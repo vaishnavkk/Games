@@ -8,24 +8,22 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg-page: #f2f5fa;
-    --glass-bg: rgba(255, 255, 255, 0.68);
-    --glass-border: rgba(255, 255, 255, 0.85);
-    --glass-border-subtle: rgba(203, 213, 225, 0.45);
-    --glass-shadow: 0 10px 32px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.03);
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --text-accent: #334155;
-    --primary-cyan: #0284c7;
-    --primary-violet: #7c3aed;
-    --radius: 18px;
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-highlight: rgba(255, 255, 255, 0.08);
+    --text-primary: rgba(255, 255, 255, 0.92);
+    --text-secondary: rgba(255, 255, 255, 0.55);
+    --text-accent: rgba(255, 255, 255, 0.7);
+    --cyan-glow: rgba(0, 220, 255, 0.6);
+    --violet-glow: rgba(140, 80, 255, 0.5);
+    --radius: 16px;
   }
 
   html, body {
     width: 100%; height: 100%;
     overflow: hidden;
-    background: radial-gradient(ellipse at 30% 20%, #ffffff 0%, #f4f6fa 45%, #e8ecf4 100%);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: radial-gradient(ellipse at 30% 20%, #1a1f35 0%, #0b0f19 70%);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: var(--text-primary);
     user-select: none;
     -webkit-user-select: none;
@@ -38,7 +36,7 @@
     min-height: 100vh;
   }
 
-  /* Ambient floating luminous orbs */
+  /* Ambient floating orbs */
   .ambient-orbs {
     position: fixed; inset: 0;
     pointer-events: none; z-index: 0;
@@ -47,37 +45,37 @@
   .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.22;
-    animation: orbFloat 22s ease-in-out infinite alternate;
+    filter: blur(80px);
+    opacity: 0.25;
+    animation: orbFloat 20s ease-in-out infinite alternate;
   }
-  .orb:nth-child(1) { width: 440px; height: 440px; background: #60a5fa; top: 8%; left: 8%; animation-duration: 24s; }
-  .orb:nth-child(2) { width: 360px; height: 360px; background: #38bdf8; top: 62%; left: 68%; animation-duration: 20s; animation-delay: -5s; }
-  .orb:nth-child(3) { width: 400px; height: 400px; background: #c084fc; top: 25%; left: 48%; animation-duration: 28s; animation-delay: -10s; }
-  .orb:nth-child(4) { width: 300px; height: 300px; background: #f472b6; top: 72%; left: 18%; animation-duration: 22s; animation-delay: -4s; }
+  .orb:nth-child(1) { width: 400px; height: 400px; background: #6366f1; top: 10%; left: 5%; animation-duration: 22s; }
+  .orb:nth-child(2) { width: 300px; height: 300px; background: #06b6d4; top: 60%; left: 70%; animation-duration: 18s; animation-delay: -5s; }
+  .orb:nth-child(3) { width: 350px; height: 350px; background: #8b5cf6; top: 30%; left: 50%; animation-duration: 25s; animation-delay: -10s; }
+  .orb:nth-child(4) { width: 250px; height: 250px; background: #ec4899; top: 75%; left: 20%; animation-duration: 20s; animation-delay: -3s; }
 
   @keyframes orbFloat {
     0% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(45px, -35px) scale(1.08); }
-    66% { transform: translate(-25px, 25px) scale(0.96); }
-    100% { transform: translate(35px, -15px) scale(1.04); }
+    33% { transform: translate(40px, -30px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
+    100% { transform: translate(30px, -10px) scale(1.05); }
   }
 
   /* Glass panel base */
   .glass {
     background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
-    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
 
   /* Main layout */
   .game-container {
     position: relative; z-index: 1;
     display: flex;
-    gap: 22px;
+    gap: 20px;
     align-items: flex-start;
     padding: 20px;
   }
@@ -87,30 +85,26 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-    width: 200px;
+    width: 190px;
   }
 
   .panel-card {
-    padding: 15px 18px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 14px 16px;
   }
 
   .panel-label {
     font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 2.2px;
+    font-weight: 700;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--text-secondary);
     margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
   .panel-hint {
-    font-size: 9.5px;
+    font-size: 9px;
     color: var(--text-secondary);
-    line-height: 1.45;
+    line-height: 1.4;
     margin-top: 6px;
   }
 
@@ -124,92 +118,92 @@
   .hold-empty-msg {
     text-align: center;
     font-size: 10px;
-    color: #94a3b8;
-    padding: 18px 4px;
+    color: rgba(255,255,255,0.25);
+    padding: 18px 0;
     line-height: 1.5;
   }
 
-  /* Flux meter */
-  .flux-meter-track {
+  /* Surge meter */
+  .surge-meter-track {
     width: 100%;
     height: 10px;
-    background: rgba(148, 163, 184, 0.16);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 5px;
     overflow: hidden;
     margin-top: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
   }
-  .flux-meter-fill {
+  .surge-meter-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #0284c7, #7c3aed);
+    background: linear-gradient(90deg, #06b6d4, #8b5cf6);
     border-radius: 5px;
     transition: width 0.3s ease;
-    box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+    box-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
   }
-  .flux-meter-fill.full {
-    animation: fluxPulse 0.9s ease-in-out infinite alternate;
+  .surge-meter-fill.full {
+    animation: surgePulse 0.8s ease-in-out infinite alternate;
   }
-  @keyframes fluxPulse {
-    0% { box-shadow: 0 0 8px rgba(2, 132, 199, 0.45); }
-    100% { box-shadow: 0 0 18px rgba(124, 58, 237, 0.65); }
+  @keyframes surgePulse {
+    0% { box-shadow: 0 0 8px rgba(6, 182, 212, 0.5); }
+    100% { box-shadow: 0 0 18px rgba(139, 92, 246, 0.8); }
   }
-  .flux-text {
+  .surge-text {
     font-size: 22px;
-    font-weight: 800;
+    font-weight: 700;
     font-variant-numeric: tabular-nums;
     color: var(--text-primary);
     text-align: center;
     margin-top: 4px;
   }
-  .flux-ready-badge {
+  .surge-ready-badge {
     display: none;
     text-align: center;
     margin-top: 6px;
-    padding: 5px 8px;
+    padding: 4px 8px;
     font-size: 9px;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: #0369a1;
-    background: rgba(2, 132, 199, 0.12);
-    border: 1px solid rgba(2, 132, 199, 0.3);
+    color: #22d3ee;
+    background: rgba(6, 182, 212, 0.12);
+    border: 1px solid rgba(6, 182, 212, 0.3);
     border-radius: 6px;
     animation: readyPulse 1.2s ease-in-out infinite alternate;
   }
-  .flux-ready-badge.visible { display: block; }
+  .surge-ready-badge.visible { display: block; }
   @keyframes readyPulse {
-    0% { opacity: 0.8; box-shadow: 0 0 4px rgba(2,132,199,0.2); }
-    100% { opacity: 1; box-shadow: 0 0 12px rgba(2,132,199,0.4); }
+    0% { opacity: 0.7; box-shadow: 0 0 4px rgba(6,182,212,0.2); }
+    100% { opacity: 1; box-shadow: 0 0 12px rgba(6,182,212,0.4); }
   }
-  .flux-desc {
-    font-size: 8.8px;
-    color: #64748b;
-    line-height: 1.45;
+  .surge-desc {
+    font-size: 8.5px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.4;
     margin-top: 8px;
     text-align: center;
   }
-  .flux-desc b { color: #334155; font-weight: 700; }
+  .surge-desc b { color: rgba(255,255,255,0.7); font-weight: 600; }
 
-  /* Antigravity timer */
-  .ag-timer {
+  /* Surge active timer */
+  .surge-timer {
     display: none;
     text-align: center;
     margin-top: 6px;
     font-size: 12px;
-    font-weight: 800;
+    font-weight: 700;
     font-variant-numeric: tabular-nums;
-    color: #0284c7;
+    color: #22d3ee;
     letter-spacing: 1px;
   }
-  .ag-timer.visible { display: block; }
+  .surge-timer.visible { display: block; }
 
   /* Controls legend */
   .controls-list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
   }
   .controls-list li {
     font-size: 10px;
@@ -222,19 +216,18 @@
   .controls-list kbd {
     font-family: system-ui, monospace;
     font-size: 9px;
-    font-weight: 700;
-    padding: 2px 7px;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(203, 213, 225, 0.8);
-    border-radius: 5px;
+    font-weight: 600;
+    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
     color: var(--text-accent);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     white-space: nowrap;
   }
   .controls-list .bonus {
     font-size: 8px;
-    color: #16a34a;
-    font-weight: 700;
+    color: #4ade80;
+    font-weight: 600;
   }
 
   /* Center board column */
@@ -251,47 +244,45 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     padding: 0 4px;
   }
+  /* Plain color text for Matrixfall title */
   .brand-title {
     font-size: 18px;
-    font-weight: 900;
+    font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
-    background: linear-gradient(135deg, #0284c7 0%, #7c3aed 50%, #db2777 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #ffffff;
   }
   .pause-btn {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 16px;
+    padding: 7px 18px;
     font-family: system-ui, sans-serif;
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-accent);
-    background: rgba(255, 255, 255, 0.75);
+    background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
   }
   .pause-btn:hover {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255,255,255,0.08);
     color: var(--text-primary);
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     transform: translateY(-1px);
   }
   .pause-btn .pause-icon {
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1;
   }
 
@@ -299,47 +290,44 @@
   .board-wrapper {
     position: relative;
     padding: 12px;
-    background: rgba(255, 255, 255, 0.72);
-    box-shadow: 0 16px 45px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.95);
     transition: box-shadow 0.5s ease, border-color 0.5s ease;
   }
-  .board-wrapper.antigravity-active {
-    box-shadow: 0 0 45px rgba(2, 132, 199, 0.35), 0 0 85px rgba(124, 58, 237, 0.25), inset 0 0 35px rgba(2, 132, 199, 0.08);
-    border-color: rgba(2, 132, 199, 0.5);
+  .board-wrapper.surge-active {
+    box-shadow: 0 0 40px rgba(6, 182, 212, 0.35), 0 0 80px rgba(139, 92, 246, 0.25), inset 0 0 35px rgba(6, 182, 212, 0.08);
+    border-color: rgba(6, 182, 212, 0.45);
   }
 
   #gameCanvas {
     display: block;
     border-radius: 8px;
-    background: rgba(248, 250, 252, 0.65);
   }
 
   /* Stat cards on right */
   .stat-value {
     font-size: 28px;
-    font-weight: 900;
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
     color: var(--text-primary);
     line-height: 1;
   }
   .stat-value.combo {
-    color: #d97706;
+    color: #f59e0b;
   }
 
   /* Level progress */
   .level-progress-track {
     width: 100%;
-    height: 5px;
-    background: rgba(148, 163, 184, 0.16);
-    border-radius: 3px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
     overflow: hidden;
     margin-top: 8px;
   }
   .level-progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #7c3aed, #ec4899);
-    border-radius: 3px;
+    background: linear-gradient(90deg, #a78bfa, #ec4899);
+    border-radius: 2px;
     transition: width 0.3s ease;
   }
   .level-progress-label {
@@ -348,7 +336,7 @@
     margin-top: 4px;
   }
 
-  /* Next piece label for quantum */
+  /* Next piece badge */
   .next-quantum-badge {
     display: none;
     text-align: center;
@@ -358,16 +346,16 @@
     font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #7c3aed;
-    background: linear-gradient(90deg, rgba(2,132,199,0.12), rgba(124,58,237,0.12), rgba(236,72,153,0.12));
-    border: 1px solid rgba(124,58,237,0.3);
+    color: #22d3ee;
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid rgba(0, 220, 255, 0.4);
     border-radius: 5px;
-    animation: quantumBadgePulse 1.2s ease-in-out infinite alternate;
+    animation: quantumBadgePulse 1s ease-in-out infinite alternate;
   }
   .next-quantum-badge.visible { display: block; }
   @keyframes quantumBadgePulse {
-    0% { border-color: rgba(2,132,199,0.3); box-shadow: 0 0 6px rgba(2,132,199,0.15); }
-    100% { border-color: rgba(236,72,153,0.4); box-shadow: 0 0 12px rgba(124,58,237,0.25); }
+    0% { border-color: rgba(0,220,255,0.4); box-shadow: 0 0 6px rgba(0,220,255,0.25); }
+    100% { border-color: rgba(6,182,212,0.6); box-shadow: 0 0 14px rgba(6,182,212,0.45); }
   }
 
   /* Overlays (Start / Pause / Game Over) */
@@ -377,7 +365,7 @@
     align-items: center;
     justify-content: center;
     z-index: 100;
-    background: rgba(241, 245, 249, 0.72);
+    background: rgba(5, 8, 15, 0.75);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     opacity: 1;
@@ -389,29 +377,24 @@
   }
   .overlay-content {
     text-align: center;
-    padding: 42px 48px;
+    padding: 40px 50px;
     min-width: 380px;
     max-width: 460px;
-    background: rgba(255, 255, 255, 0.88);
-    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.95);
   }
+  /* Plain color text for popup title */
   .overlay-title {
-    font-size: 36px;
-    font-weight: 900;
+    font-size: 34px;
+    font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
     margin-bottom: 6px;
-    background: linear-gradient(135deg, #0284c7 0%, #7c3aed 50%, #db2777 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #ffffff;
   }
   .overlay-subtitle {
     font-size: 13px;
     color: var(--text-secondary);
-    margin-bottom: 22px;
+    margin-bottom: 20px;
     letter-spacing: 1px;
-    font-weight: 500;
   }
   .overlay-stat {
     font-size: 14px;
@@ -420,37 +403,37 @@
   }
   .overlay-stat span {
     color: var(--text-primary);
-    font-weight: 800;
+    font-weight: 700;
     font-variant-numeric: tabular-nums;
   }
   .overlay-btn {
     display: inline-block;
-    margin-top: 22px;
-    padding: 14px 44px;
+    margin-top: 20px;
+    padding: 14px 40px;
     font-family: system-ui, -apple-system, sans-serif;
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: #ffffff;
-    background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
-    border: none;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.3));
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 8px 24px rgba(2, 132, 199, 0.3);
+    backdrop-filter: blur(8px);
   }
   .overlay-btn:hover {
-    background: linear-gradient(135deg, #0369a1 0%, #6d28d9 100%);
-    box-shadow: 0 10px 28px rgba(124, 58, 237, 0.4);
-    transform: translateY(-1.5px);
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(139, 92, 246, 0.5));
+    box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+    transform: translateY(-1px);
   }
 
   /* Start overlay tips */
   .start-tips {
     text-align: left;
     margin: 0 auto 16px;
-    max-width: 330px;
+    max-width: 320px;
   }
   .start-tips .tip-row {
     display: flex;
@@ -459,24 +442,23 @@
     margin-bottom: 10px;
     font-size: 11px;
     color: var(--text-secondary);
-    line-height: 1.45;
+    line-height: 1.4;
   }
   .start-tips .tip-icon {
     flex-shrink: 0;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 7px;
-    border: 1px solid rgba(203, 213, 225, 0.8);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    background: rgba(255,255,255,0.06);
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.08);
   }
   .start-tips .tip-text b {
-    color: var(--text-primary);
-    font-weight: 700;
+    color: var(--text-accent);
+    font-weight: 600;
   }
 
   /* Screen shake */
@@ -510,14 +492,14 @@
     </div>
 
     <div class="glass panel-card">
-      <div class="panel-label">Matrix Surge (Flux)</div>
-      <div class="flux-text" id="fluxText">0%</div>
-      <div class="flux-meter-track">
-        <div class="flux-meter-fill" id="fluxFill"></div>
+      <div class="panel-label">Matrix Surge</div>
+      <div class="surge-text" id="surgeText">0%</div>
+      <div class="surge-meter-track">
+        <div class="surge-meter-fill" id="surgeFill"></div>
       </div>
-      <div class="flux-ready-badge" id="fluxReadyBadge">⚡ Press E — Ready!</div>
-      <div class="ag-timer" id="agTimer">ACTIVE: 7.0s</div>
-      <div class="flux-desc">Clear lines to charge. <b>At 100%</b> press <b>E</b> to activate:<br>• Bullet-time slow-mo (7s)<br>• Bottom row vaporizes<br>• Board pulses radiant aura</div>
+      <div class="surge-ready-badge" id="surgeReadyBadge">⚡ Press E — Ready!</div>
+      <div class="surge-timer" id="surgeTimer">ACTIVE: 7.0s</div>
+      <div class="surge-desc">Clear lines to charge (25%/line). <b>At 100%</b> press <b>E</b> to activate:<br>• 7s slow-motion bullet time<br>• Bottom row dissolves<br>• Board pulses glowing aura</div>
     </div>
 
     <div class="glass panel-card">
@@ -532,7 +514,7 @@
         </li>
         <li><span>Rotate</span><kbd>↑ / X</kbd></li>
         <li><span>Save Piece</span><kbd>C / Shift</kbd></li>
-        <li><span>Surge</span><kbd>E</kbd></li>
+        <li><span>Matrix Surge</span><kbd>E</kbd></li>
         <li><span>Pause</span><kbd>P</kbd></li>
       </ul>
     </div>
@@ -659,22 +641,22 @@ if (typeof CanvasRenderingContext2D.prototype.roundRect !== "function") {
 }
 
 // ── DOM References ──────────────────────────────────────────
-const gameCanvas    = document.getElementById("gameCanvas");
-const holdCanvas    = document.getElementById("holdCanvas");
-const nextCanvas    = document.getElementById("nextCanvas");
-const boardWrapper  = document.getElementById("boardWrapper");
-const gameContainer = document.getElementById("gameContainer");
+const gameCanvas       = document.getElementById("gameCanvas");
+const holdCanvas       = document.getElementById("holdCanvas");
+const nextCanvas       = document.getElementById("nextCanvas");
+const boardWrapper     = document.getElementById("boardWrapper");
+const gameContainer    = document.getElementById("gameContainer");
 
-const fluxFill       = document.getElementById("fluxFill");
-const fluxText       = document.getElementById("fluxText");
-const fluxReadyBadge = document.getElementById("fluxReadyBadge");
-const agTimerEl      = document.getElementById("agTimer");
-const scoreEl        = document.getElementById("scoreValue");
-const levelEl        = document.getElementById("levelValue");
-const linesEl        = document.getElementById("linesValue");
-const comboEl        = document.getElementById("comboValue");
-const holdEmptyMsg   = document.getElementById("holdEmptyMsg");
-const holdHint       = document.getElementById("holdHint");
+const surgeFill        = document.getElementById("surgeFill");
+const surgeText        = document.getElementById("surgeText");
+const surgeReadyBadge  = document.getElementById("surgeReadyBadge");
+const surgeTimerEl     = document.getElementById("surgeTimer");
+const scoreEl          = document.getElementById("scoreValue");
+const levelEl          = document.getElementById("levelValue");
+const linesEl          = document.getElementById("linesValue");
+const comboEl          = document.getElementById("comboValue");
+const holdEmptyMsg     = document.getElementById("holdEmptyMsg");
+const holdHint         = document.getElementById("holdHint");
 const nextQuantumBadge = document.getElementById("nextQuantumBadge");
 const levelProgressFill  = document.getElementById("levelProgressFill");
 const levelProgressLabel = document.getElementById("levelProgressLabel");
@@ -703,15 +685,15 @@ const mainCtx = setupHiDPI(gameCanvas, BOARD_W, BOARD_H);
 const hCtx    = setupHiDPI(holdCanvas, 120, 80);
 const nCtx    = setupHiDPI(nextCanvas, 120, 80);
 
-// ── Tetromino Palette: Saturated Jewel-Pastel tones for Off-White ──
+// ── Tetromino Palette: Neon-Pastel on Deep Slate ────────────
 const TETROMINOS = {
-  I: { matrix: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], color: "#0284c7", glow: "rgba(2,132,199,0.4)" },
-  O: { matrix: [[1,1],[1,1]],                               color: "#d97706", glow: "rgba(217,119,6,0.4)" },
-  T: { matrix: [[0,1,0],[1,1,1],[0,0,0]],                   color: "#7c3aed", glow: "rgba(124,58,237,0.4)" },
-  S: { matrix: [[0,1,1],[1,1,0],[0,0,0]],                   color: "#16a34a", glow: "rgba(22,163,74,0.4)" },
-  Z: { matrix: [[1,1,0],[0,1,1],[0,0,0]],                   color: "#e11d48", glow: "rgba(225,29,72,0.4)" },
-  J: { matrix: [[1,0,0],[1,1,1],[0,0,0]],                   color: "#2563eb", glow: "rgba(37,99,235,0.4)" },
-  L: { matrix: [[0,0,1],[1,1,1],[0,0,0]],                   color: "#ea580c", glow: "rgba(234,88,12,0.4)" },
+  I: { matrix: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], color: "#22d3ee", glow: "rgba(34,211,238,0.5)" },
+  O: { matrix: [[1,1],[1,1]],                               color: "#fbbf24", glow: "rgba(251,191,36,0.5)" },
+  T: { matrix: [[0,1,0],[1,1,1],[0,0,0]],                   color: "#a78bfa", glow: "rgba(167,139,250,0.5)" },
+  S: { matrix: [[0,1,1],[1,1,0],[0,0,0]],                   color: "#4ade80", glow: "rgba(74,222,128,0.5)" },
+  Z: { matrix: [[1,1,0],[0,1,1],[0,0,0]],                   color: "#f87171", glow: "rgba(248,113,113,0.5)" },
+  J: { matrix: [[1,0,0],[1,1,1],[0,0,0]],                   color: "#60a5fa", glow: "rgba(96,165,250,0.5)" },
+  L: { matrix: [[0,0,1],[1,1,1],[0,0,0]],                   color: "#fb923c", glow: "rgba(251,146,60,0.5)" },
 };
 const PIECE_NAMES = ["I","O","T","S","Z","J","L"];
 
@@ -721,9 +703,9 @@ let score = 0;
 let level = 1;
 let lines = 0;
 let combo = 0;
-let flux = 0;
-let antigravityActive = false;
-let antigravityTimer = 0;
+let surge = 0;
+let surgeActive = false;
+let surgeTimer = 0;
 let holdPiece = null;
 let holdUsed = false;
 let gameState = "start";
@@ -919,7 +901,7 @@ function clearLines() {
     lines += cleared;
     level = Math.floor(lines / 10) + 1;
 
-    flux = Math.min(100, flux + cleared * 25);
+    surge = Math.min(100, surge + cleared * 25);
 
     gameContainer.classList.add("shake");
     setTimeout(() => gameContainer.classList.remove("shake"), 250);
@@ -1022,13 +1004,13 @@ function getGhostY() {
   return gy;
 }
 
-// ── Matrix Surge (Antigravity Flux) ─────────────────────────
-function activateAntigravity() {
-  if (flux < 100 || antigravityActive || gameOver) return;
-  flux = 0;
-  antigravityActive = true;
-  antigravityTimer = 7.0;
-  boardWrapper.classList.add("antigravity-active");
+// ── Matrix Surge ────────────────────────────────────────────
+function activateSurge() {
+  if (surge < 100 || surgeActive || gameOver) return;
+  surge = 0;
+  surgeActive = true;
+  surgeTimer = 7.0;
+  boardWrapper.classList.add("surge-active");
 
   for (let r = ROWS - 1; r >= 0; r--) {
     if (grid[r].some(cell => cell !== 0)) {
@@ -1041,17 +1023,17 @@ function activateAntigravity() {
   updateUI();
 }
 
-function updateAntigravity(dt) {
-  if (!antigravityActive) return;
-  antigravityTimer -= dt;
-  if (antigravityTimer <= 0) {
-    antigravityActive = false;
-    antigravityTimer = 0;
-    boardWrapper.classList.remove("antigravity-active");
-    agTimerEl.classList.remove("visible");
+function updateSurge(dt) {
+  if (!surgeActive) return;
+  surgeTimer -= dt;
+  if (surgeTimer <= 0) {
+    surgeActive = false;
+    surgeTimer = 0;
+    boardWrapper.classList.remove("surge-active");
+    surgeTimerEl.classList.remove("visible");
   } else {
-    agTimerEl.classList.add("visible");
-    agTimerEl.textContent = "⚡ SURGE: " + antigravityTimer.toFixed(1) + "s";
+    surgeTimerEl.classList.add("visible");
+    surgeTimerEl.textContent = "⚡ SURGE: " + surgeTimer.toFixed(1) + "s";
   }
   if (Math.random() < 0.3) {
     particles.push({
@@ -1062,7 +1044,7 @@ function updateAntigravity(dt) {
       life: 3,
       maxLife: 3,
       size: Math.random() * 4 + 2,
-      color: Math.random() > 0.5 ? "rgba(2,132,199," : "rgba(124,58,237,",
+      color: Math.random() > 0.5 ? "rgba(6,182,212," : "rgba(139,92,246,",
     });
   }
 }
@@ -1081,7 +1063,7 @@ function spawnLineClearParticles(row) {
         life: 1.5 + Math.random(),
         maxLife: 2.0,
         size: Math.random() * 5 + 2,
-        color: cell.glow ? cell.glow.replace(/[\d.]+\)$/, "") : "rgba(2,132,199,",
+        color: cell.glow ? cell.glow.replace(/[\d.]+\)$/, "") : "rgba(255,255,255,",
       });
     }
   }
@@ -1102,12 +1084,12 @@ function updateParticles(dt) {
 
 function renderParticles(c) {
   for (const p of particles) {
-    const alpha = Math.max(0, p.life / p.maxLife) * 0.85;
+    const alpha = Math.max(0, p.life / p.maxLife) * 0.8;
     c.save();
     c.globalAlpha = alpha;
     c.fillStyle = p.color + alpha.toFixed(2) + ")";
-    c.shadowColor = p.color + "0.4)";
-    c.shadowBlur = 6;
+    c.shadowColor = p.color + "0.6)";
+    c.shadowBlur = 8;
     c.translate(p.x, p.y);
     c.rotate(p.life * 3);
     c.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
@@ -1118,116 +1100,59 @@ function renderParticles(c) {
 // ── Gravity Speed ───────────────────────────────────────────
 function getDropInterval() {
   const base = Math.max(0.05, 1.0 - (level - 1) * 0.08);
-  if (antigravityActive) return base / 0.2;
+  if (surgeActive) return base / 0.2;
   return base;
 }
 
-// ── Drawing Helpers (Light Frosted Glass Tiles) ──────────────
+// ── Drawing Helpers (Dark Glassmorphic Tiles) ───────────────
 function drawGlassTile(c, x, y, size, color, glowColor, alpha) {
   const a = alpha !== undefined ? alpha : 1;
-  const pad = 1.5;
+  const pad = 1;
 
   c.save();
   c.globalAlpha = a;
 
-  // Subtle outer soft shadow/glow
   c.shadowColor = glowColor || color;
-  c.shadowBlur = 8 * a;
-  c.shadowOffsetY = 2;
+  c.shadowBlur = 10 * a;
 
-  // Main tile body
   c.fillStyle = color;
   c.beginPath();
-  c.roundRect(x + pad, y + pad, size - pad * 2, size - pad * 2, 5);
+  c.roundRect(x + pad, y + pad, size - pad * 2, size - pad * 2, 4);
   c.fill();
 
-  // Reset shadow for internal glass bevels
   c.shadowBlur = 0;
-  c.shadowOffsetY = 0;
-
-  // Inner translucent glass core
-  c.fillStyle = "rgba(255,255,255,0.22)";
+  c.fillStyle = "rgba(255,255,255,0.12)";
   c.beginPath();
-  c.roundRect(x + pad + 2, y + pad + 2, size - pad * 2 - 4, size - pad * 2 - 4, 4);
+  c.roundRect(x + pad + 2, y + pad + 2, size - pad * 2 - 4, size - pad * 2 - 4, 3);
   c.fill();
 
-  // Top/left crisp glass highlight
-  c.fillStyle = "rgba(255,255,255,0.48)";
+  c.fillStyle = "rgba(255,255,255,0.22)";
   c.fillRect(x + pad + 3, y + pad + 2, size - pad * 2 - 6, 2);
-
-  // Bottom subtle bevel
-  c.fillStyle = "rgba(0,0,0,0.12)";
-  c.fillRect(x + pad + 3, y + size - pad - 3, size - pad * 2 - 6, 1.5);
 
   c.restore();
 }
 
-// ── Quantum Phase Tile — Prismatic Holographic Rendering ─────
-function drawQuantumTile(c, x, y, size, time, alpha) {
+// ── Glowing Quantum Phase Tile (Restored to sleek radiant aura) ──
+function drawQuantumTile(c, x, y, size, now, alpha) {
   const a = alpha !== undefined ? alpha : 1;
-  const pad = 1.5;
-  const t = time / 1000;
-
-  const hue = ((t * 140) + x * 2.5 + y * 3.5) % 360;
-  const mainColor = "hsl(" + hue + ", 85%, 58%)";
-  const glowHue = (hue + 60) % 360;
-  const glowColor = "hsla(" + glowHue + ", 95%, 55%, 0.6)";
-
-  const pulse = 0.75 + 0.25 * Math.sin(t * 6);
+  const pulse = 0.65 + 0.35 * Math.sin(now / 150);
 
   c.save();
   c.globalAlpha = a;
 
-  // Radiant aura
-  c.shadowColor = glowColor;
-  c.shadowBlur = 18 * pulse;
+  // Intense glowing aura
+  c.shadowColor = "rgba(0, 220, 255, 0.85)";
+  c.shadowBlur = 16 * pulse;
 
-  // Main body
-  c.fillStyle = mainColor;
-  c.beginPath();
-  c.roundRect(x + pad, y + pad, size - pad * 2, size - pad * 2, 5);
-  c.fill();
-
-  // Prism border
-  c.shadowBlur = 0;
-  c.strokeStyle = "rgba(255,255,255," + (0.85 * pulse).toFixed(2) + ")";
-  c.lineWidth = 1.8;
-  c.beginPath();
-  c.roundRect(x + pad + 1, y + pad + 1, size - pad * 2 - 2, size - pad * 2 - 2, 4);
-  c.stroke();
-
-  // Diamond holographic prism center
-  const cx = x + size / 2;
-  const cy = y + size / 2;
-  const d = (size / 2 - 4) * pulse;
-  c.fillStyle = "rgba(255,255,255," + (0.5 * pulse).toFixed(2) + ")";
-  c.beginPath();
-  c.moveTo(cx, cy - d);
-  c.lineTo(cx + d * 0.65, cy);
-  c.lineTo(cx, cy + d);
-  c.lineTo(cx - d * 0.65, cy);
-  c.closePath();
-  c.fill();
-
-  // Orbiting sparkles
-  const sparkleAngle = t * 4;
-  const sparkR = size * 0.35;
-  for (let i = 0; i < 4; i++) {
-    const sa = sparkleAngle + (i * Math.PI / 2);
-    const sx = cx + Math.cos(sa) * sparkR;
-    const sy = cy + Math.sin(sa) * sparkR;
-    c.fillStyle = "rgba(255,255,255," + (0.9 * pulse).toFixed(2) + ")";
-    c.beginPath();
-    c.arc(sx, sy, 1.8, 0, Math.PI * 2);
-    c.fill();
-  }
+  // Luminous white-cyan tile
+  drawGlassTile(c, x, y, size, "#e0f7ff", "rgba(0, 220, 255, 0.75)", 0.88 * pulse + 0.12);
 
   c.restore();
 }
 
 function drawGrid(c) {
   c.save();
-  c.strokeStyle = "rgba(148, 163, 184, 0.15)";
+  c.strokeStyle = "rgba(255,255,255,0.03)";
   c.lineWidth = 0.5;
   for (let r = 0; r <= ROWS; r++) {
     c.beginPath();
@@ -1293,18 +1218,18 @@ function drawCurrentPiece(c) {
     }
   }
 
-  // Draw "QUANTUM" badge floating above the phase piece
+  // Glowing "QUANTUM" label floating above the phase piece
   if (isPhase && current.y >= 0) {
-    const pulse = 0.7 + 0.3 * Math.sin(now / 250);
+    const pulse = 0.6 + 0.4 * Math.sin(now / 200);
     const labelY = Math.max(0, current.y) * CELL - 8;
     const labelX = (current.x + current.matrix[0].length / 2) * CELL;
     c.save();
-    c.globalAlpha = 0.85 * pulse;
+    c.globalAlpha = 0.8 * pulse;
     c.font = "bold 8.5px system-ui, sans-serif";
     c.textAlign = "center";
-    c.fillStyle = "#7c3aed";
-    c.shadowColor = "rgba(124,58,237,0.4)";
-    c.shadowBlur = 6;
+    c.fillStyle = "#e0f7ff";
+    c.shadowColor = "rgba(0,220,255,0.85)";
+    c.shadowBlur = 8;
     c.fillText("⚛ QUANTUM", labelX, labelY);
     c.restore();
   }
@@ -1343,20 +1268,20 @@ function updateUI() {
   linesEl.textContent = lines;
   comboEl.textContent = combo > 0 ? combo + "x" : "—";
 
-  const pct = Math.min(100, Math.max(0, flux));
-  fluxFill.style.width = pct + "%";
-  fluxText.textContent = Math.floor(pct) + "%";
+  const pct = Math.min(100, Math.max(0, surge));
+  surgeFill.style.width = pct + "%";
+  surgeText.textContent = Math.floor(pct) + "%";
 
-  if (pct >= 100 && !antigravityActive) {
-    fluxFill.classList.add("full");
-    fluxReadyBadge.classList.add("visible");
+  if (pct >= 100 && !surgeActive) {
+    surgeFill.classList.add("full");
+    surgeReadyBadge.classList.add("visible");
   } else {
-    fluxFill.classList.remove("full");
-    fluxReadyBadge.classList.remove("visible");
+    surgeFill.classList.remove("full");
+    surgeReadyBadge.classList.remove("visible");
   }
 
-  if (!antigravityActive) {
-    agTimerEl.classList.remove("visible");
+  if (!surgeActive) {
+    surgeTimerEl.classList.remove("visible");
   }
 
   // Level progress
@@ -1378,9 +1303,9 @@ function updateUI() {
 function startGame() {
   grid = createGrid();
   score = 0; level = 1; lines = 0; combo = 0;
-  flux = 0;
-  antigravityActive = false;
-  antigravityTimer = 0;
+  surge = 0;
+  surgeActive = false;
+  surgeTimer = 0;
   holdPiece = null;
   holdUsed = false;
   piecesSpawned = 0;
@@ -1392,7 +1317,7 @@ function startGame() {
   lastTime = 0;
   gameOver = false;
 
-  boardWrapper.classList.remove("antigravity-active");
+  boardWrapper.classList.remove("surge-active");
 
   holdCanvas.style.display = "none";
   holdEmptyMsg.style.display = "block";
@@ -1432,7 +1357,6 @@ function triggerGameOver() {
   try {
     stored = parseInt(
       localStorage.getItem("matrixfall_highscore") ||
-      localStorage.getItem("agtetris_highscore") ||
       "0",
       10
     );
@@ -1474,7 +1398,7 @@ document.addEventListener("keydown", (e) => {
     case "KeyC":
     case "ShiftLeft":
     case "ShiftRight":  e.preventDefault(); holdCurrentPiece(); break;
-    case "KeyE":        e.preventDefault(); activateAntigravity(); break;
+    case "KeyE":        e.preventDefault(); activateSurge(); break;
   }
 });
 
@@ -1516,7 +1440,7 @@ function gameLoop(timestamp) {
   }
 
   // Surge timer
-  updateAntigravity(dt);
+  updateSurge(dt);
   // Particles
   updateParticles(dt);
 

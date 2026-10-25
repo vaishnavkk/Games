@@ -1,8 +1,8 @@
 # 🎮 Matrixfall
 
-> A modern, off-white glassmorphic falling blocks game built with pure HTML5, CSS3, and Vanilla JavaScript. Zero external libraries, zero frameworks, 100% self-contained.
+> A modern, dark glassmorphic falling blocks game built with pure HTML5, CSS3, and Vanilla JavaScript. Zero external libraries, zero frameworks, 100% self-contained.
 
-[![Play Live](https://img.shields.io/badge/Play_Live-GitHub_Pages-0284c7?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
+[![Play Live](https://img.shields.io/badge/Play_Live-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![Vanilla JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -18,31 +18,31 @@ Play instantly in your browser:
 
 ## ✨ Features
 
-### 💎 Off-White Frosted Glassmorphism
-- **Palette**: Pristine soft off-white canvas with luminous floating ambient orbs (`#60a5fa`, `#38bdf8`, `#c084fc`, `#f472b6`).
-- **Panels**: `backdrop-filter: blur(20px)` with delicate white translucent borders and subtle drop shadows.
-- **Tiles**: Optical glass gemstone tiles rendered with custom canvas bevels, inner highlights, and jewel-tone glow.
-- **Retina Ready**: Dual-buffered HiDPI canvas rendering automatically adapted to your device's pixel ratio.
+### 🌌 Dark Frosted Glassmorphism
+- **Atmosphere**: Deep radial slate gradient (`#1a1f35` to `#0b0f19`) illuminated by floating ambient glowing orbs.
+- **Panels**: Translucent frosted glass (`backdrop-filter: blur(16px)`) with crisp borders and soft outer shadows.
+- **Tetrominoes**: Sleek glass tiles rendered with an inner highlight border, translucent core, and colored glow.
+- **Retina Scaling**: Dual-buffered HiDPI canvas rendering automatically tailored to your device's pixel ratio.
 
-### ⚡ Matrix Surge (Antigravity Flux)
-- Clearing rows charges the **Flux Meter** by 25% per line.
+### ⚡ Matrix Surge
+- Clearing rows charges the **Surge Meter** by 25% per line cleared.
 - Once the meter reaches **100%**, press **`E`** to activate **Matrix Surge for 7 seconds**:
-  - Drops gravity speed to **20%** (bullet-time zero-G mode).
-  - Instantly **vaporizes the bottom-most row of blocks** into floating antigravity particles, lowering your stack to escape tight spots.
-  - The board border radiates with a cyan and violet aura while shards float upward.
+  - Drops drop speed to **20%** (bullet-time slow motion).
+  - Instantly **vaporizes the bottom-most row of blocks** into upward-drifting luminous particles to rescue you from tight stacks.
+  - The board border pulses with a radiant cyan and violet aura.
 
 ### ⚛ Quantum Phase Blocks
-- Every 10th block spawned is a **Quantum Phase Block** with a prismatic rainbow aura and spinning orbital sparkles.
-- Phase blocks **ignore collisions with existing locked blocks** while falling, allowing you to slide them through roofs to patch deep holes.
-- Hard-dropping or locking snaps the piece cleanly to the nearest valid free space.
+- Every 10th block spawned is a **Quantum Phase Block** with an intense pulsing cyan-white glow and floating indicator badge.
+- Phase blocks **ignore collisions with locked blocks** while falling, allowing you to slide through covered overhangs to fill deep buried cavities.
+- Hard-dropping or soft-dropping locks the piece safely into the nearest free spot.
 
 ### 🎯 Combo Multipliers & Particle Juice
-- Clearing lines consecutively builds a **Combo Multiplier** (`1x`, `2x`, `3x`...).
+- Clearing lines consecutively increments the **Combo Multiplier** (`1x`, `2x`, `3x`...).
 - Awards bonus points: `50 × combo × level`.
-- Dynamic screen-nudge animations and glass particle explosions accompany every clear.
+- Dynamic screen-nudge effects and canvas glass shard bursts accompany every clear.
 
-### 💾 Saved Piece (Hold Slot)
-- Beginners and pros alike can park any active piece into the **Saved Piece** slot using `C` or `Shift` and swap it back when needed (once per drop).
+### 💾 Saved Piece Slot
+- Store any active piece into the **Saved Piece** slot using `C` or `Shift` and swap it back whenever needed (once per drop).
 
 ---
 
@@ -50,12 +50,12 @@ Play instantly in your browser:
 
 | Key | Action | Reward / Notes |
 | :--- | :--- | :--- |
-| <kbd>←</kbd> <kbd>→</kbd> | **Move Left / Right** | Precise single-column shifting |
-| <kbd>↑</kbd> or <kbd>X</kbd> | **Rotate Clockwise** | Multi-point wall-kick safety checks |
-| <kbd>↓</kbd> | **Soft Drop** | Fast descent (**+1 point** per cell) |
-| <kbd>Space</kbd> | **Hard Drop** | Instant slam & lock (**+2 points** per cell) |
+| <kbd>←</kbd> <kbd>→</kbd> | **Move Left / Right** | Responsive horizontal shift |
+| <kbd>↑</kbd> or <kbd>X</kbd> | **Rotate Clockwise** | Safe horizontal wall-kick tests |
+| <kbd>↓</kbd> | **Soft Drop** | Accelerated descent (**+1 point** per cell) |
+| <kbd>Space</kbd> | **Hard Drop** | Instant lock (**+2 points** per cell) |
 | <kbd>C</kbd> or <kbd>Shift</kbd> | **Save Piece** | Store/swap active piece into reserve |
-| <kbd>E</kbd> | **Matrix Surge** | Trigger when Flux = 100% |
+| <kbd>E</kbd> | **Matrix Surge** | Trigger when Surge Meter reaches 100% |
 | <kbd>P</kbd> or <kbd>Esc</kbd> | **Pause / Resume** | Toggle pause overlay or click top ⏸ button |
 
 ---
@@ -92,8 +92,8 @@ No installation, build tools, or web server required:
 ## 🛠️ Tech Stack
 
 - **HTML5**: Semantic document layout & Canvas 2D API
-- **CSS3**: Modern Flexbox, CSS variables, backdrop-filter glassmorphism, keyframe particle animations
-- **JavaScript**: Pure ES6+, `requestAnimationFrame` delta-time physics engine, 7-bag randomizer, safe wall-kick rotation matrix
+- **CSS3**: Backdrop-filter glassmorphism, flexbox dashboard, ambient orb animations
+- **JavaScript**: Pure Vanilla ES6+, `requestAnimationFrame` delta-time loop, 7-bag randomizer, safe wall-kick rotation matrix
 
 ---
 
