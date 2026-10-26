@@ -46,8 +46,9 @@ Play instantly in your browser:
 
 ---
 
-## ⌨️ Controls
+## ⌨️ Controls & Mobile Support
 
+### Desktop Keyboard
 | Key | Action | Reward / Notes |
 | :--- | :--- | :--- |
 | <kbd>←</kbd> <kbd>→</kbd> | **Move Left / Right** | Responsive horizontal shift |
@@ -57,6 +58,13 @@ Play instantly in your browser:
 | <kbd>C</kbd> or <kbd>Shift</kbd> | **Save Piece** | Store/swap active piece into reserve |
 | <kbd>E</kbd> | **Matrix Surge** | Trigger when Surge Meter reaches 100% |
 | <kbd>P</kbd> or <kbd>Esc</kbd> | **Pause / Resume** | Toggle pause overlay or click top ⏸ button |
+
+### 📱 Mobile & Touch Controls
+- **On-Screen Touchpad**: Dedicated buttons for Left (◀), Rotate (↻), Right (▶), Hold (💾), Soft Drop (▼), Hard Drop (⬇), and Surge (⚡).
+- **Auto-Repeat (DAS)**: Hold left, right, or soft drop buttons for smooth continuous movement.
+- **Adaptive Canvas**: Dynamically scales board height and previews to fit mobile screens without page scrolling.
+- **Compact Mobile HUD**: Top-bar stats including Score, Level, Lines, Hold, Next, and Surge meter.
+- **Lock Delay System**: 0.5s placement buffer allowing micro-adjustments before pieces lock.
 
 ---
 

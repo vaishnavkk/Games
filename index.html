@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Matrixfall — Glassmorphic Falling Blocks</title>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,6 +27,9 @@
     color: var(--text-primary);
     user-select: none;
     -webkit-user-select: none;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -34,6 +37,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    min-height: 100dvh;
   }
 
   /* Ambient floating orbs */
@@ -473,6 +477,262 @@
   .shake {
     animation: screenShake 0.25s ease-out;
   }
+
+  /* ═══════════════════════════════════════════════════════════
+     MOBILE INFO BAR — hidden on desktop, visible on mobile
+     ═══════════════════════════════════════════════════════════ */
+  .mobile-info-bar {
+    display: none;
+    width: 100%;
+    padding: 6px 8px;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .mobile-info-card {
+    flex: 1;
+    padding: 4px 6px;
+    text-align: center;
+    border-radius: 10px;
+    min-width: 0;
+  }
+  .mobile-info-card .mi-label {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+  }
+  .mobile-info-card .mi-value {
+    font-size: 16px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+  .mobile-info-card .mi-value.combo { color: #f59e0b; }
+
+  /* Mobile preview cards in info bar */
+  .mobile-preview-card {
+    flex: 0 0 auto;
+    padding: 4px 6px;
+    text-align: center;
+    border-radius: 10px;
+    width: 64px;
+  }
+  .mobile-preview-canvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+  }
+
+  /* Mobile surge mini bar */
+  .mobile-surge-card {
+    flex: 1.2;
+    padding: 4px 6px;
+    text-align: center;
+    border-radius: 10px;
+    min-width: 0;
+  }
+  .mobile-surge-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .mobile-surge-pct {
+    font-size: 11px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+    white-space: nowrap;
+    min-width: 30px;
+  }
+  .mobile-surge-track {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .mobile-surge-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+  .mobile-surge-fill.full {
+    animation: surgePulse 0.8s ease-in-out infinite alternate;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     TOUCH CONTROLS — hidden on desktop, visible on mobile
+     ═══════════════════════════════════════════════════════════ */
+  .touch-controls {
+    display: none;
+    width: 100%;
+    padding: 6px 8px;
+    gap: 6px;
+    flex-direction: column;
+  }
+  .touch-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  .touch-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 52px;
+    min-height: 52px;
+    padding: 6px;
+    font-family: system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.1s, transform 0.1s;
+    flex: 1;
+    max-width: 80px;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+  }
+  .touch-btn:active, .touch-btn.active {
+    background: rgba(255,255,255,0.12);
+    transform: scale(0.94);
+  }
+  .touch-btn .btn-label {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .touch-btn.surge-btn {
+    background: rgba(6, 182, 212, 0.08);
+    border-color: rgba(6, 182, 212, 0.25);
+  }
+  .touch-btn.surge-btn.ready {
+    background: rgba(6, 182, 212, 0.15);
+    border-color: rgba(6, 182, 212, 0.5);
+    animation: readyPulse 1.2s ease-in-out infinite alternate;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+     ═══════════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    body {
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .ambient-orbs .orb {
+      transform: scale(0.5);
+      opacity: 0.15;
+    }
+    .game-container {
+      flex-direction: column;
+      align-items: center;
+      padding: 4px;
+      gap: 0;
+      width: 100%;
+      max-width: 100vw;
+    }
+    .panel-left, .panel-right {
+      display: none !important;
+    }
+    .board-column {
+      width: 100%;
+      align-items: center;
+    }
+    .top-bar {
+      margin-bottom: 4px;
+      padding: 4px 8px 0;
+    }
+    .brand-title {
+      font-size: 14px;
+      letter-spacing: 1.5px;
+    }
+    .pause-btn {
+      padding: 5px 12px;
+      font-size: 10px;
+      gap: 4px;
+      border-radius: 8px;
+    }
+    .pause-btn .pause-icon { font-size: 12px; }
+    .board-wrapper {
+      padding: 6px;
+      border-radius: 12px;
+    }
+
+    /* Show mobile elements */
+    .mobile-info-bar {
+      display: flex;
+    }
+    .touch-controls {
+      display: flex;
+    }
+
+    /* Fix overlays for mobile */
+    .overlay-content {
+      min-width: auto;
+      width: 90vw;
+      max-width: 420px;
+      padding: 28px 20px;
+      border-radius: 16px;
+    }
+    .overlay-title {
+      font-size: 24px;
+      letter-spacing: 2px;
+    }
+    .overlay-subtitle {
+      font-size: 11px;
+      margin-bottom: 14px;
+    }
+    .overlay-btn {
+      padding: 12px 32px;
+      font-size: 12px;
+    }
+    .start-tips {
+      max-width: 280px;
+    }
+    .start-tips .tip-row {
+      font-size: 10px;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .start-tips .tip-icon {
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+    }
+  }
+
+  /* Extra-small phones */
+  @media (max-width: 380px) {
+    .overlay-content {
+      padding: 20px 14px;
+    }
+    .overlay-title {
+      font-size: 20px;
+    }
+    .start-tips .tip-row {
+      font-size: 9px;
+    }
+    .touch-btn {
+      min-width: 44px;
+      min-height: 44px;
+      font-size: 16px;
+      border-radius: 10px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -482,7 +742,7 @@
 </div>
 
 <div class="game-container" id="gameContainer">
-  <!-- LEFT PANEL -->
+  <!-- LEFT PANEL (desktop only) -->
   <div class="panel-left">
     <div class="glass panel-card">
       <div class="panel-label">Saved Piece</div>
@@ -529,12 +789,75 @@
         <span>Pause</span>
       </button>
     </div>
+
+    <!-- Mobile info bar (above board on mobile) -->
+    <div class="mobile-info-bar" id="mobileInfoBar">
+      <div class="glass mobile-preview-card">
+        <div class="mi-label">Hold</div>
+        <canvas class="mobile-preview-canvas" id="mobileHoldCanvas" width="48" height="32"></canvas>
+      </div>
+      <div class="glass mobile-info-card">
+        <div class="mi-label">Score</div>
+        <div class="mi-value" id="mobileScore">0</div>
+      </div>
+      <div class="glass mobile-info-card">
+        <div class="mi-label">Level</div>
+        <div class="mi-value" id="mobileLevel">1</div>
+      </div>
+      <div class="glass mobile-info-card">
+        <div class="mi-label">Lines</div>
+        <div class="mi-value" id="mobileLines">0</div>
+      </div>
+      <div class="glass mobile-surge-card">
+        <div class="mi-label">Surge</div>
+        <div class="mobile-surge-row">
+          <span class="mobile-surge-pct" id="mobileSurgePct">0%</span>
+          <div class="mobile-surge-track">
+            <div class="mobile-surge-fill" id="mobileSurgeFill"></div>
+          </div>
+        </div>
+      </div>
+      <div class="glass mobile-preview-card">
+        <div class="mi-label">Next</div>
+        <canvas class="mobile-preview-canvas" id="mobileNextCanvas" width="48" height="32"></canvas>
+      </div>
+    </div>
+
     <div class="glass board-wrapper" id="boardWrapper">
       <canvas id="gameCanvas" width="300" height="600"></canvas>
     </div>
+
+    <!-- Touch controls (below board on mobile) -->
+    <div class="touch-controls" id="touchControls">
+      <div class="touch-row">
+        <button class="touch-btn" data-action="left" aria-label="Move Left">
+          ◀<span class="btn-label">Left</span>
+        </button>
+        <button class="touch-btn" data-action="rotate" aria-label="Rotate">
+          ↻<span class="btn-label">Rotate</span>
+        </button>
+        <button class="touch-btn" data-action="right" aria-label="Move Right">
+          ▶<span class="btn-label">Right</span>
+        </button>
+      </div>
+      <div class="touch-row">
+        <button class="touch-btn" data-action="hold" aria-label="Hold Piece">
+          💾<span class="btn-label">Hold</span>
+        </button>
+        <button class="touch-btn" data-action="soft" aria-label="Soft Drop">
+          ▼<span class="btn-label">Soft</span>
+        </button>
+        <button class="touch-btn" data-action="hard" aria-label="Hard Drop">
+          ⬇<span class="btn-label">Drop</span>
+        </button>
+        <button class="touch-btn surge-btn" data-action="surge" id="touchSurgeBtn" aria-label="Matrix Surge">
+          ⚡<span class="btn-label">Surge</span>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!-- RIGHT PANEL -->
+  <!-- RIGHT PANEL (desktop only) -->
   <div class="panel-right">
     <div class="glass panel-card">
       <div class="panel-label">Next Piece</div>
@@ -573,7 +896,7 @@
     <div class="start-tips">
       <div class="tip-row">
         <div class="tip-icon">🎮</div>
-        <div class="tip-text">Use <b>Arrow Keys</b> to steer & rotate. <b>Space</b> for instant hard drop. <b>↓</b> for soft drop.</div>
+        <div class="tip-text">Use <b>Arrow Keys</b> or <b>Touch Controls</b> to steer & rotate. <b>Space</b> for instant hard drop. <b>↓</b> for soft drop.</div>
       </div>
       <div class="tip-row">
         <div class="tip-icon">💾</div>
@@ -665,6 +988,16 @@ const startOverlay    = document.getElementById("startOverlay");
 const pauseOverlay    = document.getElementById("pauseOverlay");
 const gameOverOverlay = document.getElementById("gameOverOverlay");
 
+// Mobile DOM refs
+const mobileScore     = document.getElementById("mobileScore");
+const mobileLevel     = document.getElementById("mobileLevel");
+const mobileLines     = document.getElementById("mobileLines");
+const mobileSurgePct  = document.getElementById("mobileSurgePct");
+const mobileSurgeFill = document.getElementById("mobileSurgeFill");
+const mobileHoldCanvas = document.getElementById("mobileHoldCanvas");
+const mobileNextCanvas = document.getElementById("mobileNextCanvas");
+const touchSurgeBtn    = document.getElementById("touchSurgeBtn");
+
 // ── High-DPI Canvas Scaling ─────────────────────────────────
 function setupHiDPI(canvas, w, h) {
   const dpr = window.devicePixelRatio || 1;
@@ -677,13 +1010,65 @@ function setupHiDPI(canvas, w, h) {
   return c;
 }
 
-const BOARD_W = 300, BOARD_H = 600;
 const COLS = 10, ROWS = 20;
-const CELL = BOARD_W / COLS; // 30
 
-const mainCtx = setupHiDPI(gameCanvas, BOARD_W, BOARD_H);
-const hCtx    = setupHiDPI(holdCanvas, 120, 80);
-const nCtx    = setupHiDPI(nextCanvas, 120, 80);
+// ── Responsive board sizing ─────────────────────────────────
+let BOARD_W = 300, BOARD_H = 600;
+let CELL = BOARD_W / COLS;
+let isMobile = false;
+
+function detectMobile() {
+  return window.innerWidth <= 768;
+}
+
+function resizeBoard() {
+  isMobile = detectMobile();
+
+  if (isMobile) {
+    // Calculate board height: viewport height minus top-bar, info-bar, touch-controls, and padding
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const vw = window.innerWidth || document.documentElement.clientWidth;
+
+    // Reserve space: top-bar ~34px, info-bar ~60px, touch-controls ~130px, wrapper padding ~12, misc ~20
+    const reservedH = 260;
+    const maxBoardH = vh - reservedH;
+    const maxBoardW = vw - 24; // 12px padding on each side
+
+    // Board is 1:2 ratio (10×20 grid)
+    let bh = maxBoardH;
+    let bw = bh / 2;
+
+    if (bw > maxBoardW) {
+      bw = maxBoardW;
+      bh = bw * 2;
+    }
+
+    // Clamp to reasonable minimums
+    bw = Math.max(140, Math.floor(bw));
+    bh = Math.max(280, Math.floor(bh));
+
+    BOARD_W = bw;
+    BOARD_H = bh;
+  } else {
+    BOARD_W = 300;
+    BOARD_H = 600;
+  }
+
+  CELL = BOARD_W / COLS;
+}
+
+let mainCtx, hCtx, nCtx, mhCtx, mnCtx;
+
+function initCanvases() {
+  resizeBoard();
+  mainCtx = setupHiDPI(gameCanvas, BOARD_W, BOARD_H);
+  hCtx    = setupHiDPI(holdCanvas, 120, 80);
+  nCtx    = setupHiDPI(nextCanvas, 120, 80);
+  mhCtx   = setupHiDPI(mobileHoldCanvas, 48, 32);
+  mnCtx   = setupHiDPI(mobileNextCanvas, 48, 32);
+}
+
+initCanvases();
 
 // ── Tetromino Palette: Neon-Pastel on Deep Slate ────────────
 const TETROMINOS = {
@@ -720,6 +1105,13 @@ let particles = [];
 
 let lastTime = 0;
 let dropAccumulator = 0;
+
+// ── Lock Delay State ────────────────────────────────────────
+let lockDelay = 0;       // countdown timer (seconds)
+let lockResets = 0;      // number of resets used
+const LOCK_DELAY_TIME = 0.5;
+const LOCK_MAX_RESETS = 15;
+let isOnGround = false;
 
 // ── Helpers ─────────────────────────────────────────────────
 function createGrid() {
@@ -815,6 +1207,10 @@ function spawnPiece() {
   const type = nextPieceData || getNextPieceType();
   current = createPiece(type);
   holdUsed = false;
+  // Reset lock delay
+  lockDelay = 0;
+  lockResets = 0;
+  isOnGround = false;
   prepareNextPiece();
 
   if (!isValidMove(current.matrix, current.x, current.y) &&
@@ -912,12 +1308,36 @@ function clearLines() {
   updateUI();
 }
 
+// ── Lock Delay Helpers ──────────────────────────────────────
+function resetLockDelay() {
+  if (isOnGround && lockResets < LOCK_MAX_RESETS) {
+    lockDelay = LOCK_DELAY_TIME;
+    lockResets++;
+  }
+}
+
+function checkGroundState() {
+  if (!current) return;
+  const checker = current.isPhase ? isValidMovePhase : isValidMove;
+  const wasOnGround = isOnGround;
+  isOnGround = !checker(current.matrix, current.x, current.y + 1);
+  if (isOnGround && !wasOnGround) {
+    // Just touched ground — start lock delay
+    lockDelay = LOCK_DELAY_TIME;
+  } else if (!isOnGround) {
+    // Lifted off ground (e.g. rotation over a gap)
+    lockDelay = 0;
+  }
+}
+
 // ── Movement & Rotation ─────────────────────────────────────
 function moveLeft() {
   if (!current || gameOver) return;
   const checker = current.isPhase ? isValidMovePhase : isValidMove;
   if (checker(current.matrix, current.x - 1, current.y)) {
     current.x--;
+    resetLockDelay();
+    checkGroundState();
   }
 }
 
@@ -926,6 +1346,8 @@ function moveRight() {
   const checker = current.isPhase ? isValidMovePhase : isValidMove;
   if (checker(current.matrix, current.x + 1, current.y)) {
     current.x++;
+    resetLockDelay();
+    checkGroundState();
   }
 }
 
@@ -935,14 +1357,11 @@ function softDrop() {
   if (checker(current.matrix, current.x, current.y + 1)) {
     current.y++;
     score += 1;
+    lockDelay = 0; // reset lock delay when moving down
+    checkGroundState();
     updateUI();
-  } else {
-    if (current.isPhase) {
-      lockPhasePiece();
-    } else {
-      lockPiece();
-    }
   }
+  // Soft drop on ground does NOT instant-lock; lock delay will handle it
 }
 
 function hardDrop() {
@@ -957,6 +1376,7 @@ function hardDrop() {
   }
   score += dist * 2;
   current.y += dist;
+  // Hard drop bypasses lock delay — instant lock
   lockPiece();
   updateUI();
 }
@@ -970,6 +1390,8 @@ function rotate() {
     if (checker(rotated, current.x + kick, current.y)) {
       current.matrix = rotated;
       current.x += kick;
+      resetLockDelay();
+      checkGroundState();
       return;
     }
   }
@@ -1132,7 +1554,7 @@ function drawGlassTile(c, x, y, size, color, glowColor, alpha) {
   c.restore();
 }
 
-// ── Glowing Quantum Phase Tile (Restored to sleek radiant aura) ──
+// ── Glowing Quantum Phase Tile (sleek radiant aura) ──
 function drawQuantumTile(c, x, y, size, now, alpha) {
   const a = alpha !== undefined ? alpha : 1;
   const pulse = 0.65 + 0.35 * Math.sin(now / 150);
@@ -1140,14 +1562,19 @@ function drawQuantumTile(c, x, y, size, now, alpha) {
   c.save();
   c.globalAlpha = a;
 
-  // Intense glowing aura
+  // Draw outer glow BEFORE the tile so it's not clipped
   c.shadowColor = "rgba(0, 220, 255, 0.85)";
   c.shadowBlur = 16 * pulse;
+  c.fillStyle = "rgba(0, 220, 255, 0.15)";
+  c.beginPath();
+  c.roundRect(x + 1, y + 1, size - 2, size - 2, 4);
+  c.fill();
 
-  // Luminous white-cyan tile
-  drawGlassTile(c, x, y, size, "#e0f7ff", "rgba(0, 220, 255, 0.75)", 0.88 * pulse + 0.12);
-
+  c.shadowBlur = 0;
   c.restore();
+
+  // Luminous white-cyan tile on top
+  drawGlassTile(c, x, y, size, "#e0f7ff", "rgba(0, 220, 255, 0.75)", 0.88 * pulse + 0.12);
 }
 
 function drawGrid(c) {
@@ -1223,9 +1650,10 @@ function drawCurrentPiece(c) {
     const pulse = 0.6 + 0.4 * Math.sin(now / 200);
     const labelY = Math.max(0, current.y) * CELL - 8;
     const labelX = (current.x + current.matrix[0].length / 2) * CELL;
+    const fontSize = Math.max(6, CELL * 0.28);
     c.save();
     c.globalAlpha = 0.8 * pulse;
-    c.font = "bold 8.5px system-ui, sans-serif";
+    c.font = "bold " + fontSize + "px system-ui, sans-serif";
     c.textAlign = "center";
     c.fillStyle = "#e0f7ff";
     c.shadowColor = "rgba(0,220,255,0.85)";
@@ -1240,7 +1668,10 @@ function drawPreview(c, canvasW, canvasH, type, isPhasePreview) {
   if (!type) return;
   const def = TETROMINOS[type];
   const m = def.matrix;
-  const cellSize = 20;
+  // Scale cell size based on canvas size
+  const maxCellW = (canvasW - 8) / m[0].length;
+  const maxCellH = (canvasH - 4) / m.length;
+  const cellSize = Math.min(20, maxCellW, maxCellH);
   const totalW = m[0].length * cellSize;
   const totalH = m.length * cellSize;
   const offX = (canvasW - totalW) / 2;
@@ -1263,6 +1694,7 @@ function drawPreview(c, canvasW, canvasH, type, isPhasePreview) {
 
 // ── UI Update ───────────────────────────────────────────────
 function updateUI() {
+  // Desktop UI
   scoreEl.textContent = score.toLocaleString();
   levelEl.textContent = level;
   linesEl.textContent = lines;
@@ -1297,6 +1729,20 @@ function updateUI() {
   } else {
     nextQuantumBadge.classList.remove("visible");
   }
+
+  // Mobile UI
+  mobileScore.textContent = score.toLocaleString();
+  mobileLevel.textContent = level;
+  mobileLines.textContent = lines;
+  mobileSurgePct.textContent = Math.floor(pct) + "%";
+  mobileSurgeFill.style.width = pct + "%";
+  if (pct >= 100 && !surgeActive) {
+    mobileSurgeFill.classList.add("full");
+    touchSurgeBtn.classList.add("ready");
+  } else {
+    mobileSurgeFill.classList.remove("full");
+    touchSurgeBtn.classList.remove("ready");
+  }
 }
 
 // ── Game State Transitions ──────────────────────────────────
@@ -1316,12 +1762,18 @@ function startGame() {
   dropAccumulator = 0;
   lastTime = 0;
   gameOver = false;
+  lockDelay = 0;
+  lockResets = 0;
+  isOnGround = false;
 
   boardWrapper.classList.remove("surge-active");
 
   holdCanvas.style.display = "none";
   holdEmptyMsg.style.display = "block";
   holdHint.style.display = "none";
+
+  // Re-init canvases for current viewport
+  initCanvases();
 
   prepareNextPiece();
   spawnPiece();
@@ -1402,6 +1854,85 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// ── Touch Controls ──────────────────────────────────────────
+const DAS_DELAY = 200;   // ms before auto-repeat starts
+const DAS_RATE  = 50;    // ms between auto-repeat ticks
+let dasAction  = null;
+let dasTimeout = null;
+let dasInterval = null;
+
+function executeTouchAction(action) {
+  if (gameState !== "playing") return;
+  switch (action) {
+    case "left":    moveLeft();           break;
+    case "right":   moveRight();          break;
+    case "rotate":  rotate();             break;
+    case "soft":    softDrop();           break;
+    case "hard":    hardDrop();           break;
+    case "hold":    holdCurrentPiece();   break;
+    case "surge":   activateSurge();      break;
+  }
+}
+
+function startDAS(action) {
+  stopDAS();
+  dasAction = action;
+  executeTouchAction(action);
+  if (action === "left" || action === "right" || action === "soft") {
+    dasTimeout = setTimeout(() => {
+      dasInterval = setInterval(() => executeTouchAction(action), DAS_RATE);
+    }, DAS_DELAY);
+  }
+}
+
+function stopDAS() {
+  if (dasTimeout) { clearTimeout(dasTimeout); dasTimeout = null; }
+  if (dasInterval) { clearInterval(dasInterval); dasInterval = null; }
+  dasAction = null;
+}
+
+// Bind touch events
+const touchBtns = document.querySelectorAll(".touch-btn[data-action]");
+touchBtns.forEach(btn => {
+  const action = btn.getAttribute("data-action");
+
+  btn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    btn.classList.add("active");
+    startDAS(action);
+  }, { passive: false });
+
+  btn.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    btn.classList.remove("active");
+    stopDAS();
+  }, { passive: false });
+
+  btn.addEventListener("touchcancel", (e) => {
+    btn.classList.remove("active");
+    stopDAS();
+  });
+
+  // Also handle mouse for testing on desktop
+  btn.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    btn.classList.add("active");
+    startDAS(action);
+  });
+  btn.addEventListener("mouseup", (e) => {
+    btn.classList.remove("active");
+    stopDAS();
+  });
+  btn.addEventListener("mouseleave", (e) => {
+    btn.classList.remove("active");
+    stopDAS();
+  });
+});
+
+// Prevent default touch behaviour on the game canvas to avoid scrolling
+gameCanvas.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
+gameCanvas.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false });
+
 // ── Button Handlers ─────────────────────────────────────────
 document.getElementById("startBtn").addEventListener("click", startGame);
 document.getElementById("resumeBtn").addEventListener("click", togglePause);
@@ -1412,6 +1943,19 @@ document.getElementById("pauseBtn").addEventListener("click", () => {
   }
 });
 
+// ── Window Resize Handler ───────────────────────────────────
+let resizeDebounce = null;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeDebounce);
+  resizeDebounce = setTimeout(() => {
+    const wasMobile = isMobile;
+    const newMobile = detectMobile();
+    if (wasMobile !== newMobile || newMobile) {
+      initCanvases();
+    }
+  }, 150);
+});
+
 // ── Main Game Loop ──────────────────────────────────────────
 function gameLoop(timestamp) {
   if (gameState !== "playing") return;
@@ -1420,7 +1964,7 @@ function gameLoop(timestamp) {
   const dt = Math.min((timestamp - lastTime) / 1000, 0.1);
   lastTime = timestamp;
 
-  // Gravity drop
+  // Gravity drop with lock delay
   dropAccumulator += dt;
   const interval = getDropInterval();
   while (dropAccumulator >= interval && !gameOver) {
@@ -1429,12 +1973,28 @@ function gameLoop(timestamp) {
       const checker = current.isPhase ? isValidMovePhase : isValidMove;
       if (checker(current.matrix, current.x, current.y + 1)) {
         current.y++;
+        isOnGround = false;
+        lockDelay = 0;
       } else {
-        if (current.isPhase) {
-          lockPhasePiece();
-        } else {
-          lockPiece();
+        // Piece can't move down — start lock delay if not already started
+        if (!isOnGround) {
+          isOnGround = true;
+          lockDelay = LOCK_DELAY_TIME;
         }
+      }
+    }
+  }
+
+  // Lock delay countdown
+  if (current && isOnGround && lockDelay > 0) {
+    lockDelay -= dt;
+    if (lockDelay <= 0) {
+      lockDelay = 0;
+      // Lock the piece
+      if (current.isPhase) {
+        lockPhasePiece();
+      } else {
+        lockPiece();
       }
     }
   }
@@ -1452,11 +2012,19 @@ function gameLoop(timestamp) {
   drawCurrentPiece(mainCtx);
   renderParticles(mainCtx);
 
-  // Preview canvases
+  // Desktop preview canvases
   const nextPhase = (piecesSpawned + 1) % 10 === 0;
   drawPreview(nCtx, 120, 80, nextPieceData, nextPhase);
   if (holdPiece) {
     drawPreview(hCtx, 120, 80, holdPiece, false);
+  }
+
+  // Mobile preview canvases
+  drawPreview(mnCtx, 48, 32, nextPieceData, nextPhase);
+  if (holdPiece) {
+    drawPreview(mhCtx, 48, 32, holdPiece, false);
+  } else {
+    mhCtx.clearRect(0, 0, 48, 32);
   }
 
   if (gameState === "playing") {
