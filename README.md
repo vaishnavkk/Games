@@ -1,6 +1,6 @@
 # 🎮 Matrixfall
 
-> A modern, dark glassmorphic falling blocks game built with pure HTML5, CSS3, and Vanilla JavaScript. Zero external libraries, zero frameworks, 100% self-contained.
+> A modern, dark glassmorphic falling blocks game built with pure HTML5, CSS3, and Vanilla JavaScript. Zero external libraries, zero frameworks, 100% self-contained
 
 [![Play Live](https://img.shields.io/badge/Play_Live-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
