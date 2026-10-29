@@ -1472,8 +1472,11 @@ function softDrop() {
   }
 }
 
+let lastHardDropTime = 0;
 function hardDrop() {
-  if (!current || gameOver) return;
+  const now = performance.now();
+  if (!current || gameOver || (now - lastHardDropTime < 140)) return;
+  lastHardDropTime = now;
   triggerHaptic([25, 35, 25]);
 
   if (current.isPhase) {
@@ -1967,6 +1970,12 @@ document.addEventListener("keydown", (e) => {
   }
   if (gameState !== "playing") return;
 
+  // Prevent key repeat runaway on Space, Hold, and Surge
+  if (e.repeat && (e.code === "Space" || e.code === "KeyC" || e.code === "ShiftLeft" || e.code === "ShiftRight" || e.code === "KeyE")) {
+    e.preventDefault();
+    return;
+  }
+
   switch (e.code) {
     case "ArrowLeft":   e.preventDefault(); moveLeft();   break;
     case "ArrowRight":  e.preventDefault(); moveRight();  break;
@@ -1982,11 +1991,9 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ── Touchpad Buttons (DAS Support) ──────────────────────────
-const DAS_DELAY = 180;
-const DAS_RATE  = 45;
-let dasAction  = null;
-let dasTimeout = null;
-let dasInterval = null;
+const DAS_DELAY = 160;
+const DAS_RATE  = 40;
+const activeTimers = new Map();
 
 function executeTouchAction(action) {
   if (gameState !== "playing") return;
@@ -2002,20 +2009,27 @@ function executeTouchAction(action) {
 }
 
 function startDAS(action) {
-  stopDAS();
-  dasAction = action;
   executeTouchAction(action);
   if (action === "left" || action === "right" || action === "soft") {
-    dasTimeout = setTimeout(() => {
-      dasInterval = setInterval(() => executeTouchAction(action), DAS_RATE);
+    stopDAS(action);
+    const tId = setTimeout(() => {
+      const iId = setInterval(() => {
+        if (gameState === "playing") executeTouchAction(action);
+        else stopDAS(action);
+      }, DAS_RATE);
+      activeTimers.set(action, { interval: iId });
     }, DAS_DELAY);
+    activeTimers.set(action, { timeout: tId });
   }
 }
 
-function stopDAS() {
-  if (dasTimeout) { clearTimeout(dasTimeout); dasTimeout = null; }
-  if (dasInterval) { clearInterval(dasInterval); dasInterval = null; }
-  dasAction = null;
+function stopDAS(action) {
+  const t = activeTimers.get(action);
+  if (t) {
+    if (t.timeout) clearTimeout(t.timeout);
+    if (t.interval) clearInterval(t.interval);
+    activeTimers.delete(action);
+  }
 }
 
 const touchBtns = document.querySelectorAll(".touch-btn[data-action]");
@@ -2031,12 +2045,12 @@ touchBtns.forEach(btn => {
   btn.addEventListener("touchend", (e) => {
     e.preventDefault();
     btn.classList.remove("active");
-    stopDAS();
+    stopDAS(action);
   }, { passive: false });
 
   btn.addEventListener("touchcancel", (e) => {
     btn.classList.remove("active");
-    stopDAS();
+    stopDAS(action);
   });
 
   // Desktop mouse support for testing buttons
@@ -2047,11 +2061,11 @@ touchBtns.forEach(btn => {
   });
   btn.addEventListener("mouseup", (e) => {
     btn.classList.remove("active");
-    stopDAS();
+    stopDAS(action);
   });
   btn.addEventListener("mouseleave", (e) => {
     btn.classList.remove("active");
-    stopDAS();
+    stopDAS(action);
   });
 });
 
@@ -2081,13 +2095,17 @@ let hasDragged = false;
 let lastTapTimestamp = 0;
 let singleTapTimeout = null;
 let isPotentialDoubleTap = false;
+let activeTouchId = null;
 
 boardWrapper.addEventListener("touchstart", (e) => {
   if (gameState !== "playing" || !current) return;
   e.preventDefault();
 
+  if (activeTouchId !== null) return; // Dedicated tracking for primary touch
+
+  const touch = e.changedTouches[0];
+  activeTouchId = touch.identifier;
   const now = performance.now();
-  const touch = e.touches[0];
   touchStartX = touch.clientX;
   touchStartY = touch.clientY;
   lastDragX = touch.clientX;
@@ -2109,10 +2127,18 @@ boardWrapper.addEventListener("touchstart", (e) => {
 }, { passive: false });
 
 boardWrapper.addEventListener("touchmove", (e) => {
-  if (gameState !== "playing" || !current) return;
+  if (gameState !== "playing" || !current || activeTouchId === null) return;
   e.preventDefault();
 
-  const touch = e.touches[0];
+  let touch = null;
+  for (let i = 0; i < e.touches.length; i++) {
+    if (e.touches[i].identifier === activeTouchId) {
+      touch = e.touches[i];
+      break;
+    }
+  }
+  if (!touch) return;
+
   const currX = touch.clientX;
   const currY = touch.clientY;
   const diffX = currX - lastDragX;
@@ -2129,22 +2155,25 @@ boardWrapper.addEventListener("touchmove", (e) => {
     }
   }
 
-  // Horizontal Drag Threshold (responsive step per grid cell)
-  const xThreshold = Math.max(16, CELL * 0.7);
+  // Multi-column Horizontal Drag: Supports high-speed swipes accurately
+  const xThreshold = Math.max(16, CELL * 0.72);
   if (Math.abs(diffX) >= xThreshold) {
-    if (diffX > 0) {
-      moveRight();
-    } else {
-      moveLeft();
+    const steps = Math.floor(Math.abs(diffX) / xThreshold);
+    for (let s = 0; s < steps; s++) {
+      if (diffX > 0) moveRight();
+      else moveLeft();
     }
-    lastDragX = currX;
+    lastDragX += (diffX > 0 ? 1 : -1) * steps * xThreshold;
   }
 
-  // Downward Drag Threshold (Soft Drop)
-  const yDownThreshold = Math.max(18, CELL * 0.8);
+  // Multi-row Vertical Drag (Soft Drop)
+  const yDownThreshold = Math.max(16, CELL * 0.8);
   if (diffY >= yDownThreshold) {
-    softDrop();
-    lastDragY = currY;
+    const steps = Math.floor(diffY / yDownThreshold);
+    for (let s = 0; s < steps; s++) {
+      softDrop();
+    }
+    lastDragY += steps * yDownThreshold;
   }
 
   // Upward Drag Threshold (Hold Piece)
@@ -2156,8 +2185,18 @@ boardWrapper.addEventListener("touchmove", (e) => {
 }, { passive: false });
 
 boardWrapper.addEventListener("touchend", (e) => {
-  if (gameState !== "playing" || !current) return;
+  if (gameState !== "playing" || !current || activeTouchId === null) return;
   e.preventDefault();
+
+  let touch = null;
+  for (let i = 0; i < e.changedTouches.length; i++) {
+    if (e.changedTouches[i].identifier === activeTouchId) {
+      touch = e.changedTouches[i];
+      break;
+    }
+  }
+  if (!touch) return;
+  activeTouchId = null;
 
   const now = performance.now();
   const touchDuration = now - touchStartTime;
@@ -2190,6 +2229,7 @@ boardWrapper.addEventListener("touchend", (e) => {
 }, { passive: false });
 
 boardWrapper.addEventListener("touchcancel", () => {
+  activeTouchId = null;
   hasDragged = false;
   isPotentialDoubleTap = false;
   lastTapTimestamp = 0;
