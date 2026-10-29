@@ -2080,18 +2080,32 @@ let lastDragY = 0;
 let hasDragged = false;
 let lastTapTimestamp = 0;
 let singleTapTimeout = null;
+let isPotentialDoubleTap = false;
 
 boardWrapper.addEventListener("touchstart", (e) => {
   if (gameState !== "playing" || !current) return;
   e.preventDefault();
 
+  const now = performance.now();
   const touch = e.touches[0];
   touchStartX = touch.clientX;
   touchStartY = touch.clientY;
   lastDragX = touch.clientX;
   lastDragY = touch.clientY;
-  touchStartTime = performance.now();
+  touchStartTime = now;
   hasDragged = false;
+
+  // If a second tap arrives within double-tap window, IMMEDIATELY intercept:
+  // Cancel pending single-tap rotation before it can fire!
+  if (lastTapTimestamp > 0 && (now - lastTapTimestamp) < 340) {
+    if (singleTapTimeout) {
+      clearTimeout(singleTapTimeout);
+      singleTapTimeout = null;
+    }
+    isPotentialDoubleTap = true;
+  } else {
+    isPotentialDoubleTap = false;
+  }
 }, { passive: false });
 
 boardWrapper.addEventListener("touchmove", (e) => {
@@ -2107,6 +2121,8 @@ boardWrapper.addEventListener("touchmove", (e) => {
 
   if (totalMove > 8) {
     hasDragged = true;
+    isPotentialDoubleTap = false;
+    lastTapTimestamp = 0;
     if (singleTapTimeout) {
       clearTimeout(singleTapTimeout);
       singleTapTimeout = null;
@@ -2148,30 +2164,35 @@ boardWrapper.addEventListener("touchend", (e) => {
 
   // Check if touch qualifies as a Tap (stationary & quick)
   if (!hasDragged && touchDuration < 300) {
-    const timeSinceLastTap = now - lastTapTimestamp;
-
-    // DOUBLE TAP: "for double tap it must fall fast and reach bottum"
-    if (timeSinceLastTap < 320) {
+    // If this was the second tap of a double-tap:
+    if (isPotentialDoubleTap) {
       if (singleTapTimeout) {
         clearTimeout(singleTapTimeout);
         singleTapTimeout = null;
       }
+      isPotentialDoubleTap = false;
       lastTapTimestamp = 0;
-      hardDrop();
+      hardDrop(); // Drops fast to bottom without rotating!
       return;
     }
 
-    // SINGLE TAP: "to rotate tape the block"
+    // First tap of a potential double-tap or standalone single tap
     lastTapTimestamp = now;
     singleTapTimeout = setTimeout(() => {
       rotate();
       singleTapTimeout = null;
-    }, 200);
+      lastTapTimestamp = 0;
+    }, 280);
+  } else {
+    isPotentialDoubleTap = false;
+    lastTapTimestamp = 0;
   }
 }, { passive: false });
 
 boardWrapper.addEventListener("touchcancel", () => {
   hasDragged = false;
+  isPotentialDoubleTap = false;
+  lastTapTimestamp = 0;
   if (singleTapTimeout) {
     clearTimeout(singleTapTimeout);
     singleTapTimeout = null;
