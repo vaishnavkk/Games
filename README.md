@@ -59,11 +59,19 @@ Play instantly in your browser:
 | <kbd>E</kbd> | **Matrix Surge** | Trigger when Surge Meter reaches 100% |
 | <kbd>P</kbd> or <kbd>Esc</kbd> | **Pause / Resume** | Toggle pause overlay or click top ⏸ button |
 
-### 📱 Mobile & Touch Controls
-- **On-Screen Touchpad**: Dedicated buttons for Left (◀), Rotate (↻), Right (▶), Hold (💾), Soft Drop (▼), Hard Drop (⬇), and Surge (⚡).
-- **Auto-Repeat (DAS)**: Hold left, right, or soft drop buttons for smooth continuous movement.
-- **Adaptive Canvas**: Dynamically scales board height and previews to fit mobile screens without page scrolling.
-- **Compact Mobile HUD**: Top-bar stats including Score, Level, Lines, Hold, Next, and Surge meter.
+### 📱 Mobile & Gesture Controls
+- **Direct Board Gestures**:
+  - 👈 **Swipe Left**: Steer active block one cell left.
+  - 👉 **Swipe Right**: Steer active block one cell right.
+  - 👆 **Single Tap**: Rotate falling piece clockwise.
+  - ✌️ **Double Tap**: Fast drop piece instantly to the bottom (Hard Drop).
+  - 👇 **Drag Down**: Accelerate downward descent (Soft Drop).
+  - ☝️ **Swipe Up**: Quick-store active piece into Saved/Hold slot.
+- **Ergonomic Virtual Touch Pad**: Dedicated bottom bar with Left (◀), Rotate (↻), Right (▶), Hold (💾), Soft Drop (▼), Hard Drop (⬇), and Surge (⚡).
+- **Auto-Repeat (DAS)**: Hold left, right, or soft drop for continuous high-speed movement.
+- **Haptic Feedback**: Tactile micro-vibrations on moves, rotations, drops, and clears.
+- **Dynamic Viewport Fit**: Perfectly adapts to modern smartphones (`100dvh`), eliminating page scrolling.
+- **Compact Mobile HUD**: Sleek glass cards for Hold, Score, Level, Lines, Surge %, and Next previews.
 - **Lock Delay System**: 0.5s placement buffer allowing micro-adjustments before pieces lock.
 
 ---

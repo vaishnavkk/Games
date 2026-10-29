@@ -2,28 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Matrixfall — Glassmorphic Falling Blocks</title>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --glass-bg: rgba(255, 255, 255, 0.04);
+    --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.12);
-    --glass-highlight: rgba(255, 255, 255, 0.08);
-    --text-primary: rgba(255, 255, 255, 0.92);
+    --glass-highlight: rgba(255, 255, 255, 0.09);
+    --text-primary: rgba(255, 255, 255, 0.94);
     --text-secondary: rgba(255, 255, 255, 0.55);
-    --text-accent: rgba(255, 255, 255, 0.7);
-    --cyan-glow: rgba(0, 220, 255, 0.6);
-    --violet-glow: rgba(140, 80, 255, 0.5);
-    --radius: 16px;
+    --text-accent: rgba(255, 255, 255, 0.75);
+    --cyan-glow: rgba(0, 220, 255, 0.65);
+    --violet-glow: rgba(140, 80, 255, 0.55);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
   }
 
   html, body {
     width: 100%; height: 100%;
     overflow: hidden;
     background: radial-gradient(ellipse at 30% 20%, #1a1f35 0%, #0b0f19 70%);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: var(--text-primary);
     user-select: none;
     -webkit-user-select: none;
@@ -38,9 +40,10 @@
     justify-content: center;
     min-height: 100vh;
     min-height: 100dvh;
+    position: relative;
   }
 
-  /* Ambient floating orbs */
+  /* Ambient floating neon orbs */
   .ambient-orbs {
     position: fixed; inset: 0;
     pointer-events: none; z-index: 0;
@@ -50,29 +53,29 @@
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.25;
-    animation: orbFloat 20s ease-in-out infinite alternate;
+    opacity: 0.28;
+    animation: orbFloat 22s ease-in-out infinite alternate;
   }
-  .orb:nth-child(1) { width: 400px; height: 400px; background: #6366f1; top: 10%; left: 5%; animation-duration: 22s; }
-  .orb:nth-child(2) { width: 300px; height: 300px; background: #06b6d4; top: 60%; left: 70%; animation-duration: 18s; animation-delay: -5s; }
-  .orb:nth-child(3) { width: 350px; height: 350px; background: #8b5cf6; top: 30%; left: 50%; animation-duration: 25s; animation-delay: -10s; }
-  .orb:nth-child(4) { width: 250px; height: 250px; background: #ec4899; top: 75%; left: 20%; animation-duration: 20s; animation-delay: -3s; }
+  .orb:nth-child(1) { width: 420px; height: 420px; background: #6366f1; top: 8%; left: 4%; animation-duration: 24s; }
+  .orb:nth-child(2) { width: 320px; height: 320px; background: #06b6d4; top: 62%; left: 72%; animation-duration: 18s; animation-delay: -5s; }
+  .orb:nth-child(3) { width: 360px; height: 360px; background: #8b5cf6; top: 32%; left: 48%; animation-duration: 26s; animation-delay: -10s; }
+  .orb:nth-child(4) { width: 260px; height: 260px; background: #ec4899; top: 78%; left: 18%; animation-duration: 20s; animation-delay: -3s; }
 
   @keyframes orbFloat {
     0% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(40px, -30px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.95); }
-    100% { transform: translate(30px, -10px) scale(1.05); }
+    33% { transform: translate(45px, -35px) scale(1.08); }
+    66% { transform: translate(-25px, 25px) scale(0.94); }
+    100% { transform: translate(35px, -15px) scale(1.04); }
   }
 
   /* Glass panel base */
   .glass {
     background: var(--glass-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border: 1px solid var(--glass-border);
-    border-radius: var(--radius);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   /* Main layout */
@@ -84,16 +87,20 @@
     padding: 20px;
   }
 
-  /* Side panels */
+  /* Side panels (Desktop) */
   .panel-left, .panel-right {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    width: 190px;
+    width: 195px;
   }
 
   .panel-card {
     padding: 14px 16px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .panel-card:hover {
+    border-color: rgba(255, 255, 255, 0.18);
   }
 
   .panel-label {
@@ -103,6 +110,13 @@
     text-transform: uppercase;
     color: var(--text-secondary);
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .panel-label .icon {
+    font-size: 12px;
+    opacity: 0.8;
   }
 
   .panel-hint {
@@ -122,7 +136,7 @@
   .hold-empty-msg {
     text-align: center;
     font-size: 10px;
-    color: rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.28);
     padding: 18px 0;
     line-height: 1.5;
   }
@@ -143,18 +157,18 @@
     background: linear-gradient(90deg, #06b6d4, #8b5cf6);
     border-radius: 5px;
     transition: width 0.3s ease;
-    box-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
   }
   .surge-meter-fill.full {
     animation: surgePulse 0.8s ease-in-out infinite alternate;
   }
   @keyframes surgePulse {
-    0% { box-shadow: 0 0 8px rgba(6, 182, 212, 0.5); }
-    100% { box-shadow: 0 0 18px rgba(139, 92, 246, 0.8); }
+    0% { box-shadow: 0 0 8px rgba(6, 182, 212, 0.6); }
+    100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.9); }
   }
   .surge-text {
     font-size: 22px;
-    font-weight: 700;
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
     color: var(--text-primary);
     text-align: center;
@@ -164,30 +178,30 @@
     display: none;
     text-align: center;
     margin-top: 6px;
-    padding: 4px 8px;
+    padding: 5px 10px;
     font-size: 9px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: #22d3ee;
-    background: rgba(6, 182, 212, 0.12);
-    border: 1px solid rgba(6, 182, 212, 0.3);
-    border-radius: 6px;
+    background: rgba(6, 182, 212, 0.15);
+    border: 1px solid rgba(6, 182, 212, 0.4);
+    border-radius: 8px;
     animation: readyPulse 1.2s ease-in-out infinite alternate;
   }
   .surge-ready-badge.visible { display: block; }
   @keyframes readyPulse {
-    0% { opacity: 0.7; box-shadow: 0 0 4px rgba(6,182,212,0.2); }
-    100% { opacity: 1; box-shadow: 0 0 12px rgba(6,182,212,0.4); }
+    0% { opacity: 0.75; box-shadow: 0 0 4px rgba(6,182,212,0.25); }
+    100% { opacity: 1; box-shadow: 0 0 14px rgba(6,182,212,0.55); }
   }
   .surge-desc {
     font-size: 8.5px;
-    color: rgba(255,255,255,0.4);
-    line-height: 1.4;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.45;
     margin-top: 8px;
     text-align: center;
   }
-  .surge-desc b { color: rgba(255,255,255,0.7); font-weight: 600; }
+  .surge-desc b { color: rgba(255,255,255,0.8); font-weight: 600; }
 
   /* Surge active timer */
   .surge-timer {
@@ -195,14 +209,14 @@
     text-align: center;
     margin-top: 6px;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
     color: #22d3ee;
     letter-spacing: 1px;
   }
   .surge-timer.visible { display: block; }
 
-  /* Controls legend */
+  /* Desktop controls legend */
   .controls-list {
     list-style: none;
     display: flex;
@@ -223,7 +237,7 @@
     font-weight: 600;
     padding: 2px 6px;
     background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 4px;
     color: var(--text-accent);
     white-space: nowrap;
@@ -248,14 +262,26 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     padding: 0 4px;
   }
-  /* Plain color text for Matrixfall title */
+  .brand-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00dcff;
+    box-shadow: 0 0 10px #00dcff;
+    animation: readyPulse 2s infinite ease-in-out alternate;
+  }
   .brand-title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 800;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
     color: #ffffff;
   }
@@ -263,10 +289,10 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 7px 18px;
-    font-family: system-ui, sans-serif;
+    padding: 7px 16px;
+    font-family: inherit;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-accent);
@@ -274,41 +300,44 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
   }
-  .pause-btn:hover {
-    background: rgba(255,255,255,0.08);
+  .pause-btn:hover, .pause-btn:active {
+    background: rgba(255,255,255,0.1);
     color: var(--text-primary);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.25);
     transform: translateY(-1px);
   }
   .pause-btn .pause-icon {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1;
   }
 
   /* Center board wrapper */
   .board-wrapper {
     position: relative;
-    padding: 12px;
-    transition: box-shadow 0.5s ease, border-color 0.5s ease;
+    padding: 10px;
+    border-radius: var(--radius-lg);
+    transition: box-shadow 0.4s ease, border-color 0.4s ease;
+    touch-action: none; /* Crucial for custom touch drag/swipe */
   }
   .board-wrapper.surge-active {
-    box-shadow: 0 0 40px rgba(6, 182, 212, 0.35), 0 0 80px rgba(139, 92, 246, 0.25), inset 0 0 35px rgba(6, 182, 212, 0.08);
-    border-color: rgba(6, 182, 212, 0.45);
+    box-shadow: 0 0 40px rgba(6, 182, 212, 0.4), 0 0 80px rgba(139, 92, 246, 0.3), inset 0 0 35px rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.55);
   }
 
   #gameCanvas {
     display: block;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
+    background: rgba(10, 15, 26, 0.4);
   }
 
   /* Stat cards on right */
   .stat-value {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
     font-variant-numeric: tabular-nums;
     color: var(--text-primary);
@@ -351,29 +380,222 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #22d3ee;
-    background: rgba(6, 182, 212, 0.15);
-    border: 1px solid rgba(0, 220, 255, 0.4);
-    border-radius: 5px;
+    background: rgba(6, 182, 212, 0.18);
+    border: 1px solid rgba(0, 220, 255, 0.45);
+    border-radius: 6px;
     animation: quantumBadgePulse 1s ease-in-out infinite alternate;
   }
   .next-quantum-badge.visible { display: block; }
   @keyframes quantumBadgePulse {
     0% { border-color: rgba(0,220,255,0.4); box-shadow: 0 0 6px rgba(0,220,255,0.25); }
-    100% { border-color: rgba(6,182,212,0.6); box-shadow: 0 0 14px rgba(6,182,212,0.45); }
+    100% { border-color: rgba(6,182,212,0.7); box-shadow: 0 0 16px rgba(6,182,212,0.55); }
   }
 
-  /* Overlays (Start / Pause / Game Over) */
+  /* ═══════════════════════════════════════════════════════════
+     MOBILE HUD (Clean glass bar)
+     ═══════════════════════════════════════════════════════════ */
+  .mobile-info-bar {
+    display: none;
+    width: 100%;
+    padding: 6px 4px 8px;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .mobile-info-card {
+    flex: 1;
+    padding: 5px 6px;
+    text-align: center;
+    border-radius: var(--radius-md);
+    min-width: 0;
+  }
+  .mobile-info-card .mi-label {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+  }
+  .mobile-info-card .mi-value {
+    font-size: 15px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+  .mobile-info-card .mi-value.combo { color: #f59e0b; }
+
+  /* Mobile preview cards in info bar */
+  .mobile-preview-card {
+    flex: 0 0 auto;
+    padding: 4px 6px;
+    text-align: center;
+    border-radius: var(--radius-md);
+    width: 60px;
+    cursor: pointer;
+  }
+  .mobile-preview-card:active {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .mobile-preview-canvas {
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+  }
+
+  /* Mobile surge mini bar */
+  .mobile-surge-card {
+    flex: 1.3;
+    padding: 5px 7px;
+    text-align: center;
+    border-radius: var(--radius-md);
+    min-width: 0;
+    cursor: pointer;
+  }
+  .mobile-surge-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 2px;
+  }
+  .mobile-surge-pct {
+    font-size: 11px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-primary);
+    white-space: nowrap;
+    min-width: 30px;
+  }
+  .mobile-surge-track {
+    flex: 1;
+    height: 7px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .mobile-surge-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  .mobile-surge-fill.full {
+    animation: surgePulse 0.8s ease-in-out infinite alternate;
+  }
+
+  /* Mobile Gesture Hints Banner */
+  .gesture-hints-banner {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    margin-bottom: 6px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .gesture-hints-banner span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .gesture-hints-banner b {
+    color: var(--text-accent);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     TOUCH CONTROLS (Ergonomic Glass Pad)
+     ═══════════════════════════════════════════════════════════ */
+  .touch-controls {
+    display: none;
+    width: 100%;
+    padding: 6px 2px 2px;
+    gap: 6px;
+    flex-direction: column;
+  }
+  .touch-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  .touch-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 5px 8px;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.1s ease;
+    flex: 1;
+    max-width: 85px;
+    -webkit-touch-callout: none;
+    touch-action: manipulation;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }
+  .touch-btn:active, .touch-btn.active {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.3);
+    transform: scale(0.92);
+    box-shadow: 0 0 14px rgba(0, 220, 255, 0.35);
+  }
+  .touch-btn .btn-label {
+    font-size: 7.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .touch-btn.surge-btn {
+    background: rgba(6, 182, 212, 0.08);
+    border-color: rgba(6, 182, 212, 0.25);
+  }
+  .touch-btn.surge-btn.ready {
+    background: rgba(6, 182, 212, 0.18);
+    border-color: rgba(6, 182, 212, 0.6);
+    color: #22d3ee;
+    animation: readyPulse 1.2s ease-in-out infinite alternate;
+  }
+  .touch-btn.drop-btn {
+    background: rgba(140, 80, 255, 0.08);
+    border-color: rgba(140, 80, 255, 0.25);
+  }
+  .touch-btn.drop-btn:active {
+    background: rgba(140, 80, 255, 0.2);
+    box-shadow: 0 0 16px rgba(140, 80, 255, 0.5);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     OVERLAYS (Start / Pause / Game Over)
+     ═══════════════════════════════════════════════════════════ */
   .overlay {
     position: fixed; inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 100;
-    background: rgba(5, 8, 15, 0.75);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(5, 8, 15, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     opacity: 1;
     transition: opacity 0.3s ease;
+    padding: 16px;
   }
   .overlay.hidden {
     opacity: 0;
@@ -381,13 +603,13 @@
   }
   .overlay-content {
     text-align: center;
-    padding: 40px 50px;
-    min-width: 380px;
-    max-width: 460px;
+    padding: 38px 40px;
+    min-width: 360px;
+    max-width: 450px;
+    border-radius: var(--radius-lg);
   }
-  /* Plain color text for popup title */
   .overlay-title {
-    font-size: 34px;
+    font-size: 32px;
     font-weight: 800;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -413,23 +635,24 @@
   .overlay-btn {
     display: inline-block;
     margin-top: 20px;
-    padding: 14px 40px;
-    font-family: system-ui, -apple-system, sans-serif;
+    padding: 13px 38px;
+    font-family: inherit;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: #fff;
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.3));
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.35), rgba(139, 92, 246, 0.35));
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: all 0.2s ease;
     backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(6, 182, 212, 0.2);
   }
-  .overlay-btn:hover {
-    background: linear-gradient(135deg, rgba(6, 182, 212, 0.5), rgba(139, 92, 246, 0.5));
-    box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+  .overlay-btn:hover, .overlay-btn:active {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.55), rgba(139, 92, 246, 0.55));
+    box-shadow: 0 6px 24px rgba(6, 182, 212, 0.45);
     transform: translateY(-1px);
   }
 
@@ -479,214 +702,78 @@
   }
 
   /* ═══════════════════════════════════════════════════════════
-     MOBILE INFO BAR — hidden on desktop, visible on mobile
-     ═══════════════════════════════════════════════════════════ */
-  .mobile-info-bar {
-    display: none;
-    width: 100%;
-    padding: 6px 8px;
-    gap: 6px;
-    align-items: stretch;
-  }
-  .mobile-info-card {
-    flex: 1;
-    padding: 4px 6px;
-    text-align: center;
-    border-radius: 10px;
-    min-width: 0;
-  }
-  .mobile-info-card .mi-label {
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    margin-bottom: 2px;
-  }
-  .mobile-info-card .mi-value {
-    font-size: 16px;
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-    color: var(--text-primary);
-    line-height: 1.2;
-  }
-  .mobile-info-card .mi-value.combo { color: #f59e0b; }
-
-  /* Mobile preview cards in info bar */
-  .mobile-preview-card {
-    flex: 0 0 auto;
-    padding: 4px 6px;
-    text-align: center;
-    border-radius: 10px;
-    width: 64px;
-  }
-  .mobile-preview-canvas {
-    display: block;
-    margin: 0 auto;
-    border-radius: 4px;
-  }
-
-  /* Mobile surge mini bar */
-  .mobile-surge-card {
-    flex: 1.2;
-    padding: 4px 6px;
-    text-align: center;
-    border-radius: 10px;
-    min-width: 0;
-  }
-  .mobile-surge-row {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .mobile-surge-pct {
-    font-size: 11px;
-    font-weight: 800;
-    font-variant-numeric: tabular-nums;
-    color: var(--text-primary);
-    white-space: nowrap;
-    min-width: 30px;
-  }
-  .mobile-surge-track {
-    flex: 1;
-    height: 6px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 3px;
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.06);
-  }
-  .mobile-surge-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #06b6d4, #8b5cf6);
-    border-radius: 3px;
-    transition: width 0.3s ease;
-  }
-  .mobile-surge-fill.full {
-    animation: surgePulse 0.8s ease-in-out infinite alternate;
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     TOUCH CONTROLS — hidden on desktop, visible on mobile
-     ═══════════════════════════════════════════════════════════ */
-  .touch-controls {
-    display: none;
-    width: 100%;
-    padding: 6px 8px;
-    gap: 6px;
-    flex-direction: column;
-  }
-  .touch-row {
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-  }
-  .touch-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    min-width: 52px;
-    min-height: 52px;
-    padding: 6px;
-    font-family: system-ui, sans-serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-primary);
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.1s, transform 0.1s;
-    flex: 1;
-    max-width: 80px;
-    -webkit-touch-callout: none;
-    touch-action: manipulation;
-  }
-  .touch-btn:active, .touch-btn.active {
-    background: rgba(255,255,255,0.12);
-    transform: scale(0.94);
-  }
-  .touch-btn .btn-label {
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    margin-top: 2px;
-  }
-  .touch-btn.surge-btn {
-    background: rgba(6, 182, 212, 0.08);
-    border-color: rgba(6, 182, 212, 0.25);
-  }
-  .touch-btn.surge-btn.ready {
-    background: rgba(6, 182, 212, 0.15);
-    border-color: rgba(6, 182, 212, 0.5);
-    animation: readyPulse 1.2s ease-in-out infinite alternate;
-  }
-
-  /* ═══════════════════════════════════════════════════════════
-     RESPONSIVE BREAKPOINTS
+     RESPONSIVE BREAKPOINTS (Mobile Optimization)
      ═══════════════════════════════════════════════════════════ */
   @media (max-width: 768px) {
     body {
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
+      padding: 0;
     }
     .ambient-orbs .orb {
-      transform: scale(0.5);
-      opacity: 0.15;
+      transform: scale(0.6);
+      opacity: 0.18;
     }
     .game-container {
       flex-direction: column;
       align-items: center;
-      padding: 4px;
+      justify-content: center;
+      padding: 6px 8px;
       gap: 0;
       width: 100%;
-      max-width: 100vw;
+      height: 100dvh;
+      max-width: 440px;
     }
     .panel-left, .panel-right {
       display: none !important;
     }
     .board-column {
       width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: space-between;
     }
     .top-bar {
-      margin-bottom: 4px;
-      padding: 4px 8px 0;
+      margin-bottom: 2px;
+      padding: 4px 6px 0;
     }
     .brand-title {
-      font-size: 14px;
-      letter-spacing: 1.5px;
+      font-size: 15px;
+      letter-spacing: 2px;
     }
     .pause-btn {
       padding: 5px 12px;
       font-size: 10px;
       gap: 4px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
     }
-    .pause-btn .pause-icon { font-size: 12px; }
+    .pause-btn .pause-icon { font-size: 11px; }
+
     .board-wrapper {
       padding: 6px;
-      border-radius: 12px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
     }
 
-    /* Show mobile elements */
+    /* Show mobile-specific bars */
     .mobile-info-bar {
+      display: flex;
+    }
+    .gesture-hints-banner {
       display: flex;
     }
     .touch-controls {
       display: flex;
     }
 
-    /* Fix overlays for mobile */
+    /* Overlay scaling */
     .overlay-content {
       min-width: auto;
-      width: 90vw;
-      max-width: 420px;
-      padding: 28px 20px;
-      border-radius: 16px;
+      width: 92vw;
+      max-width: 400px;
+      padding: 24px 20px;
     }
     .overlay-title {
       font-size: 24px;
@@ -697,40 +784,38 @@
       margin-bottom: 14px;
     }
     .overlay-btn {
-      padding: 12px 32px;
+      padding: 12px 30px;
       font-size: 12px;
     }
     .start-tips {
-      max-width: 280px;
+      max-width: 290px;
     }
     .start-tips .tip-row {
       font-size: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       gap: 8px;
     }
     .start-tips .tip-icon {
-      width: 20px;
-      height: 20px;
+      width: 19px;
+      height: 19px;
       font-size: 11px;
     }
   }
 
-  /* Extra-small phones */
+  /* Compact phones (< 380px) */
   @media (max-width: 380px) {
-    .overlay-content {
-      padding: 20px 14px;
-    }
-    .overlay-title {
-      font-size: 20px;
-    }
-    .start-tips .tip-row {
-      font-size: 9px;
-    }
     .touch-btn {
       min-width: 44px;
       min-height: 44px;
-      font-size: 16px;
-      border-radius: 10px;
+      font-size: 15px;
+      padding: 4px;
+    }
+    .mobile-preview-card {
+      width: 50px;
+    }
+    .gesture-hints-banner {
+      font-size: 7.5px;
+      padding: 2px 6px;
     }
   }
 </style>
@@ -745,14 +830,14 @@
   <!-- LEFT PANEL (desktop only) -->
   <div class="panel-left">
     <div class="glass panel-card">
-      <div class="panel-label">Saved Piece</div>
+      <div class="panel-label"><span class="icon">💾</span> Saved Piece</div>
       <canvas class="preview-canvas" id="holdCanvas" width="120" height="80" style="display:none;"></canvas>
       <div class="hold-empty-msg" id="holdEmptyMsg">Press <kbd>C</kbd> or <kbd>Shift</kbd> to save<br>your active piece here</div>
       <div class="panel-hint" id="holdHint" style="display:none;">Swap once per drop with <b style="color:var(--text-accent)">C</b> or <b style="color:var(--text-accent)">Shift</b>.</div>
     </div>
 
     <div class="glass panel-card">
-      <div class="panel-label">Matrix Surge</div>
+      <div class="panel-label"><span class="icon">⚡</span> Matrix Surge</div>
       <div class="surge-text" id="surgeText">0%</div>
       <div class="surge-meter-track">
         <div class="surge-meter-fill" id="surgeFill"></div>
@@ -763,7 +848,7 @@
     </div>
 
     <div class="glass panel-card">
-      <div class="panel-label">Controls</div>
+      <div class="panel-label"><span class="icon">🎮</span> Controls</div>
       <ul class="controls-list">
         <li><span>Move</span><kbd>← →</kbd></li>
         <li>
@@ -783,18 +868,21 @@
   <!-- CENTER BOARD -->
   <div class="board-column">
     <div class="top-bar">
-      <div class="brand-title">Matrixfall</div>
-      <button class="pause-btn" id="pauseBtn">
+      <div class="brand-group">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Matrixfall</div>
+      </div>
+      <button class="pause-btn" id="pauseBtn" aria-label="Toggle Pause">
         <span class="pause-icon">⏸</span>
         <span>Pause</span>
       </button>
     </div>
 
-    <!-- Mobile info bar (above board on mobile) -->
+    <!-- Mobile HUD bar (above board on mobile) -->
     <div class="mobile-info-bar" id="mobileInfoBar">
-      <div class="glass mobile-preview-card">
+      <div class="glass mobile-preview-card" id="mobileHoldCard" title="Tap to save/swap piece">
         <div class="mi-label">Hold</div>
-        <canvas class="mobile-preview-canvas" id="mobileHoldCanvas" width="48" height="32"></canvas>
+        <canvas class="mobile-preview-canvas" id="mobileHoldCanvas" width="44" height="30"></canvas>
       </div>
       <div class="glass mobile-info-card">
         <div class="mi-label">Score</div>
@@ -808,7 +896,7 @@
         <div class="mi-label">Lines</div>
         <div class="mi-value" id="mobileLines">0</div>
       </div>
-      <div class="glass mobile-surge-card">
+      <div class="glass mobile-surge-card" id="mobileSurgeCard" title="Tap to activate when 100%">
         <div class="mi-label">Surge</div>
         <div class="mobile-surge-row">
           <span class="mobile-surge-pct" id="mobileSurgePct">0%</span>
@@ -817,17 +905,25 @@
           </div>
         </div>
       </div>
-      <div class="glass mobile-preview-card">
+      <div class="glass mobile-preview-card" id="mobileNextCard">
         <div class="mi-label">Next</div>
-        <canvas class="mobile-preview-canvas" id="mobileNextCanvas" width="48" height="32"></canvas>
+        <canvas class="mobile-preview-canvas" id="mobileNextCanvas" width="44" height="30"></canvas>
       </div>
     </div>
 
+    <!-- Mobile Gesture Hints Pill -->
+    <div class="gesture-hints-banner">
+      <span>👈👉 <b>Swipe</b> to move</span>
+      <span>👆 <b>Tap</b> to rotate</span>
+      <span>✌️ <b>2x Tap</b> hard drop</span>
+    </div>
+
+    <!-- The Playfield Canvas & Gesture Receiver -->
     <div class="glass board-wrapper" id="boardWrapper">
       <canvas id="gameCanvas" width="300" height="600"></canvas>
     </div>
 
-    <!-- Touch controls (below board on mobile) -->
+    <!-- Virtual Touch Pad (below board on mobile) -->
     <div class="touch-controls" id="touchControls">
       <div class="touch-row">
         <button class="touch-btn" data-action="left" aria-label="Move Left">
@@ -847,7 +943,7 @@
         <button class="touch-btn" data-action="soft" aria-label="Soft Drop">
           ▼<span class="btn-label">Soft</span>
         </button>
-        <button class="touch-btn" data-action="hard" aria-label="Hard Drop">
+        <button class="touch-btn drop-btn" data-action="hard" aria-label="Hard Drop">
           ⬇<span class="btn-label">Drop</span>
         </button>
         <button class="touch-btn surge-btn" data-action="surge" id="touchSurgeBtn" aria-label="Matrix Surge">
@@ -860,16 +956,16 @@
   <!-- RIGHT PANEL (desktop only) -->
   <div class="panel-right">
     <div class="glass panel-card">
-      <div class="panel-label">Next Piece</div>
+      <div class="panel-label"><span class="icon">👁</span> Next Piece</div>
       <canvas class="preview-canvas" id="nextCanvas" width="120" height="80"></canvas>
       <div class="next-quantum-badge" id="nextQuantumBadge">⚛ Quantum Phase Block</div>
     </div>
     <div class="glass panel-card">
-      <div class="panel-label">Score</div>
+      <div class="panel-label"><span class="icon">🏆</span> Score</div>
       <div class="stat-value" id="scoreValue">0</div>
     </div>
     <div class="glass panel-card">
-      <div class="panel-label">Level</div>
+      <div class="panel-label"><span class="icon">📈</span> Level</div>
       <div class="stat-value" id="levelValue">1</div>
       <div class="level-progress-track">
         <div class="level-progress-fill" id="levelProgressFill"></div>
@@ -877,11 +973,11 @@
       <div class="level-progress-label" id="levelProgressLabel">0 / 10 lines to next</div>
     </div>
     <div class="glass panel-card">
-      <div class="panel-label">Lines Cleared</div>
+      <div class="panel-label"><span class="icon">✨</span> Lines Cleared</div>
       <div class="stat-value" id="linesValue">0</div>
     </div>
     <div class="glass panel-card">
-      <div class="panel-label">Combo</div>
+      <div class="panel-label"><span class="icon">🔥</span> Combo</div>
       <div class="stat-value combo" id="comboValue">—</div>
       <div class="panel-hint" style="margin-top:4px;">Consecutive line clears build multipliers for massive bonuses.</div>
     </div>
@@ -895,16 +991,20 @@
     <div class="overlay-subtitle">Glassmorphic Modern Edition</div>
     <div class="start-tips">
       <div class="tip-row">
+        <div class="tip-icon">👆</div>
+        <div class="tip-text"><b>Tap the block</b> to rotate. <b>Swipe Left/Right</b> to steer. <b>Double-Tap</b> to fast drop to the bottom!</div>
+      </div>
+      <div class="tip-row">
         <div class="tip-icon">🎮</div>
-        <div class="tip-text">Use <b>Arrow Keys</b> or <b>Touch Controls</b> to steer & rotate. <b>Space</b> for instant hard drop. <b>↓</b> for soft drop.</div>
+        <div class="tip-text">On desktop: <b>Arrow Keys</b> to steer & rotate, <b>Space</b> for instant hard drop, <b>↓</b> for soft drop.</div>
       </div>
       <div class="tip-row">
         <div class="tip-icon">💾</div>
-        <div class="tip-text">Press <b>C</b> or <b>Shift</b> to save your active piece for later — swap it back anytime.</div>
+        <div class="tip-text">Tap <b>Hold</b> or press <b>C/Shift</b> to store your active block in reserve for later.</div>
       </div>
       <div class="tip-row">
         <div class="tip-icon">⚡</div>
-        <div class="tip-text">Clear lines to charge <b>Matrix Surge</b>. At 100%, press <b>E</b> for slow-mo + bottom row vaporization.</div>
+        <div class="tip-text">Clear lines to charge <b>Matrix Surge</b>. At 100%, tap <b>Surge</b> or press <b>E</b> for slow-mo + bottom row vaporization.</div>
       </div>
       <div class="tip-row">
         <div class="tip-icon">⚛</div>
@@ -963,6 +1063,13 @@ if (typeof CanvasRenderingContext2D.prototype.roundRect !== "function") {
   };
 }
 
+// ── Haptic feedback helper ──────────────────────────────────
+function triggerHaptic(pattern = 10) {
+  if (typeof navigator !== "undefined" && navigator.vibrate) {
+    try { navigator.vibrate(pattern); } catch(e) {}
+  }
+}
+
 // ── DOM References ──────────────────────────────────────────
 const gameCanvas       = document.getElementById("gameCanvas");
 const holdCanvas       = document.getElementById("holdCanvas");
@@ -989,20 +1096,22 @@ const pauseOverlay    = document.getElementById("pauseOverlay");
 const gameOverOverlay = document.getElementById("gameOverOverlay");
 
 // Mobile DOM refs
-const mobileScore     = document.getElementById("mobileScore");
-const mobileLevel     = document.getElementById("mobileLevel");
-const mobileLines     = document.getElementById("mobileLines");
-const mobileSurgePct  = document.getElementById("mobileSurgePct");
-const mobileSurgeFill = document.getElementById("mobileSurgeFill");
+const mobileScore      = document.getElementById("mobileScore");
+const mobileLevel      = document.getElementById("mobileLevel");
+const mobileLines      = document.getElementById("mobileLines");
+const mobileSurgePct   = document.getElementById("mobileSurgePct");
+const mobileSurgeFill  = document.getElementById("mobileSurgeFill");
 const mobileHoldCanvas = document.getElementById("mobileHoldCanvas");
 const mobileNextCanvas = document.getElementById("mobileNextCanvas");
 const touchSurgeBtn    = document.getElementById("touchSurgeBtn");
+const mobileHoldCard   = document.getElementById("mobileHoldCard");
+const mobileSurgeCard  = document.getElementById("mobileSurgeCard");
 
 // ── High-DPI Canvas Scaling ─────────────────────────────────
 function setupHiDPI(canvas, w, h) {
   const dpr = window.devicePixelRatio || 1;
-  canvas.width  = w * dpr;
-  canvas.height = h * dpr;
+  canvas.width  = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
   canvas.style.width  = w + "px";
   canvas.style.height = h + "px";
   const c = canvas.getContext("2d");
@@ -1025,16 +1134,14 @@ function resizeBoard() {
   isMobile = detectMobile();
 
   if (isMobile) {
-    // Calculate board height: viewport height minus top-bar, info-bar, touch-controls, and padding
     const vh = window.innerHeight || document.documentElement.clientHeight;
     const vw = window.innerWidth || document.documentElement.clientWidth;
 
-    // Reserve space: top-bar ~34px, info-bar ~60px, touch-controls ~130px, wrapper padding ~12, misc ~20
-    const reservedH = 260;
+    // Header ~38px, mobile HUD ~54px, hint banner ~24px, touch pad ~124px, paddings & margins ~32px
+    const reservedH = 270;
     const maxBoardH = vh - reservedH;
-    const maxBoardW = vw - 24; // 12px padding on each side
+    const maxBoardW = vw - 28; // safety margin for screen borders
 
-    // Board is 1:2 ratio (10×20 grid)
     let bh = maxBoardH;
     let bw = bh / 2;
 
@@ -1043,9 +1150,9 @@ function resizeBoard() {
       bh = bw * 2;
     }
 
-    // Clamp to reasonable minimums
-    bw = Math.max(140, Math.floor(bw));
-    bh = Math.max(280, Math.floor(bh));
+    // Clamp boundaries
+    bw = Math.max(160, Math.floor(bw));
+    bh = Math.max(320, Math.floor(bh));
 
     BOARD_W = bw;
     BOARD_H = bh;
@@ -1064,8 +1171,8 @@ function initCanvases() {
   mainCtx = setupHiDPI(gameCanvas, BOARD_W, BOARD_H);
   hCtx    = setupHiDPI(holdCanvas, 120, 80);
   nCtx    = setupHiDPI(nextCanvas, 120, 80);
-  mhCtx   = setupHiDPI(mobileHoldCanvas, 48, 32);
-  mnCtx   = setupHiDPI(mobileNextCanvas, 48, 32);
+  mhCtx   = setupHiDPI(mobileHoldCanvas, 44, 30);
+  mnCtx   = setupHiDPI(mobileNextCanvas, 44, 30);
 }
 
 initCanvases();
@@ -1107,8 +1214,8 @@ let lastTime = 0;
 let dropAccumulator = 0;
 
 // ── Lock Delay State ────────────────────────────────────────
-let lockDelay = 0;       // countdown timer (seconds)
-let lockResets = 0;      // number of resets used
+let lockDelay = 0;
+let lockResets = 0;
 const LOCK_DELAY_TIME = 0.5;
 const LOCK_MAX_RESETS = 15;
 let isOnGround = false;
@@ -1207,7 +1314,6 @@ function spawnPiece() {
   const type = nextPieceData || getNextPieceType();
   current = createPiece(type);
   holdUsed = false;
-  // Reset lock delay
   lockDelay = 0;
   lockResets = 0;
   isOnGround = false;
@@ -1221,7 +1327,7 @@ function spawnPiece() {
 
 // ── Lock Piece ──────────────────────────────────────────────
 function lockPiece() {
-  if (gameOver) return;
+  if (gameOver || !current) return;
   const m = current.matrix;
   let anyAboveBoard = false;
   for (let r = 0; r < m.length; r++) {
@@ -1245,7 +1351,7 @@ function lockPiece() {
 }
 
 function lockPhasePiece() {
-  if (gameOver) return;
+  if (gameOver || !current) return;
   if (isValidMove(current.matrix, current.x, current.y)) {
     lockPiece();
     return;
@@ -1276,6 +1382,8 @@ function clearLines() {
   }
 
   if (cleared > 0) {
+    triggerHaptic([30, 40, 30]);
+
     for (const row of clearedRows) {
       spawnLineClearParticles(row);
     }
@@ -1322,10 +1430,8 @@ function checkGroundState() {
   const wasOnGround = isOnGround;
   isOnGround = !checker(current.matrix, current.x, current.y + 1);
   if (isOnGround && !wasOnGround) {
-    // Just touched ground — start lock delay
     lockDelay = LOCK_DELAY_TIME;
   } else if (!isOnGround) {
-    // Lifted off ground (e.g. rotation over a gap)
     lockDelay = 0;
   }
 }
@@ -1336,6 +1442,7 @@ function moveLeft() {
   const checker = current.isPhase ? isValidMovePhase : isValidMove;
   if (checker(current.matrix, current.x - 1, current.y)) {
     current.x--;
+    triggerHaptic(8);
     resetLockDelay();
     checkGroundState();
   }
@@ -1346,6 +1453,7 @@ function moveRight() {
   const checker = current.isPhase ? isValidMovePhase : isValidMove;
   if (checker(current.matrix, current.x + 1, current.y)) {
     current.x++;
+    triggerHaptic(8);
     resetLockDelay();
     checkGroundState();
   }
@@ -1357,15 +1465,17 @@ function softDrop() {
   if (checker(current.matrix, current.x, current.y + 1)) {
     current.y++;
     score += 1;
-    lockDelay = 0; // reset lock delay when moving down
+    lockDelay = 0;
     checkGroundState();
     updateUI();
+    triggerHaptic(5);
   }
-  // Soft drop on ground does NOT instant-lock; lock delay will handle it
 }
 
 function hardDrop() {
   if (!current || gameOver) return;
+  triggerHaptic([25, 35, 25]);
+
   if (current.isPhase) {
     lockPhasePiece();
     return;
@@ -1376,7 +1486,21 @@ function hardDrop() {
   }
   score += dist * 2;
   current.y += dist;
-  // Hard drop bypasses lock delay — instant lock
+
+  // Visual drop dust particles
+  for (let i = 0; i < 6; i++) {
+    particles.push({
+      x: (current.x + Math.random() * current.matrix[0].length) * CELL,
+      y: (current.y + current.matrix.length) * CELL,
+      vx: (Math.random() - 0.5) * 60,
+      vy: -(Math.random() * 40 + 20),
+      life: 0.6,
+      maxLife: 0.6,
+      size: Math.random() * 3 + 1,
+      color: "rgba(0, 220, 255,",
+    });
+  }
+
   lockPiece();
   updateUI();
 }
@@ -1390,6 +1514,7 @@ function rotate() {
     if (checker(rotated, current.x + kick, current.y)) {
       current.matrix = rotated;
       current.x += kick;
+      triggerHaptic(14);
       resetLockDelay();
       checkGroundState();
       return;
@@ -1401,6 +1526,7 @@ function rotate() {
 function holdCurrentPiece() {
   if (!current || holdUsed || gameOver) return;
   holdUsed = true;
+  triggerHaptic(18);
   const type = current.type;
   if (holdPiece) {
     const prev = holdPiece;
@@ -1432,6 +1558,7 @@ function activateSurge() {
   surge = 0;
   surgeActive = true;
   surgeTimer = 7.0;
+  triggerHaptic([40, 50, 40]);
   boardWrapper.classList.add("surge-active");
 
   for (let r = ROWS - 1; r >= 0; r--) {
@@ -1543,12 +1670,12 @@ function drawGlassTile(c, x, y, size, color, glowColor, alpha) {
   c.fill();
 
   c.shadowBlur = 0;
-  c.fillStyle = "rgba(255,255,255,0.12)";
+  c.fillStyle = "rgba(255,255,255,0.14)";
   c.beginPath();
   c.roundRect(x + pad + 2, y + pad + 2, size - pad * 2 - 4, size - pad * 2 - 4, 3);
   c.fill();
 
-  c.fillStyle = "rgba(255,255,255,0.22)";
+  c.fillStyle = "rgba(255,255,255,0.25)";
   c.fillRect(x + pad + 3, y + pad + 2, size - pad * 2 - 6, 2);
 
   c.restore();
@@ -1562,10 +1689,10 @@ function drawQuantumTile(c, x, y, size, now, alpha) {
   c.save();
   c.globalAlpha = a;
 
-  // Draw outer glow BEFORE the tile so it's not clipped
-  c.shadowColor = "rgba(0, 220, 255, 0.85)";
+  // Outer glowing aura
+  c.shadowColor = "rgba(0, 220, 255, 0.9)";
   c.shadowBlur = 16 * pulse;
-  c.fillStyle = "rgba(0, 220, 255, 0.15)";
+  c.fillStyle = "rgba(0, 220, 255, 0.16)";
   c.beginPath();
   c.roundRect(x + 1, y + 1, size - 2, size - 2, 4);
   c.fill();
@@ -1573,13 +1700,12 @@ function drawQuantumTile(c, x, y, size, now, alpha) {
   c.shadowBlur = 0;
   c.restore();
 
-  // Luminous white-cyan tile on top
-  drawGlassTile(c, x, y, size, "#e0f7ff", "rgba(0, 220, 255, 0.75)", 0.88 * pulse + 0.12);
+  drawGlassTile(c, x, y, size, "#e0f7ff", "rgba(0, 220, 255, 0.8)", 0.88 * pulse + 0.12);
 }
 
 function drawGrid(c) {
   c.save();
-  c.strokeStyle = "rgba(255,255,255,0.03)";
+  c.strokeStyle = "rgba(255,255,255,0.035)";
   c.lineWidth = 0.5;
   for (let r = 0; r <= ROWS; r++) {
     c.beginPath();
@@ -1650,9 +1776,9 @@ function drawCurrentPiece(c) {
     const pulse = 0.6 + 0.4 * Math.sin(now / 200);
     const labelY = Math.max(0, current.y) * CELL - 8;
     const labelX = (current.x + current.matrix[0].length / 2) * CELL;
-    const fontSize = Math.max(6, CELL * 0.28);
+    const fontSize = Math.max(7, CELL * 0.28);
     c.save();
-    c.globalAlpha = 0.8 * pulse;
+    c.globalAlpha = 0.85 * pulse;
     c.font = "bold " + fontSize + "px system-ui, sans-serif";
     c.textAlign = "center";
     c.fillStyle = "#e0f7ff";
@@ -1668,8 +1794,7 @@ function drawPreview(c, canvasW, canvasH, type, isPhasePreview) {
   if (!type) return;
   const def = TETROMINOS[type];
   const m = def.matrix;
-  // Scale cell size based on canvas size
-  const maxCellW = (canvasW - 8) / m[0].length;
+  const maxCellW = (canvasW - 6) / m[0].length;
   const maxCellH = (canvasH - 4) / m.length;
   const cellSize = Math.min(20, maxCellW, maxCellH);
   const totalW = m[0].length * cellSize;
@@ -1694,7 +1819,6 @@ function drawPreview(c, canvasW, canvasH, type, isPhasePreview) {
 
 // ── UI Update ───────────────────────────────────────────────
 function updateUI() {
-  // Desktop UI
   scoreEl.textContent = score.toLocaleString();
   levelEl.textContent = level;
   linesEl.textContent = lines;
@@ -1730,7 +1854,7 @@ function updateUI() {
     nextQuantumBadge.classList.remove("visible");
   }
 
-  // Mobile UI
+  // Mobile HUD
   mobileScore.textContent = score.toLocaleString();
   mobileLevel.textContent = level;
   mobileLines.textContent = lines;
@@ -1739,9 +1863,11 @@ function updateUI() {
   if (pct >= 100 && !surgeActive) {
     mobileSurgeFill.classList.add("full");
     touchSurgeBtn.classList.add("ready");
+    mobileSurgeCard.classList.add("ready");
   } else {
     mobileSurgeFill.classList.remove("full");
     touchSurgeBtn.classList.remove("ready");
+    mobileSurgeCard.classList.remove("ready");
   }
 }
 
@@ -1772,7 +1898,6 @@ function startGame() {
   holdEmptyMsg.style.display = "block";
   holdHint.style.display = "none";
 
-  // Re-init canvases for current viewport
   initCanvases();
 
   prepareNextPiece();
@@ -1791,10 +1916,12 @@ function togglePause() {
   if (gameState === "playing") {
     gameState = "paused";
     pauseOverlay.classList.remove("hidden");
+    triggerHaptic(15);
   } else if (gameState === "paused") {
     gameState = "playing";
     pauseOverlay.classList.add("hidden");
     lastTime = 0;
+    triggerHaptic(15);
     requestAnimationFrame(gameLoop);
   }
 }
@@ -1804,12 +1931,12 @@ function triggerGameOver() {
   gameOver = true;
   gameState = "gameover";
   current = null;
+  triggerHaptic([50, 60, 50]);
 
   let stored = 0;
   try {
     stored = parseInt(
-      localStorage.getItem("matrixfall_highscore") ||
-      "0",
+      localStorage.getItem("matrixfall_highscore") || "0",
       10
     );
   } catch(e) {}
@@ -1823,7 +1950,7 @@ function triggerGameOver() {
   gameOverOverlay.classList.remove("hidden");
 }
 
-// ── Input Handling ──────────────────────────────────────────
+// ── Keyboard Input ──────────────────────────────────────────
 document.addEventListener("keydown", (e) => {
   if (gameState === "start") {
     if (e.code === "Space" || e.code === "Enter") { e.preventDefault(); startGame(); }
@@ -1854,9 +1981,9 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ── Touch Controls ──────────────────────────────────────────
-const DAS_DELAY = 200;   // ms before auto-repeat starts
-const DAS_RATE  = 50;    // ms between auto-repeat ticks
+// ── Touchpad Buttons (DAS Support) ──────────────────────────
+const DAS_DELAY = 180;
+const DAS_RATE  = 45;
 let dasAction  = null;
 let dasTimeout = null;
 let dasInterval = null;
@@ -1891,7 +2018,6 @@ function stopDAS() {
   dasAction = null;
 }
 
-// Bind touch events
 const touchBtns = document.querySelectorAll(".touch-btn[data-action]");
 touchBtns.forEach(btn => {
   const action = btn.getAttribute("data-action");
@@ -1913,7 +2039,7 @@ touchBtns.forEach(btn => {
     stopDAS();
   });
 
-  // Also handle mouse for testing on desktop
+  // Desktop mouse support for testing buttons
   btn.addEventListener("mousedown", (e) => {
     e.preventDefault();
     btn.classList.add("active");
@@ -1929,11 +2055,130 @@ touchBtns.forEach(btn => {
   });
 });
 
-// Prevent default touch behaviour on the game canvas to avoid scrolling
-gameCanvas.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
-gameCanvas.addEventListener("touchstart", (e) => e.preventDefault(), { passive: false });
+// Mobile HUD quick taps (Hold card and Surge card)
+mobileHoldCard.addEventListener("click", () => {
+  if (gameState === "playing") holdCurrentPiece();
+});
+mobileSurgeCard.addEventListener("click", () => {
+  if (gameState === "playing") activateSurge();
+});
 
-// ── Button Handlers ─────────────────────────────────────────
+// ── DIRECT BOARD TOUCH GESTURES ─────────────────────────────
+// 1. Swipe Left -> Move left one cell
+// 2. Swipe Right -> Move right one cell
+// 3. Swipe Down -> Soft drop fast
+// 4. Tap the block/board -> Rotate piece
+// 5. Double Tap -> Fast drop to bottom (hard drop)
+// 6. Swipe Up -> Hold piece
+// ────────────────────────────────────────────────────────────
+
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartTime = 0;
+let lastDragX = 0;
+let lastDragY = 0;
+let hasDragged = false;
+let lastTapTimestamp = 0;
+let singleTapTimeout = null;
+
+boardWrapper.addEventListener("touchstart", (e) => {
+  if (gameState !== "playing" || !current) return;
+  e.preventDefault();
+
+  const touch = e.touches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+  lastDragX = touch.clientX;
+  lastDragY = touch.clientY;
+  touchStartTime = performance.now();
+  hasDragged = false;
+}, { passive: false });
+
+boardWrapper.addEventListener("touchmove", (e) => {
+  if (gameState !== "playing" || !current) return;
+  e.preventDefault();
+
+  const touch = e.touches[0];
+  const currX = touch.clientX;
+  const currY = touch.clientY;
+  const diffX = currX - lastDragX;
+  const diffY = currY - lastDragY;
+  const totalMove = Math.hypot(currX - touchStartX, currY - touchStartY);
+
+  if (totalMove > 8) {
+    hasDragged = true;
+    if (singleTapTimeout) {
+      clearTimeout(singleTapTimeout);
+      singleTapTimeout = null;
+    }
+  }
+
+  // Horizontal Drag Threshold (responsive step per grid cell)
+  const xThreshold = Math.max(16, CELL * 0.7);
+  if (Math.abs(diffX) >= xThreshold) {
+    if (diffX > 0) {
+      moveRight();
+    } else {
+      moveLeft();
+    }
+    lastDragX = currX;
+  }
+
+  // Downward Drag Threshold (Soft Drop)
+  const yDownThreshold = Math.max(18, CELL * 0.8);
+  if (diffY >= yDownThreshold) {
+    softDrop();
+    lastDragY = currY;
+  }
+
+  // Upward Drag Threshold (Hold Piece)
+  const yUpThreshold = Math.max(35, CELL * 1.5);
+  if (diffY <= -yUpThreshold) {
+    holdCurrentPiece();
+    lastDragY = currY;
+  }
+}, { passive: false });
+
+boardWrapper.addEventListener("touchend", (e) => {
+  if (gameState !== "playing" || !current) return;
+  e.preventDefault();
+
+  const now = performance.now();
+  const touchDuration = now - touchStartTime;
+
+  // Check if touch qualifies as a Tap (stationary & quick)
+  if (!hasDragged && touchDuration < 300) {
+    const timeSinceLastTap = now - lastTapTimestamp;
+
+    // DOUBLE TAP: "for double tap it must fall fast and reach bottum"
+    if (timeSinceLastTap < 320) {
+      if (singleTapTimeout) {
+        clearTimeout(singleTapTimeout);
+        singleTapTimeout = null;
+      }
+      lastTapTimestamp = 0;
+      hardDrop();
+      return;
+    }
+
+    // SINGLE TAP: "to rotate tape the block"
+    lastTapTimestamp = now;
+    singleTapTimeout = setTimeout(() => {
+      rotate();
+      singleTapTimeout = null;
+    }, 200);
+  }
+}, { passive: false });
+
+boardWrapper.addEventListener("touchcancel", () => {
+  hasDragged = false;
+  if (singleTapTimeout) {
+    clearTimeout(singleTapTimeout);
+    singleTapTimeout = null;
+  }
+});
+
+// ── Overlay & Control Buttons ───────────────────────────────
 document.getElementById("startBtn").addEventListener("click", startGame);
 document.getElementById("resumeBtn").addEventListener("click", togglePause);
 document.getElementById("retryBtn").addEventListener("click", startGame);
@@ -1943,17 +2188,13 @@ document.getElementById("pauseBtn").addEventListener("click", () => {
   }
 });
 
-// ── Window Resize Handler ───────────────────────────────────
+// ── Dynamic Window Resize Handler ───────────────────────────
 let resizeDebounce = null;
 window.addEventListener("resize", () => {
   clearTimeout(resizeDebounce);
   resizeDebounce = setTimeout(() => {
-    const wasMobile = isMobile;
-    const newMobile = detectMobile();
-    if (wasMobile !== newMobile || newMobile) {
-      initCanvases();
-    }
-  }, 150);
+    initCanvases();
+  }, 120);
 });
 
 // ── Main Game Loop ──────────────────────────────────────────
@@ -1976,7 +2217,6 @@ function gameLoop(timestamp) {
         isOnGround = false;
         lockDelay = 0;
       } else {
-        // Piece can't move down — start lock delay if not already started
         if (!isOnGround) {
           isOnGround = true;
           lockDelay = LOCK_DELAY_TIME;
@@ -1990,7 +2230,6 @@ function gameLoop(timestamp) {
     lockDelay -= dt;
     if (lockDelay <= 0) {
       lockDelay = 0;
-      // Lock the piece
       if (current.isPhase) {
         lockPhasePiece();
       } else {
@@ -2012,19 +2251,19 @@ function gameLoop(timestamp) {
   drawCurrentPiece(mainCtx);
   renderParticles(mainCtx);
 
-  // Desktop preview canvases
+  // Desktop previews
   const nextPhase = (piecesSpawned + 1) % 10 === 0;
   drawPreview(nCtx, 120, 80, nextPieceData, nextPhase);
   if (holdPiece) {
     drawPreview(hCtx, 120, 80, holdPiece, false);
   }
 
-  // Mobile preview canvases
-  drawPreview(mnCtx, 48, 32, nextPieceData, nextPhase);
+  // Mobile previews
+  drawPreview(mnCtx, 44, 30, nextPieceData, nextPhase);
   if (holdPiece) {
-    drawPreview(mhCtx, 48, 32, holdPiece, false);
+    drawPreview(mhCtx, 44, 30, holdPiece, false);
   } else {
-    mhCtx.clearRect(0, 0, 48, 32);
+    mhCtx.clearRect(0, 0, 44, 30);
   }
 
   if (gameState === "playing") {
