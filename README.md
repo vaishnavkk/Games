@@ -33,8 +33,10 @@ Play instantly in your browser:
 
 ### ⚛ Quantum Phase Blocks
 - Every 10th block spawned is a **Quantum Phase Block** with an intense pulsing cyan-white glow and floating indicator badge.
-- Phase blocks **ignore collisions with locked blocks** while falling, allowing you to slide through covered overhangs to fill deep buried cavities.
-- Hard-dropping or soft-dropping locks the piece safely into the nearest free spot.
+- Phase blocks **pass completely through existing solid blocks** while falling or hard-dropping, allowing you to fill deep buried cavities and bottom gaps without obstruction.
+- Displays a dedicated radiant cyan **ghost outline** showing exactly where the phased piece will settle.
+- Locks cleanly in-place into vacant cells with a vibrant 16-particle burst—no ceiling rewinding or warping.
+- Retains its full quantum state even when swapped into and out of the **Saved Piece** slot.
 
 ### 🎯 Combo Multipliers & Particle Juice
 - Clearing lines consecutively increments the **Combo Multiplier** (`1x`, `2x`, `3x`...).
@@ -44,8 +46,9 @@ Play instantly in your browser:
 ### 💾 Saved Piece Slot
 - Store any active piece into the **Saved Piece** slot using `C` or `Shift` and swap it back whenever needed (once per drop).
 
-### 🏎️ Dynamic Acceleration (Per-Block Tempo Scaling)
-- Speed increases **minutely with every single block locked**, continuously raising the stakes and forcing players to think and act faster as the stack rises.
+### 🏎️ Dynamic Acceleration (Per-Block & Destroyed-Row Tempo Scaling)
+- Speed increases **minutely with every single block placed** AND accelerates further **every time any row is destroyed**, raising the tempo and forcing players to act fast.
+- Includes a live `.speed-pulse` visual notification badge whenever rows are cleared.
 - Real-time **Speed Multiplier** displayed live in both Desktop and Mobile HUDs (e.g. 1.0x scaling smoothly to intense 4.0x+).
 - Game over screen tracks your **Total Blocks Placed** and **Peak Speed Achieved**.
 

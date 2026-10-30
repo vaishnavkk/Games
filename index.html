@@ -701,6 +701,17 @@
     animation: screenShake 0.25s ease-out;
   }
 
+  /* Speed pulse animation on row destruction */
+  @keyframes speedPulseAnim {
+    0% { transform: scale(1); filter: brightness(1); }
+    40% { transform: scale(1.24); filter: brightness(1.8); color: #38bdf8; text-shadow: 0 0 14px #38bdf8; }
+    100% { transform: scale(1); filter: brightness(1); }
+  }
+  .speed-pulse {
+    display: inline-block;
+    animation: speedPulseAnim 0.45s ease-out;
+  }
+
   /* ═══════════════════════════════════════════════════════════
      RESPONSIVE BREAKPOINTS (Mobile Optimization)
      ═══════════════════════════════════════════════════════════ */
@@ -1000,7 +1011,7 @@
       </div>
       <div class="tip-row">
         <div class="tip-icon">🏎️</div>
-        <div class="tip-text"><b>Dynamic Acceleration</b>: Speed increases minutely with <b>every single block dropped</b>, raising the stakes as you play!</div>
+        <div class="tip-text"><b>Speed Acceleration</b>: Falling speed increases with <b>every row destroyed</b> and every block placed, testing your speed!</div>
       </div>
       <div class="tip-row">
         <div class="tip-icon">🎮</div>
@@ -1016,7 +1027,7 @@
       </div>
       <div class="tip-row">
         <div class="tip-icon">⚛</div>
-        <div class="tip-text">Every 10th piece is a <b>Quantum Phase Block</b> — phases smoothly through existing blocks!</div>
+        <div class="tip-text">Every 10th piece is a <b>Quantum Phase Block</b> — phases directly through solid blocks to fill bottom gaps & cavities!</div>
       </div>
     </div>
     <button class="overlay-btn" id="startBtn">Start Game</button>
@@ -1303,10 +1314,10 @@ function getNextPieceType() {
   return bag.shift();
 }
 
-function createPiece(type) {
+function createPiece(type, forcedPhase) {
   const def = TETROMINOS[type];
   piecesSpawned++;
-  const isPhase = (piecesSpawned % 10 === 0);
+  const isPhase = forcedPhase !== undefined ? forcedPhase : (piecesSpawned % 10 === 0);
   return {
     type: type,
     matrix: deepCopyMatrix(def.matrix),
@@ -1333,8 +1344,9 @@ function spawnPiece() {
   isOnGround = false;
   prepareNextPiece();
 
-  if (!isValidMove(current.matrix, current.x, current.y) &&
-      !isValidMove(current.matrix, current.x, current.y + 1)) {
+  const checker = current.isPhase ? isValidMovePhase : isValidMove;
+  if (!checker(current.matrix, current.x, current.y) &&
+      !checker(current.matrix, current.x, current.y + 1)) {
     triggerGameOver();
   }
 }
@@ -1343,6 +1355,7 @@ function spawnPiece() {
 function lockPiece() {
   if (gameOver || !current) return;
   const m = current.matrix;
+  const isPhase = current.isPhase;
   let anyAboveBoard = false;
   for (let r = 0; r < m.length; r++) {
     for (let c = 0; c < m[r].length; c++) {
@@ -1353,33 +1366,40 @@ function lockPiece() {
         anyAboveBoard = true;
         continue;
       }
-      grid[ny][nx] = { color: current.color, glow: current.glow };
+      if (isPhase) {
+        grid[ny][nx] = { color: "#e0f7ff", glow: "rgba(0, 220, 255, 0.85)" };
+      } else {
+        grid[ny][nx] = { color: current.color, glow: current.glow };
+      }
     }
   }
   if (anyAboveBoard) {
     triggerGameOver();
     return;
   }
+
+  // If quantum piece locked, spawn radiant solidification burst
+  if (isPhase) {
+    for (let i = 0; i < 16; i++) {
+      particles.push({
+        x: (current.x + Math.random() * m[0].length) * CELL,
+        y: (current.y + Math.random() * m.length) * CELL,
+        vx: (Math.random() - 0.5) * 80,
+        vy: (Math.random() - 0.5) * 80,
+        life: 0.8,
+        maxLife: 0.8,
+        size: Math.random() * 4 + 2,
+        color: "rgba(0, 220, 255,",
+      });
+    }
+  }
+
   blocksPlaced++;
   clearLines();
   spawnPiece();
 }
 
 function lockPhasePiece() {
-  if (gameOver || !current) return;
-  if (isValidMove(current.matrix, current.x, current.y)) {
-    lockPiece();
-    return;
-  }
-  let testY = current.y;
-  while (testY >= -4 && !isValidMove(current.matrix, current.x, testY)) {
-    testY--;
-  }
-  if (testY < -4) {
-    triggerGameOver();
-    return;
-  }
-  current.y = testY;
   lockPiece();
 }
 
@@ -1419,6 +1439,18 @@ function clearLines() {
 
     lines += cleared;
     level = Math.floor(lines / 10) + 1;
+
+    // Pulse speed indicator when rows are destroyed
+    if (speedEl) {
+      speedEl.classList.remove("speed-pulse");
+      void speedEl.offsetWidth;
+      speedEl.classList.add("speed-pulse");
+    }
+    if (mobileSpeedEl) {
+      mobileSpeedEl.classList.remove("speed-pulse");
+      void mobileSpeedEl.offsetWidth;
+      mobileSpeedEl.classList.add("speed-pulse");
+    }
 
     surge = Math.min(100, surge + cleared * 25);
 
@@ -1494,19 +1526,17 @@ function hardDrop() {
   lastHardDropTime = now;
   triggerHaptic([25, 35, 25]);
 
-  if (current.isPhase) {
-    lockPhasePiece();
-    return;
-  }
+  const checker = current.isPhase ? isValidMovePhase : isValidMove;
   let dist = 0;
-  while (isValidMove(current.matrix, current.x, current.y + dist + 1)) {
+  while (checker(current.matrix, current.x, current.y + dist + 1)) {
     dist++;
   }
   score += dist * 2;
   current.y += dist;
 
   // Visual drop dust particles
-  for (let i = 0; i < 6; i++) {
+  const pColor = current.isPhase ? "rgba(0, 220, 255," : "rgba(255, 255, 255,";
+  for (let i = 0; i < (current.isPhase ? 10 : 6); i++) {
     particles.push({
       x: (current.x + Math.random() * current.matrix[0].length) * CELL,
       y: (current.y + current.matrix.length) * CELL,
@@ -1515,7 +1545,7 @@ function hardDrop() {
       life: 0.6,
       maxLife: 0.6,
       size: Math.random() * 3 + 1,
-      color: "rgba(0, 220, 255,",
+      color: pColor,
     });
   }
 
@@ -1545,14 +1575,16 @@ function holdCurrentPiece() {
   if (!current || holdUsed || gameOver) return;
   holdUsed = true;
   triggerHaptic(18);
-  const type = current.type;
+  const currentData = { type: current.type, isPhase: current.isPhase };
   if (holdPiece) {
     const prev = holdPiece;
-    holdPiece = type;
-    current = createPiece(prev);
+    holdPiece = currentData;
+    const prevType = typeof prev === "object" ? prev.type : prev;
+    const prevPhase = typeof prev === "object" ? prev.isPhase : false;
+    current = createPiece(prevType, prevPhase);
     piecesSpawned--;
   } else {
-    holdPiece = type;
+    holdPiece = currentData;
     spawnPiece();
   }
   holdCanvas.style.display = "block";
@@ -1564,7 +1596,8 @@ function holdCurrentPiece() {
 function getGhostY() {
   if (!current) return 0;
   let gy = current.y;
-  while (isValidMove(current.matrix, current.x, gy + 1)) {
+  const checker = current.isPhase ? isValidMovePhase : isValidMove;
+  while (checker(current.matrix, current.x, gy + 1)) {
     gy++;
   }
   return gy;
@@ -1666,8 +1699,8 @@ function renderParticles(c) {
 
 // ── Gravity Speed & Dynamic Acceleration ────────────────────
 function getBaseDropInterval() {
-  // Speed increases minutely with each block placed (3.5ms per block) and with each level (50ms per level)
-  return Math.max(0.06, 1.0 - (level - 1) * 0.05 - blocksPlaced * 0.0035);
+  // Speed increases with every single destroyed row (20ms/row) and minutely with each block placed (2ms/block)
+  return Math.max(0.05, 1.0 - lines * 0.02 - blocksPlaced * 0.002);
 }
 
 function getDropInterval() {
@@ -1762,10 +1795,12 @@ function drawBoard(c) {
 }
 
 function drawGhostPiece(c) {
-  if (!current || current.isPhase) return;
+  if (!current) return;
   const ghostY = getGhostY();
   if (ghostY === current.y) return;
   const m = current.matrix;
+  const isPhase = current.isPhase;
+
   for (let r = 0; r < m.length; r++) {
     for (let col = 0; col < m[r].length; col++) {
       if (!m[r][col]) continue;
@@ -1773,7 +1808,11 @@ function drawGhostPiece(c) {
       if (drawRow < 0) continue;
       const px = (current.x + col) * CELL;
       const py = drawRow * CELL;
-      drawGlassTile(c, px, py, CELL, current.color, current.glow, 0.22);
+      if (isPhase) {
+        drawGlassTile(c, px, py, CELL, "#e0f7ff", "rgba(0, 220, 255, 0.75)", 0.32);
+      } else {
+        drawGlassTile(c, px, py, CELL, current.color, current.glow, 0.22);
+      }
     }
   }
 }
@@ -2327,11 +2366,7 @@ function gameLoop(timestamp) {
     lockDelay -= dt;
     if (lockDelay <= 0) {
       lockDelay = 0;
-      if (current.isPhase) {
-        lockPhasePiece();
-      } else {
-        lockPiece();
-      }
+      lockPiece();
     }
   }
 
@@ -2352,13 +2387,17 @@ function gameLoop(timestamp) {
   const nextPhase = (piecesSpawned + 1) % 10 === 0;
   drawPreview(nCtx, 120, 80, nextPieceData, nextPhase);
   if (holdPiece) {
-    drawPreview(hCtx, 120, 80, holdPiece, false);
+    const hpType = typeof holdPiece === "object" ? holdPiece.type : holdPiece;
+    const hpPhase = typeof holdPiece === "object" ? holdPiece.isPhase : false;
+    drawPreview(hCtx, 120, 80, hpType, hpPhase);
   }
 
   // Mobile previews
   drawPreview(mnCtx, 44, 30, nextPieceData, nextPhase);
   if (holdPiece) {
-    drawPreview(mhCtx, 44, 30, holdPiece, false);
+    const hpType = typeof holdPiece === "object" ? holdPiece.type : holdPiece;
+    const hpPhase = typeof holdPiece === "object" ? holdPiece.isPhase : false;
+    drawPreview(mhCtx, 44, 30, hpType, hpPhase);
   } else {
     mhCtx.clearRect(0, 0, 44, 30);
   }
