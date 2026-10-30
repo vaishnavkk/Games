@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>GeoTrivia: Earth Explorer 🌍 | 3D Interactive Geography Trivia</title>
+  <meta name="description" content="Explore the Earth in 3D! Guess countries by iconic clues, landmarks, and culture. If you miss, fly into the nation and discover memorable facts to anchor in your memory.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- 3D Libraries: Three.js, OrbitControls, Tween.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+  <!-- Canvas Confetti for celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #080c14;
+      --panel-bg: rgba(13, 20, 36, 0.72);
+      --panel-border: rgba(255, 255, 255, 0.12);
+      --accent-cyan: #06b6d4;
+      --accent-glow: rgba(6, 182, 212, 0.4);
+      --accent-blue: #3b82f6;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --font-heading: 'Space Grotesk', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 40%, #111a2e 0%, #080c14 70%, #030508 100%);
+      font-family: var(--font-body);
+      color: var(--text-main);
+    }
+
+    /* 3D Canvas Background */
+    #webgl-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      outline: none;
+      cursor: grab;
+    }
+    #webgl-container:active {
+      cursor: grabbing;
+    }
+
+    /* Cosmic Ambient Particles & Lights */
+    .space-glow {
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
+      filter: blur(50px);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .glow-1 { top: -100px; left: -100px; }
+    .glow-2 { bottom: -120px; right: -120px; background: radial-gradient(circle, rgba(139, 92, 246, 0.14) 0%, transparent 70%); }
+
+    /* UI Overlay Layer */
+    .app-ui {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px 20px;
+    }
+
+    /* Top Navigation & Status Bar */
+    .top-header {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .brand-icon {
+      font-size: 20px;
+      filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.6));
+      animation: rotateGlobeIcon 12s linear infinite;
+    }
+    @keyframes rotateGlobeIcon {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .brand-title {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+    .brand-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: rgba(6, 182, 212, 0.2);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+    }
+
+    .stats-tray {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+    .stat-pill .icon {
+      font-size: 14px;
+    }
+    .stat-value {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 50%;
+      color: var(--text-main);
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    }
+    .icon-btn:hover {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+    }
+    .icon-btn:active {
+      transform: translateY(0);
+    }
+
+    .arcade-link {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(16px);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #e2e8f0;
+      transition: all 0.2s ease;
+    }
+    .arcade-link:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    /* Globe Control Helper Pill */
+    .globe-helper {
+      pointer-events: auto;
+      align-self: center;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(13, 20, 36, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+    .globe-helper:hover {
+      opacity: 1;
+    }
+
+    /* Main Bottom Area: Trivia Card / Educational Memory Card */
+    .bottom-container {
+      pointer-events: auto;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Glassmorphic Cards */
+    .glass-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+    }
+
+    /* Question Card Elements */
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .round-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.15);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(6, 182, 212, 0.25);
+    }
+    .continent-tag {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .question-prompt {
+      font-family: var(--font-heading);
+      font-size: 19px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 14px;
+      line-height: 1.35;
+    }
+
+    /* Progressive Clues List */
+    .clues-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .clue-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.45;
+      color: #e2e8f0;
+      transition: all 0.25s ease;
+    }
+    .clue-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+    .clue-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .clue-text strong {
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+
+    /* Extra Hint Drawer */
+    .hint-trigger {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 14px;
+      transition: all 0.2s ease;
+    }
+    .hint-trigger:hover {
+      background: rgba(245, 158, 11, 0.2);
+    }
+    .extra-hint-box {
+      display: none;
+      padding: 10px 14px;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 10px;
+      font-size: 13px;
+      color: #fef3c7;
+      margin-bottom: 14px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* 4 Choice Buttons */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .choice-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #ffffff;
+      font-family: var(--font-body);
+      font-size: 14.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .choice-btn .choice-letter {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+    .choice-btn:hover {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(6, 182, 212, 0.2);
+    }
+    .choice-btn:hover .choice-letter {
+      background: var(--accent-cyan);
+      color: #042f2e;
+    }
+    .choice-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Answer States */
+    .choice-btn.correct {
+      background: rgba(16, 185, 129, 0.25) !important;
+      border-color: #10b981 !important;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.5) !important;
+      color: #ecfdf5 !important;
+    }
+    .choice-btn.correct .choice-letter {
+      background: #10b981 !important;
+      color: #064e3b !important;
+    }
+
+    .choice-btn.wrong {
+      background: rgba(244, 63, 94, 0.25) !important;
+      border-color: #f43f5e !important;
+      box-shadow: 0 0 20px rgba(244, 63, 94, 0.4) !important;
+      color: #fff1f2 !important;
+    }
+    .choice-btn.wrong .choice-letter {
+      background: #f43f5e !important;
+      color: #ffe4e6 !important;
+    }
+
+    .choice-btn:disabled {
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       EDUCATIONAL MEMORY VAULT CARD (Triggers on incorrect guess)
+       ═══════════════════════════════════════════════════════════ */
+    .memory-vault {
+      display: none;
+      background: rgba(10, 16, 30, 0.88);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(6, 182, 212, 0.2);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      animation: slideUpCard 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes slideUpCard {
+      from { opacity: 0; transform: translateY(30px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .vault-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .vault-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .vault-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(244, 63, 94, 0.2);
+      color: #fda4af;
+      border: 1px solid rgba(244, 63, 94, 0.4);
+    }
+    .vault-badge.correct-badge {
+      background: rgba(16, 185, 129, 0.2);
+      color: #a7f3d0;
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+    .vault-flight-note {
+      font-size: 12px;
+      color: var(--accent-cyan);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nation-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .nation-flag {
+      font-size: 40px;
+      line-height: 1;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+    }
+    .nation-title {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+    .nation-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .memory-anchors-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .memory-box {
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+    .memory-box.highlight {
+      background: rgba(6, 182, 212, 0.08);
+      border-color: rgba(6, 182, 212, 0.25);
+    }
+    .memory-box-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent-cyan);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .memory-box.highlight .memory-box-title {
+      color: #38bdf8;
+    }
+
+    .action-btn-primary {
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(6, 182, 212, 0.35);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .action-btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5);
+    }
+    .action-btn-primary:active {
+      transform: translateY(0);
+    }
+
+    /* Game Completion Modal */
+    .gameover-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 100;
+      background: rgba(4, 7, 14, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
+      max-width: 480px;
+      width: 100%;
+      padding: 32px 28px;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(6, 182, 212, 0.3);
+      animation: modalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalPop {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .modal-trophy {
+      font-size: 54px;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.5));
+    }
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .modal-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .stats-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .summary-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .summary-num {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+    .summary-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       RESPONSIVE ADAPTATIONS (Mobile & Small Screens)
+       ═══════════════════════════════════════════════════════════ */
+    @media (max-width: 640px) {
+      .app-ui {
+        padding: 12px 14px;
+      }
+      .brand-title {
+        font-size: 14px;
+      }
+      .brand-badge {
+        display: none;
+      }
+      .top-header {
+        gap: 8px;
+      }
+      .stat-pill {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      .globe-helper {
+        display: none;
+      }
+      .bottom-container {
+        max-width: 100%;
+      }
+      .glass-card {
+        padding: 16px;
+        border-radius: 16px;
+      }
+      .question-prompt {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .clue-item {
+        padding: 8px 10px;
+        font-size: 12.5px;
+      }
+      .choices-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .choice-btn {
+        padding: 10px 12px;
+        font-size: 13.5px;
+      }
+      .nation-title {
+        font-size: 20px;
+      }
+      .memory-box {
+        padding: 10px 12px;
+        font-size: 12px;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WebGL 3D Globe Canvas Container -->
+  <div id="webgl-container"></div>
+
+  <!-- Ambient Cosmic Lights -->
+  <div class="space-glow glow-1"></div>
+  <div class="space-glow glow-2"></div>
+
+  <!-- App UI Overlay -->
+  <div class="app-ui">
+    
+    <!-- Top Bar -->
+    <header class="top-header">
+      <div class="brand-pill">
+        <span class="brand-icon">🌍</span>
+        <span class="brand-title">GeoTrivia</span>
+        <span class="brand-badge">3D Explorer</span>
+      </div>
+
+      <div class="stats-tray">
+        <div class="stat-pill" title="Current Score">
+          <span class="icon">⭐</span>
+          <span class="stat-value" id="scoreVal">0</span>
+        </div>
+        <div class="stat-pill" title="Correct Streak">
+          <span class="icon">🔥</span>
+          <span class="stat-value" id="streakVal">0</span>
+        </div>
+        <div class="stat-pill" title="Exploration Progress">
+          <span class="icon">🗺️</span>
+          <span class="stat-value" id="progressVal">1/10</span>
+        </div>
+        <button class="icon-btn" id="soundBtn" title="Toggle Sound">🔊</button>
+        <a href="../index.html" class="arcade-link" title="Play Matrixfall">
+          <span>🎮</span>
+          <span>Matrixfall</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Mid Helper Pill (Desktop) -->
+    <div class="globe-helper">
+      <span>🖱️ Drag to orbit globe • Scroll to zoom • Guess country below</span>
+    </div>
+
+    <!-- Bottom Question / Educational Memory Container -->
+    <div class="bottom-container">
+
+      <!-- Active Question Card -->
+      <div class="glass-card" id="questionCard">
+        <div class="card-header">
+          <span class="round-tag" id="roundTag">ROUND 1 OF 10</span>
+          <span class="continent-tag">
+            <span>🌐</span>
+            <span id="continentTag">World Tour</span>
+          </span>
+        </div>
+
+        <div class="question-prompt" id="questionPrompt">
+          Can you identify this mystery nation?
+        </div>
+
+        <div class="clues-grid">
+          <div class="clue-item">
+            <span class="clue-icon">📍</span>
+            <div class="clue-text" id="clueGeo">Loading geographic coordinates...</div>
+          </div>
+          <div class="clue-item">
+            <span class="clue-icon">🏛️</span>
+            <div class="clue-text" id="clueLandmark">Discovering monumental heritage...</div>
+          </div>
+          <div class="clue-item">
+            <span class="clue-icon">🍲</span>
+            <div class="clue-text" id="clueCulture">Unveiling signature traditions...</div>
+          </div>
+        </div>
+
+        <button class="hint-trigger" id="hintTriggerBtn">
+          <span>💡 Need a hint? Reveal secret memory anchor</span>
+        </button>
+        <div class="extra-hint-box" id="extraHintBox"></div>
+
+        <!-- 4 Multiple Choice Buttons -->
+        <div class="choices-grid" id="choicesGrid">
+          <button class="choice-btn" data-index="0">
+            <span class="choice-letter">A</span>
+            <span class="choice-name">Option A</span>
+          </button>
+          <button class="choice-btn" data-index="1">
+            <span class="choice-letter">B</span>
+            <span class="choice-name">Option B</span>
+          </button>
+          <button class="choice-btn" data-index="2">
+            <span class="choice-letter">C</span>
+            <span class="choice-name">Option C</span>
+          </button>
+          <button class="choice-btn" data-index="3">
+            <span class="choice-letter">D</span>
+            <span class="choice-name">Option D</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Educational Memory Vault (Appears on wrong answer or review) -->
+      <div class="memory-vault" id="memoryVault">
+        <div class="vault-banner">
+          <div class="vault-status">
+            <span class="vault-badge" id="vaultBadge">MISSED • STUDY & REMEMBER</span>
+          </div>
+          <div class="vault-flight-note">
+            <span>✈️ Focused on coordinates</span>
+          </div>
+        </div>
+
+        <div class="nation-header">
+          <div class="nation-flag" id="vaultFlag">🇯🇵</div>
+          <div>
+            <div class="nation-title" id="vaultName">Japan</div>
+            <div class="nation-meta" id="vaultMeta">Capital: Tokyo • Continent: Asia</div>
+          </div>
+        </div>
+
+        <div class="memory-anchors-list">
+          <div class="memory-box">
+            <div class="memory-box-title">
+              <span>🏛️</span>
+              <span>Iconic Wonder to Picture</span>
+            </div>
+            <div id="vaultWonder">Mount Fuji, ancient Buddhist temples, and cherry blossom avenues.</div>
+          </div>
+
+          <div class="memory-box">
+            <div class="memory-box-title">
+              <span>🍲</span>
+              <span>Signature Taste & Tradition</span>
+            </div>
+            <div id="vaultCulture">Fresh handmade sushi, authentic ramen, and centuries-old tea ceremonies.</div>
+          </div>
+
+          <div class="memory-box highlight">
+            <div class="memory-box-title">
+              <span>🧠</span>
+              <span>Memory Anchor (Never Forget This!)</span>
+            </div>
+            <div id="vaultAnchor">Home to an island filled with free-roaming bowing deer (Nara) and more automated vending machines per capita than anywhere else on Earth!</div>
+          </div>
+        </div>
+
+        <button class="action-btn-primary" id="vaultNextBtn">
+          <span>Got It! Next Nation ➔</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Game Completion / Summary Modal -->
+  <div class="gameover-modal" id="gameoverModal">
+    <div class="modal-content">
+      <div class="modal-trophy">🏆</div>
+      <h2 class="modal-title">Expedition Complete!</h2>
+      <p class="modal-desc" id="modalDesc">You explored the globe and discovered unforgettable cultural anchors.</p>
+
+      <div class="stats-summary-grid">
+        <div class="summary-box">
+          <div class="summary-num" id="finalScore">0</div>
+          <div class="summary-label">Final Score</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-num" id="finalAccuracy">0%</div>
+          <div class="summary-label">Accuracy</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-num" id="finalStreak">0</div>
+          <div class="summary-label">Best Streak</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-num" id="finalMastered">0/10</div>
+          <div class="summary-label">Nations Mastered</div>
+        </div>
+      </div>
+
+      <button class="action-btn-primary" id="restartGameBtn">
+        <span>🔄 Launch New Expedition</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GAME JAVASCRIPT & 3D ENGINE
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+    /* ─────────────────────────────────────────────────────────────
+       1. RICH WORLD COUNTRIES DATABASE (Coordinates + Memory Hooks)
+       ───────────────────────────────────────────────────────────── */
+    const COUNTRIES_DB = [
+      {
+        name: "Japan",
+        flag: "🇯🇵",
+        capital: "Tokyo",
+        continent: "Asia",
+        lat: 36.2048,
+        lon: 138.2529,
+        clues: {
+          geo: "An East Asian island chain formed along the Pacific volcanic Ring of Fire.",
+          landmark: "Towering snow-capped Mount Fuji and golden Kyoto shrines.",
+          culture: "Famous for sushi, delicate cherry blossom festivals (Sakura), and anime."
+        },
+        hint: "Its bullet trains (Shinkansen) run with an average annual delay of less than 60 seconds.",
+        wonder: "Mount Fuji, imperial palaces, and the 10,000 torii gates of Fushimi Inari.",
+        tradition: "Matcha tea ceremonies, Kaiseki cuisine, and sumo wrestling.",
+        memoryAnchor: "Remember the bowing sika deer of Nara and hot-spring soaking snow monkeys!"
+      },
+      {
+        name: "Egypt",
+        flag: "🇪🇬",
+        capital: "Cairo",
+        continent: "Africa",
+        lat: 26.8206,
+        lon: 30.8025,
+        clues: {
+          geo: "Northeastern African cradle of civilization bisected by the world's longest river.",
+          landmark: "The Great Pyramids of Giza and the monumental limestone Sphinx.",
+          culture: "Hieroglyphic papyrus scrolls, rich spiced Koshari, and bustling bazaars."
+        },
+        hint: "The Great Pyramid was the tallest human-made structure in the world for over 3,800 years.",
+        wonder: "The Great Pyramids of Giza, the Valley of the Kings, and Abu Simbel temples.",
+        tradition: "Spiced Koshari, mint tea in Khan el-Khalili, and felucca sailing on the Nile.",
+        memoryAnchor: "The Pyramids are the only surviving wonder of the original Ancient Seven Wonders of the World!"
+      },
+      {
+        name: "Brazil",
+        flag: "🇧🇷",
+        capital: "Brasília",
+        continent: "South America",
+        lat: -14.2350,
+        lon: -51.9253,
+        clues: {
+          geo: "The largest nation in South America, spanning across the Amazon Basin.",
+          landmark: "The massive Art Deco Christ the Redeemer statue overlooking Rio's bay.",
+          culture: "Carnaval samba rhythms, Bossa Nova, and 5 historic FIFA World Cup victories."
+        },
+        hint: "Home to roughly 60% of the entire Amazon rainforest and greatest biodiversity on Earth.",
+        wonder: "Iguazu Falls and Christ the Redeemer on Mount Corcovado.",
+        tradition: "Feijoada stew, Capoeira martial arts dance, and energetic street Carnaval.",
+        memoryAnchor: "The only Portuguese-speaking country in the Americas and home to the world's largest river by water volume!"
+      },
+      {
+        name: "Australia",
+        flag: "🇦🇺",
+        capital: "Canberra",
+        continent: "Oceania",
+        lat: -25.2744,
+        lon: 133.7751,
+        clues: {
+          geo: "An island continent bounded by the Indian and Pacific Oceans, dominated by the Outback.",
+          landmark: "Sydney Opera House with its sail roofs, and the sacred sandstone monolith Uluru.",
+          culture: "Surfing at Bondi Beach, BBQ barbies, and indigenous Dreamtime folklore."
+        },
+        hint: "Kangaroos and koalas outnumber the human population by almost 2 to 1.",
+        wonder: "The Great Barrier Reef—the largest living organism on Earth, visible from space.",
+        tradition: "Vegemite on toast, Aussie rules football, and boomerang throwing.",
+        memoryAnchor: "It's both an entire continent and an independent country, surrounded entirely by water!"
+      },
+      {
+        name: "Italy",
+        flag: "🇮🇹",
+        capital: "Rome",
+        continent: "Europe",
+        lat: 41.8719,
+        lon: 12.5674,
+        clues: {
+          geo: "Distinctive boot-shaped Mediterranean peninsula dotted with active volcanoes like Vesuvius.",
+          landmark: "The Roman Colosseum, Leaning Tower of Pisa, and Venice's Grand Canal.",
+          culture: "The birthplace of the Renaissance, authentic wood-fired pizza, and espresso."
+        },
+        hint: "It has more UNESCO World Heritage sites (59) than any other country in the world.",
+        wonder: "The Roman Colosseum, Florence Cathedral, and the canals of Venice.",
+        tradition: "Neapolitan pizza, silky gelato, espresso etiquette, and Tuscan wine harvest.",
+        memoryAnchor: "It completely surrounds two independent countries: San Marino and the Vatican City!"
+      },
+      {
+        name: "India",
+        flag: "🇮🇳",
+        capital: "New Delhi",
+        continent: "Asia",
+        lat: 20.5937,
+        lon: 78.9629,
+        clues: {
+          geo: "A vast subcontinent bounded by the snow-crowned Himalayas in the north and the Indian Ocean.",
+          landmark: "The radiant white marble Taj Mahal in Agra, built as an eternal testament of love.",
+          culture: "Rich aromatic curries, Bollywood cinema, yoga, and vibrant festivals like Diwali and Holi."
+        },
+        hint: "Birthplace of chess, zero (mathematical concept), ayurveda, and yoga.",
+        wonder: "The Taj Mahal, Golden Temple of Amritsar, and ancient carved Ellora Caves.",
+        tradition: "Festivals of light (Diwali) and colors (Holi), classical sitar music, and fragrant chai.",
+        memoryAnchor: "Home to the world's highest motorable pass and over 19,500 distinct mother tongues!"
+      },
+      {
+        name: "Peru",
+        flag: "🇵🇪",
+        capital: "Lima",
+        continent: "South America",
+        lat: -9.1900,
+        lon: -75.0152,
+        clues: {
+          geo: "Pacific coast nation traversing the spine of the dramatic Andes mountains.",
+          landmark: "The 15th-century Inca citadel of Machu Picchu perched amidst clouds.",
+          culture: "Native alpaca wool ponchos, fresh lime-cured ceviche, and pan flute melodies."
+        },
+        hint: "Ancient inhabitants etched the gigantic, mysterious Nazca Lines into its coastal desert.",
+        wonder: "Machu Picchu, Rainbow Mountain (Vinicunca), and Lake Titicaca.",
+        tradition: "Over 4,000 native varieties of potatoes and traditional weaving in the Sacred Valley.",
+        memoryAnchor: "The lost city of Machu Picchu was never discovered by the Spanish conquistadors!"
+      },
+      {
+        name: "Canada",
+        flag: "🇨🇦",
+        capital: "Ottawa",
+        continent: "North America",
+        lat: 56.1304,
+        lon: -106.3468,
+        clues: {
+          geo: "The second-largest country by landmass, spanning from Atlantic to Pacific to Arctic oceans.",
+          landmark: "The turquoise alpine waters of Banff National Park and Niagara Falls.",
+          culture: "Ice hockey passion, pure maple syrup harvest, and friendly bilingual heritage."
+        },
+        hint: "Has over 2 million lakes—containing more lake surface area than all other countries combined!",
+        wonder: "Banff and Jasper Rocky Mountain parks, and the thunderous horseshoe Niagara Falls.",
+        tradition: "Tapping maple trees for syrup, poutine, and winter carnivals.",
+        memoryAnchor: "Has the longest coastline of any nation in the world (over 202,000 kilometers)!"
+      },
+      {
+        name: "France",
+        flag: "🇫🇷",
+        capital: "Paris",
+        continent: "Europe",
+        lat: 46.2276,
+        lon: 2.2137,
+        clues: {
+          geo: "Western European nation with borders touching both the Atlantic Ocean and the Mediterranean.",
+          landmark: "The iconic wrought-iron Eiffel Tower and the grand Palace of Versailles.",
+          culture: "Haute couture fashion, buttery croissants, fine cheeses, and the Louvre museum."
+        },
+        hint: "Holds the title as the most visited country in the world by international tourists.",
+        wonder: "The Eiffel Tower, Mont Saint-Michel abbey, and Notre-Dame Cathedral.",
+        tradition: "Fresh daily baguettes, Michelin culinary culture, and Tour de France cycling.",
+        memoryAnchor: "It spans 12 different time zones when counting its overseas territories—more than any other nation!"
+      },
+      {
+        name: "Kenya",
+        flag: "🇰🇪",
+        capital: "Nairobi",
+        continent: "Africa",
+        lat: -0.0236,
+        lon: 37.9062,
+        clues: {
+          geo: "East African country straddling the equator along the Great Rift Valley.",
+          landmark: "The golden savannahs of the Maasai Mara and snow-capped Mount Kenya.",
+          culture: "The heroic 'Big Five' safari wildlife, red shúkà fabrics of Maasai warriors, and world champion marathoners."
+        },
+        hint: "Witnesses the annual Great Migration of over 1.5 million wildebeest crossing the Mara River.",
+        wonder: "Maasai Mara Game Reserve, Amboseli's elephant herds with Kilimanjaro backdrops.",
+        tradition: "Swahili hospitality ('Karibu'), traditional jumping dance (Adumu), and Nyama Choma barbecue.",
+        memoryAnchor: "Home of the Great Wildebeest Migration, considered one of the Seven Natural Wonders of Africa!"
+      },
+      {
+        name: "Iceland",
+        flag: "🇮🇸",
+        capital: "Reykjavik",
+        continent: "Europe",
+        lat: 64.9631,
+        lon: -19.0208,
+        clues: {
+          geo: "A volcanic island in the North Atlantic situated directly atop the Mid-Atlantic Ridge.",
+          landmark: "Geysers spurting boiling steam, black sand beaches, and geothermal Blue Lagoon.",
+          culture: "Known as the Land of Fire and Ice, with Viking sagas and magical Northern Lights."
+        },
+        hint: "Runs on nearly 100% renewable geothermal and hydroelectric energy.",
+        wonder: "The Blue Lagoon, Gullfoss waterfall, and active erupting volcanoes beneath massive ice caps.",
+        tradition: "Soaking in natural geothermal hot pots and the festive Christmas book exchange (Jolabokaflod).",
+        memoryAnchor: "There are no mosquitoes anywhere on the entire island due to its rapid freeze-thaw cycles!"
+      },
+      {
+        name: "Mexico",
+        flag: "🇲🇽",
+        capital: "Mexico City",
+        continent: "North America",
+        lat: 23.6345,
+        lon: -102.5528,
+        clues: {
+          geo: "Bridges North and Central America between the Gulf of Mexico and the Pacific Ocean.",
+          landmark: "The towering Mayan step pyramid El Castillo at Chichen Itza.",
+          culture: "Vibrant Mariachi music, Day of the Dead (Día de los Muertos), and world-famous street tacos."
+        },
+        hint: "Gave chocolate (cacao), vanilla, corn, avocados, and chili peppers to the entire world.",
+        wonder: "Chichen Itza, Teotihuacan pyramids of the Sun and Moon, and Cenote sinkholes.",
+        tradition: "Elaborate sugar skulls, handmade corn tortillas, and festive Lucha Libre wrestling.",
+        memoryAnchor: "The ancient Aztec capital was built directly over a sacred lake on floating gardens (chinampas)!"
+      },
+      {
+        name: "Norway",
+        flag: "🇳🇴",
+        capital: "Oslo",
+        continent: "Europe",
+        lat: 60.4720,
+        lon: 8.4689,
+        clues: {
+          geo: "Scandinavian kingdom celebrated for deep coastal saltwater fjords carved by ancient glaciers.",
+          landmark: "The dramatic sheer cliff ledge of Preikestolen (Pulpit Rock) and Geirangerfjord.",
+          culture: "The midnight sun, northern lights, Viking longships, and fresh Arctic salmon."
+        },
+        hint: "In Svalbard in the far north, the sun does not set at all from late April through late August.",
+        wonder: "Geirangerfjord, the Lofoten archipelago islands, and the Flåm mountain railway.",
+        tradition: "Cross-country skiing culture, wooden stave churches, and outdoor 'Friluftsliv' philosophy.",
+        memoryAnchor: "It boasts the Global Seed Vault deep inside Arctic permafrost to safeguard all world crops!"
+      },
+      {
+        name: "Greece",
+        flag: "🇬🇷",
+        capital: "Athens",
+        continent: "Europe",
+        lat: 39.0742,
+        lon: 21.8243,
+        clues: {
+          geo: "Southern European archipelago in the Aegean and Ionian seas comprising thousands of islands.",
+          landmark: "The ancient hilltop Parthenon temple and Santorini's whitewashed cliffside towns.",
+          culture: "Birthplace of democracy, Western philosophy, Olympic Games, and Mediterranean olive oils."
+        },
+        hint: "No point anywhere in the country is farther than 85 miles (137 km) from the sea.",
+        wonder: "The Acropolis of Athens, the Meteora monasteries on rock pillars, and Delphi oracle.",
+        tradition: "Tossing plates at celebrations, rich moussaka, baklava, and Kalamata olive harvesting.",
+        memoryAnchor: "The original Olympic Games were founded here in 776 BC in ancient Olympia!"
+      },
+      {
+        name: "South Africa",
+        flag: "🇿🇦",
+        capital: "Pretoria",
+        continent: "Africa",
+        lat: -30.5595,
+        lon: 22.9375,
+        clues: {
+          geo: "Occupies the southernmost tip of Africa where the Atlantic meets the warm Indian Ocean.",
+          landmark: "The flat-topped sandstone Table Mountain and the historic Cape of Good Hope.",
+          culture: "The 'Rainbow Nation' famous for Nelson Mandela's legacy and rugby world champion Springboks."
+        },
+        hint: "The only country in the entire world with three official capital cities (Pretoria, Cape Town, Bloemfontein).",
+        wonder: "Table Mountain, Kruger National Park's roaming lions, and Blyde River Canyon.",
+        tradition: "Braai (woodfire barbecue), biltong, and vibrant Gumboot dancing.",
+        memoryAnchor: "Has 11 official languages and three separate capital cities serving executive, legislative, and judicial branches!"
+      },
+      {
+        name: "New Zealand",
+        flag: "🇳🇿",
+        capital: "Wellington",
+        continent: "Oceania",
+        lat: -40.9006,
+        lon: 174.8860,
+        clues: {
+          geo: "An island nation in the southwestern Pacific consisting of two main landmasses (North and South islands).",
+          landmark: "The majestic carved fiords of Milford Sound and geothermal Rotorua.",
+          culture: "Indigenous Māori culture, the powerful Haka pre-match ritual, and flightless Kiwi birds."
+        },
+        hint: "The first self-governing country in the world to give all women the right to vote (in 1893).",
+        wonder: "Milford Sound, Mount Cook (Aoraki), and the Waitomo glowworm caves.",
+        tradition: "The Haka war dance, Hāngī earth-oven cooking, and All Blacks rugby.",
+        memoryAnchor: "Its breathtaking landscapes served as the real-world Middle-earth for The Lord of the Rings movies!"
+      },
+      {
+        name: "Morocco",
+        flag: "🇲🇦",
+        capital: "Rabat",
+        continent: "Africa",
+        lat: 31.7917,
+        lon: -7.0926,
+        clues: {
+          geo: "Northwestern corner of Africa overlooking the Strait of Gibraltar toward Europe.",
+          landmark: "The blue-washed mountain town of Chefchaouen and ancient Marrakech medinas.",
+          culture: "Clay-pot tagines, fragrant fresh mint tea poured from high, and vibrant mosaic zellij tiles."
+        },
+        hint: "Home to the oldest continuously operating university in the world, founded in 859 AD (University of al-Qarawiyyin).",
+        wonder: "The Sahara Desert Erg Chebbi dunes, Chefchaouen Blue Pearl, and Hassan II Mosque.",
+        tradition: "Hospitality mint tea ceremonies, aromatic couscous, and leather tanneries of Fez.",
+        memoryAnchor: "The ancient medina of Fez is the world's largest car-free contiguous urban zone in the world!"
+      },
+      {
+        name: "Switzerland",
+        flag: "🇨🇭",
+        capital: "Bern",
+        continent: "Europe",
+        lat: 46.8182,
+        lon: 8.2275,
+        clues: {
+          geo: "Landlocked central European alpine sanctuary dominated by the snow-capped Swiss Alps.",
+          landmark: "The jagged pyramid peak of the Matterhorn and scenic Lake Geneva.",
+          culture: "Celebrated for precision mechanical watchmaking, creamy milk chocolate, and melted cheese fondue."
+        },
+        hint: "Has enough underground nuclear fallout shelters to accommodate 100% of its entire population.",
+        wonder: "The Matterhorn, Jungfraujoch (Top of Europe), and Rhine Falls.",
+        tradition: "Alpine yodeling, alphorn blowing, cheese fondue dipping, and master chocolate craftsmanship.",
+        memoryAnchor: "Its national flag is a square (not a rectangle), one of only two square national flags in the world!"
+      },
+      {
+        name: "Thailand",
+        flag: "🇹🇭",
+        capital: "Bangkok",
+        continent: "Asia",
+        lat: 15.8700,
+        lon: 100.9925,
+        clues: {
+          geo: "Southeast Asian nation on the Indochinese Peninsula bordering the Gulf of Thailand and Andaman Sea.",
+          landmark: "The gleaming riverside temple of Wat Arun and the Grand Palace of Bangkok.",
+          culture: "Known as the Land of Smiles, famous for Pad Thai noodles, vibrant night markets, and Muay Thai boxing."
+        },
+        hint: "The only country in Southeast Asia that was never colonized by any European empire.",
+        wonder: "The Grand Palace, Wat Pho with its giant Reclining Buddha, and limestone towers of Phang Nga Bay.",
+        tradition: "Songkran water festival celebrating the New Year, floating markets, and traditional Thai massage.",
+        memoryAnchor: "Bangkok's ceremonial full name is 168 letters long—the longest geographical place name in Guinness records!"
+      },
+      {
+        name: "Argentina",
+        flag: "🇦🇷",
+        capital: "Buenos Aires",
+        continent: "South America",
+        lat: -38.4161,
+        lon: -63.6167,
+        clues: {
+          geo: "Southern Cone giant stretching from subtropical rainforests all the way down to windswept Tierra del Fuego.",
+          landmark: "The roaring Garganta del Diablo at Iguazu Falls and the blue calving Perito Moreno Glacier.",
+          culture: "The passionate Tango dance, gaucho cowboy tradition, sharing herbal Yerba Mate, and world-class beef."
+        },
+        hint: "Contains both the highest mountain peak in the Western Hemisphere (Aconcagua) and the lowest point.",
+        wonder: "Iguazu Falls (wider than Niagara), Perito Moreno Glacier, and Mount Fitz Roy.",
+        tradition: "Asado barbecues, sipping Yerba Mate from a hollow gourd, and street Tango in La Boca.",
+        memoryAnchor: "Has won three FIFA World Cups and is home to the southernmost city in the world (Ushuaia)!"
+      }
+    ];
+
+    /* ─────────────────────────────────────────────────────────────
+       2. WEB AUDIO SYNTHESIZER (Pure Web Audio API — No External Files)
+       ───────────────────────────────────────────────────────────── */
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playTone(freq, type = 'sine', duration = 0.25, gainVal = 0.15) {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playFlightSwoosh() {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(480, now + 0.4);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 1.2);
+
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(0.12, now + 0.3);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 1.2);
+      } catch (e) {}
+    }
+
+    function playSuccessChime() {
+      if (!soundEnabled) return;
+      initAudio();
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 arpeggio
+      notes.forEach((f, i) => {
+        setTimeout(() => playTone(f, 'triangle', 0.4, 0.18), i * 80);
+      });
+    }
+
+    function playWrongChord() {
+      if (!soundEnabled) return;
+      initAudio();
+      // Gentle, informative chord (not harsh)
+      playTone(220, 'sine', 0.6, 0.2); // A3
+      setTimeout(() => playTone(261.63, 'sine', 0.6, 0.18), 60); // C4
+      setTimeout(() => playTone(311.13, 'sine', 0.7, 0.16), 120); // Eb4
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       3. 3D EARTH GLOBE ENGINE (Three.js + Procedural Fallback)
+       ───────────────────────────────────────────────────────────── */
+    const GLOBE_RADIUS = 1.6;
+    let scene, camera, renderer, controls;
+    let earthMesh, atmosphereMesh, cloudsMesh;
+    let beaconGroup;
+    let isAutoRotating = true;
+
+    function init3D() {
+      const container = document.getElementById('webgl-container');
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      // Scene
+      scene = new THREE.Scene();
+
+      // Camera
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera.position.set(0, 1.2, 4.4);
+
+      // Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.2;
+      container.appendChild(renderer.domElement);
+
+      // OrbitControls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.minDistance = 2.0;
+      controls.maxDistance = 7.5;
+      controls.enablePan = false;
+      controls.rotateSpeed = 0.6;
+      controls.zoomSpeed = 0.8;
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xdde8ff, 0.85);
+      scene.add(ambientLight);
+
+      const sunLight = new THREE.DirectionalLight(0xffffff, 1.6);
+      sunLight.position.set(5, 3, 5);
+      scene.add(sunLight);
+
+      const blueBackLight = new THREE.DirectionalLight(0x06b6d4, 0.8);
+      blueBackLight.position.set(-5, -2, -4);
+      scene.add(blueBackLight);
+
+      // Starfield Background
+      createCosmicStarfield();
+
+      // Earth Sphere with High-Fidelity Procedural Map (Offline-First) + Texture Upgrade
+      createEarthSphere();
+
+      // Glowing Atmosphere Shell
+      createAtmosphereGlow();
+
+      // Beacon Pin Group
+      beaconGroup = new THREE.Group();
+      scene.add(beaconGroup);
+
+      // Resize Listener
+      window.addEventListener('resize', onWindowResize);
+
+      // Render Loop
+      animate3D();
+    }
+
+    // High-Resolution Procedural Canvas Earth Map
+    function createProceduralEarthCanvas() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 2048;
+      canvas.height = 1024;
+      const ctx = canvas.getContext('2d');
+
+      // Deep Ocean Gradient
+      const oceanGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      oceanGrad.addColorStop(0, '#0a1628');
+      oceanGrad.addColorStop(0.5, '#07111e');
+      oceanGrad.addColorStop(1, '#050c16');
+      ctx.fillStyle = oceanGrad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Latitude and Longitude Grid Lines
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.08)';
+      ctx.lineWidth = 1;
+      for (let lon = 0; lon < canvas.width; lon += 64) {
+        ctx.beginPath();
+        ctx.moveTo(lon, 0);
+        ctx.lineTo(lon, canvas.height);
+        ctx.stroke();
+      }
+      for (let lat = 0; lat < canvas.height; lat += 64) {
+        ctx.beginPath();
+        ctx.moveTo(0, lat);
+        ctx.lineTo(canvas.width, lat);
+        ctx.stroke();
+      }
+
+      // Equator & Prime Meridian Highlight
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.22)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height / 2);
+      ctx.lineTo(canvas.width, canvas.height / 2);
+      ctx.stroke();
+
+      // Stylized Continents Outlines & Landmass Shapes
+      ctx.fillStyle = '#1e3352';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+
+      // Approximate world landmass clusters on equirectangular projection
+      const landmasses = [
+        // North America
+        [[280, 220], [420, 160], [540, 240], [500, 360], [380, 420], [320, 340]],
+        // South America
+        [[450, 480], [560, 520], [580, 680], [480, 820], [420, 720], [420, 560]],
+        // Europe
+        [[960, 180], [1160, 160], [1220, 260], [1080, 320], [980, 300]],
+        // Africa
+        [[960, 340], [1180, 340], [1240, 520], [1160, 760], [1040, 740], [940, 480]],
+        // Asia
+        [[1200, 140], [1680, 160], [1820, 340], [1560, 480], [1340, 420], [1240, 280]],
+        // Australia
+        [[1620, 620], [1780, 620], [1820, 740], [1680, 780], [1580, 700]],
+        // Greenland
+        [[680, 80], [780, 90], [740, 160], [640, 140]],
+        // Antarctica
+        [[0, 940], [2048, 940], [2048, 1024], [0, 1024]]
+      ];
+
+      landmasses.forEach(points => {
+        ctx.beginPath();
+        ctx.moveTo(points[0][0], points[0][1]);
+        for (let i = 1; i < points.length; i++) {
+          ctx.lineTo(points[i][0], points[i][1]);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      });
+
+      return new THREE.CanvasTexture(canvas);
+    }
+
+    function createEarthSphere() {
+      const geometry = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
+      
+      // Initial procedural texture
+      const proceduralTexture = createProceduralEarthCanvas();
+
+      const material = new THREE.MeshPhongMaterial({
+        map: proceduralTexture,
+        shininess: 25,
+        specular: new THREE.Color(0x334466),
+        bumpScale: 0.05
+      });
+
+      earthMesh = new THREE.Mesh(geometry, material);
+      scene.add(earthMesh);
+
+      // Async Upgrade to Photorealistic NASA Blue Marble texture from unpkg CDN
+      const textureLoader = new THREE.TextureLoader();
+      textureLoader.load(
+        'https://unpkg.com/three-globe@2.28.0/example/img/earth-blue-marble.jpg',
+        (tex) => {
+          material.map = tex;
+          material.needsUpdate = true;
+        },
+        undefined,
+        () => {
+          // Keep procedural texture on offline/fallback
+        }
+      );
+    }
+
+    function createAtmosphereGlow() {
+      const atmosGeo = new THREE.SphereGeometry(GLOBE_RADIUS * 1.035, 64, 64);
+      const atmosMat = new THREE.ShaderMaterial({
+        vertexShader: `
+          varying vec3 vNormal;
+          void main() {
+            vNormal = normalize(normalMatrix * normal);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          varying vec3 vNormal;
+          void main() {
+            float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.2);
+            gl_FragColor = vec4(0.02, 0.72, 0.88, 1.0) * intensity * 1.5;
+          }
+        `,
+        blending: THREE.AdditiveBlending,
+        side: THREE.BackSide,
+        transparent: true
+      });
+
+      atmosphereMesh = new THREE.Mesh(atmosGeo, atmosMat);
+      scene.add(atmosphereMesh);
+    }
+
+    function createCosmicStarfield() {
+      const starGeo = new THREE.BufferGeometry();
+      const starCount = 1200;
+      const starPositions = new Float32Array(starCount * 3);
+
+      for (let i = 0; i < starCount * 3; i += 3) {
+        const r = 40 + Math.random() * 50;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+
+        starPositions[i] = r * Math.sin(phi) * Math.cos(theta);
+        starPositions[i + 1] = r * Math.sin(phi) * Math.sin(theta);
+        starPositions[i + 2] = r * Math.cos(phi);
+      }
+
+      starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+      const starMat = new THREE.PointsMaterial({
+        color: 0x93c5fd,
+        size: 0.65,
+        transparent: true,
+        opacity: 0.85
+      });
+
+      const stars = new THREE.Points(starGeo, starMat);
+      scene.add(stars);
+    }
+
+    // Lat/Lon to 3D Cartesian coordinates conversion on sphere
+    function latLonToVector3(lat, lon, radius) {
+      const phi = (90 - lat) * (Math.PI / 180);
+      const theta = (lon + 180) * (Math.PI / 180);
+
+      const x = -(radius * Math.sin(phi) * Math.cos(theta));
+      const z = (radius * Math.sin(phi) * Math.sin(theta));
+      const y = (radius * Math.cos(phi));
+
+      return new THREE.Vector3(x, y, z);
+    }
+
+    // 3D Visual Beacon on target nation
+    let beaconRing, beaconLightBeam;
+    function showBeaconAt(position) {
+      // Clear previous beacon
+      while (beaconGroup.children.length > 0) {
+        beaconGroup.remove(beaconGroup.children[0]);
+      }
+
+      const norm = position.clone().normalize();
+
+      // Pulsing Ring at surface
+      const ringGeo = new THREE.RingGeometry(0.04, 0.08, 32);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: 0x38bdf8,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.9
+      });
+      beaconRing = new THREE.Mesh(ringGeo, ringMat);
+      beaconRing.position.copy(position.clone().multiplyScalar(1.002));
+      beaconRing.lookAt(position.clone().add(norm));
+      beaconGroup.add(beaconRing);
+
+      // Vertical Light Beam pointing upwards into space
+      const beamGeo = new THREE.CylinderGeometry(0.015, 0.03, 0.45, 16);
+      const beamMat = new THREE.MeshBasicMaterial({
+        color: 0x06b6d4,
+        transparent: true,
+        opacity: 0.75
+      });
+      beaconLightBeam = new THREE.Mesh(beamGeo, beamMat);
+      // Align cylinder with surface normal
+      beaconLightBeam.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), norm);
+      beaconLightBeam.position.copy(position.clone().add(norm.clone().multiplyScalar(0.22)));
+      beaconGroup.add(beaconLightBeam);
+    }
+
+    function clearBeacon() {
+      while (beaconGroup.children.length > 0) {
+        beaconGroup.remove(beaconGroup.children[0]);
+      }
+    }
+
+    // Smooth Orbital Flight to Country
+    function flyToCountry(lat, lon, onComplete) {
+      isAutoRotating = false;
+      controls.enabled = false;
+      playFlightSwoosh();
+
+      const surfacePt = latLonToVector3(lat, lon, GLOBE_RADIUS);
+      const cameraDest = surfacePt.clone().normalize().multiplyScalar(2.65);
+
+      showBeaconAt(surfacePt);
+
+      const startPos = camera.position.clone();
+
+      new TWEEN.Tween({ progress: 0 })
+        .to({ progress: 1 }, 1800)
+        .easing(TWEEN.Easing.Cubic.InOut)
+        .onUpdate(({ progress }) => {
+          // Spherical interpolation along direction + distance lerp
+          const dir = new THREE.Vector3().lerpVectors(
+            startPos.clone().normalize(),
+            cameraDest.clone().normalize(),
+            progress
+          ).normalize();
+
+          const dist = THREE.MathUtils.lerp(startPos.length(), cameraDest.length(), progress);
+          camera.position.copy(dir.multiplyScalar(dist));
+          camera.lookAt(0, 0, 0);
+          controls.target.set(0, 0, 0);
+        })
+        .onComplete(() => {
+          controls.enabled = true;
+          if (onComplete) onComplete();
+        })
+        .start();
+    }
+
+    // Reset Camera to Orbit Overview
+    function resetCameraToOverview(onComplete) {
+      controls.enabled = false;
+      clearBeacon();
+
+      const startPos = camera.position.clone();
+      const defaultDest = new THREE.Vector3(0, 1.2, 4.4);
+
+      new TWEEN.Tween({ progress: 0 })
+        .to({ progress: 1 }, 1300)
+        .easing(TWEEN.Easing.Cubic.Out)
+        .onUpdate(({ progress }) => {
+          camera.position.lerpVectors(startPos, defaultDest, progress);
+          camera.lookAt(0, 0, 0);
+          controls.target.set(0, 0, 0);
+        })
+        .onComplete(() => {
+          controls.enabled = true;
+          isAutoRotating = true;
+          if (onComplete) onComplete();
+        })
+        .start();
+    }
+
+    function onWindowResize() {
+      if (!camera || !renderer) return;
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate3D(time) {
+      requestAnimationFrame(animate3D);
+
+      TWEEN.update();
+
+      if (isAutoRotating && earthMesh) {
+        earthMesh.rotation.y += 0.0012;
+      }
+
+      // Animate Beacon pulse
+      if (beaconRing) {
+        const pulse = 1 + Math.sin((time || 0) * 0.006) * 0.25;
+        beaconRing.scale.set(pulse, pulse, 1);
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       4. GAME STATE & TRIVIA CONTROLLER
+       ───────────────────────────────────────────────────────────── */
+    const TOTAL_ROUNDS = 10;
+    let currentRoundIndex = 0;
+    let score = 0;
+    let streak = 0;
+    let bestStreak = 0;
+    let correctAnswersCount = 0;
+    let currentCountry = null;
+    let currentOptions = [];
+    let isRoundLocked = false;
+    let gamePool = [];
+
+    // DOM Elements
+    const scoreValEl = document.getElementById('scoreVal');
+    const streakValEl = document.getElementById('streakVal');
+    const progressValEl = document.getElementById('progressVal');
+    const soundBtn = document.getElementById('soundBtn');
+
+    const roundTagEl = document.getElementById('roundTag');
+    const continentTagEl = document.getElementById('continentTag');
+    const questionPromptEl = document.getElementById('questionPrompt');
+    const clueGeoEl = document.getElementById('clueGeo');
+    const clueLandmarkEl = document.getElementById('clueLandmark');
+    const clueCultureEl = document.getElementById('clueCulture');
+
+    const hintTriggerBtn = document.getElementById('hintTriggerBtn');
+    const extraHintBox = document.getElementById('extraHintBox');
+    const choicesGridEl = document.getElementById('choicesGrid');
+
+    const questionCardEl = document.getElementById('questionCard');
+    const memoryVaultEl = document.getElementById('memoryVault');
+    const vaultBadgeEl = document.getElementById('vaultBadge');
+    const vaultFlagEl = document.getElementById('vaultFlag');
+    const vaultNameEl = document.getElementById('vaultName');
+    const vaultMetaEl = document.getElementById('vaultMeta');
+    const vaultWonderEl = document.getElementById('vaultWonder');
+    const vaultCultureEl = document.getElementById('vaultCulture');
+    const vaultAnchorEl = document.getElementById('vaultAnchor');
+    const vaultNextBtn = document.getElementById('vaultNextBtn');
+
+    const gameoverModal = document.getElementById('gameoverModal');
+    const finalScoreEl = document.getElementById('finalScore');
+    const finalAccuracyEl = document.getElementById('finalAccuracy');
+    const finalStreakEl = document.getElementById('finalStreak');
+    const finalMasteredEl = document.getElementById('finalMastered');
+    const restartGameBtn = document.getElementById('restartGameBtn');
+
+    // Shuffle Array Utility
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function initGame() {
+      score = 0;
+      streak = 0;
+      bestStreak = 0;
+      correctAnswersCount = 0;
+      currentRoundIndex = 0;
+
+      updateHUD();
+
+      // Shuffle entire DB and pick 10 unique countries
+      gamePool = shuffleArray(COUNTRIES_DB).slice(0, TOTAL_ROUNDS);
+
+      loadRound(0);
+    }
+
+    function updateHUD() {
+      scoreValEl.textContent = score;
+      streakValEl.textContent = streak;
+      progressValEl.textContent = `${currentRoundIndex + 1}/${TOTAL_ROUNDS}`;
+    }
+
+    function loadRound(index) {
+      currentRoundIndex = index;
+      isRoundLocked = false;
+      currentCountry = gamePool[index];
+
+      updateHUD();
+
+      // Reset UI views
+      questionCardEl.style.display = 'block';
+      memoryVaultEl.style.display = 'none';
+      extraHintBox.style.display = 'none';
+      hintTriggerBtn.style.display = 'inline-flex';
+
+      // Update Clues
+      roundTagEl.textContent = `ROUND ${index + 1} OF ${TOTAL_ROUNDS}`;
+      continentTagEl.textContent = currentCountry.continent;
+      questionPromptEl.textContent = "Which nation matches these coordinates & heritage?";
+
+      clueGeoEl.innerHTML = `<strong>Geography</strong>: ${currentCountry.clues.geo}`;
+      clueLandmarkEl.innerHTML = `<strong>Iconic Landmark</strong>: ${currentCountry.clues.landmark}`;
+      clueCultureEl.innerHTML = `<strong>Cultural Heritage</strong>: ${currentCountry.clues.culture}`;
+      extraHintBox.textContent = `💡 Secret Anchor: ${currentCountry.hint}`;
+
+      // Pick 3 wrong options from other countries in DB
+      const wrongPool = COUNTRIES_DB.filter(c => c.name !== currentCountry.name);
+      const wrongPicks = shuffleArray(wrongPool).slice(0, 3);
+
+      currentOptions = shuffleArray([currentCountry, ...wrongPicks]);
+
+      // Populate 4 Choice Buttons
+      const choiceButtons = choicesGridEl.querySelectorAll('.choice-btn');
+      choiceButtons.forEach((btn, i) => {
+        btn.classList.remove('correct', 'wrong');
+        btn.disabled = false;
+        const opt = currentOptions[i];
+        btn.querySelector('.choice-name').textContent = `${opt.flag} ${opt.name}`;
+      });
+
+      // Reset camera to orbit view
+      resetCameraToOverview();
+    }
+
+    // Handle Option Click
+    function handleChoiceClick(choiceIndex) {
+      if (isRoundLocked) return;
+      isRoundLocked = true;
+      initAudio();
+
+      const selected = currentOptions[choiceIndex];
+      const isCorrect = (selected.name === currentCountry.name);
+
+      const choiceButtons = choicesGridEl.querySelectorAll('.choice-btn');
+      const clickedBtn = choiceButtons[choiceIndex];
+
+      // Disable all buttons
+      choiceButtons.forEach(btn => btn.disabled = true);
+
+      if (isCorrect) {
+        // Correct Action
+        clickedBtn.classList.add('correct');
+        playSuccessChime();
+
+        streak++;
+        if (streak > bestStreak) bestStreak = streak;
+        correctAnswersCount++;
+
+        const ptsEarned = 100 + (streak - 1) * 25;
+        score += ptsEarned;
+        updateHUD();
+
+        // Celebration Confetti
+        try {
+          confetti({
+            particleCount: 70,
+            spread: 60,
+            origin: { y: 0.8 },
+            colors: ['#06b6d4', '#10b981', '#f59e0b', '#3b82f6']
+          });
+        } catch (e) {}
+
+        // Fly smoothly to target country with victory beacon
+        flyToCountry(currentCountry.lat, currentCountry.lon, () => {
+          setTimeout(() => {
+            showMemoryVault(true);
+          }, 600);
+        });
+
+      } else {
+        // Wrong Action (The key feature: zoom into country & teach facts)
+        clickedBtn.classList.add('wrong');
+        playWrongChord();
+
+        // Highlight correct button
+        choiceButtons.forEach((btn, i) => {
+          if (currentOptions[i].name === currentCountry.name) {
+            btn.classList.add('correct');
+          }
+        });
+
+        streak = 0;
+        updateHUD();
+
+        // Fly directly and zoom in on the missed country
+        flyToCountry(currentCountry.lat, currentCountry.lon, () => {
+          setTimeout(() => {
+            showMemoryVault(false);
+          }, 400);
+        });
+      }
+    }
+
+    // Display Educational Memory Card
+    function showMemoryVault(wasCorrect) {
+      questionCardEl.style.display = 'none';
+      memoryVaultEl.style.display = 'block';
+
+      if (wasCorrect) {
+        vaultBadgeEl.textContent = '🎉 CORRECT DISCOVERY!';
+        vaultBadgeEl.className = 'vault-badge correct-badge';
+        vaultNextBtn.innerHTML = '<span>Excellent! Next Nation ➔</span>';
+      } else {
+        vaultBadgeEl.textContent = 'MISSED • STUDY & REMEMBER';
+        vaultBadgeEl.className = 'vault-badge';
+        vaultNextBtn.innerHTML = '<span>Got It! Next Nation ➔</span>';
+      }
+
+      vaultFlagEl.textContent = currentCountry.flag;
+      vaultNameEl.textContent = currentCountry.name;
+      vaultMetaEl.textContent = `Capital: ${currentCountry.capital} • Continent: ${currentCountry.continent}`;
+      vaultWonderEl.textContent = currentCountry.wonder;
+      vaultCultureEl.textContent = currentCountry.tradition;
+      vaultAnchorEl.textContent = currentCountry.memoryAnchor;
+    }
+
+    // Advance to Next Round or Finish
+    function advanceToNextRound() {
+      if (currentRoundIndex + 1 < TOTAL_ROUNDS) {
+        loadRound(currentRoundIndex + 1);
+      } else {
+        triggerGameOver();
+      }
+    }
+
+    function triggerGameOver() {
+      questionCardEl.style.display = 'none';
+      memoryVaultEl.style.display = 'none';
+      gameoverModal.style.display = 'flex';
+
+      finalScoreEl.textContent = score;
+      finalAccuracyEl.textContent = `${Math.round((correctAnswersCount / TOTAL_ROUNDS) * 100)}%`;
+      finalStreakEl.textContent = bestStreak;
+      finalMasteredEl.textContent = `${correctAnswersCount}/${TOTAL_ROUNDS}`;
+
+      if (correctAnswersCount >= 8) {
+        document.getElementById('modalDesc').textContent = "Incredible Master Geographer! You have phenomenal global knowledge and memory recall.";
+      } else if (correctAnswersCount >= 5) {
+        document.getElementById('modalDesc').textContent = "Great Expedition! You anchored many key world cultures into your memory.";
+      } else {
+        document.getElementById('modalDesc').textContent = "Good first expedition! Reviewing these memory anchors will boost your score next run.";
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       5. EVENT LISTENERS & INITIALIZATION
+       ───────────────────────────────────────────────────────────── */
+    // Choice Clicks
+    choicesGridEl.querySelectorAll('.choice-btn').forEach((btn, idx) => {
+      btn.addEventListener('click', () => handleChoiceClick(idx));
+    });
+
+    // Extra Hint Trigger
+    hintTriggerBtn.addEventListener('click', () => {
+      initAudio();
+      playTone(600, 'sine', 0.2, 0.1);
+      extraHintBox.style.display = 'block';
+      hintTriggerBtn.style.display = 'none';
+    });
+
+    // Vault Next Button
+    vaultNextBtn.addEventListener('click', () => {
+      initAudio();
+      advanceToNextRound();
+    });
+
+    // Restart Button
+    restartGameBtn.addEventListener('click', () => {
+      gameoverModal.style.display = 'none';
+      initGame();
+    });
+
+    // Sound Toggle
+    soundBtn.addEventListener('click', () => {
+      initAudio();
+      soundEnabled = !soundEnabled;
+      soundBtn.textContent = soundEnabled ? '🔊' : '🔇';
+      soundBtn.title = soundEnabled ? 'Mute Sound' : 'Enable Sound';
+    });
+
+    // Launch on Load
+    window.addEventListener('DOMContentLoaded', () => {
+      init3D();
+      initGame();
+    });
+  </script>
+</body>
+</html>

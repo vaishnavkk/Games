@@ -1,123 +1,93 @@
-# 🎮 Matrixfall
+# 🕹️ Web Games Collection
 
-> A modern, dark glassmorphic falling blocks game built with pure HTML5, CSS3, and Vanilla JavaScript. Zero external libraries, zero frameworks, 100% self-contained
+> An arcade collection of web games built with pure HTML5, CSS3, modern JavaScript, and WebGL. Fast, responsive, dark glassmorphic UI, and 100% self-contained.
 
-[![Play Live](https://img.shields.io/badge/Play_Live-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
+[![Play Live](https://img.shields.io/badge/Play_Arcade-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![Vanilla JS](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Three.js](https://img.shields.io/badge/Three.js-WebGL-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
 
 ---
 
-## 🕹️ Live Demo
+## 🚀 Play Instantly
 
-Play instantly in your browser:
-👉 **[https://vaishnavkk.github.io/Games/](https://vaishnavkk.github.io/Games/)**
-
----
-
-## ✨ Features
-
-### 🌌 Dark Frosted Glassmorphism
-- **Atmosphere**: Deep radial slate gradient (`#1a1f35` to `#0b0f19`) illuminated by floating ambient glowing orbs.
-- **Panels**: Translucent frosted glass (`backdrop-filter: blur(16px)`) with crisp borders and soft outer shadows.
-- **Tetrominoes**: Sleek glass tiles rendered with an inner highlight border, translucent core, and colored glow.
-- **Retina Scaling**: Dual-buffered HiDPI canvas rendering automatically tailored to your device's pixel ratio.
-
-### ⚡ Matrix Surge
-- Clearing rows charges the **Surge Meter** by 25% per line cleared.
-- Once the meter reaches **100%**, press **`E`** to activate **Matrix Surge for 7 seconds**:
-  - Drops drop speed to **20%** (bullet-time slow motion).
-  - Instantly **vaporizes the bottom-most row of blocks** into upward-drifting luminous particles to rescue you from tight stacks.
-  - The board border pulses with a radiant cyan and violet aura.
-
-### ⚛ Quantum Phase Blocks
-- Every 10th block spawned is a **Quantum Phase Block** with an intense pulsing cyan-white glow and floating indicator badge.
-- Phase blocks **pass completely through existing solid blocks** while falling or hard-dropping, allowing you to fill deep buried cavities and bottom gaps without obstruction.
-- Displays a dedicated radiant cyan **ghost outline** showing exactly where the phased piece will settle.
-- Locks cleanly in-place into vacant cells with a vibrant 16-particle burst—no ceiling rewinding or warping.
-- Retains its full quantum state even when swapped into and out of the **Saved Piece** slot.
-
-### 🎯 Combo Multipliers & Particle Juice
-- Clearing lines consecutively increments the **Combo Multiplier** (`1x`, `2x`, `3x`...).
-- Awards bonus points: `50 × combo × level`.
-- Dynamic screen-nudge effects and canvas glass shard bursts accompany every clear.
-
-### 💾 Saved Piece Slot
-- Store any active piece into the **Saved Piece** slot using `C` or `Shift` and swap it back whenever needed (once per drop).
-
-### 🏎️ Dynamic Acceleration (Per-Block & Destroyed-Row Tempo Scaling)
-- Speed increases **minutely with every single block placed** AND accelerates further **every time any row is destroyed**, raising the tempo and forcing players to act fast.
-- Includes a live `.speed-pulse` visual notification badge whenever rows are cleared.
-- Real-time **Speed Multiplier** displayed live in both Desktop and Mobile HUDs (e.g. 1.0x scaling smoothly to intense 4.0x+).
-- Game over screen tracks your **Total Blocks Placed** and **Peak Speed Achieved**.
+| Game | Description | Play Link |
+| :--- | :--- | :--- |
+| 🎮 **Matrixfall** | Dark glassmorphic falling blocks with Matrix Surge, Quantum Phase Blocks & Dynamic Acceleration | 👉 **[Play Matrixfall](https://vaishnavkk.github.io/Games/)** |
+| 🌍 **GeoTrivia: Earth Explorer** | Interactive 3D WebGL Globe geography trivia with cinematic fly-to zoom & educational Memory Anchors | 👉 **[Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/)** |
 
 ---
 
-## ⌨️ Controls & Mobile Support
+## 🌍 Game 2: GeoTrivia — Earth Explorer
+
+An interactive 3D WebGL Globe trivia experience designed to test geography knowledge and help players permanently remember world nations through unforgettable cultural anchors.
+
+### ✨ Key Features
+- **Interactive 3D Earth Globe**: Smooth orbital controls (drag to rotate, pinch/scroll to zoom) with atmospheric glow, starfields, and real-time day/night lighting powered by Three.js.
+- **Cinematic Fly-To Zoom**: When an answer is submitted (or missed), the camera takes orbital flight, smoothly rotating and zooming directly to the country's coordinates on the globe.
+- **3D Surface Beacons**: Target countries light up with pulsing holographic rings and upward vertical light beams on the sphere's surface.
+- **Educational Memory Vault (Study & Remember)**:
+  - When an answer is incorrect, the game swoops into the nation and unlocks a **Memory Vault Card**.
+  - Highlights:
+    - 🏛️ **Iconic Wonder**: Unforgettable landmarks and natural phenomena.
+    - 🍲 **Taste & Tradition**: Signature cultural dishes and heritage.
+    - 🧠 **Memory Anchor**: Surprising, memorable trivia designed so players never forget the nation again.
+- **Progressive Clues**: Each round offers 3 distinct clues (Geography, Iconic Landmark, Culture) plus an optional **Secret Hint**.
+- **Synthesized Audio**: Web Audio API sound synthesis for camera swooshes, success arpeggios, and educational chords—zero external audio dependencies.
+- **Mobile Responsive**: Ergonomic touch controls and compact layout optimized for mobile screens.
+
+---
+
+## 🎮 Game 1: Matrixfall
+
+A dark glassmorphic falling blocks game built with dual-buffered canvas rendering.
+
+### ✨ Key Features
+- **Dark Frosted Glassmorphism**: Deep radial slate gradient (`#1a1f35` to `#0b0f19`) with translucent frosted glass panels and glowing ambient orbs.
+- **Matrix Surge**: Clearing rows charges the Surge Meter. At 100%, trigger Matrix Surge to enter 20% bullet-time speed and vaporize the bottom stack row.
+- **Quantum Phase Blocks**: Every 10th block passes completely through existing solid blocks to fill deep buried cavities with a dedicated cyan ghost preview and 16-particle solidification burst.
+- **Speed Acceleration**: Fall tempo accelerates with every block placed and on **every row destroyed** (with a `.speed-pulse` HUD notification).
+- **Mobile Gestures & Virtual Pad**: Full touch gesture support (swipe left/right, single tap rotate, double tap hard drop, drag down soft drop, swipe up save) plus on-screen touch controls.
+
+---
+
+## ⌨️ Matrixfall Controls
 
 ### Desktop Keyboard
 | Key | Action | Reward / Notes |
 | :--- | :--- | :--- |
 | <kbd>←</kbd> <kbd>→</kbd> | **Move Left / Right** | Responsive horizontal shift |
 | <kbd>↑</kbd> or <kbd>X</kbd> | **Rotate Clockwise** | Safe horizontal wall-kick tests |
-| <kbd>↓</kbd> | **Soft Drop** | Accelerated descent (**+1 point** per cell) |
-| <kbd>Space</kbd> | **Hard Drop** | Instant lock (**+2 points** per cell) |
+| <kbd>↓</kbd> | **Soft Drop** | Accelerated descent (**+1 pt** / cell) |
+| <kbd>Space</kbd> | **Hard Drop** | Instant lock (**+2 pts** / cell) |
 | <kbd>C</kbd> or <kbd>Shift</kbd> | **Save Piece** | Store/swap active piece into reserve |
 | <kbd>E</kbd> | **Matrix Surge** | Trigger when Surge Meter reaches 100% |
 | <kbd>P</kbd> or <kbd>Esc</kbd> | **Pause / Resume** | Toggle pause overlay or click top ⏸ button |
-
-### 📱 Mobile & Gesture Controls
-- **Direct Board Gestures**:
-  - 👈 **Swipe Left**: Steer active block one cell left.
-  - 👉 **Swipe Right**: Steer active block one cell right.
-  - 👆 **Single Tap**: Rotate falling piece clockwise.
-  - ✌️ **Double Tap**: Fast drop piece instantly to the bottom (Hard Drop).
-  - 👇 **Drag Down**: Accelerate downward descent (Soft Drop).
-  - ☝️ **Swipe Up**: Quick-store active piece into Saved/Hold slot.
-- **Ergonomic Virtual Touch Pad**: Dedicated bottom bar with Left (◀), Rotate (↻), Right (▶), Hold (💾), Soft Drop (▼), Hard Drop (⬇), and Surge (⚡).
-- **Auto-Repeat (DAS)**: Hold left, right, or soft drop for continuous high-speed movement.
-- **Haptic Feedback**: Tactile micro-vibrations on moves, rotations, drops, and clears.
-- **Dynamic Viewport Fit**: Perfectly adapts to modern smartphones (`100dvh`), eliminating page scrolling.
-- **Compact Mobile HUD**: Sleek glass cards for Hold, Score, Level, Lines, Surge %, and Next previews.
-- **Lock Delay System**: 0.5s placement buffer allowing micro-adjustments before pieces lock.
-
----
-
-## 🏆 Scoring System
-
-| Move | Points |
-| :--- | :--- |
-| **Single Line** | `100 × Level` |
-| **Double (2 lines)** | `300 × Level` |
-| **Triple (3 lines)** | `500 × Level` |
-| **Matrixfall (4 lines)** | `800 × Level` |
-| **Cascade Combo** | `+ (50 × Combo × Level)` |
-| **Soft Drop** | `+1 pt / cell` |
-| **Hard Drop** | `+2 pts / cell` |
-
-*High scores are saved automatically in your browser's `localStorage`.*
 
 ---
 
 ## 🚀 Running Locally
 
-No installation, build tools, or web server required:
+No build tools or web servers required:
 
-1. Clone or download the repository:
+1. Clone the repository:
    ```bash
    git clone https://github.com/vaishnavkk/Games.git
    cd Games
    ```
-2. Double-click **`index.html`** or open it in any modern browser (Chrome, Edge, Firefox, Safari).
+2. Open either game in your browser:
+   - **Matrixfall**: Double-click `index.html`
+   - **GeoTrivia**: Double-click `earth-trivia/index.html`
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **HTML5**: Semantic document layout & Canvas 2D API
-- **CSS3**: Backdrop-filter glassmorphism, flexbox dashboard, ambient orb animations
-- **JavaScript**: Pure Vanilla ES6+, `requestAnimationFrame` delta-time loop, 7-bag randomizer, safe wall-kick rotation matrix
+- **HTML5 & CSS3**: Semantic layouts, glassmorphic backdrop filters, custom animations
+- **JavaScript (ES6+)**: Pure vanilla game engines, delta-time game loops, Web Audio API
+- **Three.js & WebGL**: 3D globe geometry, shaders, orbital controls, and spherical camera interpolation
+- **Tween.js**: Smooth cubic easing for camera flight trajectories
 
 ---
 
