@@ -891,6 +891,7 @@
       <div class="glass mobile-info-card">
         <div class="mi-label">Level</div>
         <div class="mi-value" id="mobileLevel">1</div>
+        <div style="font-size:8px; font-weight:800; color:#22d3ee; line-height:1; margin-top:2px;" id="mobileSpeed">1.0x</div>
       </div>
       <div class="glass mobile-info-card">
         <div class="mi-label">Lines</div>
@@ -965,8 +966,11 @@
       <div class="stat-value" id="scoreValue">0</div>
     </div>
     <div class="glass panel-card">
-      <div class="panel-label"><span class="icon">📈</span> Level</div>
-      <div class="stat-value" id="levelValue">1</div>
+      <div class="panel-label"><span class="icon">📈</span> Level & Tempo</div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+        <div class="stat-value" id="levelValue">1</div>
+        <div style="font-size:12px; font-weight:800; color:#22d3ee; font-variant-numeric:tabular-nums; letter-spacing:0.5px; padding-bottom:3px;" id="speedValue">1.0x Speed</div>
+      </div>
       <div class="level-progress-track">
         <div class="level-progress-fill" id="levelProgressFill"></div>
       </div>
@@ -993,6 +997,10 @@
       <div class="tip-row">
         <div class="tip-icon">👆</div>
         <div class="tip-text"><b>Tap the block</b> to rotate. <b>Swipe Left/Right</b> to steer. <b>Double-Tap</b> to fast drop to the bottom!</div>
+      </div>
+      <div class="tip-row">
+        <div class="tip-icon">🏎️</div>
+        <div class="tip-text"><b>Dynamic Acceleration</b>: Speed increases minutely with <b>every single block dropped</b>, raising the stakes as you play!</div>
       </div>
       <div class="tip-row">
         <div class="tip-icon">🎮</div>
@@ -1031,6 +1039,8 @@
     <div class="overlay-stat">High Score: <span id="highScore">0</span></div>
     <div class="overlay-stat">Lines: <span id="finalLines">0</span></div>
     <div class="overlay-stat">Level: <span id="finalLevel">1</span></div>
+    <div class="overlay-stat">Blocks Placed: <span id="finalBlocks">0</span></div>
+    <div class="overlay-stat">Peak Speed: <span id="finalSpeed">1.0x</span></div>
     <button class="overlay-btn" id="retryBtn">Play Again</button>
   </div>
 </div>
@@ -1083,6 +1093,7 @@ const surgeReadyBadge  = document.getElementById("surgeReadyBadge");
 const surgeTimerEl     = document.getElementById("surgeTimer");
 const scoreEl          = document.getElementById("scoreValue");
 const levelEl          = document.getElementById("levelValue");
+const speedEl          = document.getElementById("speedValue");
 const linesEl          = document.getElementById("linesValue");
 const comboEl          = document.getElementById("comboValue");
 const holdEmptyMsg     = document.getElementById("holdEmptyMsg");
@@ -1098,6 +1109,7 @@ const gameOverOverlay = document.getElementById("gameOverOverlay");
 // Mobile DOM refs
 const mobileScore      = document.getElementById("mobileScore");
 const mobileLevel      = document.getElementById("mobileLevel");
+const mobileSpeedEl    = document.getElementById("mobileSpeed");
 const mobileLines      = document.getElementById("mobileLines");
 const mobileSurgePct   = document.getElementById("mobileSurgePct");
 const mobileSurgeFill  = document.getElementById("mobileSurgeFill");
@@ -1202,6 +1214,8 @@ let holdPiece = null;
 let holdUsed = false;
 let gameState = "start";
 let piecesSpawned = 0;
+let blocksPlaced = 0;
+let peakSpeed = 1.0;
 let gameOver = false;
 
 let current = null;
@@ -1346,6 +1360,7 @@ function lockPiece() {
     triggerGameOver();
     return;
   }
+  blocksPlaced++;
   clearLines();
   spawnPiece();
 }
@@ -1649,11 +1664,21 @@ function renderParticles(c) {
   }
 }
 
-// ── Gravity Speed ───────────────────────────────────────────
+// ── Gravity Speed & Dynamic Acceleration ────────────────────
+function getBaseDropInterval() {
+  // Speed increases minutely with each block placed (3.5ms per block) and with each level (50ms per level)
+  return Math.max(0.06, 1.0 - (level - 1) * 0.05 - blocksPlaced * 0.0035);
+}
+
 function getDropInterval() {
-  const base = Math.max(0.05, 1.0 - (level - 1) * 0.08);
+  const base = getBaseDropInterval();
   if (surgeActive) return base / 0.2;
   return base;
+}
+
+function getSpeedMultiplier() {
+  const base = getBaseDropInterval();
+  return 1.0 / base;
 }
 
 // ── Drawing Helpers (Dark Glassmorphic Tiles) ───────────────
@@ -1857,6 +1882,13 @@ function updateUI() {
     nextQuantumBadge.classList.remove("visible");
   }
 
+  // Speed & Tempo
+  const speedMult = getSpeedMultiplier();
+  if (speedMult > peakSpeed) peakSpeed = speedMult;
+  const speedText = speedMult.toFixed(1) + "x";
+  if (speedEl) speedEl.textContent = surgeActive ? "⚡ Slow-Mo" : speedText + " Speed";
+  if (mobileSpeedEl) mobileSpeedEl.textContent = surgeActive ? "⚡ Slow" : speedText;
+
   // Mobile HUD
   mobileScore.textContent = score.toLocaleString();
   mobileLevel.textContent = level;
@@ -1884,6 +1916,8 @@ function startGame() {
   holdPiece = null;
   holdUsed = false;
   piecesSpawned = 0;
+  blocksPlaced = 0;
+  peakSpeed = 1.0;
   bag = [];
   particles = [];
   current = null;
@@ -1950,6 +1984,8 @@ function triggerGameOver() {
   document.getElementById("highScore").textContent  = best.toLocaleString();
   document.getElementById("finalLines").textContent  = lines;
   document.getElementById("finalLevel").textContent  = level;
+  document.getElementById("finalBlocks").textContent = blocksPlaced;
+  document.getElementById("finalSpeed").textContent  = peakSpeed.toFixed(1) + "x";
   gameOverOverlay.classList.remove("hidden");
 }
 

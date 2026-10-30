@@ -44,6 +44,11 @@ Play instantly in your browser:
 ### 💾 Saved Piece Slot
 - Store any active piece into the **Saved Piece** slot using `C` or `Shift` and swap it back whenever needed (once per drop).
 
+### 🏎️ Dynamic Acceleration (Per-Block Tempo Scaling)
+- Speed increases **minutely with every single block locked**, continuously raising the stakes and forcing players to think and act faster as the stack rises.
+- Real-time **Speed Multiplier** displayed live in both Desktop and Mobile HUDs (e.g. 1.0x scaling smoothly to intense 4.0x+).
+- Game over screen tracks your **Total Blocks Placed** and **Peak Speed Achieved**.
+
 ---
 
 ## ⌨️ Controls & Mobile Support
