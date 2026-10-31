@@ -1,0 +1,35 @@
+{
+  "name": "geotrivia-earth-explorer",
+  "version": "2.0.0",
+  "description": "3D Interactive Globe Geography Trivia Game with Direct Country Clicking",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validateData.js",
+    "bundle:map": "node scripts/bundleMapData.js",
+    "build": "esbuild src/main.js --bundle --outfile=dist/bundle.js --format=esm --minify",
+    "serve": "node scripts/serve.js",
+    "test": "node scripts/validateData.js"
+  },
+  "keywords": [
+    "geography",
+    "trivia",
+    "3d",
+    "threejs",
+    "globe",
+    "educational"
+  ],
+  "author": "vaishnavkk",
+  "license": "MIT",
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "three": "^0.182.0",
+    "topojson-client": "^3.1.0",
+    "world-atlas": "^2.0.2"
+  },
+  "devDependencies": {
+    "canvas": "^3.2.3",
+    "esbuild": "^0.28.2",
+    "puppeteer-core": "^25.16.0"
+  }
+}
