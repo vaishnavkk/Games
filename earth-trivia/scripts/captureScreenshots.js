@@ -176,7 +176,8 @@ async function main() {
       { name: 'Microstate - Malta', lat: 35.93, lon: 14.37, expectedId: '470' },
       { name: 'Microstate - Monaco', lat: 43.73, lon: 7.42, expectedId: '492' },
       { name: 'Microstate - Vatican City', lat: 41.90, lon: 12.45, expectedId: '336' },
-      { name: 'Microstate - Maldives', lat: 3.20, lon: 73.22, expectedId: '462' }
+      { name: 'Microstate - Maldives', lat: 3.20, lon: 73.22, expectedId: '462' },
+      { name: 'Microstate - Tuvalu', lat: -7.10, lon: 177.64, expectedId: '798' }
     ];
 
     return testCoords.map(tc => {

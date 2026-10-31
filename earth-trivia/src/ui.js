@@ -46,6 +46,12 @@ export class UIManager {
     this.clueCard.classList.add('hidden');
     this.memoryVault.classList.add('hidden');
     this.endScreen.classList.add('hidden');
+
+    const highScoreEl = document.getElementById('startHighScore');
+    if (highScoreEl) {
+      const saved = localStorage.getItem('geotrivia_highscore') || '0';
+      highScoreEl.textContent = `🏆 Personal Best: ${parseInt(saved, 10).toLocaleString()} pts`;
+    }
   }
 
   showGameHUD(totalRounds, lives, hasTimer) {
@@ -101,6 +107,13 @@ export class UIManager {
   showQuestion({ mode, country, clueIndex, clueText, availableCluesCount }) {
     this.clueCard.classList.remove('hidden');
     this.memoryVault.classList.add('hidden');
+
+    const clueBody = document.getElementById('clueBody');
+    const toggleClueBtn = document.getElementById('toggleClueBtn');
+    if (clueBody && toggleClueBtn) {
+      clueBody.classList.remove('collapsed');
+      toggleClueBtn.textContent = '➖';
+    }
 
     if (mode === 'name') {
       this.cluePrompt.textContent = 'Find this country on the globe:';

@@ -167,7 +167,7 @@ export class GameManager {
 
   // Handle user click on globe
   handleGlobeClick(clientX, clientY) {
-    if (!this.isAnswering) return;
+    if (!this.isAnswering || this.globe.flight.isFlying) return;
 
     const hitResult = this.globe.picker.pickCountry(
       clientX,
@@ -186,6 +186,8 @@ export class GameManager {
     if (!this.isAnswering) return;
     this.isAnswering = false;
     this.stopTimer();
+    this.currentHoveredId = null;
+    this.globe.renderer.domElement.style.cursor = 'grab';
 
     const target = this.currentCountry;
     const isCorrect = guessCountry && guessCountry.id === target.id;
@@ -304,12 +306,34 @@ export class GameManager {
   endGame() {
     this.stopTimer();
     this.isAnswering = false;
+    this.currentHoveredId = null;
+    this.globe.renderer.domElement.style.cursor = 'default';
 
     // Save high score to localStorage
     const savedHigh = parseInt(localStorage.getItem('geotrivia_highscore') || '0', 10);
     if (this.score > savedHigh) {
       localStorage.setItem('geotrivia_highscore', String(this.score));
     }
+
+    // Save missed countries history in localStorage (spaced repetition)
+    try {
+      const raw = localStorage.getItem('geotrivia_missed_history');
+      const history = raw ? JSON.parse(raw) : {};
+      for (const mc of this.missedCountries) {
+        const idStr = String(mc.id).padStart(3, '0');
+        history[idStr] = {
+          id: idStr,
+          name: mc.name,
+          flag: mc.flag,
+          capital: mc.capital,
+          landmark: mc.landmark,
+          memoryAnchor: mc.memoryAnchors ? mc.memoryAnchors[0] : '',
+          missCount: (history[idStr]?.missCount || 0) + 1,
+          lastMissedAt: new Date().toISOString()
+        };
+      }
+      localStorage.setItem('geotrivia_missed_history', JSON.stringify(history));
+    } catch (e) {}
 
     const accuracy = this.round > 0 ? Math.round((this.correctCount / this.round) * 100) : 0;
 
@@ -338,6 +362,8 @@ export class GameManager {
 
   bindEvents() {
     const canvas = this.globe.renderer.domElement;
+    this.currentHoveredId = null;
+    let lastHoverTime = 0;
 
     // Track mouse drag vs click
     let downX = 0, downY = 0, downTime = 0;
@@ -351,9 +377,55 @@ export class GameManager {
     canvas.addEventListener('pointerup', (e) => {
       const dist = Math.hypot(e.clientX - downX, e.clientY - downY);
       const time = performance.now() - downTime;
-      // If minimal movement and quick press, treat as click selection!
-      if (dist < 6 && time < 400) {
+      // Ergonomic tap detection: allow up to 12px finger jitter and 650ms press
+      if (dist < 12 && time < 650) {
         this.handleGlobeClick(e.clientX, e.clientY);
+      }
+    });
+
+    // Hover soft highlight on globe
+    canvas.addEventListener('pointermove', (e) => {
+      if (!this.isAnswering || this.globe.flight.isFlying) {
+        if (this.currentHoveredId) {
+          this.currentHoveredId = null;
+          this.globe.mapRenderer.resetHighlights();
+          canvas.style.cursor = 'grab';
+        }
+        return;
+      }
+
+      const now = performance.now();
+      if (now - lastHoverTime < 50) return; // throttle to ~20fps
+      lastHoverTime = now;
+
+      const hit = this.globe.picker.pickCountry(
+        e.clientX,
+        e.clientY,
+        this.globe.width,
+        this.globe.height
+      );
+
+      if (hit && hit.country) {
+        const countryId = String(hit.country.id).padStart(3, '0');
+        if (countryId !== this.currentHoveredId) {
+          this.currentHoveredId = countryId;
+          this.globe.mapRenderer.renderHighlights({ hoveredCountryId: countryId });
+          canvas.style.cursor = 'pointer';
+        }
+      } else {
+        if (this.currentHoveredId) {
+          this.currentHoveredId = null;
+          this.globe.mapRenderer.resetHighlights();
+          canvas.style.cursor = 'grab';
+        }
+      }
+    });
+
+    canvas.addEventListener('pointerleave', () => {
+      if (this.currentHoveredId) {
+        this.currentHoveredId = null;
+        this.globe.mapRenderer.resetHighlights();
+        canvas.style.cursor = 'default';
       }
     });
 

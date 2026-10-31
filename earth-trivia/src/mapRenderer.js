@@ -154,37 +154,63 @@ export class MapRenderer {
     // Reset from pre-rendered base
     this.ctx.drawImage(this.baseCanvas, 0, 0);
 
+    const getCountry = (id) => {
+      if (!id) return null;
+      return this.countryMap.get(id) || this.countryMap.get(String(id).padStart(3, '0'));
+    };
+
+    const highlightTinyDot = (countryId, fillColor, strokeColor, radius) => {
+      if (!countryId) return;
+      const idStr = String(countryId).padStart(3, '0');
+      const tiny = TINY_COUNTRIES.find(t => t.id === idStr);
+      if (tiny) {
+        const [tx, ty] = this.toPixel(tiny.centroid[0], tiny.centroid[1]);
+        this.ctx.fillStyle = fillColor;
+        this.ctx.beginPath();
+        this.ctx.arc(tx, ty, radius, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.strokeStyle = strokeColor;
+        this.ctx.lineWidth = 2;
+        this.ctx.stroke();
+      }
+    };
+
+    const dotRadius = this.width > 2048 ? 8 : 5;
+
     // Hovered Country
     if (hoveredCountryId && hoveredCountryId !== correctCountryId && hoveredCountryId !== guessCountryId) {
-      const country = this.countryMap.get(hoveredCountryId);
-      if (country) {
+      const country = getCountry(hoveredCountryId);
+      if (country && country.geometry) {
         this.ctx.fillStyle = 'rgba(6, 182, 212, 0.35)';
         this.ctx.strokeStyle = '#38bdf8';
         this.ctx.lineWidth = this.width > 2048 ? 3 : 2;
         this.drawGeometry(this.ctx, country.geometry);
       }
+      highlightTinyDot(hoveredCountryId, '#06b6d4', '#ffffff', dotRadius);
     }
 
     // Wrong Guess Country (Red)
     if (guessCountryId && guessCountryId !== correctCountryId) {
-      const country = this.countryMap.get(guessCountryId);
-      if (country) {
+      const country = getCountry(guessCountryId);
+      if (country && country.geometry) {
         this.ctx.fillStyle = 'rgba(239, 68, 68, 0.65)';
         this.ctx.strokeStyle = '#ef4444';
         this.ctx.lineWidth = this.width > 2048 ? 4 : 2.5;
         this.drawGeometry(this.ctx, country.geometry);
       }
+      highlightTinyDot(guessCountryId, '#ef4444', '#fecaca', dotRadius + 2);
     }
 
     // Correct Country (Green)
     if (correctCountryId) {
-      const country = this.countryMap.get(correctCountryId);
-      if (country) {
+      const country = getCountry(correctCountryId);
+      if (country && country.geometry) {
         this.ctx.fillStyle = 'rgba(16, 185, 129, 0.72)';
         this.ctx.strokeStyle = '#34d399';
         this.ctx.lineWidth = this.width > 2048 ? 4.5 : 3.0;
         this.drawGeometry(this.ctx, country.geometry);
       }
+      highlightTinyDot(correctCountryId, '#10b981', '#a7f3d0', dotRadius + 2);
     }
 
     // Notify Three.js to re-upload updated texture

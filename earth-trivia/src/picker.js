@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
+import { COUNTRIES_DB } from '../data/countries.js';
 
 export class CountryPicker {
   constructor(camera, globeMesh) {
@@ -12,6 +13,7 @@ export class CountryPicker {
     // Cache pre-computed bounding boxes and polygons
     this.countries = WORLD_COUNTRIES;
     this.tinyCountries = TINY_COUNTRIES;
+    this.dbCountries = COUNTRIES_DB;
   }
 
   // Convert 3D Sphere Local Point to (lat, lon)
@@ -96,8 +98,17 @@ export class CountryPicker {
 
   // Raycast from mouse / touch screen coordinates [clientX, clientY]
   pickCountry(clientX, clientY, containerWidth, containerHeight) {
-    this.mouse.x = (clientX / containerWidth) * 2 - 1;
-    this.mouse.y = -(clientY / containerHeight) * 2 + 1;
+    const canvas = document.querySelector('#webgl-container canvas');
+    if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const rw = rect.width || containerWidth;
+      const rh = rect.height || containerHeight;
+      this.mouse.x = ((clientX - rect.left) / rw) * 2 - 1;
+      this.mouse.y = -((clientY - rect.top) / rh) * 2 + 1;
+    } else {
+      this.mouse.x = (clientX / containerWidth) * 2 - 1;
+      this.mouse.y = -(clientY / containerHeight) * 2 + 1;
+    }
 
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObject(this.globeMesh, false);
@@ -120,7 +131,10 @@ export class CountryPicker {
       const degDist = Math.hypot(dLon, dLat);
 
       if (degDist <= tiny.hitRadius) {
-        const fullCountry = this.countries.find(c => c.id === tiny.id);
+        let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === tiny.id);
+        if (!fullCountry) {
+          fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === tiny.id);
+        }
         if (fullCountry) {
           return {
             country: fullCountry,
@@ -177,7 +191,10 @@ export class CountryPicker {
       const degDist = Math.hypot(dLon, dLat);
 
       if (degDist <= tiny.hitRadius) {
-        const fullCountry = this.countries.find(c => c.id === tiny.id);
+        let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === tiny.id);
+        if (!fullCountry) {
+          fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === tiny.id);
+        }
         if (fullCountry) return fullCountry;
       }
     }

@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const globeApp = new GlobeApp(container);
   const ui = new UIManager();
   const game = new GameManager(globeApp, ui);
+  ui.showStartScreen();
 
   // Expose for testing and verification
   window.__geotrivia = { globeApp, ui, game };
