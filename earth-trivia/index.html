@@ -211,25 +211,37 @@
       transform: translateY(-1px);
     }
 
-    .arcade-btn {
-      text-decoration: none;
+    .confirm-selection-btn {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 45;
+      background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+      padding: 12px 22px;
+      font-family: var(--font-heading);
+      font-size: 13.5px;
+      font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 5px;
-      padding: 6px 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(16px);
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #e2e8f0;
-      transition: all 0.2s ease;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
+      cursor: pointer;
+      animation: popInBtn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      pointer-events: auto;
     }
-    .arcade-btn:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: #38bdf8;
-      color: #38bdf8;
+    @keyframes popInBtn {
+      from { transform: translate(-50%, 20px) scale(0.9); opacity: 0; }
+      to { transform: translate(-50%, 0) scale(1); opacity: 1; }
+    }
+    .confirm-selection-btn.hidden {
+      display: none !important;
+    }
+    .confirm-selection-btn:active {
+      transform: translate(-50%, 2px) scale(0.97);
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -824,12 +836,16 @@
         </div>
         <div class="lives-strip" id="livesContainer" title="Lives Remaining" style="display:none;"></div>
         <button class="icon-btn" id="soundBtn" title="Toggle Sound">🔊</button>
-        <a href="../index.html" class="arcade-btn" title="Play Matrixfall">
-          <span>🎮</span>
-          <span>Matrixfall</span>
-        </a>
       </div>
     </header>
+
+    <!-- Touch Device Confirm Button (Visible on mobile tap selection to prevent mis-taps) -->
+    <button class="confirm-selection-btn hidden" id="touchConfirmBtn">
+      <span>Confirm:</span>
+      <span id="touchSelectedFlag">📍</span>
+      <strong id="touchSelectedName">Selected Nation</strong>
+      <span class="confirm-arrow">✓</span>
+    </button>
 
     <!-- Slim Floating Clue Card (Top Center, Max ~2 Lines) -->
     <div class="floating-clue-card hidden" id="clueCard">

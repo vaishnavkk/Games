@@ -166,7 +166,7 @@ export class GameManager {
   }
 
   // Handle user click on globe
-  handleGlobeClick(clientX, clientY) {
+  handleGlobeClick(clientX, clientY, pointerType = 'mouse') {
     if (!this.isAnswering || this.globe.flight.isFlying) return;
 
     const hitResult = this.globe.picker.pickCountry(
@@ -176,16 +176,42 @@ export class GameManager {
       this.globe.height
     );
 
-    if (!hitResult) return;
+    const isTouch = pointerType === 'touch' || window.matchMedia('(pointer: coarse)').matches;
+
+    if (!hitResult || !hitResult.country) {
+      if (isTouch) {
+        this.selectedTouchHit = null;
+        this.ui.hideTouchConfirm();
+        this.globe.mapRenderer.resetHighlights();
+      }
+      return;
+    }
 
     sound.playClick();
-    this.handleGuess(hitResult.country, hitResult.hitLat, hitResult.hitLon);
+
+    if (isTouch) {
+      // On touch devices: tap selects and a "Confirm" button submits (prevents mis-taps)
+      this.selectedTouchHit = hitResult;
+      const countryId = String(hitResult.country.id).padStart(3, '0');
+      this.globe.mapRenderer.renderHighlights({ hoveredCountryId: countryId });
+      this.ui.showTouchConfirm(hitResult.country, () => {
+        sound.playClick();
+        this.ui.hideTouchConfirm();
+        this.handleGuess(hitResult.country, hitResult.hitLat, hitResult.hitLon);
+      });
+    } else {
+      // On desktop: click directly submits!
+      this.ui.hideTouchConfirm();
+      this.handleGuess(hitResult.country, hitResult.hitLat, hitResult.hitLon);
+    }
   }
 
   handleGuess(guessCountry, hitLat, hitLon) {
     if (!this.isAnswering) return;
     this.isAnswering = false;
     this.stopTimer();
+    this.ui.hideTouchConfirm();
+    this.selectedTouchHit = null;
     this.currentHoveredId = null;
     this.globe.renderer.domElement.style.cursor = 'grab';
 
@@ -379,7 +405,7 @@ export class GameManager {
       const time = performance.now() - downTime;
       // Ergonomic tap detection: allow up to 12px finger jitter and 650ms press
       if (dist < 12 && time < 650) {
-        this.handleGlobeClick(e.clientX, e.clientY);
+        this.handleGlobeClick(e.clientX, e.clientY, e.pointerType);
       }
     });
 

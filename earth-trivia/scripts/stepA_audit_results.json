@@ -1,0 +1,218 @@
+{
+  "coverage": {
+    "desktop": {
+      "question": 32.7,
+      "correct": 31.7,
+      "wrong": 31.7
+    },
+    "mobile": {
+      "question": 82.1,
+      "correct": 82.1,
+      "wrong": 68.6
+    }
+  },
+  "pins": [
+    {
+      "country": "Japan",
+      "lat": 36.2048,
+      "lon": 138.2529,
+      "screenshot": "before-pin-japan.png",
+      "landsInside": "MISALIGNED (offset from hand-drawn canvas shapes)"
+    },
+    {
+      "country": "Kenya",
+      "lat": -0.0236,
+      "lon": 37.9062,
+      "screenshot": "before-pin-kenya.png",
+      "landsInside": "MISALIGNED (offset from hand-drawn canvas shapes)"
+    },
+    {
+      "country": "Brazil",
+      "lat": -14.235,
+      "lon": -51.9253,
+      "screenshot": "before-pin-brazil.png",
+      "landsInside": "Partial / Approximate"
+    },
+    {
+      "country": "Australia",
+      "lat": -25.2744,
+      "lon": 133.7751,
+      "screenshot": "before-pin-australia.png",
+      "landsInside": "Partial / Approximate"
+    },
+    {
+      "country": "Iceland",
+      "lat": 64.9631,
+      "lon": -19.0208,
+      "screenshot": "before-pin-iceland.png",
+      "landsInside": "MISALIGNED (offset from hand-drawn canvas shapes)"
+    },
+    {
+      "country": "New Zealand",
+      "lat": -40.9006,
+      "lon": 174.886,
+      "screenshot": "before-pin-newzealand.png",
+      "landsInside": "MISALIGNED (offset from hand-drawn canvas shapes)"
+    }
+  ],
+  "spoiledCluesCount": 22,
+  "spoiledClues": [
+    {
+      "country": "Japan",
+      "type": "geo",
+      "bannedWord": "Asian",
+      "fullText": "An East Asian island chain formed along the Pacific volcanic Ring of Fire."
+    },
+    {
+      "country": "Egypt",
+      "type": "geo",
+      "bannedWord": "African",
+      "fullText": "Northeastern African cradle of civilization bisected by the world's longest river."
+    },
+    {
+      "country": "Brazil",
+      "type": "geo",
+      "bannedWord": "South America",
+      "fullText": "The largest nation in South America, spanning across the Amazon Basin."
+    },
+    {
+      "country": "Australia",
+      "type": "geo",
+      "bannedWord": "Pacific",
+      "fullText": "An island continent bounded by the Indian and Pacific Oceans, dominated by the Outback."
+    },
+    {
+      "country": "Italy",
+      "type": "geo",
+      "bannedWord": "Mediterranean",
+      "fullText": "Distinctive boot-shaped Mediterranean peninsula dotted with active volcanoes like Vesuvius."
+    },
+    {
+      "country": "India",
+      "type": "geo",
+      "bannedWord": "Indian Ocean",
+      "fullText": "A vast subcontinent bounded by the snow-crowned Himalayas in the north and the Indian Ocean."
+    },
+    {
+      "country": "Peru",
+      "type": "geo",
+      "bannedWord": "Pacific",
+      "fullText": "Pacific coast nation traversing the spine of the dramatic Andes mountains."
+    },
+    {
+      "country": "Canada",
+      "type": "geo",
+      "bannedWord": "Atlantic",
+      "fullText": "The second-largest country by landmass, spanning from Atlantic to Pacific to Arctic oceans."
+    },
+    {
+      "country": "Canada",
+      "type": "landmark",
+      "bannedWord": "alpine",
+      "fullText": "The turquoise alpine waters of Banff National Park and Niagara Falls."
+    },
+    {
+      "country": "France",
+      "type": "geo",
+      "bannedWord": "European",
+      "fullText": "Western European nation with borders touching both the Atlantic Ocean and the Mediterranean."
+    },
+    {
+      "country": "Kenya",
+      "type": "geo",
+      "bannedWord": "African",
+      "fullText": "East African country straddling the equator along the Great Rift Valley."
+    },
+    {
+      "country": "Iceland",
+      "type": "geo",
+      "bannedWord": "Atlantic",
+      "fullText": "A volcanic island in the North Atlantic situated directly atop the Mid-Atlantic Ridge."
+    },
+    {
+      "country": "Mexico",
+      "type": "geo",
+      "bannedWord": "Pacific",
+      "fullText": "Bridges North and Central America between the Gulf of Mexico and the Pacific Ocean."
+    },
+    {
+      "country": "Norway",
+      "type": "geo",
+      "bannedWord": "Scandinavian",
+      "fullText": "Scandinavian kingdom celebrated for deep coastal saltwater fjords carved by ancient glaciers."
+    },
+    {
+      "country": "Norway",
+      "type": "culture",
+      "bannedWord": "Arctic",
+      "fullText": "The midnight sun, northern lights, Viking longships, and fresh Arctic salmon."
+    },
+    {
+      "country": "Greece",
+      "type": "geo",
+      "bannedWord": "European",
+      "fullText": "Southern European archipelago in the Aegean and Ionian seas comprising thousands of islands."
+    },
+    {
+      "country": "Greece",
+      "type": "culture",
+      "bannedWord": "Mediterranean",
+      "fullText": "Birthplace of democracy, Western philosophy, Olympic Games, and Mediterranean olive oils."
+    },
+    {
+      "country": "South Africa",
+      "type": "geo",
+      "bannedWord": "Africa",
+      "fullText": "Occupies the southernmost tip of Africa where the Atlantic meets the warm Indian Ocean."
+    },
+    {
+      "country": "New Zealand",
+      "type": "geo",
+      "bannedWord": "Pacific",
+      "fullText": "An island nation in the southwestern Pacific consisting of two main landmasses (North and South islands)."
+    },
+    {
+      "country": "Morocco",
+      "type": "geo",
+      "bannedWord": "Africa",
+      "fullText": "Northwestern corner of Africa overlooking the Strait of Gibraltar toward Europe."
+    },
+    {
+      "country": "Switzerland",
+      "type": "geo",
+      "bannedWord": "European",
+      "fullText": "Landlocked central European alpine sanctuary dominated by the snow-capped Swiss Alps."
+    },
+    {
+      "country": "Thailand",
+      "type": "geo",
+      "bannedWord": "Asian",
+      "fullText": "Southeast Asian nation on the Indochinese Peninsula bordering the Gulf of Thailand and Andaman Sea."
+    }
+  ],
+  "brokenItems": [
+    {
+      "item": "Broken Arcade Navigation Link",
+      "code": "<a href=\"../index.html\" class=\"arcade-link\">Matrixfall</a>",
+      "detail": "Direct relative link to ../index.html assumes specific parent server directory, broken in subpath deployments and irrelevant to GeoTrivia"
+    },
+    {
+      "item": "Runtime External CDN Reliance",
+      "code": "three.js, OrbitControls, tween.umd.js, canvas-confetti, unpkg Blue Marble texture",
+      "detail": "Fails in offline environments; downloads 2MB+ unpkg image on every session"
+    },
+    {
+      "item": "4-Choice Button Mechanic instead of Globe Picking",
+      "detail": "Multiple choice trivia buttons instead of direct 3D sphere raycasting and country polygon hit detection"
+    },
+    {
+      "item": "Borders & Pin Misalignment",
+      "detail": "Hand-drawn canvas strokes and Blue Marble texture do not align with spherical lat/lon math"
+    },
+    {
+      "item": "Mystery Nation Label",
+      "code": "<div class=\"question-prompt\">Can you identify this mystery nation?</div>",
+      "detail": "Redundant boilerplate text wasting vertical space"
+    }
+  ]
+}

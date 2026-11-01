@@ -38,9 +38,29 @@ export class UIManager {
     this.missedList = document.getElementById('missedList');
     this.replayMissedBtn = document.getElementById('replayMissedBtn');
     this.restartBtn = document.getElementById('restartBtn');
+
+    // Touch Confirm Elements
+    this.touchConfirmBtn = document.getElementById('touchConfirmBtn');
+    this.touchSelectedFlag = document.getElementById('touchSelectedFlag');
+    this.touchSelectedName = document.getElementById('touchSelectedName');
+  }
+
+  showTouchConfirm(country, onConfirm) {
+    if (!this.touchConfirmBtn) return;
+    if (this.touchSelectedFlag) this.touchSelectedFlag.textContent = country.flag || '📍';
+    if (this.touchSelectedName) this.touchSelectedName.textContent = country.name;
+    this.touchConfirmBtn.classList.remove('hidden');
+    this.touchConfirmBtn.onclick = onConfirm;
+  }
+
+  hideTouchConfirm() {
+    if (this.touchConfirmBtn) {
+      this.touchConfirmBtn.classList.add('hidden');
+    }
   }
 
   showStartScreen() {
+    this.hideTouchConfirm();
     this.startScreen.classList.remove('hidden');
     this.topHud.classList.add('hidden');
     this.clueCard.classList.add('hidden');
@@ -105,6 +125,7 @@ export class UIManager {
   }
 
   showQuestion({ mode, country, clueIndex, clueText, availableCluesCount }) {
+    this.hideTouchConfirm();
     this.clueCard.classList.remove('hidden');
     this.memoryVault.classList.add('hidden');
 
@@ -142,6 +163,7 @@ export class UIManager {
   }
 
   showMemoryVault({ isCorrect, targetCountry, guessCountry, distanceKm, onNext }) {
+    this.hideTouchConfirm();
     this.clueCard.classList.add('hidden');
     this.memoryVault.classList.remove('hidden');
 
@@ -169,6 +191,7 @@ export class UIManager {
   }
 
   showEndScreen({ score, accuracy, bestStreak, missedCountries, onRestart, onReplayMissed }) {
+    this.hideTouchConfirm();
     this.topHud.classList.add('hidden');
     this.clueCard.classList.add('hidden');
     this.memoryVault.classList.add('hidden');

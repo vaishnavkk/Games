@@ -1,0 +1,132 @@
+{
+  "coverage": {
+    "desktop": {
+      "question": 8.9,
+      "globe": 91.1,
+      "correct": 14.3,
+      "wrong": 15.3
+    },
+    "mobile": {
+      "question": 18.5,
+      "globe": 81.5,
+      "correct": 41.6,
+      "wrong": 41.6
+    }
+  },
+  "pins": [
+    {
+      "country": "Japan",
+      "lat": 36.2,
+      "lon": 138.25,
+      "screenshot": "after-pin-japan.png",
+      "landsInside": "EXACT MATCH (Confirmed via Natural Earth polygon)"
+    },
+    {
+      "country": "Kenya",
+      "lat": -0.02,
+      "lon": 37.9,
+      "screenshot": "after-pin-kenya.png",
+      "landsInside": "EXACT MATCH (Confirmed via Natural Earth polygon)"
+    },
+    {
+      "country": "Brazil",
+      "lat": -14.23,
+      "lon": -51.92,
+      "screenshot": "after-pin-brazil.png",
+      "landsInside": "EXACT MATCH (Confirmed via Natural Earth polygon)"
+    },
+    {
+      "country": "Australia",
+      "lat": -25.27,
+      "lon": 133.77,
+      "screenshot": "after-pin-australia.png",
+      "landsInside": "EXACT MATCH (Confirmed via Natural Earth polygon)"
+    },
+    {
+      "country": "Iceland",
+      "lat": 64.96,
+      "lon": -19.02,
+      "screenshot": "after-pin-iceland.png",
+      "landsInside": "EXACT MATCH (Confirmed via Natural Earth polygon)"
+    },
+    {
+      "country": "New Zealand",
+      "lat": -40.9,
+      "lon": 174.88,
+      "screenshot": "after-pin-newzealand.png",
+      "landsInside": "FAIL"
+    }
+  ],
+  "clickAccuracy": [
+    {
+      "name": "Russia (Date Line / Siberia)",
+      "targetId": "643",
+      "foundName": "Russia",
+      "foundId": "643",
+      "pass": true
+    },
+    {
+      "name": "Fiji (Date Line Crosser)",
+      "targetId": "242",
+      "foundName": "Fiji",
+      "foundId": "242",
+      "pass": true
+    },
+    {
+      "name": "Norway (High Latitude Fjords)",
+      "targetId": "578",
+      "foundName": "Norway",
+      "foundId": "578",
+      "pass": true
+    },
+    {
+      "name": "Chile (Long Narrow Pacific Spine)",
+      "targetId": "152",
+      "foundName": "Chile",
+      "foundId": "152",
+      "pass": true
+    },
+    {
+      "name": "Brazil (Equator & Tropical Basin)",
+      "targetId": "076",
+      "foundName": "Brazil",
+      "foundId": "076",
+      "pass": true
+    },
+    {
+      "name": "Japan (Narrow Archipelagic Arc)",
+      "targetId": "392",
+      "foundName": "Japan",
+      "foundId": "392",
+      "pass": true
+    },
+    {
+      "name": "Kenya (Equatorial Rift)",
+      "targetId": "404",
+      "foundName": "Kenya",
+      "foundId": "404",
+      "pass": true
+    },
+    {
+      "name": "Tuvalu (Isolated Microstate)",
+      "targetId": "798",
+      "foundName": "Tuvalu",
+      "foundId": "798",
+      "pass": true
+    },
+    {
+      "name": "Singapore (Small Island State)",
+      "targetId": "702",
+      "foundName": "Singapore",
+      "foundId": "702",
+      "pass": true
+    },
+    {
+      "name": "Vatican City (Landlocked Micro-enclave)",
+      "targetId": "336",
+      "foundName": "Vatican",
+      "foundId": "336",
+      "pass": true
+    }
+  ]
+}

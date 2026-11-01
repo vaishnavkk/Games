@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "validate": "node scripts/validateData.js",
+    "check:clues": "node scripts/validateData.js",
     "bundle:map": "node scripts/bundleMapData.js",
     "build": "esbuild src/main.js --bundle --outfile=dist/bundle.js --format=esm --minify",
     "serve": "node scripts/serve.js",
