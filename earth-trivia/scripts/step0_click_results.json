@@ -1,0 +1,420 @@
+{
+  "total": 46,
+  "passed": 46,
+  "results": [
+    {
+      "target": "Rome Centre",
+      "coords": "[41.89, 12.49]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.762, rotY:-0.563, roll:15°",
+      "expected": "Italy",
+      "actual": "Italy",
+      "passed": true
+    },
+    {
+      "target": "Paris Centre",
+      "coords": "[48.86, 2.35]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.653, rotY:-1.238, roll:330°",
+      "expected": "France",
+      "actual": "France",
+      "passed": true
+    },
+    {
+      "target": "Zurich Centre",
+      "coords": "[47.38, 8.54]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.337, rotY:1.425, roll:138°",
+      "expected": "Switzerland",
+      "actual": "Switzerland",
+      "passed": true
+    },
+    {
+      "target": "Vienna Centre",
+      "coords": "[48.21, 16.37]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.841, rotY:-0.791, roll:354°",
+      "expected": "Austria",
+      "actual": "Austria",
+      "passed": true
+    },
+    {
+      "target": "Monaco Area",
+      "coords": "[43.74, 7.42]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-1.674, rotY:0.442, roll:201°",
+      "expected": "Monaco",
+      "actual": "Monaco",
+      "passed": true
+    },
+    {
+      "target": "Spain near Portugal (Badajoz)",
+      "coords": "[38.88, -6.97]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-1.403, rotY:-0.969, roll:287°",
+      "expected": "Spain",
+      "actual": "Spain",
+      "passed": true
+    },
+    {
+      "target": "Portugal near Spain (Elvas)",
+      "coords": "[38.88, -7.16]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.425, rotY:-0.838, roll:3°",
+      "expected": "Portugal",
+      "actual": "Portugal",
+      "passed": true
+    },
+    {
+      "target": "Rwanda near Burundi (Butare)",
+      "coords": "[-2.60, 29.74]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:2.858, rotY:-1.028, roll:13°",
+      "expected": "Rwanda",
+      "actual": "Rwanda",
+      "passed": true
+    },
+    {
+      "target": "Burundi near Rwanda (Ngozi)",
+      "coords": "[-2.91, 29.83]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:2.908, rotY:1.035, roll:176°",
+      "expected": "Burundi",
+      "actual": "Burundi",
+      "passed": true
+    },
+    {
+      "target": "Germany near France (Kehl)",
+      "coords": "[48.57, 7.81]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.708, rotY:0.853, roll:90°",
+      "expected": "Germany",
+      "actual": "Germany",
+      "passed": true
+    },
+    {
+      "target": "France near Germany (Strasbourg)",
+      "coords": "[48.58, 7.75]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-1.679, rotY:0.601, roll:187°",
+      "expected": "France",
+      "actual": "France",
+      "passed": true
+    },
+    {
+      "target": "Mid-Pacific Ocean (Equator)",
+      "coords": "[0.00, -145.00]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:0.489, rotY:-0.864, roll:202°",
+      "expected": "None",
+      "actual": "None",
+      "passed": true
+    },
+    {
+      "target": "South Pacific Ocean",
+      "coords": "[-35.00, -125.00]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-0.325, rotY:0.784, roll:327°",
+      "expected": "None",
+      "actual": "None",
+      "passed": true
+    },
+    {
+      "target": "Central North Atlantic",
+      "coords": "[30.00, -42.00]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:0.890, rotY:0.401, roll:81°",
+      "expected": "None",
+      "actual": "None",
+      "passed": true
+    },
+    {
+      "target": "South Indian Ocean",
+      "coords": "[-28.00, 80.00]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:2.895, rotY:0.459, roll:226°",
+      "expected": "None",
+      "actual": "None",
+      "passed": true
+    },
+    {
+      "target": "Southern Ocean (Off Antarctica)",
+      "coords": "[-58.00, -110.00]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:0.916, rotY:-0.613, roll:151°",
+      "expected": "None",
+      "actual": "None",
+      "passed": true
+    },
+    {
+      "target": "Japan",
+      "coords": "[36.20, 138.25]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.171, rotY:-0.314, roll:156°",
+      "expected": "Japan",
+      "actual": "Japan",
+      "passed": true
+    },
+    {
+      "target": "Brazil",
+      "coords": "[-14.23, -51.92]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-0.612, rotY:-0.370, roll:326°",
+      "expected": "Brazil",
+      "actual": "Brazil",
+      "passed": true
+    },
+    {
+      "target": "Kenya",
+      "coords": "[-0.02, 37.90]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:3.047, rotY:-0.906, roll:4°",
+      "expected": "Kenya",
+      "actual": "Kenya",
+      "passed": true
+    },
+    {
+      "target": "Australia",
+      "coords": "[-25.27, 133.77]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:2.358, rotY:-0.399, roll:205°",
+      "expected": "Australia",
+      "actual": "Australia",
+      "passed": true
+    },
+    {
+      "target": "Iceland",
+      "coords": "[64.96, -19.02]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.428, rotY:-0.237, roll:10°",
+      "expected": "Iceland",
+      "actual": "Iceland",
+      "passed": true
+    },
+    {
+      "target": "New Zealand",
+      "coords": "[-42.50, 172.50]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.690, rotY:0.632, roll:264°",
+      "expected": "New Zealand",
+      "actual": "New Zealand",
+      "passed": true
+    },
+    {
+      "target": "Canada",
+      "coords": "[56.13, -106.34]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-0.963, rotY:-0.359, roll:194°",
+      "expected": "Canada",
+      "actual": "Canada",
+      "passed": true
+    },
+    {
+      "target": "Argentina",
+      "coords": "[-38.41, -63.61]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:0.736, rotY:-0.327, roll:124°",
+      "expected": "Argentina",
+      "actual": "Argentina",
+      "passed": true
+    },
+    {
+      "target": "South Africa",
+      "coords": "[-30.55, 22.93]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:2.102, rotY:-0.847, roll:70°",
+      "expected": "South Africa",
+      "actual": "South Africa",
+      "passed": true
+    },
+    {
+      "target": "Egypt",
+      "coords": "[26.82, 30.80]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.576, rotY:-0.999, roll:311°",
+      "expected": "Egypt",
+      "actual": "Egypt",
+      "passed": true
+    },
+    {
+      "target": "India",
+      "coords": "[20.59, 78.96]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.854, rotY:-0.290, roll:253°",
+      "expected": "India",
+      "actual": "India",
+      "passed": true
+    },
+    {
+      "target": "Norway",
+      "coords": "[60.47, 8.46]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.687, rotY:0.898, roll:81°",
+      "expected": "Norway",
+      "actual": "Norway",
+      "passed": true
+    },
+    {
+      "target": "Mexico",
+      "coords": "[23.63, -102.55]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:0.251, rotY:-0.395, roll:274°",
+      "expected": "Mexico",
+      "actual": "Mexico",
+      "passed": true
+    },
+    {
+      "target": "Thailand",
+      "coords": "[15.87, 100.99]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.854, rotY:0.176, roll:114°",
+      "expected": "Thailand",
+      "actual": "Thailand",
+      "passed": true
+    },
+    {
+      "target": "Turkey",
+      "coords": "[38.96, 35.24]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.472, rotY:-0.962, roll:292°",
+      "expected": "Turkey",
+      "actual": "Turkey",
+      "passed": true
+    },
+    {
+      "target": "Chile",
+      "coords": "[-35.67, -71.54]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:0.662, rotY:0.215, roll:176°",
+      "expected": "Chile",
+      "actual": "Chile",
+      "passed": true
+    },
+    {
+      "target": "Fiji",
+      "coords": "[-17.71, 178.06]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:1.605, rotY:0.376, roll:274°",
+      "expected": "Fiji",
+      "actual": "Fiji",
+      "passed": true
+    },
+    {
+      "target": "Russia",
+      "coords": "[61.52, 105.31]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.304, rotY:0.813, roll:117°",
+      "expected": "Russia",
+      "actual": "Russia",
+      "passed": true
+    },
+    {
+      "target": "Madagascar",
+      "coords": "[-18.76, 46.86]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.566, rotY:0.603, roll:245°",
+      "expected": "Madagascar",
+      "actual": "Madagascar",
+      "passed": true
+    },
+    {
+      "target": "Greece",
+      "coords": "[39.07, 21.82]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:2.018, rotY:-0.841, roll:358°",
+      "expected": "Greece",
+      "actual": "Greece",
+      "passed": true
+    },
+    {
+      "target": "Vietnam",
+      "coords": "[14.05, 108.27]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:2.806, rotY:-0.221, roll:274°",
+      "expected": "Vietnam",
+      "actual": "Vietnam",
+      "passed": true
+    },
+    {
+      "target": "Colombia",
+      "coords": "[4.57, -74.29]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:0.202, rotY:-0.203, roll:28°",
+      "expected": "Colombia",
+      "actual": "Colombia",
+      "passed": true
+    },
+    {
+      "target": "Saudi Arabia",
+      "coords": "[23.88, 45.07]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.287, rotY:-0.168, roll:251°",
+      "expected": "Saudi Arabia",
+      "actual": "Saudi Arabia",
+      "passed": true
+    },
+    {
+      "target": "Mongolia",
+      "coords": "[46.86, 103.84]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.663, rotY:-0.726, roll:230°",
+      "expected": "Mongolia",
+      "actual": "Mongolia",
+      "passed": true
+    },
+    {
+      "target": "Poland",
+      "coords": "[51.91, 19.14]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.188, rotY:1.214, roll:143°",
+      "expected": "Poland",
+      "actual": "Poland",
+      "passed": true
+    },
+    {
+      "target": "Nigeria",
+      "coords": "[9.08, 8.67]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-1.721, rotY:0.115, roll:254°",
+      "expected": "Nigeria",
+      "actual": "Nigeria",
+      "passed": true
+    },
+    {
+      "target": "Indonesia",
+      "coords": "[-0.78, 113.92]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:2.751, rotY:-0.153, roll:246°",
+      "expected": "Indonesia",
+      "actual": "Indonesia",
+      "passed": true
+    },
+    {
+      "target": "Peru",
+      "coords": "[-9.18, -75.01]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-0.302, rotY:0.051, roll:292°",
+      "expected": "Peru",
+      "actual": "Peru",
+      "passed": true
+    },
+    {
+      "target": "Sweden",
+      "coords": "[62.00, 15.00]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:-2.146, rotY:1.346, roll:128°",
+      "expected": "Sweden",
+      "actual": "Sweden",
+      "passed": true
+    },
+    {
+      "target": "Morocco",
+      "coords": "[31.79, -7.09]",
+      "screen": "(720, 450)",
+      "orientation": "rotX:0.265, rotY:1.462, roll:146°",
+      "expected": "Morocco",
+      "actual": "Morocco",
+      "passed": true
+    }
+  ]
+}

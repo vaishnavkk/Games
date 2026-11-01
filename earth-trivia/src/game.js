@@ -28,6 +28,7 @@ export class GameManager {
     this.roundQueue = [];
     this.missedCountries = [];
     this.currentCountry = null;
+    this.selectedHit = null;
     this.clueIndex = 0;
     this.isAnswering = false;
 
@@ -101,6 +102,8 @@ export class GameManager {
     this.currentCountry = this.roundQueue.shift();
     this.clueIndex = 0;
     this.isAnswering = true;
+    this.selectedHit = null;
+    this.ui.hideTouchConfirm();
     this.roundStartTime = performance.now();
 
     // Reset visual map and camera
@@ -176,34 +179,28 @@ export class GameManager {
       this.globe.height
     );
 
-    const isTouch = pointerType === 'touch' || window.matchMedia('(pointer: coarse)').matches;
-
     if (!hitResult || !hitResult.country) {
-      if (isTouch) {
-        this.selectedTouchHit = null;
-        this.ui.hideTouchConfirm();
-        this.globe.mapRenderer.resetHighlights();
-      }
+      this.selectedHit = null;
+      this.ui.hideTouchConfirm();
+      this.globe.mapRenderer.resetHighlights();
       return;
     }
 
     sound.playClick();
 
-    if (isTouch) {
-      // On touch devices: tap selects and a "Confirm" button submits (prevents mis-taps)
-      this.selectedTouchHit = hitResult;
-      const countryId = String(hitResult.country.id).padStart(3, '0');
-      this.globe.mapRenderer.renderHighlights({ hoveredCountryId: countryId });
-      this.ui.showTouchConfirm(hitResult.country, () => {
-        sound.playClick();
-        this.ui.hideTouchConfirm();
-        this.handleGuess(hitResult.country, hitResult.hitLat, hitResult.hitLon);
-      });
-    } else {
-      // On desktop: click directly submits!
+    // On desktop and touch: click selects (highlight) and Confirm button or Enter submits
+    this.selectedHit = hitResult;
+    const countryId = String(hitResult.country.id).padStart(3, '0');
+    this.globe.mapRenderer.renderHighlights({ selectedCountryId: countryId });
+    this.ui.showTouchConfirm(hitResult.country, () => {
+      sound.playClick();
       this.ui.hideTouchConfirm();
-      this.handleGuess(hitResult.country, hitResult.hitLat, hitResult.hitLon);
-    }
+      const hit = this.selectedHit;
+      this.selectedHit = null;
+      if (hit) {
+        this.handleGuess(hit.country, hit.hitLat, hit.hitLon);
+      }
+    });
   }
 
   handleGuess(guessCountry, hitLat, hitLon) {
@@ -211,7 +208,7 @@ export class GameManager {
     this.isAnswering = false;
     this.stopTimer();
     this.ui.hideTouchConfirm();
-    this.selectedTouchHit = null;
+    this.selectedHit = null;
     this.currentHoveredId = null;
     this.globe.renderer.domElement.style.cursor = 'grab';
 
@@ -403,9 +400,23 @@ export class GameManager {
     canvas.addEventListener('pointerup', (e) => {
       const dist = Math.hypot(e.clientX - downX, e.clientY - downY);
       const time = performance.now() - downTime;
-      // Ergonomic tap detection: allow up to 12px finger jitter and 650ms press
-      if (dist < 12 && time < 650) {
+      // Step 0.a: treat pointer-up as click only if moved < 6px and < 350ms elapsed
+      if (dist < 6 && time < 350) {
         this.handleGlobeClick(e.clientX, e.clientY, e.pointerType);
+      }
+    });
+
+    // Enter key submits active country selection
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        if (this.isAnswering && this.selectedHit && this.selectedHit.country) {
+          e.preventDefault();
+          sound.playClick();
+          this.ui.hideTouchConfirm();
+          const hit = this.selectedHit;
+          this.selectedHit = null;
+          this.handleGuess(hit.country, hit.hitLat, hit.hitLon);
+        }
       }
     });
 
@@ -435,13 +446,19 @@ export class GameManager {
         const countryId = String(hit.country.id).padStart(3, '0');
         if (countryId !== this.currentHoveredId) {
           this.currentHoveredId = countryId;
-          this.globe.mapRenderer.renderHighlights({ hoveredCountryId: countryId });
+          const selectedId = this.selectedHit ? String(this.selectedHit.country.id).padStart(3, '0') : null;
+          this.globe.mapRenderer.renderHighlights({ hoveredCountryId: countryId, selectedCountryId: selectedId });
           canvas.style.cursor = 'pointer';
         }
       } else {
         if (this.currentHoveredId) {
           this.currentHoveredId = null;
-          this.globe.mapRenderer.resetHighlights();
+          const selectedId = this.selectedHit ? String(this.selectedHit.country.id).padStart(3, '0') : null;
+          if (selectedId) {
+            this.globe.mapRenderer.renderHighlights({ selectedCountryId: selectedId });
+          } else {
+            this.globe.mapRenderer.resetHighlights();
+          }
           canvas.style.cursor = 'grab';
         }
       }

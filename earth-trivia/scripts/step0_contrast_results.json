@@ -1,0 +1,106 @@
+[
+  {
+    "element": "Primary Text on Surface BG",
+    "foreground": "#f8fafc",
+    "background": "#0f172a",
+    "ratio": "17.06:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AAA"
+  },
+  {
+    "element": "Primary Text on Card Surface",
+    "foreground": "#f8fafc",
+    "background": "#131c31",
+    "ratio": "16.21:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AAA"
+  },
+  {
+    "element": "Secondary Text on Surface BG",
+    "foreground": "#94a3b8",
+    "background": "#0f172a",
+    "ratio": "6.96:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AA"
+  },
+  {
+    "element": "Secondary Text on Card Surface",
+    "foreground": "#94a3b8",
+    "background": "#131c31",
+    "ratio": "6.61:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AA"
+  },
+  {
+    "element": "Muted Text on Deep Canvas",
+    "foreground": "#7888a0",
+    "background": "#090d16",
+    "ratio": "5.39:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AA"
+  },
+  {
+    "element": "Accent Blue Button Text on Accent BG",
+    "foreground": "#ffffff",
+    "background": "#2563eb",
+    "ratio": "5.17:1",
+    "standard": "Button text (≥4.5:1)",
+    "status": "PASS AA"
+  },
+  {
+    "element": "Accent Subtext on Card Surface",
+    "foreground": "#60a5fa",
+    "background": "#131c31",
+    "ratio": "6.67:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AA"
+  },
+  {
+    "element": "Success Text on Card Surface",
+    "foreground": "#34d399",
+    "background": "#131c31",
+    "ratio": "8.82:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AAA"
+  },
+  {
+    "element": "Success Text on Success Subtle Tint",
+    "foreground": "#34d399",
+    "background": "#132f3b",
+    "ratio": "7.29:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AAA"
+  },
+  {
+    "element": "Error Text on Card Surface",
+    "foreground": "#f87171",
+    "background": "#131c31",
+    "ratio": "6.13:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AA"
+  },
+  {
+    "element": "Error Text on Error Subtle Tint",
+    "foreground": "#f87171",
+    "background": "#2d2133",
+    "ratio": "5.51:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AA"
+  },
+  {
+    "element": "Warning / Clue Points Text on Card Surface",
+    "foreground": "#fbbf24",
+    "background": "#131c31",
+    "ratio": "10.16:1",
+    "standard": "Normal text (≥4.5:1)",
+    "status": "PASS AAA"
+  },
+  {
+    "element": "Card Border on Canvas",
+    "foreground": "#1e293b",
+    "background": "#090d16",
+    "ratio": "1.33:1",
+    "standard": "UI Component boundary (≥3.0:1)",
+    "status": "FAIL"
+  }
+]

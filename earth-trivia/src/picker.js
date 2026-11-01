@@ -122,31 +122,7 @@ export class CountryPicker {
     const localPoint = this.globeMesh.worldToLocal(hit.point.clone());
     const { lat, lon } = CountryPicker.vector3ToLatLon(localPoint);
 
-    // 1. Check Tiny Countries / Microstates with generous hit radius
-    for (const tiny of this.tinyCountries) {
-      const [tLon, tLat] = tiny.centroid;
-      // Spherical angular distance estimation
-      const dLon = (lon - tLon) * Math.cos((lat * Math.PI) / 180);
-      const dLat = lat - tLat;
-      const degDist = Math.hypot(dLon, dLat);
-
-      if (degDist <= tiny.hitRadius) {
-        let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === tiny.id);
-        if (!fullCountry) {
-          fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === tiny.id);
-        }
-        if (fullCountry) {
-          return {
-            country: fullCountry,
-            hitLat: tLat,
-            hitLon: tLon,
-            isTiny: true
-          };
-        }
-      }
-    }
-
-    // 2. Test Bounding Box & Point-in-Polygon for all countries
+    // 1. Polygon hit ALWAYS wins: Check Bounding Box & Point-in-Polygon for all countries
     for (const country of this.countries) {
       const [minLon, minLat, maxLon, maxLat] = country.bbox;
 
@@ -172,6 +148,30 @@ export class CountryPicker {
       }
     }
 
+    // 2. Microstate Fallback: Fallback radius applies ONLY when no polygon is hit
+    for (const tiny of this.tinyCountries) {
+      const [tLon, tLat] = tiny.centroid;
+      // Spherical angular distance estimation
+      const dLon = (lon - tLon) * Math.cos((lat * Math.PI) / 180);
+      const dLat = lat - tLat;
+      const degDist = Math.hypot(dLon, dLat);
+
+      if (degDist <= tiny.hitRadius) {
+        let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === tiny.id);
+        if (!fullCountry) {
+          fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === tiny.id);
+        }
+        if (fullCountry) {
+          return {
+            country: fullCountry,
+            hitLat: tLat,
+            hitLon: tLon,
+            isTiny: true
+          };
+        }
+      }
+    }
+
     // Clicked in ocean or unassigned territory
     return {
       country: null,
@@ -183,7 +183,23 @@ export class CountryPicker {
 
   // Lookup country directly by lat/lon (used for coordinate & microstate testing)
   findCountryAtLatLon(lat, lon) {
-    // 1. Check Tiny Countries / Microstates
+    // 1. Polygon hit ALWAYS wins
+    for (const country of this.countries) {
+      const [minLon, minLat, maxLon, maxLat] = country.bbox;
+      let inBbox = false;
+      if (maxLon >= minLon) {
+        inBbox = (lon >= minLon && lon <= maxLon && lat >= minLat && lat <= maxLat);
+      } else {
+        inBbox = ((lon >= minLon || lon <= maxLon) && lat >= minLat && lat <= maxLat);
+      }
+      if (!inBbox) continue;
+
+      if (CountryPicker.testGeometry(lon, lat, country.geometry)) {
+        return country;
+      }
+    }
+
+    // 2. Fallback radius applies ONLY when no polygon is hit
     for (const tiny of this.tinyCountries) {
       const [tLon, tLat] = tiny.centroid;
       const dLon = (lon - tLon) * Math.cos((lat * Math.PI) / 180);
@@ -199,21 +215,6 @@ export class CountryPicker {
       }
     }
 
-    // 2. Test Bounding Box & Point-in-Polygon
-    for (const country of this.countries) {
-      const [minLon, minLat, maxLon, maxLat] = country.bbox;
-      let inBbox = false;
-      if (maxLon >= minLon) {
-        inBbox = (lon >= minLon && lon <= maxLon && lat >= minLat && lat <= maxLat);
-      } else {
-        inBbox = ((lon >= minLon || lon <= maxLon) && lat >= minLat && lat <= maxLat);
-      }
-      if (!inBbox) continue;
-
-      if (CountryPicker.testGeometry(lon, lat, country.geometry)) {
-        return country;
-      }
-    }
     return null;
   }
 }

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "validate": "node scripts/validateData.js",
-    "check:clues": "node scripts/validateData.js",
+    "check:clues": "node scripts/checkCluesStep0.js",
     "bundle:map": "node scripts/bundleMapData.js",
     "build": "esbuild src/main.js --bundle --outfile=dist/bundle.js --format=esm --minify",
     "serve": "node scripts/serve.js",
@@ -24,6 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "canvas-confetti": "^1.9.4",
+    "flag-icons": "^7.6.0",
     "three": "^0.182.0",
     "topojson-client": "^3.1.0",
     "world-atlas": "^2.0.2"

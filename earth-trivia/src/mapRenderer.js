@@ -79,16 +79,16 @@ export class MapRenderer {
     const w = this.width;
     const h = this.height;
 
-    // 1. Deep Ocean Background
+    // 1. Deep Ocean Background (Refined slate/charcoal)
     const oceanGrad = ctx.createLinearGradient(0, 0, 0, h);
-    oceanGrad.addColorStop(0, '#07101e');
-    oceanGrad.addColorStop(0.5, '#050b14');
-    oceanGrad.addColorStop(1, '#03070d');
+    oceanGrad.addColorStop(0, '#090d16');
+    oceanGrad.addColorStop(0.5, '#070b12');
+    oceanGrad.addColorStop(1, '#05080f');
     ctx.fillStyle = oceanGrad;
     ctx.fillRect(0, 0, w, h);
 
     // 2. Subtle Equirectangular Grid Lines (Lat / Lon)
-    ctx.strokeStyle = 'rgba(6, 182, 212, 0.06)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
     ctx.lineWidth = 1;
     for (let lon = -180; lon <= 180; lon += 30) {
       const [x] = this.toPixel(lon, 0);
@@ -106,16 +106,16 @@ export class MapRenderer {
     }
 
     // Equator accent line
-    ctx.strokeStyle = 'rgba(6, 182, 212, 0.16)';
-    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(0, h / 2);
     ctx.lineTo(w, h / 2);
     ctx.stroke();
 
-    // 3. Render all land polygons
-    ctx.fillStyle = '#142033';
-    ctx.strokeStyle = 'rgba(148, 190, 235, 0.38)';
+    // 3. Render all land polygons (Muted neutral tone, thin soft borders)
+    ctx.fillStyle = '#161f30';
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
     ctx.lineWidth = this.width > 2048 ? 1.5 : 1.0;
 
     for (const country of WORLD_COUNTRIES) {
@@ -125,9 +125,9 @@ export class MapRenderer {
     // 4. Subtle tiny country dots for microstates
     for (const tiny of TINY_COUNTRIES) {
       const [tx, ty] = this.toPixel(tiny.centroid[0], tiny.centroid[1]);
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.7)';
+      ctx.fillStyle = 'rgba(148, 163, 184, 0.65)';
       ctx.beginPath();
-      ctx.arc(tx, ty, this.width > 2048 ? 3.5 : 2.0, 0, Math.PI * 2);
+      ctx.arc(tx, ty, this.width > 2048 ? 3.0 : 1.8, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -148,7 +148,7 @@ export class MapRenderer {
   }
 
   // Re-render highlight states (fast drawImage + overlay polygon fills)
-  renderHighlights({ correctCountryId = null, guessCountryId = null, hoveredCountryId = null } = {}) {
+  renderHighlights({ correctCountryId = null, guessCountryId = null, selectedCountryId = null, hoveredCountryId = null } = {}) {
     if (!this.isReady) return;
 
     // Reset from pre-rendered base
@@ -177,19 +177,31 @@ export class MapRenderer {
 
     const dotRadius = this.width > 2048 ? 8 : 5;
 
-    // Hovered Country
-    if (hoveredCountryId && hoveredCountryId !== correctCountryId && hoveredCountryId !== guessCountryId) {
+    // 1. Hovered Country (soft highlight)
+    if (hoveredCountryId && hoveredCountryId !== correctCountryId && hoveredCountryId !== guessCountryId && hoveredCountryId !== selectedCountryId) {
       const country = getCountry(hoveredCountryId);
       if (country && country.geometry) {
-        this.ctx.fillStyle = 'rgba(6, 182, 212, 0.35)';
-        this.ctx.strokeStyle = '#38bdf8';
-        this.ctx.lineWidth = this.width > 2048 ? 3 : 2;
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
+        this.ctx.lineWidth = this.width > 2048 ? 2.5 : 1.5;
         this.drawGeometry(this.ctx, country.geometry);
       }
-      highlightTinyDot(hoveredCountryId, '#06b6d4', '#ffffff', dotRadius);
+      highlightTinyDot(hoveredCountryId, 'rgba(255, 255, 255, 0.65)', '#ffffff', dotRadius);
     }
 
-    // Wrong Guess Country (Red)
+    // 2. Selected Country (prior to confirmation: clear accent blue)
+    if (selectedCountryId && selectedCountryId !== correctCountryId && selectedCountryId !== guessCountryId) {
+      const country = getCountry(selectedCountryId);
+      if (country && country.geometry) {
+        this.ctx.fillStyle = 'rgba(59, 130, 246, 0.38)';
+        this.ctx.strokeStyle = '#60a5fa';
+        this.ctx.lineWidth = this.width > 2048 ? 3.5 : 2.0;
+        this.drawGeometry(this.ctx, country.geometry);
+      }
+      highlightTinyDot(selectedCountryId, '#3b82f6', '#bfdbfe', dotRadius + 1);
+    }
+
+    // 3. Wrong Guess Country (Red)
     if (guessCountryId && guessCountryId !== correctCountryId) {
       const country = getCountry(guessCountryId);
       if (country && country.geometry) {
@@ -201,7 +213,7 @@ export class MapRenderer {
       highlightTinyDot(guessCountryId, '#ef4444', '#fecaca', dotRadius + 2);
     }
 
-    // Correct Country (Green)
+    // 4. Correct Country (Green)
     if (correctCountryId) {
       const country = getCountry(correctCountryId);
       if (country && country.geometry) {

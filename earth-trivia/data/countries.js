@@ -174,7 +174,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "A nation whose national winter pastime involves skates, ice rinks, and sliding vulcanized rubber pucks.",
       "Famous for pristine turquoise glacial lakes, sprawling pine forests, and sweet tree-tapped syrup.",
-      "Recognized by a red stylized maple leaf emblem on its flag and french fries topped with cheese curds."
+      "Recognized by a red stylized maple leaf emblem on its flag and crispy golden fries topped with cheese curds."
     ],
     "memoryAnchors": [
       "Contains more freshwater lake surface area than all other sovereign nations combined.",
@@ -747,7 +747,7 @@ export const COUNTRIES_DB = [
     "landmark": "Borobudur Buddhist Temple Complex",
     "cultureFood": "Nasi Goreng and Satay",
     "clues": [
-      "Composed of over 17,000 tropical volcanic islands spanning across three equatorial time zones.",
+      "Composed of over 17,000 tropical volcanic islands spanning across three tropical time zones.",
       "Traditional performing arts include shadow puppet plays accompanied by bronze gong gamelan orchestras.",
       "Famous for the world's largest ancient Buddhist stone monument and giant venomous Komodo dragon lizards."
     ],
@@ -1024,7 +1024,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Encebollado and Locro de Papa",
     "clues": [
       "Named directly after the mathematical zero-degree latitude line that bisects its northern territory.",
-      "Its high-altitude historic capital features preserved Spanish baroque churches with gleaming gold-leaf interiors.",
+      "Its high-altitude historic capital features preserved ornate colonial baroque churches with gleaming gold-leaf interiors.",
       "Administers an isolated volcanic archipelago whose giant tortoises and finches inspired Charles Darwin's evolution insights."
     ],
     "memoryAnchors": [
@@ -1162,7 +1162,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Mansaf Lamb and Saffron Rice",
     "clues": [
       "A desert kingdom home to an ancient caravan city carved into pink sandstone cliff faces over two thousand years ago.",
-      "Bordered by a hyper-saline inland lake where swimmers effortlessly float without treading water.",
+      "Fringed by a hyper-saline inland lake where swimmers effortlessly float without treading water.",
       "Famous for the monumental Treasury façade of Petra and the national feast dish Mansaf."
     ],
     "memoryAnchors": [
@@ -1470,7 +1470,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Bryndzové Halušky",
     "clues": [
       "Boasts one of the highest densities of historic medieval castles and stone châteaux per capita on Earth.",
-      "Its capital city borders two other sovereign nations directly along its municipal perimeter.",
+      "Its capital city adjoins two other sovereign nations directly along its municipal perimeter.",
       "Famous for small potato dumplings tossed with creamy sheep cheese and topped with crispy smoked bacon bits."
     ],
     "memoryAnchors": [
@@ -1623,7 +1623,7 @@ export const COUNTRIES_DB = [
     "landmark": "Registan Square in Samarkand",
     "cultureFood": "Plov Rice and Somsa",
     "clues": [
-      "One of only two doubly-landlocked sovereign nations on Earth, requiring crossing at least two borders to reach oceans.",
+      "One of only two doubly-landlocked sovereign nations on Earth, requiring crossing at least two foreign perimeters to reach oceans.",
       "Historic caravan oasis cities feature soaring minarets tiled with intricate geometric turquoise and lapis lazuli mosaics.",
       "Famous for massive iron cauldrons simmering saffron rice pilaf with tender lamb, yellow carrots, and sweet raisins."
     ],
@@ -1689,7 +1689,7 @@ export const COUNTRIES_DB = [
     "landmark": "Mount Kilimanjaro Volcano Summit",
     "cultureFood": "Ugali and Zanzibar Spiced Pilau",
     "clues": [
-      "Home to the highest solitary free-standing mountain summit on planet Earth, topped with equatorial snowfields.",
+      "Home to the highest solitary free-standing mountain summit on planet Earth, topped with glaciated snowfields.",
       "Expansive wildlife parks encompass an immense unbroken volcanic caldera harboring thousands of grazing animals.",
       "Famous for spice-scented coastal islands with carved wooden doorways and climbing a dormant stratovolcano."
     ],
@@ -1843,7 +1843,7 @@ export const COUNTRIES_DB = [
     "landmark": "Casa de la Vall Historic Parliament",
     "cultureFood": "Escudella Stew",
     "clues": [
-      "A tiny mountainous co-principality jointly ruled by the Bishop of Urgell and the President of a neighboring republic.",
+      "A tiny mountainous co-principality jointly ruled by the Bishop of Urgell and the President of an adjoining republic.",
       "Its capital city sits at over 1,000 meters elevation, making it the highest-altitude capital on its landmass.",
       "Famous for duty-free shopping avenues, ski resorts, and hearty winter meat stews served with large shell pasta."
     ],
@@ -1888,7 +1888,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Pepperpot Stew and Fungi",
     "clues": [
       "A twin-island nation celebrated locally for having 365 distinct beaches, one for every day of the calendar year.",
-      "Features the only continuously working Georgian naval dockyard in the world, once fortified by Admiral Horatio Nelson.",
+      "Features the only continuously working 18th-century naval dockyard in the world, once fortified by Admiral Horatio Nelson.",
       "Famous for cornmeal dumplings served with rich slow-cooked salted meat and vegetable pepperpot."
     ],
     "memoryAnchors": [
@@ -1955,7 +1955,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Its historic capital was nicknamed the Jerusalem of its landmass for having mosques, synagogues, and churches side by side.",
       "Famous for a graceful 16th-century arched stone bridge over emerald river waters where brave divers leap from 24 meters.",
-      "Famous for copper pots brewing unfiltered dark coffee served with Turkish delight, and grilled minced meat sausages."
+      "Famous for copper pots brewing unfiltered dark coffee served with sweet lokum cubes, and grilled minced meat sausages."
     ],
     "memoryAnchors": [
       "Bosnia and Herzegovina is known for its capital city Sarajevo.",
@@ -1997,7 +1997,7 @@ export const COUNTRIES_DB = [
     "landmark": "Royal Drummers Sanctuary of Gishora",
     "cultureFood": "Boko Boko Harees",
     "clues": [
-      "Bordered on its west by one of the deepest and longest ancient freshwater rift lakes on planet Earth.",
+      "Framed on its west by one of the deepest and longest ancient freshwater rift lakes on planet Earth.",
       "Renowned for energetic master royal drum ensembles who perform synchronized rhythms around sacred carved wooden drums.",
       "Famous for high-altitude hillside tea plantations, bird sanctuaries, and cracked wheat porridge with chicken."
     ],
@@ -2019,7 +2019,7 @@ export const COUNTRIES_DB = [
     "landmark": "Pico do Fogo Active Stratovolcano",
     "cultureFood": "Cachupa Stew",
     "clues": [
-      "A volcanic archipelago of ten islands where Portuguese and indigenous cultures blended into a vibrant Creole heritage.",
+      "A volcanic archipelago of ten islands where lusophone and indigenous Creole cultures blended into a vibrant Creole heritage.",
       "The homeland of the soulful, melancholic acoustic musical genre known as Morna, popularized by Cesária Évora.",
       "Famous for a slow-cooked national stew of hominy corn, beans, cassava, and cured meats called Cachupa."
     ],
@@ -2239,7 +2239,7 @@ export const COUNTRIES_DB = [
     "landmark": "Basílica de la Inmaculada Concepción in Mongomo",
     "cultureFood": "Succotash and Sopa de Pescado",
     "clues": [
-      "The only sovereign nation on its entire continental landmass where Spanish is an official primary language.",
+      "The only sovereign nation on its entire continental landmass where Castilian is an official primary language.",
       "Its historic capital city is located on a volcanic island over 200 kilometers away from its mainland territory.",
       "Famous for dramatic offshore gas platforms, colonial wooden cathedral spires, and forested volcanic calderas."
     ],
@@ -2261,9 +2261,9 @@ export const COUNTRIES_DB = [
     "landmark": "Asmara Modernist Architecture and Cinema Roma",
     "cultureFood": "Zigni Spicy Beef Stew with Kitcha",
     "clues": [
-      "Its high-altitude capital is world-renowned for having the most complete ensemble of 1930s Italian Futurist architecture.",
+      "Its high-altitude capital is world-renowned for having the most complete ensemble of 1930s modernist Futurist architecture.",
       "Features a dramatic steam railway line engineered with 30 tunnels and 65 bridges climbing from coast to mountains.",
-      "Famous for spicy berbere beef stew eaten with flatbread, Italian espresso bar culture, and coastal coral archipelagos."
+      "Famous for spicy berbere beef stew eaten with flatbread, vibrant espresso bar culture, and coastal coral archipelagos."
     ],
     "memoryAnchors": [
       "Eritrea is known for its capital city Asmara.",
@@ -2305,7 +2305,7 @@ export const COUNTRIES_DB = [
     "landmark": "Loango National Park Surfing Hippos",
     "cultureFood": "Nyembwe Chicken with Palm Butter",
     "clues": [
-      "Over eighty percent of its territory is blanketed by equatorial rainforests, acting as a vital carbon sink.",
+      "Over eighty percent of its territory is blanketed by dense tropical rainforests, acting as a vital carbon sink.",
       "Loango National Park is celebrated worldwide as the place where wild elephants and hippos wander directly along ocean surf beaches.",
       "Famous for traditional carved wooden ancestral reliquary masks, and chicken simmered in rich red palm nut paste."
     ],
@@ -2415,7 +2415,7 @@ export const COUNTRIES_DB = [
     "landmark": "Kaieteur Single-Drop Waterfall",
     "cultureFood": "Pepperpot Cassareep Stew",
     "clues": [
-      "The only sovereign nation on its entire continental landmass where English is the official primary language.",
+      "The only sovereign nation on its entire continental landmass where an official Anglophone tongue is primary.",
       "Home to Kaieteur Falls, the world's largest single-drop waterfall by volume, plunging 226 meters in dense jungle.",
       "Famous for a dark slow-cooked holiday meat stew preserved with caramelized cassava juice called cassareep."
     ],
@@ -2546,7 +2546,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Beshbarmak and Kuurdak",
     "clues": [
       "Known for the epic oral storytelling recitation of the Poem of Manas, consisting of hundreds of thousands of poetic verses.",
-      "Home to the second-largest high-altitude saline alpine lake on Earth, which never freezes even in freezing winter.",
+      "Home to the second-largest high-altitude saline mountain lake on Earth, which never freezes even in freezing winter.",
       "Famous for traditional eagle falconry on horseback, nomad horse games, and handmade felt yurt tents."
     ],
     "memoryAnchors": [
@@ -2611,8 +2611,8 @@ export const COUNTRIES_DB = [
     "landmark": "Providence Island Historical Site",
     "cultureFood": "Jollof Rice and Pepper Soup",
     "clues": [
-      "Founded in the early 19th century by freed American citizens, making it the oldest modern republic on its landmass.",
-      "Its national capital was named in honor of the fifth president of the United States, James Monroe.",
+      "Founded in the early 19th century by freed 19th-century transatlantic settlers, making it the oldest modern republic on its landmass.",
+      "Its national capital was named in honor of the fifth president, James Monroe.",
       "Famous for rich coastal rubber plantations, a single-star flag modeled on the Stars and Stripes, and spicy pepper soup."
     ],
     "memoryAnchors": [
@@ -2655,7 +2655,7 @@ export const COUNTRIES_DB = [
     "landmark": "Vaduz Castle Prince's Residence",
     "cultureFood": "Käsknöpfle Cheese Pasta",
     "clues": [
-      "A tiny alpine principality situated along the Rhine, one of only two doubly-landlocked sovereign nations on Earth.",
+      "A tiny mountain principality situated along the Rhine, one of only two doubly-landlocked sovereign nations on Earth.",
       "The reigning monarch actually resides inside an imposing 12th-century stone fortress perched high above the capital.",
       "Famous for tiny egg pasta dumplings smothered in melted cheese and topped with sweet caramelized onions."
     ],
@@ -2876,7 +2876,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Piri-Piri Chicken and Matapa",
     "clues": [
       "The only sovereign national flag in the world featuring a modern assault rifle integrated into its national coat of arms.",
-      "Features over 2,500 kilometers of coastline bordered by pristine turquoise coral reefs and whale shark feeding grounds.",
+      "Features over 2,500 kilometers of coastline fringed by pristine turquoise coral reefs and whale shark feeding grounds.",
       "Famous for flame-grilled chicken marinated in fiery piri-piri chili sauce, and cassava leaf stew with ground peanuts."
     ],
     "memoryAnchors": [
@@ -3184,7 +3184,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Torta Tre Monti Chocolate Wafers",
     "clues": [
       "Claims the title of the oldest surviving constitutional sovereign republic in the world, founded in 301 AD.",
-      "Entirely surrounded on all borders as an enclave within the territory of a single boot-shaped country.",
+      "Entirely surrounded on all perimeters as an enclave within the territory of a single boot-shaped country.",
       "Famous for three dramatic medieval stone fortress towers crowning the limestone ridges of Mount Titano."
     ],
     "memoryAnchors": [
@@ -3205,7 +3205,7 @@ export const COUNTRIES_DB = [
     "landmark": "Pico Cão Grande Volcanic Needle Peak",
     "cultureFood": "Calulu Dried Fish Stew",
     "clues": [
-      "An equatorial two-island republic situated directly along the zero-degree latitude and longitude oceanic crossroads.",
+      "A lush two-island republic situated directly along the zero-degree latitude and longitude oceanic crossroads.",
       "Features a breathtaking skyscraper-like vertical needle of phonolite volcanic rock rising 370 meters above dense jungle.",
       "Famous for historic organic cocoa bean plantations once earning it the moniker of the chocolate islands."
     ],
@@ -3337,7 +3337,7 @@ export const COUNTRIES_DB = [
     "landmark": "Meroë Ancient Nubian Pyramids",
     "cultureFood": "Ful Medames and Kisra",
     "clues": [
-      "Contains more ancient royal funerary pyramids than its northern neighbor, built by the ancient Kingdom of Kush.",
+      "Contains more ancient royal funerary pyramids than its northern counterpart, built by the ancient Kingdom of Kush.",
       "Its capital city sits directly at the confluence where two distinct blue and white branches of a mighty river unite.",
       "Famous for steep narrow stone pyramids rising from golden desert dunes, and slow-cooked fava bean stew with cumin."
     ],
@@ -3359,7 +3359,7 @@ export const COUNTRIES_DB = [
     "landmark": "Paramaribo Wooden Colonial Architecture",
     "cultureFood": "Pom Baked Root Casserole and Roti",
     "clues": [
-      "The only sovereign nation in the Americas where Dutch serves as the official administrative and educational language.",
+      "The only sovereign nation in the Americas where Nederlands serves as the official administrative and educational language.",
       "Its coastal capital features an exceptional historic center constructed almost entirely with symmetrical white wood buildings.",
       "Famous for an oven-baked festival casserole prepared with tannia root tubers and citrus-seasoned chicken, and pristine rainforests."
     ],
@@ -3603,7 +3603,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "The smallest internationally recognized sovereign independent state in the world by both surface land area and population.",
       "Completely encircled within the metropolitan municipal boundaries of a single foreign capital city.",
-      "Famous for a monumental Renaissance basilica with a soaring dome designed by Michelangelo, and Swiss Guards in colorful uniforms."
+      "Famous for a monumental Renaissance basilica with a soaring dome designed by Michelangelo, and the ceremonial Pontifical Guard in colorful uniforms."
     ],
     "memoryAnchors": [
       "Vatican City is known for its capital city Vatican City.",
@@ -3799,7 +3799,7 @@ export const COUNTRIES_DB = [
     "landmark": "Great Blue Hole Oceanic Sinkhole",
     "cultureFood": "Fry Jacks and Rice and Beans",
     "clues": [
-      "The only sovereign nation in its continental corridor where English is the sole official national language.",
+      "The only sovereign nation in its continental corridor where an Anglophone tongue is the sole official national language.",
       "Features a perfectly circular submarine sinkhole over 300 meters across made famous by ocean explorers.",
       "Famous for puff pastry fried bread pockets stuffed with eggs and beans, and ancient rainforest Mayan temple pyramids."
     ],
@@ -4107,7 +4107,7 @@ export const COUNTRIES_DB = [
     "landmark": "Megalithic Temples of Ħaġar Qim",
     "cultureFood": "Pastizzi and Rabbit Stew",
     "clues": [
-      "Home to freestanding megalithic stone temples constructed around 3600 BC, predating both Stonehenge and the Egyptian Pyramids.",
+      "Home to freestanding megalithic stone temples constructed around 3600 BC, predating both Stonehenge and the famous Giza pyramids.",
       "Its fortified capital city was built by the Knights of St. John following a monumental 16th-century siege.",
       "Famous for diamond-shaped flaky filo pastries filled with spiced ricotta or mushy peas, and bright painted fishing boats with protective eyes."
     ],
@@ -4153,7 +4153,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Home to the oldest desert on Earth, where colossal rusty-red sand dunes plunge directly into crashing ocean swells.",
       "Features a stark white clay pan dotted with centuries-old blackened dead camelthorn tree skeletons preserved by dry air.",
-      "Famous for dark sky stargazing reserves, desert-adapted elephants, and German colonial architecture in coastal desert towns."
+      "Famous for dark sky stargazing reserves, desert-adapted elephants, and 19th-century colonial architecture in coastal desert towns."
     ],
     "memoryAnchors": [
       "Namibia is known for its historic capital Windhoek.",
@@ -4329,7 +4329,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Named after ancient medieval stone palace ruins constructed entirely with interlocking granite blocks without mortar.",
       "Its national emblem depicts a distinctive soapstone carved bird discovered among ancient royal enclosures.",
-      "Famous for sharing the thunderous Victoria Falls spray with its northern neighbor, and thick maize meal porridge."
+      "Famous for sharing the thunderous Victoria Falls spray with its northern counterpart, and thick maize meal porridge."
     ],
     "memoryAnchors": [
       "Zimbabwe is known for its historic capital Harare.",

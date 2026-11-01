@@ -146,7 +146,12 @@ export class CameraFlightController {
     const finalRotY = curY + diffY;
 
     // Tilt for latitude
-    const targetRotX = ((lat * 0.72) * Math.PI) / 180;
+    const targetRotX = (lat * Math.PI) / 180;
+
+    // On mobile, offset camera vertically so country sits in visible area above bottom sheet
+    const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
+    const targetCamY = isMobile ? -0.08 : 0;
+    const startCamY = this.camera.position.y || 0;
 
     const startRotX = this.globeMesh.rotation.x;
     const startRotY = curY;
@@ -166,8 +171,10 @@ export class CameraFlightController {
 
       this.globeMesh.rotation.x = THREE.MathUtils.lerp(startRotX, targetRotX, ease);
       this.globeMesh.rotation.y = THREE.MathUtils.lerp(startRotY, finalRotY, ease);
+      const camY = THREE.MathUtils.lerp(startCamY, targetCamY, ease);
+      this.camera.position.y = camY;
       this.camera.position.z = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
-      this.camera.lookAt(0, 0, 0);
+      this.camera.lookAt(0, camY, 0);
 
       if (progress < 1) {
         requestAnimationFrame(animateFlight);
@@ -188,6 +195,8 @@ export class CameraFlightController {
     this.controls.enabled = false;
 
     const startRotX = this.globeMesh.rotation.x;
+    const startCamY = this.camera.position.y || 0;
+    const targetCamY = 0;
     const startCamZ = this.camera.position.z;
     const targetCamZ = 4.0;
     const startTime = performance.now();
@@ -198,8 +207,10 @@ export class CameraFlightController {
       const ease = 1 - Math.pow(1 - progress, 3); // Cubic ease out
 
       this.globeMesh.rotation.x = THREE.MathUtils.lerp(startRotX, 0.05, ease);
+      const camY = THREE.MathUtils.lerp(startCamY, targetCamY, ease);
+      this.camera.position.y = camY;
       this.camera.position.z = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
-      this.camera.lookAt(0, 0, 0);
+      this.camera.lookAt(0, camY, 0);
 
       if (progress < 1) {
         requestAnimationFrame(animateReset);

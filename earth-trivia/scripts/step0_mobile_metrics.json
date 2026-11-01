@@ -1,0 +1,42 @@
+{
+  "390x844": {
+    "correct": {
+      "vw": 390,
+      "vh": 844,
+      "vaultHeightPx": 253,
+      "vaultHeightPercent": 30,
+      "totalUIPercent": 37.9,
+      "globePercent": 62.1,
+      "countryScreenY": 340,
+      "countryRatioY": 0.403,
+      "vaultTopY": 583,
+      "isCountryAboveSheet": true
+    },
+    "wrong": {
+      "vw": 390,
+      "vh": 844,
+      "vaultHeightPx": 253,
+      "vaultHeightPercent": 30,
+      "totalUIPercent": 37.9,
+      "globePercent": 62.1,
+      "countryScreenY": 340,
+      "countryRatioY": 0.403,
+      "vaultTopY": 583,
+      "isCountryAboveSheet": true
+    }
+  },
+  "360x740": {
+    "correct": {
+      "vw": 360,
+      "vh": 740,
+      "vaultHeightPx": 222,
+      "vaultHeightPercent": 30,
+      "totalUIPercent": 39.2,
+      "globePercent": 60.8,
+      "countryScreenY": 298,
+      "countryRatioY": 0.403,
+      "vaultTopY": 510,
+      "isCountryAboveSheet": true
+    }
+  }
+}

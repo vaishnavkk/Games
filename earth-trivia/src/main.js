@@ -2,6 +2,7 @@ import { GlobeApp } from './globe.js';
 import { UIManager } from './ui.js';
 import { GameManager } from './game.js';
 import { sound } from './audio.js';
+import { ICONS } from './icons.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('webgl-container');
@@ -14,13 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
   ui.showStartScreen();
 
   // Expose for testing and verification
+  window.game = game;
+  window.globe = globeApp;
   window.__geotrivia = { globeApp, ui, game };
 
   // Sound Button
   const soundBtn = document.getElementById('soundBtn');
   const updateSoundIcon = () => {
     if (soundBtn) {
-      soundBtn.textContent = sound.isMuted() ? '🔇' : '🔊';
+      soundBtn.innerHTML = sound.isMuted() ? ICONS.volumeX : ICONS.volume2;
       soundBtn.title = sound.isMuted() ? 'Unmute Sound' : 'Mute Sound';
     }
   };
@@ -39,8 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const clueBody = document.getElementById('clueBody');
   if (toggleClueBtn && clueBody) {
     toggleClueBtn.addEventListener('click', () => {
-      clueBody.classList.toggle('collapsed');
-      toggleClueBtn.textContent = clueBody.classList.contains('collapsed') ? '➕' : '➖';
+      const isCollapsed = clueBody.classList.toggle('collapsed');
+      toggleClueBtn.innerHTML = isCollapsed ? ICONS.chevronDown : ICONS.chevronUp;
+      toggleClueBtn.setAttribute('aria-expanded', !isCollapsed);
     });
   }
 
