@@ -2,12 +2,40 @@ import * as THREE from 'three';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
 
+/**
+ * GeoTrivia MapRenderer (Step 2 & 3: "Atlas" Cartographic Direction)
+ * - Deep ink-teal ocean & graticules
+ * - 5 warm sand and paper tints using greedy graph coloring (no adjacent conflicts)
+ * - Crisp 1px dark ink sepia borders (contrast >= 5.0:1)
+ * - Direct texture highlight: fill + 2px bright outline
+ * - 300ms smooth fill tween
+ * - Tiny countries: transparent-center unfilled rings
+ * - Zero country names on globe during gameplay
+ */
 export class MapRenderer {
   constructor() {
-    // Choose texture resolution (2048x1024 mobile / 4096x2048 high-DPI desktop)
     const isDesktop = window.innerWidth > 900 && (window.devicePixelRatio || 1) >= 1.5;
     this.width = isDesktop ? 4096 : 2048;
     this.height = isDesktop ? 2048 : 1024;
+
+    // "Atlas" 5 Muted Land Tints (Warm Sand & Paper, distinct from ocean, green, & red)
+    this.LAND_TINTS = [
+      '#ded6c4', // Tint 0: Pale antique vellum
+      '#d3c4aa', // Tint 1: Warm dune sand
+      '#c8b79b', // Tint 2: Desert parchment
+      '#e5dfcd', // Tint 3: Light linen
+      '#bead8e'  // Tint 4: Weathered wheat
+    ];
+
+    // Deep ink-teal ocean colors
+    this.COLOR_OCEAN_TOP = '#0a1d27';
+    this.COLOR_OCEAN_MID = '#071720';
+    this.COLOR_OCEAN_BOT = '#051219';
+
+    // Graticules and borders
+    this.COLOR_GRATICULE = 'rgba(255, 255, 255, 0.04)';
+    this.COLOR_EQUATOR = 'rgba(255, 255, 255, 0.09)';
+    this.COLOR_BORDER = '#2c3b42'; // Dark ink-slate border: >= 5.0:1 contrast against all 5 tints
 
     // Base pre-rendered canvas (generated once on startup)
     this.baseCanvas = document.createElement('canvas');
@@ -23,6 +51,7 @@ export class MapRenderer {
 
     this.texture = null;
     this.isReady = false;
+    this._tweenRaf = null;
 
     // Fast lookup of countries by ID
     this.countryMap = new Map();
@@ -36,7 +65,7 @@ export class MapRenderer {
     return [x, y];
   }
 
-  // Draw a Polygon or MultiPolygon onto canvas context
+  // Draw Polygon or MultiPolygon
   drawGeometry(ctx, geometry) {
     if (!geometry || !geometry.coordinates) return;
 
@@ -60,7 +89,6 @@ export class MapRenderer {
 
       for (let i = 1; i < ring.length; i++) {
         const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
-        // Handle longitude wrapping edge artifacts
         if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
           ctx.moveTo(px, py);
         } else {
@@ -73,22 +101,22 @@ export class MapRenderer {
     }
   }
 
-  // Generate the permanent base border texture once
+  // Generate the permanent base texture with graph coloring
   initBaseTexture() {
     const ctx = this.baseCtx;
     const w = this.width;
     const h = this.height;
 
-    // 1. Deep Ocean Background (Refined slate/charcoal)
+    // 1. Deep Ink-Teal Ocean Gradient
     const oceanGrad = ctx.createLinearGradient(0, 0, 0, h);
-    oceanGrad.addColorStop(0, '#090d16');
-    oceanGrad.addColorStop(0.5, '#070b12');
-    oceanGrad.addColorStop(1, '#05080f');
+    oceanGrad.addColorStop(0, this.COLOR_OCEAN_TOP);
+    oceanGrad.addColorStop(0.5, this.COLOR_OCEAN_MID);
+    oceanGrad.addColorStop(1, this.COLOR_OCEAN_BOT);
     ctx.fillStyle = oceanGrad;
     ctx.fillRect(0, 0, w, h);
 
-    // 2. Subtle Equirectangular Grid Lines (Lat / Lon)
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+    // 2. Graticule Lat / Lon grid lines
+    ctx.strokeStyle = this.COLOR_GRATICULE;
     ctx.lineWidth = 1;
     for (let lon = -180; lon <= 180; lon += 30) {
       const [x] = this.toPixel(lon, 0);
@@ -106,35 +134,37 @@ export class MapRenderer {
     }
 
     // Equator accent line
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.strokeStyle = this.COLOR_EQUATOR;
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(0, h / 2);
     ctx.lineTo(w, h / 2);
     ctx.stroke();
 
-    // 3. Render all land polygons (Muted neutral tone, thin soft borders)
-    ctx.fillStyle = '#161f30';
-    ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
+    // 3. Render all land polygons with 5 graph-colored tints
+    ctx.strokeStyle = this.COLOR_BORDER;
     ctx.lineWidth = this.width > 2048 ? 1.5 : 1.0;
 
     for (const country of WORLD_COUNTRIES) {
+      const tintIndex = country.colorIndex !== undefined ? country.colorIndex : 0;
+      ctx.fillStyle = this.LAND_TINTS[tintIndex % 5];
       this.drawGeometry(ctx, country.geometry);
     }
 
-    // 4. Subtle tiny country dots for microstates
+    // 4. Subtle microstate resting markers (unfilled ring for tiny countries)
     for (const tiny of TINY_COUNTRIES) {
       const [tx, ty] = this.toPixel(tiny.centroid[0], tiny.centroid[1]);
-      ctx.fillStyle = 'rgba(148, 163, 184, 0.65)';
+      ctx.strokeStyle = 'rgba(74, 90, 102, 0.45)';
+      ctx.lineWidth = 1.0;
       ctx.beginPath();
-      ctx.arc(tx, ty, this.width > 2048 ? 3.0 : 1.8, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.arc(tx, ty, this.width > 2048 ? 3.5 : 2.0, 0, Math.PI * 2);
+      ctx.stroke();
     }
 
-    // Copy base to active canvas
+    // Copy base to active display canvas
     this.ctx.drawImage(this.baseCanvas, 0, 0);
 
-    // Create Three.js Canvas Texture
+    // Three.js Texture
     this.texture = new THREE.CanvasTexture(this.canvas);
     this.texture.anisotropy = 4;
     this.texture.generateMipmaps = true;
@@ -147,10 +177,13 @@ export class MapRenderer {
     return this.texture;
   }
 
-  // Re-render highlight states (fast drawImage + overlay polygon fills)
-  renderHighlights({ correctCountryId = null, guessCountryId = null, selectedCountryId = null, hoveredCountryId = null } = {}) {
-    if (!this.isReady) return;
-
+  // Draw highlights at a given animation progress fraction (0.0 to 1.0)
+  _drawHighlightsAtProgress(progress, {
+    correctCountryId = null,
+    guessCountryId = null,
+    selectedCountryId = null,
+    hoveredCountryId = null
+  }) {
     // Reset from pre-rendered base
     this.ctx.drawImage(this.baseCanvas, 0, 0);
 
@@ -159,79 +192,133 @@ export class MapRenderer {
       return this.countryMap.get(id) || this.countryMap.get(String(id).padStart(3, '0'));
     };
 
-    const highlightTinyDot = (countryId, fillColor, strokeColor, radius) => {
+    // Draw UNFILLED ring for tiny countries (center stays 100% transparent)
+    const drawTinyRing = (countryId, strokeColor, radiusPx = 8) => {
       if (!countryId) return;
       const idStr = String(countryId).padStart(3, '0');
       const tiny = TINY_COUNTRIES.find(t => t.id === idStr);
       if (tiny) {
         const [tx, ty] = this.toPixel(tiny.centroid[0], tiny.centroid[1]);
-        this.ctx.fillStyle = fillColor;
-        this.ctx.beginPath();
-        this.ctx.arc(tx, ty, radius, 0, Math.PI * 2);
-        this.ctx.fill();
+        this.ctx.save();
         this.ctx.strokeStyle = strokeColor;
-        this.ctx.lineWidth = 2;
-        this.ctx.stroke();
+        this.ctx.lineWidth = 2.0;
+        this.ctx.beginPath();
+        this.ctx.arc(tx, ty, radiusPx, 0, Math.PI * 2);
+        this.ctx.stroke(); // Unfilled: transparent center
+        this.ctx.restore();
       }
     };
 
-    const dotRadius = this.width > 2048 ? 8 : 5;
+    const ringRadius = this.width > 2048 ? 10 : 6;
+    const t = Math.max(0, Math.min(1, progress));
 
-    // 1. Hovered Country (soft highlight)
-    if (hoveredCountryId && hoveredCountryId !== correctCountryId && hoveredCountryId !== guessCountryId && hoveredCountryId !== selectedCountryId) {
+    // 1. Hovered Country (soft golden ivory highlight)
+    if (
+      hoveredCountryId &&
+      hoveredCountryId !== correctCountryId &&
+      hoveredCountryId !== guessCountryId &&
+      hoveredCountryId !== selectedCountryId
+    ) {
       const country = getCountry(hoveredCountryId);
       if (country && country.geometry) {
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
+        this.ctx.fillStyle = `rgba(255, 252, 235, ${(0.40 * t).toFixed(3)})`;
+        this.ctx.strokeStyle = '#fff5d6';
         this.ctx.lineWidth = this.width > 2048 ? 2.5 : 1.5;
         this.drawGeometry(this.ctx, country.geometry);
       }
-      highlightTinyDot(hoveredCountryId, 'rgba(255, 255, 255, 0.65)', '#ffffff', dotRadius);
+      drawTinyRing(hoveredCountryId, '#fff5d6', ringRadius);
     }
 
-    // 2. Selected Country (prior to confirmation: clear accent blue)
-    if (selectedCountryId && selectedCountryId !== correctCountryId && selectedCountryId !== guessCountryId) {
+    // 2. Selected Country (prior to confirmation: warm saffron focus)
+    if (
+      selectedCountryId &&
+      selectedCountryId !== correctCountryId &&
+      selectedCountryId !== guessCountryId
+    ) {
       const country = getCountry(selectedCountryId);
       if (country && country.geometry) {
-        this.ctx.fillStyle = 'rgba(59, 130, 246, 0.38)';
-        this.ctx.strokeStyle = '#60a5fa';
+        this.ctx.fillStyle = `rgba(217, 125, 16, ${(0.45 * t).toFixed(3)})`;
+        this.ctx.strokeStyle = '#d97d10';
         this.ctx.lineWidth = this.width > 2048 ? 3.5 : 2.0;
         this.drawGeometry(this.ctx, country.geometry);
       }
-      highlightTinyDot(selectedCountryId, '#3b82f6', '#bfdbfe', dotRadius + 1);
+      drawTinyRing(selectedCountryId, '#d97d10', ringRadius + 2);
     }
 
-    // 3. Wrong Guess Country (Red)
+    // 3. Wrong Guess Country: Brick Red (#ba3c2a) + 2px bright outline (#eb5843)
     if (guessCountryId && guessCountryId !== correctCountryId) {
       const country = getCountry(guessCountryId);
       if (country && country.geometry) {
-        this.ctx.fillStyle = 'rgba(239, 68, 68, 0.65)';
-        this.ctx.strokeStyle = '#ef4444';
-        this.ctx.lineWidth = this.width > 2048 ? 4 : 2.5;
+        this.ctx.fillStyle = `rgba(186, 60, 42, ${(0.78 * t).toFixed(3)})`;
+        this.ctx.strokeStyle = '#eb5843';
+        this.ctx.lineWidth = this.width > 2048 ? 3.5 : 2.0;
         this.drawGeometry(this.ctx, country.geometry);
       }
-      highlightTinyDot(guessCountryId, '#ef4444', '#fecaca', dotRadius + 2);
+      drawTinyRing(guessCountryId, '#eb5843', ringRadius + 3);
     }
 
-    // 4. Correct Country (Green)
+    // 4. Correct Target Country: Botanical Green (#1d733e) + 2px bright outline (#36b368)
     if (correctCountryId) {
       const country = getCountry(correctCountryId);
       if (country && country.geometry) {
-        this.ctx.fillStyle = 'rgba(16, 185, 129, 0.72)';
-        this.ctx.strokeStyle = '#34d399';
-        this.ctx.lineWidth = this.width > 2048 ? 4.5 : 3.0;
+        this.ctx.fillStyle = `rgba(29, 115, 62, ${(0.78 * t).toFixed(3)})`;
+        this.ctx.strokeStyle = '#36b368';
+        this.ctx.lineWidth = this.width > 2048 ? 4.0 : 2.5;
         this.drawGeometry(this.ctx, country.geometry);
       }
-      highlightTinyDot(correctCountryId, '#10b981', '#a7f3d0', dotRadius + 2);
+      drawTinyRing(correctCountryId, '#36b368', ringRadius + 3);
     }
 
-    // Notify Three.js to re-upload updated texture
     if (this.texture) {
       this.texture.needsUpdate = true;
     }
   }
 
+  // Render dynamic interaction highlights with 300ms fill tween
+  renderHighlights({
+    correctCountryId = null,
+    guessCountryId = null,
+    selectedCountryId = null,
+    hoveredCountryId = null,
+    animate = true
+  } = {}) {
+    if (!this.isReady) return;
+
+    if (this._tweenRaf) {
+      cancelAnimationFrame(this._tweenRaf);
+      this._tweenRaf = null;
+    }
+
+    const params = { correctCountryId, guessCountryId, selectedCountryId, hoveredCountryId };
+
+    // If hover only or animate=false, draw immediately at 1.0
+    if (!animate || (hoveredCountryId && !correctCountryId && !guessCountryId && !selectedCountryId)) {
+      this._drawHighlightsAtProgress(1.0, params);
+      return;
+    }
+
+    const duration = 300; // 300ms fill tween
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1.0, elapsed / duration);
+      this._drawHighlightsAtProgress(progress, params);
+      if (progress < 1.0) {
+        this._tweenRaf = requestAnimationFrame(step);
+      } else {
+        this._tweenRaf = null;
+      }
+    };
+
+    this._tweenRaf = requestAnimationFrame(step);
+  }
+
   resetHighlights() {
+    if (this._tweenRaf) {
+      cancelAnimationFrame(this._tweenRaf);
+      this._tweenRaf = null;
+    }
     if (!this.isReady) return;
     this.ctx.drawImage(this.baseCanvas, 0, 0);
     if (this.texture) {

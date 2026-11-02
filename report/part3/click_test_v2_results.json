@@ -1,0 +1,607 @@
+{
+  "total": 60,
+  "passed": 60,
+  "passRate": "100.0",
+  "results": [
+    {
+      "index": 1,
+      "category": "Outer Disc",
+      "targetName": "Japan",
+      "screenCoords": "(1015, 342)",
+      "latLon": "(36.20°, 138.25°)",
+      "expected": "Japan",
+      "actual": "Japan",
+      "pass": true
+    },
+    {
+      "index": 2,
+      "category": "Outer Disc",
+      "targetName": "Iceland",
+      "screenCoords": "(1034, 402)",
+      "latLon": "(64.96°, -19.02°)",
+      "expected": "Iceland",
+      "actual": "Iceland",
+      "pass": true
+    },
+    {
+      "index": 3,
+      "category": "Outer Disc",
+      "targetName": "Madagascar",
+      "screenCoords": "(1042, 466)",
+      "latLon": "(-18.76°, 46.86°)",
+      "expected": "Madagascar",
+      "actual": "Madagascar",
+      "pass": true
+    },
+    {
+      "index": 4,
+      "category": "Outer Disc",
+      "targetName": "Germany",
+      "screenCoords": "(1024, 528)",
+      "latLon": "(51.16°, 10.45°)",
+      "expected": "Germany",
+      "actual": "Germany",
+      "pass": true
+    },
+    {
+      "index": 5,
+      "category": "Outer Disc",
+      "targetName": "United Kingdom",
+      "screenCoords": "(1006, 588)",
+      "latLon": "(55.37°, -3.43°)",
+      "expected": "United Kingdom",
+      "actual": "United Kingdom",
+      "pass": true
+    },
+    {
+      "index": 6,
+      "category": "Outer Disc",
+      "targetName": "Chile",
+      "screenCoords": "(976, 645)",
+      "latLon": "(-35.67°, -71.54°)",
+      "expected": "Chile",
+      "actual": "Chile",
+      "pass": true
+    },
+    {
+      "index": 7,
+      "category": "Outer Disc",
+      "targetName": "Norway",
+      "screenCoords": "(927, 686)",
+      "latLon": "(60.47°, 8.46°)",
+      "expected": "Norway",
+      "actual": "Norway",
+      "pass": true
+    },
+    {
+      "index": 8,
+      "category": "Outer Disc",
+      "targetName": "South Africa",
+      "screenCoords": "(878, 726)",
+      "latLon": "(-30.55°, 22.93°)",
+      "expected": "South Africa",
+      "actual": "South Africa",
+      "pass": true
+    },
+    {
+      "index": 9,
+      "category": "Outer Disc",
+      "targetName": "Mexico",
+      "screenCoords": "(822, 756)",
+      "latLon": "(23.63°, -102.55°)",
+      "expected": "Mexico",
+      "actual": "Mexico",
+      "pass": true
+    },
+    {
+      "index": 10,
+      "category": "Outer Disc",
+      "targetName": "Cuba",
+      "screenCoords": "(758, 762)",
+      "latLon": "(21.52°, -77.78°)",
+      "expected": "Cuba",
+      "actual": "Cuba",
+      "pass": true
+    },
+    {
+      "index": 11,
+      "category": "Outer Disc",
+      "targetName": "Sri Lanka",
+      "screenCoords": "(695, 767)",
+      "latLon": "(7.87°, 80.77°)",
+      "expected": "Sri Lanka",
+      "actual": "Sri Lanka",
+      "pass": true
+    },
+    {
+      "index": 12,
+      "category": "Outer Disc",
+      "targetName": "Ireland",
+      "screenCoords": "(631, 760)",
+      "latLon": "(53.41°, -8.24°)",
+      "expected": "Ireland",
+      "actual": "Ireland",
+      "pass": true
+    },
+    {
+      "index": 13,
+      "category": "Outer Disc",
+      "targetName": "Portugal",
+      "screenCoords": "(575, 729)",
+      "latLon": "(39.39°, -8.22°)",
+      "expected": "Portugal",
+      "actual": "Portugal",
+      "pass": true
+    },
+    {
+      "index": 14,
+      "category": "Outer Disc",
+      "targetName": "Turkey",
+      "screenCoords": "(520, 697)",
+      "latLon": "(38.96°, 35.24°)",
+      "expected": "Turkey",
+      "actual": "Turkey",
+      "pass": true
+    },
+    {
+      "index": 15,
+      "category": "Outer Disc",
+      "targetName": "Italy",
+      "screenCoords": "(472, 655)",
+      "latLon": "(41.87°, 12.56°)",
+      "expected": "Italy",
+      "actual": "Italy",
+      "pass": true
+    },
+    {
+      "index": 16,
+      "category": "Outer Disc",
+      "targetName": "Spain",
+      "screenCoords": "(443, 598)",
+      "latLon": "(40.46°, -3.74°)",
+      "expected": "Spain",
+      "actual": "Spain",
+      "pass": true
+    },
+    {
+      "index": 17,
+      "category": "Outer Disc",
+      "targetName": "Argentina",
+      "screenCoords": "(415, 541)",
+      "latLon": "(-38.41°, -63.61°)",
+      "expected": "Argentina",
+      "actual": "Argentina",
+      "pass": true
+    },
+    {
+      "index": 18,
+      "category": "Outer Disc",
+      "targetName": "Greece",
+      "screenCoords": "(399, 479)",
+      "latLon": "(39.07°, 21.82°)",
+      "expected": "Greece",
+      "actual": "Greece",
+      "pass": true
+    },
+    {
+      "index": 19,
+      "category": "Outer Disc",
+      "targetName": "Panama",
+      "screenCoords": "(408, 416)",
+      "latLon": "(8.53°, -80.78°)",
+      "expected": "Panama",
+      "actual": "Panama",
+      "pass": true
+    },
+    {
+      "index": 20,
+      "category": "Outer Disc",
+      "targetName": "Papua New Guinea",
+      "screenCoords": "(417, 353)",
+      "latLon": "(-6.31°, 143.95°)",
+      "expected": "Papua New Guinea",
+      "actual": "Papua New Guinea",
+      "pass": true
+    },
+    {
+      "index": 21,
+      "category": "Ocean",
+      "targetName": "Point Nemo (South Pacific)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-48.87°, -123.39°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 22,
+      "category": "Ocean",
+      "targetName": "Central North Atlantic",
+      "screenCoords": "(720, 450)",
+      "latLon": "(32.00°, -42.00°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 23,
+      "category": "Ocean",
+      "targetName": "Central Indian Ocean",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-20.00°, 80.00°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 24,
+      "category": "Ocean",
+      "targetName": "North Pacific Abyss",
+      "screenCoords": "(720, 450)",
+      "latLon": "(38.00°, 170.00°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 25,
+      "category": "Ocean",
+      "targetName": "Southern Ocean Abyss",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-60.00°, 0.00°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 26,
+      "category": "Ocean",
+      "targetName": "Off Rio de Janeiro (200km)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-24.80°, -41.00°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 27,
+      "category": "Ocean",
+      "targetName": "Off Sydney (180km)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-34.20°, 153.50°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 28,
+      "category": "Ocean",
+      "targetName": "Off Tokyo Bay (180km)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(34.20°, 141.80°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 29,
+      "category": "Ocean",
+      "targetName": "Off California (200km)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(35.00°, -123.50°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 30,
+      "category": "Ocean",
+      "targetName": "Off Cape of Good Hope (180km)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-36.50°, 18.50°)",
+      "expected": "None (Ocean)",
+      "actual": "None (Ocean)",
+      "pass": true
+    },
+    {
+      "index": 31,
+      "category": "Microstate",
+      "targetName": "Monaco",
+      "screenCoords": "(720, 450)",
+      "latLon": "(43.74°, 7.42°)",
+      "expected": "Monaco",
+      "actual": "Monaco",
+      "pass": true
+    },
+    {
+      "index": 32,
+      "category": "Microstate",
+      "targetName": "Malta",
+      "screenCoords": "(720, 450)",
+      "latLon": "(35.94°, 14.38°)",
+      "expected": "Malta",
+      "actual": "Malta",
+      "pass": true
+    },
+    {
+      "index": 33,
+      "category": "Microstate",
+      "targetName": "Singapore",
+      "screenCoords": "(720, 450)",
+      "latLon": "(1.35°, 103.82°)",
+      "expected": "Singapore",
+      "actual": "Singapore",
+      "pass": true
+    },
+    {
+      "index": 34,
+      "category": "Microstate",
+      "targetName": "San Marino",
+      "screenCoords": "(720, 450)",
+      "latLon": "(43.94°, 12.46°)",
+      "expected": "San Marino",
+      "actual": "San Marino",
+      "pass": true
+    },
+    {
+      "index": 35,
+      "category": "Microstate",
+      "targetName": "Bahrain",
+      "screenCoords": "(720, 450)",
+      "latLon": "(26.07°, 50.56°)",
+      "expected": "Bahrain",
+      "actual": "Bahrain",
+      "pass": true
+    },
+    {
+      "index": 36,
+      "category": "Microstate",
+      "targetName": "Maldives",
+      "screenCoords": "(720, 450)",
+      "latLon": "(3.20°, 73.22°)",
+      "expected": "Maldives",
+      "actual": "Maldives",
+      "pass": true
+    },
+    {
+      "index": 37,
+      "category": "Border",
+      "targetName": "Spain side of border (Badajoz)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(38.88°, -6.97°)",
+      "expected": "Spain",
+      "actual": "Spain",
+      "pass": true
+    },
+    {
+      "index": 38,
+      "category": "Border",
+      "targetName": "Portugal side of border (Elvas)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(38.88°, -7.16°)",
+      "expected": "Portugal",
+      "actual": "Portugal",
+      "pass": true
+    },
+    {
+      "index": 39,
+      "category": "Border",
+      "targetName": "France side of Rhine (Strasbourg)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(48.57°, 7.75°)",
+      "expected": "France",
+      "actual": "France",
+      "pass": true
+    },
+    {
+      "index": 40,
+      "category": "Border",
+      "targetName": "Germany side of Rhine (Kehl)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(48.57°, 7.82°)",
+      "expected": "Germany",
+      "actual": "Germany",
+      "pass": true
+    },
+    {
+      "index": 41,
+      "category": "Border",
+      "targetName": "Kenya side of Namanga",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-2.53°, 36.79°)",
+      "expected": "Kenya",
+      "actual": "Kenya",
+      "pass": true
+    },
+    {
+      "index": 42,
+      "category": "Border",
+      "targetName": "Tanzania side of Namanga",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-2.57°, 36.79°)",
+      "expected": "Tanzania",
+      "actual": "Tanzania",
+      "pass": true
+    },
+    {
+      "index": 43,
+      "category": "Sovereign",
+      "targetName": "Brazil (Brasilia)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-15.80°, -47.89°)",
+      "expected": "Brazil",
+      "actual": "Brazil",
+      "pass": true
+    },
+    {
+      "index": 44,
+      "category": "Sovereign",
+      "targetName": "Australia (Canberra)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-35.28°, 149.13°)",
+      "expected": "Australia",
+      "actual": "Australia",
+      "pass": true
+    },
+    {
+      "index": 45,
+      "category": "Sovereign",
+      "targetName": "Canada (Ottawa)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(45.42°, -75.70°)",
+      "expected": "Canada",
+      "actual": "Canada",
+      "pass": true
+    },
+    {
+      "index": 46,
+      "category": "Sovereign",
+      "targetName": "India (New Delhi)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(28.61°, 77.21°)",
+      "expected": "India",
+      "actual": "India",
+      "pass": true
+    },
+    {
+      "index": 47,
+      "category": "Sovereign",
+      "targetName": "Argentina (Buenos Aires)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-34.60°, -58.38°)",
+      "expected": "Argentina",
+      "actual": "Argentina",
+      "pass": true
+    },
+    {
+      "index": 48,
+      "category": "Sovereign",
+      "targetName": "Egypt (Cairo)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(30.04°, 31.24°)",
+      "expected": "Egypt",
+      "actual": "Egypt",
+      "pass": true
+    },
+    {
+      "index": 49,
+      "category": "Sovereign",
+      "targetName": "Poland (Warsaw)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(52.23°, 21.01°)",
+      "expected": "Poland",
+      "actual": "Poland",
+      "pass": true
+    },
+    {
+      "index": 50,
+      "category": "Sovereign",
+      "targetName": "Thailand (Bangkok)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(13.76°, 100.50°)",
+      "expected": "Thailand",
+      "actual": "Thailand",
+      "pass": true
+    },
+    {
+      "index": 51,
+      "category": "Sovereign",
+      "targetName": "Morocco (Rabat)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(34.02°, -6.84°)",
+      "expected": "Morocco",
+      "actual": "Morocco",
+      "pass": true
+    },
+    {
+      "index": 52,
+      "category": "Sovereign",
+      "targetName": "Kenya (Nairobi)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-1.29°, 36.82°)",
+      "expected": "Kenya",
+      "actual": "Kenya",
+      "pass": true
+    },
+    {
+      "index": 53,
+      "category": "Sovereign",
+      "targetName": "Hungary (Budapest)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(47.50°, 19.04°)",
+      "expected": "Hungary",
+      "actual": "Hungary",
+      "pass": true
+    },
+    {
+      "index": 54,
+      "category": "Sovereign",
+      "targetName": "Colombia (Bogota)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(4.71°, -74.07°)",
+      "expected": "Colombia",
+      "actual": "Colombia",
+      "pass": true
+    },
+    {
+      "index": 55,
+      "category": "Sovereign",
+      "targetName": "Sweden (Inland)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(59.30°, 15.20°)",
+      "expected": "Sweden",
+      "actual": "Sweden",
+      "pass": true
+    },
+    {
+      "index": 56,
+      "category": "Sovereign",
+      "targetName": "Kazakhstan (Astana)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(51.17°, 71.45°)",
+      "expected": "Kazakhstan",
+      "actual": "Kazakhstan",
+      "pass": true
+    },
+    {
+      "index": 57,
+      "category": "Sovereign",
+      "targetName": "Vietnam (Hanoi)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(21.03°, 105.85°)",
+      "expected": "Vietnam",
+      "actual": "Vietnam",
+      "pass": true
+    },
+    {
+      "index": 58,
+      "category": "Sovereign",
+      "targetName": "Ghana (Accra)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(5.60°, -0.19°)",
+      "expected": "Ghana",
+      "actual": "Ghana",
+      "pass": true
+    },
+    {
+      "index": 59,
+      "category": "Sovereign",
+      "targetName": "Peru (Lima)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(-12.05°, -77.04°)",
+      "expected": "Peru",
+      "actual": "Peru",
+      "pass": true
+    },
+    {
+      "index": 60,
+      "category": "Sovereign",
+      "targetName": "South Korea (Seoul)",
+      "screenCoords": "(720, 450)",
+      "latLon": "(37.57°, 126.98°)",
+      "expected": "South Korea",
+      "actual": "South Korea",
+      "pass": true
+    }
+  ]
+}

@@ -1,8 +1,11 @@
+import * as THREE from 'three';
 import { GlobeApp } from './globe.js';
 import { UIManager } from './ui.js';
 import { GameManager } from './game.js';
 import { sound } from './audio.js';
 import { ICONS } from './icons.js';
+
+window.THREE = THREE;
 
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('webgl-container');
@@ -14,10 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const game = new GameManager(globeApp, ui);
   ui.showStartScreen();
 
-  // Expose for testing and verification
+  // Expose for automated testing and verification
   window.game = game;
   window.globe = globeApp;
-  window.__geotrivia = { globeApp, ui, game };
+  window.ui = ui;
+  window.__geotrivia = {
+    globeApp,
+    ui,
+    game,
+    getState: () => ({
+      mode: game.mode,
+      tier: game.tier,
+      round: game.round,
+      phase: game.phase || (game.isAnswering ? (game.selectedHit ? 'selected' : 'question') : 'result'),
+      targetIso: game.currentCountry ? (game.currentCountry.code || String(game.currentCountry.id).padStart(3, '0')) : null,
+      guessIso: game.lastGuessCountry ? (game.lastGuessCountry.code || String(game.lastGuessCountry.id).padStart(3, '0')) : (game.selectedHit?.country ? (game.selectedHit.country.code || String(game.selectedHit.country.id).padStart(3, '0')) : null)
+    })
+  };
 
   // Sound Button
   const soundBtn = document.getElementById('soundBtn');
@@ -48,12 +64,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Start Screen Mode Selection
+  // Start Screen Selection State
   let selectedMode = 'clue';
   let selectedTier = 'easy';
   let selectedRounds = 10;
-  let isSurvival = false;
   let hasTimer = false;
+  let isPractice = false;
+
+  const updateBestScoreDisplay = () => {
+    const bestEl = document.getElementById('startBestScore');
+    if (bestEl) {
+      try {
+        const val = localStorage.getItem(`geotrivia_best_${selectedMode}_${selectedTier}`) || '0';
+        bestEl.textContent = `${parseInt(val, 10).toLocaleString()} pts`;
+      } catch (e) {
+        bestEl.textContent = '0 pts';
+      }
+    }
+  };
 
   const modeButtons = document.querySelectorAll('.mode-btn');
   modeButtons.forEach(btn => {
@@ -62,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       modeButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       selectedMode = btn.dataset.mode;
+      updateBestScoreDisplay();
     });
   });
 
@@ -72,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tierButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       selectedTier = btn.dataset.tier;
+      updateBestScoreDisplay();
     });
   });
 
@@ -94,13 +124,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const survivalToggle = document.getElementById('survivalToggle');
-  if (survivalToggle) {
-    survivalToggle.addEventListener('change', () => {
-      isSurvival = survivalToggle.checked;
+  const practiceToggle = document.getElementById('practiceToggle');
+  if (practiceToggle) {
+    practiceToggle.addEventListener('change', () => {
+      isPractice = practiceToggle.checked;
+      if (isPractice && timerToggle) {
+        timerToggle.checked = false;
+        hasTimer = false;
+        timerToggle.disabled = true;
+      } else if (timerToggle) {
+        timerToggle.disabled = false;
+      }
       sound.playClick();
     });
   }
+
+  updateBestScoreDisplay();
 
   // Start Game Button
   const startBtn = document.getElementById('startExpeditionBtn');
@@ -111,8 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mode: selectedMode,
         tier: selectedTier,
         rounds: selectedRounds,
-        isSurvival,
-        hasTimer
+        hasTimer,
+        isPractice
       });
     });
   }

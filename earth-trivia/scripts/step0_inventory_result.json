@@ -1,0 +1,37 @@
+{
+  "tiersCount": {
+    "easy": 50,
+    "medium": 78,
+    "total": 195
+  },
+  "modes": {
+    "clue": true,
+    "name": true,
+    "nameDisabled": true,
+    "flag": true,
+    "flagDisabled": true
+  },
+  "tiers": {
+    "easy": true,
+    "mediumDisabled": true,
+    "hardDisabled": true
+  },
+  "rounds": {
+    "ten": true,
+    "twenty": true,
+    "endless": true
+  },
+  "toggles": {
+    "timerInDOM": false,
+    "survivalInDOM": false
+  },
+  "logic": {
+    "clueModeHandled": true,
+    "nameModeHandled": true,
+    "flagModeHandled": true,
+    "timerLogic": true,
+    "survivalLogic": true,
+    "requeueMissed": true,
+    "localStorageScore": true
+  }
+}

@@ -20,7 +20,13 @@ export const COUNTRIES_DB = [
       "Home to ancient temples where free-roaming sika deer bow to visitors in Nara.",
       "Operates the Shinkansen high-speed rail network with zero passenger fatalities from derailments."
     ],
-    "id": "392"
+    "id": "392",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Japan",
+    "memoryFacts": [
+      "Mount Fuji is an active volcano that last erupted in 1707.",
+      "Home to ancient temples where free-roaming sika deer bow to visitors in Nara.",
+      "Operates the Shinkansen high-speed rail network with zero passenger fatalities from derailments."
+    ]
   },
   {
     "name": "Egypt",
@@ -43,7 +49,13 @@ export const COUNTRIES_DB = [
       "The ancient capital of Luxor contains approximately a third of the world's most valuable ancient monuments.",
       "Traditional felucca sailboats rely entirely on sail canvas without motors."
     ],
-    "id": "818"
+    "id": "818",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Egypt",
+    "memoryFacts": [
+      "The Great Pyramid of Giza is the only surviving wonder of the original Ancient Seven Wonders.",
+      "The ancient capital of Luxor contains approximately a third of the world's most valuable ancient monuments.",
+      "Traditional felucca sailboats rely entirely on sail canvas without motors."
+    ]
   },
   {
     "name": "Brazil",
@@ -66,7 +78,13 @@ export const COUNTRIES_DB = [
       "Brasília was designed by urban planner Lúcio Costa and architect Oscar Niemeyer.",
       "Feijoada is a slow-cooked black bean and pork stew considered the national culinary centerpiece."
     ],
-    "id": "076"
+    "id": "076",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Brazil",
+    "memoryFacts": [
+      "The Christ the Redeemer statue on Mount Corcovado is made of reinforced concrete and soapstone.",
+      "Brasília was designed by urban planner Lúcio Costa and architect Oscar Niemeyer.",
+      "Feijoada is a slow-cooked black bean and pork stew considered the national culinary centerpiece."
+    ]
   },
   {
     "name": "Australia",
@@ -89,7 +107,13 @@ export const COUNTRIES_DB = [
       "Home to the sacred sandstone monolith Uluru which changes color at dawn and sunset.",
       "Indigenous hunting boomerangs were engineered thousands of years ago with aerodynamic lift."
     ],
-    "id": "036"
+    "id": "036",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Australia",
+    "memoryFacts": [
+      "The Sydney Opera House was designed by Danish architect Jørn Utzon.",
+      "Home to the sacred sandstone monolith Uluru which changes color at dawn and sunset.",
+      "Indigenous hunting boomerangs were engineered thousands of years ago with aerodynamic lift."
+    ]
   },
   {
     "name": "Italy",
@@ -112,7 +136,13 @@ export const COUNTRIES_DB = [
       "The Colosseum could accommodate over 50,000 spectators for ancient gladiator games.",
       "Encompasses two independent sovereign enclaves: San Marino and Vatican City."
     ],
-    "id": "380"
+    "id": "380",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Italy",
+    "memoryFacts": [
+      "Contains the highest count of UNESCO World Heritage cultural sites of any nation.",
+      "The Colosseum could accommodate over 50,000 spectators for ancient gladiator games.",
+      "Encompasses two independent sovereign enclaves: San Marino and Vatican City."
+    ]
   },
   {
     "name": "India",
@@ -135,7 +165,13 @@ export const COUNTRIES_DB = [
       "The mathematical number system including zero was developed by ancient scholars here.",
       "More than 19,500 distinct mother tongues are spoken across its diverse states."
     ],
-    "id": "356"
+    "id": "356",
+    "sourceUrl": "https://en.wikipedia.org/wiki/India",
+    "memoryFacts": [
+      "The Taj Mahal was commissioned by Emperor Shah Jahan in memory of his wife Mumtaz Mahal.",
+      "The mathematical number system including zero was developed by ancient scholars here.",
+      "More than 19,500 distinct mother tongues are spoken across its diverse states."
+    ]
   },
   {
     "name": "Peru",
@@ -158,7 +194,13 @@ export const COUNTRIES_DB = [
       "Ancient desert plains feature giant geoglyphs depicting hummingbirds and monkeys etched into stone.",
       "Cultivates over 4,000 documented native varieties of potatoes in diverse microclimates."
     ],
-    "id": "604"
+    "id": "604",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Peru",
+    "memoryFacts": [
+      "Machu Picchu was built in the 15th century and never discovered by Spanish colonizers.",
+      "Ancient desert plains feature giant geoglyphs depicting hummingbirds and monkeys etched into stone.",
+      "Cultivates over 4,000 documented native varieties of potatoes in diverse microclimates."
+    ]
   },
   {
     "name": "Canada",
@@ -181,7 +223,13 @@ export const COUNTRIES_DB = [
       "Has the longest ocean coastline of any nation in the world at over 202,000 kilometers.",
       "Produces approximately 70 percent of the entire global supply of pure maple syrup."
     ],
-    "id": "124"
+    "id": "124",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Canada",
+    "memoryFacts": [
+      "Contains more freshwater lake surface area than all other sovereign nations combined.",
+      "Has the longest ocean coastline of any nation in the world at over 202,000 kilometers.",
+      "Produces approximately 70 percent of the entire global supply of pure maple syrup."
+    ]
   },
   {
     "name": "France",
@@ -204,7 +252,13 @@ export const COUNTRIES_DB = [
       "The Louvre Museum is the world's most-visited art museum, housing thousands of masterpieces.",
       "More than 1,000 distinct types of traditional cheese are produced across its provinces."
     ],
-    "id": "250"
+    "id": "250",
+    "sourceUrl": "https://en.wikipedia.org/wiki/France",
+    "memoryFacts": [
+      "The Eiffel Tower expands by up to 15 centimeters during hot sunny weather due to thermal expansion.",
+      "The Louvre Museum is the world's most-visited art museum, housing thousands of masterpieces.",
+      "More than 1,000 distinct types of traditional cheese are produced across its provinces."
+    ]
   },
   {
     "name": "Kenya",
@@ -227,7 +281,13 @@ export const COUNTRIES_DB = [
       "Nairobi is the only global capital city with a national wildlife park located within its city boundaries.",
       "Long-distance runners from the high plateau hold numerous world records in marathons."
     ],
-    "id": "404"
+    "id": "404",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Kenya",
+    "memoryFacts": [
+      "The Great Wildebeest Migration involves over 1.5 million animals searching for fresh grazing grass.",
+      "Nairobi is the only global capital city with a national wildlife park located within its city boundaries.",
+      "Long-distance runners from the high plateau hold numerous world records in marathons."
+    ]
   },
   {
     "name": "Iceland",
@@ -250,7 +310,13 @@ export const COUNTRIES_DB = [
       "Does not have a single mosquito due to rapid seasonal freeze-thaw cycles preventing breeding.",
       "The national parliament, the Althing, was established in 930 AD and is one of the world's oldest assemblies."
     ],
-    "id": "352"
+    "id": "352",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Iceland",
+    "memoryFacts": [
+      "Nearly 100 percent of the nation's electricity and domestic heating comes from renewable energy sources.",
+      "Does not have a single mosquito due to rapid seasonal freeze-thaw cycles preventing breeding.",
+      "The national parliament, the Althing, was established in 930 AD and is one of the world's oldest assemblies."
+    ]
   },
   {
     "name": "Mexico",
@@ -273,7 +339,13 @@ export const COUNTRIES_DB = [
       "The Chichen Itza pyramid casts an undulating shadow during equinoxes resembling a descending serpent.",
       "Its traditional national cuisine is recognized by UNESCO as an Intangible Cultural Heritage of Humanity."
     ],
-    "id": "484"
+    "id": "484",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mexico",
+    "memoryFacts": [
+      "The ancient capital Tenochtitlan was built on artificial island gardens on a freshwater lake.",
+      "The Chichen Itza pyramid casts an undulating shadow during equinoxes resembling a descending serpent.",
+      "Its traditional national cuisine is recognized by UNESCO as an Intangible Cultural Heritage of Humanity."
+    ]
   },
   {
     "name": "Norway",
@@ -296,7 +368,13 @@ export const COUNTRIES_DB = [
       "In the northern archipelago of Svalbard, the sun does not dip below the horizon for over four months in summer.",
       "Preikestolen is a steep cliff rising 604 meters above a sheer drop into a glacier-carved fjord."
     ],
-    "id": "578"
+    "id": "578",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Norway",
+    "memoryFacts": [
+      "Houses the Global Seed Vault deep within permafrost to safeguard world crop biodiversity.",
+      "In the northern archipelago of Svalbard, the sun does not dip below the horizon for over four months in summer.",
+      "Preikestolen is a steep cliff rising 604 meters above a sheer drop into a glacier-carved fjord."
+    ]
   },
   {
     "name": "Greece",
@@ -319,7 +397,13 @@ export const COUNTRIES_DB = [
       "Features more than 2,000 islands and islets, of which roughly 200 are permanently inhabited.",
       "The Parthenon was built entirely with white Pentelic marble without mortar or modern cements."
     ],
-    "id": "300"
+    "id": "300",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Greece",
+    "memoryFacts": [
+      "The original athletic Olympic Games were founded in the sanctuary of Olympia in 776 BC.",
+      "Features more than 2,000 islands and islets, of which roughly 200 are permanently inhabited.",
+      "The Parthenon was built entirely with white Pentelic marble without mortar or modern cements."
+    ]
   },
   {
     "name": "South Africa",
@@ -342,7 +426,13 @@ export const COUNTRIES_DB = [
       "Maintains three official capitals: Pretoria (executive), Cape Town (legislative), and Bloemfontein (judicial).",
       "Has 12 official national languages recognized within its democratic constitution."
     ],
-    "id": "710"
+    "id": "710",
+    "sourceUrl": "https://en.wikipedia.org/wiki/South_Africa",
+    "memoryFacts": [
+      "Table Mountain is estimated to be over 200 million years old, making it one of the oldest peaks on Earth.",
+      "Maintains three official capitals: Pretoria (executive), Cape Town (legislative), and Bloemfontein (judicial).",
+      "Has 12 official national languages recognized within its democratic constitution."
+    ]
   },
   {
     "name": "New Zealand",
@@ -365,7 +455,13 @@ export const COUNTRIES_DB = [
       "Milford Sound was described by author Rudyard Kipling as the eighth wonder of the world.",
       "The flightless kiwi bird lays an egg that is up to 20 percent of the mother's total body weight."
     ],
-    "id": "554"
+    "id": "554",
+    "sourceUrl": "https://en.wikipedia.org/wiki/New_Zealand",
+    "memoryFacts": [
+      "Became the first self-governing nation in the world where women won the right to vote in 1893.",
+      "Milford Sound was described by author Rudyard Kipling as the eighth wonder of the world.",
+      "The flightless kiwi bird lays an egg that is up to 20 percent of the mother's total body weight."
+    ]
   },
   {
     "name": "Morocco",
@@ -388,7 +484,13 @@ export const COUNTRIES_DB = [
       "Chefchaouen was painted in shades of blue originally by residents seeking to keep buildings cool.",
       "Traditional conical tagines allow steam to condense and circulate, keeping food tender with minimal water."
     ],
-    "id": "504"
+    "id": "504",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Morocco",
+    "memoryFacts": [
+      "The University of al-Qarawiyyin in Fez was founded in 859 AD and is recognized as the world's oldest university.",
+      "Chefchaouen was painted in shades of blue originally by residents seeking to keep buildings cool.",
+      "Traditional conical tagines allow steam to condense and circulate, keeping food tender with minimal water."
+    ]
   },
   {
     "name": "Switzerland",
@@ -411,7 +513,13 @@ export const COUNTRIES_DB = [
       "The national flag is a square geometry, one of only two square sovereign national flags in the world.",
       "The Matterhorn's four distinct triangular faces face the four compass points."
     ],
-    "id": "756"
+    "id": "756",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Switzerland",
+    "memoryFacts": [
+      "Maintains enough reinforced underground fallout shelters to accommodate 100 percent of its resident population.",
+      "The national flag is a square geometry, one of only two square sovereign national flags in the world.",
+      "The Matterhorn's four distinct triangular faces face the four compass points."
+    ]
   },
   {
     "name": "Thailand",
@@ -434,7 +542,13 @@ export const COUNTRIES_DB = [
       "The Songkran festival marks the traditional new year with water splashing symbolizing ritual cleansing.",
       "The traditional martial art of Muay Thai utilizes fists, elbows, knees, and shins."
     ],
-    "id": "764"
+    "id": "764",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Thailand",
+    "memoryFacts": [
+      "The ceremonial traditional name of its capital city contains over 160 letters, the longest place name.",
+      "The Songkran festival marks the traditional new year with water splashing symbolizing ritual cleansing.",
+      "The traditional martial art of Muay Thai utilizes fists, elbows, knees, and shins."
+    ]
   },
   {
     "name": "Argentina",
@@ -457,7 +571,13 @@ export const COUNTRIES_DB = [
       "Traditional yerba mate is sipped communally through a filtered metal straw known as a bombilla.",
       "The southernmost city on Earth, Ushuaia, is located within its southern territory."
     ],
-    "id": "032"
+    "id": "032",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Argentina",
+    "memoryFacts": [
+      "The Perito Moreno Glacier is one of the few glaciers worldwide that maintains an equilibrium without retreating.",
+      "Traditional yerba mate is sipped communally through a filtered metal straw known as a bombilla.",
+      "The southernmost city on Earth, Ushuaia, is located within its southern territory."
+    ]
   },
   {
     "name": "United Kingdom",
@@ -480,7 +600,13 @@ export const COUNTRIES_DB = [
       "The Elizabeth Tower housing the bell Big Ben tilts slightly towards the northwest due to tunnel excavations.",
       "Postage stamps here are the only ones globally that do not feature the name of the issuing country."
     ],
-    "id": "826"
+    "id": "826",
+    "sourceUrl": "https://en.wikipedia.org/wiki/United_Kingdom",
+    "memoryFacts": [
+      "Stonehenge was constructed in stages beginning approximately 5,000 years ago.",
+      "The Elizabeth Tower housing the bell Big Ben tilts slightly towards the northwest due to tunnel excavations.",
+      "Postage stamps here are the only ones globally that do not feature the name of the issuing country."
+    ]
   },
   {
     "name": "Germany",
@@ -503,7 +629,13 @@ export const COUNTRIES_DB = [
       "Neuschwanstein Castle was commissioned by King Ludwig II as a private romantic retreat in the 19th century.",
       "Over 20,000 historical castles and fortresses dot its landscapes and river valleys."
     ],
-    "id": "276"
+    "id": "276",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Germany",
+    "memoryFacts": [
+      "Johannes Gutenberg introduced movable type printing press technology in Mainz around 1440.",
+      "Neuschwanstein Castle was commissioned by King Ludwig II as a private romantic retreat in the 19th century.",
+      "Over 20,000 historical castles and fortresses dot its landscapes and river valleys."
+    ]
   },
   {
     "name": "Spain",
@@ -526,7 +658,13 @@ export const COUNTRIES_DB = [
       "The world's oldest continuously operating restaurant, founded in 1725, operates in its capital.",
       "Produces approximately 40 percent of the entire global supply of olive oil."
     ],
-    "id": "724"
+    "id": "724",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Spain",
+    "memoryFacts": [
+      "The Sagrada Família was designed by Antoni Gaudí and is slated for completion more than 140 years after construction began.",
+      "The world's oldest continuously operating restaurant, founded in 1725, operates in its capital.",
+      "Produces approximately 40 percent of the entire global supply of olive oil."
+    ]
   },
   {
     "name": "United States",
@@ -549,7 +687,13 @@ export const COUNTRIES_DB = [
       "The Statue of Liberty was a diplomatic gift celebrating democratic independence.",
       "Established Yellowstone in 1872 as the first official designated national park on the planet."
     ],
-    "id": "840"
+    "id": "840",
+    "sourceUrl": "https://en.wikipedia.org/wiki/United_States",
+    "memoryFacts": [
+      "The Grand Canyon exposes nearly two billion years of Earth's geological history in its layered rock strata.",
+      "The Statue of Liberty was a diplomatic gift celebrating democratic independence.",
+      "Established Yellowstone in 1872 as the first official designated national park on the planet."
+    ]
   },
   {
     "name": "China",
@@ -572,7 +716,13 @@ export const COUNTRIES_DB = [
       "The Forbidden City served as the ceremonial and political imperial palace for 24 successive emperors.",
       "Giant pandas are endemic to bamboo forests in its central mountain reserves."
     ],
-    "id": "156"
+    "id": "156",
+    "sourceUrl": "https://en.wikipedia.org/wiki/China",
+    "memoryFacts": [
+      "The Great Wall consists of defensive sections spanning over 21,000 kilometers when all historical dynasties are counted.",
+      "The Forbidden City served as the ceremonial and political imperial palace for 24 successive emperors.",
+      "Giant pandas are endemic to bamboo forests in its central mountain reserves."
+    ]
   },
   {
     "name": "Russia",
@@ -595,7 +745,13 @@ export const COUNTRIES_DB = [
       "The Trans-Siberian Railway is the longest direct passenger railway line on the globe, stretching over 9,200 kilometers.",
       "Saint Basil's Cathedral on Red Square was commissioned by Ivan the Terrible in the 16th century."
     ],
-    "id": "643"
+    "id": "643",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Russia",
+    "memoryFacts": [
+      "Contains Lake Baikal, the deepest and oldest freshwater lake in the world, holding 20 percent of unfrozen freshwater.",
+      "The Trans-Siberian Railway is the longest direct passenger railway line on the globe, stretching over 9,200 kilometers.",
+      "Saint Basil's Cathedral on Red Square was commissioned by Ivan the Terrible in the 16th century."
+    ]
   },
   {
     "name": "Turkey",
@@ -618,7 +774,13 @@ export const COUNTRIES_DB = [
       "The subterranean cities of Cappadocia were carved into soft volcanic rock to shelter thousands of inhabitants.",
       "Hagia Sophia stood as the world's largest cathedral for nearly one thousand consecutive years after 537 AD."
     ],
-    "id": "792"
+    "id": "792",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Turkey",
+    "memoryFacts": [
+      "Its most populous metropolis, Istanbul, is the only major city spanning across two separate continents.",
+      "The subterranean cities of Cappadocia were carved into soft volcanic rock to shelter thousands of inhabitants.",
+      "Hagia Sophia stood as the world's largest cathedral for nearly one thousand consecutive years after 537 AD."
+    ]
   },
   {
     "name": "Vietnam",
@@ -641,7 +803,13 @@ export const COUNTRIES_DB = [
       "Houses Son Doong Cave, verified as the largest natural cave passage in the world by cross-sectional volume.",
       "Is one of the world's leading exporters of both Robusta coffee beans and black pepper."
     ],
-    "id": "704"
+    "id": "704",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Vietnam",
+    "memoryFacts": [
+      "Ha Long Bay contains approximately 1,600 limestone islands and islets formed over millions of years.",
+      "Houses Son Doong Cave, verified as the largest natural cave passage in the world by cross-sectional volume.",
+      "Is one of the world's leading exporters of both Robusta coffee beans and black pepper."
+    ]
   },
   {
     "name": "South Korea",
@@ -664,7 +832,13 @@ export const COUNTRIES_DB = [
       "Features one of the highest household broadband penetration rates and fastest average mobile speeds on Earth.",
       "Kimjang, the traditional collaborative practice of preparing winter kimchi, is recognized by UNESCO."
     ],
-    "id": "410"
+    "id": "410",
+    "sourceUrl": "https://en.wikipedia.org/wiki/South_Korea",
+    "memoryFacts": [
+      "King Sejong the Great personally created the Hangul phonetic script in 1443 to replace complex logograms.",
+      "Features one of the highest household broadband penetration rates and fastest average mobile speeds on Earth.",
+      "Kimjang, the traditional collaborative practice of preparing winter kimchi, is recognized by UNESCO."
+    ]
   },
   {
     "name": "Netherlands",
@@ -687,7 +861,13 @@ export const COUNTRIES_DB = [
       "Has more bicycles than human inhabitants, with dedicated cycling highways traversing the entire nation.",
       "Produces billions of commercial flower bulbs annually, dominating global cut-flower trade."
     ],
-    "id": "528"
+    "id": "528",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Netherlands",
+    "memoryFacts": [
+      "Approximately 26 percent of its landmass lies directly below sea level, protected by the Delta Works barrier system.",
+      "Has more bicycles than human inhabitants, with dedicated cycling highways traversing the entire nation.",
+      "Produces billions of commercial flower bulbs annually, dominating global cut-flower trade."
+    ]
   },
   {
     "name": "Sweden",
@@ -710,7 +890,13 @@ export const COUNTRIES_DB = [
       "The 64-gun warship Vasa sank on its maiden voyage in 1628 and was salvaged 333 years later in pristine condition.",
       "Practices the daily cultural tradition of 'fika'—pausing work for coffee, fresh pastries, and social conversation."
     ],
-    "id": "752"
+    "id": "752",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sweden",
+    "memoryFacts": [
+      "Contains over 267,000 islands within its borders, the highest island count of any sovereign nation.",
+      "The 64-gun warship Vasa sank on its maiden voyage in 1628 and was salvaged 333 years later in pristine condition.",
+      "Practices the daily cultural tradition of 'fika'—pausing work for coffee, fresh pastries, and social conversation."
+    ]
   },
   {
     "name": "Portugal",
@@ -733,7 +919,13 @@ export const COUNTRIES_DB = [
       "Produces over 50 percent of the world's commercial supply of natural wine cork from protected oak groves.",
       "Pena Palace in Sintra sits atop a granite peak featuring a romantic eclectic blend of vibrant yellow and red towers."
     ],
-    "id": "620"
+    "id": "620",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Portugal",
+    "memoryFacts": [
+      "The Anglo-Portuguese Alliance, ratified in 1386, is the oldest active diplomatic alliance in continuous recorded history.",
+      "Produces over 50 percent of the world's commercial supply of natural wine cork from protected oak groves.",
+      "Pena Palace in Sintra sits atop a granite peak featuring a romantic eclectic blend of vibrant yellow and red towers."
+    ]
   },
   {
     "name": "Indonesia",
@@ -756,7 +948,13 @@ export const COUNTRIES_DB = [
       "Is the world's largest sovereign island archipelago nation by both territory and island count.",
       "Komodo National Park protects the largest living lizard species, which can reach three meters in length."
     ],
-    "id": "360"
+    "id": "360",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Indonesia",
+    "memoryFacts": [
+      "The 9th-century Borobudur temple contains 504 Buddha statues and 72 perforated stupas.",
+      "Is the world's largest sovereign island archipelago nation by both territory and island count.",
+      "Komodo National Park protects the largest living lizard species, which can reach three meters in length."
+    ]
   },
   {
     "name": "Colombia",
@@ -779,7 +977,13 @@ export const COUNTRIES_DB = [
       "The Quindío wax palm, the national tree, can grow up to 60 meters tall, making it the world's tallest palm.",
       "Las Lajas Sanctuary is built inside a river canyon spanning a bridge 50 meters above the riverbed."
     ],
-    "id": "170"
+    "id": "170",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Colombia",
+    "memoryFacts": [
+      "Ranks as the second most biodiverse nation on Earth and holds the highest diversity of bird and orchid species.",
+      "The Quindío wax palm, the national tree, can grow up to 60 meters tall, making it the world's tallest palm.",
+      "Las Lajas Sanctuary is built inside a river canyon spanning a bridge 50 meters above the riverbed."
+    ]
   },
   {
     "name": "Chile",
@@ -802,7 +1006,13 @@ export const COUNTRIES_DB = [
       "Averages only 177 kilometers in width while stretching across 38 degrees of latitude.",
       "Houses the Moai stone statues carved by the ancient Rapa Nui civilization on Easter Island."
     ],
-    "id": "152"
+    "id": "152",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Chile",
+    "memoryFacts": [
+      "The Atacama Desert is the driest non-polar desert on Earth, with some weather stations recording zero rainfall for decades.",
+      "Averages only 177 kilometers in width while stretching across 38 degrees of latitude.",
+      "Houses the Moai stone statues carved by the ancient Rapa Nui civilization on Easter Island."
+    ]
   },
   {
     "name": "Austria",
@@ -825,7 +1035,13 @@ export const COUNTRIES_DB = [
       "Schönbrunn Palace contains 1,441 imperial rooms decorated in the Rococo style.",
       "The tiergarten at Schönbrunn, established in 1752, is the oldest operating zoo on Earth."
     ],
-    "id": "040"
+    "id": "040",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Austria",
+    "memoryFacts": [
+      "Vienna was home to world-renowned composers including Mozart, Beethoven, Haydn, Schubert, and Strauss.",
+      "Schönbrunn Palace contains 1,441 imperial rooms decorated in the Rococo style.",
+      "The tiergarten at Schönbrunn, established in 1752, is the oldest operating zoo on Earth."
+    ]
   },
   {
     "name": "Belgium",
@@ -833,7 +1049,7 @@ export const COUNTRIES_DB = [
     "fallbackId": "056",
     "flag": "🇧🇪",
     "capital": "Brussels",
-    "tier": "easy",
+    "tier": "medium",
     "lat": 50.5,
     "lon": 4.46,
     "landmark": "Grand Place and Atomium in Brussels",
@@ -848,7 +1064,13 @@ export const COUNTRIES_DB = [
       "Invented the chocolate praline shell in 1912 by chocolatier Jean Neuhaus in Brussels.",
       "The Atomium monument represents an iron crystal cell magnified 165 billion times."
     ],
-    "id": "056"
+    "id": "056",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Belgium",
+    "memoryFacts": [
+      "The Grand Place central square is celebrated for its opulent 17th-century baroque guild halls with gold leaf accents.",
+      "Invented the chocolate praline shell in 1912 by chocolatier Jean Neuhaus in Brussels.",
+      "The Atomium monument represents an iron crystal cell magnified 165 billion times."
+    ]
   },
   {
     "name": "Ireland",
@@ -871,7 +1093,13 @@ export const COUNTRIES_DB = [
       "Trinity College Library in Dublin preserves the Book of Kells, an illuminated gospel manuscript created around 800 AD.",
       "Halloween trace its historical roots directly to the ancient Gaelic harvest festival of Samhain celebrated here."
     ],
-    "id": "372"
+    "id": "372",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ireland",
+    "memoryFacts": [
+      "The Cliffs of Moher rise to an impressive height of 214 meters above churning ocean swells.",
+      "Trinity College Library in Dublin preserves the Book of Kells, an illuminated gospel manuscript created around 800 AD.",
+      "Halloween trace its historical roots directly to the ancient Gaelic harvest festival of Samhain celebrated here."
+    ]
   },
   {
     "name": "Poland",
@@ -894,7 +1122,13 @@ export const COUNTRIES_DB = [
       "Warsaw's historic center was meticulously reconstructed brick by brick using 18th-century paintings after wartime destruction.",
       "Nicolaus Copernicus formulated the modern heliocentric model of planetary motion in his 1543 treatise."
     ],
-    "id": "616"
+    "id": "616",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Poland",
+    "memoryFacts": [
+      "The Wieliczka Salt Mine features an entire cathedral chapel carved by hand deep underground from rock salt.",
+      "Warsaw's historic center was meticulously reconstructed brick by brick using 18th-century paintings after wartime destruction.",
+      "Nicolaus Copernicus formulated the modern heliocentric model of planetary motion in his 1543 treatise."
+    ]
   },
   {
     "name": "Malaysia",
@@ -902,7 +1136,7 @@ export const COUNTRIES_DB = [
     "fallbackId": "458",
     "flag": "🇲🇾",
     "capital": "Kuala Lumpur",
-    "tier": "easy",
+    "tier": "medium",
     "lat": 4.21,
     "lon": 101.97,
     "landmark": "Petronas Twin Towers",
@@ -917,7 +1151,13 @@ export const COUNTRIES_DB = [
       "The Batu Caves feature a massive golden statue of Lord Murugan standing 42 meters tall outside a limestone cavern.",
       "Home to ancient tropical rainforests in Taman Negara estimated to be over 130 million years old."
     ],
-    "id": "458"
+    "id": "458",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Malaysia",
+    "memoryFacts": [
+      "The Petronas Twin Towers stood as the world's tallest buildings from 1998 to 2004 and remain the tallest twin towers.",
+      "The Batu Caves feature a massive golden statue of Lord Murugan standing 42 meters tall outside a limestone cavern.",
+      "Home to ancient tropical rainforests in Taman Negara estimated to be over 130 million years old."
+    ]
   },
   {
     "name": "Singapore",
@@ -940,7 +1180,13 @@ export const COUNTRIES_DB = [
       "Its traditional street hawker food culture is inscribed on the UNESCO Intangible Cultural Heritage list.",
       "Is one of only three surviving true city-states in the modern world (alongside Monaco and Vatican City)."
     ],
-    "id": "702"
+    "id": "702",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Singapore",
+    "memoryFacts": [
+      "The Supertree Grove features vertical gardens up to 50 meters tall that collect rainwater and vent conservatory air.",
+      "Its traditional street hawker food culture is inscribed on the UNESCO Intangible Cultural Heritage list.",
+      "Is one of only three surviving true city-states in the modern world (alongside Monaco and Vatican City)."
+    ]
   },
   {
     "name": "Saudi Arabia",
@@ -963,7 +1209,13 @@ export const COUNTRIES_DB = [
       "Hegra features over 100 monumental tombs carved directly into sandstone rock formations dating to the 1st century.",
       "The nation produces dates from over 30 million cultivated date palm trees across fertile desert oases."
     ],
-    "id": "682"
+    "id": "682",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Saudi_Arabia",
+    "memoryFacts": [
+      "The Rub' al Khali (Empty Quarter) is the largest continuous expanse of sand desert on the planet.",
+      "Hegra features over 100 monumental tombs carved directly into sandstone rock formations dating to the 1st century.",
+      "The nation produces dates from over 30 million cultivated date palm trees across fertile desert oases."
+    ]
   },
   {
     "name": "United Arab Emirates",
@@ -986,7 +1238,13 @@ export const COUNTRIES_DB = [
       "The Sheikh Zayed Grand Mosque in Abu Dhabi features 82 marble domes and the world's largest hand-knotted carpet.",
       "Falconry has been practiced in the desert for over four thousand years as a revered cultural heritage."
     ],
-    "id": "784"
+    "id": "784",
+    "sourceUrl": "https://en.wikipedia.org/wiki/United_Arab_Emirates",
+    "memoryFacts": [
+      "The Burj Khalifa rises 828 meters and contains 163 habitable floors with design inspired by the desert Hymenocallis flower.",
+      "The Sheikh Zayed Grand Mosque in Abu Dhabi features 82 marble domes and the world's largest hand-knotted carpet.",
+      "Falconry has been practiced in the desert for over four thousand years as a revered cultural heritage."
+    ]
   },
   {
     "name": "Nigeria",
@@ -1009,7 +1267,13 @@ export const COUNTRIES_DB = [
       "Produces thousands of feature films each year, ranking as one of the largest film industries by volume.",
       "Over 500 distinct indigenous ethnic languages are spoken across its diverse states."
     ],
-    "id": "566"
+    "id": "566",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Nigeria",
+    "memoryFacts": [
+      "Zuma Rock is a natural monolithic granite inselberg that rises over 300 meters above the surrounding savanna.",
+      "Produces thousands of feature films each year, ranking as one of the largest film industries by volume.",
+      "Over 500 distinct indigenous ethnic languages are spoken across its diverse states."
+    ]
   },
   {
     "name": "Ecuador",
@@ -1017,7 +1281,7 @@ export const COUNTRIES_DB = [
     "fallbackId": "218",
     "flag": "🇪🇨",
     "capital": "Quito",
-    "tier": "easy",
+    "tier": "medium",
     "lat": -1.83,
     "lon": -78.18,
     "landmark": "Galápagos Islands and Cotopaxi Volcano",
@@ -1032,7 +1296,13 @@ export const COUNTRIES_DB = [
       "The Galápagos Islands are home to the only marine iguana species in the world that forages for algae underwater.",
       "Its capital Quito was the first global city designated as a UNESCO World Heritage site in 1978."
     ],
-    "id": "218"
+    "id": "218",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ecuador",
+    "memoryFacts": [
+      "Due to the equatorial bulge of the Earth, the summit of Mount Chimborazo is the closest terrestrial point to the Sun.",
+      "The Galápagos Islands are home to the only marine iguana species in the world that forages for algae underwater.",
+      "Its capital Quito was the first global city designated as a UNESCO World Heritage site in 1978."
+    ]
   },
   {
     "name": "Croatia",
@@ -1040,7 +1310,7 @@ export const COUNTRIES_DB = [
     "fallbackId": "191",
     "flag": "🇭🇷",
     "capital": "Zagreb",
-    "tier": "easy",
+    "tier": "medium",
     "lat": 45.1,
     "lon": 15.2,
     "landmark": "Dubrovnik Medieval Walls",
@@ -1055,7 +1325,13 @@ export const COUNTRIES_DB = [
       "Plitvice Lakes National Park consists of 16 terraced cascade lakes separated by natural travertine dams.",
       "The Dalmatian dog breed traces its registered historical origins and spotted coat directly to its coastal province."
     ],
-    "id": "191"
+    "id": "191",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Croatia",
+    "memoryFacts": [
+      "The stone defensive walls of Dubrovnik run continuously for nearly two kilometers and were never breached during the Middle Ages.",
+      "Plitvice Lakes National Park consists of 16 terraced cascade lakes separated by natural travertine dams.",
+      "The Dalmatian dog breed traces its registered historical origins and spotted coat directly to its coastal province."
+    ]
   },
   {
     "name": "Czechia",
@@ -1063,7 +1339,7 @@ export const COUNTRIES_DB = [
     "fallbackId": "203",
     "flag": "🇨🇿",
     "capital": "Prague",
-    "tier": "easy",
+    "tier": "medium",
     "lat": 49.81,
     "lon": 15.47,
     "landmark": "Charles Bridge and Prague Castle Complex",
@@ -1078,7 +1354,13 @@ export const COUNTRIES_DB = [
       "The Prague Astronomical Clock (Orloj), installed in 1410, is the oldest operating astronomical clock on Earth.",
       "The town of Plzeň created the world's first pale pilsner lager in 1842, establishing the global beer standard."
     ],
-    "id": "203"
+    "id": "203",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Czechia",
+    "memoryFacts": [
+      "Prague Castle is verified by the Guinness Book of Records as the largest coherent ancient castle complex in the world.",
+      "The Prague Astronomical Clock (Orloj), installed in 1410, is the oldest operating astronomical clock on Earth.",
+      "The town of Plzeň created the world's first pale pilsner lager in 1842, establishing the global beer standard."
+    ]
   },
   {
     "name": "Hungary",
@@ -1086,7 +1368,7 @@ export const COUNTRIES_DB = [
     "fallbackId": "348",
     "flag": "🇭🇺",
     "capital": "Budapest",
-    "tier": "easy",
+    "tier": "medium",
     "lat": 47.16,
     "lon": 19.5,
     "landmark": "Hungarian Parliament Building on the Danube",
@@ -1101,7 +1383,13 @@ export const COUNTRIES_DB = [
       "The Hungarian Parliament Building contains 691 rooms and utilized 40 kilograms of 24-carat gold in its interior.",
       "Budapest is nicknamed the City of Spas due to more than 100 natural thermal springs flowing beneath its streets."
     ],
-    "id": "348"
+    "id": "348",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Hungary",
+    "memoryFacts": [
+      "Architect Ernő Rubik invented the rotating Rubik's Cube in his capital studio in 1974 as a geometric teaching tool.",
+      "The Hungarian Parliament Building contains 691 rooms and utilized 40 kilograms of 24-carat gold in its interior.",
+      "Budapest is nicknamed the City of Spas due to more than 100 natural thermal springs flowing beneath its streets."
+    ]
   },
   {
     "name": "Denmark",
@@ -1109,7 +1397,7 @@ export const COUNTRIES_DB = [
     "fallbackId": "208",
     "flag": "🇩🇰",
     "capital": "Copenhagen",
-    "tier": "easy",
+    "tier": "medium",
     "lat": 56.26,
     "lon": 9.5,
     "landmark": "Nyhavn Waterfront and Little Mermaid Statue",
@@ -1124,7 +1412,13 @@ export const COUNTRIES_DB = [
       "The Dannebrog national flag has been in continuous use since 1219, making it the oldest continuous national flag.",
       "Copenhagen features dedicated bicycle bridges and highways where over 60 percent of residents commute on two wheels."
     ],
-    "id": "208"
+    "id": "208",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Denmark",
+    "memoryFacts": [
+      "Ole Kirk Christiansen invented interlocking plastic Lego bricks in his Billund carpentry workshop in 1949.",
+      "The Dannebrog national flag has been in continuous use since 1219, making it the oldest continuous national flag.",
+      "Copenhagen features dedicated bicycle bridges and highways where over 60 percent of residents commute on two wheels."
+    ]
   },
   {
     "name": "Finland",
@@ -1132,7 +1426,7 @@ export const COUNTRIES_DB = [
     "fallbackId": "246",
     "flag": "🇫🇮",
     "capital": "Helsinki",
-    "tier": "easy",
+    "tier": "medium",
     "lat": 61.92,
     "lon": 25.74,
     "landmark": "Suomenlinna Sea Fortress",
@@ -1147,7 +1441,13 @@ export const COUNTRIES_DB = [
       "Over 75 percent of its sovereign surface area is covered by dense pine and spruce forests.",
       "The traditional education system assigns minimal standardized homework while consistently achieving top rankings."
     ],
-    "id": "246"
+    "id": "246",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Finland",
+    "memoryFacts": [
+      "Houses an estimated 3.3 million saunas for a population of 5.5 million inhabitants.",
+      "Over 75 percent of its sovereign surface area is covered by dense pine and spruce forests.",
+      "The traditional education system assigns minimal standardized homework while consistently achieving top rankings."
+    ]
   },
   {
     "id": "400",
@@ -1166,6 +1466,12 @@ export const COUNTRIES_DB = [
       "Famous for the monumental Treasury façade of Petra and the national feast dish Mansaf."
     ],
     "memoryAnchors": [
+      "The ancient Nabataean city of Petra was carved directly into vibrant rose-red sandstone cliffs.",
+      "The Dead Sea shoreline sits at roughly 430 meters below sea level, the lowest land elevation on Earth.",
+      "Wadi Rum's red sand valleys and granite monoliths have served as filming backdrops for numerous space movies."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Jordan",
+    "memoryFacts": [
       "The ancient Nabataean city of Petra was carved directly into vibrant rose-red sandstone cliffs.",
       "The Dead Sea shoreline sits at roughly 430 meters below sea level, the lowest land elevation on Earth.",
       "Wadi Rum's red sand valleys and granite monoliths have served as filming backdrops for numerous space movies."
@@ -1191,6 +1497,12 @@ export const COUNTRIES_DB = [
       "Mount Everest rises to an officially surveyed elevation of 8,848.86 meters above sea level.",
       "The non-rectangular flag's two triangles symbolize both the high peaks and the two prominent spiritual traditions.",
       "Lumbini in its southern plains is historically recognized as the birthplace of Siddhartha Gautama, the Buddha."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Nepal",
+    "memoryFacts": [
+      "Mount Everest rises to an officially surveyed elevation of 8,848.86 meters above sea level.",
+      "The non-rectangular flag's two triangles symbolize both the high peaks and the two prominent spiritual traditions.",
+      "Lumbini in its southern plains is historically recognized as the birthplace of Siddhartha Gautama, the Buddha."
     ]
   },
   {
@@ -1210,6 +1522,12 @@ export const COUNTRIES_DB = [
       "Famous for playful ring-tailed lemurs, colorful chameleons, and producing world-renowned bourbon vanilla beans."
     ],
     "memoryAnchors": [
+      "Separated from continental landmasses roughly 88 million years ago, allowing unique evolutionary flora and fauna.",
+      "Produces approximately 80 percent of the world's natural bourbon vanilla bean crop.",
+      "The Avenue of the Baobabs features Grandidier's baobab trees that can store thousands of liters of water."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Madagascar",
+    "memoryFacts": [
       "Separated from continental landmasses roughly 88 million years ago, allowing unique evolutionary flora and fauna.",
       "Produces approximately 80 percent of the world's natural bourbon vanilla bean crop.",
       "The Avenue of the Baobabs features Grandidier's baobab trees that can store thousands of liters of water."
@@ -1235,6 +1553,12 @@ export const COUNTRIES_DB = [
       "Features thousands of pre-1960 classic vintage vehicles kept running through ingenious local mechanics.",
       "Old Havana was founded in 1519 and contains one of the most preserved historical colonial centers.",
       "Ropa Vieja, meaning 'old clothes', is the national culinary symbol, cooked slowly with bell peppers and cumin."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Cuba",
+    "memoryFacts": [
+      "Features thousands of pre-1960 classic vintage vehicles kept running through ingenious local mechanics.",
+      "Old Havana was founded in 1519 and contains one of the most preserved historical colonial centers.",
+      "Ropa Vieja, meaning 'old clothes', is the national culinary symbol, cooked slowly with bell peppers and cumin."
     ]
   },
   {
@@ -1254,6 +1578,12 @@ export const COUNTRIES_DB = [
       "Famous for savory vinegar and soy braised adobo, sweet mangoes, and two-thousand-year-old high-altitude rice terraces."
     ],
     "memoryAnchors": [
+      "The Banaue Rice Terraces were carved into the mountainsides over 2,000 years ago using mostly hand tools.",
+      "Jeepneys originated from surplus military transport jeeps left behind after WWII and became cultural folk art.",
+      "Features more than 170 distinct indigenous languages spoken across its thousands of islands."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Philippines",
+    "memoryFacts": [
       "The Banaue Rice Terraces were carved into the mountainsides over 2,000 years ago using mostly hand tools.",
       "Jeepneys originated from surplus military transport jeeps left behind after WWII and became cultural folk art.",
       "Features more than 170 distinct indigenous languages spoken across its thousands of islands."
@@ -1279,6 +1609,12 @@ export const COUNTRIES_DB = [
       "The Pysanka tradition of decorating raw eggs with beeswax and dye dates back to ancient celebrations.",
       "Saint Sophia Cathedral in Kyiv was founded in the 11th century and houses intact centuries-old mosaic murals.",
       "Holds approximately one-quarter of the world's most fertile chernozem (black soil) agricultural reserves."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ukraine",
+    "memoryFacts": [
+      "The Pysanka tradition of decorating raw eggs with beeswax and dye dates back to ancient celebrations.",
+      "Saint Sophia Cathedral in Kyiv was founded in the 11th century and houses intact centuries-old mosaic murals.",
+      "Holds approximately one-quarter of the world's most fertile chernozem (black soil) agricultural reserves."
     ]
   },
   {
@@ -1298,6 +1634,12 @@ export const COUNTRIES_DB = [
       "Famous for a mountainous steak sandwich loaded with ham and eggs, and an oceanfront white sculpture-citadel."
     ],
     "memoryAnchors": [
+      "Hosted and won the very first FIFA World Cup tournament in 1930 at the Estadio Centenario.",
+      "Casapueblo was built by artist Carlos Páez Vilaró over 36 years without architectural blueprints.",
+      "Ranks among the leading nations globally in generating electricity from renewable wind and hydropower."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Uruguay",
+    "memoryFacts": [
       "Hosted and won the very first FIFA World Cup tournament in 1930 at the Estadio Centenario.",
       "Casapueblo was built by artist Carlos Páez Vilaró over 36 years without architectural blueprints.",
       "Ranks among the leading nations globally in generating electricity from renewable wind and hydropower."
@@ -1323,6 +1665,12 @@ export const COUNTRIES_DB = [
       "Abolished its army in 1948, redirecting defense budgets toward universal healthcare and public education.",
       "Protects more than 25 percent of its entire national sovereign territory within national parks and reserves.",
       "Generates roughly 98 percent of its national electricity from renewable sources including geothermal and water."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Costa_Rica",
+    "memoryFacts": [
+      "Abolished its army in 1948, redirecting defense budgets toward universal healthcare and public education.",
+      "Protects more than 25 percent of its entire national sovereign territory within national parks and reserves.",
+      "Generates roughly 98 percent of its national electricity from renewable sources including geothermal and water."
     ]
   },
   {
@@ -1342,6 +1690,12 @@ export const COUNTRIES_DB = [
       "Famous for throat singing harmonies, fermented mare's milk, and a colossal 40-meter gleaming stainless steel horseman statue."
     ],
     "memoryAnchors": [
+      "The Genghis Khan Equestrian Statue in Tsonjin Boldog is the largest equestrian statue on planet Earth.",
+      "Has the lowest human population density of any independent sovereign nation, with roughly two people per square kilometer.",
+      "Traditional throat singers can produce two or more distinct vocal pitches simultaneously."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mongolia",
+    "memoryFacts": [
       "The Genghis Khan Equestrian Statue in Tsonjin Boldog is the largest equestrian statue on planet Earth.",
       "Has the lowest human population density of any independent sovereign nation, with roughly two people per square kilometer.",
       "Traditional throat singers can produce two or more distinct vocal pitches simultaneously."
@@ -1367,6 +1721,12 @@ export const COUNTRIES_DB = [
       "Sigiriya features ancient mirror-finish plastered walls and frescoes painted over 1,500 years ago.",
       "Is historically the world's leading exporter of true cinnamon (Cinnamomum verum).",
       "Traditional stilt fishermen balance on narrow wooden crossbars planted into shallow coral reefs."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sri_Lanka",
+    "memoryFacts": [
+      "Sigiriya features ancient mirror-finish plastered walls and frescoes painted over 1,500 years ago.",
+      "Is historically the world's leading exporter of true cinnamon (Cinnamomum verum).",
+      "Traditional stilt fishermen balance on narrow wooden crossbars planted into shallow coral reefs."
     ]
   },
   {
@@ -1386,6 +1746,12 @@ export const COUNTRIES_DB = [
       "Famous for boat-shaped yeast bread filled with melted cheese and a runny egg yolk, and twisted spiced soup dumplings."
     ],
     "memoryAnchors": [
+      "The traditional qvevri wine-making method ferments crushed grapes inside beeswax-coated earthenware vessels buried underground.",
+      "Gergeti Trinity Church sits alone on a hilltop at 2,170 meters elevation framed by a soaring snow-capped peak.",
+      "Features its own unique 33-letter alphabet with elegant curved strokes."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Georgia",
+    "memoryFacts": [
       "The traditional qvevri wine-making method ferments crushed grapes inside beeswax-coated earthenware vessels buried underground.",
       "Gergeti Trinity Church sits alone on a hilltop at 2,170 meters elevation framed by a soaring snow-capped peak.",
       "Features its own unique 33-letter alphabet with elegant curved strokes."
@@ -1411,6 +1777,12 @@ export const COUNTRIES_DB = [
       "The 82-kilometer canal officially opened in 1914, saving ships an 8,000-nautical-mile journey around treacherous capes.",
       "Features the world's only capital city with a tropical rainforest within its municipal limits.",
       "The famous wide-brimmed woven straw hat known globally as a Panama hat actually originated in Ecuador."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Panama",
+    "memoryFacts": [
+      "The 82-kilometer canal officially opened in 1914, saving ships an 8,000-nautical-mile journey around treacherous capes.",
+      "Features the world's only capital city with a tropical rainforest within its municipal limits.",
+      "The famous wide-brimmed woven straw hat known globally as a Panama hat actually originated in Ecuador."
     ]
   },
   {
@@ -1430,6 +1802,12 @@ export const COUNTRIES_DB = [
       "Famous for fairy-tale turrets atop cliffside fortresses associated in folklore with vampire legends, and cornmeal polenta."
     ],
     "memoryAnchors": [
+      "The Palace of the Parliament in Bucharest weighs an estimated 4.1 million tonnes, making it the heaviest building on Earth.",
+      "The Transfăgărășan highway climbs to 2,042 meters with hairpin turns and dramatic viaducts.",
+      "Bran Castle is perched on a 60-meter rock promontory and remains iconic in gothic literary lore."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Romania",
+    "memoryFacts": [
       "The Palace of the Parliament in Bucharest weighs an estimated 4.1 million tonnes, making it the heaviest building on Earth.",
       "The Transfăgărășan highway climbs to 2,042 meters with hairpin turns and dramatic viaducts.",
       "Bran Castle is perched on a 60-meter rock promontory and remains iconic in gothic literary lore."
@@ -1455,6 +1833,12 @@ export const COUNTRIES_DB = [
       "Belgrade is one of the oldest continuously inhabited urban centers on its landmass, contested in over 115 wars.",
       "Produces a significant proportion of the world's commercial raspberry supply.",
       "Nikola Tesla's ashes and personal archive are preserved in a dedicated museum in its capital."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Serbia",
+    "memoryFacts": [
+      "Belgrade is one of the oldest continuously inhabited urban centers on its landmass, contested in over 115 wars.",
+      "Produces a significant proportion of the world's commercial raspberry supply.",
+      "Nikola Tesla's ashes and personal archive are preserved in a dedicated museum in its capital."
     ]
   },
   {
@@ -1474,6 +1858,12 @@ export const COUNTRIES_DB = [
       "Famous for small potato dumplings tossed with creamy sheep cheese and topped with crispy smoked bacon bits."
     ],
     "memoryAnchors": [
+      "Bratislava is the only national capital in the world that shares borders directly with two other sovereign countries.",
+      "Spiš Castle is one of the largest castle complexes by surface area on its landmass, covering over 41,000 square meters.",
+      "Features more than 6,000 documented natural caves and grottos throughout its limestone karst mountains."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Slovakia",
+    "memoryFacts": [
       "Bratislava is the only national capital in the world that shares borders directly with two other sovereign countries.",
       "Spiš Castle is one of the largest castle complexes by surface area on its landmass, covering over 41,000 square meters.",
       "Features more than 6,000 documented natural caves and grottos throughout its limestone karst mountains."
@@ -1499,6 +1889,12 @@ export const COUNTRIES_DB = [
       "Lake Bled features a tiny central island accessed by traditional flat-bottom wooden rowboats called pletnas.",
       "Postojna Cave operates the world's oldest underground cave passenger railway, running since 1872.",
       "Over 60 percent of its territory is cloaked in lush native forests, among the highest forest coverage on its landmass."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Slovenia",
+    "memoryFacts": [
+      "Lake Bled features a tiny central island accessed by traditional flat-bottom wooden rowboats called pletnas.",
+      "Postojna Cave operates the world's oldest underground cave passenger railway, running since 1872.",
+      "Over 60 percent of its territory is cloaked in lush native forests, among the highest forest coverage on its landmass."
     ]
   },
   {
@@ -1518,6 +1914,12 @@ export const COUNTRIES_DB = [
       "Famous for layered filo dough pastries filled with whisked eggs and cheese, and a colorful mountain monastery cloister."
     ],
     "memoryAnchors": [
+      "The Rose Valley produces roughly half of the entire global supply of natural rose attar oil.",
+      "The Cyrillic script was developed here in the First Empire during the late 9th century under Tsar Simeon I.",
+      "Rila Monastery features vibrant exterior biblical frescoes painted by 19th-century masters against mountain cliffs."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bulgaria",
+    "memoryFacts": [
       "The Rose Valley produces roughly half of the entire global supply of natural rose attar oil.",
       "The Cyrillic script was developed here in the First Empire during the late 9th century under Tsar Simeon I.",
       "Rila Monastery features vibrant exterior biblical frescoes painted by 19th-century masters against mountain cliffs."
@@ -1543,6 +1945,12 @@ export const COUNTRIES_DB = [
       "Became the first nation in the world to conduct general parliamentary elections via secure online internet voting in 2005.",
       "Over 50 percent of its national land territory is covered by undisturbed natural woodland and mossy peat bogs.",
       "Tallinn's historic Old Town is considered one of the most intact medieval merchant town centers on its landmass."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Estonia",
+    "memoryFacts": [
+      "Became the first nation in the world to conduct general parliamentary elections via secure online internet voting in 2005.",
+      "Over 50 percent of its national land territory is covered by undisturbed natural woodland and mossy peat bogs.",
+      "Tallinn's historic Old Town is considered one of the most intact medieval merchant town centers on its landmass."
     ]
   },
   {
@@ -1562,6 +1970,12 @@ export const COUNTRIES_DB = [
       "Famous for dense sourdough dark rye bread, herbal liqueur infused with 24 botanicals, and coastal pine forests."
     ],
     "memoryAnchors": [
+      "Approximately one-third of all buildings in its capital's center are designed in the flamboyant Art Nouveau style.",
+      "The traditional nationwide Song and Dance Celebration brings together over 40,000 choir performers in open-air amphitheatres.",
+      "Venta Rapid in Kuldīga is verified as the widest natural waterfall on its landmass, stretching up to 270 meters."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Latvia",
+    "memoryFacts": [
       "Approximately one-third of all buildings in its capital's center are designed in the flamboyant Art Nouveau style.",
       "The traditional nationwide Song and Dance Celebration brings together over 40,000 choir performers in open-air amphitheatres.",
       "Venta Rapid in Kuldīga is verified as the widest natural waterfall on its landmass, stretching up to 270 meters."
@@ -1587,6 +2001,12 @@ export const COUNTRIES_DB = [
       "The Hill of Crosses features an estimated 100,000 devotional crosses placed by pilgrims as peaceful cultural resilience.",
       "Trakai Island Castle sits on a picturesque lake island and was constructed with defensive red brick in the 14th century.",
       "Retains an ancient language that is among the most conservative living Indo-European tongues, preserving archaic forms."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Lithuania",
+    "memoryFacts": [
+      "The Hill of Crosses features an estimated 100,000 devotional crosses placed by pilgrims as peaceful cultural resilience.",
+      "Trakai Island Castle sits on a picturesque lake island and was constructed with defensive red brick in the 14th century.",
+      "Retains an ancient language that is among the most conservative living Indo-European tongues, preserving archaic forms."
     ]
   },
   {
@@ -1606,6 +2026,12 @@ export const COUNTRIES_DB = [
       "Famous for futuristic capital architecture, a tower holding a mythical golden egg, and horsemeat noodles eaten with five fingers."
     ],
     "memoryAnchors": [
+      "The Baikonur Cosmodrome was the launch site for both Sputnik 1 in 1957 and Yuri Gagarin's orbital flight in 1961.",
+      "Is verified as the ninth largest sovereign nation on Earth by surface area and the world's largest landlocked country.",
+      "Wild apples originated genetically in the mountain slopes surrounding its largest southern city, Almaty."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Kazakhstan",
+    "memoryFacts": [
       "The Baikonur Cosmodrome was the launch site for both Sputnik 1 in 1957 and Yuri Gagarin's orbital flight in 1961.",
       "Is verified as the ninth largest sovereign nation on Earth by surface area and the world's largest landlocked country.",
       "Wild apples originated genetically in the mountain slopes surrounding its largest southern city, Almaty."
@@ -1631,6 +2057,12 @@ export const COUNTRIES_DB = [
       "Registan Square in Samarkand is framed by three monumental Islamic madrasahs covered in dazzling azure tilework.",
       "Is one of only two doubly-landlocked nations on the planet (alongside Liechtenstein).",
       "Plov is the revered national dish, traditionally prepared in giant outdoor cast-iron cauldrons called kazans."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Uzbekistan",
+    "memoryFacts": [
+      "Registan Square in Samarkand is framed by three monumental Islamic madrasahs covered in dazzling azure tilework.",
+      "Is one of only two doubly-landlocked nations on the planet (alongside Liechtenstein).",
+      "Plov is the revered national dish, traditionally prepared in giant outdoor cast-iron cauldrons called kazans."
     ]
   },
   {
@@ -1650,6 +2082,12 @@ export const COUNTRIES_DB = [
       "Famous for intricate hand-painted transport trucks decorated with vibrant folk motifs, and slow-simmered spiced shank stews."
     ],
     "memoryAnchors": [
+      "Houses K2 (Mount Godwin-Austen), the second highest mountain peak on Earth at 8,611 meters elevation.",
+      "Mohenjo-daro was an ancient Indus Valley metropolis with grid-planned brick streets and covered drainage systems.",
+      "Elaborate truck art turns everyday commercial transport vehicles into moving folk art masterpieces with hand-painted murals."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Pakistan",
+    "memoryFacts": [
       "Houses K2 (Mount Godwin-Austen), the second highest mountain peak on Earth at 8,611 meters elevation.",
       "Mohenjo-daro was an ancient Indus Valley metropolis with grid-planned brick streets and covered drainage systems.",
       "Elaborate truck art turns everyday commercial transport vehicles into moving folk art masterpieces with hand-painted murals."
@@ -1675,6 +2113,12 @@ export const COUNTRIES_DB = [
       "The Sundarbans is the largest single tract of mangrove forest on Earth and is home to the Royal Bengal tiger.",
       "Its delta is formed by the confluence of the Padma, Jamuna, and Meghna river networks.",
       "The UNESCO International Mother Language Day honors students who demonstrated for linguistic rights here in 1952."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bangladesh",
+    "memoryFacts": [
+      "The Sundarbans is the largest single tract of mangrove forest on Earth and is home to the Royal Bengal tiger.",
+      "Its delta is formed by the confluence of the Padma, Jamuna, and Meghna river networks.",
+      "The UNESCO International Mother Language Day honors students who demonstrated for linguistic rights here in 1952."
     ]
   },
   {
@@ -1694,6 +2138,12 @@ export const COUNTRIES_DB = [
       "Famous for spice-scented coastal islands with carved wooden doorways and climbing a dormant stratovolcano."
     ],
     "memoryAnchors": [
+      "Mount Kilimanjaro is the highest free-standing mountain above sea level on Earth, rising 5,895 meters.",
+      "The Ngorongoro Crater is the world's largest inactive, intact, and unfilled volcanic caldera.",
+      "The historic spice island of Zanzibar was historically a major crossroads of maritime spice trade."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Tanzania",
+    "memoryFacts": [
       "Mount Kilimanjaro is the highest free-standing mountain above sea level on Earth, rising 5,895 meters.",
       "The Ngorongoro Crater is the world's largest inactive, intact, and unfilled volcanic caldera.",
       "The historic spice island of Zanzibar was historically a major crossroads of maritime spice trade."
@@ -1719,6 +2169,12 @@ export const COUNTRIES_DB = [
       "Angkor Wat covers over 160 hectares, officially recognized by Guinness World Records as the largest religious structure.",
       "The Tonle Sap River uniquely reverses its flow direction twice a year depending on seasonal monsoon water pressure.",
       "The stone faces carved at the Bayon temple depict serene smiling enigmatic monumental portraits."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Cambodia",
+    "memoryFacts": [
+      "Angkor Wat covers over 160 hectares, officially recognized by Guinness World Records as the largest religious structure.",
+      "The Tonle Sap River uniquely reverses its flow direction twice a year depending on seasonal monsoon water pressure.",
+      "The stone faces carved at the Bayon temple depict serene smiling enigmatic monumental portraits."
     ]
   },
   {
@@ -1738,6 +2194,12 @@ export const COUNTRIES_DB = [
       "Famous for eleven monolithic churches chiseled straight down into solid red volcanic bedrock, and spongy sourdough flatbread."
     ],
     "memoryAnchors": [
+      "The eleven rock-hewn monolithic churches of Lalibela were chiseled downward into solid red volcanic rock in the 12th century.",
+      "Follows an ancient calendar running approximately seven years behind the Gregorian calendar with 13 months.",
+      "Lucy (Australopithecus afarensis), a 3.2-million-year-old hominid ancestor fossil, was unearthed in its Awash Valley."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ethiopia",
+    "memoryFacts": [
       "The eleven rock-hewn monolithic churches of Lalibela were chiseled downward into solid red volcanic rock in the 12th century.",
       "Follows an ancient calendar running approximately seven years behind the Gregorian calendar with 13 months.",
       "Lucy (Australopithecus afarensis), a 3.2-million-year-old hominid ancestor fossil, was unearthed in its Awash Valley."
@@ -1763,6 +2225,12 @@ export const COUNTRIES_DB = [
       "Salar de Uyuni covers over 10,000 square kilometers of salt crust, serving as an exceptional natural satellite calibration target.",
       "Maintains two official capital cities: Sucre (constitutional and judicial) and La Paz (seat of executive government).",
       "La Paz operates Mi Teleférico, the highest and most extensive urban transit aerial cable car network on Earth."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bolivia",
+    "memoryFacts": [
+      "Salar de Uyuni covers over 10,000 square kilometers of salt crust, serving as an exceptional natural satellite calibration target.",
+      "Maintains two official capital cities: Sucre (constitutional and judicial) and La Paz (seat of executive government).",
+      "La Paz operates Mi Teleférico, the highest and most extensive urban transit aerial cable car network on Earth."
     ]
   },
   {
@@ -1782,6 +2250,12 @@ export const COUNTRIES_DB = [
       "Famous for artisanal custom fantasy coffins sculpted in shapes of airplanes or cocoa pods, and pounded cassava fufu."
     ],
     "memoryAnchors": [
+      "Became the first colony in its region to gain independence from colonial rule on March 6, 1957.",
+      "Kente cloth was historically reserved for royalty, hand-woven on narrow wooden looms with symbolic color codes.",
+      "Produces a major proportion of the world's high-grade cocoa beans used in international chocolate manufacturing."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ghana",
+    "memoryFacts": [
       "Became the first colony in its region to gain independence from colonial rule on March 6, 1957.",
       "Kente cloth was historically reserved for royalty, hand-woven on narrow wooden looms with symbolic color codes.",
       "Produces a major proportion of the world's high-grade cocoa beans used in international chocolate manufacturing."
@@ -1807,6 +2281,12 @@ export const COUNTRIES_DB = [
       "Afghanistan is known for its capital city Kabul.",
       "The nation features the landmark Minaret of Jam Ancient Tower.",
       "A key cultural tradition is Kabuli Pulao."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Afghanistan",
+    "memoryFacts": [
+      "Afghanistan is known for its capital city Kabul.",
+      "The nation features the landmark Minaret of Jam Ancient Tower.",
+      "A key cultural tradition is Kabuli Pulao."
     ]
   },
   {
@@ -1826,6 +2306,12 @@ export const COUNTRIES_DB = [
       "Famous for whitewashed coastal colonial architecture in its capital nicknamed the White, and steamed semolina grain."
     ],
     "memoryAnchors": [
+      "Algeria is known for its capital city Algiers.",
+      "The nation features the landmark Tassili n'Ajjer Sandstone Plateau.",
+      "A key cultural tradition is Couscous with Lamb."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Algeria",
+    "memoryFacts": [
       "Algeria is known for its capital city Algiers.",
       "The nation features the landmark Tassili n'Ajjer Sandstone Plateau.",
       "A key cultural tradition is Couscous with Lamb."
@@ -1851,6 +2337,12 @@ export const COUNTRIES_DB = [
       "Andorra is known for its capital city Andorra la Vella.",
       "The nation features the landmark Casa de la Vall Historic Parliament.",
       "A key cultural tradition is Escudella Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Andorra",
+    "memoryFacts": [
+      "Andorra is known for its capital city Andorra la Vella.",
+      "The nation features the landmark Casa de la Vall Historic Parliament.",
+      "A key cultural tradition is Escudella Stew."
     ]
   },
   {
@@ -1870,6 +2362,12 @@ export const COUNTRIES_DB = [
       "Famous for traditional chicken stew cooked in rich red palm oil with okra and garlic, and Kizomba partner dance."
     ],
     "memoryAnchors": [
+      "Angola is known for its capital city Luanda.",
+      "The nation features the landmark Kalandula Horseshoe Waterfalls.",
+      "A key cultural tradition is Muamba de Galinha."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Angola",
+    "memoryFacts": [
       "Angola is known for its capital city Luanda.",
       "The nation features the landmark Kalandula Horseshoe Waterfalls.",
       "A key cultural tradition is Muamba de Galinha."
@@ -1895,6 +2393,12 @@ export const COUNTRIES_DB = [
       "Antigua and Barbuda is known for its capital city St. John's.",
       "The nation features the landmark Nelson's Historic Dockyard in English Harbour.",
       "A key cultural tradition is Pepperpot Stew and Fungi."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Antigua_and_Barbuda",
+    "memoryFacts": [
+      "Antigua and Barbuda is known for its capital city St. John's.",
+      "The nation features the landmark Nelson's Historic Dockyard in English Harbour.",
+      "A key cultural tradition is Pepperpot Stew and Fungi."
     ]
   },
   {
@@ -1914,6 +2418,12 @@ export const COUNTRIES_DB = [
       "Famous for winged oceanic fish paired with steamed cornmeal and okra mash, and producing global music icon Rihanna."
     ],
     "memoryAnchors": [
+      "Barbados is known for its capital city Bridgetown.",
+      "The nation features the landmark Harrison's Cave Limestone Caverns.",
+      "A key cultural tradition is Flying Fish and Cou-Cou."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Barbados",
+    "memoryFacts": [
       "Barbados is known for its capital city Bridgetown.",
       "The nation features the landmark Harrison's Cave Limestone Caverns.",
       "A key cultural tradition is Flying Fish and Cou-Cou."
@@ -1939,6 +2449,12 @@ export const COUNTRIES_DB = [
       "Bhutan is known for its capital city Thimphu.",
       "The nation features the landmark Paro Taktsang Tiger's Nest Monastery.",
       "A key cultural tradition is Ema Datshi Chili Cheese."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bhutan",
+    "memoryFacts": [
+      "Bhutan is known for its capital city Thimphu.",
+      "The nation features the landmark Paro Taktsang Tiger's Nest Monastery.",
+      "A key cultural tradition is Ema Datshi Chili Cheese."
     ]
   },
   {
@@ -1958,6 +2474,12 @@ export const COUNTRIES_DB = [
       "Famous for copper pots brewing unfiltered dark coffee served with sweet lokum cubes, and grilled minced meat sausages."
     ],
     "memoryAnchors": [
+      "Bosnia and Herzegovina is known for its capital city Sarajevo.",
+      "The nation features the landmark Stari Most Old Bridge in Mostar.",
+      "A key cultural tradition is Ćevapi in Somun Bread."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bosnia_and_Herzegovina",
+    "memoryFacts": [
       "Bosnia and Herzegovina is known for its capital city Sarajevo.",
       "The nation features the landmark Stari Most Old Bridge in Mostar.",
       "A key cultural tradition is Ćevapi in Somun Bread."
@@ -1983,6 +2505,12 @@ export const COUNTRIES_DB = [
       "Burkina Faso is known for its capital city Ouagadougou.",
       "The nation features the landmark Sindou Rock Peaks and Ruins of Loropéni.",
       "A key cultural tradition is Riz Gras and Tô."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Burkina_Faso",
+    "memoryFacts": [
+      "Burkina Faso is known for its capital city Ouagadougou.",
+      "The nation features the landmark Sindou Rock Peaks and Ruins of Loropéni.",
+      "A key cultural tradition is Riz Gras and Tô."
     ]
   },
   {
@@ -2002,6 +2530,12 @@ export const COUNTRIES_DB = [
       "Famous for high-altitude hillside tea plantations, bird sanctuaries, and cracked wheat porridge with chicken."
     ],
     "memoryAnchors": [
+      "Burundi is known for its capital city Gitega.",
+      "The nation features the landmark Royal Drummers Sanctuary of Gishora.",
+      "A key cultural tradition is Boko Boko Harees."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Burundi",
+    "memoryFacts": [
       "Burundi is known for its capital city Gitega.",
       "The nation features the landmark Royal Drummers Sanctuary of Gishora.",
       "A key cultural tradition is Boko Boko Harees."
@@ -2027,6 +2561,12 @@ export const COUNTRIES_DB = [
       "Cabo Verde is known for its capital city Praia.",
       "The nation features the landmark Pico do Fogo Active Stratovolcano.",
       "A key cultural tradition is Cachupa Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Cape_Verde",
+    "memoryFacts": [
+      "Cabo Verde is known for its capital city Praia.",
+      "The nation features the landmark Pico do Fogo Active Stratovolcano.",
+      "A key cultural tradition is Cachupa Stew."
     ]
   },
   {
@@ -2046,6 +2586,12 @@ export const COUNTRIES_DB = [
       "Famous for its rich national dish prepared with stewed bitterleaf greens, peanut paste, crayfish, and beef."
     ],
     "memoryAnchors": [
+      "Cameroon is known for its capital city Yaoundé.",
+      "The nation features the landmark Mount Cameroon Active Volcano Peak.",
+      "A key cultural tradition is Ndole Stew and Plantains."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Cameroon",
+    "memoryFacts": [
       "Cameroon is known for its capital city Yaoundé.",
       "The nation features the landmark Mount Cameroon Active Volcano Peak.",
       "A key cultural tradition is Ndole Stew and Plantains."
@@ -2071,6 +2617,12 @@ export const COUNTRIES_DB = [
       "Central African Republic is known for its capital city Bangui.",
       "The nation features the landmark Dzanga-Sangha Gorilla and Elephant Clearing.",
       "A key cultural tradition is Kanda Meatballs and Cassava."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Central_African_Republic",
+    "memoryFacts": [
+      "Central African Republic is known for its capital city Bangui.",
+      "The nation features the landmark Dzanga-Sangha Gorilla and Elephant Clearing.",
+      "A key cultural tradition is Kanda Meatballs and Cassava."
     ]
   },
   {
@@ -2090,6 +2642,12 @@ export const COUNTRIES_DB = [
       "Famous for prehistoric cave paintings of grazing herds, and a national dish of okra, sweet potato greens, and peanuts."
     ],
     "memoryAnchors": [
+      "Chad is known for its capital city N'Djamena.",
+      "The nation features the landmark Ennedi Desert Sandstone Arches.",
+      "A key cultural tradition is Daraba Okra and Peanut Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Chad",
+    "memoryFacts": [
       "Chad is known for its capital city N'Djamena.",
       "The nation features the landmark Ennedi Desert Sandstone Arches.",
       "A key cultural tradition is Daraba Okra and Peanut Stew."
@@ -2115,6 +2673,12 @@ export const COUNTRIES_DB = [
       "Comoros is known for its capital city Moroni.",
       "The nation features the landmark Mount Karthala Shield Volcano Caldera.",
       "A key cultural tradition is Langouste à la Vanille."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Comoros",
+    "memoryFacts": [
+      "Comoros is known for its capital city Moroni.",
+      "The nation features the landmark Mount Karthala Shield Volcano Caldera.",
+      "A key cultural tradition is Langouste à la Vanille."
     ]
   },
   {
@@ -2134,6 +2698,12 @@ export const COUNTRIES_DB = [
       "Famous for dense primary rainforests harboring lowland gorillas, and pounded cassava leaf stew with palm oil."
     ],
     "memoryAnchors": [
+      "Congo (Republic) is known for its capital city Brazzaville.",
+      "The nation features the landmark Odzala-Kokoua Rainforest Reserve.",
+      "A key cultural tradition is Saka-Saka Cassava Leaves."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Congo_(Republic)",
+    "memoryFacts": [
       "Congo (Republic) is known for its capital city Brazzaville.",
       "The nation features the landmark Odzala-Kokoua Rainforest Reserve.",
       "A key cultural tradition is Saka-Saka Cassava Leaves."
@@ -2159,6 +2729,12 @@ export const COUNTRIES_DB = [
       "DR Congo is known for its capital city Kinshasa.",
       "The nation features the landmark Mount Nyiragongo Lava Lake.",
       "A key cultural tradition is Moambe Chicken and Fufu."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Democratic_Republic_of_the_Congo",
+    "memoryFacts": [
+      "DR Congo is known for its capital city Kinshasa.",
+      "The nation features the landmark Mount Nyiragongo Lava Lake.",
+      "A key cultural tradition is Moambe Chicken and Fufu."
     ]
   },
   {
@@ -2178,6 +2754,12 @@ export const COUNTRIES_DB = [
       "Famous for gentle whale shark nursery waters, volcanic salt flats, and aromatic lamb rice spiced with cardamom."
     ],
     "memoryAnchors": [
+      "Djibouti is known for its capital city Djibouti City.",
+      "The nation features the landmark Lake Assal Hyper-Saline Crater.",
+      "A key cultural tradition is Skoudehkaris Lamb Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Djibouti",
+    "memoryFacts": [
       "Djibouti is known for its capital city Djibouti City.",
       "The nation features the landmark Lake Assal Hyper-Saline Crater.",
       "A key cultural tradition is Skoudehkaris Lamb Stew."
@@ -2203,6 +2785,12 @@ export const COUNTRIES_DB = [
       "Dominica is known for its capital city Roseau.",
       "The nation features the landmark Boiling Lake Geothermal Fumarole.",
       "A key cultural tradition is Callaloo Soup and Mountain Chicken."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Dominica",
+    "memoryFacts": [
+      "Dominica is known for its capital city Roseau.",
+      "The nation features the landmark Boiling Lake Geothermal Fumarole.",
+      "A key cultural tradition is Callaloo Soup and Mountain Chicken."
     ]
   },
   {
@@ -2222,6 +2810,12 @@ export const COUNTRIES_DB = [
       "Famous for thick handmade corn griddle cakes stuffed with melted cheese, refried beans, and chicharrón pork."
     ],
     "memoryAnchors": [
+      "El Salvador is known for its capital city San Salvador.",
+      "The nation features the landmark Santa Ana Volcano Crater Lake.",
+      "A key cultural tradition is Pupusas Stuffed Corn Cakes."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/El_Salvador",
+    "memoryFacts": [
       "El Salvador is known for its capital city San Salvador.",
       "The nation features the landmark Santa Ana Volcano Crater Lake.",
       "A key cultural tradition is Pupusas Stuffed Corn Cakes."
@@ -2247,6 +2841,12 @@ export const COUNTRIES_DB = [
       "Equatorial Guinea is known for its capital city Malabo.",
       "The nation features the landmark Basílica de la Inmaculada Concepción in Mongomo.",
       "A key cultural tradition is Succotash and Sopa de Pescado."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Equatorial_Guinea",
+    "memoryFacts": [
+      "Equatorial Guinea is known for its capital city Malabo.",
+      "The nation features the landmark Basílica de la Inmaculada Concepción in Mongomo.",
+      "A key cultural tradition is Succotash and Sopa de Pescado."
     ]
   },
   {
@@ -2266,6 +2866,12 @@ export const COUNTRIES_DB = [
       "Famous for spicy berbere beef stew eaten with flatbread, vibrant espresso bar culture, and coastal coral archipelagos."
     ],
     "memoryAnchors": [
+      "Eritrea is known for its capital city Asmara.",
+      "The nation features the landmark Asmara Modernist Architecture and Cinema Roma.",
+      "A key cultural tradition is Zigni Spicy Beef Stew with Kitcha."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Eritrea",
+    "memoryFacts": [
       "Eritrea is known for its capital city Asmara.",
       "The nation features the landmark Asmara Modernist Architecture and Cinema Roma.",
       "A key cultural tradition is Zigni Spicy Beef Stew with Kitcha."
@@ -2291,6 +2897,12 @@ export const COUNTRIES_DB = [
       "Eswatini is known for its capital city Mbabane.",
       "The nation features the landmark Sibebe Rock Granite Monolith.",
       "A key cultural tradition is Umncwisho and Karoo Lamb."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Eswatini",
+    "memoryFacts": [
+      "Eswatini is known for its capital city Mbabane.",
+      "The nation features the landmark Sibebe Rock Granite Monolith.",
+      "A key cultural tradition is Umncwisho and Karoo Lamb."
     ]
   },
   {
@@ -2310,6 +2922,12 @@ export const COUNTRIES_DB = [
       "Famous for traditional carved wooden ancestral reliquary masks, and chicken simmered in rich red palm nut paste."
     ],
     "memoryAnchors": [
+      "Gabon is known for its capital city Libreville.",
+      "The nation features the landmark Loango National Park Surfing Hippos.",
+      "A key cultural tradition is Nyembwe Chicken with Palm Butter."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Gabon",
+    "memoryFacts": [
       "Gabon is known for its capital city Libreville.",
       "The nation features the landmark Loango National Park Surfing Hippos.",
       "A key cultural tradition is Nyembwe Chicken with Palm Butter."
@@ -2335,6 +2953,12 @@ export const COUNTRIES_DB = [
       "Gambia is known for its capital city Banjul.",
       "The nation features the landmark Wassu Ancient Stone Circles.",
       "A key cultural tradition is Domoda Peanut Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Gambia",
+    "memoryFacts": [
+      "Gambia is known for its capital city Banjul.",
+      "The nation features the landmark Wassu Ancient Stone Circles.",
+      "A key cultural tradition is Domoda Peanut Stew."
     ]
   },
   {
@@ -2354,6 +2978,12 @@ export const COUNTRIES_DB = [
       "Famous for the national one-pot stew of breadfruit, salted meat, dumplings, and callaloo cooked in coconut milk."
     ],
     "memoryAnchors": [
+      "Grenada is known for its capital city St. George's.",
+      "The nation features the landmark Grand Etang Volcanic Crater Lake.",
+      "A key cultural tradition is Oil Down Salt Meat Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Grenada",
+    "memoryFacts": [
       "Grenada is known for its capital city St. George's.",
       "The nation features the landmark Grand Etang Volcanic Crater Lake.",
       "A key cultural tradition is Oil Down Salt Meat Stew."
@@ -2379,6 +3009,12 @@ export const COUNTRIES_DB = [
       "Guinea is known for its capital city Conakry.",
       "The nation features the landmark Mount Nimba Strict Nature Reserve.",
       "A key cultural tradition is Poulet Yassa and Foutou."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Guinea",
+    "memoryFacts": [
+      "Guinea is known for its capital city Conakry.",
+      "The nation features the landmark Mount Nimba Strict Nature Reserve.",
+      "A key cultural tradition is Poulet Yassa and Foutou."
     ]
   },
   {
@@ -2398,6 +3034,12 @@ export const COUNTRIES_DB = [
       "Famous for being one of the world's top cashew nut exporters, and traditional cashew apple juice and wine."
     ],
     "memoryAnchors": [
+      "Guinea-Bissau is known for its capital city Bissau.",
+      "The nation features the landmark Bijagós Archipelago Biosphere Reserve.",
+      "A key cultural tradition is Caldo de Mancarra Peanut Soup."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Guinea-Bissau",
+    "memoryFacts": [
       "Guinea-Bissau is known for its capital city Bissau.",
       "The nation features the landmark Bijagós Archipelago Biosphere Reserve.",
       "A key cultural tradition is Caldo de Mancarra Peanut Soup."
@@ -2423,6 +3065,12 @@ export const COUNTRIES_DB = [
       "Guyana is known for its capital city Georgetown.",
       "The nation features the landmark Kaieteur Single-Drop Waterfall.",
       "A key cultural tradition is Pepperpot Cassareep Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Guyana",
+    "memoryFacts": [
+      "Guyana is known for its capital city Georgetown.",
+      "The nation features the landmark Kaieteur Single-Drop Waterfall.",
+      "A key cultural tradition is Pepperpot Cassareep Stew."
     ]
   },
   {
@@ -2442,6 +3090,12 @@ export const COUNTRIES_DB = [
       "Famous for citrus-marinated crispy fried pork chunks served with spicy pickled cabbage slaw and pumpkin soup."
     ],
     "memoryAnchors": [
+      "Haiti is known for its capital city Port-au-Prince.",
+      "The nation features the landmark Citadelle Laferrière Mountaintop Fortress.",
+      "A key cultural tradition is Griot Pork and Soup Joumou."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Haiti",
+    "memoryFacts": [
       "Haiti is known for its capital city Port-au-Prince.",
       "The nation features the landmark Citadelle Laferrière Mountaintop Fortress.",
       "A key cultural tradition is Griot Pork and Soup Joumou."
@@ -2467,6 +3121,12 @@ export const COUNTRIES_DB = [
       "Iraq is known for its capital city Baghdad.",
       "The nation features the landmark Ziggurat of Ur and Spiral Minaret of Samarra.",
       "A key cultural tradition is Masgouf Grilled Carp."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Iraq",
+    "memoryFacts": [
+      "Iraq is known for its capital city Baghdad.",
+      "The nation features the landmark Ziggurat of Ur and Spiral Minaret of Samarra.",
+      "A key cultural tradition is Masgouf Grilled Carp."
     ]
   },
   {
@@ -2486,6 +3146,12 @@ export const COUNTRIES_DB = [
       "Famous for crispy golden saffron rice crust, slow-cooked pomegranate and walnut chicken stew, and Persepolis columns."
     ],
     "memoryAnchors": [
+      "Iran is known for its capital city Tehran.",
+      "The nation features the landmark Persepolis Ancient Ceremonial Capital.",
+      "A key cultural tradition is Tahdig and Fesenjan Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Iran",
+    "memoryFacts": [
       "Iran is known for its capital city Tehran.",
       "The nation features the landmark Persepolis Ancient Ceremonial Capital.",
       "A key cultural tradition is Tahdig and Fesenjan Stew."
@@ -2511,6 +3177,12 @@ export const COUNTRIES_DB = [
       "Kiribati is known for its capital city South Tarawa.",
       "The nation features the landmark Kiritimati Christmas Island Atoll.",
       "A key cultural tradition is Palusami Coconut Taro Leaves."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Kiribati",
+    "memoryFacts": [
+      "Kiribati is known for its capital city South Tarawa.",
+      "The nation features the landmark Kiritimati Christmas Island Atoll.",
+      "A key cultural tradition is Palusami Coconut Taro Leaves."
     ]
   },
   {
@@ -2532,6 +3204,12 @@ export const COUNTRIES_DB = [
       "Kuwait is known for its capital city Kuwait City.",
       "The nation features the landmark Kuwait Water Towers in Kuwait City.",
       "A key cultural tradition is Machboos Laham Spiced Meat."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Kuwait",
+    "memoryFacts": [
+      "Kuwait is known for its capital city Kuwait City.",
+      "The nation features the landmark Kuwait Water Towers in Kuwait City.",
+      "A key cultural tradition is Machboos Laham Spiced Meat."
     ]
   },
   {
@@ -2550,6 +3228,12 @@ export const COUNTRIES_DB = [
       "Famous for traditional eagle falconry on horseback, nomad horse games, and handmade felt yurt tents."
     ],
     "memoryAnchors": [
+      "Kyrgyzstan is known for its capital city Bishkek.",
+      "The nation features the landmark Lake Issyk-Kul Alpine Lake.",
+      "A key cultural tradition is Beshbarmak and Kuurdak."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Kyrgyzstan",
+    "memoryFacts": [
       "Kyrgyzstan is known for its capital city Bishkek.",
       "The nation features the landmark Lake Issyk-Kul Alpine Lake.",
       "A key cultural tradition is Beshbarmak and Kuurdak."
@@ -2575,6 +3259,12 @@ export const COUNTRIES_DB = [
       "Laos is known for its capital city Vientiane.",
       "The nation features the landmark Luang Prabang Golden Temples and Kuang Si Falls.",
       "A key cultural tradition is Larb Minced Salad and Sticky Rice."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Laos",
+    "memoryFacts": [
+      "Laos is known for its capital city Vientiane.",
+      "The nation features the landmark Luang Prabang Golden Temples and Kuang Si Falls.",
+      "A key cultural tradition is Larb Minced Salad and Sticky Rice."
     ]
   },
   {
@@ -2594,6 +3284,12 @@ export const COUNTRIES_DB = [
       "Famous for conical woven straw hats called basotho, colorful wool blankets worn against mountain chills, and pony trekking."
     ],
     "memoryAnchors": [
+      "Lesotho is known for its capital city Maseru.",
+      "The nation features the landmark Maletsunyane Single-Drop Waterfall.",
+      "A key cultural tradition is Pap-Pap and Morokho."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Lesotho",
+    "memoryFacts": [
       "Lesotho is known for its capital city Maseru.",
       "The nation features the landmark Maletsunyane Single-Drop Waterfall.",
       "A key cultural tradition is Pap-Pap and Morokho."
@@ -2619,6 +3315,12 @@ export const COUNTRIES_DB = [
       "Liberia is known for its capital city Monrovia.",
       "The nation features the landmark Providence Island Historical Site.",
       "A key cultural tradition is Jollof Rice and Pepper Soup."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Liberia",
+    "memoryFacts": [
+      "Liberia is known for its capital city Monrovia.",
+      "The nation features the landmark Providence Island Historical Site.",
+      "A key cultural tradition is Jollof Rice and Pepper Soup."
     ]
   },
   {
@@ -2638,6 +3340,12 @@ export const COUNTRIES_DB = [
       "Famous for hard unleavened boiled barley flour dough shaped into a pyramid dome served with spicy tomato lamb gravy."
     ],
     "memoryAnchors": [
+      "Libya is known for its capital city Tripoli.",
+      "The nation features the landmark Leptis Magna Roman Imperial Ruins.",
+      "A key cultural tradition is Bazeen Barley Dough and Couscous."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Libya",
+    "memoryFacts": [
       "Libya is known for its capital city Tripoli.",
       "The nation features the landmark Leptis Magna Roman Imperial Ruins.",
       "A key cultural tradition is Bazeen Barley Dough and Couscous."
@@ -2663,6 +3371,12 @@ export const COUNTRIES_DB = [
       "Liechtenstein is known for its capital city Vaduz.",
       "The nation features the landmark Vaduz Castle Prince's Residence.",
       "A key cultural tradition is Käsknöpfle Cheese Pasta."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Liechtenstein",
+    "memoryFacts": [
+      "Liechtenstein is known for its capital city Vaduz.",
+      "The nation features the landmark Vaduz Castle Prince's Residence.",
+      "A key cultural tradition is Käsknöpfle Cheese Pasta."
     ]
   },
   {
@@ -2682,6 +3396,12 @@ export const COUNTRIES_DB = [
       "Famous for thick cornmeal porridge paired with fresh grilled tilapia fish caught in wooden dugout canoes."
     ],
     "memoryAnchors": [
+      "Malawi is known for its capital city Lilongwe.",
+      "The nation features the landmark Lake Malawi National Park Cichlid Waters.",
+      "A key cultural tradition is Nsima and Chambo Fish."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Malawi",
+    "memoryFacts": [
       "Malawi is known for its capital city Lilongwe.",
       "The nation features the landmark Lake Malawi National Park Cichlid Waters.",
       "A key cultural tradition is Nsima and Chambo Fish."
@@ -2707,6 +3427,12 @@ export const COUNTRIES_DB = [
       "Maldives is known for its capital city Malé.",
       "The nation features the landmark Malé Old Friday Stone Mosque.",
       "A key cultural tradition is Mas Huni Tuna and Garudhiya."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Maldives",
+    "memoryFacts": [
+      "Maldives is known for its capital city Malé.",
+      "The nation features the landmark Malé Old Friday Stone Mosque.",
+      "A key cultural tradition is Mas Huni Tuna and Garudhiya."
     ]
   },
   {
@@ -2726,6 +3452,12 @@ export const COUNTRIES_DB = [
       "Famous for the largest mud-brick architectural building on Earth, replastered annually by the entire community."
     ],
     "memoryAnchors": [
+      "Mali is known for its capital city Bamako.",
+      "The nation features the landmark Great Mosque of Djenné Mud-Brick Monument.",
+      "A key cultural tradition is Tiga Dega Na Peanut Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mali",
+    "memoryFacts": [
       "Mali is known for its capital city Bamako.",
       "The nation features the landmark Great Mosque of Djenné Mud-Brick Monument.",
       "A key cultural tradition is Tiga Dega Na Peanut Stew."
@@ -2751,6 +3483,12 @@ export const COUNTRIES_DB = [
       "Marshall Islands is known for its capital city Majuro.",
       "The nation features the landmark Bikini Atoll Marine Coral Nuclear Crater.",
       "A key cultural tradition is Barramundi Cod and Breadfruit."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Marshall_Islands",
+    "memoryFacts": [
+      "Marshall Islands is known for its capital city Majuro.",
+      "The nation features the landmark Bikini Atoll Marine Coral Nuclear Crater.",
+      "A key cultural tradition is Barramundi Cod and Breadfruit."
     ]
   },
   {
@@ -2770,6 +3508,12 @@ export const COUNTRIES_DB = [
       "Famous for ancient sandstone library caravan towns holding medieval astronomy manuscripts among shifting dunes."
     ],
     "memoryAnchors": [
+      "Mauritania is known for its capital city Nouakchott.",
+      "The nation features the landmark Richat Structure Eye of the Sahara.",
+      "A key cultural tradition is Thieboudienne and Camel Milk."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mauritania",
+    "memoryFacts": [
       "Mauritania is known for its capital city Nouakchott.",
       "The nation features the landmark Richat Structure Eye of the Sahara.",
       "A key cultural tradition is Thieboudienne and Camel Milk."
@@ -2795,6 +3539,12 @@ export const COUNTRIES_DB = [
       "Micronesia is known for its capital city Palikir.",
       "The nation features the landmark Nan Madol Megalithic Stone Ruins.",
       "A key cultural tradition is Roasted Breadfruit and Taro."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Micronesia",
+    "memoryFacts": [
+      "Micronesia is known for its capital city Palikir.",
+      "The nation features the landmark Nan Madol Megalithic Stone Ruins.",
+      "A key cultural tradition is Roasted Breadfruit and Taro."
     ]
   },
   {
@@ -2814,6 +3564,12 @@ export const COUNTRIES_DB = [
       "Famous for savory flaky pastry pies filled with soft cheese or pumpkin, and lush rolling vineyard hills."
     ],
     "memoryAnchors": [
+      "Moldova is known for its capital city Chișinău.",
+      "The nation features the landmark Mileștii Mici Underground Wine Cellar.",
+      "A key cultural tradition is Mămăligă and Plăcintă."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Moldova",
+    "memoryFacts": [
       "Moldova is known for its capital city Chișinău.",
       "The nation features the landmark Mileștii Mici Underground Wine Cellar.",
       "A key cultural tradition is Mămăligă and Plăcintă."
@@ -2839,6 +3595,12 @@ export const COUNTRIES_DB = [
       "Monaco is known for its capital city Monaco.",
       "The nation features the landmark Monte Carlo Casino and Prince's Palace.",
       "A key cultural tradition is Barbagiuan Stuffed Fritters."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Monaco",
+    "memoryFacts": [
+      "Monaco is known for its capital city Monaco.",
+      "The nation features the landmark Monte Carlo Casino and Prince's Palace.",
+      "A key cultural tradition is Barbagiuan Stuffed Fritters."
     ]
   },
   {
@@ -2858,6 +3620,12 @@ export const COUNTRIES_DB = [
       "Famous for wood-smoked dry-cured ham from mountain villages, and a clifftop monastery carved into vertical rock."
     ],
     "memoryAnchors": [
+      "Montenegro is known for its capital city Podgorica.",
+      "The nation features the landmark Bay of Kotor Fjord and Lovćen Mausoleum.",
+      "A key cultural tradition is Njeguški Pršut and Kačamak."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Montenegro",
+    "memoryFacts": [
       "Montenegro is known for its capital city Podgorica.",
       "The nation features the landmark Bay of Kotor Fjord and Lovćen Mausoleum.",
       "A key cultural tradition is Njeguški Pršut and Kačamak."
@@ -2883,6 +3651,12 @@ export const COUNTRIES_DB = [
       "Mozambique is known for its capital city Maputo.",
       "The nation features the landmark Bazaruto Archipelago Marine National Park.",
       "A key cultural tradition is Piri-Piri Chicken and Matapa."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mozambique",
+    "memoryFacts": [
+      "Mozambique is known for its capital city Maputo.",
+      "The nation features the landmark Bazaruto Archipelago Marine National Park.",
+      "A key cultural tradition is Piri-Piri Chicken and Matapa."
     ]
   },
   {
@@ -2902,6 +3676,12 @@ export const COUNTRIES_DB = [
       "Famous for catfish broth noodle soup seasoned with lemongrass and crunchy chickpea fritters, and leg-rowing fishermen."
     ],
     "memoryAnchors": [
+      "Myanmar is known for its capital city Naypyidaw.",
+      "The nation features the landmark Bagan Plain with thousands of Buddhist Temples.",
+      "A key cultural tradition is Mohinga Fish Noodle Soup."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Myanmar",
+    "memoryFacts": [
       "Myanmar is known for its capital city Naypyidaw.",
       "The nation features the landmark Bagan Plain with thousands of Buddhist Temples.",
       "A key cultural tradition is Mohinga Fish Noodle Soup."
@@ -2927,6 +3707,12 @@ export const COUNTRIES_DB = [
       "Nauru is known for its capital city Yaren.",
       "The nation features the landmark Anibare Bay and Central Plateau Pinnacles.",
       "A key cultural tradition is Coconut Fish and Pandanus."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Nauru",
+    "memoryFacts": [
+      "Nauru is known for its capital city Yaren.",
+      "The nation features the landmark Anibare Bay and Central Plateau Pinnacles.",
+      "A key cultural tradition is Coconut Fish and Pandanus."
     ]
   },
   {
@@ -2946,6 +3732,12 @@ export const COUNTRIES_DB = [
       "Famous for steaming corn dough tamales filled with pork, rice, and mint wrapped in plantain leaves, and active lava craters."
     ],
     "memoryAnchors": [
+      "Nicaragua is known for its capital city Managua.",
+      "The nation features the landmark Masaya Volcano Active Lava Crater.",
+      "A key cultural tradition is Gallo Pinto and Nacatamales."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Nicaragua",
+    "memoryFacts": [
       "Nicaragua is known for its capital city Managua.",
       "The nation features the landmark Masaya Volcano Active Lava Crater.",
       "A key cultural tradition is Gallo Pinto and Nacatamales."
@@ -2971,6 +3763,12 @@ export const COUNTRIES_DB = [
       "Niger is known for its capital city Niamey.",
       "The nation features the landmark Agadez Grand Mud Mosque Minaret.",
       "A key cultural tradition is Djerma Stew and Millet Porridge."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Niger",
+    "memoryFacts": [
+      "Niger is known for its capital city Niamey.",
+      "The nation features the landmark Agadez Grand Mud Mosque Minaret.",
+      "A key cultural tradition is Djerma Stew and Millet Porridge."
     ]
   },
   {
@@ -2990,6 +3788,12 @@ export const COUNTRIES_DB = [
       "Famous for chilled buckwheat noodles served in tangy icy beef broth with thinly sliced cucumbers and boiled eggs."
     ],
     "memoryAnchors": [
+      "North Korea is known for its capital city Pyongyang.",
+      "The nation features the landmark Ryugyong Pyramid Hotel in Pyongyang.",
+      "A key cultural tradition is Cold Naengmyeon Noodles."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/North_Korea",
+    "memoryFacts": [
       "North Korea is known for its capital city Pyongyang.",
       "The nation features the landmark Ryugyong Pyramid Hotel in Pyongyang.",
       "A key cultural tradition is Cold Naengmyeon Noodles."
@@ -3015,6 +3819,12 @@ export const COUNTRIES_DB = [
       "North Macedonia is known for its capital city Skopje.",
       "The nation features the landmark Lake Ohrid and Church of St. John at Kaneo.",
       "A key cultural tradition is Tavče Gravče Baked Beans."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/North_Macedonia",
+    "memoryFacts": [
+      "North Macedonia is known for its capital city Skopje.",
+      "The nation features the landmark Lake Ohrid and Church of St. John at Kaneo.",
+      "A key cultural tradition is Tavče Gravče Baked Beans."
     ]
   },
   {
@@ -3034,6 +3844,12 @@ export const COUNTRIES_DB = [
       "Famous for mushroom-shaped green limestone islets rising from turquoise waters, and ancient matriarchal governance traditions."
     ],
     "memoryAnchors": [
+      "Palau is known for its capital city Ngerulmud.",
+      "The nation features the landmark Rock Islands Southern Lagoon and Jellyfish Lake.",
+      "A key cultural tradition is Taro and Fruit Bat Soup."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Palau",
+    "memoryFacts": [
       "Palau is known for its capital city Ngerulmud.",
       "The nation features the landmark Rock Islands Southern Lagoon and Jellyfish Lake.",
       "A key cultural tradition is Taro and Fruit Bat Soup."
@@ -3059,6 +3875,12 @@ export const COUNTRIES_DB = [
       "Palestine is known for its capital city Ramallah.",
       "The nation features the landmark Church of the Nativity in Bethlehem.",
       "A key cultural tradition is Musakhan Chicken with Sumac."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Palestine",
+    "memoryFacts": [
+      "Palestine is known for its capital city Ramallah.",
+      "The nation features the landmark Church of the Nativity in Bethlehem.",
+      "A key cultural tradition is Musakhan Chicken with Sumac."
     ]
   },
   {
@@ -3078,6 +3900,12 @@ export const COUNTRIES_DB = [
       "Famous for tree-dwelling kangaroos, steaming volcanic calderas, and underground earth-oven pork banquets."
     ],
     "memoryAnchors": [
+      "Papua New Guinea is known for its capital city Port Moresby.",
+      "The nation features the landmark Tavurvur Volcano and Mount Wilhelm.",
+      "A key cultural tradition is Mumu Earth Oven Feast."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Papua_New_Guinea",
+    "memoryFacts": [
       "Papua New Guinea is known for its capital city Port Moresby.",
       "The nation features the landmark Tavurvur Volcano and Mount Wilhelm.",
       "A key cultural tradition is Mumu Earth Oven Feast."
@@ -3103,6 +3931,12 @@ export const COUNTRIES_DB = [
       "Saint Kitts and Nevis is known for its capital city Basseterre.",
       "The nation features the landmark Brimstone Hill Fortress.",
       "A key cultural tradition is Stewed Saltfish with Spicy Plantains."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Saint_Kitts_and_Nevis",
+    "memoryFacts": [
+      "Saint Kitts and Nevis is known for its capital city Basseterre.",
+      "The nation features the landmark Brimstone Hill Fortress.",
+      "A key cultural tradition is Stewed Saltfish with Spicy Plantains."
     ]
   },
   {
@@ -3122,6 +3956,12 @@ export const COUNTRIES_DB = [
       "Famous for a drive-in volcanic sulfur spring crater with bubbling mud baths, and savory green banana with salted cod."
     ],
     "memoryAnchors": [
+      "Saint Lucia is known for its capital city Castries.",
+      "The nation features the landmark The Pitons Twin Volcanic Spires.",
+      "A key cultural tradition is Green Fig and Saltfish."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Saint_Lucia",
+    "memoryFacts": [
       "Saint Lucia is known for its capital city Castries.",
       "The nation features the landmark The Pitons Twin Volcanic Spires.",
       "A key cultural tradition is Green Fig and Saltfish."
@@ -3147,6 +3987,12 @@ export const COUNTRIES_DB = [
       "Saint Vincent and the Grenadines is known for its capital city Kingstown.",
       "The nation features the landmark La Soufrière Active Volcano.",
       "A key cultural tradition is Roasted Breadfruit and Fried Jackfish."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Saint_Vincent_and_the_Grenadines",
+    "memoryFacts": [
+      "Saint Vincent and the Grenadines is known for its capital city Kingstown.",
+      "The nation features the landmark La Soufrière Active Volcano.",
+      "A key cultural tradition is Roasted Breadfruit and Fried Jackfish."
     ]
   },
   {
@@ -3166,6 +4012,12 @@ export const COUNTRIES_DB = [
       "Famous for intricate traditional master body tattoos called pe'a, fire knife dancing, and raw fish marinated in fresh coconut cream."
     ],
     "memoryAnchors": [
+      "Samoa is known for its capital city Apia.",
+      "The nation features the landmark To Sua Ocean Trench Natural Pool.",
+      "A key cultural tradition is Oka I'a Raw Fish in Coconut."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Samoa",
+    "memoryFacts": [
       "Samoa is known for its capital city Apia.",
       "The nation features the landmark To Sua Ocean Trench Natural Pool.",
       "A key cultural tradition is Oka I'a Raw Fish in Coconut."
@@ -3191,6 +4043,12 @@ export const COUNTRIES_DB = [
       "San Marino is known for its capital city City of San Marino.",
       "The nation features the landmark Three Towers of Mount Titano.",
       "A key cultural tradition is Torta Tre Monti Chocolate Wafers."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/San_Marino",
+    "memoryFacts": [
+      "San Marino is known for its capital city City of San Marino.",
+      "The nation features the landmark Three Towers of Mount Titano.",
+      "A key cultural tradition is Torta Tre Monti Chocolate Wafers."
     ]
   },
   {
@@ -3210,6 +4068,12 @@ export const COUNTRIES_DB = [
       "Famous for historic organic cocoa bean plantations once earning it the moniker of the chocolate islands."
     ],
     "memoryAnchors": [
+      "São Tomé and Príncipe is known for its capital city São Tomé.",
+      "The nation features the landmark Pico Cão Grande Volcanic Needle Peak.",
+      "A key cultural tradition is Calulu Dried Fish Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe",
+    "memoryFacts": [
       "São Tomé and Príncipe is known for its capital city São Tomé.",
       "The nation features the landmark Pico Cão Grande Volcanic Needle Peak.",
       "A key cultural tradition is Calulu Dried Fish Stew."
@@ -3235,6 +4099,12 @@ export const COUNTRIES_DB = [
       "Seychelles is known for its capital city Victoria.",
       "The nation features the landmark Anse Source d'Argent Granite Boulder Beach.",
       "A key cultural tradition is Grilled Fish with Creole Sauce."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Seychelles",
+    "memoryFacts": [
+      "Seychelles is known for its capital city Victoria.",
+      "The nation features the landmark Anse Source d'Argent Granite Boulder Beach.",
+      "A key cultural tradition is Grilled Fish with Creole Sauce."
     ]
   },
   {
@@ -3254,6 +4124,12 @@ export const COUNTRIES_DB = [
       "Famous for sweet fried banana fritters, spicy cassava leaf stew cooked with fish, and golden sandy beaches."
     ],
     "memoryAnchors": [
+      "Sierra Leone is known for its capital city Freetown.",
+      "The nation features the landmark Cotton Tree Monument in Freetown.",
+      "A key cultural tradition is Cassava Leaf Stew and Groundnut Soup."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sierra_Leone",
+    "memoryFacts": [
       "Sierra Leone is known for its capital city Freetown.",
       "The nation features the landmark Cotton Tree Monument in Freetown.",
       "A key cultural tradition is Cassava Leaf Stew and Groundnut Soup."
@@ -3279,6 +4155,12 @@ export const COUNTRIES_DB = [
       "Solomon Islands is known for its capital city Honiara.",
       "The nation features the landmark Marovo Lagoon Double Barrier Coral Reef.",
       "A key cultural tradition is Poi and Cassava Pudding."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Solomon_Islands",
+    "memoryFacts": [
+      "Solomon Islands is known for its capital city Honiara.",
+      "The nation features the landmark Marovo Lagoon Double Barrier Coral Reef.",
+      "A key cultural tradition is Poi and Cassava Pudding."
     ]
   },
   {
@@ -3298,6 +4180,12 @@ export const COUNTRIES_DB = [
       "Famous for a rich oral poetry culture earning it the title 'Nation of Bards', and spongy sourdough breakfast flatbread."
     ],
     "memoryAnchors": [
+      "Somalia is known for its capital city Mogadishu.",
+      "The nation features the landmark Laas Geel Prehistoric Rock Cave Murals.",
+      "A key cultural tradition is Canjeero Flatbread and Suqaar."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Somalia",
+    "memoryFacts": [
       "Somalia is known for its capital city Mogadishu.",
       "The nation features the landmark Laas Geel Prehistoric Rock Cave Murals.",
       "A key cultural tradition is Canjeero Flatbread and Suqaar."
@@ -3323,6 +4211,12 @@ export const COUNTRIES_DB = [
       "South Sudan is known for its capital city Juba.",
       "The nation features the landmark Sudd Wetland Swamp.",
       "A key cultural tradition is Kisra Flatbread and Dried Meat Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/South_Sudan",
+    "memoryFacts": [
+      "South Sudan is known for its capital city Juba.",
+      "The nation features the landmark Sudd Wetland Swamp.",
+      "A key cultural tradition is Kisra Flatbread and Dried Meat Stew."
     ]
   },
   {
@@ -3342,6 +4236,12 @@ export const COUNTRIES_DB = [
       "Famous for steep narrow stone pyramids rising from golden desert dunes, and slow-cooked fava bean stew with cumin."
     ],
     "memoryAnchors": [
+      "Sudan is known for its capital city Khartoum.",
+      "The nation features the landmark Meroë Ancient Nubian Pyramids.",
+      "A key cultural tradition is Ful Medames and Kisra."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sudan",
+    "memoryFacts": [
       "Sudan is known for its capital city Khartoum.",
       "The nation features the landmark Meroë Ancient Nubian Pyramids.",
       "A key cultural tradition is Ful Medames and Kisra."
@@ -3367,6 +4267,12 @@ export const COUNTRIES_DB = [
       "Suriname is known for its capital city Paramaribo.",
       "The nation features the landmark Paramaribo Wooden Colonial Architecture.",
       "A key cultural tradition is Pom Baked Root Casserole and Roti."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Suriname",
+    "memoryFacts": [
+      "Suriname is known for its capital city Paramaribo.",
+      "The nation features the landmark Paramaribo Wooden Colonial Architecture.",
+      "A key cultural tradition is Pom Baked Root Casserole and Roti."
     ]
   },
   {
@@ -3386,6 +4292,12 @@ export const COUNTRIES_DB = [
       "Famous for olive oil soap crafted by hand in historic stone vats, hammered copper trays, and spiced bulgur meat shells."
     ],
     "memoryAnchors": [
+      "Syria is known for its capital city Damascus.",
+      "The nation features the landmark Umayyad Mosque and Ancient Palmyra Columns.",
+      "A key cultural tradition is Kibbeh and Fatteh."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Syria",
+    "memoryFacts": [
       "Syria is known for its capital city Damascus.",
       "The nation features the landmark Umayyad Mosque and Ancient Palmyra Columns.",
       "A key cultural tradition is Kibbeh and Fatteh."
@@ -3411,6 +4323,12 @@ export const COUNTRIES_DB = [
       "Tajikistan is known for its capital city Dushanbe.",
       "The nation features the landmark Pamir Highway and Iskanderkul Alpine Lake.",
       "A key cultural tradition is Qurutob Bread with Yogurt Sauce."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Tajikistan",
+    "memoryFacts": [
+      "Tajikistan is known for its capital city Dushanbe.",
+      "The nation features the landmark Pamir Highway and Iskanderkul Alpine Lake.",
+      "A key cultural tradition is Qurutob Bread with Yogurt Sauce."
     ]
   },
   {
@@ -3430,6 +4348,12 @@ export const COUNTRIES_DB = [
       "Famous for grilled fish marinated in tamarind and chili paste roasted in palm leaves, and wild Arabica shade-grown coffee."
     ],
     "memoryAnchors": [
+      "Timor-Leste is known for its capital city Dili.",
+      "The nation features the landmark Cristo Rei of Dili Statue.",
+      "A key cultural tradition is Ikan Sabuko Fish and Batar Da'an."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Timor-Leste",
+    "memoryFacts": [
       "Timor-Leste is known for its capital city Dili.",
       "The nation features the landmark Cristo Rei of Dili Statue.",
       "A key cultural tradition is Ikan Sabuko Fish and Batar Da'an."
@@ -3455,6 +4379,12 @@ export const COUNTRIES_DB = [
       "Togo is known for its capital city Lomé.",
       "The nation features the landmark Koutammakou Mud Tower-Houses.",
       "A key cultural tradition is Fufu with Palm Nut Soup."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Togo",
+    "memoryFacts": [
+      "Togo is known for its capital city Lomé.",
+      "The nation features the landmark Koutammakou Mud Tower-Houses.",
+      "A key cultural tradition is Fufu with Palm Nut Soup."
     ]
   },
   {
@@ -3474,6 +4404,12 @@ export const COUNTRIES_DB = [
       "Famous for tender salted corned beef and onions baked inside taro leaves with coconut cream, and humpback whale migrations."
     ],
     "memoryAnchors": [
+      "Tonga is known for its capital city Nuku'alofa.",
+      "The nation features the landmark Ha'amonga 'a Maui Trilithon Megalith.",
+      "A key cultural tradition is Lu Pulu Beef in Taro Leaves."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Tonga",
+    "memoryFacts": [
       "Tonga is known for its capital city Nuku'alofa.",
       "The nation features the landmark Ha'amonga 'a Maui Trilithon Megalith.",
       "A key cultural tradition is Lu Pulu Beef in Taro Leaves."
@@ -3499,6 +4435,12 @@ export const COUNTRIES_DB = [
       "Trinidad and Tobago is known for its capital city Port of Spain.",
       "The nation features the landmark Pitch Lake Natural Asphalt Lake.",
       "A key cultural tradition is Doubles with Channa and Roti."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Trinidad_and_Tobago",
+    "memoryFacts": [
+      "Trinidad and Tobago is known for its capital city Port of Spain.",
+      "The nation features the landmark Pitch Lake Natural Asphalt Lake.",
+      "A key cultural tradition is Doubles with Channa and Roti."
     ]
   },
   {
@@ -3518,6 +4460,12 @@ export const COUNTRIES_DB = [
       "Famous for ancient Akhal-Teke horses with natural metallic golden coats, and clay oven baked meat pies cooked in desert sand."
     ],
     "memoryAnchors": [
+      "Turkmenistan is known for its capital city Ashgabat.",
+      "The nation features the landmark Darvaza Gas Crater Door to Hell.",
+      "A key cultural tradition is Ichlekli Meat Pie and Shashlik."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Turkmenistan",
+    "memoryFacts": [
       "Turkmenistan is known for its capital city Ashgabat.",
       "The nation features the landmark Darvaza Gas Crater Door to Hell.",
       "A key cultural tradition is Ichlekli Meat Pie and Shashlik."
@@ -3543,6 +4491,12 @@ export const COUNTRIES_DB = [
       "Tuvalu is known for its capital city Funafuti.",
       "The nation features the landmark Funafuti Conservation Coral Lagoon.",
       "A key cultural tradition is Pulaka Swamp Taro and Coconut."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Tuvalu",
+    "memoryFacts": [
+      "Tuvalu is known for its capital city Funafuti.",
+      "The nation features the landmark Funafuti Conservation Coral Lagoon.",
+      "A key cultural tradition is Pulaka Swamp Taro and Coconut."
     ]
   },
   {
@@ -3562,6 +4516,12 @@ export const COUNTRIES_DB = [
       "Famous for a popular street food rolled chapati filled with fried eggs and cabbage called a Rolex, and mountain gorillas."
     ],
     "memoryAnchors": [
+      "Uganda is known for its capital city Kampala.",
+      "The nation features the landmark Murchison Falls on the Victoria Nile.",
+      "A key cultural tradition is Matooke Steamed Green Bananas and Rolex."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Uganda",
+    "memoryFacts": [
       "Uganda is known for its capital city Kampala.",
       "The nation features the landmark Murchison Falls on the Victoria Nile.",
       "A key cultural tradition is Matooke Steamed Green Bananas and Rolex."
@@ -3587,6 +4547,12 @@ export const COUNTRIES_DB = [
       "Vanuatu is known for its capital city Port Vila.",
       "The nation features the landmark Mount Yasur Active Volcano on Tanna Island.",
       "A key cultural tradition is Laplap Cassava Cake."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Vanuatu",
+    "memoryFacts": [
+      "Vanuatu is known for its capital city Port Vila.",
+      "The nation features the landmark Mount Yasur Active Volcano on Tanna Island.",
+      "A key cultural tradition is Laplap Cassava Cake."
     ]
   },
   {
@@ -3606,6 +4572,12 @@ export const COUNTRIES_DB = [
       "Famous for a monumental Renaissance basilica with a soaring dome designed by Michelangelo, and the ceremonial Pontifical Guard in colorful uniforms."
     ],
     "memoryAnchors": [
+      "Vatican City is known for its capital city Vatican City.",
+      "The nation features the landmark St. Peter's Basilica and Sistine Chapel.",
+      "A key cultural tradition is Roman Pasta all'Amatriciana."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Vatican_City",
+    "memoryFacts": [
       "Vatican City is known for its capital city Vatican City.",
       "The nation features the landmark St. Peter's Basilica and Sistine Chapel.",
       "A key cultural tradition is Roman Pasta all'Amatriciana."
@@ -3631,6 +4603,12 @@ export const COUNTRIES_DB = [
       "Venezuela is known for its capital city Caracas.",
       "The nation features the landmark Angel Falls Kerepakupai Merú.",
       "A key cultural tradition is Arepas and Pabellón Criollo."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Venezuela",
+    "memoryFacts": [
+      "Venezuela is known for its capital city Caracas.",
+      "The nation features the landmark Angel Falls Kerepakupai Merú.",
+      "A key cultural tradition is Arepas and Pabellón Criollo."
     ]
   },
   {
@@ -3650,6 +4628,12 @@ export const COUNTRIES_DB = [
       "Famous for bubbling hot stone bowls of meat stew topped with whipped frothy fenugreek foam, and cardamom coffee."
     ],
     "memoryAnchors": [
+      "Yemen is known for its capital city Sana'a.",
+      "The nation features the landmark Old City of Sana'a Mud-Brick Skyscrapers.",
+      "A key cultural tradition is Saltah Lamb Stew with Fenugreek."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Yemen",
+    "memoryFacts": [
       "Yemen is known for its capital city Sana'a.",
       "The nation features the landmark Old City of Sana'a Mud-Brick Skyscrapers.",
       "A key cultural tradition is Saltah Lamb Stew with Fenugreek."
@@ -3675,6 +4659,12 @@ export const COUNTRIES_DB = [
       "Albania is known for its historic capital Tirana.",
       "The nation features the landmark Berat Castle and Mangalem Quarter.",
       "A key cultural tradition is Tavë Kosi Baked Lamb."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Albania",
+    "memoryFacts": [
+      "Albania is known for its historic capital Tirana.",
+      "The nation features the landmark Berat Castle and Mangalem Quarter.",
+      "A key cultural tradition is Tavë Kosi Baked Lamb."
     ]
   },
   {
@@ -3694,6 +4684,12 @@ export const COUNTRIES_DB = [
       "Famous for an ancient clifftop monastery framing a sacred snow-capped peak, and apricot orchards."
     ],
     "memoryAnchors": [
+      "Armenia is known for its historic capital Yerevan.",
+      "The nation features the landmark Khor Virap Monastery with Mount Ararat View.",
+      "A key cultural tradition is Lavash Flatbread and Dolma."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Armenia",
+    "memoryFacts": [
       "Armenia is known for its historic capital Yerevan.",
       "The nation features the landmark Khor Virap Monastery with Mount Ararat View.",
       "A key cultural tradition is Lavash Flatbread and Dolma."
@@ -3719,6 +4715,12 @@ export const COUNTRIES_DB = [
       "Azerbaijan is known for its historic capital Baku.",
       "The nation features the landmark Flame Towers and Maiden Tower in Baku.",
       "A key cultural tradition is Shah Plov and Qutab."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Azerbaijan",
+    "memoryFacts": [
+      "Azerbaijan is known for its historic capital Baku.",
+      "The nation features the landmark Flame Towers and Maiden Tower in Baku.",
+      "A key cultural tradition is Shah Plov and Qutab."
     ]
   },
   {
@@ -3738,6 +4740,12 @@ export const COUNTRIES_DB = [
       "Famous for refreshing citrus-marinated sea snail salad, vibrant carnival parades, and 66 solid-limestone hand-carved stairs."
     ],
     "memoryAnchors": [
+      "Bahamas is known for its historic capital Nassau.",
+      "The nation features the landmark Queen's Staircase and Dean's Blue Hole.",
+      "A key cultural tradition is Conch Salad and Bahamian Macaroni."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bahamas",
+    "memoryFacts": [
       "Bahamas is known for its historic capital Nassau.",
       "The nation features the landmark Queen's Staircase and Dean's Blue Hole.",
       "A key cultural tradition is Conch Salad and Bahamian Macaroni."
@@ -3763,6 +4771,12 @@ export const COUNTRIES_DB = [
       "Bahrain is known for its historic capital Manama.",
       "The nation features the landmark Qal'at al-Bahrain Ancient Dilmun Fort.",
       "A key cultural tradition is Machboos and Halwa Bahraini."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bahrain",
+    "memoryFacts": [
+      "Bahrain is known for its historic capital Manama.",
+      "The nation features the landmark Qal'at al-Bahrain Ancient Dilmun Fort.",
+      "A key cultural tradition is Machboos and Halwa Bahraini."
     ]
   },
   {
@@ -3782,6 +4796,12 @@ export const COUNTRIES_DB = [
       "Famous for crispy grated potato pancakes served with sour cream, red brick medieval castles, and pristine lakes."
     ],
     "memoryAnchors": [
+      "Belarus is known for its historic capital Minsk.",
+      "The nation features the landmark Mir Castle Complex and Nesvizh Palace.",
+      "A key cultural tradition is Draniki Potato Pancakes."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Belarus",
+    "memoryFacts": [
       "Belarus is known for its historic capital Minsk.",
       "The nation features the landmark Mir Castle Complex and Nesvizh Palace.",
       "A key cultural tradition is Draniki Potato Pancakes."
@@ -3807,6 +4827,12 @@ export const COUNTRIES_DB = [
       "Belize is known for its historic capital Belmopan.",
       "The nation features the landmark Great Blue Hole Oceanic Sinkhole.",
       "A key cultural tradition is Fry Jacks and Rice and Beans."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Belize",
+    "memoryFacts": [
+      "Belize is known for its historic capital Belmopan.",
+      "The nation features the landmark Great Blue Hole Oceanic Sinkhole.",
+      "A key cultural tradition is Fry Jacks and Rice and Beans."
     ]
   },
   {
@@ -3826,6 +4852,12 @@ export const COUNTRIES_DB = [
       "Famous for clay bas-relief royal palaces, crispy spiced peanut snacks, and voodoo spiritual traditions."
     ],
     "memoryAnchors": [
+      "Benin is known for its historic capital Porto-Novo.",
+      "The nation features the landmark Royal Palaces of Abomey.",
+      "A key cultural tradition is Kuli-Kuli and Akpan."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Benin",
+    "memoryFacts": [
       "Benin is known for its historic capital Porto-Novo.",
       "The nation features the landmark Royal Palaces of Abomey.",
       "A key cultural tradition is Kuli-Kuli and Akpan."
@@ -3851,6 +4883,12 @@ export const COUNTRIES_DB = [
       "Botswana is known for its historic capital Gaborone.",
       "The nation features the landmark Okavango Inland River Delta.",
       "A key cultural tradition is Seswaa Slow Cooked Beef."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Botswana",
+    "memoryFacts": [
+      "Botswana is known for its historic capital Gaborone.",
+      "The nation features the landmark Okavango Inland River Delta.",
+      "A key cultural tradition is Seswaa Slow Cooked Beef."
     ]
   },
   {
@@ -3870,6 +4908,12 @@ export const COUNTRIES_DB = [
       "Famous for sticky sago starch eaten with a two-pronged bamboo stick, and preserved primary rainforest reserves."
     ],
     "memoryAnchors": [
+      "Brunei is known for its historic capital Bandar Seri Begawan.",
+      "The nation features the landmark Sultan Omar Ali Saifuddien Mosque.",
+      "A key cultural tradition is Ambuyat and Nasi Katok."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Brunei",
+    "memoryFacts": [
       "Brunei is known for its historic capital Bandar Seri Begawan.",
       "The nation features the landmark Sultan Omar Ali Saifuddien Mosque.",
       "A key cultural tradition is Ambuyat and Nasi Katok."
@@ -3895,6 +4939,12 @@ export const COUNTRIES_DB = [
       "Côte d'Ivoire is known for its historic capital Yamoussoukro.",
       "The nation features the landmark Basilica of Our Lady of Peace in Yamoussoukro.",
       "A key cultural tradition is Attiéké with Grilled Fish."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/C%C3%B4te_d'Ivoire",
+    "memoryFacts": [
+      "Côte d'Ivoire is known for its historic capital Yamoussoukro.",
+      "The nation features the landmark Basilica of Our Lady of Peace in Yamoussoukro.",
+      "A key cultural tradition is Attiéké with Grilled Fish."
     ]
   },
   {
@@ -3914,6 +4964,12 @@ export const COUNTRIES_DB = [
       "Famous for distinctive semi-hard unripened brined cheese that can be fried or grilled without melting, and citrus groves."
     ],
     "memoryAnchors": [
+      "Cyprus is known for its historic capital Nicosia.",
+      "The nation features the landmark Ancient Kourion Greco-Roman Amphitheatre.",
+      "A key cultural tradition is Halloumi Cheese and Souvla."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Cyprus",
+    "memoryFacts": [
       "Cyprus is known for its historic capital Nicosia.",
       "The nation features the landmark Ancient Kourion Greco-Roman Amphitheatre.",
       "A key cultural tradition is Halloumi Cheese and Souvla."
@@ -3939,6 +4995,12 @@ export const COUNTRIES_DB = [
       "Dominican Republic is known for its historic capital Santo Domingo.",
       "The nation features the landmark Alcázar de Colón Colonial Palace.",
       "A key cultural tradition is La Bandera and Mangú."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Dominican_Republic",
+    "memoryFacts": [
+      "Dominican Republic is known for its historic capital Santo Domingo.",
+      "The nation features the landmark Alcázar de Colón Colonial Palace.",
+      "A key cultural tradition is La Bandera and Mangú."
     ]
   },
   {
@@ -3958,6 +5020,12 @@ export const COUNTRIES_DB = [
       "Famous for friendly choral hospitality, earth-oven feasts buried with hot stones, and world-class seven-a-side rugby champions."
     ],
     "memoryAnchors": [
+      "Fiji is known for its historic capital Suva.",
+      "The nation features the landmark Sri Siva Subramaniya Hindu Temple in Nadi.",
+      "A key cultural tradition is Kokoda Lime Fish and Lovo."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Fiji",
+    "memoryFacts": [
       "Fiji is known for its historic capital Suva.",
       "The nation features the landmark Sri Siva Subramaniya Hindu Temple in Nadi.",
       "A key cultural tradition is Kokoda Lime Fish and Lovo."
@@ -3983,6 +5051,12 @@ export const COUNTRIES_DB = [
       "Guatemala is known for its historic capital Guatemala City.",
       "The nation features the landmark Tikal Ancient Mayan Pyramid Temples.",
       "A key cultural tradition is Pepián Spicy Meat Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Guatemala",
+    "memoryFacts": [
+      "Guatemala is known for its historic capital Guatemala City.",
+      "The nation features the landmark Tikal Ancient Mayan Pyramid Temples.",
+      "A key cultural tradition is Pepián Spicy Meat Stew."
     ]
   },
   {
@@ -4002,6 +5076,12 @@ export const COUNTRIES_DB = [
       "Famous for colonial mountain towns, extensive coral barrier reefs, and carved stone stelae depicting ancient rulers."
     ],
     "memoryAnchors": [
+      "Honduras is known for its historic capital Tegucigalpa.",
+      "The nation features the landmark Copán Ruinas Hieroglyphic Stairway.",
+      "A key cultural tradition is Baleadas and Pastelitos."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Honduras",
+    "memoryFacts": [
       "Honduras is known for its historic capital Tegucigalpa.",
       "The nation features the landmark Copán Ruinas Hieroglyphic Stairway.",
       "A key cultural tradition is Baleadas and Pastelitos."
@@ -4027,6 +5107,12 @@ export const COUNTRIES_DB = [
       "Israel is known for its historic capital Jerusalem.",
       "The nation features the landmark Western Wall and Masada Fortress.",
       "A key cultural tradition is Falafel and Shakshuka."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Israel",
+    "memoryFacts": [
+      "Israel is known for its historic capital Jerusalem.",
+      "The nation features the landmark Western Wall and Masada Fortress.",
+      "A key cultural tradition is Falafel and Shakshuka."
     ]
   },
   {
@@ -4046,6 +5132,12 @@ export const COUNTRIES_DB = [
       "Famous for spicy pimento-wood smoked jerk barbecue, blue mountain coffee beans, and legendary world sprint champions."
     ],
     "memoryAnchors": [
+      "Jamaica is known for its historic capital Kingston.",
+      "The nation features the landmark Dunn's River Terraced Falls.",
+      "A key cultural tradition is Jerk Chicken and Ackee with Saltfish."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Jamaica",
+    "memoryFacts": [
       "Jamaica is known for its historic capital Kingston.",
       "The nation features the landmark Dunn's River Terraced Falls.",
       "A key cultural tradition is Jerk Chicken and Ackee with Saltfish."
@@ -4071,6 +5163,12 @@ export const COUNTRIES_DB = [
       "Lebanon is known for its historic capital Beirut.",
       "The nation features the landmark Baalbek Roman Temple of Bacchus.",
       "A key cultural tradition is Tabbouleh and Kibbeh."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Lebanon",
+    "memoryFacts": [
+      "Lebanon is known for its historic capital Beirut.",
+      "The nation features the landmark Baalbek Roman Temple of Bacchus.",
+      "A key cultural tradition is Tabbouleh and Kibbeh."
     ]
   },
   {
@@ -4090,6 +5188,12 @@ export const COUNTRIES_DB = [
       "Famous for smoked pork collar served with broad beans, multilingual residents, and being the first nation with free nationwide public transit."
     ],
     "memoryAnchors": [
+      "Luxembourg is known for its historic capital Luxembourg City.",
+      "The nation features the landmark Bock Casemates Cliff Fortress.",
+      "A key cultural tradition is Judd mat Gaardebounen Smoked Pork."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Luxembourg",
+    "memoryFacts": [
       "Luxembourg is known for its historic capital Luxembourg City.",
       "The nation features the landmark Bock Casemates Cliff Fortress.",
       "A key cultural tradition is Judd mat Gaardebounen Smoked Pork."
@@ -4115,6 +5219,12 @@ export const COUNTRIES_DB = [
       "Malta is known for its historic capital Valletta.",
       "The nation features the landmark Megalithic Temples of Ħaġar Qim.",
       "A key cultural tradition is Pastizzi and Rabbit Stew."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Malta",
+    "memoryFacts": [
+      "Malta is known for its historic capital Valletta.",
+      "The nation features the landmark Megalithic Temples of Ħaġar Qim.",
+      "A key cultural tradition is Pastizzi and Rabbit Stew."
     ]
   },
   {
@@ -4134,6 +5244,12 @@ export const COUNTRIES_DB = [
       "Famous for thin yellow split-pea flatbreads rolled with bean curries, botanical water-lily gardens, and turquoise coral lagoons."
     ],
     "memoryAnchors": [
+      "Mauritius is known for its historic capital Port Louis.",
+      "The nation features the landmark Seven Coloured Earths of Chamarel.",
+      "A key cultural tradition is Dholl Puri and Fish Vindaye."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mauritius",
+    "memoryFacts": [
       "Mauritius is known for its historic capital Port Louis.",
       "The nation features the landmark Seven Coloured Earths of Chamarel.",
       "A key cultural tradition is Dholl Puri and Fish Vindaye."
@@ -4159,6 +5275,12 @@ export const COUNTRIES_DB = [
       "Namibia is known for its historic capital Windhoek.",
       "The nation features the landmark Sossusvlei Red Sand Dunes and Deadvlei.",
       "A key cultural tradition is Braaivleis and Potjiekos."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Namibia",
+    "memoryFacts": [
+      "Namibia is known for its historic capital Windhoek.",
+      "The nation features the landmark Sossusvlei Red Sand Dunes and Deadvlei.",
+      "A key cultural tradition is Braaivleis and Potjiekos."
     ]
   },
   {
@@ -4178,6 +5300,12 @@ export const COUNTRIES_DB = [
       "Famous for marinating spiced meats wrapped in banana leaves and slow-cooking them for days in subterranean sand fire pits."
     ],
     "memoryAnchors": [
+      "Oman is known for its historic capital Muscat.",
+      "The nation features the landmark Sultan Qaboos Grand Mosque in Muscat.",
+      "A key cultural tradition is Shuwa Slow-Roasted Lamb."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Oman",
+    "memoryFacts": [
       "Oman is known for its historic capital Muscat.",
       "The nation features the landmark Sultan Qaboos Grand Mosque in Muscat.",
       "A key cultural tradition is Shuwa Slow-Roasted Lamb."
@@ -4203,6 +5331,12 @@ export const COUNTRIES_DB = [
       "Paraguay is known for its historic capital Asunción.",
       "The nation features the landmark Jesuit Missions of La Santísima Trinidad.",
       "A key cultural tradition is Sopa Paraguaya Cornbread."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Paraguay",
+    "memoryFacts": [
+      "Paraguay is known for its historic capital Asunción.",
+      "The nation features the landmark Jesuit Missions of La Santísima Trinidad.",
+      "A key cultural tradition is Sopa Paraguaya Cornbread."
     ]
   },
   {
@@ -4222,6 +5356,12 @@ export const COUNTRIES_DB = [
       "Famous for hosting the 2022 FIFA World Cup, traditional wooden dhow harbor panoramas, and spiced condensed milk tea."
     ],
     "memoryAnchors": [
+      "Qatar is known for its historic capital Doha.",
+      "The nation features the landmark Museum of Islamic Art in Doha.",
+      "A key cultural tradition is Machboos and Karak Tea."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Qatar",
+    "memoryFacts": [
       "Qatar is known for its historic capital Doha.",
       "The nation features the landmark Museum of Islamic Art in Doha.",
       "A key cultural tradition is Machboos and Karak Tea."
@@ -4247,6 +5387,12 @@ export const COUNTRIES_DB = [
       "Rwanda is known for its historic capital Kigali.",
       "The nation features the landmark Volcanoes National Park Gorilla Sanctuary.",
       "A key cultural tradition is Isombe Cassava Stew and Brochettes."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Rwanda",
+    "memoryFacts": [
+      "Rwanda is known for its historic capital Kigali.",
+      "The nation features the landmark Volcanoes National Park Gorilla Sanctuary.",
+      "A key cultural tradition is Isombe Cassava Stew and Brochettes."
     ]
   },
   {
@@ -4266,6 +5412,12 @@ export const COUNTRIES_DB = [
       "Famous for aromatic broken rice simmered in rich tomato broth with fish and vegetables, and colorful wooden pirogue fishing boats."
     ],
     "memoryAnchors": [
+      "Senegal is known for its historic capital Dakar.",
+      "The nation features the landmark African Renaissance Monument in Dakar.",
+      "A key cultural tradition is Thieboudienne Fish with Rice."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Senegal",
+    "memoryFacts": [
       "Senegal is known for its historic capital Dakar.",
       "The nation features the landmark African Renaissance Monument in Dakar.",
       "A key cultural tradition is Thieboudienne Fish with Rice."
@@ -4291,6 +5443,12 @@ export const COUNTRIES_DB = [
       "Tunisia is known for its historic capital Tunis.",
       "The nation features the landmark Amphitheatre of El Jem.",
       "A key cultural tradition is Couscous with Harissa and Brik."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Tunisia",
+    "memoryFacts": [
+      "Tunisia is known for its historic capital Tunis.",
+      "The nation features the landmark Amphitheatre of El Jem.",
+      "A key cultural tradition is Couscous with Harissa and Brik."
     ]
   },
   {
@@ -4313,6 +5471,12 @@ export const COUNTRIES_DB = [
       "Zambia is known for its historic capital Lusaka.",
       "The nation features the landmark Victoria Falls Mosi-oa-Tunya.",
       "A key cultural tradition is Nshima with Relish."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Zambia",
+    "memoryFacts": [
+      "Zambia is known for its historic capital Lusaka.",
+      "The nation features the landmark Victoria Falls Mosi-oa-Tunya.",
+      "A key cultural tradition is Nshima with Relish."
     ]
   },
   {
@@ -4332,6 +5496,12 @@ export const COUNTRIES_DB = [
       "Famous for sharing the thunderous Victoria Falls spray with its northern counterpart, and thick maize meal porridge."
     ],
     "memoryAnchors": [
+      "Zimbabwe is known for its historic capital Harare.",
+      "The nation features the landmark Great Zimbabwe Ancient Dry-Stone Monument.",
+      "A key cultural tradition is Sadza and Bota Porridge."
+    ],
+    "sourceUrl": "https://en.wikipedia.org/wiki/Zimbabwe",
+    "memoryFacts": [
       "Zimbabwe is known for its historic capital Harare.",
       "The nation features the landmark Great Zimbabwe Ancient Dry-Stone Monument.",
       "A key cultural tradition is Sadza and Bota Porridge."

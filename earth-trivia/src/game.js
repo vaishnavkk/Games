@@ -10,18 +10,18 @@ export class GameManager {
 
     // Game Configuration Options
     this.mode = 'clue';       // 'clue' | 'name' | 'flag'
-    this.tier = 'easy';       // 'easy' | 'medium' | 'hard'
+    this.tier = 'easy';       // 'easy' (~40) | 'medium' (100) | 'hard' (all 193 UN)
     this.totalRounds = 10;    // 10 | 20 | Infinity
-    this.isSurvival = false;  // 3 lives vs Practice
-    this.hasTimer = false;
+    this.hasTimer = false;    // Optional toggle (default off)
+    this.isPractice = false;  // Practice mode: no timer, no score kept
 
     // Runtime State
     this.score = 0;
     this.streak = 0;
     this.bestStreak = 0;
     this.round = 0;
-    this.lives = 3;
     this.correctCount = 0;
+    this.phase = 'start';     // 'start' | 'question' | 'selected' | 'result' | 'end'
 
     // Country Pools
     this.fullDatabase = COUNTRIES_DB;
@@ -29,11 +29,13 @@ export class GameManager {
     this.missedCountries = [];
     this.currentCountry = null;
     this.selectedHit = null;
+    this.lastGuessCountry = null;
+    this.lastRoundBreakdown = null;
     this.clueIndex = 0;
     this.isAnswering = false;
 
-    // Timer
-    this.timerDuration = 25000; // 25s per round
+    // Timer (25 seconds)
+    this.timerDuration = 25000;
     this.timerRemaining = 25000;
     this.timerInterval = null;
     this.roundStartTime = 0;
@@ -44,35 +46,39 @@ export class GameManager {
   // Filter countries by tier
   getTierPool(tier) {
     if (tier === 'easy') {
+      // About 40 well-known major countries (42 iconic nations)
       return this.fullDatabase.filter(c => c.tier === 'easy');
     } else if (tier === 'medium') {
-      return this.fullDatabase.filter(c => c.tier === 'easy' || c.tier === 'medium');
+      // About 100 diverse countries
+      const pool = this.fullDatabase.filter(c => c.tier === 'easy' || c.tier === 'medium');
+      return pool.slice(0, 100);
     } else {
-      // Hard: all 195 nations
+      // Hard: all 193 UN member states + observers (195 total)
       return [...this.fullDatabase];
     }
   }
 
-  startExpedition({ mode, tier, rounds, isSurvival, hasTimer }) {
+  startExpedition({ mode = 'clue', tier = 'easy', rounds = 10, hasTimer = false, isPractice = false }) {
     this.mode = mode;
     this.tier = tier;
     this.totalRounds = rounds;
-    this.isSurvival = isSurvival;
-    this.hasTimer = hasTimer;
+    this.hasTimer = isPractice ? false : hasTimer;
+    this.isPractice = isPractice;
 
     this.score = 0;
     this.streak = 0;
     this.bestStreak = 0;
     this.round = 0;
     this.correctCount = 0;
-    this.lives = isSurvival ? 3 : null;
     this.missedCountries = [];
+    this.phase = 'start';
+    this.lastRoundBreakdown = null;
 
     // Shuffle pool
     const pool = this.getTierPool(tier);
     this.roundQueue = this.shuffle([...pool]);
 
-    this.ui.showGameHUD(this.totalRounds, this.lives, this.hasTimer);
+    this.ui.showGameHUD(this.totalRounds, this.hasTimer, this.isPractice);
     this.nextRound();
   }
 
@@ -93,24 +99,21 @@ export class GameManager {
       return;
     }
 
-    if (this.isSurvival && this.lives <= 0) {
-      this.endGame();
-      return;
-    }
-
     this.round++;
     this.currentCountry = this.roundQueue.shift();
     this.clueIndex = 0;
     this.isAnswering = true;
+    this.phase = 'question';
     this.selectedHit = null;
+    this.lastGuessCountry = null;
     this.ui.hideTouchConfirm();
     this.roundStartTime = performance.now();
 
-    // Reset visual map and camera
+    // Reset visual map and camera (clears all markers, arcs, and highlights)
     this.globe.flight.resetToOverview({ duration: 800 });
     this.globe.mapRenderer.resetHighlights();
 
-    // Display clue
+    // Display clue/prompt based on mode
     this.ui.showQuestion({
       mode: this.mode,
       country: this.currentCountry,
@@ -164,7 +167,6 @@ export class GameManager {
 
   handleTimeout() {
     if (!this.isAnswering) return;
-    // Timeout is treated as a miss with max distance
     this.handleGuess(null, this.currentCountry.lat + 45, this.currentCountry.lon + 90);
   }
 
@@ -181,6 +183,7 @@ export class GameManager {
 
     if (!hitResult || !hitResult.country) {
       this.selectedHit = null;
+      this.phase = 'question';
       this.ui.hideTouchConfirm();
       this.globe.mapRenderer.resetHighlights();
       return;
@@ -188,10 +191,12 @@ export class GameManager {
 
     sound.playClick();
 
-    // On desktop and touch: click selects (highlight) and Confirm button or Enter submits
+    // Both desktop and touch: click selects (highlight) and Confirm button / Enter submits
     this.selectedHit = hitResult;
+    this.phase = 'selected';
     const countryId = String(hitResult.country.id).padStart(3, '0');
     this.globe.mapRenderer.renderHighlights({ selectedCountryId: countryId });
+
     this.ui.showTouchConfirm(hitResult.country, () => {
       sound.playClick();
       this.ui.hideTouchConfirm();
@@ -206,6 +211,8 @@ export class GameManager {
   handleGuess(guessCountry, hitLat, hitLon) {
     if (!this.isAnswering) return;
     this.isAnswering = false;
+    this.phase = 'result';
+    this.lastGuessCountry = guessCountry;
     this.stopTimer();
     this.ui.hideTouchConfirm();
     this.selectedHit = null;
@@ -213,7 +220,14 @@ export class GameManager {
     this.globe.renderer.domElement.style.cursor = 'grab';
 
     const target = this.currentCountry;
-    const isCorrect = guessCountry && guessCountry.id === target.id;
+    const isCorrect = guessCountry && (
+      guessCountry.id === target.id ||
+      String(guessCountry.id).padStart(3, '0') === String(target.id).padStart(3, '0') ||
+      (guessCountry.code && target.code && guessCountry.code === target.code)
+    );
+
+    let roundPoints = 0;
+    let distanceKm = 0;
 
     if (isCorrect) {
       // ── CORRECT GUESS ──────────────────────────────────────
@@ -222,40 +236,70 @@ export class GameManager {
       this.streak++;
       if (this.streak > this.bestStreak) this.bestStreak = this.streak;
 
-      // Score calculation
-      const elapsedSec = (performance.now() - this.roundStartTime) / 1000;
-      const speedBonus = Math.max(0, Math.round((20 - elapsedSec) * 20));
-      const clueBonus = (3 - this.clueIndex) * 250;
-      const streakMultiplier = Math.min(3, 1 + (this.streak - 1) * 0.25);
-      const points = Math.round((1000 + speedBonus + clueBonus) * streakMultiplier);
+      // Scoring formula: maximum 1,000 per round
+      // Base: 500
+      // Fewer-clues bonus: Clue 1: +300, Clue 2: +150, Clue 3: 0 (or +300 in name/flag mode)
+      const base = 500;
+      let clueBonus = 0;
+      if (this.mode === 'name' || this.mode === 'flag') {
+        clueBonus = 300;
+      } else {
+        clueBonus = this.clueIndex === 0 ? 300 : (this.clueIndex === 1 ? 150 : 0);
+      }
 
-      this.score += points;
+      // Speed bonus: up to +200 only when timer is ON
+      let speedBonus = 0;
+      if (this.hasTimer && this.timerDuration > 0) {
+        const timeFraction = Math.max(0, this.timerRemaining / this.timerDuration);
+        speedBonus = Math.round(200 * timeFraction);
+      }
 
-      // Confetti celebratory burst on milestones
+      // Streak multiplier: 1.0x, 1.1x, 1.2x... max 1.5x
+      const streakMultiplier = Math.min(1.5, 1.0 + Math.max(0, this.streak - 1) * 0.1);
+
+      if (!this.isPractice) {
+        roundPoints = Math.min(1000, Math.round((base + clueBonus + speedBonus) * streakMultiplier));
+        this.score += roundPoints;
+      }
+
+      this.lastRoundBreakdown = {
+        isCorrect: true,
+        base,
+        clueBonus,
+        speedBonus,
+        streakMultiplier,
+        points: roundPoints,
+        distanceKm: 0
+      };
+
+      // Confetti burst on streaks
       if (this.streak >= 3) {
         try {
           confetti({
-            particleCount: 50 + this.streak * 10,
-            spread: 60,
-            origin: { y: 0.7 }
+            particleCount: 40 + this.streak * 10,
+            spread: 55,
+            origin: { y: 0.75 }
           });
         } catch (e) {}
       }
 
-      // Visual feedback: green fill & glowing pin
+      // Visual feedback: Texture fill + 2px outline (NO pin or beam beacon!)
       this.globe.mapRenderer.renderHighlights({ correctCountryId: target.id });
-      this.globe.flight.createPinMarker(target.lat, target.lon, 0x10b981);
 
-      // Camera flight to target country
+      // Camera flight: frame country so it fills 50-60% of free area
       sound.playSwoosh();
+      const angularSpan = target.angularSpan || 10;
       this.globe.flight.flyToCountry(target.lat, target.lon, {
         isDesktopOffset: true,
+        angularSpan,
         onComplete: () => {
           this.ui.showMemoryVault({
             isCorrect: true,
             targetCountry: target,
             guessCountry: target,
             distanceKm: 0,
+            breakdown: this.lastRoundBreakdown,
+            isPractice: this.isPractice,
             onNext: () => this.nextRound()
           });
         }
@@ -266,47 +310,57 @@ export class GameManager {
       sound.playWrong();
       this.streak = 0;
 
-      if (this.isSurvival) {
-        this.lives--;
-      }
-
       // Distance error
-      const distanceKm = haversineDistanceKm(hitLat, hitLon, target.lat, target.lon);
+      distanceKm = haversineDistanceKm(hitLat, hitLon, target.lat, target.lon);
 
-      // Partial credit if close (under 1200 km)
-      if (distanceKm < 1200) {
-        const partial = Math.max(50, Math.round(500 * (1 - distanceKm / 1200)));
+      // Partial credit by distance: up to 400 pts if within 5000 km
+      if (!this.isPractice && distanceKm < 5000) {
+        const partial = Math.max(0, Math.round(400 * (1 - distanceKm / 5000)));
+        roundPoints = partial;
         this.score += partial;
       }
 
-      // Re-queue missed country later in session (spaced repetition!)
+      this.lastRoundBreakdown = {
+        isCorrect: false,
+        base: 0,
+        clueBonus: 0,
+        speedBonus: 0,
+        streakMultiplier: 1.0,
+        points: roundPoints,
+        distanceKm
+      };
+
+      // Spaced repetition: requeue missed country once later in session
       this.missedCountries.push(target);
-      const reinsertIndex = Math.min(this.roundQueue.length, 3 + Math.floor(Math.random() * 3));
+      const reinsertIndex = Math.min(this.roundQueue.length, 2 + Math.floor(Math.random() * 3));
       this.roundQueue.splice(reinsertIndex, 0, target);
 
-      // Visuals: Red fill on guess, Green fill on target, arc & markers
+      // Visuals: Red fill on guess, Green fill on target (NO interior pin or beam)
       const guessId = guessCountry ? guessCountry.id : null;
       this.globe.mapRenderer.renderHighlights({
         correctCountryId: target.id,
         guessCountryId: guessId
       });
 
-      this.globe.flight.createPinMarker(target.lat, target.lon, 0x10b981);
-      if (guessCountry) {
-        this.globe.flight.createPinMarker(hitLat, hitLon, 0xef4444);
-      }
+      // 2px neutral great-circle geodesic arc (white at 70%) with km distance at midpoint
       this.globe.flight.drawGreatCircleArc(hitLat, hitLon, target.lat, target.lon);
 
-      // Camera flight to target country
+      // Camera flight: frame both if both fit with target >= 25% free area; otherwise frame target
       sound.playSwoosh();
+      const angularSpan = target.angularSpan || 10;
       this.globe.flight.flyToCountry(target.lat, target.lon, {
         isDesktopOffset: true,
+        angularSpan,
+        guessLat: hitLat,
+        guessLon: hitLon,
         onComplete: () => {
           this.ui.showMemoryVault({
             isCorrect: false,
             targetCountry: target,
-            guessCountry,
+            guessCountry: guessCountry || { name: 'Open Ocean / Off-target' },
             distanceKm,
+            breakdown: this.lastRoundBreakdown,
+            isPractice: this.isPractice,
             onNext: () => this.nextRound()
           });
         }
@@ -322,41 +376,38 @@ export class GameManager {
       streak: this.streak,
       round: this.round,
       totalRounds: this.totalRounds,
-      lives: this.lives
+      isPractice: this.isPractice
     });
   }
 
   endGame() {
     this.stopTimer();
     this.isAnswering = false;
+    this.phase = 'end';
     this.currentHoveredId = null;
     this.globe.renderer.domElement.style.cursor = 'default';
 
-    // Save high score to localStorage
-    const savedHigh = parseInt(localStorage.getItem('geotrivia_highscore') || '0', 10);
-    if (this.score > savedHigh) {
-      localStorage.setItem('geotrivia_highscore', String(this.score));
-    }
+    // Reset visual map and clear arcs on end screen
+    this.globe.flight.clearVisuals();
+    this.globe.mapRenderer.resetHighlights();
 
-    // Save missed countries history in localStorage (spaced repetition)
-    try {
-      const raw = localStorage.getItem('geotrivia_missed_history');
-      const history = raw ? JSON.parse(raw) : {};
-      for (const mc of this.missedCountries) {
-        const idStr = String(mc.id).padStart(3, '0');
-        history[idStr] = {
-          id: idStr,
-          name: mc.name,
-          flag: mc.flag,
-          capital: mc.capital,
-          landmark: mc.landmark,
-          memoryAnchor: mc.memoryAnchors ? mc.memoryAnchors[0] : '',
-          missCount: (history[idStr]?.missCount || 0) + 1,
-          lastMissedAt: new Date().toISOString()
-        };
+    // Save best score per mode and tier in localStorage inside try/catch
+    if (!this.isPractice) {
+      try {
+        const key = `geotrivia_best_${this.mode}_${this.tier}`;
+        const savedHigh = parseInt(localStorage.getItem(key) || '0', 10);
+        if (this.score > savedHigh) {
+          localStorage.setItem(key, String(this.score));
+        }
+        // Also keep legacy global highscore for backwards compatibility
+        const legacyHigh = parseInt(localStorage.getItem('geotrivia_highscore') || '0', 10);
+        if (this.score > legacyHigh) {
+          localStorage.setItem('geotrivia_highscore', String(this.score));
+        }
+      } catch (e) {
+        console.warn('localStorage access failed:', e);
       }
-      localStorage.setItem('geotrivia_missed_history', JSON.stringify(history));
-    } catch (e) {}
+    }
 
     const accuracy = this.round > 0 ? Math.round((this.correctCount / this.round) * 100) : 0;
 
@@ -365,6 +416,9 @@ export class GameManager {
       accuracy,
       bestStreak: this.bestStreak,
       missedCountries: this.missedCountries,
+      isPractice: this.isPractice,
+      mode: this.mode,
+      tier: this.tier,
       onRestart: () => this.ui.showStartScreen(),
       onReplayMissed: () => this.replayMissedSession()
     });
@@ -377,8 +431,8 @@ export class GameManager {
       mode: this.mode,
       tier: this.tier,
       rounds: missed.length,
-      isSurvival: false,
-      hasTimer: false
+      hasTimer: false,
+      isPractice: this.isPractice
     });
     this.roundQueue = this.shuffle(missed);
   }
@@ -386,9 +440,8 @@ export class GameManager {
   bindEvents() {
     const canvas = this.globe.renderer.domElement;
     this.currentHoveredId = null;
-    let lastHoverTime = 0;
 
-    // Track mouse drag vs click
+    // Track mouse drag vs click: pointer-up is a click only if moved < 6px and < 350ms elapsed
     let downX = 0, downY = 0, downTime = 0;
 
     canvas.addEventListener('pointerdown', (e) => {
@@ -399,80 +452,31 @@ export class GameManager {
 
     canvas.addEventListener('pointerup', (e) => {
       const dist = Math.hypot(e.clientX - downX, e.clientY - downY);
-      const time = performance.now() - downTime;
-      // Step 0.a: treat pointer-up as click only if moved < 6px and < 350ms elapsed
-      if (dist < 6 && time < 350) {
+      const elapsed = performance.now() - downTime;
+      if (dist < 6 && elapsed < 350) {
         this.handleGlobeClick(e.clientX, e.clientY, e.pointerType);
       }
     });
 
-    // Enter key submits active country selection
+    // Keyboard accessibility: Enter submits selected country; Space reveals next clue
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        if (this.isAnswering && this.selectedHit && this.selectedHit.country) {
+        const confirmBtn = document.getElementById('touchConfirmBtn');
+        if (confirmBtn && !confirmBtn.classList.contains('hidden') && this.selectedHit) {
           e.preventDefault();
-          sound.playClick();
-          this.ui.hideTouchConfirm();
-          const hit = this.selectedHit;
-          this.selectedHit = null;
-          this.handleGuess(hit.country, hit.hitLat, hit.hitLon);
+          confirmBtn.click();
+        }
+      } else if (e.key === ' ' && this.isAnswering && this.mode === 'clue') {
+        // Space reveals next clue if clue button is active
+        const nextClueBtn = document.getElementById('nextClueBtn');
+        if (nextClueBtn && nextClueBtn.style.display !== 'none') {
+          e.preventDefault();
+          this.revealNextClue();
         }
       }
     });
 
-    // Hover soft highlight on globe
-    canvas.addEventListener('pointermove', (e) => {
-      if (!this.isAnswering || this.globe.flight.isFlying) {
-        if (this.currentHoveredId) {
-          this.currentHoveredId = null;
-          this.globe.mapRenderer.resetHighlights();
-          canvas.style.cursor = 'grab';
-        }
-        return;
-      }
-
-      const now = performance.now();
-      if (now - lastHoverTime < 50) return; // throttle to ~20fps
-      lastHoverTime = now;
-
-      const hit = this.globe.picker.pickCountry(
-        e.clientX,
-        e.clientY,
-        this.globe.width,
-        this.globe.height
-      );
-
-      if (hit && hit.country) {
-        const countryId = String(hit.country.id).padStart(3, '0');
-        if (countryId !== this.currentHoveredId) {
-          this.currentHoveredId = countryId;
-          const selectedId = this.selectedHit ? String(this.selectedHit.country.id).padStart(3, '0') : null;
-          this.globe.mapRenderer.renderHighlights({ hoveredCountryId: countryId, selectedCountryId: selectedId });
-          canvas.style.cursor = 'pointer';
-        }
-      } else {
-        if (this.currentHoveredId) {
-          this.currentHoveredId = null;
-          const selectedId = this.selectedHit ? String(this.selectedHit.country.id).padStart(3, '0') : null;
-          if (selectedId) {
-            this.globe.mapRenderer.renderHighlights({ selectedCountryId: selectedId });
-          } else {
-            this.globe.mapRenderer.resetHighlights();
-          }
-          canvas.style.cursor = 'grab';
-        }
-      }
-    });
-
-    canvas.addEventListener('pointerleave', () => {
-      if (this.currentHoveredId) {
-        this.currentHoveredId = null;
-        this.globe.mapRenderer.resetHighlights();
-        canvas.style.cursor = 'default';
-      }
-    });
-
-    // Reveal clue button
+    // Next Clue Button click
     if (this.ui.nextClueBtn) {
       this.ui.nextClueBtn.onclick = () => this.revealNextClue();
     }

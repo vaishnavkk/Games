@@ -1,0 +1,290 @@
+{
+  "after-start-1440x900.png": {
+    "filename": "after-start-1440x900.png",
+    "desc": "Desktop Start Screen",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 0,
+      "phase": "start",
+      "targetIso": null,
+      "guessIso": null
+    }
+  },
+  "after-question-1440x900.png": {
+    "filename": "after-question-1440x900.png",
+    "desc": "Desktop Question in Progress (Clue Mode)",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "question",
+      "targetIso": "SAU",
+      "guessIso": null
+    }
+  },
+  "after-mode-clue-1440x900.png": {
+    "filename": "after-mode-clue-1440x900.png",
+    "desc": "Desktop Clue Mode in Play",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "question",
+      "targetIso": "SAU",
+      "guessIso": null
+    }
+  },
+  "after-selected-1440x900.png": {
+    "filename": "after-selected-1440x900.png",
+    "desc": "Desktop Country Selected with Confirm Bar",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "selected",
+      "targetIso": "SAU",
+      "guessIso": "SAU"
+    }
+  },
+  "after-correct-russia-1440x900.png": {
+    "filename": "after-correct-russia-1440x900.png",
+    "desc": "Desktop Correct Answer: Large Country (Russia)",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "RUS",
+      "guessIso": "RUS"
+    }
+  },
+  "after-correct-malta-1440x900.png": {
+    "filename": "after-correct-malta-1440x900.png",
+    "desc": "Desktop Correct Answer: Small Country (Malta)",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "MLT",
+      "guessIso": "MLT"
+    }
+  },
+  "after-correct-hungary-1440x900.png": {
+    "filename": "after-correct-hungary-1440x900.png",
+    "desc": "Desktop Correct Answer: Medium Country (Hungary)",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "HUN",
+      "guessIso": "HUN"
+    }
+  },
+  "after-wrong-spain-morocco-1440x900.png": {
+    "filename": "after-wrong-spain-morocco-1440x900.png",
+    "desc": "Desktop Wrong Answer: Spain Guessed for Morocco",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "MAR",
+      "guessIso": "ESP"
+    }
+  },
+  "after-wrong-longdist-1440x900.png": {
+    "filename": "after-wrong-longdist-1440x900.png",
+    "desc": "Desktop Long-Distance Wrong Answer: Australia for Iceland",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "ISL",
+      "guessIso": "AUS"
+    }
+  },
+  "after-mode-name-1440x900.png": {
+    "filename": "after-mode-name-1440x900.png",
+    "desc": "Desktop Name Mode in Play",
+    "state": {
+      "mode": "name",
+      "tier": "easy",
+      "round": 2,
+      "phase": "question",
+      "targetIso": "CHE",
+      "guessIso": null
+    }
+  },
+  "after-mode-flag-1440x900.png": {
+    "filename": "after-mode-flag-1440x900.png",
+    "desc": "Desktop Flag Mode in Play",
+    "state": {
+      "mode": "flag",
+      "tier": "easy",
+      "round": 3,
+      "phase": "question",
+      "targetIso": "CZE",
+      "guessIso": null
+    }
+  },
+  "after-endscreen-1440x900.png": {
+    "filename": "after-endscreen-1440x900.png",
+    "desc": "Desktop End Expedition Screen",
+    "state": {
+      "mode": "flag",
+      "tier": "easy",
+      "round": 6,
+      "phase": "end",
+      "targetIso": "CZE",
+      "guessIso": null
+    }
+  },
+  "after-start-390x844.png": {
+    "filename": "after-start-390x844.png",
+    "desc": "Mobile Start Screen",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 0,
+      "phase": "start",
+      "targetIso": null,
+      "guessIso": null
+    }
+  },
+  "after-question-390x844.png": {
+    "filename": "after-question-390x844.png",
+    "desc": "Mobile Question in Progress (Clue Mode)",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "question",
+      "targetIso": "JPN",
+      "guessIso": null
+    }
+  },
+  "after-mode-clue-390x844.png": {
+    "filename": "after-mode-clue-390x844.png",
+    "desc": "Mobile Clue Mode in Play",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "question",
+      "targetIso": "JPN",
+      "guessIso": null
+    }
+  },
+  "after-selected-390x844.png": {
+    "filename": "after-selected-390x844.png",
+    "desc": "Mobile Country Selected with Confirm Bar",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "selected",
+      "targetIso": "JPN",
+      "guessIso": "JPN"
+    }
+  },
+  "after-correct-russia-390x844.png": {
+    "filename": "after-correct-russia-390x844.png",
+    "desc": "Mobile Correct Answer: Large Country (Russia)",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "RUS",
+      "guessIso": "RUS"
+    }
+  },
+  "after-correct-malta-390x844.png": {
+    "filename": "after-correct-malta-390x844.png",
+    "desc": "Mobile Correct Answer: Small Country (Malta)",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "MLT",
+      "guessIso": "MLT"
+    }
+  },
+  "after-correct-hungary-390x844.png": {
+    "filename": "after-correct-hungary-390x844.png",
+    "desc": "Mobile Correct Answer: Medium Country (Hungary)",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "HUN",
+      "guessIso": "HUN"
+    }
+  },
+  "after-wrong-spain-morocco-390x844.png": {
+    "filename": "after-wrong-spain-morocco-390x844.png",
+    "desc": "Mobile Wrong Answer: Spain Guessed for Morocco",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "MAR",
+      "guessIso": "ESP"
+    }
+  },
+  "after-wrong-longdist-390x844.png": {
+    "filename": "after-wrong-longdist-390x844.png",
+    "desc": "Mobile Long-Distance Wrong Answer: Australia for Iceland",
+    "state": {
+      "mode": "clue",
+      "tier": "easy",
+      "round": 1,
+      "phase": "result",
+      "targetIso": "ISL",
+      "guessIso": "AUS"
+    }
+  },
+  "after-mode-name-390x844.png": {
+    "filename": "after-mode-name-390x844.png",
+    "desc": "Mobile Name Mode in Play",
+    "state": {
+      "mode": "name",
+      "tier": "easy",
+      "round": 2,
+      "phase": "question",
+      "targetIso": "SWE",
+      "guessIso": null
+    }
+  },
+  "after-mode-flag-390x844.png": {
+    "filename": "after-mode-flag-390x844.png",
+    "desc": "Mobile Flag Mode in Play",
+    "state": {
+      "mode": "flag",
+      "tier": "easy",
+      "round": 3,
+      "phase": "question",
+      "targetIso": "EGY",
+      "guessIso": null
+    }
+  },
+  "after-endscreen-390x844.png": {
+    "filename": "after-endscreen-390x844.png",
+    "desc": "Mobile End Expedition Screen",
+    "state": {
+      "mode": "flag",
+      "tier": "easy",
+      "round": 6,
+      "phase": "end",
+      "targetIso": "EGY",
+      "guessIso": null
+    }
+  }
+}

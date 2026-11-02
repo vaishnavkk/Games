@@ -25,57 +25,84 @@ export class CameraFlightController {
     this.markersGroup = new THREE.Group();
     this.globeMesh.add(this.markersGroup);
 
-    // Active arc line
     this.arcMesh = null;
+    this.distanceSprite = null;
     this.isFlying = false;
+
+    // Min and max camera distance bounds
+    this.MIN_CAMERA_Z = 1.45;
+    this.MAX_CAMERA_Z = 2.75;
   }
 
   clearVisuals() {
     while (this.markersGroup.children.length > 0) {
       const child = this.markersGroup.children[0];
       if (child.geometry) child.geometry.dispose();
-      if (child.material) child.material.dispose();
+      if (child.material) {
+        if (child.material.map) child.material.map.dispose();
+        child.material.dispose();
+      }
       this.markersGroup.remove(child);
     }
     this.arcMesh = null;
+    this.distanceSprite = null;
   }
 
-  // Add 3D surface beacon pin
-  createPinMarker(lat, lon, colorHex = 0x10b981) {
-    const pinGroup = new THREE.Group();
-    const localPt = CountryPicker.latLonToVector3(lat, lon, 1.7);
-    const norm = localPt.clone().normalize();
-
-    // Pulsing surface ring
-    const ringGeo = new THREE.RingGeometry(0.035, 0.075, 32);
-    const ringMat = new THREE.MeshBasicMaterial({
-      color: colorHex,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.95
-    });
-    const ring = new THREE.Mesh(ringGeo, ringMat);
-    ring.position.copy(localPt.clone().multiplyScalar(1.002));
-    ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), norm);
-    pinGroup.add(ring);
-
-    // Vertical light beam
-    const beamGeo = new THREE.CylinderGeometry(0.01, 0.025, 0.4, 16);
-    const beamMat = new THREE.MeshBasicMaterial({
-      color: colorHex,
-      transparent: true,
-      opacity: 0.85
-    });
-    const beam = new THREE.Mesh(beamGeo, beamMat);
-    beam.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), norm);
-    beam.position.copy(localPt.clone().add(norm.clone().multiplyScalar(0.2)));
-    pinGroup.add(beam);
-
-    this.markersGroup.add(pinGroup);
-    return pinGroup;
+  // Compute camera distance so target fills 50-60% of free area
+  computeTargetDistance(angularSpanDeg) {
+    const span = Math.min(65, Math.max(0.5, angularSpanDeg || 8));
+    // Square-root progressive scaling from minZ (1.45) for microstates to maxZ (2.75) for Russia/Canada/China/USA
+    const t = Math.pow((span - 0.5) / (65 - 0.5), 0.5);
+    return this.MIN_CAMERA_Z + t * (this.MAX_CAMERA_Z - this.MIN_CAMERA_Z);
   }
 
-  // Draw 3D Great-Circle Geodesic Arc between Guess and Target
+  // Create canvas sprite badge for distance at midpoint of arc
+  createDistanceBadge(distanceKm, positionVec) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 96;
+    const ctx = canvas.getContext('2d');
+
+    // Rounded badge surface (Atlas ink-navy pill with light border)
+    ctx.fillStyle = 'rgba(8, 26, 36, 0.90)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.40)';
+    ctx.lineWidth = 3;
+
+    const r = 24;
+    ctx.beginPath();
+    ctx.moveTo(r, 6);
+    ctx.lineTo(256 - r, 6);
+    ctx.quadraticCurveTo(256 - 6, 6, 256 - 6, r);
+    ctx.lineTo(256 - 6, 96 - r);
+    ctx.quadraticCurveTo(256 - 6, 96 - 6, 256 - r, 96 - 6);
+    ctx.lineTo(r, 96 - 6);
+    ctx.quadraticCurveTo(6, 96 - 6, 6, 96 - r);
+    ctx.lineTo(6, r);
+    ctx.quadraticCurveTo(6, 6, r, 6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Distance text in white
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 34px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(`${distanceKm.toLocaleString()} km`, 128, 51);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.minFilter = THREE.LinearFilter;
+    const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
+    const sprite = new THREE.Sprite(spriteMat);
+    sprite.position.copy(positionVec);
+    sprite.scale.set(0.38, 0.14, 1);
+
+    this.distanceSprite = sprite;
+    this.markersGroup.add(sprite);
+    return sprite;
+  }
+
+  // Draw 2px neutral line (white at 70%) with distance at midpoint
   drawGreatCircleArc(lat1, lon1, lat2, lon2) {
     const v1 = CountryPicker.latLonToVector3(lat1, lon1, 1.7).normalize();
     const v2 = CountryPicker.latLonToVector3(lat2, lon2, 1.7).normalize();
@@ -84,10 +111,11 @@ export class CameraFlightController {
     const numPoints = 64;
     const points = [];
 
-    // Altitude peak proportional to distance (up to 0.45 globe radii above surface)
     const angularDist = v1.angleTo(v2);
-    const maxAltitude = Math.min(0.45, 0.15 + (angularDist / Math.PI) * 0.35);
+    const maxAltitude = Math.min(0.42, 0.12 + (angularDist / Math.PI) * 0.32);
     const sinAngle = Math.sin(angularDist);
+
+    let midpointVec = null;
 
     for (let i = 0; i <= numPoints; i++) {
       const t = i / numPoints;
@@ -105,37 +133,82 @@ export class CameraFlightController {
           v1.z * scale1 + v2.z * scale2
         ).normalize();
       }
-      // Parabolic altitude arc
+
+      // Parabolic altitude arc above globe surface
       const altitude = Math.sin(t * Math.PI) * maxAltitude;
       p.multiplyScalar(1.7 + altitude);
       points.push(p);
+
+      if (i === Math.floor(numPoints / 2)) {
+        midpointVec = p.clone().add(p.clone().normalize().multiplyScalar(0.08));
+      }
     }
 
+    // 2px neutral line (white at 70%)
     const curve = new THREE.CatmullRomCurve3(points);
-    const tubeGeo = new THREE.TubeGeometry(curve, 64, 0.014, 8, false);
+    const tubeGeo = new THREE.TubeGeometry(curve, 64, 0.009, 8, false);
     const tubeMat = new THREE.MeshBasicMaterial({
-      color: 0xf59e0b,
+      color: 0xffffff,
       transparent: true,
-      opacity: 0.9
+      opacity: 0.70
     });
 
     this.arcMesh = new THREE.Mesh(tubeGeo, tubeMat);
     this.markersGroup.add(this.arcMesh);
 
+    // Distance label at arc midpoint
+    if (midpointVec) {
+      this.createDistanceBadge(distanceKm, midpointVec);
+    }
+
     return distanceKm;
   }
 
-  // Fly to country and center it, optionally offsetting for side cards
-  flyToCountry(lat, lon, { duration = 1400, isDesktopOffset = false, onComplete } = {}) {
+  // Smooth camera flight and framing
+  flyToCountry(targetLat, targetLon, {
+    duration = 1400,
+    isDesktopOffset = false,
+    angularSpan = 10,
+    guessLat = null,
+    guessLon = null,
+    onComplete
+  } = {}) {
     this.isFlying = true;
     this.controls.enabled = false;
 
-    // Target rotation around Y: -(lon + 90) * rad
-    let targetRotY = -((lon + 90) * Math.PI) / 180;
+    // Determine target center and distance
+    let centerLat = targetLat;
+    let centerLon = targetLon;
+    let targetCamZ = this.computeTargetDistance(angularSpan);
 
-    // If desktop side card is open, offset target slightly so country is in the open 75% area
+    // Check wrong answer framing: frame both if both fit with target >= 25% of free area
+    if (guessLat !== null && guessLon !== null) {
+      const vTarget = CountryPicker.latLonToVector3(targetLat, targetLon, 1.7).normalize();
+      const vGuess = CountryPicker.latLonToVector3(guessLat, guessLon, 1.7).normalize();
+      const angularDistDeg = (vTarget.angleTo(vGuess) * 180) / Math.PI;
+
+      // If angular distance is moderate (< 55°), frame midpoint between guess and target
+      if (angularDistDeg < 55) {
+        const vMid = vTarget.clone().add(vGuess).normalize();
+        const midCoords = CountryPicker.vector3ToLatLon(vMid.multiplyScalar(1.7));
+        centerLat = midCoords.lat;
+        centerLon = midCoords.lon;
+        // Adjust distance so both fit
+        const requiredZ = Math.max(targetCamZ, 1.8 + (angularDistDeg / 55) * 0.75);
+        targetCamZ = Math.min(this.MAX_CAMERA_Z, requiredZ);
+      } else {
+        // Extreme distance (e.g. > 55°): framing both would make target < 25% of free area; frame target directly
+        centerLat = targetLat;
+        centerLon = targetLon;
+      }
+    }
+
+    // Target rotation around Y: -(centerLon + 90) * rad
+    let targetRotY = -((centerLon + 90) * Math.PI) / 180;
+
+    // Desktop offset: shift slightly left so country sits cleanly in free area
     if (isDesktopOffset && window.innerWidth > 900) {
-      targetRotY -= 0.28; // slight yaw offset to position country to left of center
+      targetRotY -= 0.24;
     }
 
     // Shortest spherical path
@@ -146,17 +219,16 @@ export class CameraFlightController {
     const finalRotY = curY + diffY;
 
     // Tilt for latitude
-    const targetRotX = (lat * Math.PI) / 180;
+    const targetRotX = (centerLat * Math.PI) / 180;
 
-    // On mobile, offset camera vertically so country sits in visible area above bottom sheet
+    // Mobile vertical camera offset (places country at y ~ 0.38H, above 30% bottom sheet)
     const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
-    const targetCamY = isMobile ? -0.08 : 0;
+    const targetCamY = isMobile ? -0.10 : 0;
     const startCamY = this.camera.position.y || 0;
 
     const startRotX = this.globeMesh.rotation.x;
     const startRotY = curY;
     const startCamZ = this.camera.position.z;
-    const targetCamZ = 2.4;
 
     const startTime = performance.now();
 
@@ -198,13 +270,13 @@ export class CameraFlightController {
     const startCamY = this.camera.position.y || 0;
     const targetCamY = 0;
     const startCamZ = this.camera.position.z;
-    const targetCamZ = 4.0;
+    const targetCamZ = 3.8;
     const startTime = performance.now();
 
     const animateReset = (now) => {
       const elapsed = now - startTime;
       const progress = Math.min(1, elapsed / duration);
-      const ease = 1 - Math.pow(1 - progress, 3); // Cubic ease out
+      const ease = 1 - Math.pow(1 - progress, 3);
 
       this.globeMesh.rotation.x = THREE.MathUtils.lerp(startRotX, 0.05, ease);
       const camY = THREE.MathUtils.lerp(startCamY, targetCamY, ease);

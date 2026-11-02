@@ -308,6 +308,7 @@ try {
       console.log(`    Text: "${v.clueText}"`);
     });
     console.log(`\n>>> CURRENT CLUES SCAN RESULT: FAILED (${currentViolations.length} violations found).`);
+    process.exit(1);
   } else {
     console.log(`\n>>> CURRENT CLUES SCAN RESULT: PASSED (0 violations across all ${currentCountries.length} countries).`);
     console.log('✓ Zero continent / regional names');
@@ -317,6 +318,59 @@ try {
     console.log('✓ Zero neighbor / border keywords');
     console.log('✓ Zero mentions of other sovereign nation names');
     console.log('✓ Zero mentions of other sovereign nation demonyms');
+  }
+
+  // ── 3. DATASET GAP & INTEGRITY AUDIT (Step 4 Requirement) ──
+  console.log('\n--------------------------------------------------------------------------------');
+  console.log('>>> AUDITING DATASET COMPLETENESS (Missing fields, duplicates, source URLs)...');
+  console.log('--------------------------------------------------------------------------------');
+
+  let dataErrors = 0;
+  const landmarkMap = new Map();
+
+  for (const c of currentCountries) {
+    // 1. Missing fields check
+    if (!c.name || !c.name.trim()) {
+      console.error(`[DATA ERROR] Country missing name: ID ${c.id}`);
+      dataErrors++;
+    }
+    if (!c.capital || !c.capital.trim()) {
+      console.error(`[DATA ERROR] [${c.name}] missing capital city`);
+      dataErrors++;
+    }
+    if (!c.clues || c.clues.length < 3) {
+      console.error(`[DATA ERROR] [${c.name}] has only ${c.clues?.length || 0} clues (required 3)`);
+      dataErrors++;
+    }
+    const factsCount = (c.memoryFacts?.length || 0) || (c.memoryAnchors?.length || 0);
+    if (factsCount < 2) {
+      console.error(`[DATA ERROR] [${c.name}] has only ${factsCount} memory facts (required >= 2)`);
+      dataErrors++;
+    }
+    if (!c.sourceUrl || !c.sourceUrl.startsWith('http')) {
+      console.error(`[DATA ERROR] [${c.name}] missing or invalid sourceUrl: ${c.sourceUrl}`);
+      dataErrors++;
+    }
+
+    // 2. Duplicate main landmark check
+    if (c.landmark && c.landmark.trim()) {
+      const cleanLandmark = c.landmark.trim().toLowerCase();
+      if (landmarkMap.has(cleanLandmark)) {
+        console.error(`[DUPLICATE LANDMARK] "${c.landmark}" shared by [${landmarkMap.get(cleanLandmark)}] and [${c.name}]`);
+        dataErrors++;
+      } else {
+        landmarkMap.set(cleanLandmark, c.name);
+      }
+    }
+  }
+
+  if (dataErrors > 0) {
+    console.error(`\n>>> DATASET INTEGRITY AUDIT: FAILED (${dataErrors} data errors found)`);
+    process.exit(1);
+  } else {
+    console.log(`\n>>> DATASET INTEGRITY AUDIT: PASSED (0 errors across all ${currentCountries.length} countries)`);
+    console.log('✓ All 195 nations have valid name, capital, 3 clues, >= 2 memory facts, and source URL');
+    console.log('✓ Zero duplicate main landmarks across all countries');
   }
 } catch (err) {
   console.error('Error scanning current clues:', err.message);

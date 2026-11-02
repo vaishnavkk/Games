@@ -149,6 +149,10 @@ export class CountryPicker {
     }
 
     // 2. Microstate Fallback: Fallback radius applies ONLY when no polygon is hit
+    // Nearest country edge or buffer wins
+    let bestTiny = null;
+    let minDegDist = Infinity;
+
     for (const tiny of this.tinyCountries) {
       const [tLon, tLat] = tiny.centroid;
       // Spherical angular distance estimation
@@ -156,19 +160,24 @@ export class CountryPicker {
       const dLat = lat - tLat;
       const degDist = Math.hypot(dLon, dLat);
 
-      if (degDist <= tiny.hitRadius) {
-        let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === tiny.id);
-        if (!fullCountry) {
-          fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === tiny.id);
-        }
-        if (fullCountry) {
-          return {
-            country: fullCountry,
-            hitLat: tLat,
-            hitLon: tLon,
-            isTiny: true
-          };
-        }
+      if (degDist <= tiny.hitRadius && degDist < minDegDist) {
+        minDegDist = degDist;
+        bestTiny = tiny;
+      }
+    }
+
+    if (bestTiny) {
+      let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
+      if (!fullCountry) {
+        fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
+      }
+      if (fullCountry) {
+        return {
+          country: fullCountry,
+          hitLat: bestTiny.centroid[1],
+          hitLon: bestTiny.centroid[0],
+          isTiny: true
+        };
       }
     }
 
@@ -199,20 +208,27 @@ export class CountryPicker {
       }
     }
 
-    // 2. Fallback radius applies ONLY when no polygon is hit
+    // 2. Microstate Fallback: Nearest buffer wins
+    let bestTiny = null;
+    let minDegDist = Infinity;
     for (const tiny of this.tinyCountries) {
       const [tLon, tLat] = tiny.centroid;
       const dLon = (lon - tLon) * Math.cos((lat * Math.PI) / 180);
       const dLat = lat - tLat;
       const degDist = Math.hypot(dLon, dLat);
 
-      if (degDist <= tiny.hitRadius) {
-        let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === tiny.id);
-        if (!fullCountry) {
-          fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === tiny.id);
-        }
-        if (fullCountry) return fullCountry;
+      if (degDist <= tiny.hitRadius && degDist < minDegDist) {
+        minDegDist = degDist;
+        bestTiny = tiny;
       }
+    }
+
+    if (bestTiny) {
+      let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
+      if (!fullCountry) {
+        fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
+      }
+      if (fullCountry) return fullCountry;
     }
 
     return null;

@@ -1,0 +1,366 @@
+{
+  "factSample": [
+    {
+      "country": "Japan",
+      "topic": "High-speed transit safety",
+      "claim": "Operates the Tokaido Shinkansen bullet train network with zero passenger fatalities due to derailments or collisions over 60+ years of operation.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Shinkansen",
+      "confidence": "High (Verified)",
+      "note": "JR Central annual passenger safety reports & Wikipedia article."
+    },
+    {
+      "country": "Iceland",
+      "topic": "Renewable energy infrastructure",
+      "claim": "Nearly 100% of stationary electricity and home heating is generated from domestic geothermal and hydroelectric sources.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Renewable_energy_in_Iceland",
+      "confidence": "High (Verified)",
+      "note": "National Energy Authority of Iceland (Orkustofnun) & Wikipedia."
+    },
+    {
+      "country": "Norway",
+      "topic": "Sovereign wealth management",
+      "claim": "Government Pension Fund Global holds over $1.7 trillion USD in sovereign investments funded by North Sea petroleum extraction.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Government_Pension_Fund_of_Norway",
+      "confidence": "High (Verified)",
+      "note": "Norges Bank Investment Management official disclosures."
+    },
+    {
+      "country": "Bhutan",
+      "topic": "Environmental carbon sink",
+      "claim": "Mandates by constitution that at least 60% of landmass remain under forest cover in perpetuity, maintaining negative net carbon emissions.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Constitution_of_Bhutan",
+      "confidence": "High (Verified)",
+      "note": "Article 5 of Constitution of the Kingdom of Bhutan."
+    },
+    {
+      "country": "Kenya",
+      "topic": "Geothermal energy pioneering",
+      "claim": "Harnesses extensive steam fields at Olkaria in the Great Rift Valley, generating over 45% of national electric capacity.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Geothermal_power_in_Kenya",
+      "confidence": "High (Verified)",
+      "note": "Kenya Electricity Generating Company (KenGen) reports."
+    },
+    {
+      "country": "Morocco",
+      "topic": "Solar thermal infrastructure",
+      "claim": "The Noor Ouarzazate Solar Complex is among the worlds largest concentrated solar power (CSP) generation facilities.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Ouarzazate_Solar_Power_Station",
+      "confidence": "High (Verified)",
+      "note": "Moroccan Agency for Sustainable Energy (MASEN)."
+    },
+    {
+      "country": "Madagascar",
+      "topic": "Endemic biodiversity isolation",
+      "claim": "Over 85% of floral and faunal species, including all wild lemur families, exist naturally nowhere else on Earth.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Fauna_of_Madagascar",
+      "confidence": "High (Verified)",
+      "note": "World Wildlife Fund & IUCN biodiversity assessments."
+    },
+    {
+      "country": "New Zealand",
+      "topic": "Universal suffrage franchise",
+      "claim": "Became the first self-governing nation to establish universal voting rights for women in general elections in 1893.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Women%27s_suffrage_in_New_Zealand",
+      "confidence": "High (Verified)",
+      "note": "Electoral Act 1893 royal assent on 19 September 1893."
+    },
+    {
+      "country": "Estonia",
+      "topic": "Digital governance & e-residency",
+      "claim": "Over 99% of government public services are accessible online 24/7, pioneering digital identity cryptographic architecture.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/E-Estonia",
+      "confidence": "High (Verified)",
+      "note": "e-Estonia Briefing Centre & Information System Authority."
+    },
+    {
+      "country": "Chile",
+      "topic": "Astronomical observatory concentration",
+      "claim": "Houses over 50% of the worlds optical telescope mirror area due to ultra-dry atmospheric transparency in the Atacama desert.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Astronomy_in_Chile",
+      "confidence": "High (Verified)",
+      "note": "European Southern Observatory (ESO) Paranal & ALMA."
+    },
+    {
+      "country": "Malta",
+      "topic": "Megalithic prehistoric architecture",
+      "claim": "Free-standing megalithic temple complexes at Ġgantija and Ħaġar Qim predate Stonehenge and the Great Pyramid of Giza.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Megalithic_Temples_of_Malta",
+      "confidence": "High (Verified)",
+      "note": "UNESCO World Heritage nomination file 132bis."
+    },
+    {
+      "country": "Costa Rica",
+      "topic": "Constitutional demilitarization",
+      "claim": "Abolished its standing armed forces constitutionally in 1948 following civil conflict, directing military budgets to public education and healthcare.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Military_of_Costa_Rica",
+      "confidence": "High (Verified)",
+      "note": "Article 12 of the 1949 Constitution of Costa Rica."
+    },
+    {
+      "country": "Rwanda",
+      "topic": "Legislative gender parity",
+      "claim": "Maintains the worlds highest proportion of female legislative parliamentarians, exceeding 61% of Chamber of Deputies seats.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Chamber_of_Deputies_(Rwanda)",
+      "confidence": "High (Verified)",
+      "note": "Inter-Parliamentary Union (IPU) Parline global ranking."
+    },
+    {
+      "country": "Monaco",
+      "topic": "Urban sovereignty & density",
+      "claim": "Encompasses 2.08 square kilometers of Mediterranean coastline, operating as the most densely populated sovereign state on Earth.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/Monaco",
+      "confidence": "High (Verified)",
+      "note": "Monaco Statistics (IMSEE) official census data."
+    },
+    {
+      "country": "Singapore",
+      "topic": "Freshwater circular reclamation",
+      "claim": "Recycles municipal treated wastewater into high-purity potable supply brand NEWater, fulfilling up to 40% of national water demand.",
+      "sourceUrl": "https://en.wikipedia.org/wiki/NEWater",
+      "confidence": "High (Verified)",
+      "note": "Public Utilities Board (PUB) of Singapore."
+    }
+  ],
+  "clueAuditProfiles": [
+    {
+      "index": 1,
+      "country": "Japan",
+      "capital": "Tokyo",
+      "tier": "easy",
+      "clues": [
+        "Known for traditional tea ceremonies, calligraphy, and delicate seasonal cherry blossom appreciation.",
+        "Bullet trains operating with average delays under a minute connect historic wooden shrines with neon metropolises.",
+        "Famous for sushi, anime, origami folding art, and the iconic snow-covered volcanic peak of Mount Fuji."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Japan"
+    },
+    {
+      "index": 2,
+      "country": "France",
+      "capital": "Paris",
+      "tier": "easy",
+      "clues": [
+        "A global center for haute couture runway fashion, impressionist painting, and fine culinary traditions.",
+        "Daily mornings often begin with fresh crisp baguettes and flaky layered butter croissants.",
+        "Home to an iconic 330-meter puddle-iron lattice tower built for the 1889 World Exposition."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/France"
+    },
+    {
+      "index": 3,
+      "country": "New Zealand",
+      "capital": "Wellington",
+      "tier": "easy",
+      "clues": [
+        "Features indigenous Māori traditions including ceremonial ancestral challenges and wood carvings.",
+        "Rugby players perform an intimidating coordinated vocal dance and posture challenge before matches.",
+        "Home to flightless nocturnal birds with long beaks, dramatic fiord carved sounds, and earth-oven banquets."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/New_Zealand"
+    },
+    {
+      "index": 4,
+      "country": "China",
+      "capital": "Beijing",
+      "tier": "easy",
+      "clues": [
+        "The ancient birthplace of paper making, compass navigation, gunpowder formulation, and silkworm sericulture.",
+        "Features delicate tea ceremonies, intricate ink brush calligraphy, and an imperial palace complex with 9,999 rooms.",
+        "Famous for a monumental defensive masonry wall stretching thousands of kilometers across rugged mountain ridges."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/China"
+    },
+    {
+      "index": 5,
+      "country": "Colombia",
+      "capital": "Bogotá",
+      "tier": "easy",
+      "clues": [
+        "The homeland of magical realism literature, champion high-altitude cyclists, and passionate salsa dancing.",
+        "Sprawling terraced mountain farms cultivate mild Arabica beans picked by hand among towering wax palm trees.",
+        "Famous for producing fine emerald gemstones, corn cakes filled with cheese, and a dramatic gorge bridge church."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Colombia"
+    },
+    {
+      "index": 6,
+      "country": "United Arab Emirates",
+      "capital": "Abu Dhabi",
+      "tier": "easy",
+      "clues": [
+        "A federation of seven distinct emirates that evolved from historic pearl-diving ports into ultra-modern metropolises.",
+        "Known for artificial palm-shaped offshore archipelagos, indoor ski slopes, and camel racing championships.",
+        "Home to the tallest man-made architectural structure on Earth, rising 828 meters above desert coastal sands."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/United_Arab_Emirates"
+    },
+    {
+      "index": 7,
+      "country": "Nepal",
+      "capital": "Kathmandu",
+      "tier": "medium",
+      "clues": [
+        "Home to the highest terrestrial summit on planet Earth, revered locally as the goddess mother of the world.",
+        "The only sovereign nation in the world whose national flag is non-rectangular, consisting of two stacked pennants.",
+        "Famous for steamed savory meat dumplings known as momos, prayer flag passes, and eight of the world's ten tallest peaks."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Nepal"
+    },
+    {
+      "index": 8,
+      "country": "Georgia",
+      "capital": "Tbilisi",
+      "tier": "medium",
+      "clues": [
+        "Archaeological evidence confirms over 8,000 years of continuous wine-making in clay vessels buried underground.",
+        "Traditional banquets called supras are led by a ceremonial toastmaster who recites poetic blessings throughout meals.",
+        "Famous for boat-shaped yeast bread filled with melted cheese and a runny egg yolk, and twisted spiced soup dumplings."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Georgia"
+    },
+    {
+      "index": 9,
+      "country": "Pakistan",
+      "capital": "Islamabad",
+      "tier": "medium",
+      "clues": [
+        "Home to the ancient urban ruins of Mohenjo-daro, among the earliest planned settlements of antiquity.",
+        "Features the second-highest mountain peak on Earth, towering over glaciated northern mountain valleys.",
+        "Famous for intricate hand-painted transport trucks decorated with vibrant folk motifs, and slow-simmered spiced shank stews."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Pakistan"
+    },
+    {
+      "index": 10,
+      "country": "Bhutan",
+      "capital": "Thimphu",
+      "tier": "hard",
+      "clues": [
+        "Measures national progress and public policy using an innovative index called Gross National Happiness.",
+        "Mandates that over sixty percent of its national territory remain perpetually covered by natural forest canopy.",
+        "Famous for a sacred monastery clinging dramatically to a sheer granite cliff 900 meters above a forested valley."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Bhutan"
+    },
+    {
+      "index": 11,
+      "country": "Djibouti",
+      "capital": "Djibouti City",
+      "tier": "hard",
+      "clues": [
+        "Occupies a strategic geopolitical gateway where major ocean shipping routes pass through a narrow strait.",
+        "Home to a crater lake whose surface sits 155 meters below sea level, the lowest point on its entire landmass.",
+        "Famous for gentle whale shark nursery waters, volcanic salt flats, and aromatic lamb rice spiced with cardamom."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Djibouti"
+    },
+    {
+      "index": 12,
+      "country": "Iran",
+      "capital": "Tehran",
+      "tier": "medium",
+      "clues": [
+        "An ancient civilization renowned for intricate hand-knotted wool rugs, Persian gardens, and classic poetry.",
+        "Invented ancient subterranean aqueducts called qanats that transported mountain snowmelt through desert plains.",
+        "Famous for crispy golden saffron rice crust, slow-cooked pomegranate and walnut chicken stew, and Persepolis columns."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Iran"
+    },
+    {
+      "index": 13,
+      "country": "Moldova",
+      "capital": "Chișinău",
+      "tier": "hard",
+      "clues": [
+        "A landlocked agricultural republic shaped like a cluster of grapes between two major winding river systems.",
+        "Holds the Guinness World Record for the largest wine collection and underground storage tunnel network, stretching 200 kilometers.",
+        "Famous for savory flaky pastry pies filled with soft cheese or pumpkin, and lush rolling vineyard hills."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Moldova"
+    },
+    {
+      "index": 14,
+      "country": "Saint Kitts and Nevis",
+      "capital": "Basseterre",
+      "tier": "hard",
+      "clues": [
+        "The smallest sovereign nation by both territory land area and population in the Americas.",
+        "Features a massive 17th-century volcanic stone fortress known historically as the Gibraltar of its waters.",
+        "Famous for green vervet monkeys roaming volcanic hillsides, scenic sugar cane railways, and coconut dumplings."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Saint_Kitts_and_Nevis"
+    },
+    {
+      "index": 15,
+      "country": "Suriname",
+      "capital": "Paramaribo",
+      "tier": "hard",
+      "clues": [
+        "The only sovereign nation in the Americas where Nederlands serves as the official administrative and educational language.",
+        "Its coastal capital features an exceptional historic center constructed almost entirely with symmetrical white wood buildings.",
+        "Famous for an oven-baked festival casserole prepared with tannia root tubers and citrus-seasoned chicken, and pristine rainforests."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Suriname"
+    },
+    {
+      "index": 16,
+      "country": "Venezuela",
+      "capital": "Caracas",
+      "tier": "medium",
+      "clues": [
+        "Home to the world's highest uninterrupted natural waterfall, plunging 979 meters from a flat-topped sandstone table mountain.",
+        "Features an atmospheric phenomenon over Lake Maracaibo that produces silent lightning storms for up to 300 nights a year.",
+        "Famous for split corn cakes stuffed with shredded seasoned beef, black beans, fried plantains, and white cheese."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Venezuela"
+    },
+    {
+      "index": 17,
+      "country": "Benin",
+      "capital": "Porto-Novo",
+      "tier": "hard",
+      "clues": [
+        "The historical birthplace of the ancient Kingdom of Dahomey, celebrated for elite all-female military regiments.",
+        "Its southern coastal lagoon preserves the stilt village of Ganvié, home to tens of thousands living above water.",
+        "Famous for clay bas-relief royal palaces, crispy spiced peanut snacks, and voodoo spiritual traditions."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Benin"
+    },
+    {
+      "index": 18,
+      "country": "Israel",
+      "capital": "Jerusalem",
+      "tier": "medium",
+      "clues": [
+        "An ancient crossroads of monotheistic history and modern technology start-ups celebrated for high-tech innovation.",
+        "Features a desert clifftop plateau fortress where ancient defenders held out against Roman legions on sheer rock heights.",
+        "Famous for poached eggs simmered in spiced tomato bell pepper stew, chickpea falafel balls, and sacred stone limestone walls."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Israel"
+    },
+    {
+      "index": 19,
+      "country": "Paraguay",
+      "capital": "Asunción",
+      "tier": "medium",
+      "clues": [
+        "One of the few nations where an indigenous tongue (Guaraní) is spoken fluently by the vast majority alongside the official colonial language.",
+        "Features the monumental Itaipu Dam on its border, verified as one of the largest hydroelectric clean energy generators on Earth.",
+        "Famous for cold ice-water yerba mate herbal infusions sipped through horns, and a savory solid sponge cornbread with cheese and onions."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Paraguay"
+    },
+    {
+      "index": 20,
+      "country": "Zimbabwe",
+      "capital": "Harare",
+      "tier": "medium",
+      "clues": [
+        "Named after ancient medieval stone palace ruins constructed entirely with interlocking granite blocks without mortar.",
+        "Its national emblem depicts a distinctive soapstone carved bird discovered among ancient royal enclosures.",
+        "Famous for sharing the thunderous Victoria Falls spray with its northern counterpart, and thick maize meal porridge."
+      ],
+      "sourceUrl": "https://en.wikipedia.org/wiki/Zimbabwe"
+    }
+  ]
+}

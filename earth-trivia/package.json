@@ -7,6 +7,7 @@
   "scripts": {
     "validate": "node scripts/validateData.js",
     "check:clues": "node scripts/checkCluesStep0.js",
+    "check:palette": "node scripts/checkPalette.js",
     "bundle:map": "node scripts/bundleMapData.js",
     "build": "esbuild src/main.js --bundle --outfile=dist/bundle.js --format=esm --minify",
     "serve": "node scripts/serve.js",
@@ -30,8 +31,11 @@
     "world-atlas": "^2.0.2"
   },
   "devDependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
     "canvas": "^3.2.3",
     "esbuild": "^0.28.2",
-    "puppeteer-core": "^25.16.0"
+    "puppeteer-core": "^25.16.0",
+    "tailwindcss": "^3.4.19"
   }
 }

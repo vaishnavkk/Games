@@ -1,0 +1,249 @@
+{
+  "dragResults": [
+    {
+      "id": 1,
+      "desc": "Horizontal drag right (120px)",
+      "from": [
+        650,
+        450
+      ],
+      "to": [
+        770,
+        450
+      ],
+      "steps": 10,
+      "waitMs": 50,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 2,
+      "desc": "Vertical drag down (100px)",
+      "from": [
+        720,
+        400
+      ],
+      "to": [
+        720,
+        500
+      ],
+      "steps": 10,
+      "waitMs": 50,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 3,
+      "desc": "Diagonal drag southeast (90px)",
+      "from": [
+        680,
+        400
+      ],
+      "to": [
+        750,
+        470
+      ],
+      "steps": 10,
+      "waitMs": 50,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 4,
+      "desc": "Long duration hold & tiny move (500ms, >350ms limit)",
+      "from": [
+        720,
+        450
+      ],
+      "to": [
+        723,
+        450
+      ],
+      "steps": 2,
+      "waitMs": 500,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 5,
+      "desc": "Horizontal drag left (140px)",
+      "from": [
+        780,
+        450
+      ],
+      "to": [
+        640,
+        450
+      ],
+      "steps": 12,
+      "waitMs": 40,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 6,
+      "desc": "Moderate drag right (55px, >40px limit)",
+      "from": [
+        700,
+        450
+      ],
+      "to": [
+        755,
+        450
+      ],
+      "steps": 6,
+      "waitMs": 60,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 7,
+      "desc": "Long press stationary (600ms hold, >350ms limit)",
+      "from": [
+        720,
+        450
+      ],
+      "to": [
+        721,
+        451
+      ],
+      "steps": 1,
+      "waitMs": 600,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 8,
+      "desc": "Vertical drag up (110px)",
+      "from": [
+        720,
+        520
+      ],
+      "to": [
+        720,
+        410
+      ],
+      "steps": 10,
+      "waitMs": 50,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 9,
+      "desc": "Rapid fling swipe (80px in 100ms)",
+      "from": [
+        680,
+        450
+      ],
+      "to": [
+        760,
+        450
+      ],
+      "steps": 4,
+      "waitMs": 20,
+      "selected": null,
+      "pass": true
+    },
+    {
+      "id": 10,
+      "desc": "Diagonal drag northwest (100px)",
+      "from": [
+        760,
+        500
+      ],
+      "to": [
+        690,
+        430
+      ],
+      "steps": 10,
+      "waitMs": 50,
+      "selected": null,
+      "pass": true
+    }
+  ],
+  "clickResults": [
+    {
+      "id": 1,
+      "name": "Japan",
+      "lat": 36.2,
+      "lon": 138.25,
+      "selectedName": "Japan",
+      "pass": true
+    },
+    {
+      "id": 2,
+      "name": "Brazil",
+      "lat": -15.79,
+      "lon": -47.89,
+      "selectedName": "Brazil",
+      "pass": true
+    },
+    {
+      "id": 3,
+      "name": "Australia",
+      "lat": -35.28,
+      "lon": 149.13,
+      "selectedName": "Australia",
+      "pass": true
+    },
+    {
+      "id": 4,
+      "name": "France",
+      "lat": 46.22,
+      "lon": 2.21,
+      "selectedName": "France",
+      "pass": true
+    },
+    {
+      "id": 5,
+      "name": "India",
+      "lat": 28.61,
+      "lon": 77.2,
+      "selectedName": "India",
+      "pass": true
+    },
+    {
+      "id": 6,
+      "name": "Egypt",
+      "lat": 30.04,
+      "lon": 31.23,
+      "selectedName": "Egypt",
+      "pass": true
+    },
+    {
+      "id": 7,
+      "name": "Canada",
+      "lat": 45.42,
+      "lon": -75.69,
+      "selectedName": "Canada",
+      "pass": true
+    },
+    {
+      "id": 8,
+      "name": "Mexico",
+      "lat": 23.63,
+      "lon": -102.55,
+      "selectedName": "Mexico",
+      "pass": true
+    },
+    {
+      "id": 9,
+      "name": "South Africa",
+      "lat": -30.55,
+      "lon": 22.93,
+      "selectedName": "South Africa",
+      "pass": true
+    },
+    {
+      "id": 10,
+      "name": "Germany",
+      "lat": 51.16,
+      "lon": 10.45,
+      "selectedName": "Germany",
+      "pass": true
+    }
+  ],
+  "dragPass": 10,
+  "clickPass": 10,
+  "totalPass": 20
+}

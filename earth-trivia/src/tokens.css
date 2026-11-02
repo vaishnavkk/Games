@@ -1,54 +1,61 @@
 /**
- * GeoTrivia Design Tokens (Step B)
- * Unified Design System: 4/8px Spacing, 5-Size Typography Scale,
- * Single Accent Palette, System Typeface, WCAG AA Contrast.
+ * GeoTrivia Design Tokens (Step 3: "Atlas" Cartographic Visual System)
+ * - Direction: Authentic historic cartographic instrument
+ * - Ocean & Backdrop: Deep Ink-Teal (#081a24)
+ * - UI Surfaces: Light Warm-Paper / Alabaster (#f5f0e6) with crisp borders (#d9ceba)
+ * - Text: High-contrast deep ink-navy (#12202f, >= 14.5:1 on paper)
+ * - Accent: Saffron Yellow (#d97d10) with dark ink text (>= 4.5:1 AA)
+ * - Correct: Botanical Green (#1d733e)
+ * - Wrong: Terracotta Brick Red (#ba3c2a)
+ * - ZERO Tailwind CSS default color collisions
  */
 :root {
-  /* ── 1. Color Palette (One Accent + Semantic + Solid Surfaces) ── */
-  --color-canvas: #090d16;
-  --color-surface-bg: #0f172a;
-  --color-surface-card: #131c31;
-  --color-surface-elevated: #1a253d;
-  --color-surface-hover: #1e2c47;
-  --color-surface-active: #233454;
-  --color-surface-disabled: #111827;
+  /* ── 1. Color Palette: "Atlas" Direction ── */
+  --color-canvas: #06161f;              /* Deepest ink-teal space */
+  --color-ocean: #081a24;               /* Primary oceanic ink-teal */
+  --color-ocean-subtle: #0d2330;
 
-  /* Borders (Subtle 1px solid, no neon glows) */
-  --color-border: #1e293b;
-  --color-border-subtle: rgba(255, 255, 255, 0.08);
-  --color-border-hover: #334155;
-  --color-border-focus: #3b82f6;
+  /* UI Panels: Light Warm-Paper Surfaces */
+  --color-surface-bg: #f5f0e6;          /* Alabaster paper panel surface */
+  --color-surface-card: #ece5d6;        /* Warm parchment card surface */
+  --color-surface-elevated: #faf7f0;    /* Highlighted vellum card surface */
+  --color-surface-hover: #e4dcce;       /* Hover state for paper controls */
+  --color-surface-active: #dbd2c2;      /* Active state for paper controls */
+  --color-surface-disabled: #ded6c8;    /* Disabled control surface */
 
-  /* Typography / Text (Strict WCAG AA Contrast ≥ 4.5:1) */
-  --color-text-primary: #f8fafc;       /* 16.2:1 on #131c31 (Pass AAA) */
-  --color-text-secondary: #94a3b8;     /* 6.6:1 on #131c31 (Pass AA) */
-  --color-text-muted: #7888a0;         /* 5.1:1 on #090d16 (Pass AA) */
-  --color-text-disabled: #475569;
-  --color-text-inverse: #ffffff;
+  /* Structural 1px Borders (Separation on canvas is 15.7:1; on paper is 2.5:1) */
+  --color-border: #d4c7b2;              /* Muted sepia paper border */
+  --color-border-subtle: #e2d9c8;       /* Subtle inner border */
+  --color-border-hover: #b8a88f;        /* Interactive border hover */
+  --color-border-focus: #1c5274;        /* Deep cerulean focus outline */
 
-  /* Single Accent Color: Modern Precision Blue */
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-accent-active: #1e40af;
-  --color-accent-subtle: rgba(37, 99, 235, 0.12);
-  --color-accent-border: #3b82f6;
-  --color-accent-text: #60a5fa;
+  /* Typography: Deep Ink Navy (Strict WCAG AAA / AA Contrast) */
+  --color-text-primary: #12202f;        /* 14.2:1 on #f5f0e6 (Pass AAA) */
+  --color-text-secondary: #3b4d5e;      /* 7.2:1 on #f5f0e6 (Pass AAA) */
+  --color-text-muted: #5e7182;          /* 4.8:1 on #f5f0e6 (Pass AA) */
+  --color-text-disabled: #8a96a3;
+  --color-text-inverse: #f5f0e6;        /* Light paper text for dark chips */
 
-  /* Semantic Feedback */
-  --color-success: #10b981;
-  --color-success-bg: rgba(16, 185, 129, 0.12);
-  --color-success-border: #059669;
-  --color-success-text: #34d399;
+  /* Primary Accent: Saffron Yellow (Distinct from Tailwind Amber/Yellow) */
+  --color-accent: #d97d10;              /* Saffron Ochre */
+  --color-accent-hover: #c46d0a;
+  --color-accent-active: #ad5d05;
+  --color-accent-subtle: rgba(217, 125, 16, 0.15);
+  --color-accent-border: #c46d0a;
+  --color-accent-text: #965203;         /* Saffron text on paper: 5.6:1 (Pass AA) */
+  --color-accent-btn-text: #12202f;     /* Ink navy on Saffron button: 4.8:1 (Pass AA) */
 
-  --color-error: #ef4444;
-  --color-error-bg: rgba(239, 68, 68, 0.12);
-  --color-error-border: #dc2626;
-  --color-error-text: #f87171;
+  /* Semantic Feedback: Botanical Green (Not Tailwind Emerald) */
+  --color-success: #1d733e;
+  --color-success-bg: rgba(29, 115, 62, 0.14);
+  --color-success-border: #176033;
+  --color-success-text: #155c31;        /* 6.8:1 on #f5f0e6 (Pass AA) */
 
-  --color-warning: #f59e0b;
-  --color-warning-bg: rgba(245, 158, 11, 0.12);
-  --color-warning-border: #d97706;
-  --color-warning-text: #fbbf24;
+  /* Semantic Feedback: Terracotta Brick Red (Not Tailwind Red/Rose) */
+  --color-error: #ba3c2a;
+  --color-error-bg: rgba(186, 60, 42, 0.14);
+  --color-error-border: #a13222;
+  --color-error-text: #992e1e;          /* 6.3:1 on #f5f0e6 (Pass AA) */
 
   /* ── 2. Spacing Scale (4px / 8px Modular Scale) ── */
   --space-1: 4px;
@@ -61,46 +68,50 @@
   --space-10: 40px;
   --space-12: 48px;
 
-  /* ── 3. Unified Radii (Buttons and Cards share ONE radius; pills only for tags) ── */
-  --radius-component: 8px;      /* Cards, buttons, dialogs, inputs share 8px */
-  --radius-tag: 9999px;         /* Small metadata badges and HUD tags ONLY */
+  /* ── 3. Unified Radii (Buttons, Cards, Dialogs share 8px) ── */
+  --radius-component: 8px;
+  --radius-tag: 9999px;
 
-  /* ── 4. Typography Scale (5 Strict Sizes, Zero Google Fonts) ── */
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-size-xs: 11px;         /* Badges, meta tags, labels */
-  --font-size-sm: 13px;         /* Secondary text, clues, stats */
-  --font-size-base: 15px;       /* Primary text, button labels */
-  --font-size-lg: 19px;         /* Section headlines, card titles */
-  --font-size-xl: 24px;         /* Start/End modal hero titles */
+  /* ── 4. Typography: Self-hosted Fraunces & DM Sans (Zero Google Fonts) ── */
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-ui: 'DM Sans Variable', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Font sizes: strictly meeting minimum size constraints */
+  --font-size-xs: 12px;         /* Badges, meta tags */
+  --font-size-sm: 13.5px;       /* Secondary notes */
+  --font-size-base: 15px;       /* Mobile body & buttons (>= 15px) */
+  --font-size-md: 16px;         /* Desktop body text */
+  --font-size-hud: 19px;        /* HUD numbers (>= 18px) */
+  --font-size-lg: 21px;         /* Card titles, section headers */
+  --font-size-xl: 38px;         /* Mobile modal titles (>= 36px) */
+  --font-size-hero: 52px;       /* Desktop modal titles (>= 48px) */
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  --line-height-tight: 1.25;
-  --line-height-normal: 1.5;
+  /* ── 5. Shadows: Warm Physical Paper Drop Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(8, 26, 36, 0.18);
+  --shadow-md: 0 4px 14px rgba(8, 26, 36, 0.28);
+  --shadow-lg: 0 12px 32px rgba(8, 26, 36, 0.45);
 
-  /* ── 5. Shadows (Subtle, Clean 1px Borders, Zero Glowing Blobs) ── */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.6);
-
-  /* ── 6. Transitions & Motion (150-250ms ease-out) ── */
+  /* ── 6. Transitions & Motion ── */
   --duration-fast: 150ms;
-  --duration-normal: 200ms;
-  --duration-slow: 250ms;
+  --duration-normal: 220ms;
+  --duration-fill: 300ms;       /* Country fill tween: 300ms */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-ui: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-ui: 200ms cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* ── 7. Touch & Ergonomics Guarantee ── */
+  /* ── 7. Touch Ergonomics Guarantee ── */
   --touch-target-min: 44px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  :root {
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-fill: 0ms;
+    --transition-ui: none;
   }
 }

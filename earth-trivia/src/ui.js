@@ -13,7 +13,6 @@ export class UIManager {
     this.streakVal = document.getElementById('streakVal');
     this.roundVal = document.getElementById('roundVal');
     this.timerBar = document.getElementById('timerBar');
-    this.livesContainer = document.getElementById('livesContainer');
     this.soundBtn = document.getElementById('soundBtn');
 
     // Clue Card Elements
@@ -28,6 +27,7 @@ export class UIManager {
     this.vaultName = document.getElementById('vaultName');
     this.vaultCapital = document.getElementById('vaultCapital');
     this.vaultDistance = document.getElementById('vaultDistance');
+    this.vaultBreakdown = document.getElementById('vaultBreakdown');
     this.vaultLandmark = document.getElementById('vaultLandmark');
     this.vaultCulture = document.getElementById('vaultCulture');
     this.vaultAnchor = document.getElementById('vaultAnchor');
@@ -37,6 +37,7 @@ export class UIManager {
     this.endScore = document.getElementById('endScore');
     this.endAccuracy = document.getElementById('endAccuracy');
     this.endStreak = document.getElementById('endStreak');
+    this.endBestScore = document.getElementById('endBestScore');
     this.missedList = document.getElementById('missedList');
     this.replayMissedBtn = document.getElementById('replayMissedBtn');
     this.restartBtn = document.getElementById('restartBtn');
@@ -45,6 +46,9 @@ export class UIManager {
     this.touchConfirmBtn = document.getElementById('touchConfirmBtn');
     this.touchSelectedFlag = document.getElementById('touchSelectedFlag');
     this.touchSelectedName = document.getElementById('touchSelectedName');
+
+    this.currentDisplayedScore = 0;
+    this.scoreRaf = null;
   }
 
   showTouchConfirm(country, onConfirm) {
@@ -74,7 +78,7 @@ export class UIManager {
     if (this.endScreen) this.endScreen.classList.add('hidden');
   }
 
-  showGameHUD(totalRounds, lives, hasTimer) {
+  showGameHUD(totalRounds, hasTimer, isPractice) {
     if (this.startScreen) this.startScreen.classList.add('hidden');
     if (this.endScreen) this.endScreen.classList.add('hidden');
     if (this.topHud) this.topHud.classList.remove('hidden');
@@ -84,19 +88,71 @@ export class UIManager {
     if (this.timerBar && this.timerBar.parentElement) {
       this.timerBar.parentElement.style.display = hasTimer ? 'block' : 'none';
     }
-    this.updateLives(lives);
+
+    this.currentDisplayedScore = 0;
+    if (this.scoreVal) {
+      this.scoreVal.textContent = isPractice ? 'PRACTICE' : '0';
+    }
   }
 
-  updateHUD({ score, streak, round, totalRounds, lives, timePercent }) {
-    if (this.scoreVal && score !== undefined) {
-      this.scoreVal.textContent = score.toLocaleString();
+  // Smooth animated count-up for score changes (~300ms)
+  animateScoreCountUp(targetScore) {
+    if (!this.scoreVal) return;
+    if (this.scoreRaf) {
+      cancelAnimationFrame(this.scoreRaf);
+      this.scoreRaf = null;
     }
+
+    const startVal = this.currentDisplayedScore;
+    const diff = targetScore - startVal;
+    if (diff === 0) {
+      this.scoreVal.textContent = targetScore.toLocaleString();
+      return;
+    }
+
+    const duration = 300;
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1.0, elapsed / duration);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(startVal + diff * ease);
+      this.scoreVal.textContent = current.toLocaleString();
+
+      if (progress < 1.0) {
+        this.scoreRaf = requestAnimationFrame(step);
+      } else {
+        this.currentDisplayedScore = targetScore;
+        this.scoreVal.textContent = targetScore.toLocaleString();
+        this.scoreRaf = null;
+      }
+    };
+
+    this.scoreRaf = requestAnimationFrame(step);
+  }
+
+  updateHUD({ score, streak, round, totalRounds, isPractice, timePercent }) {
+    if (this.scoreVal) {
+      if (isPractice) {
+        this.scoreVal.textContent = 'PRACTICE';
+      } else if (score !== undefined) {
+        if (Math.abs(score - this.currentDisplayedScore) > 0) {
+          this.animateScoreCountUp(score);
+        } else {
+          this.scoreVal.textContent = score.toLocaleString();
+        }
+      }
+    }
+
     if (this.streakVal && streak !== undefined) {
       this.streakVal.textContent = streak;
     }
+
     if (this.roundVal && round !== undefined) {
       this.roundVal.textContent = totalRounds === Infinity ? `${round}` : `${round}/${totalRounds}`;
     }
+
     if (this.timerBar && timePercent !== undefined) {
       this.timerBar.style.width = `${Math.max(0, Math.min(100, timePercent))}%`;
       if (timePercent < 25) {
@@ -104,24 +160,6 @@ export class UIManager {
       } else {
         this.timerBar.style.background = 'var(--color-accent)';
       }
-    }
-    if (lives !== undefined) {
-      this.updateLives(lives);
-    }
-  }
-
-  updateLives(lives) {
-    if (!this.livesContainer) return;
-    if (lives === null || lives === undefined) {
-      this.livesContainer.style.display = 'none';
-      return;
-    }
-    this.livesContainer.style.display = 'flex';
-    this.livesContainer.innerHTML = '';
-    for (let i = 0; i < 3; i++) {
-      const dot = document.createElement('span');
-      dot.className = `life-dot ${i < lives ? 'active' : 'lost'}`;
-      this.livesContainer.appendChild(dot);
     }
   }
 
@@ -139,13 +177,13 @@ export class UIManager {
     }
 
     if (mode === 'name') {
-      this.cluePrompt.textContent = 'Locate on the globe:';
-      this.clueText.innerHTML = `<span class="highlight-target">${getFlagSvg(country.flag)} ${country.name}</span>`;
+      this.cluePrompt.textContent = 'Locate nation on globe:';
+      this.clueText.innerHTML = `<span class="target-name-spotlight">${getFlagSvg(country.flag)} ${country.name}</span>`;
       if (this.clueProgression) this.clueProgression.style.display = 'none';
       if (this.nextClueBtn) this.nextClueBtn.style.display = 'none';
     } else if (mode === 'flag') {
       this.cluePrompt.textContent = 'Locate nation for flag:';
-      this.clueText.innerHTML = `<span class="flag-preview">${getFlagSvg(country.flag)}</span>`;
+      this.clueText.innerHTML = `<div class="target-flag-spotlight">${getFlagSvg(country.flag)}</div>`;
       if (this.clueProgression) this.clueProgression.style.display = 'none';
       if (this.nextClueBtn) this.nextClueBtn.style.display = 'none';
     } else {
@@ -168,11 +206,12 @@ export class UIManager {
     }
   }
 
-  showMemoryVault({ isCorrect, targetCountry, guessCountry, distanceKm, onNext }) {
+  showMemoryVault({ isCorrect, targetCountry, guessCountry, distanceKm, breakdown, isPractice, onNext }) {
     this.hideTouchConfirm();
     if (this.clueCard) this.clueCard.classList.add('hidden');
     if (this.memoryVault) this.memoryVault.classList.remove('hidden');
 
+    // Status Pill
     if (isCorrect) {
       this.vaultStatus.innerHTML = `${ICONS.check} CORRECT IDENTIFICATION`;
       this.vaultStatus.className = 'vault-status correct';
@@ -185,19 +224,39 @@ export class UIManager {
       this.vaultStatus.className = 'vault-status missed';
       if (this.vaultDistance) {
         this.vaultDistance.style.display = 'block';
-        const clickedName = guessCountry ? guessCountry.name : 'Ocean';
-        this.vaultDistance.innerHTML = `Clicked <strong>${clickedName}</strong> • <strong>${distanceKm.toLocaleString()} km</strong> away`;
+        const clickedName = guessCountry ? guessCountry.name : 'Open Ocean';
+        // Required exact phrasing: "You clicked Spain, 1,240 km from Morocco"
+        this.vaultDistance.innerHTML = `You clicked <strong>${clickedName}</strong>, <strong>${distanceKm.toLocaleString()} km</strong> from <strong>${targetCountry.name}</strong>`;
       }
       if (this.vaultNextBtn) {
         this.vaultNextBtn.innerHTML = `<span>Next Country</span> ${ICONS.arrowRight}`;
       }
     }
 
+    // Header: Flag, Name, Capital
     if (this.vaultFlag) {
       this.vaultFlag.innerHTML = getFlagSvg(targetCountry.flag);
     }
     if (this.vaultName) this.vaultName.textContent = targetCountry.name;
     if (this.vaultCapital) this.vaultCapital.textContent = `Capital: ${targetCountry.capital}`;
+
+    // Score Breakdown Badge
+    if (this.vaultBreakdown) {
+      if (isPractice) {
+        this.vaultBreakdown.innerHTML = `<span class="breakdown-tag practice">Practice Mode • Scores unrecorded</span>`;
+      } else if (breakdown) {
+        if (isCorrect) {
+          const speedTxt = breakdown.speedBonus > 0 ? ` | Speed: +${breakdown.speedBonus}` : '';
+          this.vaultBreakdown.innerHTML = `<span class="breakdown-tag scored"><strong>+${breakdown.points.toLocaleString()} pts</strong> (Base: ${breakdown.base} | Clues: +${breakdown.clueBonus}${speedTxt} | Streak: ${breakdown.streakMultiplier}x)</span>`;
+        } else {
+          this.vaultBreakdown.innerHTML = breakdown.points > 0
+            ? `<span class="breakdown-tag partial"><strong>+${breakdown.points.toLocaleString()} pts</strong> (Distance proximity credit)</span>`
+            : `<span class="breakdown-tag zero">0 pts (&gt;5,000 km from target)</span>`;
+        }
+      }
+    }
+
+    // Educational Facts
     if (this.vaultLandmark) this.vaultLandmark.textContent = targetCountry.landmark;
     if (this.vaultCulture) this.vaultCulture.textContent = targetCountry.cultureFood;
     if (this.vaultAnchor) {
@@ -210,16 +269,29 @@ export class UIManager {
     }
   }
 
-  showEndScreen({ score, accuracy, bestStreak, missedCountries, onRestart, onReplayMissed }) {
+  showEndScreen({ score, accuracy, bestStreak, missedCountries, isPractice, mode, tier, onRestart, onReplayMissed }) {
     this.hideTouchConfirm();
     if (this.topHud) this.topHud.classList.add('hidden');
     if (this.clueCard) this.clueCard.classList.add('hidden');
     if (this.memoryVault) this.memoryVault.classList.add('hidden');
     if (this.endScreen) this.endScreen.classList.remove('hidden');
 
-    if (this.endScore) this.endScore.textContent = score.toLocaleString();
+    if (this.endScore) {
+      this.endScore.textContent = isPractice ? 'Practice' : score.toLocaleString();
+    }
     if (this.endAccuracy) this.endAccuracy.textContent = `${accuracy}%`;
     if (this.endStreak) this.endStreak.textContent = bestStreak;
+
+    // Display saved best score
+    if (this.endBestScore) {
+      try {
+        const key = `geotrivia_best_${mode || 'clue'}_${tier || 'easy'}`;
+        const best = parseInt(localStorage.getItem(key) || '0', 10);
+        this.endBestScore.textContent = `${best.toLocaleString()} pts`;
+      } catch (e) {
+        this.endBestScore.textContent = '—';
+      }
+    }
 
     if (this.missedList) {
       this.missedList.innerHTML = '';
