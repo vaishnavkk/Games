@@ -2,11 +2,17 @@
 class SoundManager {
   constructor() {
     this.ctx = null;
-    this.muted = localStorage.getItem('geotrivia_muted') === 'true';
+    let isMuted = false;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        isMuted = localStorage.getItem('geotrivia_muted') === 'true';
+      }
+    } catch (e) {}
+    this.muted = isMuted;
   }
 
   init() {
-    if (!this.ctx) {
+    if (!this.ctx && typeof window !== 'undefined') {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (AudioCtx) this.ctx = new AudioCtx();
     }
@@ -17,7 +23,11 @@ class SoundManager {
 
   toggleMute() {
     this.muted = !this.muted;
-    localStorage.setItem('geotrivia_muted', String(this.muted));
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('geotrivia_muted', String(this.muted));
+      }
+    } catch (e) {}
     return this.muted;
   }
 

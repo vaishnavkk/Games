@@ -1,4 +1,5 @@
 import { ICONS, getFlagSvg } from './icons.js';
+import { getRevealClueButtonText, SCORING } from './scoring.js';
 
 export class UIManager {
   constructor() {
@@ -198,7 +199,7 @@ export class UIManager {
       if (this.nextClueBtn) {
         if (clueIndex < 2) {
           this.nextClueBtn.style.display = 'inline-flex';
-          this.nextClueBtn.innerHTML = `${ICONS.lightbulb} <span>Reveal Clue ${clueIndex + 2} (-250 pts)</span>`;
+          this.nextClueBtn.innerHTML = `${ICONS.lightbulb} <span>${getRevealClueButtonText(clueIndex)}</span>`;
         } else {
           this.nextClueBtn.style.display = 'none';
         }

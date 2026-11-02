@@ -3,6 +3,7 @@ import { haversineDistanceKm, distanceToCountryKm, getCountryAngularDiameter } f
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
+import { SCORING, calculateRoundScore } from './scoring.js';
 
 export class GameManager {
   constructor(globeApp, ui) {
@@ -244,41 +245,22 @@ export class GameManager {
       this.streak++;
       if (this.streak > this.bestStreak) this.bestStreak = this.streak;
 
-      // Scoring formula: maximum 1,000 per round
-      // Base: 500
-      // Fewer-clues bonus: Clue 1: +300, Clue 2: +150, Clue 3: 0 (or +300 in name/flag mode)
-      const base = 500;
-      let clueBonus = 0;
-      if (this.mode === 'name' || this.mode === 'flag') {
-        clueBonus = 300;
-      } else {
-        clueBonus = this.clueIndex === 0 ? 300 : (this.clueIndex === 1 ? 150 : 0);
-      }
+      // Scoring formula calculated from single source of truth (scoring.js)
+      this.lastRoundBreakdown = calculateRoundScore({
+        isCorrect: true,
+        mode: this.mode,
+        clueIndex: this.clueIndex,
+        hasTimer: this.hasTimer,
+        timerRemaining: this.timerRemaining,
+        timerDuration: this.timerDuration,
+        streak: this.streak,
+        isPractice: this.isPractice
+      });
 
-      // Speed bonus: up to +200 only when timer is ON
-      let speedBonus = 0;
-      if (this.hasTimer && this.timerDuration > 0) {
-        const timeFraction = Math.max(0, this.timerRemaining / this.timerDuration);
-        speedBonus = Math.round(200 * timeFraction);
-      }
-
-      // Streak multiplier: 1.0x, 1.1x, 1.2x... max 1.5x
-      const streakMultiplier = Math.min(1.5, 1.0 + Math.max(0, this.streak - 1) * 0.1);
-
+      roundPoints = this.lastRoundBreakdown.points;
       if (!this.isPractice) {
-        roundPoints = Math.min(1000, Math.round((base + clueBonus + speedBonus) * streakMultiplier));
         this.score += roundPoints;
       }
-
-      this.lastRoundBreakdown = {
-        isCorrect: true,
-        base,
-        clueBonus,
-        speedBonus,
-        streakMultiplier,
-        points: roundPoints,
-        distanceKm: 0
-      };
 
       // Confetti burst on streaks
       if (this.streak >= 3) {
@@ -323,22 +305,17 @@ export class GameManager {
       // Distance error: distance to nearest point on target boundary (0 km if inside)
       distanceKm = distanceToCountryKm(hitLat, hitLon, targetWc.geometry);
 
-      // Partial credit by distance: capped strictly at 300 pts so a wrong answer never beats correct
-      if (!this.isPractice && distanceKm < 5000) {
-        const partial = Math.max(0, Math.min(300, Math.round(400 * (1 - distanceKm / 5000))));
-        roundPoints = partial;
-        this.score += partial;
-      }
-
-      this.lastRoundBreakdown = {
+      // Scoring formula calculated from single source of truth (scoring.js)
+      this.lastRoundBreakdown = calculateRoundScore({
         isCorrect: false,
-        base: 0,
-        clueBonus: 0,
-        speedBonus: 0,
-        streakMultiplier: 1.0,
-        points: roundPoints,
-        distanceKm
-      };
+        distanceKm,
+        isPractice: this.isPractice
+      });
+
+      roundPoints = this.lastRoundBreakdown.points;
+      if (!this.isPractice) {
+        this.score += roundPoints;
+      }
 
       // Spaced repetition: requeue missed country once later in session
       this.missedCountries.push(target);
@@ -453,6 +430,7 @@ export class GameManager {
   }
 
   bindEvents() {
+    if (!this.globe || !this.globe.renderer || !this.globe.renderer.domElement) return;
     const canvas = this.globe.renderer.domElement;
     this.currentHoveredId = null;
 

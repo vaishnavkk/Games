@@ -30,10 +30,18 @@ Built with **Three.js**, **Natural Earth 50m TopoJSON** (bundled offline), and a
 - **Progressive Clues & Zero-Spoiler Policy**:
   - 3 progressive clues: cultural/historical hint → distinct fact → obvious clue. Points scale with fewer clues used.
   - Strict zero-geographical-spoiler rule: no continents, oceans, mountain ranges, or compass directions in clue text.
-- **Game Modes & Tiers (`src/game.js`)**:
+- **Game Modes & Tiers (`src/game.js`, `src/scoring.js`)**:
   - **Modes**: Clue Mode (progressive hints), Country Name Mode, Flag Mode.
-  - **Tiers**: Easy (~50 well-known nations), Medium (~120 nations), Hard (all 195 sovereign nations: 193 UN members + Vatican City & Palestine).
-  - **Pacing**: 10 rounds, 20 rounds, or Endless. Toggleable round timer and Survival Mode (3 lives) vs Practice Mode.
+  - **Tiers**: Easy (42 major iconic nations), Medium (100 diverse nations), Hard (all 195 sovereign nations: 193 UN members + Vatican City + Palestine).
+  - **Pacing**: 10 rounds, 20 rounds, or Endless. Toggleable 25s timer vs Practice Mode (scores unrecorded).
+  - **Scoring (`src/scoring.js` - Single Source of Truth)**:
+    - Base: 500 pts
+    - Fewer-clues bonus: Clue 1: +300 pts | Clue 2: +150 pts | Clue 3: +0 pts (Name/Flag modes: +300 pts)
+    - Reveal clue cost: Clue 2: -150 pts | Clue 3: -150 pts (computed as $\text{bonus}_{N-1} - \text{bonus}_N$)
+    - Timer speed bonus: Up to +200 pts proportional to remaining time (timer ON only)
+    - Streak multiplier: 1.0x to 1.5x (+0.1x per consecutive correct answer)
+    - Round cap: Strictly 1,000 pts max
+    - Wrong answer partial credit: $\max(0, \min(300, \text{round}(400 \times (1 - \text{dist} / 5000))))$, capped strictly at 300 pts so wrong guesses never beat correct answers.
 - **Spaced Repetition Review**:
   - Missed nations are automatically queued again later in the session.
   - End-game screen summarizes accuracy, best streak, and allows immediate 1-click replaying of missed countries.
