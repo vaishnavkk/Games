@@ -245,28 +245,26 @@ export class MapRenderer {
       drawTinyRing(selectedCountryId, '#d97d10', ringRadius + 2);
     }
 
-    // 3. Wrong Guess Country: Brick Red (#ba3c2a) + 2px bright outline (#eb5843)
+    // 3. Wrong Guess Country: Soft translucent brick red fill (#ba3c2a)
     if (guessCountryId && guessCountryId !== correctCountryId) {
       const country = getCountry(guessCountryId);
       if (country && country.geometry) {
-        this.ctx.fillStyle = `rgba(186, 60, 42, ${(0.78 * t).toFixed(3)})`;
-        this.ctx.strokeStyle = '#eb5843';
-        this.ctx.lineWidth = this.width > 2048 ? 3.5 : 2.0;
+        this.ctx.fillStyle = `rgba(186, 60, 42, ${(0.35 * t).toFixed(3)})`;
+        this.ctx.strokeStyle = 'transparent';
+        this.ctx.lineWidth = 0;
         this.drawGeometry(this.ctx, country.geometry);
       }
-      drawTinyRing(guessCountryId, '#eb5843', ringRadius + 3);
     }
 
-    // 4. Correct Target Country: Botanical Green (#1d733e) + 2px bright outline (#36b368)
+    // 4. Correct Target Country: Soft translucent botanical green fill (#1d733e)
     if (correctCountryId) {
       const country = getCountry(correctCountryId);
       if (country && country.geometry) {
-        this.ctx.fillStyle = `rgba(29, 115, 62, ${(0.78 * t).toFixed(3)})`;
-        this.ctx.strokeStyle = '#36b368';
-        this.ctx.lineWidth = this.width > 2048 ? 4.0 : 2.5;
+        this.ctx.fillStyle = `rgba(29, 115, 62, ${(0.35 * t).toFixed(3)})`;
+        this.ctx.strokeStyle = 'transparent';
+        this.ctx.lineWidth = 0;
         this.drawGeometry(this.ctx, country.geometry);
       }
-      drawTinyRing(correctCountryId, '#36b368', ringRadius + 3);
     }
 
     if (this.texture) {

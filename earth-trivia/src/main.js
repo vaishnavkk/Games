@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
       round: game.round,
       phase: game.phase || (game.isAnswering ? (game.selectedHit ? 'selected' : 'question') : 'result'),
       targetIso: game.currentCountry ? (game.currentCountry.code || String(game.currentCountry.id).padStart(3, '0')) : null,
-      guessIso: game.lastGuessCountry ? (game.lastGuessCountry.code || String(game.lastGuessCountry.id).padStart(3, '0')) : (game.selectedHit?.country ? (game.selectedHit.country.code || String(game.selectedHit.country.id).padStart(3, '0')) : null)
+      guessIso: game.lastGuessCountry ? (game.lastGuessCountry.code || String(game.lastGuessCountry.id).padStart(3, '0')) : (game.selectedHit?.country ? (game.selectedHit.country.code || String(game.selectedHit.country.id).padStart(3, '0')) : null),
+      targetFreeAreaPercent: globeApp.flight.targetFreeAreaPercent !== null && globeApp.flight.targetFreeAreaPercent !== undefined ? `${globeApp.flight.targetFreeAreaPercent}%` : null
     })
   };
 

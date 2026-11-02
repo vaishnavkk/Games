@@ -149,6 +149,9 @@ export class GlobeApp {
     this.camera.aspect = this.width / this.height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
+    if (this.flight) {
+      this.flight.resize(this.width, this.height);
+    }
   }
 
   animate(time) {

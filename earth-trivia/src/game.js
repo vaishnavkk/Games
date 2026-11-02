@@ -1,5 +1,6 @@
 import { COUNTRIES_DB } from '../data/countries.js';
-import { haversineDistanceKm } from './cameraFlight.js';
+import { haversineDistanceKm, distanceToCountryKm, getCountryAngularDiameter } from './cameraFlight.js';
+import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
 
@@ -209,7 +210,7 @@ export class GameManager {
   }
 
   handleGuess(guessCountry, hitLat, hitLon) {
-    if (!this.isAnswering) return;
+    if (!this.isAnswering && this.phase !== 'question' && this.phase !== 'selected') return;
     this.isAnswering = false;
     this.phase = 'result';
     this.lastGuessCountry = guessCountry;
@@ -219,12 +220,19 @@ export class GameManager {
     this.currentHoveredId = null;
     this.globe.renderer.domElement.style.cursor = 'grab';
 
+    // Clear previous visual markers and outlines
+    this.globe.flight.clearVisuals();
+
     const target = this.currentCountry;
     const isCorrect = guessCountry && (
       guessCountry.id === target.id ||
       String(guessCountry.id).padStart(3, '0') === String(target.id).padStart(3, '0') ||
       (guessCountry.code && target.code && guessCountry.code === target.code)
     );
+
+    // Resolve GeoJSON features from WORLD_COUNTRIES
+    const targetWc = WORLD_COUNTRIES.find(c => String(c.id).padStart(3, '0') === String(target.id).padStart(3, '0')) || target;
+    const guessWc = guessCountry ? (WORLD_COUNTRIES.find(c => String(c.id).padStart(3, '0') === String(guessCountry.id).padStart(3, '0')) || guessCountry) : null;
 
     let roundPoints = 0;
     let distanceKm = 0;
@@ -283,16 +291,18 @@ export class GameManager {
         } catch (e) {}
       }
 
-      // Visual feedback: Texture fill + 2px outline (NO pin or beam beacon!)
+      // Visual feedback: Translucent green texture fill + sharp 3D Line2 outline
       this.globe.mapRenderer.renderHighlights({ correctCountryId: target.id });
+      this.globe.flight.drawCountryOutline(targetWc, true);
 
-      // Camera flight: frame country so it fills 50-60% of free area
+      // Camera flight: frame country so it fits inside free area (area <= 60%)
       sound.playSwoosh();
-      const angularSpan = target.angularSpan || 10;
+      const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
       this.globe.flight.flyToCountry(target.lat, target.lon, {
         isDesktopOffset: true,
         angularSpan,
         onComplete: () => {
+          this.globe.flight.computeTargetFreeAreaPercent(targetWc);
           this.ui.showMemoryVault({
             isCorrect: true,
             targetCountry: target,
@@ -310,12 +320,12 @@ export class GameManager {
       sound.playWrong();
       this.streak = 0;
 
-      // Distance error
-      distanceKm = haversineDistanceKm(hitLat, hitLon, target.lat, target.lon);
+      // Distance error: distance to nearest point on target boundary (0 km if inside)
+      distanceKm = distanceToCountryKm(hitLat, hitLon, targetWc.geometry);
 
-      // Partial credit by distance: up to 400 pts if within 5000 km
+      // Partial credit by distance: capped strictly at 300 pts so a wrong answer never beats correct
       if (!this.isPractice && distanceKm < 5000) {
-        const partial = Math.max(0, Math.round(400 * (1 - distanceKm / 5000)));
+        const partial = Math.max(0, Math.min(300, Math.round(400 * (1 - distanceKm / 5000))));
         roundPoints = partial;
         this.score += partial;
       }
@@ -335,25 +345,30 @@ export class GameManager {
       const reinsertIndex = Math.min(this.roundQueue.length, 2 + Math.floor(Math.random() * 3));
       this.roundQueue.splice(reinsertIndex, 0, target);
 
-      // Visuals: Red fill on guess, Green fill on target (NO interior pin or beam)
+      // Visuals: Translucent red fill on guess, green on target; sharp 3D Line2 outlines
       const guessId = guessCountry ? guessCountry.id : null;
       this.globe.mapRenderer.renderHighlights({
         correctCountryId: target.id,
         guessCountryId: guessId
       });
+      this.globe.flight.drawCountryOutline(targetWc, true);
+      if (guessWc) {
+        this.globe.flight.drawCountryOutline(guessWc, false);
+      }
 
       // 2px neutral great-circle geodesic arc (white at 70%) with km distance at midpoint
-      this.globe.flight.drawGreatCircleArc(hitLat, hitLon, target.lat, target.lon);
+      this.globe.flight.drawGreatCircleArc(hitLat, hitLon, target.lat, target.lon, distanceKm);
 
       // Camera flight: frame both if both fit with target >= 25% free area; otherwise frame target
       sound.playSwoosh();
-      const angularSpan = target.angularSpan || 10;
+      const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
       this.globe.flight.flyToCountry(target.lat, target.lon, {
         isDesktopOffset: true,
         angularSpan,
         guessLat: hitLat,
         guessLon: hitLon,
         onComplete: () => {
+          this.globe.flight.computeTargetFreeAreaPercent(targetWc);
           this.ui.showMemoryVault({
             isCorrect: false,
             targetCountry: target,
