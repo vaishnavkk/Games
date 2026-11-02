@@ -277,7 +277,7 @@ export const COUNTRIES_DB = [
       "Known for vast golden grasslands where millions of wildebeest participate in an annual migration."
     ],
     "memoryAnchors": [
-      "The Great Wildebeest Migration involves over 1.5 million animals searching for fresh grazing grass.",
+      "Generates over 45% of its total annual electricity generation from geothermal power plants in the Great Rift Valley.",
       "Nairobi is the only global capital city with a national wildlife park located within its city boundaries.",
       "Long-distance runners from the high plateau hold numerous world records in marathons."
     ],
@@ -364,7 +364,7 @@ export const COUNTRIES_DB = [
       "Famous for historic Viking longships, distinctive caramel-sweet brown cheese, and outdoor cross-country skiing."
     ],
     "memoryAnchors": [
-      "Houses the Global Seed Vault deep within permafrost to safeguard world crop biodiversity.",
+      "Its Government Pension Fund Global surpassed 17 trillion kroner in assets in 2024, funded by petroleum revenue.",
       "In the northern archipelago of Svalbard, the sun does not dip below the horizon for over four months in summer.",
       "Preikestolen is a steep cliff rising 604 meters above a sheer drop into a glacier-carved fjord."
     ],
@@ -451,7 +451,7 @@ export const COUNTRIES_DB = [
       "Home to flightless nocturnal birds with long beaks, dramatic fiord carved sounds, and earth-oven banquets."
     ],
     "memoryAnchors": [
-      "Became the first self-governing nation in the world where women won the right to vote in 1893.",
+      "Became the first self-governing country in the world to grant all adult women the right to vote in national parliamentary elections in 1893.",
       "Milford Sound was described by author Rudyard Kipling as the eighth wonder of the world.",
       "The flightless kiwi bird lays an egg that is up to 20 percent of the mother's total body weight."
     ],
@@ -712,7 +712,7 @@ export const COUNTRIES_DB = [
       "Famous for a monumental defensive masonry wall stretching thousands of kilometers across rugged mountain ridges."
     ],
     "memoryAnchors": [
-      "The Great Wall consists of defensive sections spanning over 21,000 kilometers when all historical dynasties are counted.",
+      "The Forbidden City imperial palace complex contains 980 surviving buildings with an estimated 8,886 architectural room bays, traditionally mythologized as 9,999 rooms.",
       "The Forbidden City served as the ceremonial and political imperial palace for 24 successive emperors.",
       "Giant pandas are endemic to bamboo forests in its central mountain reserves."
     ],
@@ -998,11 +998,11 @@ export const COUNTRIES_DB = [
     "cultureFood": "Empanada de Pino and Pastel de Choclo",
     "clues": [
       "An exceptionally narrow ribbon of land stretching over 4,300 kilometers from hyper-arid deserts to icy glaciers.",
-      "The crystal-clear dry atmosphere in its northern plateaus hosts the world's most powerful optical telescope observatories.",
+      "The crystal-clear dry atmosphere of the high Atacama desert plateaus hosts the world's most powerful optical telescope observatories.",
       "Famous for jagged granite mountain horns, sweet corn and minced beef pies, and distant volcanic islands with giant stone moai statues."
     ],
     "memoryAnchors": [
-      "The Atacama Desert is the driest non-polar desert on Earth, with some weather stations recording zero rainfall for decades.",
+      "Accounts for roughly 34% of global mined lithium production and holds 9.3 million metric tons of identified lithium reserves according to USGS (2024).",
       "Averages only 177 kilometers in width while stretching across 38 degrees of latitude.",
       "Houses the Moai stone statues carved by the ancient Rapa Nui civilization on Easter Island."
     ],
@@ -1287,7 +1287,7 @@ export const COUNTRIES_DB = [
     "landmark": "Galápagos Islands and Cotopaxi Volcano",
     "cultureFood": "Encebollado and Locro de Papa",
     "clues": [
-      "Named directly after the mathematical zero-degree latitude line that bisects its northern territory.",
+      "Named directly after the mathematical zero-degree latitude line that bisects its sovereign territory.",
       "Its high-altitude historic capital features preserved ornate colonial baroque churches with gleaming gold-leaf interiors.",
       "Administers an isolated volcanic archipelago whose giant tortoises and finches inspired Charles Darwin's evolution insights."
     ],
@@ -1434,7 +1434,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Maintains more heated wooden steam saunas than passenger automobiles across its pristine forested territories.",
       "Frequently ranks as the happiest nation in worldwide sociological studies, praised for public education equality.",
-      "Famous for dark bitter salty licorice candies, rye crust rice pies, and expansive northern reindeer wilderness."
+      "Famous for dark bitter salty licorice candies, rye crust rice pies, and expansive boreal reindeer wilderness."
     ],
     "memoryAnchors": [
       "Houses an estimated 3.3 million saunas for a population of 5.5 million inhabitants.",
@@ -2078,7 +2078,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Biryani and Nihari",
     "clues": [
       "Home to the ancient urban ruins of Mohenjo-daro, among the earliest planned settlements of antiquity.",
-      "Features the second-highest mountain peak on Earth, towering over glaciated northern mountain valleys.",
+      "Features the second-highest mountain peak on Earth, towering over glaciated high-altitude valleys.",
       "Famous for intricate hand-painted transport trucks decorated with vibrant folk motifs, and slow-simmered spiced shank stews."
     ],
     "memoryAnchors": [
@@ -2105,7 +2105,7 @@ export const COUNTRIES_DB = [
     "landmark": "Sundarbans Mangrove Forest",
     "cultureFood": "Hilsa Fish Curry and Biryani",
     "clues": [
-      "Formed across the vast fertile delta of three mighty river systems emptying into southern tidal mangrove estuaries.",
+      "Formed across the vast fertile delta of three mighty river systems emptying into tidal mangrove estuaries.",
       "Traditional cycle rickshaws with hand-painted floral panels animate busy streets in its crowded metropolis.",
       "Home to the world's largest contiguous tidal mangrove forest and silver hilsa fish steamed with ground mustard."
     ],
@@ -2525,7 +2525,7 @@ export const COUNTRIES_DB = [
     "landmark": "Royal Drummers Sanctuary of Gishora",
     "cultureFood": "Boko Boko Harees",
     "clues": [
-      "Framed on its west by one of the deepest and longest ancient freshwater rift lakes on planet Earth.",
+      "Framed along its shoreline by one of the deepest and longest ancient freshwater rift lakes on planet Earth.",
       "Renowned for energetic master royal drum ensembles who perform synchronized rhythms around sacred carved wooden drums.",
       "Famous for high-altitude hillside tea plantations, bird sanctuaries, and cracked wheat porridge with chicken."
     ],
@@ -2582,7 +2582,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Ndole Stew and Plantains",
     "clues": [
       "Often called 'a continent in miniature' because its climate ranges from tropical rainforests to desert savannas.",
-      "Home to the highest peak in its western coastal landmass, an active volcanic giant that last erupted in 2000.",
+      "Home to Mount Fako, an active volcanic giant and the highest peak in its coastal landmass, which last erupted in 2000.",
       "Famous for its rich national dish prepared with stewed bitterleaf greens, peanut paste, crayfish, and beef."
     ],
     "memoryAnchors": [
@@ -2610,7 +2610,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Kanda Meatballs and Cassava",
     "clues": [
       "A landlocked territory featuring vast undisturbed dense lowland rainforests and mineral-rich forest clearings.",
-      "Dzanga Bai, a large mineral clearing in its southwest, attracts hundreds of rare forest elephants to lick mineral salts.",
+      "Dzanga Bai, a renowned forest clearing, attracts hundreds of rare forest elephants to lick essential mineral salts.",
       "Famous for meat or fish dumplings rolled in crushed pumpkin seeds and served in rich spicy tomato stew."
     ],
     "memoryAnchors": [
@@ -3210,7 +3210,8 @@ export const COUNTRIES_DB = [
       "Kuwait is known for its capital city Kuwait City.",
       "The nation features the landmark Kuwait Water Towers in Kuwait City.",
       "A key cultural tradition is Machboos Laham Spiced Meat."
-    ]
+    ],
+    "code": "KWT"
   },
   {
     "id": "417",
@@ -3237,7 +3238,8 @@ export const COUNTRIES_DB = [
       "Kyrgyzstan is known for its capital city Bishkek.",
       "The nation features the landmark Lake Issyk-Kul Alpine Lake.",
       "A key cultural tradition is Beshbarmak and Kuurdak."
-    ]
+    ],
+    "code": "KGZ"
   },
   {
     "id": "418",
@@ -3755,7 +3757,7 @@ export const COUNTRIES_DB = [
     "landmark": "Agadez Grand Mud Mosque Minaret",
     "cultureFood": "Djerma Stew and Millet Porridge",
     "clues": [
-      "A landlocked territory named after the great crescent river that flows through its southwestern capital.",
+      "A vast territory named after the great crescent river that flows through its capital city.",
       "Features a monumental 27-meter mud-brick minaret in Agadez supported by protruding wooden timber beams.",
       "Famous for the annual Cure Salée gathering of nomadic Tuareg and Wodaabe camel herders celebrating courtship dances."
     ],
@@ -3923,8 +3925,8 @@ export const COUNTRIES_DB = [
     "landmark": "Brimstone Hill Fortress",
     "cultureFood": "Stewed Saltfish with Spicy Plantains",
     "clues": [
-      "The smallest sovereign nation by both territory land area and population in the Americas.",
-      "Features a massive 17th-century volcanic stone fortress known historically as the Gibraltar of its waters.",
+      "A twin-island sovereign nation comprising two verdant volcanic peaks separated by a shallow three-kilometer channel.",
+      "Features the massive 17th-century Brimstone Hill volcanic stone fortress, engineered as a monumental hillside citadel.",
       "Famous for green vervet monkeys roaming volcanic hillsides, scenic sugar cane railways, and coconut dumplings."
     ],
     "memoryAnchors": [
@@ -4063,7 +4065,7 @@ export const COUNTRIES_DB = [
     "landmark": "Pico Cão Grande Volcanic Needle Peak",
     "cultureFood": "Calulu Dried Fish Stew",
     "clues": [
-      "A lush two-island republic situated directly along the zero-degree latitude and longitude oceanic crossroads.",
+      "A lush volcanic two-island nation famous for Obo National Park's dramatic volcanic plug needle rising over dense cloud forests.",
       "Features a breathtaking skyscraper-like vertical needle of phonolite volcanic rock rising 370 meters above dense jungle.",
       "Famous for historic organic cocoa bean plantations once earning it the moniker of the chocolate islands."
     ],
@@ -4231,7 +4233,7 @@ export const COUNTRIES_DB = [
     "landmark": "Meroë Ancient Nubian Pyramids",
     "cultureFood": "Ful Medames and Kisra",
     "clues": [
-      "Contains more ancient royal funerary pyramids than its northern counterpart, built by the ancient Kingdom of Kush.",
+      "Preserves more than two hundred steep-sided ancient royal funerary pyramids built by the Kingdom of Kush at Meroë.",
       "Its capital city sits directly at the confluence where two distinct blue and white branches of a mighty river unite.",
       "Famous for steep narrow stone pyramids rising from golden desert dunes, and slow-cooked fava bean stew with cumin."
     ],
@@ -4259,7 +4261,7 @@ export const COUNTRIES_DB = [
     "landmark": "Paramaribo Wooden Colonial Architecture",
     "cultureFood": "Pom Baked Root Casserole and Roti",
     "clues": [
-      "The only sovereign nation in the Americas where Nederlands serves as the official administrative and educational language.",
+      "The only sovereign state on its continental landmass where Nederlands serves as the official administrative and educational language.",
       "Its coastal capital features an exceptional historic center constructed almost entirely with symmetrical white wood buildings.",
       "Famous for an oven-baked festival casserole prepared with tannia root tubers and citrus-seasoned chicken, and pristine rainforests."
     ],
@@ -4848,7 +4850,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Kuli-Kuli and Akpan",
     "clues": [
       "The historical birthplace of the ancient Kingdom of Dahomey, celebrated for elite all-female military regiments.",
-      "Its southern coastal lagoon preserves the stilt village of Ganvié, home to tens of thousands living above water.",
+      "Lake Nokoué preserves the historic stilt village of Ganvié, where tens of thousands reside in wooden dwellings above the water.",
       "Famous for clay bas-relief royal palaces, crispy spiced peanut snacks, and voodoo spiritual traditions."
     ],
     "memoryAnchors": [
@@ -4988,7 +4990,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "La Bandera and Mangú",
     "clues": [
       "The birthplace of energetic merengue and bachata dance rhythms played with accordions and metal scrapers.",
-      "Its capital city features the oldest continuously inhabited early colonial settlement and cathedral in the Americas.",
+      "Its historic colonial zone in Santo Domingo features the oldest continuously inhabited colonial cathedral founded in the early 1500s.",
       "Famous for mashed plantains topped with pickled red onions and fried salami, and producing champion baseball players."
     ],
     "memoryAnchors": [
@@ -5015,7 +5017,7 @@ export const COUNTRIES_DB = [
     "landmark": "Sri Siva Subramaniya Hindu Temple in Nadi",
     "cultureFood": "Kokoda Lime Fish and Lovo",
     "clues": [
-      "An archipelago of over 300 volcanic islands situated directly along the 180-degree meridian line of longitude.",
+      "An archipelago of over 300 volcanic islands famous for the traditional kava ceremonial drink prepared from crushed yaqona roots.",
       "Welcomes visitors with a ceremonial herbal beverage prepared from pounded pepper roots in carved wooden bowls.",
       "Famous for friendly choral hospitality, earth-oven feasts buried with hot stones, and world-class seven-a-side rugby champions."
     ],
@@ -5324,7 +5326,7 @@ export const COUNTRIES_DB = [
     "cultureFood": "Sopa Paraguaya Cornbread",
     "clues": [
       "One of the few nations where an indigenous tongue (Guaraní) is spoken fluently by the vast majority alongside the official colonial language.",
-      "Features the monumental Itaipu Dam on its border, verified as one of the largest hydroelectric clean energy generators on Earth.",
+      "Jointly operates the monumental Itaipu Dam on the Paraná River, verified as one of the largest hydroelectric clean energy generators on Earth.",
       "Famous for cold ice-water yerba mate herbal infusions sipped through horns, and a savory solid sponge cornbread with cheese and onions."
     ],
     "memoryAnchors": [
@@ -5493,7 +5495,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Named after ancient medieval stone palace ruins constructed entirely with interlocking granite blocks without mortar.",
       "Its national emblem depicts a distinctive soapstone carved bird discovered among ancient royal enclosures.",
-      "Famous for sharing the thunderous Victoria Falls spray with its northern counterpart, and thick maize meal porridge."
+      "Famous for the thunderous spray of Victoria Falls known locally as Mosi-oa-Tunya, and hearty sadza maize meal."
     ],
     "memoryAnchors": [
       "Zimbabwe is known for its historic capital Harare.",
