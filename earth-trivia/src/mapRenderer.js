@@ -7,6 +7,8 @@ import { TINY_COUNTRIES } from '../data/tiny-countries.js';
  * - Deep ink-teal ocean & graticules
  * - 5 warm sand and paper tints using greedy graph coloring (no adjacent conflicts)
  * - Crisp 1px dark ink sepia borders (contrast >= 5.0:1)
+ * - Two-pass cartographic rendering: fills first, borders on top (zero seam clipping)
+ * - High-resolution 4096 x 2048 equirectangular texture (8.38M pixels, 11.3 px/deg)
  * - Direct texture highlight: fill + 2px bright outline
  * - 300ms smooth fill tween
  * - Tiny countries: transparent-center unfilled rings
@@ -14,9 +16,11 @@ import { TINY_COUNTRIES } from '../data/tiny-countries.js';
  */
 export class MapRenderer {
   constructor() {
-    const isDesktop = window.innerWidth > 900 && (window.devicePixelRatio || 1) >= 1.5;
-    this.width = isDesktop ? 4096 : 2048;
-    this.height = isDesktop ? 2048 : 1024;
+    // Ultra-sharp 4096x2048 equirectangular map texture (8.38M pixels, 11.3 px/deg)
+    // Only drop to 2048x1024 on legacy low-memory mobile viewports (<480px width with DPR < 2)
+    const isLowMemoryMobile = window.innerWidth < 480 && (window.devicePixelRatio || 1) < 2;
+    this.width = isLowMemoryMobile ? 2048 : 4096;
+    this.height = isLowMemoryMobile ? 1024 : 2048;
 
     // "Atlas" 5 Muted Land Tints (Perceptually distinct, Delta-E >= 8 across all pairs)
     this.LAND_TINTS = [
@@ -65,7 +69,7 @@ export class MapRenderer {
     return [x, y];
   }
 
-  // Draw Polygon or MultiPolygon
+  // Draw Polygon or MultiPolygon (fill & stroke)
   drawGeometry(ctx, geometry) {
     if (!geometry || !geometry.coordinates) return;
 
@@ -101,7 +105,77 @@ export class MapRenderer {
     }
   }
 
-  // Generate the permanent base texture with graph coloring
+  // Pure Fill Pass for Polygons
+  fillGeometry(ctx, geometry) {
+    if (!geometry || !geometry.coordinates) return;
+
+    if (geometry.type === 'Polygon') {
+      this.fillPolygonRings(ctx, geometry.coordinates);
+    } else if (geometry.type === 'MultiPolygon') {
+      for (const poly of geometry.coordinates) {
+        this.fillPolygonRings(ctx, poly);
+      }
+    }
+  }
+
+  fillPolygonRings(ctx, rings) {
+    for (let r = 0; r < rings.length; r++) {
+      const ring = rings[r];
+      if (!ring || ring.length < 3) continue;
+
+      ctx.beginPath();
+      const [startX, startY] = this.toPixel(ring[0][0], ring[0][1]);
+      ctx.moveTo(startX, startY);
+
+      for (let i = 1; i < ring.length; i++) {
+        const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
+        if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
+          ctx.moveTo(px, py);
+        } else {
+          ctx.lineTo(px, py);
+        }
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
+  // Pure Stroke Pass for Country Borders
+  strokeGeometry(ctx, geometry) {
+    if (!geometry || !geometry.coordinates) return;
+
+    if (geometry.type === 'Polygon') {
+      this.strokePolygonRings(ctx, geometry.coordinates);
+    } else if (geometry.type === 'MultiPolygon') {
+      for (const poly of geometry.coordinates) {
+        this.strokePolygonRings(ctx, poly);
+      }
+    }
+  }
+
+  strokePolygonRings(ctx, rings) {
+    for (let r = 0; r < rings.length; r++) {
+      const ring = rings[r];
+      if (!ring || ring.length < 3) continue;
+
+      ctx.beginPath();
+      const [startX, startY] = this.toPixel(ring[0][0], ring[0][1]);
+      ctx.moveTo(startX, startY);
+
+      for (let i = 1; i < ring.length; i++) {
+        const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
+        if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
+          ctx.moveTo(px, py);
+        } else {
+          ctx.lineTo(px, py);
+        }
+      }
+      ctx.closePath();
+      ctx.stroke();
+    }
+  }
+
+  // Generate the permanent base texture with graph coloring and Two-Pass Cartographic Rendering
   initBaseTexture() {
     const ctx = this.baseCtx;
     const w = this.width;
@@ -135,29 +209,36 @@ export class MapRenderer {
 
     // Equator accent line
     ctx.strokeStyle = this.COLOR_EQUATOR;
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.moveTo(0, h / 2);
     ctx.lineTo(w, h / 2);
     ctx.stroke();
 
-    // 3. Render all land polygons with 5 graph-colored tints
-    ctx.strokeStyle = this.COLOR_BORDER;
-    ctx.lineWidth = this.width > 2048 ? 1.5 : 1.0;
-
+    // 3. Two-Pass Cartographic Rendering:
+    // PASS 1: Fill all land polygons with 5 graph-colored tints
     for (const country of WORLD_COUNTRIES) {
       const tintIndex = country.colorIndex !== undefined ? country.colorIndex : 0;
       ctx.fillStyle = this.LAND_TINTS[tintIndex % 5];
-      this.drawGeometry(ctx, country.geometry);
+      this.fillGeometry(ctx, country.geometry);
+    }
+
+    // PASS 2: Stroke all country borders on top of fills (no border clipping between neighbors)
+    ctx.strokeStyle = this.COLOR_BORDER;
+    ctx.lineWidth = this.width >= 4096 ? 1.8 : 1.2;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    for (const country of WORLD_COUNTRIES) {
+      this.strokeGeometry(ctx, country.geometry);
     }
 
     // 4. Subtle microstate resting markers (unfilled ring for tiny countries)
     for (const tiny of TINY_COUNTRIES) {
       const [tx, ty] = this.toPixel(tiny.centroid[0], tiny.centroid[1]);
-      ctx.strokeStyle = 'rgba(74, 90, 102, 0.45)';
-      ctx.lineWidth = 1.0;
+      ctx.strokeStyle = 'rgba(74, 90, 102, 0.55)';
+      ctx.lineWidth = this.width >= 4096 ? 1.5 : 1.0;
       ctx.beginPath();
-      ctx.arc(tx, ty, this.width > 2048 ? 3.5 : 2.0, 0, Math.PI * 2);
+      ctx.arc(tx, ty, this.width >= 4096 ? 4.0 : 2.5, 0, Math.PI * 2);
       ctx.stroke();
     }
 
@@ -166,7 +247,6 @@ export class MapRenderer {
 
     // Three.js Texture
     this.texture = new THREE.CanvasTexture(this.canvas);
-    this.texture.anisotropy = 4;
     this.texture.generateMipmaps = true;
     this.texture.minFilter = THREE.LinearMipmapLinearFilter;
     this.texture.magFilter = THREE.LinearFilter;
@@ -209,7 +289,7 @@ export class MapRenderer {
       }
     };
 
-    const ringRadius = this.width > 2048 ? 10 : 6;
+    const ringRadius = this.width >= 4096 ? 12 : 7;
     const t = Math.max(0, Math.min(1, progress));
 
     // 1. Hovered Country (soft golden ivory highlight)
@@ -223,7 +303,7 @@ export class MapRenderer {
       if (country && country.geometry) {
         this.ctx.fillStyle = `rgba(255, 252, 235, ${(0.40 * t).toFixed(3)})`;
         this.ctx.strokeStyle = '#fff5d6';
-        this.ctx.lineWidth = this.width > 2048 ? 2.5 : 1.5;
+        this.ctx.lineWidth = this.width >= 4096 ? 3.0 : 1.8;
         this.drawGeometry(this.ctx, country.geometry);
       }
       drawTinyRing(hoveredCountryId, '#fff5d6', ringRadius);
@@ -239,7 +319,7 @@ export class MapRenderer {
       if (country && country.geometry) {
         this.ctx.fillStyle = `rgba(217, 125, 16, ${(0.45 * t).toFixed(3)})`;
         this.ctx.strokeStyle = '#d97d10';
-        this.ctx.lineWidth = this.width > 2048 ? 3.5 : 2.0;
+        this.ctx.lineWidth = this.width >= 4096 ? 4.0 : 2.5;
         this.drawGeometry(this.ctx, country.geometry);
       }
       drawTinyRing(selectedCountryId, '#d97d10', ringRadius + 2);
@@ -252,18 +332,18 @@ export class MapRenderer {
         this.ctx.fillStyle = `rgba(186, 60, 42, ${(0.35 * t).toFixed(3)})`;
         this.ctx.strokeStyle = 'transparent';
         this.ctx.lineWidth = 0;
-        this.drawGeometry(this.ctx, country.geometry);
+        this.fillGeometry(this.ctx, country.geometry);
       }
     }
 
-    // 4. Correct Target Country: Soft translucent botanical green fill (#1d733e)
+    // 4. Correct Target Country: Soft botanical green fill (#1d733e)
     if (correctCountryId) {
       const country = getCountry(correctCountryId);
       if (country && country.geometry) {
         this.ctx.fillStyle = `rgba(29, 115, 62, ${(0.35 * t).toFixed(3)})`;
         this.ctx.strokeStyle = 'transparent';
         this.ctx.lineWidth = 0;
-        this.drawGeometry(this.ctx, country.geometry);
+        this.fillGeometry(this.ctx, country.geometry);
       }
     }
 

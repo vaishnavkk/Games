@@ -21,7 +21,7 @@ export class GlobeApp {
       powerPreference: 'high-performance'
     });
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.5));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.25;
     this.container.appendChild(this.renderer.domElement);
@@ -44,30 +44,34 @@ export class GlobeApp {
     this.mapRenderer = new MapRenderer();
     const texture = this.mapRenderer.initBaseTexture();
 
-    // Globe Mesh
-    const sphereGeo = new THREE.SphereGeometry(1.7, 64, 64);
+    // Set anisotropic filtering to GPU maximum (typically 16x) to preserve sharpness at grazing angles
+    const maxAnisotropy = this.renderer.capabilities.getMaxAnisotropy();
+    texture.anisotropy = Math.max(4, maxAnisotropy);
+
+    // Globe Mesh (128x128 segments = 16,384 vertices for a perfectly round silhouette with zero faceting)
+    const sphereGeo = new THREE.SphereGeometry(1.7, 128, 128);
     const sphereMat = new THREE.MeshPhongMaterial({
       map: texture,
-      shininess: 20,
-      specular: new THREE.Color(0x334466)
+      shininess: 8,
+      specular: new THREE.Color(0x162230)
     });
     this.earthMesh = new THREE.Mesh(sphereGeo, sphereMat);
     this.earthMesh.rotation.y = -Math.PI / 2;
     this.scene.add(this.earthMesh);
 
-    // Atmospheric Glow Shell
+    // Atmospheric Glow Shell (128x128 segments to match globe curvature perfectly)
     this.createAtmosphere();
 
     // Cosmic Stars
     this.createStars();
 
-    // Lighting
-    const ambient = new THREE.AmbientLight(0xdde8ff, 0.9);
+    // Lighting (Balanced illumination for cartographic clarity and high contrast)
+    const ambient = new THREE.AmbientLight(0xdde8ff, 1.05);
     this.scene.add(ambient);
-    const sunLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    const sunLight = new THREE.DirectionalLight(0xffffff, 1.35);
     sunLight.position.set(5, 3, 5);
     this.scene.add(sunLight);
-    const rimLight = new THREE.DirectionalLight(0x06b6d4, 0.7);
+    const rimLight = new THREE.DirectionalLight(0x06b6d4, 0.65);
     rimLight.position.set(-5, -2, -4);
     this.scene.add(rimLight);
 
@@ -85,7 +89,7 @@ export class GlobeApp {
   }
 
   createAtmosphere() {
-    const atmosGeo = new THREE.SphereGeometry(1.7 * 1.035, 64, 64);
+    const atmosGeo = new THREE.SphereGeometry(1.7 * 1.035, 128, 128);
     const atmosMat = new THREE.ShaderMaterial({
       vertexShader: `
         varying vec3 vNormal;
