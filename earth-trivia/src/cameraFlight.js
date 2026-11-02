@@ -153,7 +153,9 @@ export class CameraFlightController {
 
     if (isTiny) {
       // Small countries: draw an unfilled 3D ring larger than the country so land is visible inside
-      const centerVec = CountryPicker.latLonToVector3(country.lat, country.lon, 1.704).normalize();
+      const cLat = country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0);
+      const cLon = country.lon !== undefined ? country.lon : (country.centroid ? country.centroid[0] : 0);
+      const centerVec = CountryPicker.latLonToVector3(cLat, cLon, 1.704).normalize();
       // Generate orthonormal basis around centerVec
       const up = Math.abs(centerVec.y) < 0.99 ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(1, 0, 0);
       const right = new THREE.Vector3().crossVectors(centerVec, up).normalize();

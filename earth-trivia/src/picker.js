@@ -16,6 +16,23 @@ export class CountryPicker {
     this.dbCountries = COUNTRIES_DB;
   }
 
+  // Enrich country feature with trivia metadata (flag, capital, landmark, etc.)
+  _enrichCountry(country) {
+    if (!country) return null;
+    const id3 = String(country.id).padStart(3, '0');
+    const dbMatch = this.dbCountries.find(c => String(c.id).padStart(3, '0') === id3);
+    if (dbMatch) {
+      return {
+        ...country,
+        ...dbMatch,
+        // preserve GeoJSON geometry and bbox from world-50m
+        geometry: country.geometry || dbMatch.geometry,
+        bbox: country.bbox || dbMatch.bbox
+      };
+    }
+    return country;
+  }
+
   // Convert 3D Sphere Local Point to (lat, lon)
   static vector3ToLatLon(localVec) {
     const norm = localVec.clone().normalize();
@@ -140,7 +157,7 @@ export class CountryPicker {
       // Point in Polygon
       if (CountryPicker.testGeometry(lon, lat, country.geometry)) {
         return {
-          country,
+          country: this._enrichCountry(country),
           hitLat: lat,
           hitLon: lon,
           isTiny: false
@@ -173,7 +190,7 @@ export class CountryPicker {
       }
       if (fullCountry) {
         return {
-          country: fullCountry,
+          country: this._enrichCountry(fullCountry),
           hitLat: bestTiny.centroid[1],
           hitLon: bestTiny.centroid[0],
           isTiny: true
@@ -204,7 +221,7 @@ export class CountryPicker {
       if (!inBbox) continue;
 
       if (CountryPicker.testGeometry(lon, lat, country.geometry)) {
-        return country;
+        return this._enrichCountry(country);
       }
     }
 
@@ -228,7 +245,7 @@ export class CountryPicker {
       if (!fullCountry) {
         fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
       }
-      if (fullCountry) return fullCountry;
+      if (fullCountry) return this._enrichCountry(fullCountry);
     }
 
     return null;

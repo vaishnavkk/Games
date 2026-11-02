@@ -60,7 +60,7 @@ export class GameManager {
     }
   }
 
-  startExpedition({ mode = 'clue', tier = 'easy', rounds = 10, hasTimer = false, isPractice = false }) {
+  startExpedition({ mode = 'clue', tier = 'easy', rounds = 10, hasTimer = false, isPractice = false, customPool = null }) {
     this.mode = mode;
     this.tier = tier;
     this.totalRounds = rounds;
@@ -76,8 +76,8 @@ export class GameManager {
     this.phase = 'start';
     this.lastRoundBreakdown = null;
 
-    // Shuffle pool
-    const pool = this.getTierPool(tier);
+    // Use custom pool if provided (e.g. replay missed session), otherwise draw from tier pool
+    const pool = customPool && customPool.length > 0 ? customPool : this.getTierPool(tier);
     this.roundQueue = this.shuffle([...pool]);
 
     this.ui.showGameHUD(this.totalRounds, this.hasTimer, this.isPractice);
@@ -415,7 +415,12 @@ export class GameManager {
       isPractice: this.isPractice,
       mode: this.mode,
       tier: this.tier,
-      onRestart: () => this.ui.showStartScreen(),
+      onRestart: () => {
+        this.ui.showStartScreen();
+        if (typeof window !== 'undefined' && window.__updateBestScoreDisplay) {
+          window.__updateBestScoreDisplay();
+        }
+      },
       onReplayMissed: () => this.replayMissedSession()
     });
   }
@@ -428,9 +433,9 @@ export class GameManager {
       tier: this.tier,
       rounds: missed.length,
       hasTimer: false,
-      isPractice: this.isPractice
+      isPractice: this.isPractice,
+      customPool: missed
     });
-    this.roundQueue = this.shuffle(missed);
   }
 
   bindEvents() {
@@ -455,20 +460,34 @@ export class GameManager {
       }
     });
 
-    // Keyboard accessibility: Enter submits selected country; Space reveals next clue
+    // Keyboard accessibility: Enter submits selected country or advances result; Space reveals next clue or advances result
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         const confirmBtn = document.getElementById('touchConfirmBtn');
         if (confirmBtn && !confirmBtn.classList.contains('hidden') && this.selectedHit) {
           e.preventDefault();
           confirmBtn.click();
+        } else if (this.phase === 'result') {
+          const vaultNextBtn = document.getElementById('vaultNextBtn');
+          if (vaultNextBtn && this.ui.memoryVault && !this.ui.memoryVault.classList.contains('hidden')) {
+            e.preventDefault();
+            vaultNextBtn.click();
+          }
         }
-      } else if (e.key === ' ' && this.isAnswering && this.mode === 'clue') {
-        // Space reveals next clue if clue button is active
-        const nextClueBtn = document.getElementById('nextClueBtn');
-        if (nextClueBtn && nextClueBtn.style.display !== 'none') {
-          e.preventDefault();
-          this.revealNextClue();
+      } else if (e.key === ' ') {
+        if (this.isAnswering && this.mode === 'clue') {
+          // Space reveals next clue if clue button is active
+          const nextClueBtn = document.getElementById('nextClueBtn');
+          if (nextClueBtn && nextClueBtn.style.display !== 'none') {
+            e.preventDefault();
+            this.revealNextClue();
+          }
+        } else if (this.phase === 'result') {
+          const vaultNextBtn = document.getElementById('vaultNextBtn');
+          if (vaultNextBtn && this.ui.memoryVault && !this.ui.memoryVault.classList.contains('hidden')) {
+            e.preventDefault();
+            vaultNextBtn.click();
+          }
         }
       }
     });
