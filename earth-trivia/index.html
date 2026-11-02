@@ -538,6 +538,60 @@
       pointer-events: auto;
     }
 
+    /* ═══════════════════════════════════════════════════════════
+       DESKTOP START SCREEN: 2-COLUMN ATLAS INSTRUMENT (Step 4c)
+       Left: ~540px panel with Fraunces title >=64px, cards, Play CTA
+       Right: Clear/transparent, showing live rotating interactive 3D globe
+       ═══════════════════════════════════════════════════════════ */
+    #startScreen.modal-overlay-container {
+      background: transparent;
+      pointer-events: none;
+      display: flex;
+      justify-content: flex-start;
+      align-items: stretch;
+      padding: 0;
+    }
+
+    .start-screen-panel {
+      pointer-events: auto;
+      width: 540px;
+      max-width: 540px;
+      height: 100vh;
+      max-height: 100vh;
+      background: var(--color-surface-bg);
+      border-right: 1px solid var(--color-border);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-6) var(--space-6) var(--space-4) var(--space-6);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-sizing: border-box;
+      animation: modalFadeIn var(--duration-normal) var(--ease-out);
+    }
+
+    .start-hero-title {
+      font-family: var(--font-display);
+      font-size: 64px; /* Strictly >= 64px desktop constraint */
+      font-weight: var(--font-weight-bold);
+      letter-spacing: -1.2px;
+      color: var(--color-text-primary);
+      line-height: 1.0;
+      margin-bottom: 6px;
+    }
+
+    .start-scrollable-body {
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      padding-right: 4px;
+      margin-bottom: 8px;
+    }
+
+    .start-cta-bar {
+      flex-shrink: 0;
+      padding-top: 6px;
+    }
+
     .modal-dialog-surface {
       background: var(--color-surface-bg);
       border: 1px solid var(--color-border);
@@ -863,29 +917,114 @@
       .app-shell {
         padding: var(--space-2);
       }
+
+      /* Compact single-row mobile HUD (Step 4b) */
       .top-hud-bar {
-        padding: 4px var(--space-2);
+        padding: 3px 6px;
+        flex-wrap: nowrap;
+        gap: 4px;
+        min-height: 34px;
+        width: 100%;
+      }
+      .brand-group {
+        gap: 3px;
+        flex-shrink: 1;
+        min-width: 0;
       }
       .brand-title {
-        font-size: 16px;
+        font-size: 13.5px;
+        white-space: nowrap;
+      }
+      .hud-stats-group {
+        gap: 4px;
+        flex-shrink: 0;
       }
       .hud-tag {
-        padding: 2px 7px;
-        gap: 4px;
+        padding: 2px 5px;
+        gap: 3px;
       }
       .hud-label {
-        font-size: 10px;
+        font-size: 9px;
       }
       .hud-tag .val {
         font-size: 18px; /* >= 18px constraint */
+        line-height: 1;
       }
+      .icon-action-btn {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        min-height: 28px;
+        padding: 0;
+      }
+
+      /* Slim floating clue bar below compact top bar */
       .floating-clue-card {
-        top: 48px;
+        top: 46px;
+        left: 8px;
+        right: 8px;
         width: calc(100% - 16px);
-        padding: var(--space-2) var(--space-3);
+        max-width: none;
+        transform: none;
+        padding: 6px 10px;
+      }
+      .clue-meta-header {
+        margin-bottom: 2px;
       }
       .clue-text-main {
-        font-size: 13.5px;
+        font-size: 13px;
+        line-height: 1.35;
+        margin-bottom: 4px;
+      }
+      .action-secondary-btn {
+        min-height: 26px;
+        padding: 3px 8px;
+        font-size: 11.5px;
+      }
+
+      /* Mobile Start Card with Pinned Sticky CTA (Step 4a) */
+      #startScreen.modal-overlay-container {
+        background: rgba(6, 22, 31, 0.88);
+        pointer-events: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+      }
+      .start-screen-panel {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: calc(100vh - 16px);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-component);
+        padding: 12px 12px 8px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .start-hero-title {
+        font-size: var(--font-size-xl); /* 38px >= 36px mobile constraint */
+        letter-spacing: -0.6px;
+        line-height: 1.05;
+        margin-bottom: 4px;
+      }
+      .start-scrollable-body {
+        flex: 1;
+        overflow-y: auto;
+        min-height: 0;
+        margin-bottom: 6px;
+        padding-right: 2px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .start-cta-bar {
+        position: sticky;
+        bottom: 0;
+        flex-shrink: 0;
+        background: var(--color-surface-bg);
+        padding-top: 4px;
+        z-index: 10;
+        box-shadow: 0 -4px 10px rgba(8, 26, 36, 0.12);
       }
 
       /* Mobile Fact Sheet: Strict max-height: 30vh (≤30% viewport height) */
@@ -1085,14 +1224,14 @@
 
   </div><!-- /app-shell -->
 
-  <!-- Start Screen Modal (Designed Atlas Expedition Interface) -->
+  <!-- Start Screen Modal (Designed Atlas Expedition Interface - 2-Column Desktop, Pinned Mobile CTA) -->
   <div class="modal-overlay-container" id="startScreen">
-    <div class="modal-dialog-surface">
+    <div class="start-screen-panel" id="startScreenPanel">
       <div class="modal-brand-header">
         <span class="hero-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         </span>
-        <h1 class="modal-hero-title">GeoTrivia</h1>
+        <h1 class="start-hero-title">GeoTrivia</h1>
         <p class="modal-sub-label">Explore Earth in 3D: locate countries by clicking them directly on the globe.</p>
         <div class="modal-best-banner">
           <span>Best Record:</span>
@@ -1100,97 +1239,101 @@
         </div>
       </div>
 
-      <!-- Mode Selection Grid (Fully Implemented: Clues, Names, Flags) -->
-      <div class="form-group-section">
-        <label class="form-section-label">Game Mode</label>
-        <div class="choice-cards-grid">
-          <button class="choice-card mode-btn active" data-mode="clue">
-            <div class="choice-card-head">
-              <span class="choice-title">Clues</span>
-              <span class="choice-badge">Trivia</span>
-            </div>
-            <p class="choice-desc">Find nations from rich geographic and cultural clues.</p>
-          </button>
-          <button class="choice-card mode-btn" data-mode="name">
-            <div class="choice-card-head">
-              <span class="choice-title">Names</span>
-              <span class="choice-badge">Classic</span>
-            </div>
-            <p class="choice-desc">Locate sovereign nations on the globe by name.</p>
-          </button>
-          <button class="choice-card mode-btn" data-mode="flag">
-            <div class="choice-card-head">
-              <span class="choice-title">Flags</span>
-              <span class="choice-badge">Visual</span>
-            </div>
-            <p class="choice-desc">Identify nations by their national flag and colors.</p>
-          </button>
+      <div class="start-scrollable-body">
+        <!-- Mode Selection Grid (Fully Implemented: Clues, Names, Flags) -->
+        <div class="form-group-section">
+          <label class="form-section-label">Game Mode</label>
+          <div class="choice-cards-grid">
+            <button class="choice-card mode-btn active" data-mode="clue">
+              <div class="choice-card-head">
+                <span class="choice-title">Clues</span>
+                <span class="choice-badge">Trivia</span>
+              </div>
+              <p class="choice-desc">Find nations from rich geographic and cultural clues.</p>
+            </button>
+            <button class="choice-card mode-btn" data-mode="name">
+              <div class="choice-card-head">
+                <span class="choice-title">Names</span>
+                <span class="choice-badge">Classic</span>
+              </div>
+              <p class="choice-desc">Locate sovereign nations on the globe by name.</p>
+            </button>
+            <button class="choice-card mode-btn" data-mode="flag">
+              <div class="choice-card-head">
+                <span class="choice-title">Flags</span>
+                <span class="choice-badge">Visual</span>
+              </div>
+              <p class="choice-desc">Identify nations by their national flag and colors.</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Difficulty Tier Selection Grid -->
+        <div class="form-group-section">
+          <label class="form-section-label">Difficulty Tier</label>
+          <div class="choice-cards-grid">
+            <button class="choice-card tier-btn active" data-tier="easy">
+              <div class="choice-card-head">
+                <span class="choice-title">Explorer</span>
+                <span class="choice-badge">42 Nations</span>
+              </div>
+              <p class="choice-desc">Major iconic nations and prominent global powers.</p>
+            </button>
+            <button class="choice-card tier-btn" data-tier="medium">
+              <div class="choice-card-head">
+                <span class="choice-title">Navigator</span>
+                <span class="choice-badge">100 Nations</span>
+              </div>
+              <p class="choice-desc">Broad expedition across diverse world regions.</p>
+            </button>
+            <button class="choice-card tier-btn" data-tier="hard">
+              <div class="choice-card-head">
+                <span class="choice-title">Global</span>
+                <span class="choice-badge">195 Nations</span>
+              </div>
+              <p class="choice-desc">193 UN members + Vatican City + Palestine</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Rounds Selection -->
+        <div class="form-group-section">
+          <label class="form-section-label">Expedition Length</label>
+          <div class="segmented-control">
+            <button class="segmented-btn active round-btn" data-rounds="10">10 Rounds</button>
+            <button class="segmented-btn round-btn" data-rounds="20">20 Rounds</button>
+            <button class="segmented-btn round-btn" data-rounds="endless">Endless</button>
+          </div>
+        </div>
+
+        <!-- Expedition Options (Timer, Practice Mode - Survival Cleanly Cut) -->
+        <div class="form-group-section">
+          <label class="form-section-label">Options</label>
+          <div class="options-toggle-group">
+            <label class="toggle-control-label" for="timerToggle">
+              <input type="checkbox" id="timerToggle" class="toggle-checkbox">
+              <div class="toggle-text-wrap">
+                <strong>Round Countdown Timer (25s)</strong>
+                <span class="subtext">Adds up to +200 speed bonus points per identification</span>
+              </div>
+            </label>
+            <label class="toggle-control-label" for="practiceToggle">
+              <input type="checkbox" id="practiceToggle" class="toggle-checkbox">
+              <div class="toggle-text-wrap">
+                <strong>Practice Mode</strong>
+                <span class="subtext">Freely explore and identify nations without timer or score tracking</span>
+              </div>
+            </label>
+          </div>
         </div>
       </div>
 
-      <!-- Difficulty Tier Selection Grid -->
-      <div class="form-group-section">
-        <label class="form-section-label">Difficulty Tier</label>
-        <div class="choice-cards-grid">
-          <button class="choice-card tier-btn active" data-tier="easy">
-            <div class="choice-card-head">
-              <span class="choice-title">Explorer</span>
-              <span class="choice-badge">42 Nations</span>
-            </div>
-            <p class="choice-desc">Major iconic nations and prominent global powers.</p>
-          </button>
-          <button class="choice-card tier-btn" data-tier="medium">
-            <div class="choice-card-head">
-              <span class="choice-title">Navigator</span>
-              <span class="choice-badge">100 Nations</span>
-            </div>
-            <p class="choice-desc">Broad expedition across diverse world regions.</p>
-          </button>
-          <button class="choice-card tier-btn" data-tier="hard">
-            <div class="choice-card-head">
-              <span class="choice-title">Global</span>
-              <span class="choice-badge">195 Nations</span>
-            </div>
-            <p class="choice-desc">193 UN members + Vatican City + Palestine</p>
-          </button>
-        </div>
+      <div class="start-cta-bar">
+        <button class="btn-primary-action btn-hero" id="startExpeditionBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Launch Expedition</span>
+        </button>
       </div>
-
-      <!-- Rounds Selection -->
-      <div class="form-group-section">
-        <label class="form-section-label">Expedition Length</label>
-        <div class="segmented-control">
-          <button class="segmented-btn active round-btn" data-rounds="10">10 Rounds</button>
-          <button class="segmented-btn round-btn" data-rounds="20">20 Rounds</button>
-          <button class="segmented-btn round-btn" data-rounds="endless">Endless</button>
-        </div>
-      </div>
-
-      <!-- Expedition Options (Timer, Practice Mode - Survival Cleanly Cut) -->
-      <div class="form-group-section">
-        <label class="form-section-label">Options</label>
-        <div class="options-toggle-group">
-          <label class="toggle-control-label" for="timerToggle">
-            <input type="checkbox" id="timerToggle" class="toggle-checkbox">
-            <div class="toggle-text-wrap">
-              <strong>Round Countdown Timer (25s)</strong>
-              <span class="subtext">Adds up to +200 speed bonus points per identification</span>
-            </div>
-          </label>
-          <label class="toggle-control-label" for="practiceToggle">
-            <input type="checkbox" id="practiceToggle" class="toggle-checkbox">
-            <div class="toggle-text-wrap">
-              <strong>Practice Mode</strong>
-              <span class="subtext">Freely explore and identify nations without timer or score tracking</span>
-            </div>
-          </label>
-        </div>
-      </div>
-
-      <button class="btn-primary-action btn-hero" id="startExpeditionBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        <span>Launch Expedition</span>
-      </button>
     </div>
   </div>
 

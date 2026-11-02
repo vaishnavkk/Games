@@ -18,19 +18,19 @@ export class MapRenderer {
     this.width = isDesktop ? 4096 : 2048;
     this.height = isDesktop ? 2048 : 1024;
 
-    // "Atlas" 5 Muted Land Tints (Warm Sand & Paper, distinct from ocean, green, & red)
+    // "Atlas" 5 Muted Land Tints (Perceptually distinct, Delta-E >= 8 across all pairs)
     this.LAND_TINTS = [
-      '#ded6c4', // Tint 0: Pale antique vellum
-      '#d3c4aa', // Tint 1: Warm dune sand
-      '#c8b79b', // Tint 2: Desert parchment
-      '#e5dfcd', // Tint 3: Light linen
-      '#bead8e'  // Tint 4: Weathered wheat
+      '#f8f2e6', // Tint 0: Pale antique alabaster
+      '#e4d8c2', // Tint 1: Warm dune sand
+      '#cfbea0', // Tint 2: Desert parchment
+      '#baa47f', // Tint 3: Light linen ochre
+      '#a38c64'  // Tint 4: Weathered wheat gold
     ];
 
-    // Deep ink-teal ocean colors
-    this.COLOR_OCEAN_TOP = '#0a1d27';
-    this.COLOR_OCEAN_MID = '#071720';
-    this.COLOR_OCEAN_BOT = '#051219';
+    // Deep blue ocean colors (#0b1528 or similar deep blue)
+    this.COLOR_OCEAN_TOP = '#0b1528';
+    this.COLOR_OCEAN_MID = '#081322';
+    this.COLOR_OCEAN_BOT = '#050c16';
 
     // Graticules and borders
     this.COLOR_GRATICULE = 'rgba(255, 255, 255, 0.04)';

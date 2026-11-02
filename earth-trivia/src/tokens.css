@@ -32,7 +32,7 @@
   /* Typography: Deep Ink Navy (Strict WCAG AAA / AA Contrast) */
   --color-text-primary: #12202f;        /* 14.2:1 on #f5f0e6 (Pass AAA) */
   --color-text-secondary: #3b4d5e;      /* 7.2:1 on #f5f0e6 (Pass AAA) */
-  --color-text-muted: #5e7182;          /* 4.8:1 on #f5f0e6 (Pass AA) */
+  --color-text-muted: #4c5e6e;          /* 5.9:1 on #f5f0e6, 5.3:1 on #ece5d6 (Pass AA) */
   --color-text-disabled: #8a96a3;
   --color-text-inverse: #f5f0e6;        /* Light paper text for dark chips */
 
@@ -42,7 +42,7 @@
   --color-accent-active: #ad5d05;
   --color-accent-subtle: rgba(217, 125, 16, 0.15);
   --color-accent-border: #c46d0a;
-  --color-accent-text: #965203;         /* Saffron text on paper: 5.6:1 (Pass AA) */
+  --color-accent-text: #7c4100;         /* Deep Saffron Ochre: >= 5.6:1 on paper and badge (Pass AA) */
   --color-accent-btn-text: #12202f;     /* Ink navy on Saffron button: 4.8:1 (Pass AA) */
 
   /* Semantic Feedback: Botanical Green (Not Tailwind Emerald) */

@@ -212,6 +212,10 @@ export class GameManager {
 
   handleGuess(guessCountry, hitLat, hitLon) {
     if (!this.isAnswering && this.phase !== 'question' && this.phase !== 'selected') return;
+    if (hitLat === undefined && guessCountry) {
+      hitLat = guessCountry.lat || (guessCountry.centroid ? guessCountry.centroid[1] : 0);
+      hitLon = guessCountry.lon || (guessCountry.centroid ? guessCountry.centroid[0] : 0);
+    }
     this.isAnswering = false;
     this.phase = 'result';
     this.lastGuessCountry = guessCountry;
