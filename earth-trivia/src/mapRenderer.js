@@ -3,12 +3,12 @@ import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
 
 /**
- * GeoTrivia MapRenderer (Step 2 & 3: "Atlas" Cartographic Direction)
+ * GeoTrivia MapRenderer (Production Quality Pass)
  * - Deep ink-teal ocean & graticules
  * - 5 warm sand and paper tints using greedy graph coloring (no adjacent conflicts)
- * - Crisp 1px dark ink sepia borders (contrast >= 5.0:1)
+ * - Crisp dark ink sepia borders (contrast >= 5.0:1)
  * - Two-pass cartographic rendering: fills first, borders on top (zero seam clipping)
- * - High-resolution 4096 x 2048 equirectangular texture (8.38M pixels, 11.3 px/deg)
+ * - Ultra-high-resolution 8192 x 4096 equirectangular texture (with 4096x2048 fallback on mobile)
  * - Direct texture highlight: fill + 2px bright outline
  * - 300ms smooth fill tween
  * - Tiny countries: transparent-center unfilled rings
@@ -16,11 +16,22 @@ import { TINY_COUNTRIES } from '../data/tiny-countries.js';
  */
 export class MapRenderer {
   constructor() {
-    // Ultra-sharp 4096x2048 equirectangular map texture (8.38M pixels, 11.3 px/deg)
-    // Only drop to 2048x1024 on legacy low-memory mobile viewports (<480px width with DPR < 2)
-    const isLowMemoryMobile = window.innerWidth < 480 && (window.devicePixelRatio || 1) < 2;
-    this.width = isLowMemoryMobile ? 2048 : 4096;
-    this.height = isLowMemoryMobile ? 1024 : 2048;
+    let maxDim = 4096;
+    try {
+      const c = document.createElement('canvas');
+      const gl = c.getContext('webgl2') || c.getContext('webgl');
+      if (gl) {
+        maxDim = gl.getParameter(gl.MAX_TEXTURE_SIZE) || 4096;
+      }
+    } catch (e) {}
+
+    const isMobileDevice = (typeof window !== 'undefined' && window.innerWidth < 640) ||
+      (typeof window !== 'undefined' && 'ontouchstart' in window && window.innerWidth < 900);
+
+    // 8192x4096 on desktop and high-end GPUs supporting >= 8192, fallback to 4096x2048 on mobile
+    const use8K = maxDim >= 8192 && !isMobileDevice;
+    this.width = use8K ? 8192 : 4096;
+    this.height = use8K ? 4096 : 2048;
 
     // "Atlas" 5 Muted Land Tints (Perceptually distinct, Delta-E >= 8 across all pairs)
     this.LAND_TINTS = [
@@ -175,23 +186,24 @@ export class MapRenderer {
     }
   }
 
-  // Generate the permanent base texture with graph coloring and Two-Pass Cartographic Rendering
+  // Render Base Map Texture (executed once on initialization)
   initBaseTexture() {
     const ctx = this.baseCtx;
     const w = this.width;
     const h = this.height;
 
-    // 1. Deep Ink-Teal Ocean Gradient
+    // 1. Deep ink-teal ocean with subtle atmospheric depth gradient
     const oceanGrad = ctx.createLinearGradient(0, 0, 0, h);
-    oceanGrad.addColorStop(0, this.COLOR_OCEAN_TOP);
-    oceanGrad.addColorStop(0.5, this.COLOR_OCEAN_MID);
-    oceanGrad.addColorStop(1, this.COLOR_OCEAN_BOT);
+    oceanGrad.addColorStop(0.0, this.COLOR_OCEAN_TOP);
+    oceanGrad.addColorStop(0.48, this.COLOR_OCEAN_MID);
+    oceanGrad.addColorStop(0.52, this.COLOR_OCEAN_MID);
+    oceanGrad.addColorStop(1.0, this.COLOR_OCEAN_BOT);
     ctx.fillStyle = oceanGrad;
     ctx.fillRect(0, 0, w, h);
 
-    // 2. Graticule Lat / Lon grid lines
+    // 2. Subtle cartographic graticules (every 30° lon / 30° lat)
     ctx.strokeStyle = this.COLOR_GRATICULE;
-    ctx.lineWidth = 1;
+    ctx.lineWidth = w >= 8192 ? 2.0 : 1.0;
     for (let lon = -180; lon <= 180; lon += 30) {
       const [x] = this.toPixel(lon, 0);
       ctx.beginPath();
@@ -209,7 +221,7 @@ export class MapRenderer {
 
     // Equator accent line
     ctx.strokeStyle = this.COLOR_EQUATOR;
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = w >= 8192 ? 2.5 : 1.5;
     ctx.beginPath();
     ctx.moveTo(0, h / 2);
     ctx.lineTo(w, h / 2);
@@ -225,7 +237,7 @@ export class MapRenderer {
 
     // PASS 2: Stroke all country borders on top of fills (no border clipping between neighbors)
     ctx.strokeStyle = this.COLOR_BORDER;
-    ctx.lineWidth = this.width >= 4096 ? 1.8 : 1.2;
+    ctx.lineWidth = this.width >= 8192 ? 3.0 : (this.width >= 4096 ? 1.8 : 1.2);
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
     for (const country of WORLD_COUNTRIES) {
@@ -236,9 +248,9 @@ export class MapRenderer {
     for (const tiny of TINY_COUNTRIES) {
       const [tx, ty] = this.toPixel(tiny.centroid[0], tiny.centroid[1]);
       ctx.strokeStyle = 'rgba(74, 90, 102, 0.55)';
-      ctx.lineWidth = this.width >= 4096 ? 1.5 : 1.0;
+      ctx.lineWidth = this.width >= 8192 ? 2.5 : (this.width >= 4096 ? 1.5 : 1.0);
       ctx.beginPath();
-      ctx.arc(tx, ty, this.width >= 4096 ? 4.0 : 2.5, 0, Math.PI * 2);
+      ctx.arc(tx, ty, this.width >= 8192 ? 6.0 : (this.width >= 4096 ? 4.0 : 2.5), 0, Math.PI * 2);
       ctx.stroke();
     }
 
@@ -281,7 +293,7 @@ export class MapRenderer {
         const [tx, ty] = this.toPixel(tiny.centroid[0], tiny.centroid[1]);
         this.ctx.save();
         this.ctx.strokeStyle = strokeColor;
-        this.ctx.lineWidth = 2.0;
+        this.ctx.lineWidth = this.width >= 8192 ? 3.5 : 2.0;
         this.ctx.beginPath();
         this.ctx.arc(tx, ty, radiusPx, 0, Math.PI * 2);
         this.ctx.stroke(); // Unfilled: transparent center
@@ -289,7 +301,7 @@ export class MapRenderer {
       }
     };
 
-    const ringRadius = this.width >= 4096 ? 12 : 7;
+    const ringRadius = this.width >= 8192 ? 20 : (this.width >= 4096 ? 12 : 7);
     const t = Math.max(0, Math.min(1, progress));
 
     // 1. Hovered Country (soft golden ivory highlight)
@@ -303,7 +315,7 @@ export class MapRenderer {
       if (country && country.geometry) {
         this.ctx.fillStyle = `rgba(255, 252, 235, ${(0.40 * t).toFixed(3)})`;
         this.ctx.strokeStyle = '#fff5d6';
-        this.ctx.lineWidth = this.width >= 4096 ? 3.0 : 1.8;
+        this.ctx.lineWidth = this.width >= 8192 ? 5.0 : (this.width >= 4096 ? 3.0 : 1.8);
         this.drawGeometry(this.ctx, country.geometry);
       }
       drawTinyRing(hoveredCountryId, '#fff5d6', ringRadius);
@@ -319,10 +331,10 @@ export class MapRenderer {
       if (country && country.geometry) {
         this.ctx.fillStyle = `rgba(217, 125, 16, ${(0.45 * t).toFixed(3)})`;
         this.ctx.strokeStyle = '#d97d10';
-        this.ctx.lineWidth = this.width >= 4096 ? 4.0 : 2.5;
+        this.ctx.lineWidth = this.width >= 8192 ? 6.5 : (this.width >= 4096 ? 4.0 : 2.5);
         this.drawGeometry(this.ctx, country.geometry);
       }
-      drawTinyRing(selectedCountryId, '#d97d10', ringRadius + 2);
+      drawTinyRing(selectedCountryId, '#d97d10', ringRadius + 4);
     }
 
     // 3. Wrong Guess Country: Soft translucent brick red fill (#ba3c2a)

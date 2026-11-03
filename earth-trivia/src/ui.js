@@ -33,6 +33,15 @@ export class UIManager {
     this.vaultCulture = document.getElementById('vaultCulture');
     this.vaultAnchor = document.getElementById('vaultAnchor');
     this.vaultNextBtn = document.getElementById('vaultNextBtn');
+    // Country Dossier elements
+    this.vaultRegionBadge = document.getElementById('vaultRegionBadge');
+    this.vaultOfficialName = document.getElementById('vaultOfficialName');
+    this.vaultPopulation = document.getElementById('vaultPopulation');
+    this.vaultArea = document.getElementById('vaultArea');
+    this.vaultLanguages = document.getElementById('vaultLanguages');
+    this.vaultCurrency = document.getElementById('vaultCurrency');
+    this.vaultBordersText = document.getElementById('vaultBordersText');
+    this.vaultFieldNotes = document.getElementById('vaultFieldNotes');
 
     // End Screen Elements
     this.endScore = document.getElementById('endScore');
@@ -264,6 +273,48 @@ export class UIManager {
       this.vaultAnchor.textContent = (targetCountry.memoryAnchors && targetCountry.memoryAnchors[0]) || targetCountry.clues[0];
     }
 
+    // Populate Rich Country Dossier fields
+    if (this.vaultRegionBadge) {
+      this.vaultRegionBadge.textContent = targetCountry.subregion || targetCountry.region || 'Global';
+    }
+    if (this.vaultOfficialName) {
+      this.vaultOfficialName.textContent = targetCountry.officialName || targetCountry.name;
+    }
+    if (this.vaultPopulation) {
+      const pop = targetCountry.population;
+      if (pop >= 1000000000) {
+        this.vaultPopulation.textContent = (pop / 1000000000).toFixed(2) + 'B';
+      } else if (pop >= 1000000) {
+        this.vaultPopulation.textContent = (pop / 1000000).toFixed(1) + 'M';
+      } else if (pop) {
+        this.vaultPopulation.textContent = pop.toLocaleString();
+      } else {
+        this.vaultPopulation.textContent = '—';
+      }
+    }
+    if (this.vaultArea) {
+      this.vaultArea.textContent = targetCountry.areaKm2 ? targetCountry.areaKm2.toLocaleString() + ' km²' : '—';
+    }
+    if (this.vaultLanguages) {
+      this.vaultLanguages.textContent = Array.isArray(targetCountry.languages) ? targetCountry.languages.join(', ') : (targetCountry.languages || '—');
+    }
+    if (this.vaultCurrency) {
+      this.vaultCurrency.textContent = targetCountry.currency || '—';
+    }
+    if (this.vaultBordersText) {
+      if (targetCountry.neighbors && targetCountry.neighbors.length > 0) {
+        const count = targetCountry.neighbors.length;
+        this.vaultBordersText.textContent = `Bordered by ${count} nation${count > 1 ? 's' : ''}: ${targetCountry.neighbors.slice(0, 3).join(', ')}${count > 3 ? '...' : ''}`;
+      } else if (targetCountry.maritimeStatus) {
+        this.vaultBordersText.textContent = targetCountry.maritimeStatus;
+      } else {
+        this.vaultBordersText.textContent = 'Island / Maritime State';
+      }
+    }
+    if (this.vaultFieldNotes) {
+      this.vaultFieldNotes.textContent = targetCountry.fieldNotes || `Situated in ${targetCountry.subregion || targetCountry.region}, ${targetCountry.name} features distinctive cultural and geographic heritage.`;
+    }
+
     if (this.vaultNextBtn) {
       this.vaultNextBtn.onclick = onNext;
       this.vaultNextBtn.focus();
@@ -301,7 +352,10 @@ export class UIManager {
         if (this.replayMissedBtn) this.replayMissedBtn.style.display = 'none';
       } else {
         if (this.replayMissedBtn) this.replayMissedBtn.style.display = 'inline-flex';
-        missedCountries.forEach(c => {
+        const uniqueMissed = Array.isArray(missedCountries)
+        ? Array.from(new Map(missedCountries.map(c => [c.id || c.name, c])).values())
+        : [];
+      uniqueMissed.forEach(c => {
           const item = document.createElement('div');
           item.className = 'missed-item';
           item.innerHTML = `

@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { MapRenderer } from './mapRenderer.js';
 import { CameraFlightController } from './cameraFlight.js';
 import { CountryPicker } from './picker.js';
+import { WORLD_COUNTRIES } from '../data/world-50m.js';
 
 export class GlobeApp {
   constructor(containerEl) {
@@ -21,7 +22,8 @@ export class GlobeApp {
       powerPreference: 'high-performance'
     });
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.5));
+    // Cap devicePixelRatio at 2.0 for optimal balance of razor sharpness and rendering performance
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.0));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.25;
     this.container.appendChild(this.renderer.domElement);
@@ -44,22 +46,25 @@ export class GlobeApp {
     this.mapRenderer = new MapRenderer();
     const texture = this.mapRenderer.initBaseTexture();
 
-    // Set anisotropic filtering to GPU maximum (typically 16x) to preserve sharpness at grazing angles
+    // Set anisotropic filtering to GPU maximum to preserve sharpness at grazing angles
     const maxAnisotropy = this.renderer.capabilities.getMaxAnisotropy();
     texture.anisotropy = Math.max(4, maxAnisotropy);
 
-    // Globe Mesh (128x128 segments = 16,384 vertices for a perfectly round silhouette with zero faceting)
+    // Globe Mesh (128x128 segments = 16,384 vertices for a perfectly round silhouette)
     const sphereGeo = new THREE.SphereGeometry(1.7, 128, 128);
     const sphereMat = new THREE.MeshPhongMaterial({
       map: texture,
-      shininess: 8,
-      specular: new THREE.Color(0x162230)
+      shininess: 12,
+      specular: new THREE.Color(0x14202c)
     });
     this.earthMesh = new THREE.Mesh(sphereGeo, sphereMat);
     this.earthMesh.rotation.y = -Math.PI / 2;
     this.scene.add(this.earthMesh);
 
-    // Atmospheric Glow Shell (128x128 segments to match globe curvature perfectly)
+    // True 3D Spherical Vector Border Mesh (Razor-sharp 3D vector geometry across all zooms)
+    this.createVectorBorders();
+
+    // Atmospheric Glow Shell (Fresnel Rim Shader)
     this.createAtmosphere();
 
     // Cosmic Stars
@@ -88,21 +93,70 @@ export class GlobeApp {
     requestAnimationFrame(this.animate);
   }
 
+  // True 3D Spherical Vector Border Mesh (surface-offset vector geometry for ultra-crisp borders)
+  createVectorBorders() {
+    const positions = [];
+    const radius = 1.7018; // 0.1% surface offset to guarantee zero z-fighting
+
+    for (const country of WORLD_COUNTRIES) {
+      const geom = country.geometry;
+      if (!geom || !geom.coordinates) continue;
+
+      const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+      for (const poly of polys) {
+        for (const ring of poly) {
+          if (!ring || ring.length < 2) continue;
+          for (let i = 0; i < ring.length; i++) {
+            const nextIdx = (i + 1) % ring.length;
+            const p1 = ring[i];
+            const p2 = ring[nextIdx];
+            // Skip segments crossing the antimeridian seam
+            if (Math.abs(p2[0] - p1[0]) > 180) continue;
+
+            const v1 = CountryPicker.latLonToVector3(p1[1], p1[0], radius);
+            const v2 = CountryPicker.latLonToVector3(p2[1], p2[0], radius);
+
+            positions.push(v1.x, v1.y, v1.z);
+            positions.push(v2.x, v2.y, v2.z);
+          }
+        }
+      }
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+    const mat = new THREE.LineBasicMaterial({
+      color: 0x22323d,
+      transparent: true,
+      opacity: 0.85,
+      depthTest: true
+    });
+    this.borderMesh = new THREE.LineSegments(geo, mat);
+    this.earthMesh.add(this.borderMesh);
+  }
+
   createAtmosphere() {
     const atmosGeo = new THREE.SphereGeometry(1.7 * 1.035, 128, 128);
     const atmosMat = new THREE.ShaderMaterial({
       vertexShader: `
         varying vec3 vNormal;
+        varying vec3 vViewPosition;
         void main() {
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          vViewPosition = -mvPosition.xyz;
           vNormal = normalize(normalMatrix * normal);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          gl_Position = projectionMatrix * mvPosition;
         }
       `,
       fragmentShader: `
         varying vec3 vNormal;
+        varying vec3 vViewPosition;
         void main() {
-          float intensity = pow(0.72 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.4);
-          gl_FragColor = vec4(0.02, 0.72, 0.88, 1.0) * intensity * 1.5;
+          vec3 viewDir = normalize(vViewPosition);
+          vec3 norm = normalize(vNormal);
+          float fresnel = 1.0 - max(0.0, dot(viewDir, norm));
+          float intensity = pow(fresnel, 3.2);
+          gl_FragColor = vec4(0.08, 0.65, 0.95, 1.0) * intensity * 1.8;
         }
       `,
       blending: THREE.AdditiveBlending,
@@ -172,7 +226,11 @@ export class GlobeApp {
       this.earthMesh.rotation.y += 0.001;
     }
 
-    this.controls.update();
+    // Never fight active camera flight
+    if (!this.flight.isFlying) {
+      this.controls.update();
+    }
+
     this.renderer.render(this.scene, this.camera);
   }
 }

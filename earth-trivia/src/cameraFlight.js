@@ -407,7 +407,7 @@ export class CameraFlightController {
     return dist;
   }
 
-  // Smooth camera flight and framing
+  // Smooth camera flight and framing with Quaternion SLERP & zero controls fighting
   flyToCountry(targetLat, targetLon, {
     duration = 1400,
     isDesktopOffset = false,
@@ -418,6 +418,10 @@ export class CameraFlightController {
   } = {}) {
     this.isFlying = true;
     this.controls.enabled = false;
+    // Kill residual damping inertia immediately to eliminate flight jitter
+    if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
+    if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
+    this.controls.scale = 1;
 
     const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
 
@@ -456,7 +460,7 @@ export class CameraFlightController {
       targetRotY -= 0.24;
     }
 
-    // Shortest spherical path
+    // Shortest spherical path for Y rotation
     let curY = this.globeMesh.rotation.y;
     let diffY = (targetRotY - curY) % (Math.PI * 2);
     if (diffY > Math.PI) diffY -= Math.PI * 2;
@@ -470,23 +474,30 @@ export class CameraFlightController {
     const targetCamY = isMobile ? -0.10 : 0;
     const startCamY = this.camera.position.y || 0;
 
-    const startRotX = this.globeMesh.rotation.x;
-    const startRotY = curY;
-    const startCamZ = this.camera.position.z;
+    // Quaternion SLERP setup: shortest-path spherical linear interpolation on SO(3)
+    const startQuat = this.globeMesh.quaternion.clone();
+    const targetEuler = new THREE.Euler(targetRotX, finalRotY, 0, 'YXZ');
+    const targetQuat = new THREE.Quaternion().setFromEuler(targetEuler);
+    if (startQuat.dot(targetQuat) < 0) {
+      targetQuat.set(-targetQuat.x, -targetQuat.y, -targetQuat.z, -targetQuat.w);
+    }
 
+    const startCamZ = this.camera.position.z;
     const startTime = performance.now();
 
     const animateFlight = (now) => {
       const elapsed = now - startTime;
       const progress = Math.min(1, elapsed / duration);
-      // Smooth cubic ease-in-out
+      // Smooth cubic bezier / easeInOutCubic
       const ease =
         progress < 0.5
           ? 4 * progress * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 3) / 2;
 
-      this.globeMesh.rotation.x = THREE.MathUtils.lerp(startRotX, targetRotX, ease);
-      this.globeMesh.rotation.y = THREE.MathUtils.lerp(startRotY, finalRotY, ease);
+      this.globeMesh.quaternion.slerpQuaternions(startQuat, targetQuat, ease);
+      this.globeMesh.quaternion.normalize();
+      this.globeMesh.rotation.setFromQuaternion(this.globeMesh.quaternion, 'YXZ');
+
       const camY = THREE.MathUtils.lerp(startCamY, targetCamY, ease);
       this.camera.position.y = camY;
       this.camera.position.z = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
@@ -495,14 +506,16 @@ export class CameraFlightController {
       if (progress < 1) {
         requestAnimationFrame(animateFlight);
       } else {
-        this.globeMesh.rotation.x = targetRotX;
-        this.globeMesh.rotation.y = finalRotY;
+        this.globeMesh.quaternion.copy(targetQuat);
+        this.globeMesh.rotation.setFromQuaternion(targetQuat, 'YXZ');
         this.camera.position.y = targetCamY;
         this.camera.position.z = targetCamZ;
         this.camera.lookAt(0, targetCamY, 0);
 
         this.isFlying = false;
         this.controls.enabled = true;
+        if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
+        if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
         this.controls.target.set(0, targetCamY, 0);
         this.controls.update();
 
@@ -516,6 +529,8 @@ export class CameraFlightController {
   resetToOverview({ duration = 1000, onComplete } = {}) {
     this.isFlying = true;
     this.controls.enabled = false;
+    if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
+    if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
     this.clearVisuals();
 
     const startCamY = this.camera.position.y;
@@ -542,6 +557,8 @@ export class CameraFlightController {
         this.camera.lookAt(0, 0, 0);
         this.isFlying = false;
         this.controls.enabled = true;
+        if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
+        if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
         this.controls.target.set(0, 0, 0);
         this.controls.update();
         if (onComplete) onComplete();

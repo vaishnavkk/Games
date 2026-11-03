@@ -281,24 +281,34 @@ export class GameManager {
       this.globe.mapRenderer.renderHighlights({ correctCountryId: target.id });
       this.globe.flight.drawCountryOutline(targetWc, true);
 
-      // Camera flight: frame country so it fits inside free area (area <= 60%)
-      sound.playSwoosh();
+      // Freeze OrbitControls immediately and kill damping inertia to eliminate flight jitter
+      this.globe.controls.enabled = false;
+      if (this.globe.controls.sphericalDelta) this.globe.controls.sphericalDelta.set(0, 0, 0);
+      if (this.globe.controls.panOffset) this.globe.controls.panOffset.set(0, 0, 0);
+      this.globe.isAutoRotating = false;
+
+      // Camera flight: decouple heavy DOM state update to rAF so initial frame never stutters
       const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
-      this.globe.flight.flyToCountry(target.lat, target.lon, {
-        isDesktopOffset: true,
-        angularSpan,
-        onComplete: () => {
-          this.globe.flight.computeTargetFreeAreaPercent(targetWc);
-          this.ui.showMemoryVault({
-            isCorrect: true,
-            targetCountry: target,
-            guessCountry: target,
-            distanceKm: 0,
-            breakdown: this.lastRoundBreakdown,
-            isPractice: this.isPractice,
-            onNext: () => this.nextRound()
-          });
-        }
+      requestAnimationFrame(() => {
+        sound.playSwoosh();
+        this.globe.flight.flyToCountry(target.lat, target.lon, {
+          isDesktopOffset: true,
+          angularSpan,
+          onComplete: () => {
+            this.globe.flight.computeTargetFreeAreaPercent(targetWc);
+            requestAnimationFrame(() => {
+              this.ui.showMemoryVault({
+                isCorrect: true,
+                targetCountry: target,
+                guessCountry: target,
+                distanceKm: 0,
+                breakdown: this.lastRoundBreakdown,
+                isPractice: this.isPractice,
+                onNext: () => this.nextRound()
+              });
+            });
+          }
+        });
       });
 
     } else {
@@ -321,8 +331,10 @@ export class GameManager {
         this.score += roundPoints;
       }
 
-      // Spaced repetition: requeue missed country once later in session
-      this.missedCountries.push(target);
+      // Spaced repetition: requeue missed country once later in session (deduplicated by ID)
+      if (!this.missedCountries.some(c => (c.id && c.id === target.id) || c.name === target.name)) {
+        this.missedCountries.push(target);
+      }
       const reinsertIndex = Math.min(this.roundQueue.length, 2 + Math.floor(Math.random() * 3));
       this.roundQueue.splice(reinsertIndex, 0, target);
 
@@ -340,26 +352,36 @@ export class GameManager {
       // 2px neutral great-circle geodesic arc (white at 70%) with km distance at midpoint
       this.globe.flight.drawGreatCircleArc(hitLat, hitLon, target.lat, target.lon, distanceKm);
 
+      // Freeze OrbitControls immediately and kill damping inertia to eliminate flight jitter
+      this.globe.controls.enabled = false;
+      if (this.globe.controls.sphericalDelta) this.globe.controls.sphericalDelta.set(0, 0, 0);
+      if (this.globe.controls.panOffset) this.globe.controls.panOffset.set(0, 0, 0);
+      this.globe.isAutoRotating = false;
+
       // Camera flight: frame both if both fit with target >= 25% free area; otherwise frame target
-      sound.playSwoosh();
       const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
-      this.globe.flight.flyToCountry(target.lat, target.lon, {
-        isDesktopOffset: true,
-        angularSpan,
-        guessLat: hitLat,
-        guessLon: hitLon,
-        onComplete: () => {
-          this.globe.flight.computeTargetFreeAreaPercent(targetWc);
-          this.ui.showMemoryVault({
-            isCorrect: false,
-            targetCountry: target,
-            guessCountry: guessCountry || { name: 'Open Ocean / Off-target' },
-            distanceKm,
-            breakdown: this.lastRoundBreakdown,
-            isPractice: this.isPractice,
-            onNext: () => this.nextRound()
-          });
-        }
+      requestAnimationFrame(() => {
+        sound.playSwoosh();
+        this.globe.flight.flyToCountry(target.lat, target.lon, {
+          isDesktopOffset: true,
+          angularSpan,
+          guessLat: hitLat,
+          guessLon: hitLon,
+          onComplete: () => {
+            this.globe.flight.computeTargetFreeAreaPercent(targetWc);
+            requestAnimationFrame(() => {
+              this.ui.showMemoryVault({
+                isCorrect: false,
+                targetCountry: target,
+                guessCountry: guessCountry || { name: 'Open Ocean / Off-target' },
+                distanceKm,
+                breakdown: this.lastRoundBreakdown,
+                isPractice: this.isPractice,
+                onNext: () => this.nextRound()
+              });
+            });
+          }
+        });
       });
     }
 
@@ -411,7 +433,7 @@ export class GameManager {
       score: this.score,
       accuracy,
       bestStreak: this.bestStreak,
-      missedCountries: this.missedCountries,
+      missedCountries: Array.from(new Map(this.missedCountries.map(c => [c.id || c.name, c])).values()),
       isPractice: this.isPractice,
       mode: this.mode,
       tier: this.tier,
@@ -427,7 +449,7 @@ export class GameManager {
 
   replayMissedSession() {
     if (this.missedCountries.length === 0) return;
-    const missed = [...this.missedCountries];
+    const missed = Array.from(new Map(this.missedCountries.map(c => [c.id || c.name, c])).values());
     this.startExpedition({
       mode: this.mode,
       tier: this.tier,
