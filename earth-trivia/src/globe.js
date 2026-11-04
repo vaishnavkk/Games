@@ -25,7 +25,7 @@ export class GlobeApp {
     // Cap devicePixelRatio at 2.0 for optimal balance of razor sharpness and rendering performance
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.0));
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.25;
+    this.renderer.toneMappingExposure = 1.20;
     this.container.appendChild(this.renderer.domElement);
 
     // Controls
@@ -54,8 +54,8 @@ export class GlobeApp {
     const sphereGeo = new THREE.SphereGeometry(1.7, 128, 128);
     const sphereMat = new THREE.MeshPhongMaterial({
       map: texture,
-      shininess: 12,
-      specular: new THREE.Color(0x14202c)
+      shininess: 8,
+      specular: new THREE.Color(0x101a24)
     });
     this.earthMesh = new THREE.Mesh(sphereGeo, sphereMat);
     this.earthMesh.rotation.y = -Math.PI / 2;
@@ -64,21 +64,18 @@ export class GlobeApp {
     // True 3D Spherical Vector Border Mesh (Razor-sharp 3D vector geometry across all zooms)
     this.createVectorBorders();
 
-    // Atmospheric Glow Shell (Fresnel Rim Shader)
-    this.createAtmosphere();
-
-    // Cosmic Stars
+    // Cosmic Stars (No atmosphere glow shell: completely removed to ensure clean, sharp Earth edges)
     this.createStars();
 
-    // Lighting (Balanced illumination for cartographic clarity and high contrast)
-    const ambient = new THREE.AmbientLight(0xdde8ff, 1.05);
+    // Balanced Natural Lighting (Pure white illumination, no artificial colored rim glow)
+    const ambient = new THREE.AmbientLight(0xffffff, 1.15);
     this.scene.add(ambient);
-    const sunLight = new THREE.DirectionalLight(0xffffff, 1.35);
+    const sunLight = new THREE.DirectionalLight(0xffffff, 1.25);
     sunLight.position.set(5, 3, 5);
     this.scene.add(sunLight);
-    const rimLight = new THREE.DirectionalLight(0x06b6d4, 0.65);
-    rimLight.position.set(-5, -2, -4);
-    this.scene.add(rimLight);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.40);
+    fillLight.position.set(-5, -2, -4);
+    this.scene.add(fillLight);
 
     // Subsystems
     this.picker = new CountryPicker(this.camera, this.earthMesh);
@@ -133,38 +130,6 @@ export class GlobeApp {
     });
     this.borderMesh = new THREE.LineSegments(geo, mat);
     this.earthMesh.add(this.borderMesh);
-  }
-
-  createAtmosphere() {
-    const atmosGeo = new THREE.SphereGeometry(1.7 * 1.035, 128, 128);
-    const atmosMat = new THREE.ShaderMaterial({
-      vertexShader: `
-        varying vec3 vNormal;
-        varying vec3 vViewPosition;
-        void main() {
-          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          vViewPosition = -mvPosition.xyz;
-          vNormal = normalize(normalMatrix * normal);
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        varying vec3 vNormal;
-        varying vec3 vViewPosition;
-        void main() {
-          vec3 viewDir = normalize(vViewPosition);
-          vec3 norm = normalize(vNormal);
-          float fresnel = 1.0 - max(0.0, dot(viewDir, norm));
-          float intensity = pow(fresnel, 3.2);
-          gl_FragColor = vec4(0.08, 0.65, 0.95, 1.0) * intensity * 1.8;
-        }
-      `,
-      blending: THREE.AdditiveBlending,
-      side: THREE.BackSide,
-      transparent: true
-    });
-    const atmosphere = new THREE.Mesh(atmosGeo, atmosMat);
-    this.scene.add(atmosphere);
   }
 
   createStars() {

@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   updateBestScoreDisplay();
+  window.__updateBestScoreDisplay = updateBestScoreDisplay;
 
   // Start Game Button
   const startBtn = document.getElementById('startExpeditionBtn');
