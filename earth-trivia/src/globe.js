@@ -180,14 +180,16 @@ export class GlobeApp {
   animate(time) {
     requestAnimationFrame(this.animate);
 
-    // Resume idle rotation if untouched for 3.5 seconds
-    if (!this.flight.isFlying && !this.isAutoRotating) {
+    // Auto-rotation only resumes when NOT viewing a result card or selecting a country
+    const isViewingResult = window.game && (window.game.phase === 'result' || window.game.phase === 'selected');
+
+    if (!this.flight.isFlying && !this.isAutoRotating && !isViewingResult) {
       if (performance.now() - this.lastInteractionTime > 3500) {
         this.isAutoRotating = true;
       }
     }
 
-    if (this.isAutoRotating && !this.flight.isFlying) {
+    if (this.isAutoRotating && !this.flight.isFlying && !isViewingResult) {
       this.earthMesh.rotation.y += 0.001;
     }
 

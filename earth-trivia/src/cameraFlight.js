@@ -472,17 +472,18 @@ export class CameraFlightController {
 
     // Mobile vertical camera offset (places country above 30% bottom sheet)
     const targetCamY = isMobile ? -0.10 : 0;
+    const startCamX = this.camera.position.x || 0;
     const startCamY = this.camera.position.y || 0;
+    const startCamZ = this.camera.position.z;
 
     // Quaternion SLERP setup: shortest-path spherical linear interpolation on SO(3)
     const startQuat = this.globeMesh.quaternion.clone();
-    const targetEuler = new THREE.Euler(targetRotX, finalRotY, 0, 'YXZ');
+    const targetEuler = new THREE.Euler(targetRotX, finalRotY, 0, 'XYZ');
     const targetQuat = new THREE.Quaternion().setFromEuler(targetEuler);
     if (startQuat.dot(targetQuat) < 0) {
       targetQuat.set(-targetQuat.x, -targetQuat.y, -targetQuat.z, -targetQuat.w);
     }
 
-    const startCamZ = this.camera.position.z;
     const startTime = performance.now();
 
     const animateFlight = (now) => {
@@ -496,20 +497,20 @@ export class CameraFlightController {
 
       this.globeMesh.quaternion.slerpQuaternions(startQuat, targetQuat, ease);
       this.globeMesh.quaternion.normalize();
-      this.globeMesh.rotation.setFromQuaternion(this.globeMesh.quaternion, 'YXZ');
+      this.globeMesh.rotation.setFromQuaternion(this.globeMesh.quaternion, 'XYZ');
 
+      const camX = THREE.MathUtils.lerp(startCamX, 0, ease);
       const camY = THREE.MathUtils.lerp(startCamY, targetCamY, ease);
-      this.camera.position.y = camY;
-      this.camera.position.z = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
+      const camZ = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
+      this.camera.position.set(camX, camY, camZ);
       this.camera.lookAt(0, camY, 0);
 
       if (progress < 1) {
         requestAnimationFrame(animateFlight);
       } else {
         this.globeMesh.quaternion.copy(targetQuat);
-        this.globeMesh.rotation.setFromQuaternion(targetQuat, 'YXZ');
-        this.camera.position.y = targetCamY;
-        this.camera.position.z = targetCamZ;
+        this.globeMesh.rotation.setFromQuaternion(targetQuat, 'XYZ');
+        this.camera.position.set(0, targetCamY, targetCamZ);
         this.camera.lookAt(0, targetCamY, 0);
 
         this.isFlying = false;
@@ -533,6 +534,7 @@ export class CameraFlightController {
     if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
     this.clearVisuals();
 
+    const startCamX = this.camera.position.x || 0;
     const startCamY = this.camera.position.y;
     const startCamZ = this.camera.position.z;
     const targetCamZ = 4.0;
@@ -546,8 +548,10 @@ export class CameraFlightController {
           ? 2 * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      this.camera.position.y = THREE.MathUtils.lerp(startCamY, 0, ease);
-      this.camera.position.z = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
+      const camX = THREE.MathUtils.lerp(startCamX, 0, ease);
+      const camY = THREE.MathUtils.lerp(startCamY, 0, ease);
+      const camZ = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
+      this.camera.position.set(camX, camY, camZ);
       this.camera.lookAt(0, 0, 0);
 
       if (progress < 1) {
