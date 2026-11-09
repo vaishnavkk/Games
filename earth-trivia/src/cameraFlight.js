@@ -3,7 +3,6 @@ import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { CountryPicker } from './picker.js';
-import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
 
 export function haversineDistanceKm(lat1, lon1, lat2, lon2) {
@@ -204,6 +203,17 @@ export class CameraFlightController {
     if (!geom || !geom.coordinates) return;
 
     const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+    const mat = new LineMaterial({
+      color: strokeColor,
+      linewidth: 3.0,
+      worldUnits: false,
+      transparent: true,
+      opacity: 0.95,
+      depthTest: true
+    });
+    mat.resolution.set(w, h);
+    this.lineMaterials.push(mat);
+
     for (const poly of polys) {
       const ring = poly[0];
       if (!ring || ring.length < 3) continue;
@@ -219,16 +229,6 @@ export class CameraFlightController {
 
       const geo = new LineGeometry();
       geo.setPositions(positions);
-      const mat = new LineMaterial({
-        color: strokeColor,
-        linewidth: 3.0,
-        worldUnits: false,
-        transparent: true,
-        opacity: 0.95,
-        depthTest: true
-      });
-      mat.resolution.set(w, h);
-      this.lineMaterials.push(mat);
 
       const line = new Line2(geo, mat);
       line.computeLineDistances();

@@ -3,7 +3,7 @@ import { haversineDistanceKm, distanceToCountryKm, getCountryAngularDiameter } f
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
-import { SCORING, calculateRoundScore } from './scoring.js';
+import { calculateRoundScore } from './scoring.js';
 
 export class GameManager {
   constructor(globeApp, ui) {
@@ -82,6 +82,10 @@ export class GameManager {
 
     this.ui.showGameHUD(this.totalRounds, this.hasTimer, this.isPractice);
     this.nextRound();
+  }
+
+  getUniqueMissedCountries() {
+    return Array.from(new Map(this.missedCountries.map(c => [c.id || c.name, c])).values());
   }
 
   shuffle(arr) {
@@ -433,7 +437,7 @@ export class GameManager {
       score: this.score,
       accuracy,
       bestStreak: this.bestStreak,
-      missedCountries: Array.from(new Map(this.missedCountries.map(c => [c.id || c.name, c])).values()),
+      missedCountries: this.getUniqueMissedCountries(),
       isPractice: this.isPractice,
       mode: this.mode,
       tier: this.tier,
@@ -449,7 +453,7 @@ export class GameManager {
 
   replayMissedSession() {
     if (this.missedCountries.length === 0) return;
-    const missed = Array.from(new Map(this.missedCountries.map(c => [c.id || c.name, c])).values());
+    const missed = this.getUniqueMissedCountries();
     this.startExpedition({
       mode: this.mode,
       tier: this.tier,
@@ -482,8 +486,13 @@ export class GameManager {
       }
     });
 
+    canvas.addEventListener('pointercancel', () => {
+      downTime = 0;
+    });
+
     // Keyboard accessibility: Enter submits selected country or advances result; Space reveals next clue or advances result
     window.addEventListener('keydown', (e) => {
+      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
       if (e.key === 'Enter') {
         const confirmBtn = document.getElementById('touchConfirmBtn');
         if (confirmBtn && !confirmBtn.classList.contains('hidden') && this.selectedHit) {

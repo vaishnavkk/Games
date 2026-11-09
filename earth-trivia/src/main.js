@@ -84,37 +84,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const modeButtons = document.querySelectorAll('.mode-btn');
-  modeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      sound.playClick();
-      modeButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedMode = btn.dataset.mode;
-      updateBestScoreDisplay();
+  function bindButtonGroup(selector, onSelect) {
+    const buttons = document.querySelectorAll(selector);
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sound.playClick();
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        onSelect(btn);
+      });
     });
+  }
+
+  bindButtonGroup('.mode-btn', btn => {
+    selectedMode = btn.dataset.mode;
+    updateBestScoreDisplay();
   });
 
-  const tierButtons = document.querySelectorAll('.tier-btn');
-  tierButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      sound.playClick();
-      tierButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedTier = btn.dataset.tier;
-      updateBestScoreDisplay();
-    });
+  bindButtonGroup('.tier-btn', btn => {
+    selectedTier = btn.dataset.tier;
+    updateBestScoreDisplay();
   });
 
-  const roundButtons = document.querySelectorAll('.round-btn');
-  roundButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      sound.playClick();
-      roundButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const val = btn.dataset.rounds;
-      selectedRounds = val === 'endless' ? Infinity : parseInt(val, 10);
-    });
+  bindButtonGroup('.round-btn', btn => {
+    const val = btn.dataset.rounds;
+    selectedRounds = val === 'endless' ? Infinity : parseInt(val, 10);
   });
 
   const timerToggle = document.getElementById('timerToggle');

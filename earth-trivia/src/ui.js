@@ -1,5 +1,5 @@
 import { ICONS, getFlagSvg } from './icons.js';
-import { getRevealClueButtonText, SCORING } from './scoring.js';
+import { getRevealClueButtonText } from './scoring.js';
 
 export class UIManager {
   constructor() {
@@ -21,6 +21,8 @@ export class UIManager {
     this.clueText = document.getElementById('clueText');
     this.clueProgression = document.getElementById('clueProgression');
     this.nextClueBtn = document.getElementById('nextClueBtn');
+    this.clueBody = document.getElementById('clueBody');
+    this.toggleClueBtn = document.getElementById('toggleClueBtn');
 
     // Memory Vault Elements
     this.vaultStatus = document.getElementById('vaultStatus');
@@ -364,7 +366,7 @@ export class UIManager {
               <strong>${c.name}</strong>
               <span class="capital">Capital: ${c.capital}</span>
             </div>
-            <div class="missed-anchor">${c.memoryAnchors ? c.memoryAnchors[0] : c.clues[0]}</div>
+            <div class="missed-anchor">${(c.memoryAnchors && c.memoryAnchors[0]) || (c.clues && c.clues[0]) || ''}</div>
           `;
           this.missedList.appendChild(item);
         });

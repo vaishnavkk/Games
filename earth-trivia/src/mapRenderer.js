@@ -80,110 +80,44 @@ export class MapRenderer {
     return [x, y];
   }
 
-  // Draw Polygon or MultiPolygon (fill & stroke)
+  // Unified geometry renderer for fills, strokes, or combined passes
+  renderGeometry(ctx, geometry, doFill = true, doStroke = true) {
+    if (!geometry || !geometry.coordinates) return;
+
+    const polys = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates;
+    for (const poly of polys) {
+      for (const ring of poly) {
+        if (!ring || ring.length < 3) continue;
+
+        ctx.beginPath();
+        const [startX, startY] = this.toPixel(ring[0][0], ring[0][1]);
+        ctx.moveTo(startX, startY);
+
+        for (let i = 1; i < ring.length; i++) {
+          const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
+          if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
+            ctx.moveTo(px, py);
+          } else {
+            ctx.lineTo(px, py);
+          }
+        }
+        ctx.closePath();
+        if (doFill) ctx.fill();
+        if (doStroke) ctx.stroke();
+      }
+    }
+  }
+
   drawGeometry(ctx, geometry) {
-    if (!geometry || !geometry.coordinates) return;
-
-    if (geometry.type === 'Polygon') {
-      this.drawPolygonRings(ctx, geometry.coordinates);
-    } else if (geometry.type === 'MultiPolygon') {
-      for (const poly of geometry.coordinates) {
-        this.drawPolygonRings(ctx, poly);
-      }
-    }
+    this.renderGeometry(ctx, geometry, true, true);
   }
 
-  drawPolygonRings(ctx, rings) {
-    for (let r = 0; r < rings.length; r++) {
-      const ring = rings[r];
-      if (!ring || ring.length < 3) continue;
-
-      ctx.beginPath();
-      const [startX, startY] = this.toPixel(ring[0][0], ring[0][1]);
-      ctx.moveTo(startX, startY);
-
-      for (let i = 1; i < ring.length; i++) {
-        const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
-        if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
-          ctx.moveTo(px, py);
-        } else {
-          ctx.lineTo(px, py);
-        }
-      }
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-    }
-  }
-
-  // Pure Fill Pass for Polygons
   fillGeometry(ctx, geometry) {
-    if (!geometry || !geometry.coordinates) return;
-
-    if (geometry.type === 'Polygon') {
-      this.fillPolygonRings(ctx, geometry.coordinates);
-    } else if (geometry.type === 'MultiPolygon') {
-      for (const poly of geometry.coordinates) {
-        this.fillPolygonRings(ctx, poly);
-      }
-    }
+    this.renderGeometry(ctx, geometry, true, false);
   }
 
-  fillPolygonRings(ctx, rings) {
-    for (let r = 0; r < rings.length; r++) {
-      const ring = rings[r];
-      if (!ring || ring.length < 3) continue;
-
-      ctx.beginPath();
-      const [startX, startY] = this.toPixel(ring[0][0], ring[0][1]);
-      ctx.moveTo(startX, startY);
-
-      for (let i = 1; i < ring.length; i++) {
-        const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
-        if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
-          ctx.moveTo(px, py);
-        } else {
-          ctx.lineTo(px, py);
-        }
-      }
-      ctx.closePath();
-      ctx.fill();
-    }
-  }
-
-  // Pure Stroke Pass for Country Borders
   strokeGeometry(ctx, geometry) {
-    if (!geometry || !geometry.coordinates) return;
-
-    if (geometry.type === 'Polygon') {
-      this.strokePolygonRings(ctx, geometry.coordinates);
-    } else if (geometry.type === 'MultiPolygon') {
-      for (const poly of geometry.coordinates) {
-        this.strokePolygonRings(ctx, poly);
-      }
-    }
-  }
-
-  strokePolygonRings(ctx, rings) {
-    for (let r = 0; r < rings.length; r++) {
-      const ring = rings[r];
-      if (!ring || ring.length < 3) continue;
-
-      ctx.beginPath();
-      const [startX, startY] = this.toPixel(ring[0][0], ring[0][1]);
-      ctx.moveTo(startX, startY);
-
-      for (let i = 1; i < ring.length; i++) {
-        const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
-        if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
-          ctx.moveTo(px, py);
-        } else {
-          ctx.lineTo(px, py);
-        }
-      }
-      ctx.closePath();
-      ctx.stroke();
-    }
+    this.renderGeometry(ctx, geometry, false, true);
   }
 
   // Render Base Map Texture (executed once on initialization)

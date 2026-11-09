@@ -14,6 +14,7 @@ export class CountryPicker {
     this.countries = WORLD_COUNTRIES;
     this.tinyCountries = TINY_COUNTRIES;
     this.dbCountries = COUNTRIES_DB;
+    this.canvas = null;
   }
 
   // Enrich country feature with trivia metadata (flag, capital, landmark, etc.)
@@ -113,11 +114,65 @@ export class CountryPicker {
     return false;
   }
 
+  // Single unified resolution logic for both coordinate lookups and 3D raycasting
+  _resolveCountryAtLatLon(lat, lon) {
+    // 1. Polygon hit ALWAYS wins: Check Bounding Box & Point-in-Polygon for all countries
+    for (const country of this.countries) {
+      const [minLon, minLat, maxLon, maxLat] = country.bbox;
+      const inBbox = maxLon >= minLon
+        ? (lon >= minLon && lon <= maxLon && lat >= minLat && lat <= maxLat)
+        : ((lon >= minLon || lon <= maxLon) && lat >= minLat && lat <= maxLat);
+
+      if (inBbox && CountryPicker.testGeometry(lon, lat, country.geometry)) {
+        return {
+          country: this._enrichCountry(country),
+          hitLat: lat,
+          hitLon: lon,
+          isTiny: false
+        };
+      }
+    }
+
+    // 2. Microstate Fallback: Nearest buffer wins
+    let bestTiny = null;
+    let minDegDist = Infinity;
+    const cosLat = Math.cos((lat * Math.PI) / 180);
+
+    for (const tiny of this.tinyCountries) {
+      const [tLon, tLat] = tiny.centroid;
+      const dLon = (lon - tLon) * cosLat;
+      const dLat = lat - tLat;
+      const degDist = Math.hypot(dLon, dLat);
+
+      if (degDist <= tiny.hitRadius && degDist < minDegDist) {
+        minDegDist = degDist;
+        bestTiny = tiny;
+      }
+    }
+
+    if (bestTiny) {
+      const fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === bestTiny.id)
+        || this.dbCountries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
+      if (fullCountry) {
+        return {
+          country: this._enrichCountry(fullCountry),
+          hitLat: bestTiny.centroid[1],
+          hitLon: bestTiny.centroid[0],
+          isTiny: true
+        };
+      }
+    }
+
+    return null;
+  }
+
   // Raycast from mouse / touch screen coordinates [clientX, clientY]
   pickCountry(clientX, clientY, containerWidth, containerHeight) {
-    const canvas = document.querySelector('#webgl-container canvas');
-    if (canvas) {
-      const rect = canvas.getBoundingClientRect();
+    if (!this.canvas) {
+      this.canvas = document.querySelector('#webgl-container canvas');
+    }
+    if (this.canvas) {
+      const rect = this.canvas.getBoundingClientRect();
       const rw = rect.width || containerWidth;
       const rh = rect.height || containerHeight;
       this.mouse.x = ((clientX - rect.left) / rw) * 2 - 1;
@@ -129,74 +184,14 @@ export class CountryPicker {
 
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObject(this.globeMesh, false);
-
-    if (intersects.length === 0) {
-      return null;
-    }
+    if (intersects.length === 0) return null;
 
     const hit = intersects[0];
-    // Transform hit point into globe's local coordinate space
     const localPoint = this.globeMesh.worldToLocal(hit.point.clone());
     const { lat, lon } = CountryPicker.vector3ToLatLon(localPoint);
 
-    // 1. Polygon hit ALWAYS wins: Check Bounding Box & Point-in-Polygon for all countries
-    for (const country of this.countries) {
-      const [minLon, minLat, maxLon, maxLat] = country.bbox;
-
-      // Fast Bounding Box check
-      let inBbox = false;
-      if (maxLon >= minLon) {
-        inBbox = (lon >= minLon && lon <= maxLon && lat >= minLat && lat <= maxLat);
-      } else {
-        // Crosses Date Line
-        inBbox = ((lon >= minLon || lon <= maxLon) && lat >= minLat && lat <= maxLat);
-      }
-
-      if (!inBbox) continue;
-
-      // Point in Polygon
-      if (CountryPicker.testGeometry(lon, lat, country.geometry)) {
-        return {
-          country: this._enrichCountry(country),
-          hitLat: lat,
-          hitLon: lon,
-          isTiny: false
-        };
-      }
-    }
-
-    // 2. Microstate Fallback: Fallback radius applies ONLY when no polygon is hit
-    // Nearest country edge or buffer wins
-    let bestTiny = null;
-    let minDegDist = Infinity;
-
-    for (const tiny of this.tinyCountries) {
-      const [tLon, tLat] = tiny.centroid;
-      // Spherical angular distance estimation
-      const dLon = (lon - tLon) * Math.cos((lat * Math.PI) / 180);
-      const dLat = lat - tLat;
-      const degDist = Math.hypot(dLon, dLat);
-
-      if (degDist <= tiny.hitRadius && degDist < minDegDist) {
-        minDegDist = degDist;
-        bestTiny = tiny;
-      }
-    }
-
-    if (bestTiny) {
-      let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
-      if (!fullCountry) {
-        fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
-      }
-      if (fullCountry) {
-        return {
-          country: this._enrichCountry(fullCountry),
-          hitLat: bestTiny.centroid[1],
-          hitLon: bestTiny.centroid[0],
-          isTiny: true
-        };
-      }
-    }
+    const hitResult = this._resolveCountryAtLatLon(lat, lon);
+    if (hitResult) return hitResult;
 
     // Clicked in ocean or unassigned territory
     return {
@@ -209,45 +204,7 @@ export class CountryPicker {
 
   // Lookup country directly by lat/lon (used for coordinate & microstate testing)
   findCountryAtLatLon(lat, lon) {
-    // 1. Polygon hit ALWAYS wins
-    for (const country of this.countries) {
-      const [minLon, minLat, maxLon, maxLat] = country.bbox;
-      let inBbox = false;
-      if (maxLon >= minLon) {
-        inBbox = (lon >= minLon && lon <= maxLon && lat >= minLat && lat <= maxLat);
-      } else {
-        inBbox = ((lon >= minLon || lon <= maxLon) && lat >= minLat && lat <= maxLat);
-      }
-      if (!inBbox) continue;
-
-      if (CountryPicker.testGeometry(lon, lat, country.geometry)) {
-        return this._enrichCountry(country);
-      }
-    }
-
-    // 2. Microstate Fallback: Nearest buffer wins
-    let bestTiny = null;
-    let minDegDist = Infinity;
-    for (const tiny of this.tinyCountries) {
-      const [tLon, tLat] = tiny.centroid;
-      const dLon = (lon - tLon) * Math.cos((lat * Math.PI) / 180);
-      const dLat = lat - tLat;
-      const degDist = Math.hypot(dLon, dLat);
-
-      if (degDist <= tiny.hitRadius && degDist < minDegDist) {
-        minDegDist = degDist;
-        bestTiny = tiny;
-      }
-    }
-
-    if (bestTiny) {
-      let fullCountry = this.countries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
-      if (!fullCountry) {
-        fullCountry = this.dbCountries.find(c => String(c.id).padStart(3, '0') === bestTiny.id);
-      }
-      if (fullCountry) return this._enrichCountry(fullCountry);
-    }
-
-    return null;
+    const result = this._resolveCountryAtLatLon(lat, lon);
+    return result ? result.country : null;
   }
 }
