@@ -226,7 +226,7 @@ export class UIManager {
     }
   }
 
-  showMemoryVault({ isCorrect, targetCountry, guessCountry, distanceKm, hitCoords, targetCoords, breakdown, isPractice, onNext }) {
+  showMemoryVault({ isCorrect, targetCountry, guessCountry, distanceKm, isAdjacent, hitCoords, targetCoords, breakdown, isPractice, onNext }) {
     this.hideTouchConfirm();
     if (this.clueCard) this.clueCard.classList.add('hidden');
     if (this.memoryVault) this.memoryVault.classList.remove('hidden');
@@ -252,13 +252,21 @@ export class UIManager {
         const destLon = targetCoords && targetCoords.lon !== undefined ? targetCoords.lon : (targetCountry ? targetCountry.lon : 0);
         const originCoordStr = Math.abs(originLat).toFixed(2) + '°' + (originLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(originLon).toFixed(2) + '°' + (originLon >= 0 ? 'E' : 'W');
         const destCoordStr = Math.abs(destLat).toFixed(2) + '°' + (destLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(destLon).toFixed(2) + '°' + (destLon >= 0 ? 'E' : 'W');
-        // Required exact phrasing: "You clicked Spain, 1,240 km from Morocco"
-        this.vaultDistance.innerHTML = '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, <strong>' + distanceKm.toLocaleString() + ' km</strong> <span class="distance-mi">(' + miles.toLocaleString() + ' mi)</span> from <strong>' + targetCountry.name + '</strong></div>' +
-          '<div class="distance-coords">' +
-            '<span>📍 ' + originCoordStr + '</span>' +
-            '<span class="coord-arrow">➔</span>' +
-            '<span>🎯 ' + destCoordStr + '</span>' +
-          '</div>';
+        if (isAdjacent || distanceKm === 0) {
+          this.vaultDistance.innerHTML =
+            '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, <strong>0 km (Adjacent)</strong> from <strong>' + targetCountry.name + '</strong></div>' +
+            '<div class="distance-coords">' +
+              '<span>🤝 Neighboring Country • Shared Sovereign Border (0 km)</span>' +
+            '</div>';
+        } else {
+          this.vaultDistance.innerHTML =
+            '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, <strong>' + distanceKm.toLocaleString() + ' km</strong> <span class="distance-mi">(' + miles.toLocaleString() + ' mi)</span> from <strong>' + targetCountry.name + '</strong></div>' +
+            '<div class="distance-coords">' +
+              '<span>📍 ' + originCoordStr + '</span>' +
+              '<span class="coord-arrow">➔</span>' +
+              '<span>🎯 ' + destCoordStr + '</span>' +
+            '</div>';
+        }
       }
       if (this.vaultNextBtn) {
         this.vaultNextBtn.innerHTML = `<span>Next Country</span> ${ICONS.arrowRight}`;

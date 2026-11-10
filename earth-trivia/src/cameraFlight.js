@@ -4,6 +4,8 @@ import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { CountryPicker } from './picker.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
+import { COUNTRIES_DB } from '../data/countries.js';
+import { WORLD_COUNTRIES } from '../data/world-50m.js';
 
 export const FLIGHT = {
   zoomOutWrong: 1.18,   // final distance = fitDistance * this
@@ -124,6 +126,133 @@ export function haversineDistanceKm(lat1, lon1, lat2, lon2) {
       Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return Math.round(R * c);
+}
+
+function normalizeName(name) {
+  if (!name) return '';
+  return name.toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+export function areCountriesAdjacent(c1, c2) {
+  if (!c1 || !c2) return false;
+  const id1 = String(c1.id || '').padStart(3, '0');
+  const id2 = String(c2.id || '').padStart(3, '0');
+  if (id1 && id1 === id2) return true; // Same country
+
+  const db1 = COUNTRIES_DB.find(c => String(c.id).padStart(3, '0') === id1 || c.name === c1.name) || c1;
+  const db2 = COUNTRIES_DB.find(c => String(c.id).padStart(3, '0') === id2 || c.name === c2.name) || c2;
+
+  const n1 = normalizeName(db1.name || c1.name);
+  const n2 = normalizeName(db2.name || c2.name);
+
+  // 1. Check neighbors array in DB (both directions)
+  if (db1.neighbors && Array.isArray(db1.neighbors)) {
+    if (db1.neighbors.some(nb => {
+      const nnb = normalizeName(nb);
+      return nnb === n2 || n2.includes(nnb) || nnb.includes(n2);
+    })) return true;
+  }
+  if (db2.neighbors && Array.isArray(db2.neighbors)) {
+    if (db2.neighbors.some(nb => {
+      const nnb = normalizeName(nb);
+      return nnb === n1 || n1.includes(nnb) || nnb.includes(n1);
+    })) return true;
+  }
+
+  return false;
+}
+
+function extractBoundaryPoints(geom) {
+  if (!geom || !geom.coordinates) return [];
+  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+  const pts = [];
+  for (const poly of polys) {
+    const ring = poly[0];
+    if (!ring || ring.length < 2) continue;
+    const step = Math.max(1, Math.floor(ring.length / 100));
+    for (let i = 0; i < ring.length; i += step) {
+      pts.push({ lat: ring[i][1], lon: ring[i][0] });
+    }
+  }
+  return pts;
+}
+
+export function getShortestDistanceBetweenCountries(countryA, countryB) {
+  if (!countryA || !countryB) {
+    return { distanceKm: 0, isAdjacent: false, closestA: { lat: 0, lon: 0 }, closestB: { lat: 0, lon: 0 } };
+  }
+
+  // 1. Check if adjacent by database definition
+  const isAdjacent = areCountriesAdjacent(countryA, countryB);
+  if (isAdjacent) {
+    const latA = countryA.lat !== undefined ? countryA.lat : (countryA.centroid ? countryA.centroid[1] : 0);
+    const lonA = countryA.lon !== undefined ? countryA.lon : (countryA.centroid ? countryA.centroid[0] : 0);
+    const latB = countryB.lat !== undefined ? countryB.lat : (countryB.centroid ? countryB.centroid[1] : 0);
+    const lonB = countryB.lon !== undefined ? countryB.lon : (countryB.centroid ? countryB.centroid[0] : 0);
+    return {
+      distanceKm: 0,
+      isAdjacent: true,
+      closestA: { lat: latA, lon: lonA },
+      closestB: { lat: latB, lon: lonB }
+    };
+  }
+
+  // 2. Resolve geometries
+  const cidA = String(countryA.id || '').padStart(3, '0');
+  const cidB = String(countryB.id || '').padStart(3, '0');
+  const wcA = countryA.geometry ? countryA : (WORLD_COUNTRIES.find(w => String(w.id).padStart(3, '0') === cidA || w.name === countryA.name) || countryA);
+  const wcB = countryB.geometry ? countryB : (WORLD_COUNTRIES.find(w => String(w.id).padStart(3, '0') === cidB || w.name === countryB.name) || countryB);
+
+  const ptsA = extractBoundaryPoints(wcA.geometry);
+  const ptsB = extractBoundaryPoints(wcB.geometry);
+
+  if (ptsA.length === 0 || ptsB.length === 0) {
+    const latA = countryA.lat !== undefined ? countryA.lat : (countryA.centroid ? countryA.centroid[1] : 0);
+    const lonA = countryA.lon !== undefined ? countryA.lon : (countryA.centroid ? countryA.centroid[0] : 0);
+    const latB = countryB.lat !== undefined ? countryB.lat : (countryB.centroid ? countryB.centroid[1] : 0);
+    const lonB = countryB.lon !== undefined ? countryB.lon : (countryB.centroid ? countryB.centroid[0] : 0);
+    const dist = Math.round(haversineDistanceKm(latA, lonA, latB, lonB));
+    return {
+      distanceKm: dist,
+      isAdjacent: false,
+      closestA: { lat: latA, lon: lonA },
+      closestB: { lat: latB, lon: lonB }
+    };
+  }
+
+  let minDist = Infinity;
+  let bestA = ptsA[0], bestB = ptsB[0];
+
+  for (let i = 0; i < ptsA.length; i++) {
+    const pA = ptsA[i];
+    for (let j = 0; j < ptsB.length; j++) {
+      const pB = ptsB[j];
+      const d = haversineDistanceKm(pA.lat, pA.lon, pB.lat, pB.lon);
+      if (d < minDist) {
+        minDist = d;
+        bestA = pA;
+        bestB = pB;
+      }
+    }
+  }
+
+  const roundedDist = Math.round(minDist);
+  // Geometric adjacency check: if boundary points touch within 15 km
+  if (roundedDist <= 15) {
+    return {
+      distanceKm: 0,
+      isAdjacent: true,
+      closestA: bestA,
+      closestB: bestB
+    };
+  }
+
+  return {
+    distanceKm: roundedDist,
+    isAdjacent: false,
+    closestA: bestA,
+    closestB: bestB
+  };
 }
 
 // Distance from clicked point to nearest point on target country boundary
@@ -492,18 +621,23 @@ export class CameraFlightController {
     ctx.shadowBlur = 0;
     ctx.shadowOffsetY = 0;
 
-    // Primary: distance in km (crisp bold white)
+    // Primary: distance in km or Adjacent (crisp bold white)
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 31px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`${distanceKm.toLocaleString()} km`, 128, 38);
-
-    // Secondary: distance in miles
-    const miles = Math.round(distanceKm * 0.621371);
-    ctx.fillStyle = 'rgba(215, 235, 250, 0.88)';
-    ctx.font = '500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-    ctx.fillText(`(${miles.toLocaleString()} mi)`, 128, 68);
+    if (distanceKm === 0) {
+      ctx.fillText('Adjacent', 128, 38);
+      ctx.fillStyle = 'rgba(215, 235, 250, 0.88)';
+      ctx.font = '500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillText('(0 km / 0 mi)', 128, 68);
+    } else {
+      ctx.fillText(`${distanceKm.toLocaleString()} km`, 128, 38);
+      const miles = Math.round(distanceKm * 0.621371);
+      ctx.fillStyle = 'rgba(215, 235, 250, 0.88)';
+      ctx.font = '500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillText(`(${miles.toLocaleString()} mi)`, 128, 68);
+    }
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.minFilter = THREE.LinearFilter;

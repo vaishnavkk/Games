@@ -1,5 +1,5 @@
 import { COUNTRIES_DB } from '../data/countries.js';
-import { haversineDistanceKm, distanceToCountryKm, getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
+import { haversineDistanceKm, distanceToCountryKm, areCountriesAdjacent, getShortestDistanceBetweenCountries, getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
@@ -294,8 +294,25 @@ export class GameManager {
       sound.playWrong();
       this.streak = 0;
 
-      // Distance error: distance to nearest point on target boundary (0 km if inside)
-      distanceKm = distanceToCountryKm(hitLat, hitLon, targetWc.geometry);
+      let isAdjacent = false;
+      let fromCoords = { lat: hitLat, lon: hitLon };
+      let toCoords = { lat: target.lat, lon: target.lon };
+
+      if (guessCountry) {
+        // Calculate shortest distance between the two countries (not pointer click position)
+        const shortest = getShortestDistanceBetweenCountries(guessWc || guessCountry, targetWc || target);
+        distanceKm = shortest.distanceKm;
+        isAdjacent = shortest.isAdjacent;
+        fromCoords = shortest.closestA;
+        toCoords = shortest.closestB;
+      } else {
+        // Ocean / off-target click fallback
+        distanceKm = distanceToCountryKm(hitLat, hitLon, targetWc.geometry);
+        isAdjacent = false;
+      }
+
+      this.lastDistanceKm = distanceKm;
+      this.lastIsAdjacent = isAdjacent;
 
       // Scoring formula calculated from single source of truth (scoring.js)
       this.lastRoundBreakdown = calculateRoundScore({
@@ -327,8 +344,8 @@ export class GameManager {
         this.globe.flight.drawCountryOutline(guessWc, false);
       }
 
-      // 2px neutral great-circle geodesic arc (white at 70%) with km distance at midpoint
-      this.globe.flight.drawGreatCircleArc(hitLat, hitLon, target.lat, target.lon, distanceKm);
+      // 2px neutral great-circle geodesic arc with km distance at midpoint (or closest boundary points)
+      this.globe.flight.drawGreatCircleArc(fromCoords.lat, fromCoords.lon, toCoords.lat, toCoords.lon, distanceKm);
     }
 
     // Freeze OrbitControls immediately and kill damping inertia to eliminate flight jitter
@@ -360,8 +377,9 @@ export class GameManager {
           targetCountry: target,
           guessCountry: isCorrect ? target : (guessCountry || { name: 'Open Ocean / Off-target' }),
           distanceKm: isCorrect ? 0 : distanceKm,
-          hitCoords: { lat: hitLat, lon: hitLon },
-          targetCoords: { lat: target.lat, lon: target.lon },
+          isAdjacent: isCorrect ? false : (this.lastIsAdjacent || false),
+          hitCoords: isCorrect ? { lat: hitLat, lon: hitLon } : fromCoords,
+          targetCoords: isCorrect ? { lat: target.lat, lon: target.lon } : toCoords,
           breakdown: this.lastRoundBreakdown,
           isPractice: this.isPractice,
           onNext: () => this.nextRound()

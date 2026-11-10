@@ -32,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
       phase: game.phase || (game.isAnswering ? (game.selectedHit ? 'selected' : 'question') : 'result'),
       targetIso: game.currentCountry ? (game.currentCountry.code || String(game.currentCountry.id).padStart(3, '0')) : null,
       guessIso: game.lastGuessCountry ? (game.lastGuessCountry.code || String(game.lastGuessCountry.id).padStart(3, '0')) : (game.selectedHit?.country ? (game.selectedHit.country.code || String(game.selectedHit.country.id).padStart(3, '0')) : null),
+      distanceKm: game.lastDistanceKm !== undefined ? game.lastDistanceKm : 0,
+      isAdjacent: game.lastIsAdjacent || false,
+      partialPoints: game.lastRoundBreakdown?.points || 0,
       targetFreeAreaPercent: globeApp.flight.targetFreeAreaPercent !== null && globeApp.flight.targetFreeAreaPercent !== undefined ? `${globeApp.flight.targetFreeAreaPercent}%` : null
     })
   };
