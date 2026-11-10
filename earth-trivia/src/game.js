@@ -1,5 +1,5 @@
 import { COUNTRIES_DB } from '../data/countries.js';
-import { haversineDistanceKm, distanceToCountryKm, getCountryAngularDiameter } from './cameraFlight.js';
+import { haversineDistanceKm, distanceToCountryKm, getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
@@ -115,6 +115,8 @@ export class GameManager {
     this.ui.hideTouchConfirm();
     this.roundStartTime = performance.now();
 
+    cancelAnswerFlight();
+    this.globe.flight.cancelAnswerFlight();
     // Reset visual map and camera (clears all markers, arcs, and highlights)
     this.globe.flight.resetToOverview({ duration: 800 });
     this.globe.mapRenderer.resetHighlights();
@@ -214,7 +216,7 @@ export class GameManager {
     });
   }
 
-  handleGuess(guessCountry, hitLat, hitLon) {
+  async handleGuess(guessCountry, hitLat, hitLon) {
     if (!this.isAnswering && this.phase !== 'question' && this.phase !== 'selected') return;
     if (hitLat === undefined && guessCountry) {
       hitLat = guessCountry.lat || (guessCountry.centroid ? guessCountry.centroid[1] : 0);
@@ -285,36 +287,6 @@ export class GameManager {
       this.globe.mapRenderer.renderHighlights({ correctCountryId: target.id });
       this.globe.flight.drawCountryOutline(targetWc, true);
 
-      // Freeze OrbitControls immediately and kill damping inertia to eliminate flight jitter
-      this.globe.controls.enabled = false;
-      if (this.globe.controls.sphericalDelta) this.globe.controls.sphericalDelta.set(0, 0, 0);
-      if (this.globe.controls.panOffset) this.globe.controls.panOffset.set(0, 0, 0);
-      this.globe.isAutoRotating = false;
-
-      // Camera flight: decouple heavy DOM state update to rAF so initial frame never stutters
-      const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
-      requestAnimationFrame(() => {
-        sound.playSwoosh();
-        this.globe.flight.flyToCountry(target.lat, target.lon, {
-          isDesktopOffset: true,
-          angularSpan,
-          onComplete: () => {
-            this.globe.flight.computeTargetFreeAreaPercent(targetWc);
-            requestAnimationFrame(() => {
-              this.ui.showMemoryVault({
-                isCorrect: true,
-                targetCountry: target,
-                guessCountry: target,
-                distanceKm: 0,
-                breakdown: this.lastRoundBreakdown,
-                isPractice: this.isPractice,
-                onNext: () => this.nextRound()
-              });
-            });
-          }
-        });
-      });
-
     } else {
       // ── INCORRECT GUESS ────────────────────────────────────
       sound.playWrong();
@@ -355,36 +327,40 @@ export class GameManager {
 
       // 2px neutral great-circle geodesic arc (white at 70%) with km distance at midpoint
       this.globe.flight.drawGreatCircleArc(hitLat, hitLon, target.lat, target.lon, distanceKm);
+    }
 
-      // Freeze OrbitControls immediately and kill damping inertia to eliminate flight jitter
-      this.globe.controls.enabled = false;
-      if (this.globe.controls.sphericalDelta) this.globe.controls.sphericalDelta.set(0, 0, 0);
-      if (this.globe.controls.panOffset) this.globe.controls.panOffset.set(0, 0, 0);
-      this.globe.isAutoRotating = false;
+    // Freeze OrbitControls immediately and kill damping inertia to eliminate flight jitter
+    this.globe.controls.enabled = false;
+    if (this.globe.controls.sphericalDelta) this.globe.controls.sphericalDelta.set(0, 0, 0);
+    if (this.globe.controls.panOffset) this.globe.controls.panOffset.set(0, 0, 0);
+    this.globe.isAutoRotating = false;
 
-      // Camera flight: frame both if both fit with target >= 25% free area; otherwise frame target
-      const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
+    const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
+    const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
+    const fitDistance = this.globe.flight.computeTargetDistance(angularSpan, isMobile);
+    const targetDir = getTargetCameraDir(targetWc || target, this.globe.earthMesh);
+    const freeRect = getFreeRect();
+    const targetHiddenByUi = isHiddenByUi(targetDir, this.globe.camera, this.globe.renderer, freeRect, 1.7);
+
+    sound.playSwoosh();
+    const flightStatus = await this.globe.flight.animateAfterAnswer({
+      wasCorrect: isCorrect,
+      targetDir,
+      fitDistance,
+      targetHiddenByUi
+    });
+
+    if (flightStatus === 'done') {
+      this.globe.flight.computeTargetFreeAreaPercent(targetWc);
       requestAnimationFrame(() => {
-        sound.playSwoosh();
-        this.globe.flight.flyToCountry(target.lat, target.lon, {
-          isDesktopOffset: true,
-          angularSpan,
-          guessLat: hitLat,
-          guessLon: hitLon,
-          onComplete: () => {
-            this.globe.flight.computeTargetFreeAreaPercent(targetWc);
-            requestAnimationFrame(() => {
-              this.ui.showMemoryVault({
-                isCorrect: false,
-                targetCountry: target,
-                guessCountry: guessCountry || { name: 'Open Ocean / Off-target' },
-                distanceKm,
-                breakdown: this.lastRoundBreakdown,
-                isPractice: this.isPractice,
-                onNext: () => this.nextRound()
-              });
-            });
-          }
+        this.ui.showMemoryVault({
+          isCorrect,
+          targetCountry: target,
+          guessCountry: isCorrect ? target : (guessCountry || { name: 'Open Ocean / Off-target' }),
+          distanceKm: isCorrect ? 0 : distanceKm,
+          breakdown: this.lastRoundBreakdown,
+          isPractice: this.isPractice,
+          onNext: () => this.nextRound()
         });
       });
     }

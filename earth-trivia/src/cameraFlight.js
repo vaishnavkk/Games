@@ -5,6 +5,113 @@ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { CountryPicker } from './picker.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
 
+export const FLIGHT = {
+  zoomOutWrong: 1.18,   // final distance = fitDistance * this
+  zoomOutCorrect: 1.2,  // correct: current distance * this
+  holdMs: 300,          // pause on the wrong pick before travelling
+  minMs: 900, maxMs: 3200,
+  msPerDeg: 14,         // longer trips take longer, never a jump
+  bumpPerDeg: 0.004,    // extra mid-flight distance so the route stays readable
+  maxBump: 0.7,
+  maxCamLatDeg: 80,     // keeps lookAt(up = Y) from flipping at the poles
+};
+
+const { clamp, lerp, degToRad, radToDeg } = THREE.MathUtils;
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+export function limitLatitude(dir) {
+  const maxY = Math.sin(degToRad(FLIGHT.maxCamLatDeg));
+  if (Math.abs(dir.y) <= maxY) return dir;
+  const y = Math.sign(dir.y) * maxY;
+  const h = Math.hypot(dir.x, dir.z);
+  const k = h > 1e-6 ? Math.sqrt(1 - y * y) / h : 0;
+  return dir.set(h > 1e-6 ? dir.x * k : Math.sqrt(1 - y * y), y, dir.z * k);
+}
+
+// Shortest path on the sphere between two unit vectors (great-circle slerp).
+export function greatCircle(a, b, t, out) {
+  const omega = Math.acos(clamp(a.dot(b), -1, 1));
+  if (omega < 1e-5) return out.copy(b);
+  if (Math.PI - omega < 1e-3) {              // opposite sides: go over a side
+    const side = new THREE.Vector3(0, 1, 0).cross(a);
+    if (side.lengthSq() < 1e-6) side.set(1, 0, 0);
+    side.normalize();
+    return out.copy(a).multiplyScalar(Math.cos(Math.PI * t)).addScaledVector(side, Math.sin(Math.PI * t));
+  }
+  const s = Math.sin(omega);
+  return out.copy(a).multiplyScalar(Math.sin((1 - t) * omega) / s).addScaledVector(b, Math.sin(t * omega) / s);
+}
+
+// Free area = screen minus HUD minus result card (desktop) / bottom sheet (mobile).
+export function getFreeRect() {
+  const W = typeof window !== 'undefined' ? window.innerWidth : 1440;
+  const H = typeof window !== 'undefined' ? window.innerHeight : 900;
+  const hud = 64;
+  return W < 640 ? { x: 0, y: hud, w: W, h: H - hud - H * 0.30 }
+                 : { x: 0, y: hud, w: W - 340, h: H - hud };
+}
+
+export function isHiddenByUi(dirUnit, camera, renderer, freeRect, globeRadius = 1.7, margin = 48) {
+  if (dirUnit.dot(camera.position.clone().normalize()) < 0.2) return true; // far side / edge
+  const p = dirUnit.clone().multiplyScalar(globeRadius).project(camera);
+  const w = renderer && renderer.domElement ? renderer.domElement.clientWidth : (typeof window !== 'undefined' ? window.innerWidth : 1440);
+  const h = renderer && renderer.domElement ? renderer.domElement.clientHeight : (typeof window !== 'undefined' ? window.innerHeight : 900);
+  const x = (p.x * 0.5 + 0.5) * w, y = (-p.y * 0.5 + 0.5) * h;
+  return x < freeRect.x + margin || x > freeRect.x + freeRect.w - margin ||
+         y < freeRect.y + margin || y > freeRect.y + freeRect.h - margin;
+}
+
+let current = null;
+export function cancelAnswerFlight() {
+  if (current) current.cancelled = true;
+}
+
+/**
+ * o = { wasCorrect, targetDir (unit Vector3, include your free-area offset),
+ *       fitDistance, targetHiddenByUi, onProgress?(e, dir) }
+ * Resolves 'done' or 'cancelled'.
+ */
+export function animateAfterAnswer(camera, controls, o) {
+  cancelAnswerFlight();
+  const job = { cancelled: false };
+  current = job;
+
+  const startDir = camera.position.clone().normalize();
+  const startDist = camera.position.length();
+  const stayPut = o.wasCorrect && !o.targetHiddenByUi;
+  const endDir = stayPut ? startDir.clone() : limitLatitude(o.targetDir.clone().normalize());
+  const endDist = clamp(
+    o.wasCorrect ? startDist * FLIGHT.zoomOutCorrect : o.fitDistance * FLIGHT.zoomOutWrong,
+    controls.minDistance, controls.maxDistance);
+
+  const angle = radToDeg(Math.acos(clamp(startDir.dot(endDir), -1, 1)));
+  const dur = stayPut ? 650 : clamp(FLIGHT.minMs + angle * FLIGHT.msPerDeg, FLIGHT.minMs, FLIGHT.maxMs);
+  const bump = stayPut ? 0 : Math.min(FLIGHT.maxBump, angle * FLIGHT.bumpPerDeg);
+  const hold = o.wasCorrect ? 0 : FLIGHT.holdMs;
+
+  controls.enabled = false;
+  const dir = new THREE.Vector3();
+  const t0 = performance.now();
+
+  return new Promise((resolve) => {
+    const frame = (now) => {
+      if (job.cancelled) { controls.enabled = true; resolve('cancelled'); return; }
+      const raw = clamp((now - t0 - hold) / dur, 0, 1);
+      const e = easeInOutCubic(raw);
+      greatCircle(startDir, endDir, e, dir).normalize();
+      limitLatitude(dir);
+      const dist = lerp(startDist, endDist, e) + bump * Math.sin(Math.PI * raw);
+      camera.position.copy(dir).multiplyScalar(dist);
+      camera.up.set(0, 1, 0);
+      camera.lookAt(0, 0, 0);
+      o.onProgress?.(e, dir);
+      if (raw < 1) requestAnimationFrame(frame);
+      else { controls.update(); controls.enabled = true; resolve('done'); }
+    };
+    requestAnimationFrame(frame);
+  });
+}
+
 export function haversineDistanceKm(lat1, lon1, lat2, lon2) {
   const R = 6371; // Earth radius in km
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -44,6 +151,68 @@ export function distanceToCountryKm(latClick, lonClick, targetGeometry) {
   return minDistKm === Infinity ? 0 : Math.round(minDistKm);
 }
 
+// Largest landmass center for multi-part countries
+export function getLargestLandmassCenter(country) {
+  if (!country) return { lat: 0, lon: 0 };
+  const geom = country.geometry;
+  if (!geom || !geom.coordinates) {
+    return {
+      lat: country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0),
+      lon: country.lon !== undefined ? country.lon : (country.centroid ? country.centroid[0] : 0)
+    };
+  }
+  let maxPts = 0;
+  let bestPoly = null;
+  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+  for (const p of polys) {
+    if (p[0] && p[0].length > maxPts) {
+      maxPts = p[0].length;
+      bestPoly = p;
+    }
+  }
+  if (!bestPoly || !bestPoly[0]) {
+    return {
+      lat: country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0),
+      lon: country.lon !== undefined ? country.lon : (country.centroid ? country.centroid[0] : 0)
+    };
+  }
+  let sumX = 0, sumY = 0, sumZ = 0;
+  for (const [lon, lat] of bestPoly[0]) {
+    const v = CountryPicker.latLonToVector3(lat, lon, 1.0);
+    sumX += v.x; sumY += v.y; sumZ += v.z;
+  }
+  const centerV = new THREE.Vector3(sumX, sumY, sumZ).normalize();
+  return CountryPicker.vector3ToLatLon(centerV);
+}
+
+// Compute world direction vector for camera to frame country cleanly in free area
+export function getTargetCameraDir(country, globeMesh) {
+  const center = getLargestLandmassCenter(country);
+  const localVec = CountryPicker.latLonToVector3(center.lat, center.lon, 1.0);
+  if (globeMesh) {
+    globeMesh.updateMatrixWorld(true);
+    localVec.applyMatrix4(globeMesh.matrixWorld);
+  }
+  const worldVec = localVec.normalize();
+
+  const W = typeof window !== 'undefined' ? window.innerWidth : 1440;
+  const H = typeof window !== 'undefined' ? window.innerHeight : 900;
+  const isMobile = W < 640 || (W <= 900 && H > W);
+
+  const targetDir = worldVec.clone();
+  if (isMobile) {
+    // Pitch down to position country in upper 70% viewport above bottom sheet
+    const right = new THREE.Vector3().crossVectors(targetDir, new THREE.Vector3(0, 1, 0)).normalize();
+    if (right.lengthSq() > 1e-4) {
+      targetDir.applyAxisAngle(right, -0.10);
+    }
+  } else {
+    // Yaw right to position country in left free area (~550px)
+    targetDir.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.12);
+  }
+  return targetDir.normalize();
+}
+
 // Compute angular diameter of country's largest landmass
 export function getCountryAngularDiameter(country) {
   if (!country) return 5;
@@ -62,26 +231,8 @@ export function getCountryAngularDiameter(country) {
   if (!bestPoly || !bestPoly[0]) return 5;
 
   const ext = bestPoly[0];
-  let centerLat = country.lat;
-  let centerLon = country.lon;
-
-  if (centerLat === undefined && country.centroid) {
-    centerLon = country.centroid[0];
-    centerLat = country.centroid[1];
-  }
-  if (centerLat === undefined) {
-    let sumX = 0, sumY = 0, sumZ = 0;
-    for (const [lon, lat] of ext) {
-      const v = CountryPicker.latLonToVector3(lat, lon, 1.0);
-      sumX += v.x; sumY += v.y; sumZ += v.z;
-    }
-    const centerV = new THREE.Vector3(sumX, sumY, sumZ).normalize();
-    const coords = CountryPicker.vector3ToLatLon(centerV);
-    centerLat = coords.lat;
-    centerLon = coords.lon;
-  }
-
-  const centerVec = CountryPicker.latLonToVector3(centerLat, centerLon, 1.0).normalize();
+  const center = getLargestLandmassCenter(country);
+  const centerVec = CountryPicker.latLonToVector3(center.lat, center.lon, 1.0).normalize();
   let maxAngle = 0;
   for (const [lon, lat] of ext) {
     const v = CountryPicker.latLonToVector3(lat, lon, 1.0).normalize();
@@ -147,14 +298,13 @@ export class CameraFlightController {
     const isTiny = TINY_COUNTRIES.some(t => String(t.id).padStart(3, '0') === String(country.id).padStart(3, '0')) ||
                    getCountryAngularDiameter(country) < 2.0;
 
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    const w = typeof window !== 'undefined' ? window.innerWidth : 1440;
+    const h = typeof window !== 'undefined' ? window.innerHeight : 900;
 
     if (isTiny) {
       // Small countries: draw an unfilled 3D ring larger than the country so land is visible inside
-      const cLat = country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0);
-      const cLon = country.lon !== undefined ? country.lon : (country.centroid ? country.centroid[0] : 0);
-      const centerVec = CountryPicker.latLonToVector3(cLat, cLon, 1.704).normalize();
+      const c = getLargestLandmassCenter(country);
+      const centerVec = CountryPicker.latLonToVector3(c.lat, c.lon, 1.704).normalize();
       // Generate orthonormal basis around centerVec
       const up = Math.abs(centerVec.y) < 0.99 ? new THREE.Vector3(0, 1, 0) : new THREE.Vector3(1, 0, 0);
       const right = new THREE.Vector3().crossVectors(centerVec, up).normalize();
@@ -258,8 +408,8 @@ export class CameraFlightController {
     this.globeMesh.updateMatrixWorld(true);
     this.camera.updateMatrixWorld(true);
 
-    const W = window.innerWidth;
-    const H = window.innerHeight;
+    const W = typeof window !== 'undefined' ? window.innerWidth : 1440;
+    const H = typeof window !== 'undefined' ? window.innerHeight : 900;
     const isMobile = W <= 640 || (W <= 900 && H > W);
     const freeAreaPx = isMobile ? (W * (H * 0.70)) : ((W - 344) * H);
 
@@ -407,7 +557,20 @@ export class CameraFlightController {
     return dist;
   }
 
-  // Smooth camera flight and framing with Quaternion SLERP & zero controls fighting
+  animateAfterAnswer(opts) {
+    this.isFlying = true;
+    return animateAfterAnswer(this.camera, this.controls, opts).then((status) => {
+      this.isFlying = false;
+      return status;
+    });
+  }
+
+  cancelAnswerFlight() {
+    this.isFlying = false;
+    cancelAnswerFlight();
+  }
+
+  // Backwards compatible wrapper for flyToCountry
   flyToCountry(targetLat, targetLon, {
     duration = 1400,
     isDesktopOffset = false,
@@ -416,118 +579,34 @@ export class CameraFlightController {
     guessLon = null,
     onComplete
   } = {}) {
-    this.isFlying = true;
-    this.controls.enabled = false;
-    // Kill residual damping inertia immediately to eliminate flight jitter
-    if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
-    if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
-    this.controls.scale = 1;
-
-    const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
-
-    // Determine target center and distance
-    let centerLat = targetLat;
-    let centerLon = targetLon;
-    let targetCamZ = this.computeTargetDistance(angularSpan, isMobile);
-
-    // Check wrong answer framing: frame both if both fit with target >= 25% of free area
-    if (guessLat !== null && guessLon !== null) {
-      const vTarget = CountryPicker.latLonToVector3(targetLat, targetLon, 1.7).normalize();
-      const vGuess = CountryPicker.latLonToVector3(guessLat, guessLon, 1.7).normalize();
-      const angularDistDeg = (vTarget.angleTo(vGuess) * 180) / Math.PI;
-
-      // If angular distance is moderate (< 50°), frame midpoint between guess and target
-      if (angularDistDeg < 50) {
-        const vMid = vTarget.clone().add(vGuess).normalize();
-        const midCoords = CountryPicker.vector3ToLatLon(vMid.multiplyScalar(1.7));
-        centerLat = midCoords.lat;
-        centerLon = midCoords.lon;
-        const requiredZ = Math.max(targetCamZ, isMobile ? 3.2 + (angularDistDeg / 50) * 1.5 : 2.2 + (angularDistDeg / 50) * 1.1);
-        const maxZ = isMobile ? this.MAX_CAMERA_Z_MOBILE : this.MAX_CAMERA_Z_DESKTOP;
-        targetCamZ = Math.min(maxZ, requiredZ);
-      } else {
-        // Extreme distance (e.g. > 50°): framing both would reduce target < 25%; frame target directly
-        centerLat = targetLat;
-        centerLon = targetLon;
-      }
+    const isMobile = (typeof window !== 'undefined') ? (window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth)) : false;
+    const fitDistance = this.computeTargetDistance(angularSpan, isMobile);
+    const centerVec = CountryPicker.latLonToVector3(targetLat, targetLon, 1.0);
+    if (this.globeMesh) {
+      this.globeMesh.updateMatrixWorld(true);
+      centerVec.applyMatrix4(this.globeMesh.matrixWorld);
+    }
+    const targetDir = centerVec.normalize();
+    if (isDesktopOffset && !isMobile) {
+      targetDir.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.12);
+    } else if (isMobile) {
+      const right = new THREE.Vector3().crossVectors(targetDir, new THREE.Vector3(0, 1, 0)).normalize();
+      if (right.lengthSq() > 1e-4) targetDir.applyAxisAngle(right, -0.10);
     }
 
-    // Target rotation around Y: -(centerLon + 90) * rad
-    let targetRotY = -((centerLon + 90) * Math.PI) / 180;
-
-    // Desktop offset: shift slightly left so country sits cleanly in free area
-    if (isDesktopOffset && window.innerWidth > 900) {
-      targetRotY -= 0.24;
-    }
-
-    // Shortest spherical path for Y rotation
-    let curY = this.globeMesh.rotation.y;
-    let diffY = (targetRotY - curY) % (Math.PI * 2);
-    if (diffY > Math.PI) diffY -= Math.PI * 2;
-    if (diffY < -Math.PI) diffY += Math.PI * 2;
-    const finalRotY = curY + diffY;
-
-    // Tilt for latitude
-    const targetRotX = (centerLat * Math.PI) / 180;
-
-    // Mobile vertical camera offset (places country above 30% bottom sheet)
-    const targetCamY = isMobile ? -0.10 : 0;
-    const startCamX = this.camera.position.x || 0;
-    const startCamY = this.camera.position.y || 0;
-    const startCamZ = this.camera.position.z;
-
-    // Quaternion SLERP setup: shortest-path spherical linear interpolation on SO(3)
-    const startQuat = this.globeMesh.quaternion.clone();
-    const targetEuler = new THREE.Euler(targetRotX, finalRotY, 0, 'XYZ');
-    const targetQuat = new THREE.Quaternion().setFromEuler(targetEuler);
-    if (startQuat.dot(targetQuat) < 0) {
-      targetQuat.set(-targetQuat.x, -targetQuat.y, -targetQuat.z, -targetQuat.w);
-    }
-
-    const startTime = performance.now();
-
-    const animateFlight = (now) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(1, elapsed / duration);
-      // Smooth cubic bezier / easeInOutCubic
-      const ease =
-        progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-      this.globeMesh.quaternion.slerpQuaternions(startQuat, targetQuat, ease);
-      this.globeMesh.quaternion.normalize();
-      this.globeMesh.rotation.setFromQuaternion(this.globeMesh.quaternion, 'XYZ');
-
-      const camX = THREE.MathUtils.lerp(startCamX, 0, ease);
-      const camY = THREE.MathUtils.lerp(startCamY, targetCamY, ease);
-      const camZ = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
-      this.camera.position.set(camX, camY, camZ);
-      this.camera.lookAt(0, camY, 0);
-
-      if (progress < 1) {
-        requestAnimationFrame(animateFlight);
-      } else {
-        this.globeMesh.quaternion.copy(targetQuat);
-        this.globeMesh.rotation.setFromQuaternion(targetQuat, 'XYZ');
-        this.camera.position.set(0, targetCamY, targetCamZ);
-        this.camera.lookAt(0, targetCamY, 0);
-
-        this.isFlying = false;
-        this.controls.enabled = true;
-        if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
-        if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
-        this.controls.target.set(0, targetCamY, 0);
-        this.controls.update();
-
-        if (onComplete) onComplete();
-      }
-    };
-
-    requestAnimationFrame(animateFlight);
+    return this.animateAfterAnswer({
+      wasCorrect: false,
+      targetDir,
+      fitDistance,
+      targetHiddenByUi: false
+    }).then((status) => {
+      if (onComplete) onComplete();
+      return status;
+    });
   }
 
   resetToOverview({ duration = 1000, onComplete } = {}) {
+    this.cancelAnswerFlight();
     this.isFlying = true;
     this.controls.enabled = false;
     if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
@@ -535,7 +614,7 @@ export class CameraFlightController {
     this.clearVisuals();
 
     const startCamX = this.camera.position.x || 0;
-    const startCamY = this.camera.position.y;
+    const startCamY = this.camera.position.y || 0;
     const startCamZ = this.camera.position.z;
     const targetCamZ = 4.0;
     const startTime = performance.now();
