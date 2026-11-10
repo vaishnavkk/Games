@@ -32,7 +32,7 @@ export class GlobeApp {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
     this.controls.dampingFactor = 0.05;
-    this.controls.minDistance = 2.0;
+    this.controls.minDistance = 2.52;
     this.controls.maxDistance = 6.5;
     this.controls.enablePan = false;
     this.controls.rotateSpeed = 0.6;
@@ -132,6 +132,26 @@ export class GlobeApp {
     this.earthMesh.add(this.borderMesh);
   }
 
+
+  setMicrostateTarget(target) {
+    if (!target) {
+      this.activeMicrostate = null;
+      const ring = document.getElementById('microstateRing');
+      if (ring) ring.style.display = 'none';
+      return;
+    }
+    const bbox = target.bbox;
+    const w = bbox ? Math.abs(bbox[2] - bbox[0]) : (target.angularSpan || 0);
+    if (w < 3.0 || (target.id && ['336', '492', '674', '438', '020', '470', '584', '798', '296'].includes(String(target.id).padStart(3, '0')))) {
+      const lat = target.lat !== undefined ? target.lat : (target.centroid ? target.centroid[1] : 0);
+      const lon = target.lon !== undefined ? target.lon : (target.centroid ? target.centroid[0] : 0);
+      this.activeMicrostate = { target, lat, lon };
+    } else {
+      this.activeMicrostate = null;
+      const ring = document.getElementById('microstateRing');
+      if (ring) ring.style.display = 'none';
+    }
+  }
   createStars() {
     const starGeo = new THREE.BufferGeometry();
     const starCount = 1000;
@@ -196,6 +216,33 @@ export class GlobeApp {
     // Never fight active camera flight
     if (!this.flight.isFlying) {
       this.controls.update();
+    }
+
+    // Microstate HTML/SVG overlay ring projection (Step 3d)
+    const ring = document.getElementById('microstateRing');
+    if (ring) {
+      if (this.activeMicrostate) {
+        const localPt = CountryPicker.latLonToVector3(this.activeMicrostate.lat, this.activeMicrostate.lon, 1.7);
+        const worldPt = localPt.clone().applyMatrix4(this.earthMesh.matrixWorld);
+        const toCam = this.camera.position.clone().sub(worldPt).normalize();
+        const norm = worldPt.clone().normalize();
+        const isFacing = norm.dot(toCam) > 0.05;
+
+        if (isFacing) {
+          const p = worldPt.clone().project(this.camera);
+          const w = this.renderer.domElement.clientWidth;
+          const h = this.renderer.domElement.clientHeight;
+          const x = (p.x * 0.5 + 0.5) * w;
+          const y = (-p.y * 0.5 + 0.5) * h;
+          ring.style.display = 'block';
+          ring.style.left = `${Math.round(x - 28)}px`;
+          ring.style.top = `${Math.round(y - 28)}px`;
+        } else {
+          ring.style.display = 'none';
+        }
+      } else {
+        ring.style.display = 'none';
+      }
     }
 
     this.renderer.render(this.scene, this.camera);

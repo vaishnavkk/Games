@@ -261,7 +261,7 @@ export class CameraFlightController {
     this.lineMaterials = [];
 
     // Min and max camera distance bounds
-    this.MIN_CAMERA_Z = 2.05;
+    this.MIN_CAMERA_Z = 2.52;
     this.MAX_CAMERA_Z_DESKTOP = 3.65;
     this.MAX_CAMERA_Z_MOBILE = 5.15;
   }
@@ -488,7 +488,7 @@ export class CameraFlightController {
     const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
     const sprite = new THREE.Sprite(spriteMat);
     sprite.position.copy(positionVec);
-    sprite.scale.set(0.38, 0.14, 1);
+    sprite.scale.set(0.24, 0.09, 1);
 
     this.distanceSprite = sprite;
     this.markersGroup.add(sprite);
@@ -533,13 +533,16 @@ export class CameraFlightController {
       points.push(p);
 
       if (i === Math.floor(numPoints / 2)) {
-        midpointVec = p.clone().add(p.clone().normalize().multiplyScalar(0.08));
+        const normal = p.clone().normalize();
+        const tangent = v2.clone().sub(v1).normalize();
+        const side = new THREE.Vector3().crossVectors(normal, tangent).normalize();
+        midpointVec = p.clone().addScaledVector(normal, 0.09).addScaledVector(side, 0.05);
       }
     }
 
     // 2px neutral line (white at 70%)
     const curve = new THREE.CatmullRomCurve3(points);
-    const tubeGeo = new THREE.TubeGeometry(curve, 64, 0.009, 8, false);
+    const tubeGeo = new THREE.TubeGeometry(curve, 64, 0.0020, 8, false);
     const tubeMat = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,

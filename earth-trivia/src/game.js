@@ -119,6 +119,7 @@ export class GameManager {
     this.globe.flight.cancelAnswerFlight();
     // Reset visual map and camera (clears all markers, arcs, and highlights)
     this.globe.flight.resetToOverview({ duration: 800 });
+    this.globe.setMicrostateTarget(this.currentCountry);
     this.globe.mapRenderer.resetHighlights();
 
     // Display clue/prompt based on mode
@@ -233,6 +234,7 @@ export class GameManager {
 
     // Clear previous visual markers and outlines
     this.globe.flight.clearVisuals();
+    this.globe.setMicrostateTarget(null);
 
     const target = this.currentCountry;
     const isCorrect = guessCountry && (
@@ -407,7 +409,7 @@ export class GameManager {
       }
     }
 
-    const accuracy = this.round > 0 ? Math.round((this.correctCount / this.round) * 100) : 0;
+    const accuracy = Math.min(100, Math.max(0, this.round > 0 ? Math.round((this.correctCount / this.round) * 100) : 0));
 
     this.ui.showEndScreen({
       score: this.score,

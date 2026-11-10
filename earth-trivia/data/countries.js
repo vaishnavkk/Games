@@ -1604,7 +1604,7 @@ export const COUNTRIES_DB = [
       "Famous for jagged granite mountain horns, sweet corn and minced beef pies, and distant volcanic islands with giant stone moai statues."
     ],
     "memoryAnchors": [
-      "Accounts for roughly 34% of global mined lithium production and holds 9.3 million metric tons of identified lithium reserves according to USGS (2024).",
+      "Holds world-leading lithium reserves of 9.3 million tonnes (largest globally), and accounted for about 20% of global mine production in 2024 (49,000 of 240,000 t) according to USGS MCS 2025.",
       "Averages only 177 kilometers in width while stretching across 38 degrees of latitude.",
       "Houses the Moai stone statues carved by the ancient Rapa Nui civilization on Easter Island."
     ],

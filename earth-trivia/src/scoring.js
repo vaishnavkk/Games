@@ -227,3 +227,8 @@ export function renderClueWorth({ clueIndex = 0, streak = 0, speedBonus = 0, mod
   }
   return worth;
 }
+
+export function calculateAccuracy(correct, roundsAnswered) {
+  if (!roundsAnswered || roundsAnswered <= 0) return 0;
+  return Math.min(100, Math.max(0, Math.round((correct / roundsAnswered) * 100)));
+}

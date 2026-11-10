@@ -1,3 +1,23 @@
+function computeGeometryArea(geometry) {
+  if (!geometry || !geometry.coordinates) return Infinity;
+  let totalArea = 0;
+  const polys = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates;
+  for (const poly of polys) {
+    const ring = poly[0];
+    if (!ring || ring.length < 3) continue;
+    let a = 0;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const latMid = ((ring[i][1] + ring[j][1]) / 2) * (Math.PI / 180);
+      const cosLat = Math.cos(latMid);
+      const x1 = ring[j][0] * cosLat, y1 = ring[j][1];
+      const x2 = ring[i][0] * cosLat, y2 = ring[i][1];
+      a += (x1 * y2) - (x2 * y1);
+    }
+    totalArea += Math.abs(a) * 0.5;
+  }
+  return totalArea;
+}
+
 import * as THREE from 'three';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
