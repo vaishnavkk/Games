@@ -3,7 +3,7 @@ import { haversineDistanceKm, distanceToCountryKm, getCountryAngularDiameter, ge
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
-import { calculateRoundScore } from './scoring.js';
+import { calculateRoundScore, pointsIfCorrect } from './scoring.js';
 
 export class GameManager {
   constructor(globeApp, ui) {

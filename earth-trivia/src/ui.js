@@ -1,5 +1,5 @@
 import { ICONS, getFlagSvg } from './icons.js';
-import { getRevealClueButtonText } from './scoring.js';
+import { getRevealClueButtonText, renderClueWorth, breakdownText, PARTIAL_MAX_KM } from './scoring.js';
 
 export class UIManager {
   constructor() {
