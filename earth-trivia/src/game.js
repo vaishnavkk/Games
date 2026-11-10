@@ -548,8 +548,5 @@ export class GameManager {
     if (this.ui.mainMenuBtn) {
       this.ui.mainMenuBtn.onclick = () => this.returnToMainMenu();
     }
-    if (this.ui.vaultMenuBtn) {
-      this.ui.vaultMenuBtn.onclick = () => this.returnToMainMenu();
-    }
   }
 }

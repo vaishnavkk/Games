@@ -375,21 +375,10 @@
       color: var(--color-accent);
     }
 
-    /* Vault actions row with Continue and Main Menu buttons */
-    .vault-actions-row {
-      display: flex;
-      gap: var(--space-2);
+    /* Vault primary action button */
+    .memory-vault-panel .btn-primary-action {
       width: 100%;
       margin-top: auto;
-    }
-    .vault-actions-row .btn-primary-action {
-      flex: 1;
-      min-width: 0;
-    }
-    .vault-actions-row .vault-menu-btn {
-      padding: 6px 12px;
-      min-height: 38px;
-      font-size: 12.5px;
       flex-shrink: 0;
     }
 
@@ -483,8 +472,10 @@
       text-transform: uppercase;
       padding: 3px 8px;
       border-radius: var(--radius-tag);
-      margin-bottom: 6px;
+      margin-bottom: 0;
       width: fit-content;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .vault-status.correct {
       background: var(--color-success-bg);
@@ -501,6 +492,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       margin-bottom: 6px;
       gap: 6px;
     }
@@ -514,7 +506,9 @@
       color: var(--color-text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.4px;
-      white-space: nowrap;
+      max-width: 100%;
+      white-space: normal;
+      word-break: break-word;
     }
     .vault-official-name {
       font-size: 11.5px;
@@ -610,44 +604,7 @@
     .vault-distance-box .coord-arrow {
       opacity: 0.7;
     }
-    .vault-distance-box .distance-map-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-      padding-top: 6px;
-      border-top: 1px solid rgba(161, 50, 34, 0.2);
-    }
-    .map-link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: var(--radius-component, 4px);
-      text-decoration: none;
-      transition: background 0.15s ease, border-color 0.15s ease;
-      cursor: pointer;
-    }
-    .map-link-btn.gmaps-btn {
-      background: rgba(18, 32, 47, 0.08);
-      color: var(--color-text-primary, #12202f);
-      border: 1px solid rgba(18, 32, 47, 0.25);
-    }
-    .map-link-btn.gmaps-btn:hover {
-      background: rgba(18, 32, 47, 0.16);
-      border-color: rgba(18, 32, 47, 0.45);
-    }
-    .map-link-btn.osm-btn {
-      background: rgba(18, 32, 47, 0.08);
-      color: var(--color-text-primary, #12202f);
-      border: 1px solid rgba(18, 32, 47, 0.25);
-    }
-    .map-link-btn.osm-btn:hover {
-      background: rgba(18, 32, 47, 0.16);
-      border-color: rgba(18, 32, 47, 0.45);
-    }
+
 
     .vault-breakdown-box {
       margin-bottom: 8px;
@@ -1193,11 +1150,6 @@
         padding: 3px 6px;
         min-height: 26px;
       }
-      .vault-actions-row .vault-menu-btn {
-        padding: 4px 8px;
-        min-height: 34px;
-        font-size: 11.5px;
-      }
       .hud-tag .val {
         font-size: 18px; /* >= 18px constraint */
         line-height: 1;
@@ -1521,15 +1473,10 @@
         </div>
       </div>
 
-      <div class="vault-actions-row">
-        <button class="btn-primary-action" id="vaultNextBtn">
-          <span>Continue Exploration</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </button>
-        <button class="btn-secondary-action vault-menu-btn" id="vaultMenuBtn" title="Return to Main Menu / Switch Mode">
-          <span>Main Menu</span>
-        </button>
-      </div>
+      <button class="btn-primary-action" id="vaultNextBtn">
+        <span>Continue Exploration</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" x2="19" y1="12" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
     </div>
 
   </div><!-- /app-shell -->

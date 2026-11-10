@@ -109,6 +109,8 @@ export class GlobeApp {
             const p2 = ring[nextIdx];
             // Skip segments crossing the antimeridian seam
             if (Math.abs(p2[0] - p1[0]) > 180) continue;
+            // Skip artificial antimeridian split seam
+            if (Math.abs(p1[0]) >= 179.99 && Math.abs(p2[0]) >= 179.99) continue;
 
             const v1 = CountryPicker.latLonToVector3(p1[1], p1[0], radius);
             const v2 = CountryPicker.latLonToVector3(p2[1], p2[0], radius);

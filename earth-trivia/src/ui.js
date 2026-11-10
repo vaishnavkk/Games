@@ -17,7 +17,6 @@ export class UIManager {
     this.timerBar = document.getElementById('timerBar');
     this.soundBtn = document.getElementById('soundBtn');
     this.mainMenuBtn = document.getElementById('mainMenuBtn');
-    this.vaultMenuBtn = document.getElementById('vaultMenuBtn');
 
     // Clue Card Elements
     this.cluePrompt = document.getElementById('cluePrompt');
@@ -251,8 +250,6 @@ export class UIManager {
         const originLon = hitCoords && hitCoords.lon !== undefined ? hitCoords.lon : (guessCountry && guessCountry.lon !== undefined ? guessCountry.lon : 0);
         const destLat = targetCoords && targetCoords.lat !== undefined ? targetCoords.lat : (targetCountry ? targetCountry.lat : 0);
         const destLon = targetCoords && targetCoords.lon !== undefined ? targetCoords.lon : (targetCountry ? targetCountry.lon : 0);
-        const gmapsUrl = 'https://www.google.com/maps/dir/?api=1&origin=' + originLat.toFixed(4) + ',' + originLon.toFixed(4) + '&destination=' + destLat.toFixed(4) + ',' + destLon.toFixed(4);
-        const osmUrl = 'https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=' + originLat.toFixed(4) + '%2C' + originLon.toFixed(4) + '%3B' + destLat.toFixed(4) + '%2C' + destLon.toFixed(4);
         const originCoordStr = Math.abs(originLat).toFixed(2) + '°' + (originLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(originLon).toFixed(2) + '°' + (originLon >= 0 ? 'E' : 'W');
         const destCoordStr = Math.abs(destLat).toFixed(2) + '°' + (destLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(destLon).toFixed(2) + '°' + (destLon >= 0 ? 'E' : 'W');
         // Required exact phrasing: "You clicked Spain, 1,240 km from Morocco"
@@ -261,16 +258,6 @@ export class UIManager {
             '<span>📍 ' + originCoordStr + '</span>' +
             '<span class="coord-arrow">➔</span>' +
             '<span>🎯 ' + destCoordStr + '</span>' +
-          '</div>' +
-          '<div class="distance-map-links">' +
-            '<a href="' + gmapsUrl + '" target="_blank" rel="noopener noreferrer" class="map-link-btn gmaps-btn" title="Open Google Maps directions and satellite view">' +
-              '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>' +
-              '<span>Google Maps</span>' +
-            '</a>' +
-            '<a href="' + osmUrl + '" target="_blank" rel="noopener noreferrer" class="map-link-btn osm-btn" title="Open OpenStreetMap route &amp; geographic boundary">' +
-              '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>' +
-              '<span>OpenStreetMap</span>' +
-            '</a>' +
           '</div>';
       }
       if (this.vaultNextBtn) {

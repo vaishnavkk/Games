@@ -89,21 +89,35 @@ export class MapRenderer {
       for (const ring of poly) {
         if (!ring || ring.length < 3) continue;
 
-        ctx.beginPath();
-        const [startX, startY] = this.toPixel(ring[0][0], ring[0][1]);
-        ctx.moveTo(startX, startY);
+        if (doFill) {
+          ctx.beginPath();
+          const [startX, startY] = this.toPixel(ring[0][0], ring[0][1]);
+          ctx.moveTo(startX, startY);
 
-        for (let i = 1; i < ring.length; i++) {
-          const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
-          if (Math.abs(ring[i][0] - ring[i - 1][0]) > 180) {
-            ctx.moveTo(px, py);
-          } else {
+          for (let i = 1; i < ring.length; i++) {
+            const [px, py] = this.toPixel(ring[i][0], ring[i][1]);
             ctx.lineTo(px, py);
           }
+          ctx.closePath();
+          ctx.fill();
         }
-        ctx.closePath();
-        if (doFill) ctx.fill();
-        if (doStroke) ctx.stroke();
+
+        if (doStroke) {
+          ctx.beginPath();
+          for (let i = 0; i < ring.length; i++) {
+            const nextIdx = (i + 1) % ring.length;
+            const p1 = ring[i];
+            const p2 = ring[nextIdx];
+            // Skip antimeridian seam edges and wrapping chords
+            if (Math.abs(p2[0] - p1[0]) > 180) continue;
+            if (Math.abs(p1[0]) >= 179.99 && Math.abs(p2[0]) >= 179.99) continue;
+            const [x1, y1] = this.toPixel(p1[0], p1[1]);
+            const [x2, y2] = this.toPixel(p2[0], p2[1]);
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+          }
+          ctx.stroke();
+        }
       }
     }
   }

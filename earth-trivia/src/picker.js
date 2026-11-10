@@ -137,6 +137,10 @@ export class CountryPicker {
   // Single unified resolution logic for both coordinate lookups and 3D raycasting
   _resolveCountryAtLatLon(lat, lon) {
     // 1. Polygon hit ALWAYS wins: Check Bounding Box & Point-in-Polygon for all countries
+    // Step 3c: When several polygons contain the point, the smallest-area one wins
+    let bestCountry = null;
+    let minArea = Infinity;
+
     for (const country of this.countries) {
       const [minLon, minLat, maxLon, maxLat] = country.bbox;
       const inBbox = maxLon >= minLon
@@ -144,13 +148,21 @@ export class CountryPicker {
         : ((lon >= minLon || lon <= maxLon) && lat >= minLat && lat <= maxLat);
 
       if (inBbox && CountryPicker.testGeometry(lon, lat, country.geometry)) {
-        return {
-          country: this._enrichCountry(country),
-          hitLat: lat,
-          hitLon: lon,
-          isTiny: false
-        };
+        const area = computeGeometryArea(country.geometry);
+        if (area < minArea) {
+          minArea = area;
+          bestCountry = country;
+        }
       }
+    }
+
+    if (bestCountry) {
+      return {
+        country: this._enrichCountry(bestCountry),
+        hitLat: lat,
+        hitLon: lon,
+        isTiny: false
+      };
     }
 
     // 2. Microstate Fallback: Nearest buffer wins

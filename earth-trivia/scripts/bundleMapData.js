@@ -177,6 +177,82 @@ if (ind && pak) {
   console.log('✓ Applied Official Survey of India sovereign boundary correction.');
 }
 
+// ═══════════════════════════════════════════════════════════════
+// Vatican City (336) Precision Envelope
+// Expands microscopic polygon to cover St. Peter's & official DB coords
+// ═══════════════════════════════════════════════════════════════
+const vat = countries.find(c => c.id === '336');
+if (vat) {
+  vat.geometry = {
+    type: 'Polygon',
+    coordinates: [[[12.425, 41.895], [12.458, 41.895], [12.458, 41.908], [12.425, 41.908], [12.425, 41.895]]]
+  };
+  const vMetrics = computeBoundsAndCentroid(vat.geometry);
+  vat.bbox = vMetrics.bbox;
+  vat.centroid = vMetrics.centroid;
+  vat.angularSpan = vMetrics.angularSpan;
+  console.log('✓ Applied Vatican City precision envelope.');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Antimeridian Seam Split (Russia, Fiji)
+// Clean planar equirectangular split at 180° meridian:
+// Resolves Pacific / Sea of Okhotsk chord artifact and guarantees
+// valid, closed non-self-intersecting 2D polygon rings.
+// ═══════════════════════════════════════════════════════════════
+const rus = countries.find(c => c.id === '643');
+if (rus) {
+  const p17 = rus.geometry.coordinates[17][0];
+  const p17_East = [
+    ...p17.slice(0, 3713),
+    [180, 68.984196297588],
+    [180, 65.06777250585009],
+    ...p17.slice(4035)
+  ];
+  const p17_West = [
+    [-180, 68.984196297588],
+    ...p17.slice(3714, 4035),
+    [-180, 65.06777250585009],
+    [-180, 68.984196297588]
+  ];
+
+  const p28 = rus.geometry.coordinates[28][0];
+  const p28_West = [
+    ...p28.slice(0, 28),
+    [-180, 71.53785737810506]
+  ];
+  const p28_East = [
+    [180, 70.99275229361672],
+    ...p28.slice(28, 42),
+    [180, 71.53785737810506],
+    [180, 70.99275229361672]
+  ];
+
+  rus.geometry.coordinates[17] = [p17_East];
+  rus.geometry.coordinates.push([p17_West]);
+  rus.geometry.coordinates[28] = [p28_West];
+  rus.geometry.coordinates.push([p28_East]);
+  console.log('✓ Split Russia antimeridian polygons (Poly 17 and Poly 28) into clean closed rings.');
+}
+
+const fiji = countries.find(c => c.id === '242');
+if (fiji && fiji.geometry.coordinates[15]) {
+  const f15 = fiji.geometry.coordinates[15][0];
+  const f15_East = [
+    ...f15.slice(0, 3),
+    [180, -16.48966975294752],
+    [180, -16.54001385310727]
+  ];
+  const f15_West = [
+    [-180, -16.48966975294752],
+    ...f15.slice(4, 9),
+    [-180, -16.48966975294752]
+  ];
+  fiji.geometry.coordinates[15] = [f15_East];
+  fiji.geometry.coordinates.push([f15_West]);
+  console.log('✓ Split Fiji antimeridian polygon 15 into clean closed rings.');
+}
+
 console.log(`Processed ${countries.length} countries.`);
 
 const dataDir = path.join(__dirname, '../data');
