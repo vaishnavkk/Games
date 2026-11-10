@@ -1,8 +1,8 @@
-# 🕹️ Web Games Collection
+# 🎮 Web Games Collection
 
-> An arcade collection of web games built with pure HTML5, CSS3, modern JavaScript, and WebGL. Fast, responsive, dark glassmorphic UI, and 100% self-contained.
+> An arcade collection of high-performance web games built with pure HTML5, CSS3, modern JavaScript, and WebGL. Fast, responsive, dark glassmorphic UI, and 100% self-contained with zero runtime dependencies.
 
-[![Play Live](https://img.shields.io/badge/Play_Arcade-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
+[![Play Arcade](https://img.shields.io/badge/Play_Arcade-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -10,12 +10,71 @@
 
 ---
 
-## 🚀 Play Instantly
+## 🕹️ Play Instantly
 
-| Game | Description | Play Link |
-| :--- | :--- | :--- |
-| 🎮 **Matrixfall** | Dark glassmorphic falling blocks with Matrix Surge, Quantum Phase Blocks & Dynamic Acceleration | 👉 **[Play Matrixfall](https://vaishnavkk.github.io/Games/)** |
-| 🌍 **GeoTrivia: Earth Explorer** | Interactive 3D WebGL Globe geography trivia with cinematic fly-to zoom & educational Memory Anchors | 👉 **[Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/)** |
+| Game | Platform / Category | Description | Play Link |
+| :--- | :--- | :--- | :--- |
+| 🎮 **Arcade Hub** | Portal / Launcher | Unified glassmorphic game selector & specs dashboard | **[Launch Arcade](https://vaishnavkk.github.io/Games/)** |
+| 🧱 **Matrixfall** | 2D Canvas Arcade | Dark glassmorphic falling blocks with Matrix Surge, Quantum Phase Blocks & Dynamic Speed | **[Play Matrixfall](https://vaishnavkk.github.io/Games/matrix-fall/)** |
+| 🌍 **GeoTrivia: Earth Explorer** | 3D WebGL Globe | Interactive 3D Earth trivia with cinematic fly-to zoom, 195 nations & Memory Anchors | **[Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/)** |
+
+---
+
+## 📁 Repository Structure
+
+```
+Games/
+├── index.html                   # 🎮 Unified Arcade Portal & Game Selector
+├── LICENSE                      # MIT Open Source License
+├── README.md                    # Root Documentation (this file)
+│
+├── matrix-fall/                 # 🧱 Game 1: Matrixfall
+│   ├── index.html               # 100% self-contained game (Canvas + Audio + CSS)
+│   └── README.md                # Game guide, controls, surge mechanics & scoring
+│
+├── earth-trivia/                # 🌍 Game 2: GeoTrivia — Earth Explorer
+│   ├── index.html               # Game shell, UI HUD, modals & design tokens
+│   ├── README.md                # 3D globe architecture, math formulas & data schema
+│   ├── package.json             # Build and verification scripts
+│   ├── data/                    # Offline 195-nation dataset & Natural Earth 50m TopoJSON
+│   ├── dist/                    # Production bundle (esbuild)
+│   ├── scripts/                 # Pre-commit validators, clue scanners & QA test suite
+│   ├── src/                     # Modular source code (Three.js globe, picker, UI, audio)
+│   └── vendor/                  # Localized offline fonts and SVG flag assets
+│
+├── matrixfall/                  # ↪️ Direct URL redirect alias to /matrix-fall/
+│   └── index.html
+└── geotrivia/                   # ↪️ Direct URL redirect alias to /earth-trivia/
+    └── index.html
+```
+
+---
+
+## 🧱 Game 1: Matrixfall
+
+A dark frosted glassmorphic falling blocks game built with dual-buffered canvas rendering.
+
+### ✨ Key Features
+- **Dark Frosted Glassmorphism**: Deep radial slate gradient (`#1a1f35` to `#0b0f19`) with translucent frosted glass panels and glowing ambient lights.
+- **⚡ Matrix Surge**: Clearing rows charges the Surge Meter. At 100%, trigger Matrix Surge (<kbd>E</kbd>) to enter 20% bullet-time speed and instantly vaporize the bottom stack row.
+- **✨ Quantum Phase Blocks**: Every 10th block passes completely through existing solid blocks to fill deep buried cavities with a dedicated cyan ghost preview and 16-particle solidification burst.
+- **🚀 Dynamic Speed Acceleration**: Fall tempo accelerates with every block placed and on **every row destroyed** (with a `.speed-pulse` HUD notification).
+- **📱 Mobile Gestures & Virtual Pad**: Full touch gesture support (swipe left/right, single tap rotate, double tap hard drop, drag down soft drop, swipe up save) plus on-screen touch controls.
+- **🎵 Synthesized Audio**: Built-in Web Audio API sound synthesis with zero external audio dependencies.
+
+### 🕹️ Quick Controls
+| Key | Action |
+| :--- | :--- |
+| <kbd>←</kbd> <kbd>→</kbd> / <kbd>A</kbd> <kbd>D</kbd> | Move Left / Right |
+| <kbd>↑</kbd> / <kbd>W</kbd> / <kbd>X</kbd> | Rotate Clockwise |
+| <kbd>Z</kbd> | Rotate Counter-Clockwise |
+| <kbd>↓</kbd> / <kbd>S</kbd> | Soft Drop (+1 pt/cell) |
+| <kbd>Space</kbd> | Hard Drop (+2 pts/cell) |
+| <kbd>C</kbd> / <kbd>Shift</kbd> | Hold / Save Piece |
+| <kbd>E</kbd> | Trigger Matrix Surge |
+| <kbd>P</kbd> / <kbd>Esc</kbd> | Pause / Resume |
+
+👉 *Full details, scoring tables, and strategy tips in the [Matrixfall README](matrix-fall/README.md).*
 
 ---
 
@@ -24,70 +83,56 @@
 An interactive 3D WebGL Globe trivia experience designed to test geography knowledge and help players permanently remember world nations through unforgettable cultural anchors.
 
 ### ✨ Key Features
-- **Interactive 3D Earth Globe**: Smooth orbital controls (drag to rotate, pinch/scroll to zoom) with atmospheric glow, starfields, and real-time day/night lighting powered by Three.js.
-- **Cinematic Fly-To Zoom**: When an answer is submitted (or missed), the camera takes orbital flight, smoothly rotating and zooming directly to the country's coordinates on the globe.
-- **3D Surface Beacons**: Target countries light up with pulsing holographic rings and upward vertical light beams on the sphere's surface.
-- **Educational Memory Vault (Study & Remember)**:
-  - When an answer is incorrect, the game swoops into the nation and unlocks a **Memory Vault Card**.
-  - Highlights:
-    - 🏛️ **Iconic Wonder**: Unforgettable landmarks and natural phenomena.
+- **Interactive 3D Earth Globe**: Smooth orbital controls (drag to rotate, pinch/scroll to zoom) with atmospheric rim shaders, starfields, and real-time cartographic rasterization (8192×4096) powered by Three.js.
+- **Cinematic Fly-To Zoom**: When an answer is submitted, the camera takes orbital flight, smoothly rotating along the shortest great-circle trajectory and zooming directly to the country.
+- **Sovereign Cartographic Accuracy**: Survey of India official sovereign boundaries (complete integration of Jammu & Kashmir, Ladakh, Aksai Chin, Siachen, and Arunachal Pradesh with zero disputed overlay strokes).
+- **Educational Memory Vault**:
+  - Unlocked after each identification to cement knowledge:
+    - 🏛️ **Iconic Wonder**: Unforgettable landmarks and UNESCO World Heritage sites.
     - 🍲 **Taste & Tradition**: Signature cultural dishes and heritage.
-    - 🧠 **Memory Anchor**: Surprising, memorable trivia designed so players never forget the nation again.
-- **Progressive Clues**: Each round offers 3 distinct clues (Geography, Iconic Landmark, Culture) plus an optional **Secret Hint**.
-- **Synthesized Audio**: Web Audio API sound synthesis for camera swooshes, success arpeggios, and educational chords—zero external audio dependencies.
-- **Mobile Responsive**: Ergonomic touch controls and compact layout optimized for mobile screens.
+    - 🧠 **Memory Anchor**: Surprising historical trivia, current affairs, and geographical facts.
+    - 📋 **Rich Country Dossier**: Official sovereign title, capital, subregion, population, area, languages, and neighbors.
+- **Precision Distance & Maps Routing**:
+  - Displays exact boundary distance in kilometers and miles.
+  - High-DPI 3D globe distance badge with dynamic zoom scaling.
+  - One-click direct links to **Google Maps** and **OpenStreetMap** to inspect real-world routes and terrain.
+- **Free Clue System**: Take up to 3 clues freely per round without penalty; score potential stays at 800 pts.
+- **Game Modes**: Clues Mode, Country Names Mode, and Flag Mode across Easy (42 nations), Medium (100 nations), and Hard (195 sovereign nations).
 
----
-
-## 🎮 Game 1: Matrixfall
-
-A dark glassmorphic falling blocks game built with dual-buffered canvas rendering.
-
-### ✨ Key Features
-- **Dark Frosted Glassmorphism**: Deep radial slate gradient (`#1a1f35` to `#0b0f19`) with translucent frosted glass panels and glowing ambient orbs.
-- **Matrix Surge**: Clearing rows charges the Surge Meter. At 100%, trigger Matrix Surge to enter 20% bullet-time speed and vaporize the bottom stack row.
-- **Quantum Phase Blocks**: Every 10th block passes completely through existing solid blocks to fill deep buried cavities with a dedicated cyan ghost preview and 16-particle solidification burst.
-- **Speed Acceleration**: Fall tempo accelerates with every block placed and on **every row destroyed** (with a `.speed-pulse` HUD notification).
-- **Mobile Gestures & Virtual Pad**: Full touch gesture support (swipe left/right, single tap rotate, double tap hard drop, drag down soft drop, swipe up save) plus on-screen touch controls.
-
----
-
-## ⌨️ Matrixfall Controls
-
-### Desktop Keyboard
-| Key | Action | Reward / Notes |
-| :--- | :--- | :--- |
-| <kbd>←</kbd> <kbd>→</kbd> | **Move Left / Right** | Responsive horizontal shift |
-| <kbd>↑</kbd> or <kbd>X</kbd> | **Rotate Clockwise** | Safe horizontal wall-kick tests |
-| <kbd>↓</kbd> | **Soft Drop** | Accelerated descent (**+1 pt** / cell) |
-| <kbd>Space</kbd> | **Hard Drop** | Instant lock (**+2 pts** / cell) |
-| <kbd>C</kbd> or <kbd>Shift</kbd> | **Save Piece** | Store/swap active piece into reserve |
-| <kbd>E</kbd> | **Matrix Surge** | Trigger when Surge Meter reaches 100% |
-| <kbd>P</kbd> or <kbd>Esc</kbd> | **Pause / Resume** | Toggle pause overlay or click top ⏸ button |
+👉 *Full details, architecture documentation, and test gates in the [GeoTrivia README](earth-trivia/README.md).*
 
 ---
 
 ## 🚀 Running Locally
 
-No build tools or web servers required:
+No complex dependencies, servers, or compilers required:
 
-1. Clone the repository:
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/vaishnavkk/Games.git
    cd Games
    ```
-2. Open either game in your browser:
-   - **Matrixfall**: Double-click `index.html`
-   - **GeoTrivia**: Double-click `earth-trivia/index.html`
+
+2. **Run any game directly**:
+   - **Arcade Hub**: Double-click `index.html`
+   - **Matrixfall**: Open `matrix-fall/index.html` in your browser
+   - **GeoTrivia**: Open `earth-trivia/index.html` in your browser
+
+3. **Or run with a local lightweight server**:
+   ```bash
+   # Using Python 3
+   python -m http.server 8080
+   # Then visit http://localhost:8080
+   ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technical Stack
 
-- **HTML5 & CSS3**: Semantic layouts, glassmorphic backdrop filters, custom animations
-- **JavaScript (ES6+)**: Pure vanilla game engines, delta-time game loops, Web Audio API
+- **HTML5 & CSS3**: Glassmorphic backdrop filters, responsive CSS grid/flexbox, custom animations
+- **JavaScript (ES6+)**: Delta-time game loops, SRS wall-kick algorithms, modular architecture
 - **Three.js & WebGL**: 3D globe geometry, shaders, orbital controls, and spherical camera interpolation
-- **Tween.js**: Smooth cubic easing for camera flight trajectories
+- **Web Audio API**: Procedural sound synthesis across both games—zero external MP3/WAV files
 
 ---
 

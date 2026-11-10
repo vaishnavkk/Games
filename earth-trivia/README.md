@@ -9,8 +9,8 @@ Built with **Three.js**, **Natural Earth 50m TopoJSON** (bundled offline), and a
 ## ✨ Features & Highlights
 
 - **3D Interactive Globe (`src/globe.js`, `src/mapRenderer.js`)**:
-  - Offline vector rendering of real Natural Earth country boundaries onto an offscreen canvas texture (2048x1024 / 4096x2048).
-  - OrbitControls with realistic inertia, zoom bounds, atmosphere shader glow, and slow idle auto-rotation.
+  - Offline vector rendering of real Natural Earth country boundaries onto an offscreen canvas texture (4096×2048 / 8192×4096).
+  - OrbitControls with realistic inertia, zoom bounds, atmosphere rim shader, and idle auto-rotation.
   - Dominates ≥75% of the screen across desktop, tablet, and mobile.
 - **Accurate Direct Country Picking (`src/picker.js`)**:
   - Raycasts mouse or touch directly onto the 3D sphere.
@@ -18,120 +18,55 @@ Built with **Three.js**, **Natural Earth 50m TopoJSON** (bundled offline), and a
     $$\text{lat} = \arcsin(y) \cdot \frac{180}{\pi}$$
     $$\theta = \text{atan2}(z, -x), \quad \text{lon} = \theta \cdot \frac{180}{\pi} - 180$$
   - Ray-casting point-in-polygon with bounding-box prefiltering and international date-line wrapping.
-  - Enhanced microstate hit detection: enlarged invisible touch radii and beacon dots for small island nations (Malta, Singapore, Maldives, Monaco, Vatican City, etc.).
+  - Enhanced microstate hit detection: enlarged touch radii and beacon dots for small island nations (Malta, Singapore, Maldives, Monaco, Vatican City, etc.).
+- **Sovereign Boundaries (Survey of India Standards)**:
+  - Complete integration of Jammu & Kashmir, Ladakh (Aksai Chin & Gilgit-Baltistan), and Arunachal Pradesh into India's sovereign polygon (`IND`).
+  - Zero overlapping disputed border strokes across Indian territory.
 - **Cinematic Feedback & Flight (`src/cameraFlight.js`)**:
-  - Smooth spherical interpolation (slerp) flying camera to center on the target country upon answer.
+  - Smooth spherical linear interpolation (`slerp`) camera flight centering on the target country upon answer submission.
   - If answered correctly: nation lights up emerald green.
-  - If answered incorrectly: nation lights up red, the player's guess is flagged, and a 3D elevated **great-circle geodesic arc** connects the two points with distance in kilometers calculated via the Haversine formula:
-    $$d = 2R \arcsin\left(\sqrt{\sin^2\left(\frac{\Delta\phi}{2}\right) + \cos\phi_1\cos\phi_2\sin^2\left(\frac{\Delta\lambda}{2}\right)}\right)$$
-- **Memory Vault Side/Bottom Card (`src/ui.js`)**:
-  - Displays cultural anchors, landmark, flag, and capital to solidify knowledge.
-  - Smart camera yaw offset ensures the country is never obscured by the card.
-- **Progressive Clues & Zero-Spoiler Policy**:
-  - 3 progressive clues: cultural/historical hint → distinct fact → obvious clue. Points scale with fewer clues used.
+  - If answered incorrectly: nation lights up red, player's guess is highlighted, and a 3D elevated **great-circle geodesic arc** connects the two points with distance in kilometers and miles.
+- **High-DPI Distance Badge & Dynamic Zoom**:
+  - High-resolution ($512 \times 192$) dynamic canvas sprite badge on the globe.
+  - Automatically scales relative to camera zoom distance so it never obstructs or balloons over geography.
+- **Educational Memory Vault Side/Bottom Card (`src/ui.js`)**:
+  - Displays cultural anchors, landmark, flag, capital, and full geographic dossier (area, population, languages, currency, neighbors).
+  - Smart camera framing ensures the country is never obscured by the card.
+  - One-click direct inspection in **Google Maps** and **OpenStreetMap**.
+- **Free Clue System & Zero-Spoiler Policy**:
+  - 3 progressive clues: cultural/historical hint ➔ distinct fact ➔ landmark/current affairs clue.
+  - All 3 clues can be revealed freely with zero point deduction.
   - Strict zero-geographical-spoiler rule: no continents, oceans, mountain ranges, or compass directions in clue text.
 - **Game Modes & Tiers (`src/game.js`, `src/scoring.js`)**:
   - **Modes**: Clue Mode (progressive hints), Country Name Mode, Flag Mode.
   - **Tiers**: Easy (42 major iconic nations), Medium (100 diverse nations), Hard (all 195 sovereign nations: 193 UN members + Vatican City + Palestine).
   - **Pacing**: 10 rounds, 20 rounds, or Endless. Toggleable 25s timer vs Practice Mode (scores unrecorded).
-  - **Scoring (`src/scoring.js` - Single Source of Truth)**:
-    - Base: 500 pts
-    - Fewer-clues bonus: Clue 1: +300 pts | Clue 2: +150 pts | Clue 3: +0 pts (Name/Flag modes: +300 pts)
-    - Reveal clue cost: Clue 2: -150 pts | Clue 3: -150 pts (computed as $\text{bonus}_{N-1} - \text{bonus}_N$)
-    - Timer speed bonus: Up to +200 pts proportional to remaining time (timer ON only)
-    - Streak multiplier: 1.0x to 1.5x (+0.1x per consecutive correct answer)
-    - Round cap: Strictly 1,000 pts max
-    - Wrong answer partial credit: $\max(0, \min(300, \text{round}(400 \times (1 - \text{dist} / 5000))))$, capped strictly at 300 pts so wrong guesses never beat correct answers.
-- **Spaced Repetition Review**:
-  - Missed nations are automatically queued again later in the session.
-  - End-game screen summarizes accuracy, best streak, and allows immediate 1-click replaying of missed countries.
 
 ---
 
-## 📁 Project Architecture
+## 🚀 Development & Testing
 
-```
-earth-trivia/
-├── index.html              # Clean dark-space UI shell, responsive HUD, modal layers
-├── package.json            # Scripts and dependencies (Three.js, topojson-client, esbuild)
-├── README.md               # Documentation and guides
-├── data/
-│   ├── countries.json      # All 195 countries with vetted clues, anchors, landmarks
-│   ├── countries.js        # ESM export of countries dataset
-│   ├── tiny-countries.json # 30 microstates with enlarged hit radii & centroids
-│   ├── tiny-countries.js   # ESM export of microstates
-│   ├── world-50m.json      # Bundled Natural Earth 50m GeoJSON features & cached bboxes
-│   └── world-50m.js        # ESM export of map features
-├── scripts/
-│   ├── bundleMapData.js    # Pre-processes world-atlas TopoJSON into fast GeoJSON features
-│   ├── validateData.js     # Rigorous validator: checks banned words, duplicate landmarks, IDs
-│   └── serve.js            # Lightweight local HTTP preview server
-├── src/
-│   ├── audio.js            # Web Audio API procedural sound synthesizer (no audio assets needed)
-│   ├── cameraFlight.js     # Camera slerp tweening, 3D great-circle arcs, pin beacons
-│   ├── game.js             # State machine: modes, tiers, lives, streak, spaced repetition
-│   ├── globe.js            # Three.js scene, atmosphere shader, stars, OrbitControls
-│   ├── main.js             # Application entrypoint & event coordinator
-│   ├── mapRenderer.js      # Equirectangular canvas texture rendering & country polygon fill
-│   ├── picker.js           # Sphere raycasting, lat/lon math, point-in-polygon test
-│   └── ui.js               # Responsive HUD, clue collapsible card, Memory Vault card
-└── dist/
-    └── bundle.js           # Minified production bundle
-```
-
----
-
-## 🚀 Setup & Local Execution
-
-### 1. Install Dependencies
 ```bash
 cd earth-trivia
-npm install
-```
 
-### 2. Validate Dataset
-Run the automated validation script to verify that all 195 countries adhere to schema requirements, contain **no banned geographic spoiler words**, and have **no duplicate landmarks**:
-```bash
-npm run validate
-```
+# Run all test suites
+npm test
 
-### 3. Build Production Bundle
-Compile and minify modern ES modules into `dist/bundle.js` with `esbuild`:
-```bash
+# Run clue integrity and banned word scanner
+npm run check:clues
+
+# Run Tailwind color collision audit
+npm run check:palette
+
+# Run WCAG AA contrast check across all viewports
+npm run check:contrast
+
+# Build production bundle
 npm run build
 ```
 
-### 4. Run Locally
-Because the application uses ES modules and Web Workers / Canvas textures, serve it via an HTTP server:
-```bash
-# Using Node built-in script:
-node scripts/serve.js
-
-# Or using npx / python:
-npx serve .
-# or:
-python -m http.server 8080
-```
-Open [http://localhost:8080](http://localhost:8080) in your browser.
-
 ---
 
-## 🎮 How to Play
+## 📄 License
 
-1. **Configure Expedition**: Choose Mode (*Clue*, *Name*, or *Flag*), Difficulty (*Easy*, *Medium*, or *Hard - All 195*), Rounds, and Timer/Survival preferences.
-2. **Find the Nation**:
-   - Rotate the Earth by dragging with mouse or touch.
-   - Zoom with mouse wheel or pinch gesture.
-   - Reveal more clues if stuck (costing partial score bonus).
-3. **Click to Submit**:
-   - Click or tap directly on the nation's borders on the globe.
-   - For microstates, click directly on or near the glowing beacon dot.
-4. **Learn from the Flight**:
-   - The camera will automatically glide to the correct nation.
-   - Learn the cultural anchors, capital, and famous landmark from the Memory Vault card.
-   - If incorrect, observe the distance arc to see how close your guess was!
-
----
-
-## 📜 License
-MIT License. Created for interactive learning and geography education.
+Open source and free to use under the [MIT License](../LICENSE).
