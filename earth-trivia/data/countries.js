@@ -13,7 +13,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Known for traditional tea ceremonies, calligraphy, and delicate seasonal cherry blossom appreciation.",
       "Bullet trains operating with average delays under a minute connect historic wooden shrines with neon metropolises.",
-      "Famous for sushi, anime, origami folding art, and the iconic snow-covered volcanic peak of Mount Fuji."
+      "Celebrated a historic pinpoint lunar landing with its SLIM robotic spacecraft, famous for high-speed bullet trains, anime culture, and snow-capped Mount Fuji."
     ],
     "memoryAnchors": [
       "Mount Fuji is an active volcano that last erupted in 1707.",
@@ -54,7 +54,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "A civilization renowned for ancient hieroglyphic writing, papyrus scrolls, and limestone tombs.",
       "Traditional wooden felucca sailboats cruise along fertile banks flanked by arid desert dunes.",
-      "Home to the Great Pyramids of Giza, the Sphinx, and the national comfort dish Koshari."
+      "Celebrated the grand opening of the massive billion-dollar antiquities museum complex situated right beside the Great Pyramids of Giza and the Sphinx."
     ],
     "memoryAnchors": [
       "The Great Pyramid of Giza is the only surviving wonder of the original Ancient Seven Wonders.",
@@ -100,7 +100,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Renowned for the vibrant rhythms of Bossa Nova music and the acrobatic martial art dance Capoeira.",
       "Celebrates an annual nationwide street festival filled with elaborate feathered parade floats and samba beats.",
-      "Five-time world championship winners whose capital city was planned in the aerodynamic shape of an airplane."
+      "Welcomed world leaders for the 2024 G20 Summit in Rio, achieved major leaps in tropical rainforest conservation, and stands as a proud five-time world football champion."
     ],
     "memoryAnchors": [
       "The Christ the Redeemer statue on Mount Corcovado is made of reinforced concrete and soapstone.",
@@ -151,7 +151,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Home to distinctive ancient Dreamtime folklore passed down through generations of musical didgeridoos.",
       "Features vast expanses of red sandstone monoliths and arid shrublands populated by pouched marsupials.",
-      "Famous for its harbor opera house with interlocking sail roofs and salty yeast extract spread."
+      "Co-hosted the record-breaking 2023 Women's World Cup, pioneered massive grid-scale renewable battery storage, and home to an iconic harbor opera house with sail-shaped roofs."
     ],
     "memoryAnchors": [
       "The Sydney Opera House was designed by Danish architect Jørn Utzon.",
@@ -240,7 +240,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "The historic cradle of yoga, meditation, ayurvedic wellness, and classical sitar ragas.",
       "Celebrates vibrant nationwide holidays where crowds light clay lamps or shower colored powders.",
-      "World-famous for aromatic spice blends, vibrant cinema dance numbers, and a white marble mausoleum."
+      "Made history as the first nation to land a spacecraft near the lunar polar terrain with the Chandrayaan mission, hosted the global G20 summit, and home to a magnificent white marble mausoleum."
     ],
     "memoryAnchors": [
       "The Taj Mahal was commissioned by Emperor Shah Jahan in memory of his wife Mumtaz Mahal.",
@@ -383,7 +383,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "A global center for haute couture runway fashion, impressionist painting, and fine culinary traditions.",
       "Daily mornings often begin with fresh crisp baguettes and flaky layered butter croissants.",
-      "Home to an iconic 330-meter puddle-iron lattice tower built for the 1889 World Exposition."
+      "Recently captivated the globe by hosting the 2024 Olympic Games with a spectacular river flotilla parade, and home to an iconic 330-meter puddle-iron lattice tower."
     ],
     "memoryAnchors": [
       "The Eiffel Tower expands by up to 15 centimeters during hot sunny weather due to thermal expansion.",
@@ -433,7 +433,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Famous for long-distance marathon champions who dominate global road races and Olympic endurance events.",
       "Traditional pastoralist communities wear vibrant geometric red cloths and perform jumping dances.",
-      "Known for vast golden grasslands where millions of wildebeest participate in an annual migration."
+      "A global pioneer in mobile money microfinance, generates over ninety percent of its electricity from renewable sources, and world-renowned for protected savannah wildlife sanctuaries."
     ],
     "memoryAnchors": [
       "Generates over 45% of its total annual electricity generation from geothermal power plants in the Great Rift Valley.",
@@ -659,7 +659,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Known as the Rainbow Nation due to its multicultural heritage, diverse languages, and reconciliation history.",
       "Famous for outdoor wood-fire barbecue feasts known locally as a braai and cured dried meat snacks.",
-      "Home to a prominent flat-topped sandstone mountain and the only nation with three separate capital cities."
+      "Formed a historic multi-party government of national unity after pivotal 2024 elections, home to a flat-topped sandstone mountain and three distinct official capital cities."
     ],
     "memoryAnchors": [
       "Table Mountain is estimated to be over 200 million years old, making it one of the oldest peaks on Earth.",
@@ -939,7 +939,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "The birthplace of industrial steam railways, parliamentary democracy conventions, and literary detective fiction.",
       "Traditional daily social gatherings feature steeped black tea served with scones, clotted cream, and strawberry jam.",
-      "Famous for red double-decker buses, mystery prehistoric megalithic stone rings, and battered cod served with chips."
+      "Held the historic royal coronation of its monarch at Westminster Abbey, famous for red double-decker buses and ancient megalithic stone circles."
     ],
     "memoryAnchors": [
       "Stonehenge was constructed in stages beginning approximately 5,000 years ago.",
@@ -982,7 +982,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "The birthplace of movable-type metal book printing, classic symphonies, and pioneering automotive engineering.",
       "Celebrates autumn folk gatherings under massive tents with twisted salted sourdough dough pastries and brass bands.",
-      "Famous for fairy-tale turrets that inspired animated palaces, highway systems without general speed limits, and sausages."
+      "Hosted the massive 2024 international football championship tournament, completed its transition away from atomic reactors, and renowned for highways without general speed limits."
     ],
     "memoryAnchors": [
       "Johannes Gutenberg introduced movable type printing press technology in Mainz around 1440.",
@@ -1083,7 +1083,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "The birthplace of musical genres including jazz, blues, rock and roll, and modern cinema entertainment studios.",
       "Known for pioneering modern aerospace lunar landings, national park wilderness conservation, and computer microchips.",
-      "Famous for a colossal copper lady holding an uplifted torch and a monumental sandstone chasm carved by a river."
+      "Pioneered the worldwide generative artificial intelligence revolution, leads the Artemis crewed lunar mission, and home to a colossal copper statue holding an uplifted torch."
     ],
     "memoryAnchors": [
       "The Grand Canyon exposes nearly two billion years of Earth's geological history in its layered rock strata.",
@@ -1240,7 +1240,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Renowned for fine silk carpets, centuries-old bathhouse steam traditions, and hot copper pots brewing unfiltered coffee.",
       "Features landscapes where hundreds of colorful hot-air balloons glide over cone-shaped volcanic tuff rock towers.",
-      "Famous for a monumental cathedral-turned-mosque with a hovering dome and sweet layered honey walnut pastries."
+      "Formally registered its traditional localized name with the United Nations, mediated vital global maritime shipping corridors, and home to the monumental dome of the Hagia Sophia."
     ],
     "memoryAnchors": [
       "Its most populous metropolis, Istanbul, is the only major city spanning across two separate continents.",
@@ -1335,7 +1335,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "A global cultural phenomenon renowned for electronic esports arenas, synchronized pop choreography, and television dramas.",
       "Pioneered an ingenious scientific alphabet invented in 1443 to increase literacy across all social classes.",
-      "Famous for fermented chili Napa cabbage, table-side charcoal barbecues, and historic royal palace gates."
+      "A global entertainment powerhouse leading worldwide music and streaming charts, world-leading semiconductor manufacturing, and celebrated for fermented kimchi dishes."
     ],
     "memoryAnchors": [
       "King Sejong the Great personally created the Hangul phonetic script in 1443 to replace complex logograms.",
@@ -1926,7 +1926,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "Contains vast expanses of continuous wind-swept desert dunes including the massive Rub' al Khali sand sea.",
       "Welcomes millions of international spiritual pilgrims annually to ancient sanctuary cities during sacred pilgrimage seasons.",
-      "Famous for monumental Nabataean rock tombs carved into sandstone bluffs, aromatic cardamom coffee, and spiced meat platters."
+      "Building the futuristic NEOM zero-emission linear metropolis, officially confirmed to host the 2034 World Cup, and famed for ancient sandstone rock tombs."
     ],
     "memoryAnchors": [
       "The Rub' al Khali (Empty Quarter) is the largest continuous expanse of sand desert on the planet.",
@@ -1975,7 +1975,7 @@ export const COUNTRIES_DB = [
     "clues": [
       "A federation of seven distinct emirates that evolved from historic pearl-diving ports into ultra-modern metropolises.",
       "Known for artificial palm-shaped offshore archipelagos, indoor ski slopes, and camel racing championships.",
-      "Home to the tallest man-made architectural structure on Earth, rising 828 meters above desert coastal sands."
+      "Hosted the historic COP28 global climate summit in Dubai, launched interplanetary space exploration probes, and home to the tallest 828-meter skyscraper on Earth."
     ],
     "memoryAnchors": [
       "The Burj Khalifa rises 828 meters and contains 163 habitable floors with design inspired by the desert Hymenocallis flower.",

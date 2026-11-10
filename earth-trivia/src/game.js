@@ -214,7 +214,7 @@ export class GameManager {
       if (hit) {
         this.handleGuess(hit.country, hit.hitLat, hit.hitLon);
       }
-    });
+    }, this.mode);
   }
 
   async handleGuess(guessCountry, hitLat, hitLon) {
@@ -360,6 +360,8 @@ export class GameManager {
           targetCountry: target,
           guessCountry: isCorrect ? target : (guessCountry || { name: 'Open Ocean / Off-target' }),
           distanceKm: isCorrect ? 0 : distanceKm,
+          hitCoords: { lat: hitLat, lon: hitLon },
+          targetCoords: { lat: target.lat, lon: target.lon },
           breakdown: this.lastRoundBreakdown,
           isPractice: this.isPractice,
           onNext: () => this.nextRound()

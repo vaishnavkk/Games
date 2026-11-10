@@ -449,46 +449,70 @@ export class CameraFlightController {
     return pct;
   }
 
-  // Create canvas sprite badge for distance at midpoint of arc
+  // Create high-DPI canvas sprite badge for distance at midpoint of arc
   createDistanceBadge(distanceKm, positionVec) {
     const canvas = document.createElement('canvas');
-    canvas.width = 256;
-    canvas.height = 96;
+    canvas.width = 512;
+    canvas.height = 192;
     const ctx = canvas.getContext('2d');
 
-    // Rounded badge surface (Atlas ink-navy pill with light border)
-    ctx.fillStyle = 'rgba(8, 26, 36, 0.90)';
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.40)';
+    // High-DPI 2x scale
+    ctx.scale(2, 2);
+
+    const w = 256;
+    const h = 96;
+    const r = 24;
+
+    // Drop shadow
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.65)';
+    ctx.shadowBlur = 8;
+    ctx.shadowOffsetY = 2;
+
+    // Rounded badge surface (Atlas ink-navy pill with crisp glass border)
+    ctx.fillStyle = 'rgba(8, 26, 36, 0.94)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.60)';
     ctx.lineWidth = 3;
 
-    const r = 24;
     ctx.beginPath();
     ctx.moveTo(r, 6);
-    ctx.lineTo(256 - r, 6);
-    ctx.quadraticCurveTo(256 - 6, 6, 256 - 6, r);
-    ctx.lineTo(256 - 6, 96 - r);
-    ctx.quadraticCurveTo(256 - 6, 96 - 6, 256 - r, 96 - 6);
-    ctx.lineTo(r, 96 - 6);
-    ctx.quadraticCurveTo(6, 96 - 6, 6, 96 - r);
+    ctx.lineTo(w - r, 6);
+    ctx.quadraticCurveTo(w - 6, 6, w - 6, r);
+    ctx.lineTo(w - 6, h - r);
+    ctx.quadraticCurveTo(w - 6, h - 6, w - r, h - 6);
+    ctx.lineTo(r, h - 6);
+    ctx.quadraticCurveTo(6, h - 6, 6, h - r);
     ctx.lineTo(6, r);
     ctx.quadraticCurveTo(6, 6, r, 6);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
 
-    // Distance text in white
+    // Reset shadow for crisp typography
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+
+    // Primary: distance in km (crisp bold white)
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 34px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.font = 'bold 31px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`${distanceKm.toLocaleString()} km`, 128, 51);
+    ctx.fillText(`${distanceKm.toLocaleString()} km`, 128, 38);
+
+    // Secondary: distance in miles
+    const miles = Math.round(distanceKm * 0.621371);
+    ctx.fillStyle = 'rgba(215, 235, 250, 0.88)';
+    ctx.font = '500 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillText(`(${miles.toLocaleString()} mi)`, 128, 68);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
     const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
     const sprite = new THREE.Sprite(spriteMat);
     sprite.position.copy(positionVec);
     sprite.scale.set(0.24, 0.09, 1);
+    sprite.userData = { baseScale: { x: 0.24, y: 0.09 } };
 
     this.distanceSprite = sprite;
     this.markersGroup.add(sprite);

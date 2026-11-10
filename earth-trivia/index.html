@@ -541,6 +541,68 @@
       border-radius: var(--radius-component);
       color: var(--color-error-text);
     }
+    .vault-distance-box .distance-main {
+      font-size: 12.5px;
+      line-height: 1.35;
+      color: var(--color-error-text);
+    }
+    .vault-distance-box .distance-mi {
+      font-weight: 500;
+      opacity: 0.9;
+    }
+    .vault-distance-box .distance-coords {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: var(--color-error-text);
+      margin-top: 4px;
+      margin-bottom: 4px;
+      opacity: 0.92;
+    }
+    .vault-distance-box .coord-arrow {
+      opacity: 0.7;
+    }
+    .vault-distance-box .distance-map-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(161, 50, 34, 0.2);
+    }
+    .map-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-component, 4px);
+      text-decoration: none;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+    }
+    .map-link-btn.gmaps-btn {
+      background: rgba(18, 32, 47, 0.08);
+      color: var(--color-text-primary, #12202f);
+      border: 1px solid rgba(18, 32, 47, 0.25);
+    }
+    .map-link-btn.gmaps-btn:hover {
+      background: rgba(18, 32, 47, 0.16);
+      border-color: rgba(18, 32, 47, 0.45);
+    }
+    .map-link-btn.osm-btn {
+      background: rgba(18, 32, 47, 0.08);
+      color: var(--color-text-primary, #12202f);
+      border: 1px solid rgba(18, 32, 47, 0.25);
+    }
+    .map-link-btn.osm-btn:hover {
+      background: rgba(18, 32, 47, 0.16);
+      border-color: rgba(18, 32, 47, 0.45);
+    }
 
     .vault-breakdown-box {
       margin-bottom: 8px;
@@ -1306,7 +1368,7 @@
             <span>Reveal Clue 2</span>
           </button>
         </div>
-        <p class="clue-help">Each extra clue lowers what this round is worth.</p>
+        <p class="clue-help">Take up to 3 clues freely to pinpoint the nation.</p>
       </div>
     </div>
 

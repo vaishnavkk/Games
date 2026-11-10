@@ -218,6 +218,15 @@ export class GlobeApp {
       this.controls.update();
     }
 
+    // Dynamic distance badge scaling so zooming in stays crystal clear and un-crowded
+    if (this.flight && this.flight.distanceSprite) {
+      const sprite = this.flight.distanceSprite;
+      const camDist = this.camera.position.distanceTo(sprite.position);
+      const scaleFactor = Math.max(0.35, Math.min(2.0, camDist / 3.8));
+      const base = (sprite.userData && sprite.userData.baseScale) || { x: 0.24, y: 0.09 };
+      sprite.scale.set(base.x * scaleFactor, base.y * scaleFactor, 1);
+    }
+
     // Microstate HTML/SVG overlay ring projection (Step 3d)
     const ring = document.getElementById('microstateRing');
     if (ring) {

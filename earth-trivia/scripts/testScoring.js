@@ -23,12 +23,12 @@ const testCases = [
   {
     name: 'Case 02: Clue mode, Clue 2, timer OFF, streak 1',
     input: { isCorrect: true, mode: 'clue', clueIndex: 1, hasTimer: false, streak: 1 },
-    expected: { points: 650, base: 500, clueBonus: 150, speedBonus: 0, mult: 1.0 }
+    expected: { points: 800, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.0 }
   },
   {
     name: 'Case 03: Clue mode, Clue 3, timer OFF, streak 1',
     input: { isCorrect: true, mode: 'clue', clueIndex: 2, hasTimer: false, streak: 1 },
-    expected: { points: 500, base: 500, clueBonus: 0, speedBonus: 0, mult: 1.0 }
+    expected: { points: 800, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.0 }
   },
   {
     name: 'Case 04: Name mode, timer OFF, streak 1',
@@ -136,21 +136,21 @@ for (const dt of distTests) {
   console.log(`  d = ${String(dt.d).padEnd(5)} km -> ${pts} pts (expected: ${dt.exp}) [${p ? 'PASS' : 'FAIL'}]`);
 }
 
-// Verify Reveal Clue Cost
-console.log('\n--- Reveal Clue Cost & Button Text Verification ---');
+// Verify Reveal Clue Cost (Free Clues)
+console.log('\n--- Reveal Clue Cost & Button Text Verification (Free Clues) ---');
 const costClue2 = getRevealClueCost(2);
 const costClue3 = getRevealClueCost(3);
 const btnClue2 = getRevealClueButtonText(0);
 const btnClue3 = getRevealClueButtonText(1);
 
-console.log(`Clue 2 cost: ${costClue2} pts (expected: 150) | Button: "${btnClue2}"`);
-console.log(`Clue 3 cost: ${costClue3} pts (expected: 150) | Button: "${btnClue3}"`);
+console.log(`Clue 2 cost: ${costClue2} pts (expected: 0) | Button: "${btnClue2}"`);
+console.log(`Clue 3 cost: ${costClue3} pts (expected: 0) | Button: "${btnClue3}"`);
 
-if (costClue2 !== 150 || costClue3 !== 150) {
-  console.error('✗ Reveal clue cost does not match expected 150 pts');
+if (costClue2 !== 0 || costClue3 !== 0) {
+  console.error('✗ Reveal clue cost does not match expected 0 pts (Free)');
   allPassed = false;
 } else {
-  console.log('✓ Reveal clue cost check PASSED');
+  console.log('✓ Reveal clue cost check PASSED (All 3 clues free)');
 }
 
 // Verify Real Country DB Pools vs SCORING.TIERS

@@ -18,33 +18,33 @@ console.log('===================================================================
 let allPassed = true;
 
 const testCases = [
-  // 1. Base points and clue progression with streak 0 (mult 1.0)
+  // 1. Base points and free clue progression with streak 0 (mult 1.0)
   {
     desc: 'Clue 1 (idx 0), streak 0 (mult 1.0x)',
     fn: () => pointsIfCorrect({ clueIndex: 0, streakBefore: 0, speedBonus: 0, mode: 'clue' }),
     expected: 800
   },
   {
-    desc: 'Clue 2 (idx 1), streak 0 (mult 1.0x)',
+    desc: 'Clue 2 (idx 1), streak 0 (mult 1.0x) - FREE clue',
     fn: () => pointsIfCorrect({ clueIndex: 1, streakBefore: 0, speedBonus: 0, mode: 'clue' }),
-    expected: 650
+    expected: 800
   },
   {
-    desc: 'Clue 3 (idx 2), streak 0 (mult 1.0x)',
+    desc: 'Clue 3 (idx 2), streak 0 (mult 1.0x) - FREE clue',
     fn: () => pointsIfCorrect({ clueIndex: 2, streakBefore: 0, speedBonus: 0, mode: 'clue' }),
-    expected: 500
+    expected: 800
   },
 
-  // 2. Reveal cost countdown
+  // 2. Reveal cost countdown (all clues free, cost = 0)
   {
-    desc: 'Reveal Clue 2 cost from Clue 1 (streak 0): 800 -> 650 (cost 150)',
+    desc: 'Reveal Clue 2 cost from Clue 1 (streak 0): 800 -> 800 (cost 0, Free)',
     fn: () => revealCost({ clueIndex: 0, streakBefore: 0, speedBonus: 0 }),
-    verify: (r) => r && r.now === 800 && r.next === 650 && r.cost === 150
+    verify: (r) => r && r.now === 800 && r.next === 800 && r.cost === 0
   },
   {
-    desc: 'Reveal Clue 3 cost from Clue 2 (streak 0): 650 -> 500 (cost 150)',
+    desc: 'Reveal Clue 3 cost from Clue 2 (streak 0): 800 -> 800 (cost 0, Free)',
     fn: () => revealCost({ clueIndex: 1, streakBefore: 0, speedBonus: 0 }),
-    verify: (r) => r && r.now === 650 && r.next === 500 && r.cost === 150
+    verify: (r) => r && r.now === 800 && r.next === 800 && r.cost === 0
   },
   {
     desc: 'Reveal cost from Clue 3 (idx 2): null (nothing left to reveal)',
@@ -59,9 +59,9 @@ const testCases = [
     expected: 960
   },
   {
-    desc: 'Reveal Clue 2 cost at streak 2 (mult 1.2x): 960 -> 780 (cost 180)',
+    desc: 'Reveal Clue 2 cost at streak 2 (mult 1.2x): 960 -> 960 (cost 0, Free)',
     fn: () => revealCost({ clueIndex: 0, streakBefore: 2, speedBonus: 0 }),
-    verify: (r) => r && r.now === 960 && r.next === 780 && r.cost === 180
+    verify: (r) => r && r.now === 960 && r.next === 960 && r.cost === 0
   },
   {
     desc: 'Clue 1, streak 5 (mult 1.5x cap): 800 * 1.5 = 1200 -> capped at 1000 pts',
@@ -69,9 +69,9 @@ const testCases = [
     expected: 1000
   },
   {
-    desc: 'Reveal Clue 2 cost at streak 5 (cap interaction): 1000 -> 975 (cost 25)',
+    desc: 'Reveal Clue 2 cost at streak 5 (cap interaction): 1000 -> 1000 (cost 0, Free)',
     fn: () => revealCost({ clueIndex: 0, streakBefore: 5, speedBonus: 0 }),
-    verify: (r) => r && r.now === 1000 && r.next === 975 && r.cost === 25
+    verify: (r) => r && r.now === 1000 && r.next === 1000 && r.cost === 0
   },
 
   // 4. Result breakdown formatting
@@ -81,9 +81,9 @@ const testCases = [
     expected: 'Base 500 + clue 300 + speed 0 = 800 × streak 1.0 = 800'
   },
   {
-    desc: 'breakdownText() with speed bonus and streak 2',
+    desc: 'breakdownText() with speed bonus and streak 2 (clue 1)',
     fn: () => breakdownText({ clueIndex: 1, speedBonus: 50, streakBefore: 2, mode: 'clue' }),
-    expected: 'Base 500 + clue 150 + speed 50 = 700 × streak 1.2 = 840'
+    expected: 'Base 500 + clue 300 + speed 50 = 850 × streak 1.2 = 1000 (capped at 1,000)'
   },
   {
     desc: 'breakdownText() capped at 1,000 (clue 0, streak 5)',

@@ -17,7 +17,7 @@
  */
 
 export const BASE_POINTS = 500;
-export const CLUE_BONUSES = [300, 150, 0];
+export const CLUE_BONUSES = [300, 300, 300];
 export const MAX_ROUND_POINTS = 1000;
 export const STREAK_STEP = 0.1;
 export const STREAK_MAX = 1.5;
@@ -91,15 +91,12 @@ export const SCORING = {
 };
 
 export function getRevealClueCost(targetClueNumber) {
-  const prevBonus = CLUE_BONUSES[targetClueNumber - 2] ?? 300;
-  const newBonus = CLUE_BONUSES[targetClueNumber - 1] ?? 0;
-  return Math.max(0, prevBonus - newBonus);
+  return 0; // Clues are 100% free
 }
 
 export function getRevealClueButtonText(currentClueIndex) {
   const targetClueNum = currentClueIndex + 2;
-  const cost = getRevealClueCost(targetClueNum);
-  return `Reveal Clue ${targetClueNum} (-${cost} pts)`;
+  return `Reveal Clue ${targetClueNum} (Free)`;
 }
 
 export function calculateRoundScore({
@@ -194,15 +191,12 @@ export function renderClueWorth({ clueIndex = 0, streak = 0, speedBonus = 0, mod
   if (valueEl) {
     if (prev !== null && prev !== worth) {
       countTo(valueEl, prev, worth);
-      if (dropEl) {
-        dropEl.textContent = `−${fmt(prev - worth)}`;
-        dropEl.hidden = false;
-        setTimeout(() => { dropEl.hidden = true; }, 1700);
-      }
     } else {
       valueEl.textContent = fmt(worth);
-      if (dropEl) dropEl.hidden = true;
     }
+  }
+  if (dropEl) {
+    dropEl.hidden = true;
   }
 
   const btn = document.getElementById('revealBtn');
@@ -217,13 +211,8 @@ export function renderClueWorth({ clueIndex = 0, streak = 0, speedBonus = 0, mod
       return worth;
     }
     btn.hidden = false;
-    const label = btn.querySelector('.rv-label');
-    if (label) label.textContent = `Reveal clue ${clueIndex + 2}:`;
-    const rvNow = document.getElementById('rvNow');
-    const rvNext = document.getElementById('rvNext');
-    if (rvNow) rvNow.textContent = fmt(r.now);
-    if (rvNext) rvNext.textContent = fmt(r.next);
-    btn.setAttribute('aria-label', `Reveal clue ${clueIndex + 2}. This round drops from ${r.now} to ${r.next} points.`);
+    btn.innerHTML = `<span class="rv-label">Reveal Clue ${clueIndex + 2}</span> <span class="badge-free" style="background:var(--color-accent-subtle); color:var(--color-accent-text); font-weight:700; padding:1px 6px; border-radius:4px; margin-left:4px;">Free</span>`;
+    btn.setAttribute('aria-label', `Reveal clue ${clueIndex + 2} for free. This round remains worth ${worth} points.`);
   }
   return worth;
 }
