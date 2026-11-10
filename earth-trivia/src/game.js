@@ -382,6 +382,37 @@ export class GameManager {
     });
   }
 
+  returnToMainMenu() {
+    this.stopTimer();
+    this.isAnswering = false;
+    this.phase = 'start';
+    this.score = 0;
+    this.streak = 0;
+    this.bestStreak = 0;
+    this.round = 0;
+    this.roundQueue = [];
+    this.missedCountries = [];
+    this.selectedHit = null;
+    this.currentCountry = null;
+    this.lastGuessCountry = null;
+    this.currentHoveredId = null;
+
+    cancelAnswerFlight();
+    this.globe.flight.cancelAnswerFlight();
+    this.globe.flight.clearVisuals();
+    this.globe.flight.resetToOverview({ duration: 600 });
+    this.globe.setMicrostateTarget(null);
+    this.globe.mapRenderer.resetHighlights();
+    this.globe.controls.enabled = true;
+    this.globe.isAutoRotating = true;
+
+    this.ui.hideTouchConfirm();
+    this.ui.showStartScreen();
+    if (typeof window !== 'undefined' && window.__updateBestScoreDisplay) {
+      window.__updateBestScoreDisplay();
+    }
+  }
+
   endGame() {
     this.stopTimer();
     this.isAnswering = false;
@@ -485,6 +516,11 @@ export class GameManager {
             vaultNextBtn.click();
           }
         }
+      } else if (e.key === 'Escape') {
+        if (this.phase === 'question' || this.phase === 'selected' || this.phase === 'result') {
+          e.preventDefault();
+          this.returnToMainMenu();
+        }
       } else if (e.key === ' ') {
         if (this.isAnswering && this.mode === 'clue') {
           // Space reveals next clue if clue button is active
@@ -506,6 +542,14 @@ export class GameManager {
     // Next Clue Button click
     if (this.ui.nextClueBtn) {
       this.ui.nextClueBtn.onclick = () => this.revealNextClue();
+    }
+
+    // Main Menu Navigation (quit in-between and restart fresh)
+    if (this.ui.mainMenuBtn) {
+      this.ui.mainMenuBtn.onclick = () => this.returnToMainMenu();
+    }
+    if (this.ui.vaultMenuBtn) {
+      this.ui.vaultMenuBtn.onclick = () => this.returnToMainMenu();
     }
   }
 }

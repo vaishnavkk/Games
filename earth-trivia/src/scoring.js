@@ -187,32 +187,17 @@ export function countTo(el, from, to, ms = 450) {
 export function renderClueWorth({ clueIndex = 0, streak = 0, speedBonus = 0, mode = 'clue', prev = null }) {
   const worth = pointsIfCorrect({ clueIndex, streakBefore: streak, speedBonus, mode });
   const valueEl = document.getElementById('cwValue');
-  const dropEl = document.getElementById('cwDrop');
   if (valueEl) {
-    if (prev !== null && prev !== worth) {
-      countTo(valueEl, prev, worth);
-    } else {
-      valueEl.textContent = fmt(worth);
-    }
+    valueEl.textContent = fmt(worth);
   }
-  if (dropEl) {
-    dropEl.hidden = true;
-  }
-
   const btn = document.getElementById('revealBtn');
   if (btn) {
-    if (mode !== 'clue') {
-      btn.hidden = true;
-      return worth;
-    }
-    const r = revealCost({ clueIndex, streakBefore: streak, speedBonus });
-    if (!r) {
-      btn.hidden = true;
-      return worth;
-    }
-    btn.hidden = false;
-    btn.innerHTML = `<span class="rv-label">Reveal Clue ${clueIndex + 2}</span> <span class="badge-free" style="background:var(--color-accent-subtle); color:var(--color-accent-text); font-weight:700; padding:1px 6px; border-radius:4px; margin-left:4px;">Free</span>`;
-    btn.setAttribute('aria-label', `Reveal clue ${clueIndex + 2} for free. This round remains worth ${worth} points.`);
+    btn.style.display = 'none';
+    btn.hidden = true;
+  }
+  const clueWorthEl = document.querySelector('.clue-worth');
+  if (clueWorthEl) {
+    clueWorthEl.style.display = 'none';
   }
   return worth;
 }

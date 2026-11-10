@@ -16,6 +16,8 @@ export class UIManager {
     this.roundVal = document.getElementById('roundVal');
     this.timerBar = document.getElementById('timerBar');
     this.soundBtn = document.getElementById('soundBtn');
+    this.mainMenuBtn = document.getElementById('mainMenuBtn');
+    this.vaultMenuBtn = document.getElementById('vaultMenuBtn');
 
     // Clue Card Elements
     this.cluePrompt = document.getElementById('cluePrompt');
@@ -217,7 +219,7 @@ export class UIManager {
       if (this.nextClueBtn) {
         if (clueIndex < 2) {
           this.nextClueBtn.style.display = 'inline-flex';
-          this.nextClueBtn.innerHTML = `${ICONS.lightbulb} <span>${getRevealClueButtonText(clueIndex)}</span>`;
+          this.nextClueBtn.innerHTML = `${ICONS.lightbulb} <span>Reveal Clue ${clueIndex + 2}</span>`;
         } else {
           this.nextClueBtn.style.display = 'none';
         }
