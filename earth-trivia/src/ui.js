@@ -3,6 +3,7 @@ import { getRevealClueButtonText, renderClueWorth, breakdownText, PARTIAL_MAX_KM
 
 export class UIManager {
   constructor() {
+    this.renderClueWorth = renderClueWorth;
     this.startScreen = document.getElementById('startScreen');
     this.topHud = document.getElementById('topHud');
     this.clueCard = document.getElementById('clueCard');
