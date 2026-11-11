@@ -1,0 +1,7 @@
+
+> geotrivia-earth-explorer@2.0.0 check:sources
+> node scripts/checkSources.js
+
+check:sources: 694 URLs checked across 1089 clues.
+Counts: OK: 1089, Failed: 0, Unreachable: 0 (0.0%).
+Result: PASSED

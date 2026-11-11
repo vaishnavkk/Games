@@ -1,0 +1,350 @@
+{
+  "summary": {
+    "tier": "EASY",
+    "totalCountries": 42,
+    "itemsPerCountry": {
+      "min": 15,
+      "max": 15
+    },
+    "totalItemsInTier": 630,
+    "newItemsWritten": 504,
+    "totalLibraryItems": 1089,
+    "levelDistribution": {
+      "1": 210,
+      "2": 210,
+      "3": 210
+    },
+    "kindDistribution": {
+      "culture": 205,
+      "history": 266,
+      "record": 34,
+      "current": 64,
+      "incident": 20,
+      "landmark": 41
+    },
+    "level3CurrentIncident": {
+      "count": 84,
+      "totalLevel3": 210,
+      "percentage": "40.0%"
+    }
+  },
+  "auditTable": [
+    {
+      "id": "USA-3-003",
+      "text": "The Golden Gate Bridge spans ocean waters with majestic International Orange suspension towers often shrouded in rolling maritime fog banks.",
+      "source": "https://en.wikipedia.org/wiki/Golden_Gate_Bridge",
+      "result": "ok"
+    },
+    {
+      "id": "IND-1-002",
+      "text": "Bharatanatyam classical temple dance tradition, combining intricate rhythmic footwork, symbolic hand mudras, and expressive facial poetry.",
+      "source": "https://en.wikipedia.org/wiki/Bharatanatyam",
+      "result": "ok"
+    },
+    {
+      "id": "IRL-1-003",
+      "text": "The Book of Kells preserves an exquisitely illuminated four-Gospel manuscript created by Celtic monks with Celtic spirals, animals, and vibrant pigments.",
+      "source": "https://en.wikipedia.org/wiki/Book_of_Kells",
+      "result": "ok"
+    },
+    {
+      "id": "TUR-2-003",
+      "text": "The ancient city of Ephesus preserves the monumental two-story marble facade of the Library of Celsus and grand classical amphitheatres.",
+      "source": "https://en.wikipedia.org/wiki/Library_of_Celsus",
+      "result": "ok"
+    },
+    {
+      "id": "NLD-3-005",
+      "text": "In 2023, the Rijksmuseum staged the largest exhibition in history of painter Johannes Vermeer, drawing worldwide art enthusiasts.",
+      "source": "https://en.wikipedia.org/wiki/Johannes_Vermeer",
+      "result": "ok"
+    },
+    {
+      "id": "AUS-1-002",
+      "text": "Ancient ochre rock art galleries preserved in remote sandstone shelters depict spiritual Dreamtime ancestral stories dating back tens of thousands of years.",
+      "source": "https://en.wikipedia.org/wiki/Gwion_Gwion_rock_art",
+      "result": "ok"
+    },
+    {
+      "id": "RUS-3-005",
+      "text": "In 2013, an explosive Chelyabinsk meteor superbolide detonated high above town settlements, producing shockwaves that shattered thousands of windows.",
+      "source": "https://en.wikipedia.org/wiki/Chelyabinsk_meteor",
+      "result": "ok"
+    },
+    {
+      "id": "AUT-2-005",
+      "text": "Hallstatt stands as a picturesque lakeside village famous for ancient prehistoric salt mining tunnels and pastel-colored timber houses.",
+      "source": "https://en.wikipedia.org/wiki/Hallstatt",
+      "result": "ok"
+    },
+    {
+      "id": "POL-2-004",
+      "text": "Wieliczka Salt Mine features underground chapels, chandeliers, and religious sculptures carved entirely from subterranean rock salt by generations of miners.",
+      "source": "https://en.wikipedia.org/wiki/Wieliczka_Salt_Mine",
+      "result": "ok"
+    },
+    {
+      "id": "MEX-2-002",
+      "text": "Natural limestone sinkholes filled with clear freshwater served as sacred ritual sites and essential water reservoirs for ancient civilizations.",
+      "source": "https://en.wikipedia.org/wiki/Cenote",
+      "result": "ok"
+    },
+    {
+      "id": "KEN-3-005",
+      "text": "In 2020, battled devastating desert locust swarms that surged across agricultural valleys, threatening harvests across multiple rural communities.",
+      "source": "https://en.wikipedia.org/wiki/2019%E2%80%932021_locust_infestation",
+      "result": "ok"
+    },
+    {
+      "id": "BRA-1-004",
+      "text": "Lyrical musical movement blending gentle syncopated guitar rhythms with understated vocals, popularizing poetic melodies worldwide in the late 1950s.",
+      "source": "https://en.wikipedia.org/wiki/Bossa_nova",
+      "result": "ok"
+    },
+    {
+      "id": "CHE-2-004",
+      "text": "Chapel Bridge in Lucerne survives as one of the oldest covered wooden bridges, adorned with seventeenth-century interior triangular paintings.",
+      "source": "https://en.wikipedia.org/wiki/Kapellbr%C3%BCcke",
+      "result": "ok"
+    },
+    {
+      "id": "GRC-1-003",
+      "text": "The ancient theatre of Epidaurus demonstrates miraculous acoustics where a spectator in the uppermost limestone tier clearly hears a coin drop.",
+      "source": "https://en.wikipedia.org/wiki/Ancient_Theatre_of_Epidaurus",
+      "result": "ok"
+    },
+    {
+      "id": "THA-2-004",
+      "text": "The historic railway bridge over the River Kwai was constructed during wartime under brutal conditions, immortalized in renowned literature and film.",
+      "source": "https://en.wikipedia.org/wiki/Burma_Railway",
+      "result": "ok"
+    },
+    {
+      "id": "CAN-3-004",
+      "text": "In 2010, hosted the Winter Olympic Games in Vancouver, culminating in an iconic golden goal in men ice hockey.",
+      "source": "https://en.wikipedia.org/wiki/2010_Winter_Olympics",
+      "result": "ok"
+    },
+    {
+      "id": "NZL-1-005",
+      "text": "The kakapo survives as a critically endangered flightless nocturnal parrot celebrated for its owl-like face and booming mating call.",
+      "source": "https://en.wikipedia.org/wiki/K%C4%81k%C4%81p%C5%8D",
+      "result": "ok"
+    },
+    {
+      "id": "PRT-3-002",
+      "text": "Famous for pastel de nata warm flaky egg custard tarts dusted with powdered sugar and cinnamon, originated by Catholic monks.",
+      "source": "https://en.wikipedia.org/wiki/Pastel_de_nata",
+      "result": "ok"
+    },
+    {
+      "id": "IDN-1-005",
+      "text": "The historic Spice Islands were the sole historical source of nutmeg and cloves, driving centuries of intense oceanic colonial trade conflicts.",
+      "source": "https://en.wikipedia.org/wiki/Maluku_Islands",
+      "result": "ok"
+    },
+    {
+      "id": "PER-3-003",
+      "text": "Renowned culinary culture famous for fresh citrus-cured raw fish ceviche served with roasted giant corn kernels and sweet sweet-potatoes.",
+      "source": "https://en.wikipedia.org/wiki/Ceviche",
+      "result": "ok"
+    },
+    {
+      "id": "MAR-2-005",
+      "text": "Volubilis preserves ancient Roman provincial ruins showcasing remarkably intact floor mosaics, triumphal arches, and Corinthian columns amidst olive groves.",
+      "source": "https://en.wikipedia.org/wiki/Volubilis",
+      "result": "ok"
+    },
+    {
+      "id": "JPN-1-005",
+      "text": "Ancient paper-folding craft that evolved from ceremonial gift decorations into complex geometric artistic representations.",
+      "source": "https://en.wikipedia.org/wiki/Origami",
+      "result": "ok"
+    },
+    {
+      "id": "FRA-2-003",
+      "text": "Brothers Auguste and Louis Lumiere patented the Cinematographe in 1895, hosting the first commercial public screening of projected motion pictures.",
+      "source": "https://en.wikipedia.org/wiki/Auguste_and_Louis_Lumi%C3%A8re",
+      "result": "ok"
+    },
+    {
+      "id": "SGP-3-003",
+      "text": "Marina Bay Sands hotel features three soaring towers linked by a cantilevered rooftop SkyPark with a famous panoramic infinity pool.",
+      "source": "https://en.wikipedia.org/wiki/Marina_Bay_Sands",
+      "result": "ok"
+    },
+    {
+      "id": "SWE-3-005",
+      "text": "In 2024, astronaut Marcus Wandt flew to the International Space Station aboard the Axiom Mission 3 commercial spaceflight.",
+      "source": "https://en.wikipedia.org/wiki/Marcus_Wandt",
+      "result": "ok"
+    },
+    {
+      "id": "ESP-1-002",
+      "text": "Author Miguel de Cervantes wrote the epic novel Don Quixote in 1605, chronicling the comedic adventures of a chivalric knight tilting at windmills.",
+      "source": "https://en.wikipedia.org/wiki/Don_Quixote",
+      "result": "ok"
+    },
+    {
+      "id": "GBR-1-003",
+      "text": "Highland clans wore woven wool kilt garments with distinctive criss-crossed tartan patterns signifying lineage, heritage, and regional identity.",
+      "source": "https://en.wikipedia.org/wiki/Tartan",
+      "result": "ok"
+    },
+    {
+      "id": "CHN-2-003",
+      "text": "The Leshan Giant Buddha sits carved directly from sandstone river cliffs as a monumental 71-meter stone sculpture constructed during the Tang dynasty.",
+      "source": "https://en.wikipedia.org/wiki/Leshan_Giant_Buddha",
+      "result": "ok"
+    },
+    {
+      "id": "SAU-3-002",
+      "text": "Famous for kabsa spiced long-grain rice topped with tender roasted chicken or lamb, toasted pine nuts, and savory tomato broth.",
+      "source": "https://en.wikipedia.org/wiki/Kabsa",
+      "result": "ok"
+    },
+    {
+      "id": "VNM-3-003",
+      "text": "Famous for steaming pho noodle soup garnished with fresh herbs, savory banh mi pork baguettes, and rich egg custard drip coffee.",
+      "source": "https://en.wikipedia.org/wiki/B%C3%A1nh_m%C3%AC",
+      "result": "ok"
+    }
+  ],
+  "sampleClueSets": [
+    {
+      "country": "Japan",
+      "iso": "JPN",
+      "clues": [
+        {
+          "level": 1,
+          "id": "JPN-1-002",
+          "kind": "culture",
+          "year": null,
+          "text": "Noh theater mask traditions dating to the fourteenth century, featuring slow stylized dance-drama performed on a polished cypress stage."
+        },
+        {
+          "level": 2,
+          "id": "JPN-2-001",
+          "kind": "history",
+          "year": null,
+          "text": "Bullet trains operating with average delays under a minute connect historic wooden shrines with neon metropolises."
+        },
+        {
+          "level": 3,
+          "id": "JPN-3-005",
+          "kind": "incident",
+          "year": 2024,
+          "text": "In 2024, its robotic SLIM moon lander achieved an unprecedented milestone, touching down within 55 meters of its designated target."
+        }
+      ]
+    },
+    {
+      "country": "France",
+      "iso": "FRA",
+      "clues": [
+        {
+          "level": 1,
+          "id": "FRA-1-001",
+          "kind": "culture",
+          "year": null,
+          "text": "A global center for haute couture runway fashion, impressionist painting, and fine culinary traditions."
+        },
+        {
+          "level": 2,
+          "id": "FRA-2-003",
+          "kind": "history",
+          "year": null,
+          "text": "Brothers Auguste and Louis Lumiere patented the Cinematographe in 1895, hosting the first commercial public screening of projected motion pictures."
+        },
+        {
+          "level": 3,
+          "id": "FRA-3-004",
+          "kind": "current",
+          "year": 2024,
+          "text": "In 2024, hosted the Summer Olympic Games, staging a spectacular open-air parade of international athletes along an iconic urban waterway."
+        }
+      ]
+    },
+    {
+      "country": "Egypt",
+      "iso": "EGY",
+      "clues": [
+        {
+          "level": 1,
+          "id": "EGY-1-001",
+          "kind": "history",
+          "year": null,
+          "text": "A civilization renowned for ancient hieroglyphic writing, papyrus scrolls, and limestone tombs."
+        },
+        {
+          "level": 2,
+          "id": "EGY-2-003",
+          "kind": "history",
+          "year": null,
+          "text": "The vast Karnak temple complex features a massive hypostyle hall supported by 134 towering sandstone columns carved like papyrus stalks."
+        },
+        {
+          "level": 3,
+          "id": "EGY-3-004",
+          "kind": "current",
+          "year": 2021,
+          "text": "In 2021, held the televised Pharaohs Golden Parade, transporting twenty-two preserved royal mummies inside custom shock-absorbing vehicles."
+        }
+      ]
+    },
+    {
+      "country": "Brazil",
+      "iso": "BRA",
+      "clues": [
+        {
+          "level": 1,
+          "id": "BRA-1-005",
+          "kind": "culture",
+          "year": null,
+          "text": "Ancient pre-Columbian ceramic traditions featuring intricate geometric incised designs and painted funerary urns recovered from major river delta mounds."
+        },
+        {
+          "level": 2,
+          "id": "BRA-2-001",
+          "kind": "culture",
+          "year": null,
+          "text": "Celebrates an annual nationwide street festival filled with elaborate feathered parade floats and samba beats."
+        },
+        {
+          "level": 3,
+          "id": "BRA-3-003",
+          "kind": "record",
+          "year": null,
+          "text": "Holds the all-time world record of five men’s FIFA World Cup championship victories, celebrated for vibrant yellow jerseys and flair."
+        }
+      ]
+    },
+    {
+      "country": "Norway",
+      "iso": "NOR",
+      "clues": [
+        {
+          "level": 1,
+          "id": "NOR-1-002",
+          "kind": "history",
+          "year": null,
+          "text": "Centuries-old wooden stave churches constructed with intricate timber framework, carved dragon heads, and medieval runic inscriptions."
+        },
+        {
+          "level": 2,
+          "id": "NOR-2-002",
+          "kind": "history",
+          "year": null,
+          "text": "Expressionist painter Edvard Munch captured existential human anxiety in his iconic masterpiece depicting an agonizing figure under an orange sky."
+        },
+        {
+          "level": 3,
+          "id": "NOR-3-002",
+          "kind": "landmark",
+          "year": null,
+          "text": "Preikestolen stands as a massive flat-topped cliff rising hundreds of meters vertically above a deep glacier-carved saltwater inlet."
+        }
+      ]
+    }
+  ]
+}
