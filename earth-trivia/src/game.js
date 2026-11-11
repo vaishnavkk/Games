@@ -84,7 +84,14 @@ export class GameManager {
     // Use custom pool if provided (e.g. replay missed session), otherwise draw from tier pool
     const pool = customPool && customPool.length > 0 ? customPool : this.getTierPool(tier);
     const count = (rounds === 'endless' || rounds === Infinity) ? 10 : rounds;
-    this.roundQueue = customPool ? this.shuffle([...pool]) : pickCountries(tier, pool, count);
+    if (customPool) {
+      this.roundQueue = this.shuffle([...pool]);
+    } else {
+      const isoList = pool.map(c => c.code || String(c.id));
+      const pickedIsos = pickCountries(tier, isoList, count);
+      const countryMap = new Map(pool.map(c => [c.code || String(c.id), c]));
+      this.roundQueue = pickedIsos.map(iso => countryMap.get(iso)).filter(Boolean);
+    }
 
     this.ui.showGameHUD(this.totalRounds, this.hasTimer, this.isPractice);
     this.nextRound();
@@ -111,7 +118,10 @@ export class GameManager {
     if (isEndless) {
       if (!this.roundQueue || this.roundQueue.length <= 1) {
         const pool = this.getTierPool(this.tier);
-        const nextBatch = pickCountries(this.tier, pool, 10);
+        const isoList = pool.map(c => c.code || String(c.id));
+        const nextBatchIsos = pickCountries(this.tier, isoList, 10);
+        const countryMap = new Map(pool.map(c => [c.code || String(c.id), c]));
+        const nextBatch = nextBatchIsos.map(iso => countryMap.get(iso)).filter(Boolean);
         this.roundQueue = (this.roundQueue || []).concat(nextBatch);
       }
     } else {
@@ -124,6 +134,10 @@ export class GameManager {
 
     this.round++;
     this.currentCountry = this.roundQueue.shift();
+    if (typeof this.currentCountry === 'string') {
+      const found = this.fullDatabase.find(c => c.code === this.currentCountry || String(c.id) === this.currentCountry);
+      if (found) this.currentCountry = found;
+    }
     this.clueIndex = 0;
 
     // Pick clue set via questionBag (shown in level order)
@@ -157,7 +171,7 @@ export class GameManager {
       mode: this.mode,
       country: this.currentCountry,
       clueIndex: this.clueIndex,
-      clueText: this.currentClues[0]?.text || this.currentCountry.clues[0],
+      clueText: this.currentClues[0]?.text || this.currentCountry?.clues?.[0] || '',
       availableCluesCount: 3
     });
 
@@ -176,7 +190,7 @@ export class GameManager {
         mode: this.mode,
         country: this.currentCountry,
         clueIndex: this.clueIndex,
-        clueText: this.currentClues[this.clueIndex]?.text || this.currentCountry.clues[this.clueIndex],
+        clueText: this.currentClues[this.clueIndex]?.text || this.currentCountry?.clues?.[this.clueIndex] || '',
         availableCluesCount: 3
       });
     }
