@@ -424,6 +424,25 @@
       font-size: var(--font-size-base);
       font-weight: var(--font-weight-bold);
     }
+    .selection-confirm-panel.continue-only {
+      background: var(--color-accent);
+      border-color: var(--color-accent-border);
+      color: var(--color-accent-btn-text);
+      padding: 8px 24px;
+      gap: 8px;
+      font-weight: var(--font-weight-bold);
+      font-size: 14px;
+      box-shadow: 0 4px 16px rgba(6, 22, 31, 0.35);
+    }
+    .selection-confirm-panel.continue-only:hover {
+      background: var(--color-accent-hover);
+    }
+    .selection-confirm-panel.continue-only .confirm-submit-chip {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      font-size: 14px;
+    }
     .confirm-submit-chip {
       display: inline-flex;
       align-items: center;
@@ -1345,7 +1364,7 @@
     <div class="selection-confirm-panel hidden" id="touchConfirmBtn" role="button" tabindex="0" aria-label="Confirm Country Selection">
       <span class="confirm-flag-slot" id="touchSelectedFlag"></span>
       <span class="confirm-name-slot" id="touchSelectedName">Selected Nation</span>
-      <span class="confirm-submit-chip">
+      <span class="confirm-submit-chip" id="touchConfirmChip">
         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         <span>Confirm</span>
       </span>

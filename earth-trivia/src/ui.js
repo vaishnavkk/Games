@@ -60,6 +60,7 @@ export class UIManager {
     this.touchConfirmBtn = document.getElementById('touchConfirmBtn');
     this.touchSelectedFlag = document.getElementById('touchSelectedFlag');
     this.touchSelectedName = document.getElementById('touchSelectedName');
+    this.touchConfirmChip = document.getElementById('touchConfirmChip');
 
     this.currentDisplayedScore = 0;
     this.scoreRaf = null;
@@ -67,17 +68,50 @@ export class UIManager {
 
   showTouchConfirm(country, onConfirm, mode = 'clue') {
     if (!this.touchConfirmBtn) return;
-    if (this.touchSelectedFlag) {
-      if (mode === 'flag') {
+    if (mode === 'name') {
+      // In Name mode: Never spoil the answer by showing clicked country name or flag
+      if (this.touchSelectedFlag) {
         this.touchSelectedFlag.innerHTML = '';
         this.touchSelectedFlag.style.display = 'none';
-      } else {
+      }
+      if (this.touchSelectedName) {
+        this.touchSelectedName.textContent = '';
+        this.touchSelectedName.style.display = 'none';
+      }
+      this.touchConfirmBtn.classList.add('continue-only');
+      this.touchConfirmBtn.setAttribute('aria-label', 'Continue with selected country');
+      if (this.touchConfirmChip) {
+        this.touchConfirmChip.innerHTML = `<span>Continue</span> ${ICONS.arrowRight}`;
+      }
+    } else if (mode === 'flag') {
+      this.touchConfirmBtn.classList.remove('continue-only');
+      this.touchConfirmBtn.setAttribute('aria-label', 'Confirm Country Selection');
+      if (this.touchSelectedFlag) {
+        this.touchSelectedFlag.innerHTML = '';
+        this.touchSelectedFlag.style.display = 'none';
+      }
+      if (this.touchSelectedName) {
+        this.touchSelectedName.style.display = 'inline-block';
+        this.touchSelectedName.textContent = country.name;
+      }
+      if (this.touchConfirmChip) {
+        this.touchConfirmChip.innerHTML = `${ICONS.check} <span>Confirm</span>`;
+      }
+    } else {
+      // Clue mode
+      this.touchConfirmBtn.classList.remove('continue-only');
+      this.touchConfirmBtn.setAttribute('aria-label', 'Confirm Country Selection');
+      if (this.touchSelectedFlag) {
         this.touchSelectedFlag.style.display = 'inline-block';
         this.touchSelectedFlag.innerHTML = getFlagSvg(country.flag);
       }
-    }
-    if (this.touchSelectedName) {
-      this.touchSelectedName.textContent = country.name;
+      if (this.touchSelectedName) {
+        this.touchSelectedName.style.display = 'inline-block';
+        this.touchSelectedName.textContent = country.name;
+      }
+      if (this.touchConfirmChip) {
+        this.touchConfirmChip.innerHTML = `${ICONS.check} <span>Confirm</span>`;
+      }
     }
     this.touchConfirmBtn.classList.remove('hidden');
     this.touchConfirmBtn.onclick = onConfirm;
@@ -86,6 +120,7 @@ export class UIManager {
   hideTouchConfirm() {
     if (this.touchConfirmBtn) {
       this.touchConfirmBtn.classList.add('hidden');
+      this.touchConfirmBtn.classList.remove('continue-only');
     }
   }
 
