@@ -7,12 +7,14 @@
   "scripts": {
     "validate": "node scripts/validateData.js",
     "check:clues": "node scripts/checkCluesStep0.js",
+    "check:library": "node scripts/checkLibrary.js",
+    "check:sources": "node scripts/checkSources.js",
     "check:palette": "node scripts/checkPalette.js",
     "check:contrast": "node scripts/checkContrast.js",
     "bundle:map": "node scripts/bundleMapData.js",
     "build": "esbuild src/main.js --bundle --outfile=dist/bundle.js --format=esm --minify",
     "serve": "node scripts/serve.js",
-    "test": "node scripts/validateData.js && node scripts/testStep1CameraFlight.js && node scripts/testStep2CluePoints.js && node scripts/testScoring.js && node scripts/testStep3BugFixes.js"
+    "test": "node scripts/validateData.js && node scripts/testQuestionBag.js && node scripts/testStep1CameraFlight.js && node scripts/testStep2CluePoints.js && node scripts/testScoring.js && node scripts/testStep3BugFixes.js"
   },
   "keywords": [
     "geography",

@@ -1,0 +1,8194 @@
+// Clue Library (585 items migrated across 195 nations)
+export const CLUES_LIBRARY = [
+  {
+    "id": "JPN-1-001",
+    "iso": "JPN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Known for traditional tea ceremonies, calligraphy, and delicate seasonal cherry blossom appreciation.",
+    "source": "https://en.wikipedia.org/wiki/Japan",
+    "evidence": [
+      "traditional",
+      "ceremonies"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "JPN-2-001",
+    "iso": "JPN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Bullet trains operating with average delays under a minute connect historic wooden shrines with neon metropolises.",
+    "source": "https://en.wikipedia.org/wiki/Japan",
+    "evidence": [
+      "bullet",
+      "trains"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "JPN-3-001",
+    "iso": "JPN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Celebrated a historic pinpoint lunar landing with its SLIM robotic spacecraft, famous for high-speed bullet trains, anime culture, and snow-capped Mount Fuji.",
+    "source": "https://en.wikipedia.org/wiki/Japan",
+    "evidence": [
+      "historic",
+      "lunar"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "EGY-1-001",
+    "iso": "EGY",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A civilization renowned for ancient hieroglyphic writing, papyrus scrolls, and limestone tombs.",
+    "source": "https://en.wikipedia.org/wiki/Egypt",
+    "evidence": [
+      "civilization",
+      "renowned"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "EGY-2-001",
+    "iso": "EGY",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional wooden felucca sailboats cruise along fertile banks flanked by arid desert dunes.",
+    "source": "https://en.wikipedia.org/wiki/Egypt",
+    "evidence": [
+      "traditional",
+      "along"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "EGY-3-001",
+    "iso": "EGY",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Celebrated the grand opening of the massive billion-dollar antiquities museum complex situated right beside the Great Pyramids of Giza and the Sphinx.",
+    "source": "https://en.wikipedia.org/wiki/Egypt",
+    "evidence": [
+      "grand",
+      "opening"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRA-1-001",
+    "iso": "BRA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Renowned for the vibrant rhythms of Bossa Nova music and the acrobatic martial art dance Capoeira.",
+    "source": "https://en.wikipedia.org/wiki/Brazil",
+    "evidence": [
+      "renowned",
+      "rhythms"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRA-2-001",
+    "iso": "BRA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Celebrates an annual nationwide street festival filled with elaborate feathered parade floats and samba beats.",
+    "source": "https://en.wikipedia.org/wiki/Brazil",
+    "evidence": [
+      "annual",
+      "nationwide"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRA-3-001",
+    "iso": "BRA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Welcomed world leaders for the 2024 G20 Summit in Rio, achieved major leaps in tropical rainforest conservation, and stands as a proud five-time world football champion.",
+    "source": "https://en.wikipedia.org/wiki/Brazil",
+    "evidence": [
+      "leaders",
+      "2024"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AUS-1-001",
+    "iso": "AUS",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Home to distinctive ancient Dreamtime folklore passed down through generations of musical didgeridoos.",
+    "source": "https://en.wikipedia.org/wiki/Australia",
+    "evidence": [
+      "distinctive",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AUS-2-001",
+    "iso": "AUS",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features vast expanses of red sandstone monoliths and arid shrublands populated by pouched marsupials.",
+    "source": "https://en.wikipedia.org/wiki/Australia",
+    "evidence": [
+      "vast",
+      "arid"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AUS-3-001",
+    "iso": "AUS",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Co-hosted the record-breaking 2023 Women's World Cup, pioneered massive grid-scale renewable battery storage, and home to an iconic harbor opera house with sail-shaped roofs.",
+    "source": "https://en.wikipedia.org/wiki/Australia",
+    "evidence": [
+      "2023",
+      "women"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ITA-1-001",
+    "iso": "ITA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historic classical birthplace of opera, Renaissance fine art painting, and monumental marble sculptural masterpieces.",
+    "source": "https://en.wikipedia.org/wiki/Italy",
+    "evidence": [
+      "historic",
+      "classical"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ITA-2-001",
+    "iso": "ITA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Boasts ancient stone amphitheaters, grand aqueducts, and streets paved with cobblestone plazas.",
+    "source": "https://en.wikipedia.org/wiki/Italy",
+    "evidence": [
+      "boasts",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ITA-3-001",
+    "iso": "ITA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "World-famous for hand-stretched wood-fired pizza, rich espresso coffee bars, and gondola canals.",
+    "source": "https://en.wikipedia.org/wiki/Italy",
+    "evidence": [
+      "pizza",
+      "rich"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IND-1-001",
+    "iso": "IND",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historic cradle of yoga, meditation, ayurvedic wellness, and classical sitar ragas.",
+    "source": "https://en.wikipedia.org/wiki/India",
+    "evidence": [
+      "historic",
+      "cradle"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IND-2-001",
+    "iso": "IND",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Celebrates vibrant nationwide holidays where crowds light clay lamps or shower colored powders.",
+    "source": "https://en.wikipedia.org/wiki/India",
+    "evidence": [
+      "nationwide",
+      "holidays"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IND-3-001",
+    "iso": "IND",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Made space history by landing the robotic Chandrayaan spacecraft near the rugged lunar pole and home to a magnificent white marble mausoleum.",
+    "source": "https://en.wikipedia.org/wiki/India",
+    "evidence": [
+      "made",
+      "space"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PER-1-001",
+    "iso": "PER",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Famous for vibrant hand-woven alpaca wool textiles and ancient stone masonry fitted without mortar.",
+    "source": "https://en.wikipedia.org/wiki/Peru",
+    "evidence": [
+      "vibrant",
+      "alpaca"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PER-2-001",
+    "iso": "PER",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Thousands of native varieties of colorful potatoes have been cultivated here since ancient antiquity.",
+    "source": "https://en.wikipedia.org/wiki/Peru",
+    "evidence": [
+      "native",
+      "potatoes"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PER-3-001",
+    "iso": "PER",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Home to the cloud-shrouded stone citadel of Machu Picchu and lime-marinated fresh fish ceviche.",
+    "source": "https://en.wikipedia.org/wiki/Peru",
+    "evidence": [
+      "stone",
+      "citadel"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CAN-1-001",
+    "iso": "CAN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A nation whose national winter pastime involves skates, ice rinks, and sliding vulcanized rubber pucks.",
+    "source": "https://en.wikipedia.org/wiki/Canada",
+    "evidence": [
+      "nation",
+      "whose"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CAN-2-001",
+    "iso": "CAN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Famous for pristine turquoise glacial lakes, sprawling pine forests, and sweet tree-tapped syrup.",
+    "source": "https://en.wikipedia.org/wiki/Canada",
+    "evidence": [
+      "glacial",
+      "lakes"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CAN-3-001",
+    "iso": "CAN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Recognized by a red stylized maple leaf emblem on its flag and crispy golden fries topped with cheese curds.",
+    "source": "https://en.wikipedia.org/wiki/Canada",
+    "evidence": [
+      "recognized",
+      "maple"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FRA-1-001",
+    "iso": "FRA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "A global center for haute couture runway fashion, impressionist painting, and fine culinary traditions.",
+    "source": "https://en.wikipedia.org/wiki/France",
+    "evidence": [
+      "global",
+      "center"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FRA-2-001",
+    "iso": "FRA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Daily mornings often begin with fresh crisp baguettes and flaky layered butter croissants.",
+    "source": "https://en.wikipedia.org/wiki/France",
+    "evidence": [
+      "daily",
+      "often"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FRA-3-001",
+    "iso": "FRA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Captivated the globe by hosting the 2024 Olympic Games with a spectacular river flotilla parade, and home to an iconic 330-meter puddle-iron lattice tower.",
+    "source": "https://en.wikipedia.org/wiki/France",
+    "evidence": [
+      "globe",
+      "2024"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KEN-1-001",
+    "iso": "KEN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Famous for long-distance marathon champions who dominate global road races and Olympic endurance events.",
+    "source": "https://en.wikipedia.org/wiki/Kenya",
+    "evidence": [
+      "long-distance",
+      "marathon"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KEN-2-001",
+    "iso": "KEN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional pastoralist communities wear vibrant geometric red cloths and perform jumping dances.",
+    "source": "https://en.wikipedia.org/wiki/Kenya",
+    "evidence": [
+      "traditional",
+      "pastoralist"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KEN-3-001",
+    "iso": "KEN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "A global pioneer in mobile money microfinance, generates over ninety percent of its electricity from renewable sources, and world-renowned for protected savannah wildlife sanctuaries.",
+    "source": "https://en.wikipedia.org/wiki/Kenya",
+    "evidence": [
+      "global",
+      "mobile"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ISL-1-001",
+    "iso": "ISL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known for medieval family sagas, geothermal hot springs, and expansive fields of volcanic black sand.",
+    "source": "https://en.wikipedia.org/wiki/Iceland",
+    "evidence": [
+      "medieval",
+      "family"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ISL-2-001",
+    "iso": "ISL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Heats municipal homes and downtown sidewalks using abundant boiling renewable subterranean volcanic steam.",
+    "source": "https://en.wikipedia.org/wiki/Iceland",
+    "evidence": [
+      "municipal",
+      "homes"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ISL-3-001",
+    "iso": "ISL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Known as the land of fire and ice, celebrated for erupting geysers and mineral geothermal lagoons.",
+    "source": "https://en.wikipedia.org/wiki/Iceland",
+    "evidence": [
+      "land",
+      "fire"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MEX-1-001",
+    "iso": "MEX",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Introduced chocolate, vanilla, corn, avocados, and chili peppers to the wider culinary world.",
+    "source": "https://en.wikipedia.org/wiki/Mexico",
+    "evidence": [
+      "introduced",
+      "chocolate"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MEX-2-001",
+    "iso": "MEX",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Celebrates an autumnal holiday honoring ancestors with decorative sugar skulls and marigold pathways.",
+    "source": "https://en.wikipedia.org/wiki/Mexico",
+    "evidence": [
+      "celebrates",
+      "holiday"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MEX-3-001",
+    "iso": "MEX",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for mariachi brass music, masked wrestling spectacles, and hand-pressed corn tortilla tacos.",
+    "source": "https://en.wikipedia.org/wiki/Mexico",
+    "evidence": [
+      "mariachi",
+      "music"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NOR-1-001",
+    "iso": "NOR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known for deep glacier-carved saltwater valleys framed by steep granite cliffs and cascading waterfalls.",
+    "source": "https://en.wikipedia.org/wiki/Norway",
+    "evidence": [
+      "deep",
+      "valleys"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NOR-2-001",
+    "iso": "NOR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Experienced summer weeks where the sun remains visible above the horizon throughout midnight hours.",
+    "source": "https://en.wikipedia.org/wiki/Norway",
+    "evidence": [
+      "experienced",
+      "summer"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NOR-3-001",
+    "iso": "NOR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for historic Viking longships, distinctive caramel-sweet brown cheese, and outdoor cross-country skiing.",
+    "source": "https://en.wikipedia.org/wiki/Norway",
+    "evidence": [
+      "historic",
+      "viking"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GRC-1-001",
+    "iso": "GRC",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historical cradle of direct democracy, theater tragedy, and fundamental philosophical inquiry.",
+    "source": "https://en.wikipedia.org/wiki/Greece",
+    "evidence": [
+      "historical",
+      "cradle"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GRC-2-001",
+    "iso": "GRC",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Known for thousands of islands featuring whitewashed cliffside chapels with vibrant blue domes.",
+    "source": "https://en.wikipedia.org/wiki/Greece",
+    "evidence": [
+      "thousands",
+      "islands"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GRC-3-001",
+    "iso": "GRC",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for ancient Doric columns on an acropolis citadel, rich olive oil, and feta-layered casseroles.",
+    "source": "https://en.wikipedia.org/wiki/Greece",
+    "evidence": [
+      "ancient",
+      "doric"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZAF-1-001",
+    "iso": "ZAF",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known as the Rainbow Nation due to its multicultural heritage, diverse languages, and reconciliation history.",
+    "source": "https://en.wikipedia.org/wiki/South_Africa",
+    "evidence": [
+      "rainbow",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZAF-2-001",
+    "iso": "ZAF",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Famous for outdoor wood-fire barbecue feasts known locally as a braai and cured dried meat snacks.",
+    "source": "https://en.wikipedia.org/wiki/South_Africa",
+    "evidence": [
+      "barbecue",
+      "locally"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZAF-3-001",
+    "iso": "ZAF",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Formed a historic multi-party government of national unity after pivotal 2024 elections, home to a flat-topped sandstone mountain and three distinct official capital cities.",
+    "source": "https://en.wikipedia.org/wiki/South_Africa",
+    "evidence": [
+      "formed",
+      "historic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NZL-1-001",
+    "iso": "NZL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Features rich indigenous Māori cultural traditions including ceremonial ancestral haka challenges and wood carvings.",
+    "source": "https://en.wikipedia.org/wiki/New_Zealand",
+    "evidence": [
+      "rich",
+      "indigenous"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NZL-2-001",
+    "iso": "NZL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Rugby players perform an intimidating coordinated vocal dance and posture challenge before matches.",
+    "source": "https://en.wikipedia.org/wiki/New_Zealand",
+    "evidence": [
+      "rugby",
+      "perform"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NZL-3-001",
+    "iso": "NZL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Home to flightless nocturnal birds with long beaks, dramatic fiord carved sounds, and earth-oven banquets.",
+    "source": "https://en.wikipedia.org/wiki/New_Zealand",
+    "evidence": [
+      "flightless",
+      "birds"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MAR-1-001",
+    "iso": "MAR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Famous for labyrinthine walled historic quarters with leather tanning vats and spice souks.",
+    "source": "https://en.wikipedia.org/wiki/Morocco",
+    "evidence": [
+      "historic",
+      "quarters"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MAR-2-001",
+    "iso": "MAR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Hosts a striking mountain town where all houses, staircases, and alleyways are painted in shades of blue.",
+    "source": "https://en.wikipedia.org/wiki/Morocco",
+    "evidence": [
+      "mountain",
+      "town"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MAR-3-001",
+    "iso": "MAR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Renowned for conical clay cooking pots that slow-steam savory meats with dried fruits and mint tea poured from heights.",
+    "source": "https://en.wikipedia.org/wiki/Morocco",
+    "evidence": [
+      "clay",
+      "pots"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHE-1-001",
+    "iso": "CHE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Celebrated for precision mechanical pocket watchmaking, secure banking, and permanent geopolitical neutrality.",
+    "source": "https://en.wikipedia.org/wiki/Switzerland",
+    "evidence": [
+      "precision",
+      "watchmaking"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHE-2-001",
+    "iso": "CHE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Winter chalets serve communal pots of melted gruyere cheese dipped with crusty bread cubes on long forks.",
+    "source": "https://en.wikipedia.org/wiki/Switzerland",
+    "evidence": [
+      "winter",
+      "serve"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHE-3-001",
+    "iso": "CHE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for smooth milk chocolate bars, curved wooden horns, and an iconic chisel-peaked mountain.",
+    "source": "https://en.wikipedia.org/wiki/Switzerland",
+    "evidence": [
+      "smooth",
+      "milk"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "THA-1-001",
+    "iso": "THA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known as the land of smiles, celebrated for ornate Buddhist stupas tiled with porcelain fragments.",
+    "source": "https://en.wikipedia.org/wiki/Thailand",
+    "evidence": [
+      "land",
+      "smiles"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "THA-2-001",
+    "iso": "THA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "The new year is celebrated with a cheerful nationwide water festival where entire towns engage in friendly water fights.",
+    "source": "https://en.wikipedia.org/wiki/Thailand",
+    "evidence": [
+      "year",
+      "nationwide"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "THA-3-001",
+    "iso": "THA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for stir-fried rice noodles with tamarind, fragrant lemongrass soups, and the martial art of eight limbs.",
+    "source": "https://en.wikipedia.org/wiki/Thailand",
+    "evidence": [
+      "rice",
+      "lemongrass"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARG-1-001",
+    "iso": "ARG",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The birthplace of an impassioned couple's ballroom dance accompanied by the mournful sound of the bandoneon.",
+    "source": "https://en.wikipedia.org/wiki/Argentina",
+    "evidence": [
+      "dance",
+      "the"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARG-2-001",
+    "iso": "ARG",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Skilled horsemen patrol sweeping fertile grasslands and roast side cuts of beef over open wood embers.",
+    "source": "https://en.wikipedia.org/wiki/Argentina",
+    "evidence": [
+      "patrol",
+      "grasslands"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARG-3-001",
+    "iso": "ARG",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for sharing hot herbal tea infusions through metal straws from hollow gourds and massive advancing glaciers.",
+    "source": "https://en.wikipedia.org/wiki/Argentina",
+    "evidence": [
+      "sharing",
+      "through"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GBR-1-001",
+    "iso": "GBR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The birthplace of industrial steam railways, parliamentary democracy conventions, and literary detective fiction.",
+    "source": "https://en.wikipedia.org/wiki/United_Kingdom",
+    "evidence": [
+      "birthplace",
+      "industrial"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GBR-2-001",
+    "iso": "GBR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional daily social gatherings feature steeped black tea served with scones, clotted cream, and strawberry jam.",
+    "source": "https://en.wikipedia.org/wiki/United_Kingdom",
+    "evidence": [
+      "traditional",
+      "daily"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GBR-3-001",
+    "iso": "GBR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Held the historic royal coronation of its monarch at Westminster Abbey, famous for red double-decker buses and ancient megalithic stone circles.",
+    "source": "https://en.wikipedia.org/wiki/United_Kingdom",
+    "evidence": [
+      "held",
+      "historic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DEU-1-001",
+    "iso": "DEU",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The birthplace of movable-type metal book printing, classic symphonies, and pioneering automotive engineering.",
+    "source": "https://en.wikipedia.org/wiki/Germany",
+    "evidence": [
+      "metal",
+      "book"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DEU-2-001",
+    "iso": "DEU",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Celebrates autumn folk gatherings under massive tents with twisted salted sourdough dough pastries and brass bands.",
+    "source": "https://en.wikipedia.org/wiki/Germany",
+    "evidence": [
+      "folk",
+      "tents"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DEU-3-001",
+    "iso": "DEU",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Hosted the massive 2024 international football championship tournament, completed its transition away from atomic reactors, and renowned for highways without general speed limits.",
+    "source": "https://en.wikipedia.org/wiki/Germany",
+    "evidence": [
+      "hosted",
+      "2024"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ESP-1-001",
+    "iso": "ESP",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The birthplace of passionate acoustic guitar flamenco dancing accompanied by sharp rhythmic hand clapping.",
+    "source": "https://en.wikipedia.org/wiki/Spain",
+    "evidence": [
+      "guitar",
+      "flamenco"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ESP-2-001",
+    "iso": "ESP",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Evenings frequently revolve around moving between vibrant street bars while enjoying small shared savory plates.",
+    "source": "https://en.wikipedia.org/wiki/Spain",
+    "evidence": [
+      "frequently",
+      "around"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ESP-3-001",
+    "iso": "ESP",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for a monumental basilica with nature-inspired forest pillars that has been under construction since 1882.",
+    "source": "https://en.wikipedia.org/wiki/Spain",
+    "evidence": [
+      "basilica",
+      "forest"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "USA-1-001",
+    "iso": "USA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The birthplace of musical genres including jazz, blues, rock and roll, and modern cinema entertainment studios.",
+    "source": "https://en.wikipedia.org/wiki/United_States",
+    "evidence": [
+      "musical",
+      "genres"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "USA-2-001",
+    "iso": "USA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Known for pioneering modern aerospace lunar landings, national park wilderness conservation, and computer microchips.",
+    "source": "https://en.wikipedia.org/wiki/United_States",
+    "evidence": [
+      "modern",
+      "aerospace"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "USA-3-001",
+    "iso": "USA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Pioneered the worldwide generative artificial intelligence revolution, leads the Artemis crewed lunar mission, and home to a colossal copper statue holding an uplifted torch.",
+    "source": "https://en.wikipedia.org/wiki/United_States",
+    "evidence": [
+      "pioneered",
+      "worldwide"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHN-1-001",
+    "iso": "CHN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The ancient birthplace of paper making, compass navigation, gunpowder formulation, and silkworm sericulture.",
+    "source": "https://en.wikipedia.org/wiki/China",
+    "evidence": [
+      "ancient",
+      "birthplace"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHN-2-001",
+    "iso": "CHN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Features delicate tea ceremonies, intricate ink brush calligraphy, and an imperial palace complex with 9,999 rooms.",
+    "source": "https://en.wikipedia.org/wiki/China",
+    "evidence": [
+      "brush",
+      "calligraphy"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHN-3-001",
+    "iso": "CHN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for a monumental defensive masonry wall stretching thousands of kilometers across rugged mountain ridges.",
+    "source": "https://en.wikipedia.org/wiki/China",
+    "evidence": [
+      "wall",
+      "thousands"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "RUS-1-001",
+    "iso": "RUS",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The birthplace of world-renowned classical ballet traditions, epic multi-generational novels, and human spaceflight firsts.",
+    "source": "https://en.wikipedia.org/wiki/Russia",
+    "evidence": [
+      "world-renowned",
+      "classical"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "RUS-2-001",
+    "iso": "RUS",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Spans eleven continuous domestic time zones across expansive taiga forests and birch-lined river systems.",
+    "source": "https://en.wikipedia.org/wiki/Russia",
+    "evidence": [
+      "spans",
+      "eleven"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "RUS-3-001",
+    "iso": "RUS",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for colorful onion-shaped candy-striped cathedral domes, lacquered nesting dolls, and hearty beet soup.",
+    "source": "https://en.wikipedia.org/wiki/Russia",
+    "evidence": [
+      "onion-shaped",
+      "cathedral"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUR-1-001",
+    "iso": "TUR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Renowned for fine silk carpets, centuries-old bathhouse steam traditions, and hot copper pots brewing unfiltered coffee.",
+    "source": "https://en.wikipedia.org/wiki/Turkey",
+    "evidence": [
+      "fine",
+      "carpets"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUR-2-001",
+    "iso": "TUR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features landscapes where hundreds of colorful hot-air balloons glide over cone-shaped volcanic tuff rock towers.",
+    "source": "https://en.wikipedia.org/wiki/Turkey",
+    "evidence": [
+      "landscapes",
+      "hundreds"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUR-3-001",
+    "iso": "TUR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Formally registered its traditional localized name with the United Nations, mediated vital global maritime shipping corridors, and home to the monumental dome of the Hagia Sophia.",
+    "source": "https://en.wikipedia.org/wiki/Turkey",
+    "evidence": [
+      "formally",
+      "registered"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VNM-1-001",
+    "iso": "VNM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Known for traditional water puppet theater performed in flooded rice paddies and conical woven palm hats.",
+    "source": "https://en.wikipedia.org/wiki/Vietnam",
+    "evidence": [
+      "traditional",
+      "water"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VNM-2-001",
+    "iso": "VNM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Riverside limestone karsts rise dramatically from emerald waters where traditional wooden junk boats sail.",
+    "source": "https://en.wikipedia.org/wiki/Vietnam",
+    "evidence": [
+      "rise",
+      "dramatically"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VNM-3-001",
+    "iso": "VNM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for aromatic beef noodle soup brewed with star anise, crispy baguettes filled with pâté, and drip iced coffee.",
+    "source": "https://en.wikipedia.org/wiki/Vietnam",
+    "evidence": [
+      "beef",
+      "noodle"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KOR-1-001",
+    "iso": "KOR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A global cultural phenomenon renowned for electronic esports arenas, synchronized pop choreography, and television dramas.",
+    "source": "https://en.wikipedia.org/wiki/South_Korea",
+    "evidence": [
+      "global",
+      "cultural"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KOR-2-001",
+    "iso": "KOR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Pioneered an ingenious scientific alphabet invented in 1443 to increase literacy across all social classes.",
+    "source": "https://en.wikipedia.org/wiki/South_Korea",
+    "evidence": [
+      "ingenious",
+      "scientific"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KOR-3-001",
+    "iso": "KOR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "A global entertainment powerhouse leading worldwide music and streaming charts, world-leading semiconductor manufacturing, and celebrated for fermented kimchi dishes.",
+    "source": "https://en.wikipedia.org/wiki/South_Korea",
+    "evidence": [
+      "global",
+      "entertainment"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NLD-1-001",
+    "iso": "NLD",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Famous for reclaiming vast tracts of agricultural terrain below sea level using ingenious dikes, dunes, and canals.",
+    "source": "https://en.wikipedia.org/wiki/Netherlands",
+    "evidence": [
+      "vast",
+      "agricultural"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NLD-2-001",
+    "iso": "NLD",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Bicycles significantly outnumber residents in cities laced with concentric waterways and narrow brick townhouses.",
+    "source": "https://en.wikipedia.org/wiki/Netherlands",
+    "evidence": [
+      "bicycles",
+      "significantly"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NLD-3-001",
+    "iso": "NLD",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for historic drainage windmills, vibrant springtime tulip flower carpets, and caramel waffle wafers.",
+    "source": "https://en.wikipedia.org/wiki/Netherlands",
+    "evidence": [
+      "historic",
+      "drainage"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SWE-1-001",
+    "iso": "SWE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The birthplace of the annual Nobel Prizes honoring chemistry, physics, medicine, literature, and peace.",
+    "source": "https://en.wikipedia.org/wiki/Sweden",
+    "evidence": [
+      "annual",
+      "nobel"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SWE-2-001",
+    "iso": "SWE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Celebrates midsummer festivals by decorating floral birch poles, dancing, and enjoying pickled herring feasts.",
+    "source": "https://en.wikipedia.org/wiki/Sweden",
+    "evidence": [
+      "celebrates",
+      "midsummer"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SWE-3-001",
+    "iso": "SWE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for a salvaged 1628 warship preserved almost intact, minimalist flat-pack furniture, and spiced meatballs.",
+    "source": "https://en.wikipedia.org/wiki/Sweden",
+    "evidence": [
+      "almost",
+      "intact"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRT-1-001",
+    "iso": "PRT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Pioneered global caravelle maritime navigation instruments and astronomy star charts in the Age of Discovery.",
+    "source": "https://en.wikipedia.org/wiki/Portugal",
+    "evidence": [
+      "global",
+      "maritime"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRT-2-001",
+    "iso": "PRT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Historic city hills are traversed by yellow vintage electric trams and buildings tiled in blue ceramic azulejos.",
+    "source": "https://en.wikipedia.org/wiki/Portugal",
+    "evidence": [
+      "historic",
+      "city"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRT-3-001",
+    "iso": "PRT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for creamy custard tarts dusted with cinnamon, soulful acoustic fado songs, and salted cod dishes.",
+    "source": "https://en.wikipedia.org/wiki/Portugal",
+    "evidence": [
+      "fado",
+      "cod"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IDN-1-001",
+    "iso": "IDN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Composed of over 17,000 tropical volcanic islands spanning across three tropical time zones.",
+    "source": "https://en.wikipedia.org/wiki/Indonesia",
+    "evidence": [
+      "tropical",
+      "volcanic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IDN-2-001",
+    "iso": "IDN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional performing arts include shadow puppet plays accompanied by bronze gong gamelan orchestras.",
+    "source": "https://en.wikipedia.org/wiki/Indonesia",
+    "evidence": [
+      "traditional",
+      "performing"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IDN-3-001",
+    "iso": "IDN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for the world's largest ancient Buddhist stone monument and giant venomous Komodo dragon lizards.",
+    "source": "https://en.wikipedia.org/wiki/Indonesia",
+    "evidence": [
+      "ancient",
+      "buddhist"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COL-1-001",
+    "iso": "COL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The homeland of magical realism literature, champion high-altitude cyclists, and passionate salsa dancing.",
+    "source": "https://en.wikipedia.org/wiki/Colombia",
+    "evidence": [
+      "literature",
+      "champion"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COL-2-001",
+    "iso": "COL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Sprawling terraced mountain farms cultivate mild Arabica beans picked by hand among towering wax palm trees.",
+    "source": "https://en.wikipedia.org/wiki/Colombia",
+    "evidence": [
+      "mountain",
+      "farms"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COL-3-001",
+    "iso": "COL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for producing fine emerald gemstones, corn cakes filled with cheese, and a dramatic gorge bridge church.",
+    "source": "https://en.wikipedia.org/wiki/Colombia",
+    "evidence": [
+      "fine",
+      "emerald"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHL-1-001",
+    "iso": "CHL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An exceptionally narrow ribbon of land stretching over 4,300 kilometers from hyper-arid deserts to icy glaciers.",
+    "source": "https://en.wikipedia.org/wiki/Chile",
+    "evidence": [
+      "narrow",
+      "land"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHL-2-001",
+    "iso": "CHL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "The crystal-clear dry atmosphere of the high Atacama desert plateaus hosts the world's most powerful optical telescope observatories.",
+    "source": "https://en.wikipedia.org/wiki/Chile",
+    "evidence": [
+      "high",
+      "atacama"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CHL-3-001",
+    "iso": "CHL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for jagged granite mountain horns, sweet corn and minced beef pies, and distant volcanic islands with giant stone moai statues.",
+    "source": "https://en.wikipedia.org/wiki/Chile",
+    "evidence": [
+      "mountain",
+      "minced"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AUT-1-001",
+    "iso": "AUT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The historic classical capital of symphonic waltzes, grand imperial palaces, and intellectual coffeehouse culture.",
+    "source": "https://en.wikipedia.org/wiki/Austria",
+    "evidence": [
+      "historic",
+      "classical"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AUT-2-001",
+    "iso": "AUT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Wooded mountain slopes host prestigious downhill ski racing events and picturesque lakeside hamlets.",
+    "source": "https://en.wikipedia.org/wiki/Austria",
+    "evidence": [
+      "mountain",
+      "host"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AUT-3-001",
+    "iso": "AUT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for breaded pan-fried veal cutlets, apricot jam layered chocolate sponge cakes, and imperial summer residences.",
+    "source": "https://en.wikipedia.org/wiki/Austria",
+    "evidence": [
+      "apricot",
+      "imperial"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BEL-1-001",
+    "iso": "BEL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historic home of pioneering graphic novel artists, intricate lace-making, and golden guild houses.",
+    "source": "https://en.wikipedia.org/wiki/Belgium",
+    "evidence": [
+      "historic",
+      "graphic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BEL-2-001",
+    "iso": "BEL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Hosts major international diplomatic headquarters and hundreds of historic abbey-crafted brewing traditions.",
+    "source": "https://en.wikipedia.org/wiki/Belgium",
+    "evidence": [
+      "hosts",
+      "major"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BEL-3-001",
+    "iso": "BEL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for deep-pocketed sweet yeast waffles, chocolate pralines, and steamed black mussels served with double-fried chips.",
+    "source": "https://en.wikipedia.org/wiki/Belgium",
+    "evidence": [
+      "waffles",
+      "chocolate"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRL-1-001",
+    "iso": "IRL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Known for ancient Gaelic storytelling traditions, traditional fiddle reels, and intricate Celtic knotwork.",
+    "source": "https://en.wikipedia.org/wiki/Ireland",
+    "evidence": [
+      "ancient",
+      "gaelic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRL-2-001",
+    "iso": "IRL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Verdant rolling hills and frequent mild rainfall earned this territory its timeless emerald moniker.",
+    "source": "https://en.wikipedia.org/wiki/Ireland",
+    "evidence": [
+      "frequent",
+      "mild"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRL-3-001",
+    "iso": "IRL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for sheer coastal sandstone cliffs plunging into ocean swells, dense dark stout beer, and buttermilk soda bread.",
+    "source": "https://en.wikipedia.org/wiki/Ireland",
+    "evidence": [
+      "coastal",
+      "sandstone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "POL-1-001",
+    "iso": "POL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The homeland of astronomer Nicolaus Copernicus and brilliant two-time Nobel laureate Marie Curie.",
+    "source": "https://en.wikipedia.org/wiki/Poland",
+    "evidence": [
+      "astronomer",
+      "nicolaus"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "POL-2-001",
+    "iso": "POL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Historic market squares feature colorful Renaissance townhouses with defensive brick towers and amber jewelry stalls.",
+    "source": "https://en.wikipedia.org/wiki/Poland",
+    "evidence": [
+      "historic",
+      "market"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "POL-3-001",
+    "iso": "POL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for boiled dough dumplings stuffed with potatoes and cheese, slow-simmered cabbage hunter's stew, and subterranean salt chapels.",
+    "source": "https://en.wikipedia.org/wiki/Poland",
+    "evidence": [
+      "dough",
+      "dumplings"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MYS-1-001",
+    "iso": "MYS",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Divided into two distinct geographical sections separated by hundreds of kilometers of sea water.",
+    "source": "https://en.wikipedia.org/wiki/Malaysia",
+    "evidence": [
+      "divided",
+      "distinct"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MYS-2-001",
+    "iso": "MYS",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional open-air street stalls blend diverse culinary traditions with aromatic lemongrass and coconut.",
+    "source": "https://en.wikipedia.org/wiki/Malaysia",
+    "evidence": [
+      "traditional",
+      "street"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MYS-3-001",
+    "iso": "MYS",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for coconut milk rice served with sambal and anchovies, and soaring 88-story steel-and-glass twin skyscraper spires.",
+    "source": "https://en.wikipedia.org/wiki/Malaysia",
+    "evidence": [
+      "rice",
+      "served"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SGP-1-001",
+    "iso": "SGP",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A high-tech tropical island city-state that transformed into a global financial and automated container port hub.",
+    "source": "https://en.wikipedia.org/wiki/Singapore",
+    "evidence": [
+      "high-tech",
+      "tropical"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SGP-2-001",
+    "iso": "SGP",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Pioneered sustainable green architecture featuring tree-covered skyscrapers and massive vertical plant conservatory domes.",
+    "source": "https://en.wikipedia.org/wiki/Singapore",
+    "evidence": [
+      "green",
+      "architecture"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SGP-3-001",
+    "iso": "SGP",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for open-air hawker food centers, sweet-and-savory spicy chili crab, and a triple-tower hotel with a rooftop skypark.",
+    "source": "https://en.wikipedia.org/wiki/Singapore",
+    "evidence": [
+      "open-air",
+      "hawker"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SAU-1-001",
+    "iso": "SAU",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Contains vast expanses of continuous wind-swept desert dunes including the massive Rub' al Khali sand sea.",
+    "source": "https://en.wikipedia.org/wiki/Saudi_Arabia",
+    "evidence": [
+      "contains",
+      "vast"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SAU-2-001",
+    "iso": "SAU",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Welcomes millions of international spiritual pilgrims annually to ancient sanctuary cities during sacred pilgrimage seasons.",
+    "source": "https://en.wikipedia.org/wiki/Saudi_Arabia",
+    "evidence": [
+      "millions",
+      "international"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SAU-3-001",
+    "iso": "SAU",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Building the futuristic NEOM zero-emission linear metropolis, officially confirmed to host the 2034 World Cup, and famed for ancient sandstone rock tombs.",
+    "source": "https://en.wikipedia.org/wiki/Saudi_Arabia",
+    "evidence": [
+      "building",
+      "officially"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARE-1-001",
+    "iso": "ARE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A federation of seven distinct emirates that evolved from historic pearl-diving ports into ultra-modern metropolises.",
+    "source": "https://en.wikipedia.org/wiki/United_Arab_Emirates",
+    "evidence": [
+      "federation",
+      "seven"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARE-2-001",
+    "iso": "ARE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Known for artificial palm-shaped offshore archipelagos, indoor ski slopes, and camel racing championships.",
+    "source": "https://en.wikipedia.org/wiki/United_Arab_Emirates",
+    "evidence": [
+      "artificial",
+      "offshore"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARE-3-001",
+    "iso": "ARE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Hosted the historic COP28 global climate summit in Dubai, launched interplanetary space exploration probes, and home to the tallest 828-meter skyscraper on Earth.",
+    "source": "https://en.wikipedia.org/wiki/United_Arab_Emirates",
+    "evidence": [
+      "hosted",
+      "historic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NGA-1-001",
+    "iso": "NGA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The most populous nation on its landmass, celebrated for its prolific film industry nicknamed Nollywood.",
+    "source": "https://en.wikipedia.org/wiki/Nigeria",
+    "evidence": [
+      "populous",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NGA-2-001",
+    "iso": "NGA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Energetic musical rhythms originating here have evolved into an influential worldwide pop phenomenon.",
+    "source": "https://en.wikipedia.org/wiki/Nigeria",
+    "evidence": [
+      "musical",
+      "originating"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NGA-3-001",
+    "iso": "NGA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for passionate cultural debates over spiced tomato jollof rice and a massive granite monolith near its planned capital.",
+    "source": "https://en.wikipedia.org/wiki/Nigeria",
+    "evidence": [
+      "cultural",
+      "tomato"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ECU-1-001",
+    "iso": "ECU",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Named directly after the mathematical zero-degree latitude line that bisects its sovereign territory.",
+    "source": "https://en.wikipedia.org/wiki/Ecuador",
+    "evidence": [
+      "named",
+      "directly"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ECU-2-001",
+    "iso": "ECU",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its high-altitude historic capital features preserved ornate colonial baroque churches with gleaming gold-leaf interiors.",
+    "source": "https://en.wikipedia.org/wiki/Ecuador",
+    "evidence": [
+      "historic",
+      "colonial"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ECU-3-001",
+    "iso": "ECU",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Administers an isolated volcanic archipelago whose giant tortoises and finches inspired Charles Darwin's evolution insights.",
+    "source": "https://en.wikipedia.org/wiki/Ecuador",
+    "evidence": [
+      "isolated",
+      "archipelago"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HRV-1-001",
+    "iso": "HRV",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historical origin of the modern formal necktie, originally worn by 17th-century cavalry mercenaries.",
+    "source": "https://en.wikipedia.org/wiki/Croatia",
+    "evidence": [
+      "historical",
+      "origin"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HRV-2-001",
+    "iso": "HRV",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features terraced turquoise limestone lakes linked by hundreds of cascading waterfalls and wooden footpaths.",
+    "source": "https://en.wikipedia.org/wiki/Croatia",
+    "evidence": [
+      "turquoise",
+      "limestone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HRV-3-001",
+    "iso": "HRV",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for massive seaside stone fortress walls that protected a medieval maritime trading republic and black squid ink risotto.",
+    "source": "https://en.wikipedia.org/wiki/Croatia",
+    "evidence": [
+      "massive",
+      "stone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CZE-1-001",
+    "iso": "CZE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Renowned for fine cut crystal glassware, marionette puppet theater, and Gothic church spires.",
+    "source": "https://en.wikipedia.org/wiki/Czechia",
+    "evidence": [
+      "fine",
+      "crystal"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CZE-2-001",
+    "iso": "CZE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Maintains the highest per capita beer consumption on Earth and pioneered the crisp golden pilsner style in 1842.",
+    "source": "https://en.wikipedia.org/wiki/Czechia",
+    "evidence": [
+      "maintains",
+      "highest"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CZE-3-001",
+    "iso": "CZE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for an astronomical clock tower with moving mechanical apostles and a massive hilltop royal castle.",
+    "source": "https://en.wikipedia.org/wiki/Czechia",
+    "evidence": [
+      "royal",
+      "castle"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HUN-1-001",
+    "iso": "HUN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The birthplace of the multi-colored 3D twist puzzle cube and the ballpoint pen writing instrument.",
+    "source": "https://en.wikipedia.org/wiki/Hungary",
+    "evidence": [
+      "cube",
+      "pen"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HUN-2-001",
+    "iso": "HUN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its riverfront capital is celebrated for opulent neo-baroque thermal bathhouses fed by subterranean mineral springs.",
+    "source": "https://en.wikipedia.org/wiki/Hungary",
+    "evidence": [
+      "thermal",
+      "fed"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HUN-3-001",
+    "iso": "HUN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for tender beef stews generously seasoned with vibrant red sweet paprika powder and fried garlic dough.",
+    "source": "https://en.wikipedia.org/wiki/Hungary",
+    "evidence": [
+      "tender",
+      "sweet"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DNK-1-001",
+    "iso": "DNK",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The birthplace of beloved fairy tales featuring an ugly duckling and an ocean mermaid wishing for land steps.",
+    "source": "https://en.wikipedia.org/wiki/Denmark",
+    "evidence": [
+      "birthplace",
+      "fairy"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DNK-2-001",
+    "iso": "DNK",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Celebrates the cultural concept of cozy contentment with candles, warm wool socks, and shared home comfort.",
+    "source": "https://en.wikipedia.org/wiki/Denmark",
+    "evidence": [
+      "cultural",
+      "warm"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DNK-3-001",
+    "iso": "DNK",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for interlocking colorful plastic toy bricks, open-face rye bread sandwiches, and rainbow-painted canal houses.",
+    "source": "https://en.wikipedia.org/wiki/Denmark",
+    "evidence": [
+      "bread",
+      "sandwiches"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FIN-1-001",
+    "iso": "FIN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Maintains more heated wooden steam saunas than passenger automobiles across its pristine forested territories.",
+    "source": "https://en.wikipedia.org/wiki/Finland",
+    "evidence": [
+      "maintains",
+      "steam"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FIN-2-001",
+    "iso": "FIN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Frequently ranks as the happiest nation in worldwide sociological studies, praised for public education equality.",
+    "source": "https://en.wikipedia.org/wiki/Finland",
+    "evidence": [
+      "ranks",
+      "happiest"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FIN-3-001",
+    "iso": "FIN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for dark bitter salty licorice candies, rye crust rice pies, and expansive boreal reindeer wilderness.",
+    "source": "https://en.wikipedia.org/wiki/Finland",
+    "evidence": [
+      "dark",
+      "bitter"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "JOR-1-001",
+    "iso": "JOR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A desert kingdom home to an ancient caravan city carved into pink sandstone cliff faces over two thousand years ago.",
+    "source": "https://en.wikipedia.org/wiki/Jordan",
+    "evidence": [
+      "desert",
+      "kingdom"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "JOR-2-001",
+    "iso": "JOR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Fringed by a hyper-saline inland lake where swimmers effortlessly float without treading water.",
+    "source": "https://en.wikipedia.org/wiki/Jordan",
+    "evidence": [
+      "inland",
+      "lake"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "JOR-3-001",
+    "iso": "JOR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for the monumental Treasury façade of Petra and the national feast dish Mansaf.",
+    "source": "https://en.wikipedia.org/wiki/Jordan",
+    "evidence": [
+      "petra",
+      "national"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NPL-1-001",
+    "iso": "NPL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the highest terrestrial summit on planet Earth, revered locally as the goddess mother of the world.",
+    "source": "https://en.wikipedia.org/wiki/Nepal",
+    "evidence": [
+      "highest",
+      "summit"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NPL-2-001",
+    "iso": "NPL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The only sovereign nation in the world whose national flag is non-rectangular, consisting of two stacked pennants.",
+    "source": "https://en.wikipedia.org/wiki/Nepal",
+    "evidence": [
+      "nation",
+      "whose"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NPL-3-001",
+    "iso": "NPL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for steamed savory meat dumplings known as momos, prayer flag passes, and eight of the world's ten tallest peaks.",
+    "source": "https://en.wikipedia.org/wiki/Nepal",
+    "evidence": [
+      "steamed",
+      "meat"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDG-1-001",
+    "iso": "MDG",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A large isolated island where over ninety percent of all native wildlife species are found nowhere else on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Madagascar",
+    "evidence": [
+      "large",
+      "isolated"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDG-2-001",
+    "iso": "MDG",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features unearthly groves of colossal upside-down-looking baobab trees with massive swollen water-storing trunks.",
+    "source": "https://en.wikipedia.org/wiki/Madagascar",
+    "evidence": [
+      "groves",
+      "baobab"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDG-3-001",
+    "iso": "MDG",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for playful ring-tailed lemurs, colorful chameleons, and producing world-renowned bourbon vanilla beans.",
+    "source": "https://en.wikipedia.org/wiki/Madagascar",
+    "evidence": [
+      "ring-tailed",
+      "lemurs"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CUB-1-001",
+    "iso": "CUB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Famous for handcrafted premium tobacco rolls, salsa music ensembles, and historic coastal colonial fortresses.",
+    "source": "https://en.wikipedia.org/wiki/Cuba",
+    "evidence": [
+      "tobacco",
+      "salsa"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CUB-2-001",
+    "iso": "CUB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Streets are famously animated by thousands of preserved, colorful vintage 1950s classic automobiles.",
+    "source": "https://en.wikipedia.org/wiki/Cuba",
+    "evidence": [
+      "thousands",
+      "1950s"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CUB-3-001",
+    "iso": "CUB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Known for shredded flank steak in savory tomato sauce known as Ropa Vieja, son music rhythms, and pastel architecture.",
+    "source": "https://en.wikipedia.org/wiki/Cuba",
+    "evidence": [
+      "shredded",
+      "flank"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PHL-1-001",
+    "iso": "PHL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An archipelago of over 7,600 tropical islands renowned for hand-carved agricultural stairs cut into mountainsides.",
+    "source": "https://en.wikipedia.org/wiki/Philippines",
+    "evidence": [
+      "archipelago",
+      "tropical"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PHL-2-001",
+    "iso": "PHL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Commuters navigate busy thoroughfares in vibrant, decorated surplus military vehicles converted into passenger buses.",
+    "source": "https://en.wikipedia.org/wiki/Philippines",
+    "evidence": [
+      "military",
+      "vehicles"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PHL-3-001",
+    "iso": "PHL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for savory vinegar and soy braised adobo, sweet mangoes, and two-thousand-year-old high-altitude rice terraces.",
+    "source": "https://en.wikipedia.org/wiki/Philippines",
+    "evidence": [
+      "adobo",
+      "sweet"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UKR-1-001",
+    "iso": "UKR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Known as an agricultural breadbasket due to expansive fertile black soil plains cultivating wheat and golden sunflowers.",
+    "source": "https://en.wikipedia.org/wiki/Ukraine",
+    "evidence": [
+      "agricultural",
+      "breadbasket"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UKR-2-001",
+    "iso": "UKR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Celebrates the ancient art of wax-resist folk egg decorating with intricate symbolic geometric motifs.",
+    "source": "https://en.wikipedia.org/wiki/Ukraine",
+    "evidence": [
+      "ancient",
+      "folk"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UKR-3-001",
+    "iso": "UKR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for golden-domed medieval cathedral complexes, boiled half-moon potato dumplings, and rich beet soups.",
+    "source": "https://en.wikipedia.org/wiki/Ukraine",
+    "evidence": [
+      "golden-domed",
+      "medieval"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "URY-1-001",
+    "iso": "URY",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The host and triumphant champions of the inaugural FIFA World Cup football tournament in 1930.",
+    "source": "https://en.wikipedia.org/wiki/Uruguay",
+    "evidence": [
+      "host",
+      "champions"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "URY-2-001",
+    "iso": "URY",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Citizens habitually carry thermos flasks under their arms in public to sip hot herbal infusions all day long.",
+    "source": "https://en.wikipedia.org/wiki/Uruguay",
+    "evidence": [
+      "citizens",
+      "arms"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "URY-3-001",
+    "iso": "URY",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for a mountainous steak sandwich loaded with ham and eggs, and an oceanfront white sculpture-citadel.",
+    "source": "https://en.wikipedia.org/wiki/Uruguay",
+    "evidence": [
+      "sandwich",
+      "white"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CRI-1-001",
+    "iso": "CRI",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A pioneer of eco-tourism and nature conservation that constitutionally abolished its standing military in 1948.",
+    "source": "https://en.wikipedia.org/wiki/Costa_Rica",
+    "evidence": [
+      "pioneer",
+      "nature"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CRI-2-001",
+    "iso": "CRI",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Greets friends and strangers with an optimistic philosophy meaning 'pure life' that encapsulates its peaceful lifestyle.",
+    "source": "https://en.wikipedia.org/wiki/Costa_Rica",
+    "evidence": [
+      "philosophy",
+      "meaning"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CRI-3-001",
+    "iso": "CRI",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for misty highland cloud forests inhabited by emerald quetzal birds, hanging canopy bridges, and a symmetrical stratovolcano.",
+    "source": "https://en.wikipedia.org/wiki/Costa_Rica",
+    "evidence": [
+      "forests",
+      "inhabited"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MNG-1-001",
+    "iso": "MNG",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A vast highland steppe territory where nomadic herders inhabit round felt-covered portable dome tents called gers.",
+    "source": "https://en.wikipedia.org/wiki/Mongolia",
+    "evidence": [
+      "vast",
+      "steppe"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MNG-2-001",
+    "iso": "MNG",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Celebrates an annual traditional festival featuring the three manly sports of wrestling, archery, and long-distance horse racing.",
+    "source": "https://en.wikipedia.org/wiki/Mongolia",
+    "evidence": [
+      "celebrates",
+      "annual"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MNG-3-001",
+    "iso": "MNG",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for throat singing harmonies, fermented mare's milk, and a colossal 40-meter gleaming stainless steel horseman statue.",
+    "source": "https://en.wikipedia.org/wiki/Mongolia",
+    "evidence": [
+      "throat",
+      "singing"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LKA-1-001",
+    "iso": "LKA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "A tear-shaped tropical island famed for centuries of cultivating fragrant cinnamon bark and pure black tea.",
+    "source": "https://en.wikipedia.org/wiki/Sri_Lanka",
+    "evidence": [
+      "tropical",
+      "island"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LKA-2-001",
+    "iso": "LKA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a dramatic monolithic granite column rising 180 meters with ancient palace ruins and painted frescoes.",
+    "source": "https://en.wikipedia.org/wiki/Sri_Lanka",
+    "evidence": [
+      "column",
+      "rising"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LKA-3-001",
+    "iso": "LKA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for chopped flatbread street food cooked on hot griddles with metallic clattering, and coastal stilt fishermen.",
+    "source": "https://en.wikipedia.org/wiki/Sri_Lanka",
+    "evidence": [
+      "street",
+      "food"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GEO-1-001",
+    "iso": "GEO",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Archaeological evidence confirms over 8,000 years of continuous wine-making in clay vessels buried underground.",
+    "source": "https://en.wikipedia.org/wiki/Georgia_(country)",
+    "evidence": [
+      "archaeological",
+      "evidence"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GEO-2-001",
+    "iso": "GEO",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional banquets called supras are led by a ceremonial toastmaster who recites poetic blessings throughout meals.",
+    "source": "https://en.wikipedia.org/wiki/Georgia_(country)",
+    "evidence": [
+      "traditional",
+      "called"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GEO-3-001",
+    "iso": "GEO",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for boat-shaped yeast bread filled with melted cheese and a runny egg yolk, and twisted spiced soup dumplings.",
+    "source": "https://en.wikipedia.org/wiki/Georgia_(country)",
+    "evidence": [
+      "bread",
+      "filled"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PAN-1-001",
+    "iso": "PAN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A narrow isthmus territory that naturally unites two vast landmasses, severed by a landmark human-engineered waterway.",
+    "source": "https://en.wikipedia.org/wiki/Panama",
+    "evidence": [
+      "narrow",
+      "isthmus"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PAN-2-001",
+    "iso": "PAN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The only place on Earth where travelers can watch the sun rise over one ocean and set over another in the same day.",
+    "source": "https://en.wikipedia.org/wiki/Panama",
+    "evidence": [
+      "place",
+      "earth"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PAN-3-001",
+    "iso": "PAN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for monumental ship locks that lift ocean cargo freighters 26 meters over a central divide.",
+    "source": "https://en.wikipedia.org/wiki/Panama",
+    "evidence": [
+      "monumental",
+      "ship"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ROU-1-001",
+    "iso": "ROU",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Features dramatic winding high-altitude paved mountain highways engineered directly across rocky glacial crests.",
+    "source": "https://en.wikipedia.org/wiki/Romania",
+    "evidence": [
+      "dramatic",
+      "mountain"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ROU-2-001",
+    "iso": "ROU",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its capital houses an immense neoclassical administrative palace verified as the world's heaviest building.",
+    "source": "https://en.wikipedia.org/wiki/Romania",
+    "evidence": [
+      "houses",
+      "administrative"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ROU-3-001",
+    "iso": "ROU",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for fairy-tale turrets atop cliffside fortresses associated in folklore with vampire legends, and cornmeal polenta.",
+    "source": "https://en.wikipedia.org/wiki/Romania",
+    "evidence": [
+      "fortresses",
+      "associated"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SRB-1-001",
+    "iso": "SRB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The homeland of brilliant pioneering inventor Nikola Tesla, celebrated for alternating current electricity systems.",
+    "source": "https://en.wikipedia.org/wiki/Serbia",
+    "evidence": [
+      "pioneering",
+      "inventor"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SRB-2-001",
+    "iso": "SRB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its ancient capital sits at the strategic confluence of two major continental rivers defended by a brick citadel.",
+    "source": "https://en.wikipedia.org/wiki/Serbia",
+    "evidence": [
+      "sits",
+      "strategic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SRB-3-001",
+    "iso": "SRB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for spiced grilled minced meat fingers served in flatbread with clotted cream, and plum brandy.",
+    "source": "https://en.wikipedia.org/wiki/Serbia",
+    "evidence": [
+      "spiced",
+      "grilled"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SVK-1-001",
+    "iso": "SVK",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Boasts one of the highest densities of historic medieval castles and stone châteaux per capita on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Slovakia",
+    "evidence": [
+      "highest",
+      "historic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SVK-2-001",
+    "iso": "SVK",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its capital city adjoins two other sovereign nations directly along its municipal perimeter.",
+    "source": "https://en.wikipedia.org/wiki/Slovakia",
+    "evidence": [
+      "city",
+      "other"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SVK-3-001",
+    "iso": "SVK",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for small potato dumplings tossed with creamy sheep cheese and topped with crispy smoked bacon bits.",
+    "source": "https://en.wikipedia.org/wiki/Slovakia",
+    "evidence": [
+      "small",
+      "potato"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SVN-1-001",
+    "iso": "SVN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Known for picturesque turquoise waters featuring a teardrop-shaped islet with a romantic pilgrimage church.",
+    "source": "https://en.wikipedia.org/wiki/Slovenia",
+    "evidence": [
+      "picturesque",
+      "waters"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SVN-2-001",
+    "iso": "SVN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Houses vast subterranean karst caves traversed by an underground passenger tourist railway line.",
+    "source": "https://en.wikipedia.org/wiki/Slovenia",
+    "evidence": [
+      "houses",
+      "vast"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SVN-3-001",
+    "iso": "SVN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for ringing the wishing bell on an emerald lake island and rolled yeast dough pastries filled with spiced walnuts.",
+    "source": "https://en.wikipedia.org/wiki/Slovenia",
+    "evidence": [
+      "ringing",
+      "bell"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BGR-1-001",
+    "iso": "BGR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Cultivates fragrant damask rose valleys that produce the majority of the world's precious natural rose oil for perfumes.",
+    "source": "https://en.wikipedia.org/wiki/Bulgaria",
+    "evidence": [
+      "rose",
+      "valleys"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BGR-2-001",
+    "iso": "BGR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The historical birthplace of the early Cyrillic alphabet developed by medieval scholars in the 9th century.",
+    "source": "https://en.wikipedia.org/wiki/Bulgaria",
+    "evidence": [
+      "historical",
+      "early"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BGR-3-001",
+    "iso": "BGR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for layered filo dough pastries filled with whisked eggs and cheese, and a colorful mountain monastery cloister.",
+    "source": "https://en.wikipedia.org/wiki/Bulgaria",
+    "evidence": [
+      "filo",
+      "filled"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "EST-1-001",
+    "iso": "EST",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A pioneering digital society where nearly all municipal and government services operate completely online via secure digital IDs.",
+    "source": "https://en.wikipedia.org/wiki/Estonia",
+    "evidence": [
+      "digital",
+      "society"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "EST-2-001",
+    "iso": "EST",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its capital preserves cobblestone medieval merchant quarters surrounded by stone defensive towers with red-tiled roofs.",
+    "source": "https://en.wikipedia.org/wiki/Estonia",
+    "evidence": [
+      "preserves",
+      "medieval"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "EST-3-001",
+    "iso": "EST",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for high-tech digital residency programs, open-face rye bread with spiced sprats, and ancient peat bogs.",
+    "source": "https://en.wikipedia.org/wiki/Estonia",
+    "evidence": [
+      "digital",
+      "residency"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LVA-1-001",
+    "iso": "LVA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Its capital features the highest concentration of ornate Art Nouveau architecture facades in the world.",
+    "source": "https://en.wikipedia.org/wiki/Latvia",
+    "evidence": [
+      "highest",
+      "architecture"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LVA-2-001",
+    "iso": "LVA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Celebrates the summer solstice festival by singing ancient folk melodies around towering bonfires until dawn.",
+    "source": "https://en.wikipedia.org/wiki/Latvia",
+    "evidence": [
+      "summer",
+      "festival"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LVA-3-001",
+    "iso": "LVA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for dense sourdough dark rye bread, herbal liqueur infused with 24 botanicals, and coastal pine forests.",
+    "source": "https://en.wikipedia.org/wiki/Latvia",
+    "evidence": [
+      "dark",
+      "bread"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LTU-1-001",
+    "iso": "LTU",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Features a sacred pilgrimage hill covered with more than one hundred thousand devotional wooden and metal crosses.",
+    "source": "https://en.wikipedia.org/wiki/Lithuania",
+    "evidence": [
+      "hill",
+      "covered"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LTU-2-001",
+    "iso": "LTU",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its medieval grand duchy once stretched vast territories across inland river trading routes.",
+    "source": "https://en.wikipedia.org/wiki/Lithuania",
+    "evidence": [
+      "medieval",
+      "grand"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LTU-3-001",
+    "iso": "LTU",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for bright cold beetroot soup served with boiled potatoes, and zeppelin-shaped stuffed potato dumplings.",
+    "source": "https://en.wikipedia.org/wiki/Lithuania",
+    "evidence": [
+      "bright",
+      "cold"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KAZ-1-001",
+    "iso": "KAZ",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The largest landlocked sovereign nation on Earth, spanning vast expanses of windswept grassy steppes.",
+    "source": "https://en.wikipedia.org/wiki/Kazakhstan",
+    "evidence": [
+      "landlocked",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KAZ-2-001",
+    "iso": "KAZ",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The historic spaceport from which the first artificial satellite and first human launched into space orbit.",
+    "source": "https://en.wikipedia.org/wiki/Kazakhstan",
+    "evidence": [
+      "historic",
+      "spaceport"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KAZ-3-001",
+    "iso": "KAZ",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for futuristic capital architecture, a tower holding a mythical golden egg, and horsemeat noodles eaten with five fingers.",
+    "source": "https://en.wikipedia.org/wiki/Kazakhstan",
+    "evidence": [
+      "architecture",
+      "holding"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UZB-1-001",
+    "iso": "UZB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "One of only two doubly-landlocked sovereign nations on Earth, requiring crossing at least two foreign perimeters to reach oceans.",
+    "source": "https://en.wikipedia.org/wiki/Uzbekistan",
+    "evidence": [
+      "earth",
+      "requiring"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UZB-2-001",
+    "iso": "UZB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Historic caravan oasis cities feature soaring minarets tiled with intricate geometric turquoise and lapis lazuli mosaics.",
+    "source": "https://en.wikipedia.org/wiki/Uzbekistan",
+    "evidence": [
+      "historic",
+      "cities"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UZB-3-001",
+    "iso": "UZB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for massive iron cauldrons simmering saffron rice pilaf with tender lamb, yellow carrots, and sweet raisins.",
+    "source": "https://en.wikipedia.org/wiki/Uzbekistan",
+    "evidence": [
+      "iron",
+      "rice"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PAK-1-001",
+    "iso": "PAK",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the ancient urban ruins of Mohenjo-daro, among the earliest planned settlements of antiquity.",
+    "source": "https://en.wikipedia.org/wiki/Pakistan",
+    "evidence": [
+      "ancient",
+      "urban"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PAK-2-001",
+    "iso": "PAK",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features the second-highest mountain peak on Earth, towering over glaciated high-altitude valleys.",
+    "source": "https://en.wikipedia.org/wiki/Pakistan",
+    "evidence": [
+      "mountain",
+      "peak"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PAK-3-001",
+    "iso": "PAK",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for intricate hand-painted transport trucks decorated with vibrant folk motifs, and slow-simmered spiced shank stews.",
+    "source": "https://en.wikipedia.org/wiki/Pakistan",
+    "evidence": [
+      "transport",
+      "vibrant"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BGD-1-001",
+    "iso": "BGD",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Formed across the vast fertile delta of three mighty river systems emptying into tidal mangrove estuaries.",
+    "source": "https://en.wikipedia.org/wiki/Bangladesh",
+    "evidence": [
+      "formed",
+      "vast"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BGD-2-001",
+    "iso": "BGD",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional cycle rickshaws with hand-painted floral panels animate busy streets in its crowded metropolis.",
+    "source": "https://en.wikipedia.org/wiki/Bangladesh",
+    "evidence": [
+      "traditional",
+      "with"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BGD-3-001",
+    "iso": "BGD",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Home to the world's largest contiguous tidal mangrove forest and silver hilsa fish steamed with ground mustard.",
+    "source": "https://en.wikipedia.org/wiki/Bangladesh",
+    "evidence": [
+      "tidal",
+      "mangrove"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TZA-1-001",
+    "iso": "TZA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the highest solitary free-standing mountain summit on planet Earth, topped with glaciated snowfields.",
+    "source": "https://en.wikipedia.org/wiki/Tanzania",
+    "evidence": [
+      "highest",
+      "free-standing"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TZA-2-001",
+    "iso": "TZA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Expansive wildlife parks encompass an immense unbroken volcanic caldera harboring thousands of grazing animals.",
+    "source": "https://en.wikipedia.org/wiki/Tanzania",
+    "evidence": [
+      "wildlife",
+      "parks"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TZA-3-001",
+    "iso": "TZA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for spice-scented coastal islands with carved wooden doorways and climbing a dormant stratovolcano.",
+    "source": "https://en.wikipedia.org/wiki/Tanzania",
+    "evidence": [
+      "coastal",
+      "islands"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KHM-1-001",
+    "iso": "KHM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historic center of an ancient empire that constructed monumental sandstone temple cities hidden by jungle canopies.",
+    "source": "https://en.wikipedia.org/wiki/Cambodia",
+    "evidence": [
+      "historic",
+      "center"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KHM-2-001",
+    "iso": "KHM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a remarkable freshwater lake that reverses its river flow seasonally during monsoon rains.",
+    "source": "https://en.wikipedia.org/wiki/Cambodia",
+    "evidence": [
+      "freshwater",
+      "lake"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KHM-3-001",
+    "iso": "KHM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for the world's largest religious monument with lotus-bud towers, and steamed coconut fish custard wrapped in banana leaves.",
+    "source": "https://en.wikipedia.org/wiki/Cambodia",
+    "evidence": [
+      "religious",
+      "fish"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ETH-1-001",
+    "iso": "ETH",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The ancient botanical birthplace of the wild Coffea arabica coffee plant, celebrated in traditional ceremonial roasting rituals.",
+    "source": "https://en.wikipedia.org/wiki/Ethiopia",
+    "evidence": [
+      "ancient",
+      "birthplace"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ETH-2-001",
+    "iso": "ETH",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Uses an ancient syllabary script and follows a solar calendar containing thirteen distinct months in a year.",
+    "source": "https://en.wikipedia.org/wiki/Ethiopia",
+    "evidence": [
+      "uses",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ETH-3-001",
+    "iso": "ETH",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for eleven monolithic churches chiseled straight down into solid red volcanic bedrock, and spongy sourdough flatbread.",
+    "source": "https://en.wikipedia.org/wiki/Ethiopia",
+    "evidence": [
+      "monolithic",
+      "churches"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BOL-1-001",
+    "iso": "BOL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A landlocked highland territory home to the world's largest natural salt flat, forming a surreal reflective mirror after rains.",
+    "source": "https://en.wikipedia.org/wiki/Bolivia",
+    "evidence": [
+      "landlocked",
+      "highland"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BOL-2-001",
+    "iso": "BOL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional bowler hats are proudly worn tilted by indigenous women in vibrant multi-layered pollera skirts.",
+    "source": "https://en.wikipedia.org/wiki/Bolivia",
+    "evidence": [
+      "traditional",
+      "worn"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BOL-3-001",
+    "iso": "BOL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for savory sweet baked empanadas filled with meat and gelatin broth, and high-altitude administrative cable cars.",
+    "source": "https://en.wikipedia.org/wiki/Bolivia",
+    "evidence": [
+      "high-altitude",
+      "administrative"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GHA-1-001",
+    "iso": "GHA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Historically known for ancient golden stool regalia and vibrant, colorful hand-woven geometric kente cloth strips.",
+    "source": "https://en.wikipedia.org/wiki/Ghana",
+    "evidence": [
+      "ancient",
+      "golden"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GHA-2-001",
+    "iso": "GHA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The first colony in its territory to achieve sovereign independence in 1957, symbolized by a black star on its national flag.",
+    "source": "https://en.wikipedia.org/wiki/Ghana",
+    "evidence": [
+      "first",
+      "colony"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GHA-3-001",
+    "iso": "GHA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for artisanal custom fantasy coffins sculpted in shapes of airplanes or cocoa pods, and pounded cassava fufu.",
+    "source": "https://en.wikipedia.org/wiki/Ghana",
+    "evidence": [
+      "custom",
+      "shapes"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AFG-1-001",
+    "iso": "AFG",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An ancient rugged crossroads traversed by historical trade routes, famed for lapis lazuli gemstones.",
+    "source": "https://en.wikipedia.org/wiki/Afghanistan",
+    "evidence": [
+      "ancient",
+      "rugged"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AFG-2-001",
+    "iso": "AFG",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a solitary 65-meter 12th-century brick minaret rising dramatically from a remote river canyon.",
+    "source": "https://en.wikipedia.org/wiki/Afghanistan",
+    "evidence": [
+      "brick",
+      "minaret"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AFG-3-001",
+    "iso": "AFG",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for steamed basmati rice pilaf cooked with sweet caramelized carrots, raisins, and tender lamb.",
+    "source": "https://en.wikipedia.org/wiki/Afghanistan",
+    "evidence": [
+      "rice",
+      "sweet"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DZA-1-001",
+    "iso": "DZA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The largest sovereign nation by geographic surface area on its landmass, mostly covered by desert sands.",
+    "source": "https://en.wikipedia.org/wiki/Algeria",
+    "evidence": [
+      "nation",
+      "geographic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DZA-2-001",
+    "iso": "DZA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Features a vast sandstone rock forest plateau preserving thousands of ancient prehistoric pastoralist cave paintings.",
+    "source": "https://en.wikipedia.org/wiki/Algeria",
+    "evidence": [
+      "vast",
+      "rock"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DZA-3-001",
+    "iso": "DZA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for whitewashed coastal colonial architecture in its capital nicknamed the White, and steamed semolina grain.",
+    "source": "https://en.wikipedia.org/wiki/Algeria",
+    "evidence": [
+      "coastal",
+      "colonial"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AND-1-001",
+    "iso": "AND",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A tiny mountainous co-principality jointly ruled by the Bishop of Urgell and the President of an adjoining republic.",
+    "source": "https://en.wikipedia.org/wiki/Andorra",
+    "evidence": [
+      "tiny",
+      "mountainous"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AND-2-001",
+    "iso": "AND",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its capital city sits at over 1,000 meters elevation, making it the highest-altitude capital on its landmass.",
+    "source": "https://en.wikipedia.org/wiki/Andorra",
+    "evidence": [
+      "city",
+      "sits"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AND-3-001",
+    "iso": "AND",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for duty-free shopping avenues, ski resorts, and hearty winter meat stews served with large shell pasta.",
+    "source": "https://en.wikipedia.org/wiki/Andorra",
+    "evidence": [
+      "duty-free",
+      "shopping"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AGO-1-001",
+    "iso": "AGO",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Features dramatic horseshoe-shaped waterfalls plunging over 100 meters across a green river basin.",
+    "source": "https://en.wikipedia.org/wiki/Angola",
+    "evidence": [
+      "dramatic",
+      "meters"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AGO-2-001",
+    "iso": "AGO",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The national flag prominently features a crossed machete and gear cog symbolizing agricultural and industrial workers.",
+    "source": "https://en.wikipedia.org/wiki/Angola",
+    "evidence": [
+      "national",
+      "flag"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AGO-3-001",
+    "iso": "AGO",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for traditional chicken stew cooked in rich red palm oil with okra and garlic, and Kizomba partner dance.",
+    "source": "https://en.wikipedia.org/wiki/Angola",
+    "evidence": [
+      "traditional",
+      "rich"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ATG-1-001",
+    "iso": "ATG",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A twin-island nation celebrated locally for having 365 distinct beaches, one for every day of the calendar year.",
+    "source": "https://en.wikipedia.org/wiki/Antigua_and_Barbuda",
+    "evidence": [
+      "nation",
+      "having"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ATG-2-001",
+    "iso": "ATG",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features the only continuously working 18th-century naval dockyard in the world, once fortified by Admiral Horatio Nelson.",
+    "source": "https://en.wikipedia.org/wiki/Antigua_and_Barbuda",
+    "evidence": [
+      "working",
+      "dockyard"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ATG-3-001",
+    "iso": "ATG",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for cornmeal dumplings served with rich slow-cooked salted meat and vegetable pepperpot.",
+    "source": "https://en.wikipedia.org/wiki/Antigua_and_Barbuda",
+    "evidence": [
+      "cornmeal",
+      "served"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRB-1-001",
+    "iso": "BRB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A coral limestone island renowned as the historical birthplace of commercial sugarcane molasses distillation.",
+    "source": "https://en.wikipedia.org/wiki/Barbados",
+    "evidence": [
+      "coral",
+      "limestone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRB-2-001",
+    "iso": "BRB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features subterranean limestone caverns traversed by electric trams among flowing underground crystal streams.",
+    "source": "https://en.wikipedia.org/wiki/Barbados",
+    "evidence": [
+      "limestone",
+      "electric"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRB-3-001",
+    "iso": "BRB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for winged oceanic fish paired with steamed cornmeal and okra mash, and producing global music icon Rihanna.",
+    "source": "https://en.wikipedia.org/wiki/Barbados",
+    "evidence": [
+      "oceanic",
+      "fish"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BTN-1-001",
+    "iso": "BTN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Measures national progress and public policy using an innovative index called Gross National Happiness.",
+    "source": "https://en.wikipedia.org/wiki/Bhutan",
+    "evidence": [
+      "measures",
+      "national"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BTN-2-001",
+    "iso": "BTN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Mandates that over sixty percent of its national territory remain perpetually covered by natural forest canopy.",
+    "source": "https://en.wikipedia.org/wiki/Bhutan",
+    "evidence": [
+      "sixty",
+      "percent"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BTN-3-001",
+    "iso": "BTN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for a sacred monastery clinging dramatically to a sheer granite cliff 900 meters above a forested valley.",
+    "source": "https://en.wikipedia.org/wiki/Bhutan",
+    "evidence": [
+      "sacred",
+      "monastery"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BIH-1-001",
+    "iso": "BIH",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Its historic capital was nicknamed the Jerusalem of its landmass for having mosques, synagogues, and churches side by side.",
+    "source": "https://en.wikipedia.org/wiki/Bosnia_and_Herzegovina",
+    "evidence": [
+      "historic",
+      "having"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BIH-2-001",
+    "iso": "BIH",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Famous for a graceful 16th-century arched stone bridge over emerald river waters where brave divers leap from 24 meters.",
+    "source": "https://en.wikipedia.org/wiki/Bosnia_and_Herzegovina",
+    "evidence": [
+      "stone",
+      "bridge"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BIH-3-001",
+    "iso": "BIH",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for copper pots brewing unfiltered dark coffee served with sweet lokum cubes, and grilled minced meat sausages.",
+    "source": "https://en.wikipedia.org/wiki/Bosnia_and_Herzegovina",
+    "evidence": [
+      "dark",
+      "coffee"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BFA-1-001",
+    "iso": "BFA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Its name translates in local languages to 'the land of upright, honorable people'.",
+    "source": "https://en.wikipedia.org/wiki/Burkina_Faso",
+    "evidence": [
+      "name",
+      "local"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BFA-2-001",
+    "iso": "BFA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Hosts the largest and most prestigious continental cinema and television festival, known as FESPACO.",
+    "source": "https://en.wikipedia.org/wiki/Burkina_Faso",
+    "evidence": [
+      "hosts",
+      "continental"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BFA-3-001",
+    "iso": "BFA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for ancient stone fortress enclosures built by trans-Saharan gold traders, and millet porridge cakes.",
+    "source": "https://en.wikipedia.org/wiki/Burkina_Faso",
+    "evidence": [
+      "ancient",
+      "stone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BDI-1-001",
+    "iso": "BDI",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Framed along its shoreline by one of the deepest and longest ancient freshwater rift lakes on planet Earth.",
+    "source": "https://en.wikipedia.org/wiki/Burundi",
+    "evidence": [
+      "along",
+      "rift"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BDI-2-001",
+    "iso": "BDI",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Renowned for energetic master royal drum ensembles who perform synchronized rhythms around sacred carved wooden drums.",
+    "source": "https://en.wikipedia.org/wiki/Burundi",
+    "evidence": [
+      "royal",
+      "drum"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BDI-3-001",
+    "iso": "BDI",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for high-altitude hillside tea plantations, bird sanctuaries, and cracked wheat porridge with chicken.",
+    "source": "https://en.wikipedia.org/wiki/Burundi",
+    "evidence": [
+      "plantations",
+      "bird"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CPV-1-001",
+    "iso": "CPV",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "A volcanic archipelago of ten islands where lusophone and indigenous Creole cultures blended into a vibrant Creole heritage.",
+    "source": "https://en.wikipedia.org/wiki/Cape_Verde",
+    "evidence": [
+      "volcanic",
+      "archipelago"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CPV-2-001",
+    "iso": "CPV",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "The homeland of the soulful, melancholic acoustic musical genre known as Morna, popularized by Cesária Évora.",
+    "source": "https://en.wikipedia.org/wiki/Cape_Verde",
+    "evidence": [
+      "musical",
+      "genre"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CPV-3-001",
+    "iso": "CPV",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for a slow-cooked national stew of hominy corn, beans, cassava, and cured meats called Cachupa.",
+    "source": "https://en.wikipedia.org/wiki/Cape_Verde",
+    "evidence": [
+      "slow-cooked",
+      "national"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CMR-1-001",
+    "iso": "CMR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Often called 'a continent in miniature' because its climate ranges from tropical rainforests to desert savannas.",
+    "source": "https://en.wikipedia.org/wiki/Cameroon",
+    "evidence": [
+      "often",
+      "called"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CMR-2-001",
+    "iso": "CMR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to Mount Fako, an active volcanic giant and the highest peak in its coastal landmass, which last erupted in 2000.",
+    "source": "https://en.wikipedia.org/wiki/Cameroon",
+    "evidence": [
+      "mount",
+      "active"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CMR-3-001",
+    "iso": "CMR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for its rich national dish prepared with stewed bitterleaf greens, peanut paste, crayfish, and beef.",
+    "source": "https://en.wikipedia.org/wiki/Cameroon",
+    "evidence": [
+      "rich",
+      "national"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CAF-1-001",
+    "iso": "CAF",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A landlocked territory featuring vast undisturbed dense lowland rainforests and mineral-rich forest clearings.",
+    "source": "https://en.wikipedia.org/wiki/Central_African_Republic",
+    "evidence": [
+      "landlocked",
+      "territory"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CAF-2-001",
+    "iso": "CAF",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Dzanga Bai, a renowned forest clearing, attracts hundreds of rare forest elephants to lick essential mineral salts.",
+    "source": "https://en.wikipedia.org/wiki/Central_African_Republic",
+    "evidence": [
+      "dzanga",
+      "forest"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CAF-3-001",
+    "iso": "CAF",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for meat or fish dumplings rolled in crushed pumpkin seeds and served in rich spicy tomato stew.",
+    "source": "https://en.wikipedia.org/wiki/Central_African_Republic",
+    "evidence": [
+      "meat",
+      "fish"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TCD-1-001",
+    "iso": "TCD",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Features dramatic wind-carved sandstone towers and natural rock arches rising from shimmering desert sands.",
+    "source": "https://en.wikipedia.org/wiki/Chad",
+    "evidence": [
+      "natural",
+      "rock"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TCD-2-001",
+    "iso": "TCD",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the Guelta d'Archei, a hidden desert canyon oasis where ancient dwarf crocodiles survive in natural pools.",
+    "source": "https://en.wikipedia.org/wiki/Chad",
+    "evidence": [
+      "hidden",
+      "desert"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TCD-3-001",
+    "iso": "TCD",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for prehistoric cave paintings of grazing herds, and a national dish of okra, sweet potato greens, and peanuts.",
+    "source": "https://en.wikipedia.org/wiki/Chad",
+    "evidence": [
+      "grazing",
+      "herds"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COM-1-001",
+    "iso": "COM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known historically as the perfumed islands due to fragrant plantations of ylang-ylang flowers, vanilla, and cloves.",
+    "source": "https://en.wikipedia.org/wiki/Comoros",
+    "evidence": [
+      "historically",
+      "islands"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COM-2-001",
+    "iso": "COM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Dominated by an active shield volcano that features one of the largest active volcanic craters on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Comoros",
+    "evidence": [
+      "dominated",
+      "active"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COM-3-001",
+    "iso": "COM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for spiny rock lobster simmered in sweet vanilla cream sauce, and historic Arab stone palaces.",
+    "source": "https://en.wikipedia.org/wiki/Comoros",
+    "evidence": [
+      "rock",
+      "sweet"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COG-1-001",
+    "iso": "COG",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Its capital city sits directly on the banks of a massive river directly facing another sovereign capital across the water.",
+    "source": "https://en.wikipedia.org/wiki/Republic_of_the_Congo",
+    "evidence": [
+      "city",
+      "sits"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COG-2-001",
+    "iso": "COG",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Famous for the distinctive dapper subculture called La Sape, whose gentlemen dress in flamboyant designer suits.",
+    "source": "https://en.wikipedia.org/wiki/Republic_of_the_Congo",
+    "evidence": [
+      "whose",
+      "for"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COG-3-001",
+    "iso": "COG",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for dense primary rainforests harboring lowland gorillas, and pounded cassava leaf stew with palm oil.",
+    "source": "https://en.wikipedia.org/wiki/Republic_of_the_Congo",
+    "evidence": [
+      "primary",
+      "lowland"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COD-1-001",
+    "iso": "COD",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the world's second-largest tropical rainforest basin and the deepest river system on planet Earth.",
+    "source": "https://en.wikipedia.org/wiki/Democratic_Republic_of_the_Congo",
+    "evidence": [
+      "second-largest",
+      "tropical"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COD-2-001",
+    "iso": "COD",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Houses an active stratovolcano crowned with the world's largest persistent bubbling molten lava lake.",
+    "source": "https://en.wikipedia.org/wiki/Democratic_Republic_of_the_Congo",
+    "evidence": [
+      "houses",
+      "active"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "COD-3-001",
+    "iso": "COD",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for vibrant soukous dance music rhythms, bonobo ape sanctuaries, and savory chicken in rich palm butter sauce.",
+    "source": "https://en.wikipedia.org/wiki/Democratic_Republic_of_the_Congo",
+    "evidence": [
+      "soukous",
+      "dance"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DJI-1-001",
+    "iso": "DJI",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Occupies a strategic geopolitical gateway where major ocean shipping routes pass through a narrow strait.",
+    "source": "https://en.wikipedia.org/wiki/Djibouti",
+    "evidence": [
+      "strategic",
+      "major"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DJI-2-001",
+    "iso": "DJI",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to a crater lake whose surface sits 155 meters below sea level, the lowest point on its entire landmass.",
+    "source": "https://en.wikipedia.org/wiki/Djibouti",
+    "evidence": [
+      "lake",
+      "whose"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DJI-3-001",
+    "iso": "DJI",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for gentle whale shark nursery waters, volcanic salt flats, and aromatic lamb rice spiced with cardamom.",
+    "source": "https://en.wikipedia.org/wiki/Djibouti",
+    "evidence": [
+      "waters",
+      "volcanic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DMA-1-001",
+    "iso": "DMA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known as the nature island due to its rugged mountainous terrain blanketed by dense, unspoiled volcanic rainforests.",
+    "source": "https://en.wikipedia.org/wiki/Dominica",
+    "evidence": [
+      "nature",
+      "island"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DMA-2-001",
+    "iso": "DMA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features the second-largest flooded geothermal fumarole on Earth, with gray-blue bubbling boiling water.",
+    "source": "https://en.wikipedia.org/wiki/Dominica",
+    "evidence": [
+      "second-largest",
+      "geothermal"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DMA-3-001",
+    "iso": "DMA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Its national flag is the only sovereign flag in the world prominently featuring the color purple in a parrot emblem.",
+    "source": "https://en.wikipedia.org/wiki/Dominica",
+    "evidence": [
+      "national",
+      "flag"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLV-1-001",
+    "iso": "SLV",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The smallest sovereign nation by land area in its continental corridor, known as the land of volcanoes.",
+    "source": "https://en.wikipedia.org/wiki/El_Salvador",
+    "evidence": [
+      "smallest",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLV-2-001",
+    "iso": "SLV",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Became the first sovereign nation in the world to adopt an official cryptocurrency as legal tender in 2021.",
+    "source": "https://en.wikipedia.org/wiki/El_Salvador",
+    "evidence": [
+      "became",
+      "first"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLV-3-001",
+    "iso": "SLV",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for thick handmade corn griddle cakes stuffed with melted cheese, refried beans, and chicharrón pork.",
+    "source": "https://en.wikipedia.org/wiki/El_Salvador",
+    "evidence": [
+      "thick",
+      "handmade"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GNQ-1-001",
+    "iso": "GNQ",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign nation on its entire continental landmass where Castilian is an official primary language.",
+    "source": "https://en.wikipedia.org/wiki/Equatorial_Guinea",
+    "evidence": [
+      "nation",
+      "entire"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GNQ-2-001",
+    "iso": "GNQ",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its historic capital city is located on a volcanic island over 200 kilometers away from its mainland territory.",
+    "source": "https://en.wikipedia.org/wiki/Equatorial_Guinea",
+    "evidence": [
+      "historic",
+      "city"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GNQ-3-001",
+    "iso": "GNQ",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for dramatic offshore gas platforms, colonial wooden cathedral spires, and forested volcanic calderas.",
+    "source": "https://en.wikipedia.org/wiki/Equatorial_Guinea",
+    "evidence": [
+      "dramatic",
+      "offshore"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ERI-1-001",
+    "iso": "ERI",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Its high-altitude capital is world-renowned for having the most complete ensemble of 1930s modernist Futurist architecture.",
+    "source": "https://en.wikipedia.org/wiki/Eritrea",
+    "evidence": [
+      "having",
+      "complete"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ERI-2-001",
+    "iso": "ERI",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Features a dramatic steam railway line engineered with 30 tunnels and 65 bridges climbing from coast to mountains.",
+    "source": "https://en.wikipedia.org/wiki/Eritrea",
+    "evidence": [
+      "dramatic",
+      "steam"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ERI-3-001",
+    "iso": "ERI",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for spicy berbere beef stew eaten with flatbread, vibrant espresso bar culture, and coastal coral archipelagos.",
+    "source": "https://en.wikipedia.org/wiki/Eritrea",
+    "evidence": [
+      "spicy",
+      "berbere"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SWZ-1-001",
+    "iso": "SWZ",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "One of the few remaining absolute monarchies in the world, formerly recognized under the name Swaziland.",
+    "source": "https://en.wikipedia.org/wiki/Eswatini",
+    "evidence": [
+      "remaining",
+      "absolute"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SWZ-2-001",
+    "iso": "SWZ",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to Sibebe Rock, the second-largest exposed granite pluton monolith on Earth after Uluru.",
+    "source": "https://en.wikipedia.org/wiki/Eswatini",
+    "evidence": [
+      "sibebe",
+      "rock"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SWZ-3-001",
+    "iso": "SWZ",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for the annual Umhlanga Reed Dance festival where thousands of maidens present freshly cut reeds to the Queen Mother.",
+    "source": "https://en.wikipedia.org/wiki/Eswatini",
+    "evidence": [
+      "annual",
+      "umhlanga"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GAB-1-001",
+    "iso": "GAB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Over eighty percent of its territory is blanketed by dense tropical rainforests, acting as a vital carbon sink.",
+    "source": "https://en.wikipedia.org/wiki/Gabon",
+    "evidence": [
+      "percent",
+      "territory"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GAB-2-001",
+    "iso": "GAB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Loango National Park is celebrated worldwide as the place where wild elephants and hippos wander directly along ocean surf beaches.",
+    "source": "https://en.wikipedia.org/wiki/Gabon",
+    "evidence": [
+      "loango",
+      "national"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GAB-3-001",
+    "iso": "GAB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for traditional carved wooden ancestral reliquary masks, and chicken simmered in rich red palm nut paste.",
+    "source": "https://en.wikipedia.org/wiki/Gabon",
+    "evidence": [
+      "traditional",
+      "reliquary"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GMB-1-001",
+    "iso": "GMB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The smallest sovereign country on its mainland, consisting of a narrow ribbon of land hugging a winding river.",
+    "source": "https://en.wikipedia.org/wiki/Gambia",
+    "evidence": [
+      "smallest",
+      "country"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GMB-2-001",
+    "iso": "GMB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features hundreds of mysterious megalithic red ironstone standing circles erected over a thousand years ago.",
+    "source": "https://en.wikipedia.org/wiki/Gambia",
+    "evidence": [
+      "circles",
+      "thousand"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GMB-3-001",
+    "iso": "GMB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for rich peanut butter groundnut stew simmered with meat and sweet potatoes, and river birdwatching.",
+    "source": "https://en.wikipedia.org/wiki/Gambia",
+    "evidence": [
+      "rich",
+      "peanut"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GRD-1-001",
+    "iso": "GRD",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known globally as the Island of Spice because it produces vast quantities of aromatic nutmeg, mace, and cinnamon.",
+    "source": "https://en.wikipedia.org/wiki/Grenada",
+    "evidence": [
+      "globally",
+      "island"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GRD-2-001",
+    "iso": "GRD",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features the world's first underwater sculpture park, where submerged human statues form artificial coral reefs.",
+    "source": "https://en.wikipedia.org/wiki/Grenada",
+    "evidence": [
+      "first",
+      "underwater"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GRD-3-001",
+    "iso": "GRD",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for the national one-pot stew of breadfruit, salted meat, dumplings, and callaloo cooked in coconut milk.",
+    "source": "https://en.wikipedia.org/wiki/Grenada",
+    "evidence": [
+      "national",
+      "stew"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GIN-1-001",
+    "iso": "GIN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the headwaters of three of its landmass's greatest rivers, earning it the title of 'the water tower'.",
+    "source": "https://en.wikipedia.org/wiki/Guinea",
+    "evidence": [
+      "three",
+      "rivers"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GIN-2-001",
+    "iso": "GIN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Contains the world's largest proven reserves of bauxite ore, the principal mineral raw material for aluminum.",
+    "source": "https://en.wikipedia.org/wiki/Guinea",
+    "evidence": [
+      "reserves",
+      "bauxite"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GIN-3-001",
+    "iso": "GIN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for vibrant polyrhythmic djembe hand drumming traditions and viviparous toads native to high mountain peaks.",
+    "source": "https://en.wikipedia.org/wiki/Guinea",
+    "evidence": [
+      "hand",
+      "native"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GNB-1-001",
+    "iso": "GNB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Comprises a mainland territory and a coastal archipelago of 88 islands recognized as an oceanic biosphere reserve.",
+    "source": "https://en.wikipedia.org/wiki/Guinea-Bissau",
+    "evidence": [
+      "mainland",
+      "territory"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GNB-2-001",
+    "iso": "GNB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its coastal mangrove islands are home to a rare population of saltwater-adapted marine hippopotamuses.",
+    "source": "https://en.wikipedia.org/wiki/Guinea-Bissau",
+    "evidence": [
+      "coastal",
+      "mangrove"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GNB-3-001",
+    "iso": "GNB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for being one of the world's top cashew nut exporters, and traditional cashew apple juice and wine.",
+    "source": "https://en.wikipedia.org/wiki/Guinea-Bissau",
+    "evidence": [
+      "being",
+      "cashew"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GUY-1-001",
+    "iso": "GUY",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign nation on its entire continental landmass where an official Anglophone tongue is primary.",
+    "source": "https://en.wikipedia.org/wiki/Guyana",
+    "evidence": [
+      "nation",
+      "entire"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GUY-2-001",
+    "iso": "GUY",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to Kaieteur Falls, the world's largest single-drop waterfall by volume, plunging 226 meters in dense jungle.",
+    "source": "https://en.wikipedia.org/wiki/Guyana",
+    "evidence": [
+      "kaieteur",
+      "falls"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GUY-3-001",
+    "iso": "GUY",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for a dark slow-cooked holiday meat stew preserved with caramelized cassava juice called cassareep.",
+    "source": "https://en.wikipedia.org/wiki/Guyana",
+    "evidence": [
+      "dark",
+      "holiday"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HTI-1-001",
+    "iso": "HTI",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The first independent nation in its region and the first post-colonial black-led republic in world history.",
+    "source": "https://en.wikipedia.org/wiki/Haiti",
+    "evidence": [
+      "first",
+      "independent"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HTI-2-001",
+    "iso": "HTI",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a colossal 19th-century mountaintop stone fortress built to defend against potential naval invasions.",
+    "source": "https://en.wikipedia.org/wiki/Haiti",
+    "evidence": [
+      "19th-century",
+      "stone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HTI-3-001",
+    "iso": "HTI",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for citrus-marinated crispy fried pork chunks served with spicy pickled cabbage slaw and pumpkin soup.",
+    "source": "https://en.wikipedia.org/wiki/Haiti",
+    "evidence": [
+      "fried",
+      "served"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRQ-1-001",
+    "iso": "IRQ",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historic cradle of Mesopotamia where the earliest wheel, writing system, and legal codes were developed.",
+    "source": "https://en.wikipedia.org/wiki/Iraq",
+    "evidence": [
+      "historic",
+      "cradle"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRQ-2-001",
+    "iso": "IRQ",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features the stepped pyramid Ziggurat of Ur and an iconic 52-meter ascending spiral sandstone minaret tower.",
+    "source": "https://en.wikipedia.org/wiki/Iraq",
+    "evidence": [
+      "ziggurat",
+      "tower"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRQ-3-001",
+    "iso": "IRQ",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for seasoning whole river carp split open and slow-grilled upright beside open wood embers.",
+    "source": "https://en.wikipedia.org/wiki/Iraq",
+    "evidence": [
+      "river",
+      "carp"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRN-1-001",
+    "iso": "IRN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An ancient civilization renowned for intricate hand-knotted wool rugs, Persian gardens, and classic poetry.",
+    "source": "https://en.wikipedia.org/wiki/Iran",
+    "evidence": [
+      "ancient",
+      "civilization"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRN-2-001",
+    "iso": "IRN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Invented ancient subterranean aqueducts called qanats that transported mountain snowmelt through desert plains.",
+    "source": "https://en.wikipedia.org/wiki/Iran",
+    "evidence": [
+      "invented",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "IRN-3-001",
+    "iso": "IRN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for crispy golden saffron rice crust, slow-cooked pomegranate and walnut chicken stew, and Persepolis columns.",
+    "source": "https://en.wikipedia.org/wiki/Iran",
+    "evidence": [
+      "golden",
+      "saffron"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KIR-1-001",
+    "iso": "KIR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign nation in the world whose territory spans across all four planetary hemispheres simultaneously.",
+    "source": "https://en.wikipedia.org/wiki/Kiribati",
+    "evidence": [
+      "nation",
+      "territory"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KIR-2-001",
+    "iso": "KIR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its easternmost Line Islands are the first populated place on Earth to welcome the sunrise of every new calendar year.",
+    "source": "https://en.wikipedia.org/wiki/Kiribati",
+    "evidence": [
+      "easternmost",
+      "line"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KIR-3-001",
+    "iso": "KIR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for coral atolls that barely rise two meters above sea level, coconut crab dishes, and pandanus fruit.",
+    "source": "https://en.wikipedia.org/wiki/Kiribati",
+    "evidence": [
+      "coral",
+      "atolls"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KWT-1-001",
+    "iso": "KWT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Features three iconic slender blue-green spherical water towers that have become a modern national architectural emblem.",
+    "source": "https://en.wikipedia.org/wiki/Kuwait",
+    "evidence": [
+      "three",
+      "water"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KWT-2-001",
+    "iso": "KWT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its national currency, the dinar, is verified as the highest-valued sovereign currency unit in the world.",
+    "source": "https://en.wikipedia.org/wiki/Kuwait",
+    "evidence": [
+      "national",
+      "currency"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KWT-3-001",
+    "iso": "KWT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for fragrant spiced rice cooked in meat broth served with tender braised lamb and fried split chickpeas.",
+    "source": "https://en.wikipedia.org/wiki/Kuwait",
+    "evidence": [
+      "rice",
+      "meat"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KGZ-1-001",
+    "iso": "KGZ",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known for the epic oral storytelling recitation of the Poem of Manas, consisting of hundreds of thousands of poetic verses.",
+    "source": "https://en.wikipedia.org/wiki/Kyrgyzstan",
+    "evidence": [
+      "epic",
+      "oral"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KGZ-2-001",
+    "iso": "KGZ",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the second-largest high-altitude saline mountain lake on Earth, which never freezes even in freezing winter.",
+    "source": "https://en.wikipedia.org/wiki/Kyrgyzstan",
+    "evidence": [
+      "high-altitude",
+      "mountain"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KGZ-3-001",
+    "iso": "KGZ",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for traditional eagle falconry on horseback, nomad horse games, and handmade felt yurt tents.",
+    "source": "https://en.wikipedia.org/wiki/Kyrgyzstan",
+    "evidence": [
+      "traditional",
+      "eagle"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LAO-1-001",
+    "iso": "LAO",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only landlocked sovereign nation in its tropical region, through which a great muddy river flows for over 1,800 kilometers.",
+    "source": "https://en.wikipedia.org/wiki/Laos",
+    "evidence": [
+      "landlocked",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LAO-2-001",
+    "iso": "LAO",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Every dawn, hundreds of saffron-robed Buddhist monks walk in silent procession collecting morning alms from kneeling residents.",
+    "source": "https://en.wikipedia.org/wiki/Laos",
+    "evidence": [
+      "every",
+      "buddhist"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LAO-3-001",
+    "iso": "LAO",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for eating steamed glutinous sticky rice by hand from woven bamboo baskets paired with minced herb meat salad.",
+    "source": "https://en.wikipedia.org/wiki/Laos",
+    "evidence": [
+      "eating",
+      "sticky"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LSO-1-001",
+    "iso": "LSO",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign nation on Earth whose entire land territory lies completely above 1,000 meters in elevation.",
+    "source": "https://en.wikipedia.org/wiki/Lesotho",
+    "evidence": [
+      "nation",
+      "whose"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LSO-2-001",
+    "iso": "LSO",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Known as the Kingdom in the Sky, completely encircled as an enclave within the territory of another single nation.",
+    "source": "https://en.wikipedia.org/wiki/Lesotho",
+    "evidence": [
+      "kingdom",
+      "completely"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LSO-3-001",
+    "iso": "LSO",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for conical woven straw hats called basotho, colorful wool blankets worn against mountain chills, and pony trekking.",
+    "source": "https://en.wikipedia.org/wiki/Lesotho",
+    "evidence": [
+      "called",
+      "basotho"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBR-1-001",
+    "iso": "LBR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Founded in the early 19th century by freed 19th-century transatlantic settlers, making it the oldest modern republic on its landmass.",
+    "source": "https://en.wikipedia.org/wiki/Liberia",
+    "evidence": [
+      "founded",
+      "early"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBR-2-001",
+    "iso": "LBR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its national capital was named in honor of the fifth president, James Monroe.",
+    "source": "https://en.wikipedia.org/wiki/Liberia",
+    "evidence": [
+      "national",
+      "named"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBR-3-001",
+    "iso": "LBR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for rich coastal rubber plantations, a single-star flag modeled on the Stars and Stripes, and spicy pepper soup.",
+    "source": "https://en.wikipedia.org/wiki/Liberia",
+    "evidence": [
+      "rich",
+      "coastal"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBY-1-001",
+    "iso": "LBY",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Contains over ninety percent desert terrain including vast sand dune seas where summer temperatures soar.",
+    "source": "https://en.wikipedia.org/wiki/Libya",
+    "evidence": [
+      "contains",
+      "percent"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBY-2-001",
+    "iso": "LBY",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to Leptis Magna, widely considered one of the best-preserved and most extensive Roman imperial ruin cities.",
+    "source": "https://en.wikipedia.org/wiki/Libya",
+    "evidence": [
+      "leptis",
+      "magna"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBY-3-001",
+    "iso": "LBY",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for hard unleavened boiled barley flour dough shaped into a pyramid dome served with spicy tomato lamb gravy.",
+    "source": "https://en.wikipedia.org/wiki/Libya",
+    "evidence": [
+      "hard",
+      "boiled"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LIE-1-001",
+    "iso": "LIE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A tiny mountain principality situated along the Rhine, one of only two doubly-landlocked sovereign nations on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Liechtenstein",
+    "evidence": [
+      "tiny",
+      "mountain"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LIE-2-001",
+    "iso": "LIE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The reigning monarch actually resides inside an imposing 12th-century stone fortress perched high above the capital.",
+    "source": "https://en.wikipedia.org/wiki/Liechtenstein",
+    "evidence": [
+      "reigning",
+      "monarch"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LIE-3-001",
+    "iso": "LIE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for tiny egg pasta dumplings smothered in melted cheese and topped with sweet caramelized onions.",
+    "source": "https://en.wikipedia.org/wiki/Liechtenstein",
+    "evidence": [
+      "tiny",
+      "for"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MWI-1-001",
+    "iso": "MWI",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known as the warm heart of its landmass due to the legendary friendliness and peaceful hospitality of its people.",
+    "source": "https://en.wikipedia.org/wiki/Malawi",
+    "evidence": [
+      "warm",
+      "heart"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MWI-2-001",
+    "iso": "MWI",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to a massive freshwater lake that contains more species of colorful cichlid fish than any other lake on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Malawi",
+    "evidence": [
+      "freshwater",
+      "lake"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MWI-3-001",
+    "iso": "MWI",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for thick cornmeal porridge paired with fresh grilled tilapia fish caught in wooden dugout canoes.",
+    "source": "https://en.wikipedia.org/wiki/Malawi",
+    "evidence": [
+      "fresh",
+      "fish"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDV-1-001",
+    "iso": "MDV",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An archipelago of roughly 1,200 coral islands grouped into 26 natural atolls surrounded by glowing turquoise lagoons.",
+    "source": "https://en.wikipedia.org/wiki/Maldives",
+    "evidence": [
+      "archipelago",
+      "roughly"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDV-2-001",
+    "iso": "MDV",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The lowest sovereign nation on Earth, with an average ground elevation of just 1.5 meters above sea level.",
+    "source": "https://en.wikipedia.org/wiki/Maldives",
+    "evidence": [
+      "lowest",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDV-3-001",
+    "iso": "MDV",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for overwater stilt bungalows, vibrant coral reefs, and a traditional breakfast of shredded tuna, coconut, and flatbread.",
+    "source": "https://en.wikipedia.org/wiki/Maldives",
+    "evidence": [
+      "coral",
+      "reefs"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MLI-1-001",
+    "iso": "MLI",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historic homeland of legendary 14th-century ruler Mansa Musa, widely considered the wealthiest individual in history.",
+    "source": "https://en.wikipedia.org/wiki/Mali",
+    "evidence": [
+      "historic",
+      "legendary"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MLI-2-001",
+    "iso": "MLI",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the ancient desert intellectual library city of Timbuktu where thousands of medieval manuscripts were preserved.",
+    "source": "https://en.wikipedia.org/wiki/Mali",
+    "evidence": [
+      "desert",
+      "intellectual"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MLI-3-001",
+    "iso": "MLI",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for the largest mud-brick architectural building on Earth, replastered annually by the entire community.",
+    "source": "https://en.wikipedia.org/wiki/Mali",
+    "evidence": [
+      "building",
+      "annually"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MHL-1-001",
+    "iso": "MHL",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An oceanic territory composed of 29 low-lying coral atolls and over a thousand islets spread across open waters.",
+    "source": "https://en.wikipedia.org/wiki/Marshall_Islands",
+    "evidence": [
+      "oceanic",
+      "territory"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MHL-2-001",
+    "iso": "MHL",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Ancient seafarers navigated these open waves using ingenious navigational charts constructed from sticks and cowrie shells.",
+    "source": "https://en.wikipedia.org/wiki/Marshall_Islands",
+    "evidence": [
+      "ancient",
+      "navigated"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MHL-3-001",
+    "iso": "MHL",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for the historic nuclear test site at Bikini Atoll whose name was borrowed for the two-piece women's swimsuit.",
+    "source": "https://en.wikipedia.org/wiki/Marshall_Islands",
+    "evidence": [
+      "historic",
+      "nuclear"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MRT-1-001",
+    "iso": "MRT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the Richat Structure, a colossal 40-kilometer concentric circular geological dome visible clearly from space orbit.",
+    "source": "https://en.wikipedia.org/wiki/Mauritania",
+    "evidence": [
+      "richat",
+      "structure"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MRT-2-001",
+    "iso": "MRT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Operates one of the longest direct freight trains in the world, stretching over two kilometers to haul desert iron ore.",
+    "source": "https://en.wikipedia.org/wiki/Mauritania",
+    "evidence": [
+      "direct",
+      "desert"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MRT-3-001",
+    "iso": "MRT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for ancient sandstone library caravan towns holding medieval astronomy manuscripts among shifting dunes.",
+    "source": "https://en.wikipedia.org/wiki/Mauritania",
+    "evidence": [
+      "ancient",
+      "sandstone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FSM-1-001",
+    "iso": "FSM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A federation of four distinct island states spread across thousands of kilometers of tropical ocean waters.",
+    "source": "https://en.wikipedia.org/wiki/Federated_States_of_Micronesia",
+    "evidence": [
+      "federation",
+      "four"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FSM-2-001",
+    "iso": "FSM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features Nan Madol, a mysterious prehistoric stone city built on artificial islets atop coral reefs, known as the Venice of its waters.",
+    "source": "https://en.wikipedia.org/wiki/Federated_States_of_Micronesia",
+    "evidence": [
+      "madol",
+      "stone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FSM-3-001",
+    "iso": "FSM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for giant basalt hexagonal columns used as prehistoric masonry, and Yap island's massive carved stone disk currencies.",
+    "source": "https://en.wikipedia.org/wiki/Federated_States_of_Micronesia",
+    "evidence": [
+      "columns",
+      "used"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDA-1-001",
+    "iso": "MDA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A landlocked agricultural republic shaped like a cluster of grapes between two major winding river systems.",
+    "source": "https://en.wikipedia.org/wiki/Moldova",
+    "evidence": [
+      "landlocked",
+      "agricultural"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDA-2-001",
+    "iso": "MDA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Holds the Guinness World Record for the largest wine collection and underground storage tunnel network, stretching 200 kilometers.",
+    "source": "https://en.wikipedia.org/wiki/Moldova",
+    "evidence": [
+      "holds",
+      "guinness"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MDA-3-001",
+    "iso": "MDA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for savory flaky pastry pies filled with soft cheese or pumpkin, and lush rolling vineyard hills.",
+    "source": "https://en.wikipedia.org/wiki/Moldova",
+    "evidence": [
+      "pies",
+      "filled"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MCO-1-001",
+    "iso": "MCO",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The second-smallest independent sovereign state on Earth, covering just two square kilometers of coastal cliffs.",
+    "source": "https://en.wikipedia.org/wiki/Monaco",
+    "evidence": [
+      "second-smallest",
+      "independent"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MCO-2-001",
+    "iso": "MCO",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Has the highest population density and highest concentration of millionaires of any country in the world.",
+    "source": "https://en.wikipedia.org/wiki/Monaco",
+    "evidence": [
+      "highest",
+      "population"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MCO-3-001",
+    "iso": "MCO",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for a glamorous seaside grand casino, annual Formula 1 street racing through tunnels, and luxury yachts.",
+    "source": "https://en.wikipedia.org/wiki/Monaco",
+    "evidence": [
+      "seaside",
+      "grand"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MNE-1-001",
+    "iso": "MNE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Its name translates directly as 'Black Mountain', referencing the dense dark pine forests that cloak its rugged peaks.",
+    "source": "https://en.wikipedia.org/wiki/Montenegro",
+    "evidence": [
+      "name",
+      "black"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MNE-2-001",
+    "iso": "MNE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a winding coastal bay often described as the southernmost fjord on its landmass, defended by medieval stone ramparts.",
+    "source": "https://en.wikipedia.org/wiki/Montenegro",
+    "evidence": [
+      "coastal",
+      "often"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MNE-3-001",
+    "iso": "MNE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for wood-smoked dry-cured ham from mountain villages, and a clifftop monastery carved into vertical rock.",
+    "source": "https://en.wikipedia.org/wiki/Montenegro",
+    "evidence": [
+      "mountain",
+      "monastery"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MOZ-1-001",
+    "iso": "MOZ",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign national flag in the world featuring a modern assault rifle integrated into its national coat of arms.",
+    "source": "https://en.wikipedia.org/wiki/Mozambique",
+    "evidence": [
+      "national",
+      "flag"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MOZ-2-001",
+    "iso": "MOZ",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features over 2,500 kilometers of coastline fringed by pristine turquoise coral reefs and whale shark feeding grounds.",
+    "source": "https://en.wikipedia.org/wiki/Mozambique",
+    "evidence": [
+      "coral",
+      "whale"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MOZ-3-001",
+    "iso": "MOZ",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for flame-grilled chicken marinated in fiery piri-piri chili sauce, and cassava leaf stew with ground peanuts.",
+    "source": "https://en.wikipedia.org/wiki/Mozambique",
+    "evidence": [
+      "chicken",
+      "chili"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MMR-1-001",
+    "iso": "MMR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Citizens traditionally apply a cooling yellowish-white cosmetic paste ground from tree bark called thanaka to their cheeks.",
+    "source": "https://en.wikipedia.org/wiki/Myanmar",
+    "evidence": [
+      "citizens",
+      "apply"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MMR-2-001",
+    "iso": "MMR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features an ancient plain where more than 2,000 brick Buddhist temples and gilded pagodas rise above morning mist.",
+    "source": "https://en.wikipedia.org/wiki/Myanmar",
+    "evidence": [
+      "ancient",
+      "plain"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MMR-3-001",
+    "iso": "MMR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for catfish broth noodle soup seasoned with lemongrass and crunchy chickpea fritters, and leg-rowing fishermen.",
+    "source": "https://en.wikipedia.org/wiki/Myanmar",
+    "evidence": [
+      "noodle",
+      "for"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NRU-1-001",
+    "iso": "NRU",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The smallest independent island republic on Earth, covering a single raised phosphate coral island of just 21 square kilometers.",
+    "source": "https://en.wikipedia.org/wiki/Nauru",
+    "evidence": [
+      "smallest",
+      "independent"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NRU-2-001",
+    "iso": "NRU",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Has no officially designated legal capital city, with government ministries situated in a coastal district.",
+    "source": "https://en.wikipedia.org/wiki/Nauru",
+    "evidence": [
+      "officially",
+      "designated"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NRU-3-001",
+    "iso": "NRU",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for ancient phosphate strip-mining pinnacles in its interior, and an airport runway crossing its ring road.",
+    "source": "https://en.wikipedia.org/wiki/Nauru",
+    "evidence": [
+      "phosphate",
+      "pinnacles"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NIC-1-001",
+    "iso": "NIC",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the largest freshwater lake in its continental region, which famously harbors freshwater-adapted oceanic bull sharks.",
+    "source": "https://en.wikipedia.org/wiki/Nicaragua",
+    "evidence": [
+      "freshwater",
+      "lake"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NIC-2-001",
+    "iso": "NIC",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Adventurous travelers hike up black ash volcanic slopes to engage in volcano boarding down 700-meter scree slopes.",
+    "source": "https://en.wikipedia.org/wiki/Nicaragua",
+    "evidence": [
+      "travelers",
+      "black"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NIC-3-001",
+    "iso": "NIC",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for steaming corn dough tamales filled with pork, rice, and mint wrapped in plantain leaves, and active lava craters.",
+    "source": "https://en.wikipedia.org/wiki/Nicaragua",
+    "evidence": [
+      "corn",
+      "filled"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NER-1-001",
+    "iso": "NER",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A vast territory named after the great crescent river that flows through its capital city.",
+    "source": "https://en.wikipedia.org/wiki/Niger",
+    "evidence": [
+      "vast",
+      "territory"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NER-2-001",
+    "iso": "NER",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a monumental 27-meter mud-brick minaret in Agadez supported by protruding wooden timber beams.",
+    "source": "https://en.wikipedia.org/wiki/Niger",
+    "evidence": [
+      "monumental",
+      "agadez"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NER-3-001",
+    "iso": "NER",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for the annual Cure Salée gathering of nomadic Tuareg and Wodaabe camel herders celebrating courtship dances.",
+    "source": "https://en.wikipedia.org/wiki/Niger",
+    "evidence": [
+      "annual",
+      "cure"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRK-1-001",
+    "iso": "PRK",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A highly centralized socialist state operating under the state ideology of self-reliance known as Juche.",
+    "source": "https://en.wikipedia.org/wiki/North_Korea",
+    "evidence": [
+      "highly",
+      "centralized"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRK-2-001",
+    "iso": "PRK",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a colossal 105-story pyramid-shaped skyscraper hotel that dominated its capital skyline unfinished for decades.",
+    "source": "https://en.wikipedia.org/wiki/North_Korea",
+    "evidence": [
+      "colossal",
+      "dominated"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRK-3-001",
+    "iso": "PRK",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for chilled buckwheat noodles served in tangy icy beef broth with thinly sliced cucumbers and boiled eggs.",
+    "source": "https://en.wikipedia.org/wiki/North_Korea",
+    "evidence": [
+      "noodles",
+      "served"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MKD-1-001",
+    "iso": "MKD",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The birthplace of Mother Teresa in its capital, which was heavily redesigned with hundreds of monumental bronze statues.",
+    "source": "https://en.wikipedia.org/wiki/North_Macedonia",
+    "evidence": [
+      "which",
+      "heavily"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MKD-2-001",
+    "iso": "MKD",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to one of the oldest and deepest lakes on its landmass, preserving a unique aquatic ecosystem with ancient trout.",
+    "source": "https://en.wikipedia.org/wiki/North_Macedonia",
+    "evidence": [
+      "lakes",
+      "ecosystem"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MKD-3-001",
+    "iso": "MKD",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for savory baked white beans seasoned with red paprika in traditional clay pots, and clifftop lakeside churches.",
+    "source": "https://en.wikipedia.org/wiki/North_Macedonia",
+    "evidence": [
+      "white",
+      "traditional"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PLW-1-001",
+    "iso": "PLW",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Pioneered the world's first national shark sanctuary in 2009, banning commercial shark fishing across its waters.",
+    "source": "https://en.wikipedia.org/wiki/Palau",
+    "evidence": [
+      "first",
+      "national"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PLW-2-001",
+    "iso": "PLW",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features an inland marine lake containing millions of golden jellyfish that lost their stinging ability due to lack of predators.",
+    "source": "https://en.wikipedia.org/wiki/Palau",
+    "evidence": [
+      "marine",
+      "lake"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PLW-3-001",
+    "iso": "PLW",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for mushroom-shaped green limestone islets rising from turquoise waters, and ancient matriarchal governance traditions.",
+    "source": "https://en.wikipedia.org/wiki/Palau",
+    "evidence": [
+      "green",
+      "limestone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PSE-1-001",
+    "iso": "PSE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An ancient land characterized by ancient terraced olive groves, stone hill villages, and historic holy shrines.",
+    "source": "https://en.wikipedia.org/wiki/Palestine",
+    "evidence": [
+      "ancient",
+      "land"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PSE-2-001",
+    "iso": "PSE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Features the 4th-century Church of the Nativity, constructed over the traditional cave site of the birth of Jesus.",
+    "source": "https://en.wikipedia.org/wiki/Palestine",
+    "evidence": [
+      "constructed",
+      "traditional"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PSE-3-001",
+    "iso": "PSE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for roast chicken layered over flatbread smothered in crimson sour sumac spice and caramelized sweet onions.",
+    "source": "https://en.wikipedia.org/wiki/Palestine",
+    "evidence": [
+      "sour",
+      "spice"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PNG-1-001",
+    "iso": "PNG",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The most linguistically diverse nation on planet Earth, where over 840 distinct living languages are spoken natively.",
+    "source": "https://en.wikipedia.org/wiki/Papua_New_Guinea",
+    "evidence": [
+      "linguistically",
+      "diverse"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PNG-2-001",
+    "iso": "PNG",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Indigenous highland tribes celebrate cultural gatherings with elaborate birds-of-paradise feather headdresses and painted faces.",
+    "source": "https://en.wikipedia.org/wiki/Papua_New_Guinea",
+    "evidence": [
+      "indigenous",
+      "highland"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PNG-3-001",
+    "iso": "PNG",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for tree-dwelling kangaroos, steaming volcanic calderas, and underground earth-oven pork banquets.",
+    "source": "https://en.wikipedia.org/wiki/Papua_New_Guinea",
+    "evidence": [
+      "kangaroos",
+      "volcanic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KNA-1-001",
+    "iso": "KNA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A twin-island sovereign nation comprising two verdant volcanic peaks separated by a shallow three-kilometer channel.",
+    "source": "https://en.wikipedia.org/wiki/Saint_Kitts_and_Nevis",
+    "evidence": [
+      "twin-island",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KNA-2-001",
+    "iso": "KNA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features the massive 17th-century Brimstone Hill volcanic stone fortress, engineered as a monumental hillside citadel.",
+    "source": "https://en.wikipedia.org/wiki/Saint_Kitts_and_Nevis",
+    "evidence": [
+      "brimstone",
+      "hill"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "KNA-3-001",
+    "iso": "KNA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for green vervet monkeys roaming volcanic hillsides, scenic sugar cane railways, and coconut dumplings.",
+    "source": "https://en.wikipedia.org/wiki/Saint_Kitts_and_Nevis",
+    "evidence": [
+      "green",
+      "volcanic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LCA-1-001",
+    "iso": "LCA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign nation in the world named after an actual historical woman (Saint Lucy of Syracuse).",
+    "source": "https://en.wikipedia.org/wiki/Saint_Lucia",
+    "evidence": [
+      "nation",
+      "named"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LCA-2-001",
+    "iso": "LCA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Dominated by two dramatic green volcanic spires named Gros Piton and Petit Piton rising sheer from coastal waters.",
+    "source": "https://en.wikipedia.org/wiki/Saint_Lucia",
+    "evidence": [
+      "dominated",
+      "green"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LCA-3-001",
+    "iso": "LCA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for a drive-in volcanic sulfur spring crater with bubbling mud baths, and savory green banana with salted cod.",
+    "source": "https://en.wikipedia.org/wiki/Saint_Lucia",
+    "evidence": [
+      "drive-in",
+      "volcanic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VCT-1-001",
+    "iso": "VCT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An island chain of 32 islands celebrated for pristine sailing anchorages and secluded white sand coral cays.",
+    "source": "https://en.wikipedia.org/wiki/Saint_Vincent_and_the_Grenadines",
+    "evidence": [
+      "island",
+      "chain"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VCT-2-001",
+    "iso": "VCT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Dominated by an active stratovolcano on its main island whose dramatic craters periodically erupt with ash clouds.",
+    "source": "https://en.wikipedia.org/wiki/Saint_Vincent_and_the_Grenadines",
+    "evidence": [
+      "dominated",
+      "active"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VCT-3-001",
+    "iso": "VCT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for coastal botanical gardens established in 1765 that helped introduce breadfruit plants to the region.",
+    "source": "https://en.wikipedia.org/wiki/Saint_Vincent_and_the_Grenadines",
+    "evidence": [
+      "established",
+      "helped"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "WSM-1-001",
+    "iso": "WSM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Celebrates a traditional communal code of social conduct that governs respectful family, village, and ceremonial life.",
+    "source": "https://en.wikipedia.org/wiki/Samoa",
+    "evidence": [
+      "celebrates",
+      "traditional"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "WSM-2-001",
+    "iso": "WSM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a spectacular natural blowhole sea pool surrounded by lush lava cliff gardens accessed by a long wooden ladder.",
+    "source": "https://en.wikipedia.org/wiki/Samoa",
+    "evidence": [
+      "natural",
+      "blowhole"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "WSM-3-001",
+    "iso": "WSM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for intricate traditional master body tattoos called pe'a, fire knife dancing, and raw fish marinated in fresh coconut cream.",
+    "source": "https://en.wikipedia.org/wiki/Samoa",
+    "evidence": [
+      "intricate",
+      "traditional"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SMR-1-001",
+    "iso": "SMR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Claims the title of the oldest surviving constitutional sovereign republic in the world, founded in 301 AD.",
+    "source": "https://en.wikipedia.org/wiki/San_Marino",
+    "evidence": [
+      "claims",
+      "title"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SMR-2-001",
+    "iso": "SMR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Entirely surrounded on all perimeters as an enclave within the territory of a single boot-shaped country.",
+    "source": "https://en.wikipedia.org/wiki/San_Marino",
+    "evidence": [
+      "entirely",
+      "surrounded"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SMR-3-001",
+    "iso": "SMR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for three dramatic medieval stone fortress towers crowning the limestone ridges of Mount Titano.",
+    "source": "https://en.wikipedia.org/wiki/San_Marino",
+    "evidence": [
+      "three",
+      "medieval"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "STP-1-001",
+    "iso": "STP",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A lush volcanic two-island nation famous for Obo National Park's dramatic volcanic plug needle rising over dense cloud forests.",
+    "source": "https://en.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe",
+    "evidence": [
+      "volcanic",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "STP-2-001",
+    "iso": "STP",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a breathtaking skyscraper-like vertical needle of phonolite volcanic rock rising 370 meters above dense jungle.",
+    "source": "https://en.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe",
+    "evidence": [
+      "vertical",
+      "needle"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "STP-3-001",
+    "iso": "STP",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for historic organic cocoa bean plantations once earning it the moniker of the chocolate islands.",
+    "source": "https://en.wikipedia.org/wiki/S%C3%A3o_Tom%C3%A9_and_Pr%C3%ADncipe",
+    "evidence": [
+      "historic",
+      "cocoa"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SYC-1-001",
+    "iso": "SYC",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An archipelago of 115 islands that includes unique granitic mid-ocean islands with colossal smooth pink boulders.",
+    "source": "https://en.wikipedia.org/wiki/Seychelles",
+    "evidence": [
+      "archipelago",
+      "islands"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SYC-2-001",
+    "iso": "SYC",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the endangered Coco de Mer palm tree, which produces the heaviest and largest seed in the entire plant kingdom.",
+    "source": "https://en.wikipedia.org/wiki/Seychelles",
+    "evidence": [
+      "coco",
+      "palm"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SYC-3-001",
+    "iso": "SYC",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for giant Aldabra tortoises roaming wild on coral atolls, turquoise lagoons, and spicy ginger creole fish.",
+    "source": "https://en.wikipedia.org/wiki/Seychelles",
+    "evidence": [
+      "giant",
+      "aldabra"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLE-1-001",
+    "iso": "SLE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Its coastal capital was established as a sanctuary for formerly enslaved people returning across the ocean.",
+    "source": "https://en.wikipedia.org/wiki/Sierra_Leone",
+    "evidence": [
+      "coastal",
+      "established"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLE-2-001",
+    "iso": "SLE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features vast natural harbors and rich alluvial river beds yielding exceptional commercial diamond gemstones.",
+    "source": "https://en.wikipedia.org/wiki/Sierra_Leone",
+    "evidence": [
+      "vast",
+      "natural"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLE-3-001",
+    "iso": "SLE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for sweet fried banana fritters, spicy cassava leaf stew cooked with fish, and golden sandy beaches.",
+    "source": "https://en.wikipedia.org/wiki/Sierra_Leone",
+    "evidence": [
+      "sweet",
+      "fried"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLB-1-001",
+    "iso": "SLB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "An archipelago of hundreds of tropical islands where traditional shell-money necklaces remain in cultural currency use.",
+    "source": "https://en.wikipedia.org/wiki/Solomon_Islands",
+    "evidence": [
+      "archipelago",
+      "tropical"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLB-2-001",
+    "iso": "SLB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the world's largest salt-water double barrier coral reef lagoon dotted with hundreds of palm-covered islets.",
+    "source": "https://en.wikipedia.org/wiki/Solomon_Islands",
+    "evidence": [
+      "coral",
+      "reef"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SLB-3-001",
+    "iso": "SLB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for sunken WWII naval shipwrecks in iron-bottom sound, master wood carvings inlaid with mother-of-pearl, and taro.",
+    "source": "https://en.wikipedia.org/wiki/Solomon_Islands",
+    "evidence": [
+      "naval",
+      "sound"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SOM-1-001",
+    "iso": "SOM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Boasts the longest continuous coastline on its continental mainland, jutting into strategic shipping lanes.",
+    "source": "https://en.wikipedia.org/wiki/Somalia",
+    "evidence": [
+      "longest",
+      "continuous"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SOM-2-001",
+    "iso": "SOM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the Laas Geel caves, where 5,000-year-old painted murals of decorated cattle remain in pristine, vivid color.",
+    "source": "https://en.wikipedia.org/wiki/Somalia",
+    "evidence": [
+      "laas",
+      "geel"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SOM-3-001",
+    "iso": "SOM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for a rich oral poetry culture earning it the title 'Nation of Bards', and spongy sourdough breakfast flatbread.",
+    "source": "https://en.wikipedia.org/wiki/Somalia",
+    "evidence": [
+      "rich",
+      "oral"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SSD-1-001",
+    "iso": "SSD",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The newest internationally recognized sovereign nation on Earth, gaining formal independence in 2011.",
+    "source": "https://en.wikipedia.org/wiki/South_Sudan",
+    "evidence": [
+      "newest",
+      "recognized"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SSD-2-001",
+    "iso": "SSD",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the Sudd, one of the largest freshwater wetland floodplains on Earth, acting as a massive wildlife filter.",
+    "source": "https://en.wikipedia.org/wiki/South_Sudan",
+    "evidence": [
+      "sudd",
+      "wetland"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SSD-3-001",
+    "iso": "SSD",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for tall cattle-herding pastoralist communities with ancient scarification customs, and thin sorghum flatbread.",
+    "source": "https://en.wikipedia.org/wiki/South_Sudan",
+    "evidence": [
+      "tall",
+      "pastoralist"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SDN-1-001",
+    "iso": "SDN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Preserves more than two hundred steep-sided ancient royal funerary pyramids built by the Kingdom of Kush at Meroë.",
+    "source": "https://en.wikipedia.org/wiki/Sudan",
+    "evidence": [
+      "hundred",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SDN-2-001",
+    "iso": "SDN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its capital city sits directly at the confluence where two distinct blue and white branches of a mighty river unite.",
+    "source": "https://en.wikipedia.org/wiki/Sudan",
+    "evidence": [
+      "city",
+      "directly"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SDN-3-001",
+    "iso": "SDN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for steep narrow stone pyramids rising from golden desert dunes, and slow-cooked fava bean stew with cumin.",
+    "source": "https://en.wikipedia.org/wiki/Sudan",
+    "evidence": [
+      "stone",
+      "pyramids"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SUR-1-001",
+    "iso": "SUR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign state on its continental landmass where Nederlands serves as the official administrative and educational language.",
+    "source": "https://en.wikipedia.org/wiki/Suriname",
+    "evidence": [
+      "state",
+      "landmass"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SUR-2-001",
+    "iso": "SUR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its coastal capital features an exceptional historic center constructed almost entirely with symmetrical white wood buildings.",
+    "source": "https://en.wikipedia.org/wiki/Suriname",
+    "evidence": [
+      "coastal",
+      "historic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SUR-3-001",
+    "iso": "SUR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for an oven-baked festival casserole prepared with tannia root tubers and citrus-seasoned chicken, and pristine rainforests.",
+    "source": "https://en.wikipedia.org/wiki/Suriname",
+    "evidence": [
+      "festival",
+      "root"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SYR-1-001",
+    "iso": "SYR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Its ancient historic capital contends as one of the oldest continuously inhabited settlements on planet Earth.",
+    "source": "https://en.wikipedia.org/wiki/Syria",
+    "evidence": [
+      "ancient",
+      "historic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SYR-2-001",
+    "iso": "SYR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features the monumental colonnaded ruins of Palmyra, once ruled by the formidable desert Queen Zenobia.",
+    "source": "https://en.wikipedia.org/wiki/Syria",
+    "evidence": [
+      "ruins",
+      "palmyra"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SYR-3-001",
+    "iso": "SYR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for olive oil soap crafted by hand in historic stone vats, hammered copper trays, and spiced bulgur meat shells.",
+    "source": "https://en.wikipedia.org/wiki/Syria",
+    "evidence": [
+      "olive",
+      "soap"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TJK-1-001",
+    "iso": "TJK",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A breathtaking mountainous republic where over ninety percent of the entire national territory is covered by towering mountains.",
+    "source": "https://en.wikipedia.org/wiki/Tajikistan",
+    "evidence": [
+      "mountainous",
+      "republic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TJK-2-001",
+    "iso": "TJK",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features the second-highest international road on Earth, a high-altitude highway climbing to over 4,600 meters elevation.",
+    "source": "https://en.wikipedia.org/wiki/Tajikistan",
+    "evidence": [
+      "international",
+      "road"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TJK-3-001",
+    "iso": "TJK",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for torn layered flatbread soaked in hot savory salted dried yogurt liquid topped with fried onions, and turquoise lakes.",
+    "source": "https://en.wikipedia.org/wiki/Tajikistan",
+    "evidence": [
+      "lakes",
+      "hot"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TLS-1-001",
+    "iso": "TLS",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The first new sovereign nation to achieve internationally recognized independence in the 21st century (in 2002).",
+    "source": "https://en.wikipedia.org/wiki/Timor-Leste",
+    "evidence": [
+      "first",
+      "nation"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TLS-2-001",
+    "iso": "TLS",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Its traditional spiritual origin mythology reveres the crocodile as a sacred ancestor who transformed into their rugged island.",
+    "source": "https://en.wikipedia.org/wiki/Timor-Leste",
+    "evidence": [
+      "traditional",
+      "spiritual"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TLS-3-001",
+    "iso": "TLS",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for grilled fish marinated in tamarind and chili paste roasted in palm leaves, and wild Arabica shade-grown coffee.",
+    "source": "https://en.wikipedia.org/wiki/Timor-Leste",
+    "evidence": [
+      "fish",
+      "chili"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TGO-1-001",
+    "iso": "TGO",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Features traditional two-story circular mud-brick tower houses called Takienta that double as grain silos and fortresses.",
+    "source": "https://en.wikipedia.org/wiki/Togo",
+    "evidence": [
+      "traditional",
+      "houses"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TGO-2-001",
+    "iso": "TGO",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Its coastal capital city features the historic Akodessewa Fetish Market, the largest traditional medicine market on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Togo",
+    "evidence": [
+      "coastal",
+      "city"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TGO-3-001",
+    "iso": "TGO",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for pounded yam fufu served with rich palm nut soup, hand-carved wooden sculptures, and sacred forest shrines.",
+    "source": "https://en.wikipedia.org/wiki/Togo",
+    "evidence": [
+      "served",
+      "rich"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TON-1-001",
+    "iso": "TON",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign monarchy in its oceanic region that successfully avoided ever losing its formal sovereignty to colonial powers.",
+    "source": "https://en.wikipedia.org/wiki/Tonga",
+    "evidence": [
+      "monarchy",
+      "oceanic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TON-2-001",
+    "iso": "TON",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to a massive prehistoric stone trilithon arch weighing dozens of tons, functioning as an astronomical solar calendar.",
+    "source": "https://en.wikipedia.org/wiki/Tonga",
+    "evidence": [
+      "stone",
+      "arch"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TON-3-001",
+    "iso": "TON",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for tender salted corned beef and onions baked inside taro leaves with coconut cream, and humpback whale migrations.",
+    "source": "https://en.wikipedia.org/wiki/Tonga",
+    "evidence": [
+      "beef",
+      "inside"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TTO-1-001",
+    "iso": "TTO",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The musical birthplace of the steelpan drum instrument, crafted from recycled industrial oil barrels in the 1930s.",
+    "source": "https://en.wikipedia.org/wiki/Trinidad_and_Tobago",
+    "evidence": [
+      "musical",
+      "birthplace"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TTO-2-001",
+    "iso": "TTO",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the largest natural asphalt lake on Earth, where viscous black bitumen continually seeps from subterranean depths.",
+    "source": "https://en.wikipedia.org/wiki/Trinidad_and_Tobago",
+    "evidence": [
+      "natural",
+      "asphalt"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TTO-3-001",
+    "iso": "TTO",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for popular street food of fried flatbread topped with curried chickpeas and pepper sauce, and giant carnival masquerades.",
+    "source": "https://en.wikipedia.org/wiki/Trinidad_and_Tobago",
+    "evidence": [
+      "popular",
+      "street"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TKM-1-001",
+    "iso": "TKM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to an immense natural gas crater in the desert that has been burning continuously since being ignited in 1971.",
+    "source": "https://en.wikipedia.org/wiki/Turkmenistan",
+    "evidence": [
+      "natural",
+      "crater"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TKM-2-001",
+    "iso": "TKM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its modern capital city holds the world record for the highest concentration of white marble architectural facades on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Turkmenistan",
+    "evidence": [
+      "modern",
+      "city"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TKM-3-001",
+    "iso": "TKM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for ancient Akhal-Teke horses with natural metallic golden coats, and clay oven baked meat pies cooked in desert sand.",
+    "source": "https://en.wikipedia.org/wiki/Turkmenistan",
+    "evidence": [
+      "ancient",
+      "akhal-teke"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUV-1-001",
+    "iso": "TUV",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A tiny oceanic nation composed of nine low-lying coral atolls, with one of the smallest national populations on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Tuvalu",
+    "evidence": [
+      "tiny",
+      "oceanic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUV-2-001",
+    "iso": "TUV",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Secured significant national revenue by leasing its assigned two-letter country-code top-level internet domain name (.tv).",
+    "source": "https://en.wikipedia.org/wiki/Tuvalu",
+    "evidence": [
+      "secured",
+      "significant"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUV-3-001",
+    "iso": "TUV",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for swamp taro roots cultivated in sunken pits dug into coral limestone, and narrow atolls threatened by rising tides.",
+    "source": "https://en.wikipedia.org/wiki/Tuvalu",
+    "evidence": [
+      "taro",
+      "roots"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UGA-1-001",
+    "iso": "UGA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Referred to by Winston Churchill as the pearl of its landmass due to its lush year-round greenery and vibrant wildlife.",
+    "source": "https://en.wikipedia.org/wiki/Uganda",
+    "evidence": [
+      "referred",
+      "pearl"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UGA-2-001",
+    "iso": "UGA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a thunderous natural waterfall where a massive river squeezes forcefully through a narrow seven-meter rock gorge.",
+    "source": "https://en.wikipedia.org/wiki/Uganda",
+    "evidence": [
+      "natural",
+      "massive"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "UGA-3-001",
+    "iso": "UGA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for a popular street food rolled chapati filled with fried eggs and cabbage called a Rolex, and mountain gorillas.",
+    "source": "https://en.wikipedia.org/wiki/Uganda",
+    "evidence": [
+      "popular",
+      "street"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VUT-1-001",
+    "iso": "VUT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The ancestral birthplace of modern bungee jumping, inspired by the ancient land diving ritual where men leap from wooden towers.",
+    "source": "https://en.wikipedia.org/wiki/Vanuatu",
+    "evidence": [
+      "modern",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VUT-2-001",
+    "iso": "VUT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features Mount Yasur on Tanna Island, one of the most accessible continuously erupting active volcanoes on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Vanuatu",
+    "evidence": [
+      "mount",
+      "yasur"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VUT-3-001",
+    "iso": "VUT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for grated cassava root cakes baked with wild cabbage in coconut milk, and traditional underwater post offices.",
+    "source": "https://en.wikipedia.org/wiki/Vanuatu",
+    "evidence": [
+      "root",
+      "wild"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VAT-1-001",
+    "iso": "VAT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The smallest internationally recognized sovereign independent state in the world by both surface land area and population.",
+    "source": "https://en.wikipedia.org/wiki/Vatican_City",
+    "evidence": [
+      "smallest",
+      "internationally"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VAT-2-001",
+    "iso": "VAT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Completely encircled within the metropolitan municipal boundaries of a single foreign capital city.",
+    "source": "https://en.wikipedia.org/wiki/Vatican_City",
+    "evidence": [
+      "encircled",
+      "within"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VAT-3-001",
+    "iso": "VAT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for a monumental Renaissance basilica with a soaring dome designed by Michelangelo, and the ceremonial Pontifical Guard in colorful uniforms.",
+    "source": "https://en.wikipedia.org/wiki/Vatican_City",
+    "evidence": [
+      "renaissance",
+      "basilica"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VEN-1-001",
+    "iso": "VEN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the world's highest uninterrupted natural waterfall, plunging 979 meters from a flat-topped sandstone table mountain.",
+    "source": "https://en.wikipedia.org/wiki/Venezuela",
+    "evidence": [
+      "highest",
+      "natural"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VEN-2-001",
+    "iso": "VEN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features an atmospheric phenomenon over Lake Maracaibo that produces silent lightning storms for up to 300 nights a year.",
+    "source": "https://en.wikipedia.org/wiki/Venezuela",
+    "evidence": [
+      "lake",
+      "maracaibo"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "VEN-3-001",
+    "iso": "VEN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for split corn cakes stuffed with shredded seasoned beef, black beans, fried plantains, and white cheese.",
+    "source": "https://en.wikipedia.org/wiki/Venezuela",
+    "evidence": [
+      "split",
+      "black"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "YEM-1-001",
+    "iso": "YEM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the legendary ancient city of Shibam, dubbed the 'Manhattan of the Desert' for multi-story 16th-century mud-brick towers.",
+    "source": "https://en.wikipedia.org/wiki/Yemen",
+    "evidence": [
+      "legendary",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "YEM-2-001",
+    "iso": "YEM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its isolated offshore island of Socotra features surreal dragon's blood trees with umbrella-shaped dense canopies.",
+    "source": "https://en.wikipedia.org/wiki/Yemen",
+    "evidence": [
+      "island",
+      "socotra"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "YEM-3-001",
+    "iso": "YEM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for bubbling hot stone bowls of meat stew topped with whipped frothy fenugreek foam, and cardamom coffee.",
+    "source": "https://en.wikipedia.org/wiki/Yemen",
+    "evidence": [
+      "stone",
+      "coffee"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ALB-1-001",
+    "iso": "ALB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known as the land of eagles with a distinctive double-headed bird on its national flag.",
+    "source": "https://en.wikipedia.org/wiki/Albania",
+    "evidence": [
+      "land",
+      "eagles"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ALB-2-001",
+    "iso": "ALB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features celebrated hillside Ottoman stone houses built with countless stacked symmetrical wooden framed windows.",
+    "source": "https://en.wikipedia.org/wiki/Albania",
+    "evidence": [
+      "ottoman",
+      "stone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ALB-3-001",
+    "iso": "ALB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for baked lamb casserole with spiced sour milk and rice, and ancient mountain fortresses.",
+    "source": "https://en.wikipedia.org/wiki/Albania",
+    "evidence": [
+      "baked",
+      "lamb"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARM-1-001",
+    "iso": "ARM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Historically the first sovereign nation in the world to adopt Christianity as its state religion in 301 AD.",
+    "source": "https://en.wikipedia.org/wiki/Armenia",
+    "evidence": [
+      "historically",
+      "first"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARM-2-001",
+    "iso": "ARM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional thin unleavened flatbread is baked by slapping dough against the hot clay walls of underground ovens.",
+    "source": "https://en.wikipedia.org/wiki/Armenia",
+    "evidence": [
+      "traditional",
+      "thin"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ARM-3-001",
+    "iso": "ARM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for an ancient clifftop monastery framing a sacred snow-capped peak, and apricot orchards.",
+    "source": "https://en.wikipedia.org/wiki/Armenia",
+    "evidence": [
+      "ancient",
+      "monastery"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AZE-1-001",
+    "iso": "AZE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known historically as the land of fire due to natural gas vents that burn continuously on hillsides.",
+    "source": "https://en.wikipedia.org/wiki/Azerbaijan",
+    "evidence": [
+      "historically",
+      "land"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AZE-2-001",
+    "iso": "AZE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its modern capital features three curved glass skyscraper towers designed to resemble flickering orange flames.",
+    "source": "https://en.wikipedia.org/wiki/Azerbaijan",
+    "evidence": [
+      "modern",
+      "three"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "AZE-3-001",
+    "iso": "AZE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for bubbling natural mud volcanoes, thin stuffed herb crepes, and ancient petroglyph reserves.",
+    "source": "https://en.wikipedia.org/wiki/Azerbaijan",
+    "evidence": [
+      "natural",
+      "volcanoes"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BHS-1-001",
+    "iso": "BHS",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An archipelago of roughly 700 coral islands famous for transparent turquoise waters and swimming pigs.",
+    "source": "https://en.wikipedia.org/wiki/Bahamas",
+    "evidence": [
+      "archipelago",
+      "roughly"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BHS-2-001",
+    "iso": "BHS",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features one of the deepest underwater marine caverns on Earth plunging over 200 meters into seabed rock.",
+    "source": "https://en.wikipedia.org/wiki/Bahamas",
+    "evidence": [
+      "deepest",
+      "marine"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BHS-3-001",
+    "iso": "BHS",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for refreshing citrus-marinated sea snail salad, vibrant carnival parades, and 66 solid-limestone hand-carved stairs.",
+    "source": "https://en.wikipedia.org/wiki/Bahamas",
+    "evidence": [
+      "carnival",
+      "sea"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BHR-1-001",
+    "iso": "BHR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An ancient commercial island kingdom historically revered as the trade heart of the prehistoric Dilmun civilization.",
+    "source": "https://en.wikipedia.org/wiki/Bahrain",
+    "evidence": [
+      "ancient",
+      "commercial"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BHR-2-001",
+    "iso": "BHR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a remarkable solitary 400-year-old tree flourishing alone in the middle of a barren desert with no apparent water.",
+    "source": "https://en.wikipedia.org/wiki/Bahrain",
+    "evidence": [
+      "400-year-old",
+      "tree"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BHR-3-001",
+    "iso": "BHR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for historic natural pearl diving beds, sweet saffron gelatin confections, and ancient coastal stone forts.",
+    "source": "https://en.wikipedia.org/wiki/Bahrain",
+    "evidence": [
+      "historic",
+      "natural"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BLR-1-001",
+    "iso": "BLR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known for the largest and oldest primeval lowland forest on its landmass, home to wisent bison herds.",
+    "source": "https://en.wikipedia.org/wiki/Belarus",
+    "evidence": [
+      "forest",
+      "known"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BLR-2-001",
+    "iso": "BLR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its capital was reconstructed after wartime devastation with monumental Stalinist neoclassical grand boulevards.",
+    "source": "https://en.wikipedia.org/wiki/Belarus",
+    "evidence": [
+      "stalinist",
+      "grand"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BLR-3-001",
+    "iso": "BLR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for crispy grated potato pancakes served with sour cream, red brick medieval castles, and pristine lakes.",
+    "source": "https://en.wikipedia.org/wiki/Belarus",
+    "evidence": [
+      "grated",
+      "potato"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BLZ-1-001",
+    "iso": "BLZ",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign nation in its continental corridor where an Anglophone tongue is the sole official national language.",
+    "source": "https://en.wikipedia.org/wiki/Belize",
+    "evidence": [
+      "nation",
+      "corridor"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BLZ-2-001",
+    "iso": "BLZ",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a perfectly circular submarine sinkhole over 300 meters across made famous by ocean explorers.",
+    "source": "https://en.wikipedia.org/wiki/Belize",
+    "evidence": [
+      "meters",
+      "made"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BLZ-3-001",
+    "iso": "BLZ",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for puff pastry fried bread pockets stuffed with eggs and beans, and ancient rainforest Mayan temple pyramids.",
+    "source": "https://en.wikipedia.org/wiki/Belize",
+    "evidence": [
+      "fried",
+      "bread"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BEN-1-001",
+    "iso": "BEN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historical birthplace of the ancient Kingdom of Dahomey, celebrated for elite all-female military regiments.",
+    "source": "https://en.wikipedia.org/wiki/Benin",
+    "evidence": [
+      "historical",
+      "kingdom"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BEN-2-001",
+    "iso": "BEN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Lake Nokoué preserves the historic stilt village of Ganvié, where tens of thousands reside in wooden dwellings above the water.",
+    "source": "https://en.wikipedia.org/wiki/Benin",
+    "evidence": [
+      "lake",
+      "preserves"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BEN-3-001",
+    "iso": "BEN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for clay bas-relief royal palaces, crispy spiced peanut snacks, and voodoo spiritual traditions.",
+    "source": "https://en.wikipedia.org/wiki/Benin",
+    "evidence": [
+      "peanut",
+      "voodoo"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BWA-1-001",
+    "iso": "BWA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A major global producer of natural gemstones that uses a national currency named after the word for precious rain.",
+    "source": "https://en.wikipedia.org/wiki/Botswana",
+    "evidence": [
+      "major",
+      "global"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BWA-2-001",
+    "iso": "BWA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Home to the world's largest inland river delta, where seasonal floodwaters fan out into desert sands without reaching oceans.",
+    "source": "https://en.wikipedia.org/wiki/Botswana",
+    "evidence": [
+      "inland",
+      "river"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BWA-3-001",
+    "iso": "BWA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for traditional wooden dugout canoe safaris, massive free-ranging elephant herds, and shredded beef stew.",
+    "source": "https://en.wikipedia.org/wiki/Botswana",
+    "evidence": [
+      "traditional",
+      "safaris"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRN-1-001",
+    "iso": "BRN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A prosperous sovereign sultanate completely surrounded on land by another nation on a tropical island.",
+    "source": "https://en.wikipedia.org/wiki/Brunei",
+    "evidence": [
+      "sultanate",
+      "completely"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRN-2-001",
+    "iso": "BRN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Its capital features a monumental mosque surrounded by an artificial lagoon with a replica 16th-century royal ceremonial barge.",
+    "source": "https://en.wikipedia.org/wiki/Brunei",
+    "evidence": [
+      "mosque",
+      "surrounded"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "BRN-3-001",
+    "iso": "BRN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for sticky sago starch eaten with a two-pronged bamboo stick, and preserved primary rainforest reserves.",
+    "source": "https://en.wikipedia.org/wiki/Brunei",
+    "evidence": [
+      "sticky",
+      "starch"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CIV-1-001",
+    "iso": "CIV",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The world's leading agricultural producer and exporter of cocoa beans, supplying major chocolate manufacturers.",
+    "source": "https://en.wikipedia.org/wiki/C%C3%B4te_d'Ivoire",
+    "evidence": [
+      "leading",
+      "agricultural"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CIV-2-001",
+    "iso": "CIV",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its administrative capital features a monumental Roman Catholic basilica recognized as the largest church on Earth.",
+    "source": "https://en.wikipedia.org/wiki/C%C3%B4te_d'Ivoire",
+    "evidence": [
+      "administrative",
+      "roman"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CIV-3-001",
+    "iso": "CIV",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for grated fermented cassava couscous called attiéké, wood-carved Baule masks, and lively Zouglou music.",
+    "source": "https://en.wikipedia.org/wiki/C%C3%B4te_d'Ivoire",
+    "evidence": [
+      "grated",
+      "cassava"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CYP-1-001",
+    "iso": "CYP",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "In classical mythology, this sun-drenched island was revered as the legendary birthplace of the goddess Aphrodite.",
+    "source": "https://en.wikipedia.org/wiki/Cyprus",
+    "evidence": [
+      "classical",
+      "mythology"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CYP-2-001",
+    "iso": "CYP",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The historic capital city remains the only divided capital in the world, split by a UN buffer zone.",
+    "source": "https://en.wikipedia.org/wiki/Cyprus",
+    "evidence": [
+      "historic",
+      "city"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "CYP-3-001",
+    "iso": "CYP",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for distinctive semi-hard unripened brined cheese that can be fried or grilled without melting, and citrus groves.",
+    "source": "https://en.wikipedia.org/wiki/Cyprus",
+    "evidence": [
+      "semi-hard",
+      "unripened"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DOM-1-001",
+    "iso": "DOM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The birthplace of energetic merengue and bachata dance rhythms played with accordions and metal scrapers.",
+    "source": "https://en.wikipedia.org/wiki/Dominican_Republic",
+    "evidence": [
+      "merengue",
+      "bachata"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DOM-2-001",
+    "iso": "DOM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its historic walled colonial quarter features the oldest continuously inhabited cathedral founded across the early 1500s.",
+    "source": "https://en.wikipedia.org/wiki/Dominican_Republic",
+    "evidence": [
+      "historic",
+      "colonial"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "DOM-3-001",
+    "iso": "DOM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for mashed plantains topped with pickled red onions and fried salami, and producing champion baseball players.",
+    "source": "https://en.wikipedia.org/wiki/Dominican_Republic",
+    "evidence": [
+      "mashed",
+      "fried"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FJI-1-001",
+    "iso": "FJI",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "An archipelago of over 300 volcanic islands famous for the traditional kava ceremonial drink prepared from crushed yaqona roots.",
+    "source": "https://en.wikipedia.org/wiki/Fiji",
+    "evidence": [
+      "archipelago",
+      "volcanic"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FJI-2-001",
+    "iso": "FJI",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Welcomes visitors with a ceremonial herbal beverage prepared from pounded pepper roots in carved wooden bowls.",
+    "source": "https://en.wikipedia.org/wiki/Fiji",
+    "evidence": [
+      "visitors",
+      "ceremonial"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "FJI-3-001",
+    "iso": "FJI",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for friendly choral hospitality, earth-oven feasts buried with hot stones, and world-class seven-a-side rugby champions.",
+    "source": "https://en.wikipedia.org/wiki/Fiji",
+    "evidence": [
+      "friendly",
+      "earth-oven"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GTM-1-001",
+    "iso": "GTM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The ancient heartland of classical Mayan civilization where indigenous communities continue to speak over twenty Mayan dialects.",
+    "source": "https://en.wikipedia.org/wiki/Guatemala",
+    "evidence": [
+      "ancient",
+      "classical"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GTM-2-001",
+    "iso": "GTM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a dramatic freshwater lake surrounded by three steep volcanoes described as among the most beautiful on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Guatemala",
+    "evidence": [
+      "dramatic",
+      "lake"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "GTM-3-001",
+    "iso": "GTM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for towering stone temple pyramids rising above jungle canopies, hand-loomed textiles, and spiced pumpkin seed stews.",
+    "source": "https://en.wikipedia.org/wiki/Guatemala",
+    "evidence": [
+      "temple",
+      "rising"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HND-1-001",
+    "iso": "HND",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "Home to the ancient Mayan ceremonial center of Copán, celebrated for the longest known pre-Columbian hieroglyphic text inscription.",
+    "source": "https://en.wikipedia.org/wiki/Honduras",
+    "evidence": [
+      "ancient",
+      "mayan"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HND-2-001",
+    "iso": "HND",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional street cuisine features thick handmade flour tortillas folded over refried beans, cheese, and crema.",
+    "source": "https://en.wikipedia.org/wiki/Honduras",
+    "evidence": [
+      "street",
+      "cuisine"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "HND-3-001",
+    "iso": "HND",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for colonial mountain towns, extensive coral barrier reefs, and carved stone stelae depicting ancient rulers.",
+    "source": "https://en.wikipedia.org/wiki/Honduras",
+    "evidence": [
+      "colonial",
+      "mountain"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ISR-1-001",
+    "iso": "ISR",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "An ancient crossroads of monotheistic history and modern technology start-ups celebrated for high-tech innovation.",
+    "source": "https://en.wikipedia.org/wiki/Israel",
+    "evidence": [
+      "ancient",
+      "crossroads"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ISR-2-001",
+    "iso": "ISR",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Features a desert clifftop plateau fortress where ancient defenders held out against Roman legions on sheer rock heights.",
+    "source": "https://en.wikipedia.org/wiki/Israel",
+    "evidence": [
+      "desert",
+      "fortress"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ISR-3-001",
+    "iso": "ISR",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for poached eggs simmered in spiced tomato bell pepper stew, chickpea falafel balls, and sacred stone limestone walls.",
+    "source": "https://en.wikipedia.org/wiki/Israel",
+    "evidence": [
+      "bell",
+      "stew"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "JAM-1-001",
+    "iso": "JAM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "culture",
+    "text": "The musical birthplace of reggae and ska, developed in vibrant studio sound systems with deep rolling basslines.",
+    "source": "https://en.wikipedia.org/wiki/Jamaica",
+    "evidence": [
+      "musical",
+      "birthplace"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "JAM-2-001",
+    "iso": "JAM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features cascading terraced natural limestone waterfalls that visitors climb hand-in-hand directly from the sea.",
+    "source": "https://en.wikipedia.org/wiki/Jamaica",
+    "evidence": [
+      "natural",
+      "limestone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "JAM-3-001",
+    "iso": "JAM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for spicy pimento-wood smoked jerk barbecue, blue mountain coffee beans, and legendary world sprint champions.",
+    "source": "https://en.wikipedia.org/wiki/Jamaica",
+    "evidence": [
+      "jerk",
+      "blue"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBN-1-001",
+    "iso": "LBN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Historically home to the ancient Phoenician maritime traders who invented one of the earliest widespread phonetic alphabets.",
+    "source": "https://en.wikipedia.org/wiki/Lebanon",
+    "evidence": [
+      "historically",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBN-2-001",
+    "iso": "LBN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its national flag features a majestic evergreen cedar tree revered in classical antiquity for shipbuilding timber.",
+    "source": "https://en.wikipedia.org/wiki/Lebanon",
+    "evidence": [
+      "national",
+      "flag"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LBN-3-001",
+    "iso": "LBN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for monumental Roman temple columns at Baalbek, finely chopped parsley and mint salads, and anise arak spirits.",
+    "source": "https://en.wikipedia.org/wiki/Lebanon",
+    "evidence": [
+      "roman",
+      "temple"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LUX-1-001",
+    "iso": "LUX",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The only sovereign Grand Duchy remaining in the world, functioning as a major international banking and judicial center.",
+    "source": "https://en.wikipedia.org/wiki/Luxembourg",
+    "evidence": [
+      "grand",
+      "duchy"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LUX-2-001",
+    "iso": "LUX",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its capital is perched atop sheer sandstone cliffs hollowed out with kilometers of subterranean military tunnels.",
+    "source": "https://en.wikipedia.org/wiki/Luxembourg",
+    "evidence": [
+      "sandstone",
+      "military"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "LUX-3-001",
+    "iso": "LUX",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for smoked pork collar served with broad beans, multilingual residents, and being the first nation with free nationwide public transit.",
+    "source": "https://en.wikipedia.org/wiki/Luxembourg",
+    "evidence": [
+      "served",
+      "broad"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MLT-1-001",
+    "iso": "MLT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to freestanding megalithic stone temples constructed around 3600 BC, predating both Stonehenge and the famous Giza pyramids.",
+    "source": "https://en.wikipedia.org/wiki/Malta",
+    "evidence": [
+      "megalithic",
+      "stone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MLT-2-001",
+    "iso": "MLT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its fortified capital city was built by the Knights of St. John following a monumental 16th-century siege.",
+    "source": "https://en.wikipedia.org/wiki/Malta",
+    "evidence": [
+      "fortified",
+      "city"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MLT-3-001",
+    "iso": "MLT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for diamond-shaped flaky filo pastries filled with spiced ricotta or mushy peas, and bright painted fishing boats with protective eyes.",
+    "source": "https://en.wikipedia.org/wiki/Malta",
+    "evidence": [
+      "pastries",
+      "peas"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MUS-1-001",
+    "iso": "MUS",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A volcanic island once home to the extinct flightless dodo bird, evolving into a multicultural crossroads of diverse oceanic heritage.",
+    "source": "https://en.wikipedia.org/wiki/Mauritius",
+    "evidence": [
+      "volcanic",
+      "island"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MUS-2-001",
+    "iso": "MUS",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a geological sand dune clearing where mineral-rich sands naturally separate into seven distinct vibrant layered colors.",
+    "source": "https://en.wikipedia.org/wiki/Mauritius",
+    "evidence": [
+      "geological",
+      "sand"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "MUS-3-001",
+    "iso": "MUS",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for thin yellow split-pea flatbreads rolled with bean curries, botanical water-lily gardens, and turquoise coral lagoons.",
+    "source": "https://en.wikipedia.org/wiki/Mauritius",
+    "evidence": [
+      "thin",
+      "yellow"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NAM-1-001",
+    "iso": "NAM",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to the oldest desert on Earth, where colossal rusty-red sand dunes plunge directly into crashing ocean swells.",
+    "source": "https://en.wikipedia.org/wiki/Namibia",
+    "evidence": [
+      "desert",
+      "earth"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NAM-2-001",
+    "iso": "NAM",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a stark white clay pan dotted with centuries-old blackened dead camelthorn tree skeletons preserved by dry air.",
+    "source": "https://en.wikipedia.org/wiki/Namibia",
+    "evidence": [
+      "white",
+      "dotted"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "NAM-3-001",
+    "iso": "NAM",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for dark sky stargazing reserves, desert-adapted elephants, and 19th-century colonial architecture in coastal desert towns.",
+    "source": "https://en.wikipedia.org/wiki/Namibia",
+    "evidence": [
+      "dark",
+      "reserves"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "OMN-1-001",
+    "iso": "OMN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A peaceful maritime sultanate renowned for harvesting precious aromatic frankincense resin from desert trees since antiquity.",
+    "source": "https://en.wikipedia.org/wiki/Oman",
+    "evidence": [
+      "peaceful",
+      "maritime"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "OMN-2-001",
+    "iso": "OMN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "culture",
+    "text": "Traditional men wear long white collars without neckties, scented with frankincense, accompanied by curved silver dagger belts.",
+    "source": "https://en.wikipedia.org/wiki/Oman",
+    "evidence": [
+      "traditional",
+      "wear"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "OMN-3-001",
+    "iso": "OMN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for marinating spiced meats wrapped in banana leaves and slow-cooking them for days in subterranean sand fire pits.",
+    "source": "https://en.wikipedia.org/wiki/Oman",
+    "evidence": [
+      "wrapped",
+      "days"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRY-1-001",
+    "iso": "PRY",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "One of the few nations where an indigenous tongue (Guaraní) is spoken fluently by the vast majority alongside the official colonial language.",
+    "source": "https://en.wikipedia.org/wiki/Paraguay",
+    "evidence": [
+      "indigenous",
+      "tongue"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRY-2-001",
+    "iso": "PRY",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Jointly operates the monumental Itaipu Dam on the Paraná River, verified as one of the largest hydroelectric clean energy generators on Earth.",
+    "source": "https://en.wikipedia.org/wiki/Paraguay",
+    "evidence": [
+      "jointly",
+      "itaipu"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "PRY-3-001",
+    "iso": "PRY",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for cold ice-water yerba mate herbal infusions sipped through horns, and a savory solid sponge cornbread with cheese and onions.",
+    "source": "https://en.wikipedia.org/wiki/Paraguay",
+    "evidence": [
+      "cold",
+      "yerba"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "QAT-1-001",
+    "iso": "QAT",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "A thumb-shaped desert peninsula that evolved into one of the world's leading liquefied natural gas exporters.",
+    "source": "https://en.wikipedia.org/wiki/Qatar",
+    "evidence": [
+      "desert",
+      "peninsula"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "QAT-2-001",
+    "iso": "QAT",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its modern coastal capital features an iconic museum designed by I.M. Pei inspired by ancient ablution fountains.",
+    "source": "https://en.wikipedia.org/wiki/Qatar",
+    "evidence": [
+      "modern",
+      "coastal"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "QAT-3-001",
+    "iso": "QAT",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for hosting the 2022 FIFA World Cup, traditional wooden dhow harbor panoramas, and spiced condensed milk tea.",
+    "source": "https://en.wikipedia.org/wiki/Qatar",
+    "evidence": [
+      "hosting",
+      "2022"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "RWA-1-001",
+    "iso": "RWA",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Known as the land of a thousand hills due to its dramatic terraced mountain relief cloaked in lush green mist.",
+    "source": "https://en.wikipedia.org/wiki/Rwanda",
+    "evidence": [
+      "land",
+      "thousand"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "RWA-2-001",
+    "iso": "RWA",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Citizens participate nationwide in a monthly mandatory community service Saturday dedicated to communal cleanup and public works.",
+    "source": "https://en.wikipedia.org/wiki/Rwanda",
+    "evidence": [
+      "citizens",
+      "participate"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "RWA-3-001",
+    "iso": "RWA",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for protecting critically endangered mountain gorilla families in bamboo forests, and goat meat skewers.",
+    "source": "https://en.wikipedia.org/wiki/Rwanda",
+    "evidence": [
+      "protecting",
+      "endangered"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SEN-1-001",
+    "iso": "SEN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The westernmost mainland territory of its landmass, celebrated for a national cultural philosophy of warm hospitable welcome.",
+    "source": "https://en.wikipedia.org/wiki/Senegal",
+    "evidence": [
+      "westernmost",
+      "mainland"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SEN-2-001",
+    "iso": "SEN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features a monumental 52-meter bronze statue towering over coastal cliffs, taller than the Statue of Liberty.",
+    "source": "https://en.wikipedia.org/wiki/Senegal",
+    "evidence": [
+      "monumental",
+      "statue"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "SEN-3-001",
+    "iso": "SEN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for aromatic broken rice simmered in rich tomato broth with fish and vegetables, and colorful wooden pirogue fishing boats.",
+    "source": "https://en.wikipedia.org/wiki/Senegal",
+    "evidence": [
+      "rice",
+      "rich"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUN-1-001",
+    "iso": "TUN",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "The historic homeland of the ancient maritime empire of Carthage, which challenged the supremacy of Rome.",
+    "source": "https://en.wikipedia.org/wiki/Tunisia",
+    "evidence": [
+      "historic",
+      "homeland"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUN-2-001",
+    "iso": "TUN",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Features an exceptionally preserved 3rd-century Roman stone amphitheater that once accommodated 35,000 spectators.",
+    "source": "https://en.wikipedia.org/wiki/Tunisia",
+    "evidence": [
+      "roman",
+      "stone"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "TUN-3-001",
+    "iso": "TUN",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "culture",
+    "text": "Famous for crispy deep-fried pastry triangles encasing a runny whole egg with tuna, and spicy red pepper harissa paste.",
+    "source": "https://en.wikipedia.org/wiki/Tunisia",
+    "evidence": [
+      "whole",
+      "tuna"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZMB-1-001",
+    "iso": "ZMB",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Home to one of the greatest natural waterfalls on Earth, known locally as the smoke that thunders due to its mist plumes.",
+    "source": "https://en.wikipedia.org/wiki/Zambia",
+    "evidence": [
+      "greatest",
+      "natural"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZMB-2-001",
+    "iso": "ZMB",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "The national flag features a vibrant flying eagle and an orange vertical stripe representing its rich natural copper mining heritage.",
+    "source": "https://en.wikipedia.org/wiki/Zambia",
+    "evidence": [
+      "national",
+      "flag"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZMB-3-001",
+    "iso": "ZMB",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for the Devil's Pool natural rock infinity pool right at the precipice of a 108-meter waterfall drop.",
+    "source": "https://en.wikipedia.org/wiki/Zambia",
+    "evidence": [
+      "natural",
+      "rock"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZWE-1-001",
+    "iso": "ZWE",
+    "level": 1,
+    "topic": "heritage",
+    "kind": "history",
+    "text": "Named after ancient medieval stone palace ruins constructed entirely with interlocking granite blocks without mortar.",
+    "source": "https://en.wikipedia.org/wiki/Zimbabwe",
+    "evidence": [
+      "named",
+      "ancient"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZWE-2-001",
+    "iso": "ZWE",
+    "level": 2,
+    "topic": "landmark",
+    "kind": "history",
+    "text": "Its national emblem depicts a distinctive soapstone carved bird discovered among ancient royal enclosures.",
+    "source": "https://en.wikipedia.org/wiki/Zimbabwe",
+    "evidence": [
+      "national",
+      "emblem"
+    ],
+    "checked": "2026-11-11"
+  },
+  {
+    "id": "ZWE-3-001",
+    "iso": "ZWE",
+    "level": 3,
+    "topic": "iconic landmark",
+    "kind": "history",
+    "text": "Famous for the thunderous spray of Victoria Falls known locally as Mosi-oa-Tunya, and hearty sadza maize meal.",
+    "source": "https://en.wikipedia.org/wiki/Zimbabwe",
+    "evidence": [
+      "victoria",
+      "falls"
+    ],
+    "checked": "2026-11-11"
+  }
+];
+export default CLUES_LIBRARY;

@@ -1598,6 +1598,18 @@
                 <span class="subtext">Freely explore and identify nations without timer or score tracking</span>
               </div>
             </label>
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle, #d1d5db); display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+              <div>
+                <strong style="display: block; font-size: 0.85rem; color: var(--text-primary, #1f2937);">Question History</strong>
+                <span class="subtext" style="font-size: 0.75rem; color: var(--text-muted, #6b7280);">Clear non-repeating drawer memory to replay all questions fresh</span>
+              </div>
+              <button type="button" id="resetQuestionHistoryBtn" class="btn-subtle" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-subtle, #d1d5db); background: var(--bg-surface, #ffffff); cursor: pointer; white-space: nowrap;">
+                Reset question history
+              </button>
+            </div>
+            <div id="resetHistoryToast" style="display: none; font-size: 0.78rem; color: #16a34a; font-weight: 600; text-align: right; margin-top: 4px;">
+              Question history reset!
+            </div>
           </div>
         </div>
       </div>

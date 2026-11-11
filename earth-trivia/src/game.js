@@ -1,4 +1,6 @@
 import { COUNTRIES_DB } from '../data/countries.js';
+import { CLUES_LIBRARY } from '../data/clues.js';
+import { pickCountries, pickClueSet } from './questionBag.js';
 import { haversineDistanceKm, distanceToCountryKm, areCountriesAdjacent, getShortestDistanceBetweenCountries, getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
 import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getCountryBoundingBox } from './frame_union.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
@@ -28,6 +30,8 @@ export class GameManager {
 
     // Country Pools
     this.fullDatabase = COUNTRIES_DB;
+    this.cluesLibrary = CLUES_LIBRARY || [];
+    this.currentClues = [];
     this.roundQueue = [];
     this.missedCountries = [];
     this.currentCountry = null;
@@ -79,7 +83,8 @@ export class GameManager {
 
     // Use custom pool if provided (e.g. replay missed session), otherwise draw from tier pool
     const pool = customPool && customPool.length > 0 ? customPool : this.getTierPool(tier);
-    this.roundQueue = this.shuffle([...pool]);
+    const count = (rounds === 'endless' || rounds === Infinity) ? 10 : rounds;
+    this.roundQueue = customPool ? this.shuffle([...pool]) : pickCountries(tier, pool, count);
 
     this.ui.showGameHUD(this.totalRounds, this.hasTimer, this.isPractice);
     this.nextRound();
@@ -106,7 +111,8 @@ export class GameManager {
     if (isEndless) {
       if (!this.roundQueue || this.roundQueue.length <= 1) {
         const pool = this.getTierPool(this.tier);
-        this.roundQueue = (this.roundQueue || []).concat(this.shuffle([...pool]));
+        const nextBatch = pickCountries(this.tier, pool, 10);
+        this.roundQueue = (this.roundQueue || []).concat(nextBatch);
       }
     } else {
       // Finite modes (10 / 20 rounds): check completion
@@ -119,6 +125,18 @@ export class GameManager {
     this.round++;
     this.currentCountry = this.roundQueue.shift();
     this.clueIndex = 0;
+
+    // Pick clue set via questionBag (shown in level order)
+    const excludeIds = this.currentCountry.forcedExcludeClueIds || [];
+    const pickedClues = pickClueSet(this.currentCountry.code, this.cluesLibrary, { excludeClueIds: excludeIds });
+    if (pickedClues && pickedClues.length === 3) {
+      this.currentClues = pickedClues;
+    } else {
+      this.currentClues = (this.currentCountry.clues || []).map((text, idx) => ({
+        level: idx + 1,
+        text
+      }));
+    }
     this.isAnswering = true;
     this.isFlightComplete = false;
     this.phase = 'question';
@@ -139,7 +157,7 @@ export class GameManager {
       mode: this.mode,
       country: this.currentCountry,
       clueIndex: this.clueIndex,
-      clueText: this.currentCountry.clues[0],
+      clueText: this.currentClues[0]?.text || this.currentCountry.clues[0],
       availableCluesCount: 3
     });
 
@@ -158,7 +176,7 @@ export class GameManager {
         mode: this.mode,
         country: this.currentCountry,
         clueIndex: this.clueIndex,
-        clueText: this.currentCountry.clues[this.clueIndex],
+        clueText: this.currentClues[this.clueIndex]?.text || this.currentCountry.clues[this.clueIndex],
         availableCluesCount: 3
       });
     }
@@ -407,8 +425,13 @@ export class GameManager {
       if (!this.missedCountries.some(c => (c.id && c.id === target.id) || c.name === target.name)) {
         this.missedCountries.push(target);
       }
+      const prevClueIds = (this.currentClues || []).map(c => c.id).filter(Boolean);
+      const reinsertTarget = {
+        ...target,
+        forcedExcludeClueIds: prevClueIds
+      };
       const reinsertIndex = Math.min(this.roundQueue.length, 2 + Math.floor(Math.random() * 3));
-      this.roundQueue.splice(reinsertIndex, 0, target);
+      this.roundQueue.splice(reinsertIndex, 0, reinsertTarget);
 
       // Visuals: Translucent red fill on guess (if any), green on target; sharp 3D Line2 outlines
       const guessId = guessCountry ? guessCountry.id : null;

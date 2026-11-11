@@ -8,10 +8,6 @@ const __dirname = path.dirname(__filename);
 const jsonPath = path.resolve(__dirname, '../data/countries.json');
 const countries = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
 
-console.log('================================================================================');
-console.log('         GEOTRIVIA STEM-BASED CLUE & INTEGRITY SCANNER (check:clues)            ');
-console.log('================================================================================\n');
-
 // ═══════════════════════════════════════════════════════════════
 // 1. HARD FAIL PATTERNS (Word Boundaries & Stems)
 // ═══════════════════════════════════════════════════════════════
@@ -43,6 +39,12 @@ const HARD_PATTERNS = [
   }
 ];
 
+// Temporal forbidden words
+const TEMPORAL_PATTERN = {
+  name: 'temporal (recent/recently/currently/now/today)',
+  regex: /\b(recent|recently|currently|now|today)\b/i
+};
+
 // All sovereign nation names and demonyms (excluding the country's own name and demonym)
 const SOVEREIGN_CATALOG = countries.map(c => ({
   name: c.name,
@@ -67,17 +69,82 @@ const WARN_PATTERNS = [
 
 // Run Scan
 const hardFails = [];
-const warnings = [];
+let warningCount = 0;
+let wordCountValid = 0;
+let totalClues = 0;
 
 countries.forEach(country => {
+  const ownNameRegex = new RegExp(`\\b${country.name.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
+  const ownCapRegex = country.capital ? new RegExp(`\\b${country.capital.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i') : null;
+  const ownDemRegex = country.demonym ? new RegExp(`\\b${country.demonym.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i') : null;
+
   country.clues.forEach((clue, idx) => {
+    totalClues++;
     const clueNum = idx + 1;
+
+    // Check Word Count (12 - 30 words)
+    const words = clue.trim().split(/\s+/).length;
+    if (words < 12 || words > 30) {
+      hardFails.push({
+        country: country.name,
+        clueNum,
+        type: `word count (${words} words; must be 12-30)`,
+        match: `${words} words`,
+        clueText: clue
+      });
+    } else {
+      wordCountValid++;
+    }
+
+    // Check Country's Own Name
+    if (ownNameRegex.test(clue)) {
+      hardFails.push({
+        country: country.name,
+        clueNum,
+        type: 'own country name mention',
+        match: country.name,
+        clueText: clue
+      });
+    }
+
+    // Check Country's Capital
+    if (ownCapRegex && ownCapRegex.test(clue)) {
+      hardFails.push({
+        country: country.name,
+        clueNum,
+        type: 'capital mention',
+        match: country.capital,
+        clueText: clue
+      });
+    }
+
+    // Check Country's Demonym
+    if (ownDemRegex && ownDemRegex.test(clue)) {
+      hardFails.push({
+        country: country.name,
+        clueNum,
+        type: 'demonym mention',
+        match: country.demonym,
+        clueText: clue
+      });
+    }
+
+    // Check Temporal Words (recent/recently/currently/now/today)
+    const tempMatch = clue.match(TEMPORAL_PATTERN.regex);
+    if (tempMatch) {
+      hardFails.push({
+        country: country.name,
+        clueNum,
+        type: TEMPORAL_PATTERN.name,
+        match: tempMatch[0],
+        clueText: clue
+      });
+    }
 
     // Check Hard Patterns
     for (const hp of HARD_PATTERNS) {
       const match = clue.match(hp.regex);
       if (match) {
-        // Exception: allow country's own name/demonym if mentioned in historical context
         hardFails.push({
           country: country.name,
           clueNum,
@@ -91,12 +158,10 @@ countries.forEach(country => {
     // Check Sovereign Cross-Mentions
     for (const other of SOVEREIGN_CATALOG) {
       if (other.name.toLowerCase() === country.name.toLowerCase()) continue;
-      // Word boundary regex for other country name and demonym
       const escName = other.name.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
       const otherRegex = new RegExp(`\\b${escName}\\b`, 'i');
       const m = clue.match(otherRegex);
       if (m) {
-        // Check false positives (e.g. Guinea in Guinea-Bissau, Niger in Nigeria)
         if (country.name.toLowerCase().includes(other.name.toLowerCase())) continue;
         hardFails.push({
           country: country.name,
@@ -112,72 +177,40 @@ countries.forEach(country => {
     for (const wp of WARN_PATTERNS) {
       const match = clue.match(wp.regex);
       if (match) {
-        warnings.push({
-          country: country.name,
-          clueNum,
-          type: wp.name,
-          match: match[0],
-          clueText: clue
-        });
+        warningCount++;
       }
     }
   });
 });
 
-// Print Results
-console.log(`Scan completed across ${countries.length} sovereign nations (${countries.length * 3} clues).\n`);
-
-console.log(`--------------------------------------------------------------------------------`);
-console.log(`HARD FAILS: ${hardFails.length}`);
-console.log(`--------------------------------------------------------------------------------`);
-
-if (hardFails.length > 0) {
-  hardFails.forEach(f => {
-    console.log(`[HARD FAIL] ${f.country} (Clue ${f.clueNum}) [${f.type} -> "${f.match}"]`);
-    console.log(`   Text: "${f.clueText}"\n`);
-  });
-} else {
-  console.log(`✓ Zero Hard Fails found. All clues strictly pass stem-based geographic constraints.\n`);
-}
-
-console.log(`--------------------------------------------------------------------------------`);
-console.log(`WARNINGS: ${warnings.length}`);
-console.log(`--------------------------------------------------------------------------------`);
-
-warnings.forEach(w => {
-  console.log(`[WARN] ${w.country} (Clue ${w.clueNum}) [${w.type} -> "${w.match}"]: "${w.clueText}"`);
-});
-
 // Schema and landmark duplication check
-console.log(`\n--------------------------------------------------------------------------------`);
-console.log(`DATASET INTEGRITY & UNIQUENESS CHECK`);
-console.log(`--------------------------------------------------------------------------------`);
-
 let schemaErrors = 0;
 const landmarkMap = new Map();
 countries.forEach(c => {
   if (!c.name || !c.capital || !c.clues || c.clues.length !== 3 || !c.landmark || !c.cultureFood || !c.memoryAnchors || c.memoryAnchors.length < 2 || !c.sourceUrl) {
-    console.error(`[SCHEMA ERROR] ${c.name} is missing required fields`);
     schemaErrors++;
   }
   const lk = c.landmark.toLowerCase().trim();
   if (landmarkMap.has(lk)) {
-    console.error(`[DUPLICATE LANDMARK] "${c.landmark}" shared between ${landmarkMap.get(lk)} and ${c.name}`);
     schemaErrors++;
   } else {
     landmarkMap.set(lk, c.name);
   }
 });
 
-if (schemaErrors === 0) {
-  console.log(`✓ All 195 nations have complete schema, >=2 memory anchors, source URLs, and unique landmarks.`);
-}
+// Print Counts Only
+console.log(`check:clues: ${totalClues} clues checked across ${countries.length} sovereign nations.`);
+console.log(`Counts: Hard Fails: ${hardFails.length}, Warnings: ${warningCount}, Word Count [12-30] Valid: ${wordCountValid}/${totalClues}, Schema Errors: ${schemaErrors}.`);
 
-console.log('================================================================================');
 if (hardFails.length > 0 || schemaErrors > 0) {
-  console.log('                    CHECK:CLUES RESULT: FAILED                                  ');
+  if (hardFails.length > 0) {
+    console.error('Hard Fail Samples:');
+    hardFails.slice(0, 5).forEach(f => {
+      console.error(`  [${f.country} Clue ${f.clueNum}] ${f.type} -> "${f.match}"`);
+    });
+  }
+  console.error(`Result: FAILED`);
   process.exit(1);
 } else {
-  console.log('                    CHECK:CLUES RESULT: PASSED                                  ');
+  console.log(`Result: PASSED`);
 }
-console.log('================================================================================');

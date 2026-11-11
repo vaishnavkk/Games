@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GlobeApp } from './globe.js';
 import { UIManager } from './ui.js';
 import { GameManager } from './game.js';
+import { questionBag } from './questionBag.js';
 import { sound } from './audio.js';
 import { ICONS } from './icons.js';
 
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     globeApp,
     ui,
     game,
+    questionBag,
     getState: () => ({
       mode: game.mode,
       tier: game.tier,
@@ -141,6 +143,22 @@ document.addEventListener('DOMContentLoaded', () => {
   window.__updateBestScoreDisplay = updateBestScoreDisplay;
 
   // Start Game Button
+  // Reset Question History Button
+  const resetHistoryBtn = document.getElementById('resetQuestionHistoryBtn');
+  const resetToast = document.getElementById('resetHistoryToast');
+  if (resetHistoryBtn) {
+    resetHistoryBtn.addEventListener('click', () => {
+      sound.playClick();
+      questionBag.resetHistory();
+      if (resetToast) {
+        resetToast.style.display = 'block';
+        setTimeout(() => {
+          resetToast.style.display = 'none';
+        }, 2000);
+      }
+    });
+  }
+
   const startBtn = document.getElementById('startExpeditionBtn');
   if (startBtn) {
     startBtn.addEventListener('click', () => {

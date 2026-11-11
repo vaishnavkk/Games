@@ -190,7 +190,7 @@
     "landmark": "Colosseum of Rome and Leaning Tower of Pisa",
     "cultureFood": "Neapolitan Pizza and Gelato",
     "clues": [
-      "The birthplace of opera, Renaissance painting, and marble sculptural masterpieces.",
+      "The historic classical birthplace of opera, Renaissance fine art painting, and monumental marble sculptural masterpieces.",
       "Boasts ancient stone amphitheaters, grand aqueducts, and streets paved with cobblestone plazas.",
       "World-famous for hand-stretched wood-fired pizza, rich espresso coffee bars, and gondola canals."
     ],
@@ -240,7 +240,7 @@
     "clues": [
       "The historic cradle of yoga, meditation, ayurvedic wellness, and classical sitar ragas.",
       "Celebrates vibrant nationwide holidays where crowds light clay lamps or shower colored powders.",
-      "Made history as the first nation to land a spacecraft near the lunar polar terrain with the Chandrayaan mission, hosted the global G20 summit, and home to a magnificent white marble mausoleum."
+      "Made space history by landing the robotic Chandrayaan spacecraft near the rugged lunar pole and home to a magnificent white marble mausoleum."
     ],
     "memoryAnchors": [
       "The Taj Mahal was commissioned by Emperor Shah Jahan in memory of his wife Mumtaz Mahal.",
@@ -383,7 +383,7 @@
     "clues": [
       "A global center for haute couture runway fashion, impressionist painting, and fine culinary traditions.",
       "Daily mornings often begin with fresh crisp baguettes and flaky layered butter croissants.",
-      "Recently captivated the globe by hosting the 2024 Olympic Games with a spectacular river flotilla parade, and home to an iconic 330-meter puddle-iron lattice tower."
+      "Captivated the globe by hosting the 2024 Olympic Games with a spectacular river flotilla parade, and home to an iconic 330-meter puddle-iron lattice tower."
     ],
     "memoryAnchors": [
       "The Eiffel Tower expands by up to 15 centimeters during hot sunny weather due to thermal expansion.",
@@ -480,7 +480,7 @@
     "cultureFood": "Skyr and Kjötsúpa",
     "clues": [
       "Known for medieval family sagas, geothermal hot springs, and expansive fields of volcanic black sand.",
-      "Heats homes and municipal sidewalks using boiling renewable subterranean volcanic steam.",
+      "Heats municipal homes and downtown sidewalks using abundant boiling renewable subterranean volcanic steam.",
       "Known as the land of fire and ice, celebrated for erupting geysers and mineral geothermal lagoons."
     ],
     "memoryAnchors": [
@@ -705,7 +705,7 @@
     "landmark": "Milford Sound and Mitre Peak",
     "cultureFood": "Hāngī and Pavlova",
     "clues": [
-      "Features indigenous Māori traditions including ceremonial ancestral challenges and wood carvings.",
+      "Features rich indigenous Māori cultural traditions including ceremonial ancestral haka challenges and wood carvings.",
       "Rugby players perform an intimidating coordinated vocal dance and posture challenge before matches.",
       "Home to flightless nocturnal birds with long beaks, dramatic fiord carved sounds, and earth-oven banquets."
     ],
@@ -2430,7 +2430,7 @@
     "cultureFood": "Romazava Beef Stew and Ravitoto",
     "clues": [
       "A large isolated island where over ninety percent of all native wildlife species are found nowhere else on Earth.",
-      "Features unearthly groves of massive upside-down-looking trees with swollen water-storing trunks.",
+      "Features unearthly groves of colossal upside-down-looking baobab trees with massive swollen water-storing trunks.",
       "Famous for playful ring-tailed lemurs, colorful chameleons, and producing world-renowned bourbon vanilla beans."
     ],
     "memoryAnchors": [
@@ -2778,7 +2778,7 @@
       "Gergeti Trinity Church sits alone on a hilltop at 2,170 meters elevation framed by a soaring snow-capped peak.",
       "Features its own unique 33-letter alphabet with elegant curved strokes."
     ],
-    "sourceUrl": "https://en.wikipedia.org/wiki/Georgia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Georgia_(country)",
     "memoryFacts": [
       "The traditional qvevri wine-making method ferments crushed grapes inside beeswax-coated earthenware vessels buried underground.",
       "Gergeti Trinity Church sits alone on a hilltop at 2,170 meters elevation framed by a soaring snow-capped peak.",
@@ -2857,7 +2857,7 @@
     "landmark": "Bran Castle and Palace of the Parliament",
     "cultureFood": "Sarmale Stuffed Cabbage and Mămăligă",
     "clues": [
-      "Features dramatic winding high-altitude mountain highways engineered across rocky glacial crests.",
+      "Features dramatic winding high-altitude paved mountain highways engineered directly across rocky glacial crests.",
       "Its capital houses an immense neoclassical administrative palace verified as the world's heaviest building.",
       "Famous for fairy-tale turrets atop cliffside fortresses associated in folklore with vampire legends, and cornmeal polenta."
     ],
@@ -4325,7 +4325,7 @@
       "The nation features the landmark Odzala-Kokoua Rainforest Reserve.",
       "A key cultural tradition is Saka-Saka Cassava Leaves."
     ],
-    "sourceUrl": "https://en.wikipedia.org/wiki/Congo_(Republic)",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Republic_of_the_Congo",
     "memoryFacts": [
       "Congo (Republic) is known for its capital city Brazzaville.",
       "The nation features the landmark Odzala-Kokoua Rainforest Reserve.",
@@ -5663,7 +5663,7 @@
       "The nation features the landmark Nan Madol Megalithic Stone Ruins.",
       "A key cultural tradition is Roasted Breadfruit and Taro."
     ],
-    "sourceUrl": "https://en.wikipedia.org/wiki/Micronesia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Federated_States_of_Micronesia",
     "memoryFacts": [
       "Micronesia is known for its capital city Palikir.",
       "The nation features the landmark Nan Madol Megalithic Stone Ruins.",
@@ -6833,7 +6833,7 @@
     "landmark": "Umayyad Mosque and Ancient Palmyra Columns",
     "cultureFood": "Kibbeh and Fatteh",
     "clues": [
-      "Its ancient capital Damascus contends as one of the oldest continuously inhabited cities on planet Earth.",
+      "Its ancient historic capital contends as one of the oldest continuously inhabited settlements on planet Earth.",
       "Features the monumental colonnaded ruins of Palmyra, once ruled by the formidable desert Queen Zenobia.",
       "Famous for olive oil soap crafted by hand in historic stone vats, hammered copper trays, and spiced bulgur meat shells."
     ],
@@ -7400,7 +7400,7 @@
     "cultureFood": "Tavë Kosi Baked Lamb",
     "clues": [
       "Known as the land of eagles with a distinctive double-headed bird on its national flag.",
-      "Features historic Ottoman stone houses with countless symmetrical wooden framed windows.",
+      "Features celebrated hillside Ottoman stone houses built with countless stacked symmetrical wooden framed windows.",
       "Famous for baked lamb casserole with spiced sour milk and rice, and ancient mountain fortresses."
     ],
     "memoryAnchors": [
@@ -7929,7 +7929,7 @@
     "cultureFood": "La Bandera and Mangú",
     "clues": [
       "The birthplace of energetic merengue and bachata dance rhythms played with accordions and metal scrapers.",
-      "Its historic colonial zone in Santo Domingo features the oldest continuously inhabited colonial cathedral founded in the early 1500s.",
+      "Its historic walled colonial quarter features the oldest continuously inhabited cathedral founded across the early 1500s.",
       "Famous for mashed plantains topped with pickled red onions and fried salami, and producing champion baseball players."
     ],
     "memoryAnchors": [
@@ -8320,7 +8320,7 @@
     "landmark": "Seven Coloured Earths of Chamarel",
     "cultureFood": "Dholl Puri and Fish Vindaye",
     "clues": [
-      "A volcanic island once home to the extinct flightless dodo bird, now a multicultural crossroads of diverse oceanic heritage.",
+      "A volcanic island once home to the extinct flightless dodo bird, evolving into a multicultural crossroads of diverse oceanic heritage.",
       "Features a geological sand dune clearing where mineral-rich sands naturally separate into seven distinct vibrant layered colors.",
       "Famous for thin yellow split-pea flatbreads rolled with bean curries, botanical water-lily gardens, and turquoise coral lagoons."
     ],
