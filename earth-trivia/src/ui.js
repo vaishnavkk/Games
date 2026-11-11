@@ -261,7 +261,7 @@ export class UIManager {
     }
   }
 
-  showMemoryVault({ isCorrect, targetCountry, guessCountry, distanceKm, isAdjacent, hitCoords, targetCoords, breakdown, isPractice, onNext }) {
+  showMemoryVault({ isCorrect, isTimeout, targetCountry, guessCountry, distanceKm, isAdjacent, hitCoords, targetCoords, breakdown, isPractice, onNext }) {
     this.hideTouchConfirm();
     if (this.clueCard) this.clueCard.classList.add('hidden');
     if (this.memoryVault) this.memoryVault.classList.remove('hidden');
@@ -273,6 +273,14 @@ export class UIManager {
       if (this.vaultDistance) this.vaultDistance.style.display = 'none';
       if (this.vaultNextBtn) {
         this.vaultNextBtn.innerHTML = `<span>Continue Exploration</span> ${ICONS.arrowRight}`;
+      }
+    } else if (isTimeout) {
+      this.vaultStatus.innerHTML = `TIME EXPIRED • STUDY &amp; REMEMBER`;
+      this.vaultStatus.className = 'vault-status missed';
+      // When nothing was selected on timeout, distance is not required - remove distance box completely
+      if (this.vaultDistance) this.vaultDistance.style.display = 'none';
+      if (this.vaultNextBtn) {
+        this.vaultNextBtn.innerHTML = `<span>Next Country</span> ${ICONS.arrowRight}`;
       }
     } else {
       this.vaultStatus.innerHTML = `MISSED • STUDY &amp; REMEMBER`;
@@ -319,6 +327,8 @@ export class UIManager {
     if (this.vaultBreakdown) {
       if (isPractice) {
         this.vaultBreakdown.innerHTML = `<span class="breakdown-tag practice">Practice Mode • Scores unrecorded</span>`;
+      } else if (isTimeout) {
+        this.vaultBreakdown.innerHTML = `<span class="breakdown-tag zero">0 pts (Time expired)</span>`;
       } else if (breakdown) {
         if (isCorrect) {
           const speedTxt = breakdown.speedBonus > 0 ? ` | Speed: +${breakdown.speedBonus}` : '';

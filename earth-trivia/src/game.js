@@ -176,7 +176,11 @@ export class GameManager {
 
   handleTimeout() {
     if (!this.isAnswering) return;
-    this.handleGuess(null, this.currentCountry.lat + 45, this.currentCountry.lon + 90);
+    if (this.selectedHit && this.selectedHit.country) {
+      this.handleGuess(this.selectedHit.country, this.selectedHit.lat, this.selectedHit.lon, true);
+    } else {
+      this.handleGuess(null, null, null, true);
+    }
   }
 
   // Handle user click on globe
@@ -217,7 +221,7 @@ export class GameManager {
     }, this.mode);
   }
 
-  async handleGuess(guessCountry, hitLat, hitLon) {
+  async handleGuess(guessCountry, hitLat, hitLon, isTimeout = false) {
     if (!this.isAnswering && this.phase !== 'question' && this.phase !== 'selected') return;
     if (hitLat === undefined && guessCountry) {
       hitLat = guessCountry.lat || (guessCountry.centroid ? guessCountry.centroid[1] : 0);
@@ -249,6 +253,10 @@ export class GameManager {
 
     let roundPoints = 0;
     let distanceKm = 0;
+    let fromCoords = (hitLat !== null && hitLat !== undefined && hitLon !== null && hitLon !== undefined)
+      ? { lat: hitLat, lon: hitLon }
+      : null;
+    let toCoords = target ? { lat: target.lat, lon: target.lon } : null;
 
     if (isCorrect) {
       // ── CORRECT GUESS ──────────────────────────────────────
@@ -290,13 +298,11 @@ export class GameManager {
       this.globe.flight.drawCountryOutline(targetWc, true);
 
     } else {
-      // ── INCORRECT GUESS ────────────────────────────────────
+      // ── INCORRECT GUESS / TIMEOUT ─────────────────────────
       sound.playWrong();
       this.streak = 0;
 
       let isAdjacent = false;
-      let fromCoords = { lat: hitLat, lon: hitLon };
-      let toCoords = { lat: target.lat, lon: target.lon };
 
       if (guessCountry) {
         // Calculate shortest distance between the two countries (not pointer click position)
@@ -305,10 +311,16 @@ export class GameManager {
         isAdjacent = shortest.isAdjacent;
         fromCoords = shortest.closestA;
         toCoords = shortest.closestB;
-      } else {
+      } else if (hitLat !== null && hitLat !== undefined && !isTimeout) {
         // Ocean / off-target click fallback
         distanceKm = distanceToCountryKm(hitLat, hitLon, targetWc.geometry);
         isAdjacent = false;
+        fromCoords = { lat: hitLat, lon: hitLon };
+      } else {
+        // Timeout with nothing selected: distance is 0 / not required
+        distanceKm = 0;
+        isAdjacent = false;
+        fromCoords = null;
       }
 
       this.lastDistanceKm = distanceKm;
@@ -317,9 +329,12 @@ export class GameManager {
       // Scoring formula calculated from single source of truth (scoring.js)
       this.lastRoundBreakdown = calculateRoundScore({
         isCorrect: false,
-        distanceKm,
+        distanceKm: (isTimeout && !guessCountry) ? 99999 : distanceKm,
         isPractice: this.isPractice
       });
+      if (isTimeout && !guessCountry) {
+        this.lastRoundBreakdown.points = 0;
+      }
 
       roundPoints = this.lastRoundBreakdown.points;
       if (!this.isPractice) {
@@ -333,7 +348,7 @@ export class GameManager {
       const reinsertIndex = Math.min(this.roundQueue.length, 2 + Math.floor(Math.random() * 3));
       this.roundQueue.splice(reinsertIndex, 0, target);
 
-      // Visuals: Translucent red fill on guess, green on target; sharp 3D Line2 outlines
+      // Visuals: Translucent red fill on guess (if any), green on target; sharp 3D Line2 outlines
       const guessId = guessCountry ? guessCountry.id : null;
       this.globe.mapRenderer.renderHighlights({
         correctCountryId: target.id,
@@ -344,8 +359,11 @@ export class GameManager {
         this.globe.flight.drawCountryOutline(guessWc, false);
       }
 
-      // 2px neutral great-circle geodesic arc with km distance at midpoint (or closest boundary points)
-      this.globe.flight.drawGreatCircleArc(fromCoords.lat, fromCoords.lon, toCoords.lat, toCoords.lon, distanceKm);
+      // 2px neutral great-circle geodesic arc with km distance at midpoint
+      // Only draw when a country or click location was actually selected (not on timeout with nothing selected)
+      if (fromCoords && (guessCountry || (hitLat !== null && hitLat !== undefined && !isTimeout))) {
+        this.globe.flight.drawGreatCircleArc(fromCoords.lat, fromCoords.lon, toCoords.lat, toCoords.lon, distanceKm);
+      }
     }
 
     // Freeze OrbitControls immediately and kill damping inertia to eliminate flight jitter
@@ -361,22 +379,15 @@ export class GameManager {
     const freeRect = getFreeRect();
     const targetHiddenByUi = isHiddenByUi(targetDir, this.globe.camera, this.globe.renderer, freeRect, 1.7);
 
-    sound.playSwoosh();
-    const flightStatus = await this.globe.flight.animateAfterAnswer({
-      wasCorrect: isCorrect,
-      targetDir,
-      fitDistance,
-      targetHiddenByUi
-    });
-
-    if (flightStatus === 'done') {
+    const showCard = () => {
       this.globe.flight.computeTargetFreeAreaPercent(targetWc);
       requestAnimationFrame(() => {
         this.ui.showMemoryVault({
           isCorrect,
+          isTimeout: Boolean(isTimeout && !guessCountry),
           targetCountry: target,
-          guessCountry: isCorrect ? target : (guessCountry || { name: 'Open Ocean / Off-target' }),
-          distanceKm: isCorrect ? 0 : distanceKm,
+          guessCountry: isCorrect ? target : (guessCountry || (isTimeout ? null : { name: 'Open Ocean / Off-target' })),
+          distanceKm: (isCorrect || (isTimeout && !guessCountry)) ? 0 : distanceKm,
           isAdjacent: isCorrect ? false : (this.lastIsAdjacent || false),
           hitCoords: isCorrect ? { lat: hitLat, lon: hitLon } : fromCoords,
           targetCoords: isCorrect ? { lat: target.lat, lon: target.lon } : toCoords,
@@ -385,7 +396,17 @@ export class GameManager {
           onNext: () => this.nextRound()
         });
       });
-    }
+    };
+
+    sound.playSwoosh();
+    await this.globe.flight.animateAfterAnswer({
+      wasCorrect: isCorrect,
+      targetDir,
+      fitDistance,
+      targetHiddenByUi
+    });
+
+    showCard();
 
     this.updateHUD();
   }
