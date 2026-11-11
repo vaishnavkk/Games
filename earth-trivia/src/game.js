@@ -99,10 +99,20 @@ export class GameManager {
   nextRound() {
     this.stopTimer();
 
-    // Check completion
-    if (this.round >= this.totalRounds || this.roundQueue.length === 0) {
-      this.endGame();
-      return;
+    const isEndless = this.totalRounds === Infinity || this.totalRounds === 'endless';
+
+    // In Endless mode: continuously replenish the queue so rounds continue indefinitely
+    if (isEndless) {
+      if (!this.roundQueue || this.roundQueue.length <= 1) {
+        const pool = this.getTierPool(this.tier);
+        this.roundQueue = (this.roundQueue || []).concat(this.shuffle([...pool]));
+      }
+    } else {
+      // Finite modes (10 / 20 rounds): check completion
+      if (this.round >= this.totalRounds || this.roundQueue.length === 0) {
+        this.endGame();
+        return;
+      }
     }
 
     this.round++;

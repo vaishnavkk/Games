@@ -272,7 +272,7 @@ export class UIManager {
       this.vaultStatus.className = 'vault-status correct';
       if (this.vaultDistance) this.vaultDistance.style.display = 'none';
       if (this.vaultNextBtn) {
-        this.vaultNextBtn.innerHTML = `<span>Continue Exploration</span> ${ICONS.arrowRight}`;
+        this.vaultNextBtn.innerHTML = `<span>Continue</span> ${ICONS.arrowRight}`;
       }
     } else if (isTimeout) {
       this.vaultStatus.innerHTML = `TIME EXPIRED • STUDY &amp; REMEMBER`;
@@ -280,7 +280,7 @@ export class UIManager {
       // When nothing was selected on timeout, distance is not required - remove distance box completely
       if (this.vaultDistance) this.vaultDistance.style.display = 'none';
       if (this.vaultNextBtn) {
-        this.vaultNextBtn.innerHTML = `<span>Next Country</span> ${ICONS.arrowRight}`;
+        this.vaultNextBtn.innerHTML = `<span>Continue</span> ${ICONS.arrowRight}`;
       }
     } else {
       this.vaultStatus.innerHTML = `MISSED • STUDY &amp; REMEMBER`;
@@ -312,7 +312,7 @@ export class UIManager {
         }
       }
       if (this.vaultNextBtn) {
-        this.vaultNextBtn.innerHTML = `<span>Next Country</span> ${ICONS.arrowRight}`;
+        this.vaultNextBtn.innerHTML = `<span>Continue</span> ${ICONS.arrowRight}`;
       }
     }
 
