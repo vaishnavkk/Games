@@ -1,6 +1,6 @@
 import { COUNTRIES_DB } from '../data/countries.js';
 import { CLUES_LIBRARY } from '../data/clues.js';
-import { pickCountries, pickClueSet } from './questionBag.js';
+import { buildLibrary, pickCountries, pickClueSet } from './questionBag.js';
 import { haversineDistanceKm, distanceToCountryKm, areCountriesAdjacent, getShortestDistanceBetweenCountries, getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
 import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getCountryBoundingBox } from './frame_union.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
@@ -30,7 +30,7 @@ export class GameManager {
 
     // Country Pools
     this.fullDatabase = COUNTRIES_DB;
-    this.cluesLibrary = CLUES_LIBRARY || [];
+    this.cluesLibrary = buildLibrary(CLUES_LIBRARY || []);
     this.currentClues = [];
     this.roundQueue = [];
     this.missedCountries = [];
@@ -128,7 +128,7 @@ export class GameManager {
 
     // Pick clue set via questionBag (shown in level order)
     const excludeIds = this.currentCountry.forcedExcludeClueIds || [];
-    const pickedClues = pickClueSet(this.currentCountry.code, this.cluesLibrary, { excludeClueIds: excludeIds });
+    const pickedClues = pickClueSet(this.currentCountry.code, this.cluesLibrary);
     if (pickedClues && pickedClues.length === 3) {
       this.currentClues = pickedClues;
     } else {

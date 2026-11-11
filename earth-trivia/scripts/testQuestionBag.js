@@ -1,5 +1,12 @@
 import assert from 'assert';
-import { pickCountries, pickClueSet, resetHistory, questionBag } from '../src/questionBag.js';
+import {
+  buildLibrary,
+  pickCountries,
+  pickClueSet,
+  resetHistory,
+  _reload,
+  questionBag
+} from '../src/questionBag.js';
 
 console.log('================================================================================');
 console.log('                 QUESTION BAG & NO-REPEAT ENGINE UNIT TESTS                     ');
@@ -14,12 +21,13 @@ resetHistory();
 const mock15Library = [];
 for (let i = 1; i <= 5; i++) {
   const pad = String(i).padStart(3, '0');
-  mock15Library.push({ id: `TST-1-${pad}`, iso: 'TST', level: 1, text: `Vague clue ${i}` });
-  mock15Library.push({ id: `TST-2-${pad}`, iso: 'TST', level: 2, text: `Specific clue ${i}` });
-  mock15Library.push({ id: `TST-3-${pad}`, iso: 'TST', level: 3, text: `Iconic landmark clue ${i}` });
+  mock15Library.push({ id: `TST-1-${pad}`, iso: 'TST', level: 1, topic: `heritage_${i}`, text: `Vague clue ${i}` });
+  mock15Library.push({ id: `TST-2-${pad}`, iso: 'TST', level: 2, topic: `landmark_${i}`, text: `Specific clue ${i}` });
+  mock15Library.push({ id: `TST-3-${pad}`, iso: 'TST', level: 3, topic: `iconic_${i}`, text: `Iconic clue ${i}` });
 }
 assert.strictEqual(mock15Library.length, 15, 'Mock library must contain 15 items');
 
+const lib = buildLibrary(mock15Library);
 const totalPlays = 200;
 const cycleSize = 5; // 5 plays * 3 clues = 15 clues per cycle
 const totalCycles = totalPlays / cycleSize;
@@ -28,13 +36,17 @@ for (let cycle = 0; cycle < totalCycles; cycle++) {
   const seenClueIdsInCycle = new Set();
 
   for (let play = 0; play < cycleSize; play++) {
-    const clueSet = pickClueSet('TST', mock15Library);
+    const clueSet = pickClueSet('TST', lib);
     assert.strictEqual(clueSet.length, 3, `Play must return 3 clues, got ${clueSet.length}`);
 
     // Verify level order: 1, 2, 3
     assert.strictEqual(clueSet[0].level, 1, 'First clue must be level 1');
     assert.strictEqual(clueSet[1].level, 2, 'Second clue must be level 2');
     assert.strictEqual(clueSet[2].level, 3, 'Third clue must be level 3');
+
+    // Verify distinct topics in the returned set
+    const topicsInSet = new Set(clueSet.map(c => c.topic));
+    assert.strictEqual(topicsInSet.size, 3, 'All 3 clues in set must have distinct topics');
 
     // Verify none of these clues have been seen in this cycle
     for (const clue of clueSet) {
@@ -60,9 +72,9 @@ console.log('✓ PASS: 200 plays across 40 cycles verified. Zero repeats before 
 // ═══════════════════════════════════════════════════════════════
 console.log('\nTEST 1b: Learning loop re-queued country receives a different clue set...');
 resetHistory();
-const firstSet = pickClueSet('TST', mock15Library);
+const firstSet = pickClueSet('TST', lib);
 const firstIds = firstSet.map(c => c.id);
-const reQueuedSet = pickClueSet('TST', mock15Library, { excludeClueIds: firstIds });
+const reQueuedSet = pickClueSet('TST', lib);
 const reQueuedIds = reQueuedSet.map(c => c.id);
 
 assert.strictEqual(reQueuedSet.length, 3, 'Re-queued country must receive 3 clues');
@@ -134,17 +146,23 @@ const originalLocalStorage = globalThis.localStorage;
 globalThis.localStorage = mockLocalStorage;
 
 resetHistory();
+_reload();
+
 // Pick 20 countries
 const run1 = pickCountries('reload_tier', tier42, 20);
 assert.strictEqual(run1.length, 20);
 
 // Verify state was saved to mock storage
-const rawStored = mockLocalStorage.getItem('geotrivia_seen_countries_reload_tier');
-assert.ok(rawStored, 'State must be written to localStorage');
+const rawStored = mockLocalStorage.getItem('geotrivia_seen_v1');
+assert.ok(rawStored, 'State must be written to localStorage under geotrivia_seen_v1');
 const parsedStored = JSON.parse(rawStored);
-assert.strictEqual(parsedStored.length, 20);
+assert.ok(parsedStored['c:reload_tier'], 'Bucket c:reload_tier must exist');
+assert.strictEqual(parsedStored['c:reload_tier'].length, 20);
 
-// Simulate "reload": call pickCountries again, should pick from remaining 22 countries
+// Simulate "reload": reset in-memory seen cache
+_reload();
+
+// Next pick draws from remaining 22 countries
 const run2 = pickCountries('reload_tier', tier42, 22);
 assert.strictEqual(run2.length, 22);
 for (const c of run2) {
@@ -167,8 +185,8 @@ const blockedStorage = {
 };
 
 globalThis.localStorage = blockedStorage;
+_reload();
 
-// Must not throw
 let blockedPicks = null;
 let blockedClues = null;
 assert.doesNotThrow(() => {
@@ -176,7 +194,7 @@ assert.doesNotThrow(() => {
 }, 'pickCountries must not throw when localStorage is blocked');
 
 assert.doesNotThrow(() => {
-  blockedClues = pickClueSet('TST', mock15Library);
+  blockedClues = pickClueSet('TST', lib);
 }, 'pickClueSet must not throw when localStorage is blocked');
 
 assert.doesNotThrow(() => {
@@ -193,6 +211,7 @@ if (originalLocalStorage !== undefined) {
 } else {
   delete globalThis.localStorage;
 }
+_reload();
 
 console.log('\n================================================================================');
 console.log('                      ALL QUESTION BAG TESTS PASSED                             ');
