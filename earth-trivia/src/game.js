@@ -1,5 +1,6 @@
 import { COUNTRIES_DB } from '../data/countries.js';
 import { haversineDistanceKm, distanceToCountryKm, areCountriesAdjacent, getShortestDistanceBetweenCountries, getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
+import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getCountryBoundingBox } from './frame_union.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
@@ -119,6 +120,7 @@ export class GameManager {
     this.currentCountry = this.roundQueue.shift();
     this.clueIndex = 0;
     this.isAnswering = true;
+    this.isFlightComplete = false;
     this.phase = 'question';
     this.selectedHit = null;
     this.lastGuessCountry = null;
@@ -313,28 +315,78 @@ export class GameManager {
       this.streak = 0;
 
       let isAdjacent = false;
+      let nearestPoint = null;
 
-      if (guessCountry) {
-        // Calculate shortest distance between the two countries (not pointer click position)
-        const shortest = getShortestDistanceBetweenCountries(guessWc || guessCountry, targetWc || target);
-        distanceKm = shortest.distanceKm;
-        isAdjacent = shortest.isAdjacent;
-        fromCoords = shortest.closestA;
-        toCoords = shortest.closestB;
-      } else if (hitLat !== null && hitLat !== undefined && !isTimeout) {
-        // Ocean / off-target click fallback
-        distanceKm = distanceToCountryKm(hitLat, hitLon, targetWc.geometry);
-        isAdjacent = false;
-        fromCoords = { lat: hitLat, lon: hitLon };
+      if (fromCoords && !isTimeout) {
+        // Expose { km, nearestLatLon } = distance from the CLICK POINT to nearest point of target country
+        const distRes = distanceToCountryWithNearest(fromCoords.lat, fromCoords.lon, targetWc.geometry);
+        distanceKm = distRes.km;
+        nearestPoint = distRes.nearestLatLon;
+        toCoords = nearestPoint;
+        isAdjacent = (distanceKm === 0);
+      } else if (guessCountry) {
+        const cLat = guessCountry.lat || (guessCountry.centroid ? guessCountry.centroid[1] : 0);
+        const cLon = guessCountry.lon || (guessCountry.centroid ? guessCountry.centroid[0] : 0);
+        fromCoords = { lat: cLat, lon: cLon };
+        const distRes = distanceToCountryWithNearest(cLat, cLon, targetWc.geometry);
+        distanceKm = distRes.km;
+        nearestPoint = distRes.nearestLatLon;
+        toCoords = nearestPoint;
+        isAdjacent = (distanceKm === 0);
       } else {
         // Timeout with nothing selected: distance is 0 / not required
         distanceKm = 0;
         isAdjacent = false;
         fromCoords = null;
+        toCoords = null;
       }
 
       this.lastDistanceKm = distanceKm;
       this.lastIsAdjacent = isAdjacent;
+
+      // Plan close wrong flight
+      let plan = null;
+      if (fromCoords && !isTimeout) {
+        const freeRect = getFreeRect();
+        const W = this.globe.renderer?.domElement?.clientWidth || window.innerWidth;
+        const H = this.globe.renderer?.domElement?.clientHeight || window.innerHeight;
+        const renderer = this.globe.renderer || { domElement: { clientWidth: W, clientHeight: H } };
+
+        const clickDir = latLonToVector3(fromCoords.lat, fromCoords.lon, 1.0);
+        if (this.globe.earthMesh) {
+          this.globe.earthMesh.updateMatrixWorld(true);
+          clickDir.applyMatrix4(this.globe.earthMesh.matrixWorld);
+        }
+        clickDir.normalize();
+
+        const nearestDir = latLonToVector3(nearestPoint.lat, nearestPoint.lon, 1.0);
+        if (this.globe.earthMesh) {
+          nearestDir.applyMatrix4(this.globe.earthMesh.matrixWorld);
+        }
+        nearestDir.normalize();
+
+        const cornerDirs = getLargestLandmassCornerDirs(targetWc, this.globe.earthMesh);
+
+        plan = planCloseWrongFlight({
+          clickDir,
+          nearestDir,
+          cornerDirs,
+          camera: this.globe.camera,
+          renderer,
+          freeRect,
+          R: 1.7,
+          minD: this.globe.controls?.minDistance || 2.52,
+          maxD: this.globe.controls?.maxDistance || 5.5
+        });
+
+        if (plan) {
+          plan.km = distanceKm;
+          plan.nearestPoint = nearestPoint;
+          plan.clickPoint = fromCoords;
+          plan.bbox = getCountryBoundingBox(targetWc);
+        }
+      }
+      this.lastPlan = plan;
 
       // Scoring formula calculated from single source of truth (scoring.js)
       this.lastRoundBreakdown = calculateRoundScore({
@@ -364,15 +416,26 @@ export class GameManager {
         correctCountryId: target.id,
         guessCountryId: guessId
       });
-      this.globe.flight.drawCountryOutline(targetWc, true);
+
+      const isCompact = plan ? plan.compact : false;
+      const targetBBoxSpan = plan?.bbox?.spanDeg;
+
+      // Target outline (+ unfilled ring if target bbox < 3 deg)
+      this.globe.flight.drawCountryOutline(targetWc, true, { bboxSpanDeg: targetBBoxSpan });
       if (guessWc) {
         this.globe.flight.drawCountryOutline(guessWc, false);
       }
 
-      // 2px neutral great-circle geodesic arc with km distance at midpoint
-      // Only draw when a country or click location was actually selected (not on timeout with nothing selected)
-      if (fromCoords && (guessCountry || (hitLat !== null && hitLat !== undefined && !isTimeout))) {
-        this.globe.flight.drawGreatCircleArc(fromCoords.lat, fromCoords.lon, toCoords.lat, toCoords.lon, distanceKm);
+      // 6 px click dot in screen space
+      if (fromCoords) {
+        this.globe.flight.drawClickDot(fromCoords.lat, fromCoords.lon);
+      }
+
+      // Arc and badge:
+      // compact: no arc, no map badge
+      // otherwise: 2 px arc + badge (max 96 px, offset from midpoint)
+      if (fromCoords && !isCompact && toCoords) {
+        this.globe.flight.drawGreatCircleArc(fromCoords.lat, fromCoords.lon, toCoords.lat, toCoords.lon, distanceKm, false);
       }
     }
 
@@ -381,13 +444,6 @@ export class GameManager {
     if (this.globe.controls.sphericalDelta) this.globe.controls.sphericalDelta.set(0, 0, 0);
     if (this.globe.controls.panOffset) this.globe.controls.panOffset.set(0, 0, 0);
     this.globe.isAutoRotating = false;
-
-    const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
-    const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
-    const fitDistance = this.globe.flight.computeTargetDistance(angularSpan, isMobile);
-    const targetDir = getTargetCameraDir(targetWc || target, this.globe.earthMesh);
-    const freeRect = getFreeRect();
-    const targetHiddenByUi = isHiddenByUi(targetDir, this.globe.camera, this.globe.renderer, freeRect, 1.7);
 
     const showCard = () => {
       this.globe.flight.computeTargetFreeAreaPercent(targetWc);
@@ -398,23 +454,43 @@ export class GameManager {
           targetCountry: target,
           guessCountry: isCorrect ? target : (guessCountry || (isTimeout ? null : { name: 'Open Ocean / Off-target' })),
           distanceKm: (isCorrect || (isTimeout && !guessCountry)) ? 0 : distanceKm,
-          isAdjacent: isCorrect ? false : (this.lastIsAdjacent || false),
+          isAdjacent: isCorrect ? false : (this.lastIsAdjacent || distanceKm === 0),
           hitCoords: isCorrect ? { lat: hitLat, lon: hitLon } : fromCoords,
           targetCoords: isCorrect ? { lat: target.lat, lon: target.lon } : toCoords,
           breakdown: this.lastRoundBreakdown,
           isPractice: this.isPractice,
+          isCompact: Boolean(this.lastPlan && this.lastPlan.compact),
           onNext: () => this.nextRound()
         });
       });
     };
 
+    let flightOpts;
+    if (!isCorrect && this.lastPlan) {
+      flightOpts = {
+        wasCorrect: false,
+        ...this.lastPlan, // spreads targetDir, endDist, clickPoint, nearestPoint, compact, pixelGap, km
+        targetHiddenByUi: false
+      };
+    } else {
+      const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
+      const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
+      const fitDistance = this.globe.flight.computeTargetDistance(angularSpan, isMobile);
+      const targetDir = getTargetCameraDir(targetWc || target, this.globe.earthMesh);
+      const freeRect = getFreeRect();
+      const targetHiddenByUi = isHiddenByUi(targetDir, this.globe.camera, this.globe.renderer, freeRect, 1.7);
+      flightOpts = {
+        wasCorrect: isCorrect,
+        targetDir,
+        fitDistance,
+        targetHiddenByUi
+      };
+    }
+
     sound.playSwoosh();
-    await this.globe.flight.animateAfterAnswer({
-      wasCorrect: isCorrect,
-      targetDir,
-      fitDistance,
-      targetHiddenByUi
-    });
+    this.isFlightComplete = false;
+    await this.globe.flight.animateAfterAnswer(flightOpts);
+    this.isFlightComplete = true;
 
     showCard();
 

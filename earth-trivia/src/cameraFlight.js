@@ -6,6 +6,9 @@ import { CountryPicker } from './picker.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
 import { COUNTRIES_DB } from '../data/countries.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
+import { distanceToCountryWithNearest } from './frame_union.js';
+
+export { distanceToCountryWithNearest };
 
 export const FLIGHT = {
   zoomOutWrong: 1.18,   // final distance = fitDistance * this
@@ -81,14 +84,19 @@ export function animateAfterAnswer(camera, controls, o) {
   const startDir = camera.position.clone().normalize();
   const startDist = camera.position.length();
   const stayPut = o.wasCorrect && !o.targetHiddenByUi;
-  const endDir = stayPut ? startDir.clone() : limitLatitude(o.targetDir.clone().normalize());
+  const endDir = limitLatitude((o.endDir ?? (stayPut ? startDir : o.targetDir)).clone().normalize());
   const endDist = clamp(
-    o.wasCorrect ? startDist * FLIGHT.zoomOutCorrect : o.fitDistance * FLIGHT.zoomOutWrong,
+    o.endDist ?? (o.wasCorrect ? startDist * FLIGHT.zoomOutCorrect : o.fitDistance * FLIGHT.zoomOutWrong),
     controls.minDistance, controls.maxDistance);
 
+  if (!o.viewShift && camera.view && camera.view.enabled) {
+    camera.clearViewOffset();
+  }
+
   const angle = radToDeg(Math.acos(clamp(startDir.dot(endDir), -1, 1)));
-  const dur = stayPut ? 650 : clamp(FLIGHT.minMs + angle * FLIGHT.msPerDeg, FLIGHT.minMs, FLIGHT.maxMs);
-  const bump = stayPut ? 0 : Math.min(FLIGHT.maxBump, angle * FLIGHT.bumpPerDeg);
+  const minDurForAngle = Math.ceil((angle / 3.0) * 16.6); // ensures max per-frame step <= 3 deg (constraint <= 4 deg)
+  const dur = stayPut ? 650 : clamp(Math.max(FLIGHT.minMs + angle * FLIGHT.msPerDeg, minDurForAngle), FLIGHT.minMs, FLIGHT.maxMs);
+  const bump = (stayPut || o.endDist !== undefined) ? 0 : Math.min(FLIGHT.maxBump, angle * FLIGHT.bumpPerDeg);
   const hold = o.wasCorrect ? 0 : FLIGHT.holdMs;
 
   controls.enabled = false;
@@ -106,9 +114,22 @@ export function animateAfterAnswer(camera, controls, o) {
       camera.position.copy(dir).multiplyScalar(dist);
       camera.up.set(0, 1, 0);
       camera.lookAt(0, 0, 0);
+      if (o.viewShift) camera.setViewOffset(o.W, o.H, -o.viewShift.dx * e, -o.viewShift.dy * e, o.W, o.H);
       o.onProgress?.(e, dir);
       if (raw < 1) requestAnimationFrame(frame);
-      else { controls.update(); controls.enabled = true; resolve('done'); }
+      else {
+        camera.position.copy(endDir).multiplyScalar(endDist);
+        camera.up.set(0, 1, 0);
+        camera.lookAt(0, 0, 0);
+        if (o.viewShift) camera.setViewOffset(o.W, o.H, -o.viewShift.dx, -o.viewShift.dy, o.W, o.H);
+        if (controls.target) controls.target.set(0, 0, 0);
+        if (controls.sphericalDelta) controls.sphericalDelta.set(0, 0, 0);
+        controls.update();
+        camera.position.copy(endDir).multiplyScalar(endDist);
+        if (o.viewShift) camera.setViewOffset(o.W, o.H, -o.viewShift.dx, -o.viewShift.dy, o.W, o.H);
+        controls.enabled = true;
+        resolve('done');
+      }
     };
     requestAnimationFrame(frame);
   });
@@ -257,27 +278,8 @@ export function getShortestDistanceBetweenCountries(countryA, countryB) {
 
 // Distance from clicked point to nearest point on target country boundary
 export function distanceToCountryKm(latClick, lonClick, targetGeometry) {
-  if (!targetGeometry || !targetGeometry.coordinates) return 0;
-  const polys = targetGeometry.type === 'Polygon' ? [targetGeometry.coordinates] : targetGeometry.coordinates;
-  let minDistKm = Infinity;
-
-  for (const poly of polys) {
-    const ring = poly[0];
-    if (!ring) continue;
-    for (let i = 0; i < ring.length; i++) {
-      const [lon1, lat1] = ring[i];
-      const d1 = haversineDistanceKm(latClick, lonClick, lat1, lon1);
-      if (d1 < minDistKm) minDistKm = d1;
-
-      // Also sample segment midpoint to ensure accuracy
-      const next = ring[(i + 1) % ring.length];
-      const midLat = (lat1 + next[1]) / 2;
-      const midLon = (lon1 + next[0]) / 2;
-      const dMid = haversineDistanceKm(latClick, lonClick, midLat, midLon);
-      if (dMid < minDistKm) minDistKm = dMid;
-    }
-  }
-  return minDistKm === Infinity ? 0 : Math.round(minDistKm);
+  const res = distanceToCountryWithNearest(latClick, lonClick, targetGeometry);
+  return res.km;
 }
 
 // Largest landmass center for multi-part countries
@@ -420,11 +422,12 @@ export class CameraFlightController {
   }
 
   // Draw fat-line geometry outline (Line2) on the sphere
-  drawCountryOutline(country, isTarget = true) {
+  drawCountryOutline(country, isTarget = true, { bboxSpanDeg } = {}) {
     if (!country) return;
 
     const strokeColor = isTarget ? 0x36b368 : 0xeb5843; // Botanical green or Terracotta red
-    const isTiny = TINY_COUNTRIES.some(t => String(t.id).padStart(3, '0') === String(country.id).padStart(3, '0')) ||
+    const isTiny = (bboxSpanDeg !== undefined ? bboxSpanDeg < 3.0 : false) ||
+                   TINY_COUNTRIES.some(t => String(t.id).padStart(3, '0') === String(country.id).padStart(3, '0')) ||
                    getCountryAngularDiameter(country) < 2.0;
 
     const w = typeof window !== 'undefined' ? window.innerWidth : 1440;
@@ -439,7 +442,16 @@ export class CameraFlightController {
       const right = new THREE.Vector3().crossVectors(centerVec, up).normalize();
       const perp = new THREE.Vector3().crossVectors(right, centerVec).normalize();
 
-      const ringRadiusDeg = 1.8; // ~200 km radius
+      const fov = (this.camera && this.camera.fov) ? this.camera.fov : 45;
+      const fy = (h / 2) / Math.tan((fov * Math.PI) / 360);
+      const camDist = (this.camera && this.camera.position) ? this.camera.position.length() : 2.52;
+      const z = Math.max(0.6, camDist - 1.70);
+      // Ensure ring screen diameter is at least 48 px
+      const minRadiusPx = 24;
+      const minWorldRadius = (minRadiusPx * z) / fy;
+      const minRingRadiusDeg = (minWorldRadius / 1.704) * (180 / Math.PI);
+      const ringRadiusDeg = Math.max(1.8, minRingRadiusDeg);
+
       const alpha = (ringRadiusDeg * Math.PI) / 180;
       const cosA = Math.cos(alpha);
       const sinA = Math.sin(alpha);
@@ -513,6 +525,38 @@ export class CameraFlightController {
       line.computeLineDistances();
       this.markersGroup.add(line);
     }
+  }
+
+  getDotTexture() {
+    if (this._dotTexture) return this._dotTexture;
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    ctx.arc(16, 16, 14, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    this._dotTexture = new THREE.CanvasTexture(canvas);
+    return this._dotTexture;
+  }
+
+  // Draw 6px click dot (screen-space px, never world units)
+  drawClickDot(lat, lon) {
+    if (lat === null || lat === undefined || lon === null || lon === undefined) return null;
+    const pos = CountryPicker.latLonToVector3(lat, lon, 1.704);
+    const geo = new THREE.BufferGeometry().setFromPoints([pos]);
+    const mat = new THREE.PointsMaterial({
+      size: 6,
+      sizeAttenuation: false,
+      color: 0xeb5843, // Terracotta red
+      map: this.getDotTexture(),
+      transparent: true,
+      depthTest: false
+    });
+    const point = new THREE.Points(geo, mat);
+    this.markersGroup.add(point);
+    return point;
   }
 
   // Compute camera distance so target fits free area with ocean/neighbours visible (area <= 60%)
@@ -645,16 +689,28 @@ export class CameraFlightController {
     const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthTest: false });
     const sprite = new THREE.Sprite(spriteMat);
     sprite.position.copy(positionVec);
-    sprite.scale.set(0.24, 0.09, 1);
-    sprite.userData = { baseScale: { x: 0.24, y: 0.09 } };
+
+    const W = typeof window !== 'undefined' ? window.innerWidth : 1440;
+    const H = typeof window !== 'undefined' ? window.innerHeight : 900;
+    const fov = (this.camera && this.camera.fov) ? this.camera.fov : 45;
+    const fy = (H / 2) / Math.tan((fov * Math.PI) / 360);
+    const camDist = (this.camera && this.camera.position) ? this.camera.position.length() : 2.52;
+    const z = Math.max(0.6, camDist - 1.70);
+    const maxBadgePx = 96; // badge max 96 px screen-space width
+    const targetScaleX = Math.min(0.24, (maxBadgePx * z) / fy);
+    const targetScaleY = targetScaleX * (96 / 256);
+    sprite.scale.set(targetScaleX, targetScaleY, 1);
+    sprite.userData = { baseScale: { x: targetScaleX, y: targetScaleY } };
 
     this.distanceSprite = sprite;
     this.markersGroup.add(sprite);
     return sprite;
   }
 
-  // Draw 2px neutral line (white at 70%) with distance at midpoint
-  drawGreatCircleArc(lat1, lon1, lat2, lon2, distanceKm) {
+  // Draw 2px neutral line (white at 70%) with distance at midpoint (suppressed when compact)
+  drawGreatCircleArc(lat1, lon1, lat2, lon2, distanceKm, isCompact = false) {
+    if (isCompact) return distanceKm !== undefined ? distanceKm : 0;
+
     const v1 = CountryPicker.latLonToVector3(lat1, lon1, 1.7).normalize();
     const v2 = CountryPicker.latLonToVector3(lat2, lon2, 1.7).normalize();
 
@@ -698,19 +754,31 @@ export class CameraFlightController {
       }
     }
 
-    // 2px neutral line (white at 70%)
-    const curve = new THREE.CatmullRomCurve3(points);
-    const tubeGeo = new THREE.TubeGeometry(curve, 64, 0.0020, 8, false);
-    const tubeMat = new THREE.MeshBasicMaterial({
+    // 2px neutral line in screen space (Line2)
+    const positions = [];
+    for (const p of points) {
+      positions.push(p.x, p.y, p.z);
+    }
+    const arcGeo = new LineGeometry();
+    arcGeo.setPositions(positions);
+    const w = typeof window !== 'undefined' ? window.innerWidth : 1440;
+    const h = typeof window !== 'undefined' ? window.innerHeight : 900;
+    const arcMat = new LineMaterial({
       color: 0xffffff,
+      linewidth: 2.0, // screen-space 2px line
+      worldUnits: false,
       transparent: true,
-      opacity: 0.70
+      opacity: 0.70,
+      depthTest: true
     });
+    arcMat.resolution.set(w, h);
+    this.lineMaterials.push(arcMat);
 
-    this.arcMesh = new THREE.Mesh(tubeGeo, tubeMat);
+    this.arcMesh = new Line2(arcGeo, arcMat);
+    this.arcMesh.computeLineDistances();
     this.markersGroup.add(this.arcMesh);
 
-    // Distance label at arc midpoint
+    // Distance label at arc midpoint (max 96px screen-space width)
     if (midpointVec) {
       this.createDistanceBadge(dist, midpointVec);
     }
@@ -727,6 +795,7 @@ export class CameraFlightController {
   }
 
   cancelAnswerFlight() {
+    if (this._resetJob) this._resetJob.cancelled = true;
     this.isFlying = false;
     cancelAnswerFlight();
   }
@@ -768,6 +837,9 @@ export class CameraFlightController {
 
   resetToOverview({ duration = 1000, onComplete } = {}) {
     this.cancelAnswerFlight();
+    if (this.camera && this.camera.clearViewOffset) this.camera.clearViewOffset();
+    const job = { cancelled: false };
+    this._resetJob = job;
     this.isFlying = true;
     this.controls.enabled = false;
     if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
@@ -781,6 +853,7 @@ export class CameraFlightController {
     const startTime = performance.now();
 
     const animateReset = (now) => {
+      if (job.cancelled) return;
       const elapsed = now - startTime;
       const progress = Math.min(1, elapsed / duration);
       const ease =

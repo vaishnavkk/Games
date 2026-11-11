@@ -134,6 +134,7 @@ export class UIManager {
   }
 
   showGameHUD(totalRounds, hasTimer, isPractice) {
+    this.totalRounds = totalRounds;
     if (this.startScreen) this.startScreen.classList.add('hidden');
     if (this.endScreen) this.endScreen.classList.add('hidden');
     if (this.topHud) this.topHud.classList.remove('hidden');
@@ -188,6 +189,10 @@ export class UIManager {
   }
 
   updateHUD({ score, streak, round, totalRounds, isPractice, timePercent }) {
+    if (totalRounds !== undefined) {
+      this.totalRounds = totalRounds;
+    }
+
     if (this.scoreVal) {
       if (isPractice) {
         this.scoreVal.textContent = 'PRACTICE';
@@ -205,7 +210,12 @@ export class UIManager {
     }
 
     if (this.roundVal && round !== undefined) {
-      this.roundVal.textContent = totalRounds === Infinity ? `${round}` : `${round}/${totalRounds}`;
+      const tr = this.totalRounds;
+      if (!tr || tr === Infinity || tr === 'endless') {
+        this.roundVal.textContent = `${round}`;
+      } else {
+        this.roundVal.textContent = `${round}/${tr}`;
+      }
     }
 
     if (this.timerBar && timePercent !== undefined) {
@@ -297,7 +307,7 @@ export class UIManager {
         const destCoordStr = Math.abs(destLat).toFixed(2) + '°' + (destLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(destLon).toFixed(2) + '°' + (destLon >= 0 ? 'E' : 'W');
         if (isAdjacent || distanceKm === 0) {
           this.vaultDistance.innerHTML =
-            '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, <strong>0 km (Adjacent)</strong> from <strong>' + targetCountry.name + '</strong></div>' +
+            '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, borders <strong>' + targetCountry.name + '</strong></div>' +
             '<div class="distance-coords">' +
               '<span>🤝 Neighboring Country • Shared Sovereign Border (0 km)</span>' +
             '</div>';
