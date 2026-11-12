@@ -1,12 +1,12 @@
 import { COUNTRIES_DB } from '../data/countries.js';
 import { CLUES_LIBRARY } from '../data/clues.js';
 import { buildLibrary, pickCountries, pickClueSet } from './questionBag.js';
-import { haversineDistanceKm, distanceToCountryKm, areCountriesAdjacent, getShortestDistanceBetweenCountries, getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
+import { getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
 import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getCountryBoundingBox } from './frame_union.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
-import { calculateRoundScore, pointsIfCorrect } from './scoring.js';
+import { calculateRoundScore } from './scoring.js';
 
 export class GameManager {
   constructor(globeApp, ui) {

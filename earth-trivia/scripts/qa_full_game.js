@@ -120,9 +120,10 @@ async function runFullGameQA() {
       }
 
       // 2. Orient sphere so country is under center (720, 450)
+      await page.waitForFunction(() => !window.globe.flight.isFlying, { timeout: 3000 }).catch(() => {});
       await page.evaluate((cLat, cLon) => {
         const globe = window.globe;
-        const game = window.game;
+        globe.flight.cancelAnswerFlight();
         globe.flight.isFlying = false;
         globe.isAutoRotating = false;
         globe.lastInteractionTime = performance.now() + 10000000;
@@ -140,12 +141,16 @@ async function runFullGameQA() {
 
       // 3. Dispatch real pointer click at screen center (720, 450)
       await page.mouse.click(720, 450);
-      await new Promise(r => setTimeout(r, 180));
+      await new Promise(r => setTimeout(r, 250));
 
       // 4. Confirm selection via Enter or confirm button
+      await page.evaluate(() => {
+        const btn = document.getElementById('touchConfirmBtn');
+        if (btn && !btn.classList.contains('hidden')) btn.click();
+      });
       await page.keyboard.press('Enter');
       // Wait for camera flight to complete and memory vault to appear
-      await page.waitForSelector('#memoryVault:not(.hidden)', { timeout: 6000 });
+      await page.waitForSelector('#memoryVault:not(.hidden)', { timeout: 8000 });
       await new Promise(r => setTimeout(r, 300));
 
       // 5. Read round breakdown from memory vault

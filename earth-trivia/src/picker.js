@@ -1,3 +1,8 @@
+import * as THREE from 'three';
+import { WORLD_COUNTRIES } from '../data/world-50m.js';
+import { TINY_COUNTRIES } from '../data/tiny-countries.js';
+import { COUNTRIES_DB } from '../data/countries.js';
+
 function computeGeometryArea(geometry) {
   if (!geometry || !geometry.coordinates) return Infinity;
   let totalArea = 0;
@@ -17,11 +22,6 @@ function computeGeometryArea(geometry) {
   }
   return totalArea;
 }
-
-import * as THREE from 'three';
-import { WORLD_COUNTRIES } from '../data/world-50m.js';
-import { TINY_COUNTRIES } from '../data/tiny-countries.js';
-import { COUNTRIES_DB } from '../data/countries.js';
 
 export class CountryPicker {
   constructor(camera, globeMesh) {
