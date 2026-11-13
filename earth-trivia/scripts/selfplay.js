@@ -523,7 +523,7 @@ async function getScreenCoords(page, lat, lon) {
 }
 
 // Rotate globe using real drag if country is off-screen
-async function rotateIntoView(page, lat, lon, maxDrags = 4) {
+async function rotateIntoView(page, lat, lon, maxDrags = 3) {
   let warnCount = 0;
   for (let i = 0; i < maxDrags; i++) {
     const coords = await getScreenCoords(page, lat, lon);
@@ -531,7 +531,7 @@ async function rotateIntoView(page, lat, lon, maxDrags = 4) {
       return { ok: true, warnCount, coords };
     }
 
-    // Compute relative drag direction from country position to camera
+    // Compute relative drag direction from country position to camera using OrbitControls spherical projection
     const dragVec = await page.evaluate((cLat, cLon) => {
       const globe = window.globe;
       const phi = (90 - cLat) * (Math.PI / 180);
@@ -542,21 +542,45 @@ async function rotateIntoView(page, lat, lon, maxDrags = 4) {
         1.7 * Math.sin(theta) * Math.sin(phi)
       );
       globe.earthMesh.updateMatrixWorld(true);
-      const world = local.clone().applyMatrix4(globe.earthMesh.matrixWorld).normalize();
-      const cam = globe.camera.position.clone().normalize();
-      const cross = new window.THREE.Vector3().crossVectors(cam, world);
-      const dx = cross.y > 0 ? -180 : 180;
-      const dy = world.y > cam.y ? 90 : -90;
+      const world = local.clone().applyMatrix4(globe.earthMesh.matrixWorld);
+      const cam = globe.camera.position;
+
+      const camPhi = Math.acos(Math.max(-1, Math.min(1, cam.y / cam.length())));
+      const camTheta = Math.atan2(cam.x, cam.z);
+
+      const tgtPhi = Math.acos(Math.max(-1, Math.min(1, world.y / world.length())));
+      const tgtTheta = Math.atan2(world.x, world.z);
+
+      let dTheta = tgtTheta - camTheta;
+      while (dTheta > Math.PI) dTheta -= 2 * Math.PI;
+      while (dTheta < -Math.PI) dTheta += 2 * Math.PI;
+
+      let dPhi = tgtPhi - camPhi;
+
+      const canvas = document.querySelector('#webgl-container canvas') || globe.renderer.domElement;
+      const clientH = canvas ? canvas.clientHeight : window.innerHeight;
+      let dx = - (dTheta * clientH) / (2 * Math.PI);
+      let dy = - (dPhi * clientH) / (2 * Math.PI);
+
       return { dx, dy };
     }, lat, lon);
 
-    // Perform real mouse drag across center
     const vp = page.viewport();
+    const maxDrag = Math.min(vp.width * 0.45, 250);
+    const mag = Math.hypot(dragVec.dx, dragVec.dy);
+    let stepDx = dragVec.dx;
+    let stepDy = dragVec.dy;
+    if (mag > maxDrag) {
+      stepDx = (dragVec.dx / mag) * maxDrag;
+      stepDy = (dragVec.dy / mag) * maxDrag;
+    }
+
+    // Perform real mouse drag across center
     const cx = vp.width / 2;
     const cy = vp.height / 2;
     await page.mouse.move(cx, cy);
     await page.mouse.down();
-    await page.mouse.move(cx + dragVec.dx, cy + dragVec.dy, { steps: 8 });
+    await page.mouse.move(cx + stepDx, cy + stepDy, { steps: 3 });
     await page.mouse.up();
     await new Promise(r => setTimeout(r, 60));
   }
@@ -821,8 +845,8 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       await new Promise(res => setTimeout(res, 80));
     }
 
-    // Round 6: Page reload resilience test (once per game)
-    if (r === 6 && !reloadedThisGame) {
+    // Round 2: Page reload resilience test (once per game)
+    if (r === 2 && !reloadedThisGame) {
       reloadedThisGame = true;
       await page.reload({ waitUntil: 'load' });
       await page.waitForSelector('#startScreen');

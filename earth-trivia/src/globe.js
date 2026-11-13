@@ -31,7 +31,10 @@ export class GlobeApp {
     // Controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = true;
-    this.controls.dampingFactor = 0.05;
+    const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
+      (typeof window !== 'undefined' && typeof window.location !== 'undefined' && 
+       new URLSearchParams(window.location.search).get('fast') === '1');
+    this.controls.dampingFactor = isFast ? 0.25 : 0.05;
     this.controls.minDistance = 2.52;
     this.controls.maxDistance = 6.5;
     this.controls.enablePan = false;
