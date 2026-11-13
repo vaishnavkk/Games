@@ -335,7 +335,9 @@ export class MapRenderer {
       return;
     }
 
-    const duration = 300; // 300ms fill tween
+    const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
+      (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
+    const duration = isFast ? 60 : 300; // 300ms fill tween (60ms in fast mode)
     const startTime = performance.now();
 
     const step = (now) => {

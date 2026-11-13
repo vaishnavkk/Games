@@ -1,0 +1,11 @@
+{
+  "name": "geotrivia-root",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "selfplay": "node scripts/selfplay.js",
+    "test": "npm --prefix earth-trivia test",
+    "build": "npm --prefix earth-trivia run build"
+  }
+}

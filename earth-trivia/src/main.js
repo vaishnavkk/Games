@@ -9,6 +9,16 @@ import { ICONS } from './icons.js';
 window.THREE = THREE;
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (typeof window !== 'undefined' && typeof window.location !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('fast') === '1') {
+      window.__FAST_MODE = true;
+      document.documentElement.style.setProperty('--duration-fast', '30ms');
+      document.documentElement.style.setProperty('--duration-normal', '44ms');
+      document.documentElement.style.setProperty('--duration-fill', '60ms');
+    }
+  }
+
   const container = document.getElementById('webgl-container');
   const loadingScreen = document.getElementById('loadingScreen');
 
@@ -147,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
   updateBestScoreDisplay();
   window.__updateBestScoreDisplay = updateBestScoreDisplay;
 
-  // Start Game Button
   // Reset Question History Button
   const resetHistoryBtn = document.getElementById('resetQuestionHistoryBtn');
   const resetToast = document.getElementById('resetHistoryToast');
@@ -180,11 +189,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hide initial loading screen with smooth fade
   if (loadingScreen) {
+    const fadeDelay = window.__FAST_MODE ? 80 : 400;
+    const hideDelay = window.__FAST_MODE ? 100 : 500;
     setTimeout(() => {
       loadingScreen.style.opacity = '0';
       setTimeout(() => {
         loadingScreen.style.display = 'none';
-      }, 500);
-    }, 400);
+      }, hideDelay);
+    }, fadeDelay);
   }
 });

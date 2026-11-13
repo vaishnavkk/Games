@@ -93,11 +93,16 @@ export function animateAfterAnswer(camera, controls, o) {
     camera.clearViewOffset();
   }
 
+  const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
+    (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
+  const speedScale = isFast ? 0.2 : 1.0;
+
   const angle = radToDeg(Math.acos(clamp(startDir.dot(endDir), -1, 1)));
-  const minDurForAngle = Math.ceil((angle / 3.0) * 16.6); // ensures max per-frame step <= 3 deg (constraint <= 4 deg)
-  const dur = stayPut ? 650 : clamp(Math.max(FLIGHT.minMs + angle * FLIGHT.msPerDeg, minDurForAngle), FLIGHT.minMs, FLIGHT.maxMs);
+  const minDurForAngle = Math.ceil((angle / 3.2) * 16.6); // ensures max per-frame step <= 3.2 deg (constraint <= 4 deg)
+  let dur = stayPut ? 650 : clamp(Math.max(FLIGHT.minMs + angle * FLIGHT.msPerDeg, minDurForAngle), FLIGHT.minMs, FLIGHT.maxMs);
+  dur = Math.max(minDurForAngle, Math.round(dur * speedScale));
   const bump = (stayPut || o.endDist !== undefined) ? 0 : Math.min(FLIGHT.maxBump, angle * FLIGHT.bumpPerDeg);
-  const hold = o.wasCorrect ? 0 : FLIGHT.holdMs;
+  const hold = o.wasCorrect ? 0 : Math.round(FLIGHT.holdMs * speedScale);
 
   controls.enabled = false;
   const dir = new THREE.Vector3();
@@ -836,6 +841,9 @@ export class CameraFlightController {
   }
 
   zoomOutToOverview({ targetCountry = null, duration = 600, onComplete } = {}) {
+    const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
+      (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
+    if (isFast) duration = Math.round(duration * 0.2);
     this.cancelAnswerFlight();
     const job = { cancelled: false };
     this._resetJob = job;
@@ -925,6 +933,9 @@ export class CameraFlightController {
   }
 
   resetToOverview({ duration = 1000, onComplete } = {}) {
+    const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
+      (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
+    if (isFast) duration = Math.round(duration * 0.2);
     this.cancelAnswerFlight();
     if (this.camera && this.camera.clearViewOffset) this.camera.clearViewOffset();
     const job = { cancelled: false };

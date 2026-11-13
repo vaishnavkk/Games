@@ -1165,7 +1165,7 @@
       }
       .hud-menu-btn {
         padding: 3px 6px;
-        min-height: 26px;
+        min-height: var(--touch-target-min, 44px);
       }
       .hud-tag .val {
         font-size: 18px; /* >= 18px constraint */
@@ -1276,6 +1276,7 @@
       }
       .vault-content-grid {
         flex: 1;
+        min-height: 0;
         overflow-y: auto;
         margin-bottom: 6px;
         gap: 4px;
@@ -1290,9 +1291,14 @@
         margin-bottom: 4px;
       }
       .btn-primary-action {
-        min-height: 36px;
+        min-height: var(--touch-target-min, 44px);
         padding: 6px 10px;
         font-size: 13px;
+      }
+      .memory-vault-panel .btn-primary-action {
+        position: static;
+        flex-shrink: 0;
+        margin-top: 4px;
       }
 
       .modal-dialog-surface {
