@@ -870,12 +870,14 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
     // Round 2: Page reload resilience test (once per game)
     if (r === 2 && !reloadedThisGame) {
       reloadedThisGame = true;
+      if (offlineAfterLoad) await page.setOfflineMode(false);
       await page.reload({ waitUntil: 'load' });
       await page.waitForSelector('#startScreen');
       await page.waitForFunction(() => {
         const loader = document.getElementById('loadingScreen');
         return !loader || loader.classList.contains('hidden') || loader.style.display === 'none' || window.getComputedStyle(loader).display === 'none';
       }, { timeout: 6000 }).catch(() => {});
+      if (offlineAfterLoad) await page.setOfflineMode(true);
 
       // Re-inject perf monitor and webgl context listener
       await page.evaluate(() => {
