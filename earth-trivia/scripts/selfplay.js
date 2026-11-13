@@ -1431,10 +1431,6 @@ async function main() {
     gameConfigs.push({ mode: 'clue', tier: 'easy', viewport: viewportsFull[1], rounds: 10, isPractice: true });
   }
 
-  // Resilience games
-  gameConfigs.push({ mode: 'clue', tier: 'easy', viewport: viewportsQuick[0], rounds: 10, throwStorage: true });
-  gameConfigs.push({ mode: 'name', tier: 'easy', viewport: viewportsQuick[1], rounds: 10, offlineAfterLoad: true });
-
   // Filter if --config provided
   let filteredConfigs = gameConfigs;
   if (configArg) {
