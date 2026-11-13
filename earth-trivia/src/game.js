@@ -76,6 +76,7 @@ export class GameManager {
     this.streak = 0;
     this.bestStreak = 0;
     this.round = 0;
+    this.currentCountry = null;
     this.correctCount = 0;
     this.missedCountries = [];
     this.phase = 'start';
@@ -132,6 +133,7 @@ export class GameManager {
       }
     }
 
+    const previousCountry = this.currentCountry;
     this.round++;
     this.currentCountry = this.roundQueue.shift();
     if (typeof this.currentCountry === 'string') {
@@ -162,7 +164,28 @@ export class GameManager {
     cancelAnswerFlight();
     this.globe.flight.cancelAnswerFlight();
     // Reset visual map and camera (clears all markers, arcs, and highlights)
-    this.globe.flight.resetToOverview({ duration: 800 });
+    if (previousCountry) {
+      this.globe.flight.zoomOutToOverview({
+        targetCountry: previousCountry,
+        duration: 600,
+        onComplete: () => {
+          this.globe.isAutoRotating = true;
+          this.globe.lastInteractionTime = performance.now();
+        }
+      });
+      this.globe.isAutoRotating = true;
+      this.globe.lastInteractionTime = performance.now();
+    } else {
+      this.globe.flight.resetToOverview({
+        duration: 800,
+        onComplete: () => {
+          this.globe.isAutoRotating = true;
+          this.globe.lastInteractionTime = performance.now();
+        }
+      });
+      this.globe.isAutoRotating = true;
+      this.globe.lastInteractionTime = performance.now();
+    }
     this.globe.setMicrostateTarget(this.currentCountry);
     this.globe.mapRenderer.resetHighlights();
 

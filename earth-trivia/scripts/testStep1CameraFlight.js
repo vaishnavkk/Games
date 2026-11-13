@@ -126,6 +126,51 @@ console.log(`  Distance Multiplier:  ${(r3.finalDist / 2.5).toFixed(3)}x (Constr
 
 if (r3.finalAngleErr > 0.1 || Math.abs(r3.finalDist / 2.5 - 1.2) >= 0.01) allPassed = false;
 
+// 4. Next Round Zoom-Out to Overview starting from correct nation
+function simulateZoomOutToOverview(startDirUnit, nationDirUnit, startDist, targetDist = 4.0, dur = 600) {
+  const startDir = startDirUnit.clone().normalize();
+  const endDir = limitLatitude(nationDirUnit.clone().normalize());
+  const dt = 16.666;
+  let finalDist = startDist;
+  let finalDir = startDir.clone();
+  const dir = new THREE.Vector3();
+
+  for (let now = 0; now <= dur + 1e-3; now += dt) {
+    const raw = clamp(now / dur, 0, 1);
+    const ease = 1 - Math.pow(1 - raw, 3); // ease-out cubic
+    greatCircle(startDir, endDir, ease, dir).normalize();
+    limitLatitude(dir);
+    finalDist = lerp(startDist, targetDist, ease);
+    finalDir.copy(dir);
+  }
+
+  const finalAngleErr = radToDeg(Math.acos(clamp(finalDir.dot(endDir), -1, 1)));
+  const distErrPct = Math.abs(finalDist - targetDist) / targetDist * 100;
+  return { finalDist, finalAngleErr, distErrPct };
+}
+
+// 4a. Zoom out from Spain (desktop, targetDist 4.0)
+const r4a = simulateZoomOutToOverview(vSpain, vSpain, 2.76, 4.0, 600);
+console.log('\nTest 4a: Next Round Zoom-out from Nation (Desktop D=4.0)');
+console.log(`  Direction Alignment:  ${r4a.finalAngleErr.toFixed(4)}° (Constraint: <= 0.1°) [${r4a.finalAngleErr <= 0.1 ? 'PASS' : 'FAIL'}]`);
+console.log(`  Final Distance:       ${r4a.finalDist.toFixed(3)} (Expected: 4.000) [${r4a.distErrPct < 0.1 ? 'PASS' : 'FAIL'}]`);
+if (r4a.finalAngleErr > 0.1 || r4a.distErrPct >= 0.1) allPassed = false;
+
+// 4b. Zoom out from close wrong framing (e.g. click was offset by 8 deg)
+const vSlightOffset = vSpain.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), degToRad(8)).normalize();
+const r4b = simulateZoomOutToOverview(vSlightOffset, vSpain, 3.10, 4.0, 600);
+console.log('\nTest 4b: Next Round Zoom-out from Close Wrong Framing to Correct Nation');
+console.log(`  Centered on Nation:   ${r4b.finalAngleErr.toFixed(4)}° (Constraint: <= 0.1°) [${r4b.finalAngleErr <= 0.1 ? 'PASS' : 'FAIL'}]`);
+console.log(`  Final Distance:       ${r4b.finalDist.toFixed(3)} (Expected: 4.000) [${r4b.distErrPct < 0.1 ? 'PASS' : 'FAIL'}]`);
+if (r4b.finalAngleErr > 0.1 || r4b.distErrPct >= 0.1) allPassed = false;
+
+// 4c. Zoom out on Mobile portrait (targetDist 4.4)
+const r4c = simulateZoomOutToOverview(vSpain, vSpain, 2.76, 4.4, 600);
+console.log('\nTest 4c: Next Round Zoom-out on Mobile Portrait (Mobile D=4.4)');
+console.log(`  Direction Alignment:  ${r4c.finalAngleErr.toFixed(4)}° (Constraint: <= 0.1°) [${r4c.finalAngleErr <= 0.1 ? 'PASS' : 'FAIL'}]`);
+console.log(`  Final Distance:       ${r4c.finalDist.toFixed(3)} (Expected: 4.400) [${r4c.distErrPct < 0.1 ? 'PASS' : 'FAIL'}]`);
+if (r4c.finalAngleErr > 0.1 || r4c.distErrPct >= 0.1) allPassed = false;
+
 console.log('\n================================================================================');
 if (allPassed) {
   console.log('✓ STEP 1 CAMERA FLIGHT UNIT TESTS: ALL PASSED');

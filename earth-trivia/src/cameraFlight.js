@@ -835,6 +835,95 @@ export class CameraFlightController {
     });
   }
 
+  zoomOutToOverview({ targetCountry = null, duration = 600, onComplete } = {}) {
+    this.cancelAnswerFlight();
+    const job = { cancelled: false };
+    this._resetJob = job;
+    this.isFlying = true;
+    this.controls.enabled = false;
+    if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
+    if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
+    this.clearVisuals();
+
+    const isMobile = (typeof window !== 'undefined')
+      ? (window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth))
+      : false;
+    const targetDist = isMobile ? 4.4 : 4.0;
+
+    const startDir = this.camera.position.clone().normalize();
+    const startDist = this.camera.position.length();
+
+    let endDir = startDir.clone();
+    if (targetCountry) {
+      const tc = WORLD_COUNTRIES.find(c =>
+        (c.id && c.id === targetCountry.id) ||
+        (c.properties && c.properties.name === targetCountry.name) ||
+        (c.properties && c.properties.iso_a3 === targetCountry.code)
+      ) || targetCountry;
+      const center = getLargestLandmassCenter(tc);
+      const localVec = CountryPicker.latLonToVector3(center.lat, center.lon, 1.0);
+      if (this.globeMesh) {
+        this.globeMesh.updateMatrixWorld(true);
+        localVec.applyMatrix4(this.globeMesh.matrixWorld);
+      }
+      const countryWorldDir = localVec.normalize();
+      if (startDir.dot(countryWorldDir) > 0.1) {
+        endDir = countryWorldDir;
+      }
+    }
+    limitLatitude(endDir);
+
+    const hasViewOffset = Boolean(this.camera.view && this.camera.view.enabled);
+    const startOffsetX = hasViewOffset ? this.camera.view.offsetX : 0;
+    const startOffsetY = hasViewOffset ? this.camera.view.offsetY : 0;
+    const fullW = hasViewOffset ? this.camera.view.fullWidth : 0;
+    const fullH = hasViewOffset ? this.camera.view.fullHeight : 0;
+
+    const startTime = performance.now();
+    const animateZoom = (now) => {
+      if (job.cancelled) return;
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      // ease-out cubic for a gentle, cinematic deceleration into overview
+      const ease = 1 - Math.pow(1 - progress, 3);
+
+      const curDir = new THREE.Vector3();
+      greatCircle(startDir, endDir, ease, curDir).normalize();
+      limitLatitude(curDir);
+
+      const curDist = THREE.MathUtils.lerp(startDist, targetDist, ease);
+      this.camera.position.copy(curDir).multiplyScalar(curDist);
+      this.camera.up.set(0, 1, 0);
+      this.camera.lookAt(0, 0, 0);
+
+      if (hasViewOffset) {
+        const curOffsetX = THREE.MathUtils.lerp(startOffsetX, 0, ease);
+        const curOffsetY = THREE.MathUtils.lerp(startOffsetY, 0, ease);
+        this.camera.setViewOffset(fullW, fullH, curOffsetX, curOffsetY, fullW, fullH);
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(animateZoom);
+      } else {
+        this.camera.position.copy(endDir).multiplyScalar(targetDist);
+        this.camera.up.set(0, 1, 0);
+        this.camera.lookAt(0, 0, 0);
+        if (this.camera.clearViewOffset) this.camera.clearViewOffset();
+
+        this.isFlying = false;
+        this.controls.enabled = true;
+        if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
+        if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
+        this.controls.target.set(0, 0, 0);
+        this.controls.update();
+
+        if (onComplete) onComplete();
+      }
+    };
+
+    requestAnimationFrame(animateZoom);
+  }
+
   resetToOverview({ duration = 1000, onComplete } = {}) {
     this.cancelAnswerFlight();
     if (this.camera && this.camera.clearViewOffset) this.camera.clearViewOffset();
