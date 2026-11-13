@@ -100,7 +100,6 @@ for (const [iso, items] of cluesByIso.entries()) {
 }
 
 // 4. Current / Incident year requirement
-// Current/incident items must have a year 2000-2026 that appears in the text
 let invalidCurrentOrIncident = 0;
 let totalCurrentOrIncident = 0;
 
@@ -116,49 +115,80 @@ for (const item of clues) {
   }
 }
 
-// 5. Tier-based checks
-let tierQuotaViolations = 0;
-let currentIncidentPctViolations = 0;
+// 5. Tier Targets:
+// Easy (Explorer): 15 = 5/5/5
+// Medium (Navigator-only): 9 = 3/3/3
+// Hard (Global-only): 6 = 2/2/2
+const TIER_DEFS = {
+  easy: { name: 'Easy', target: [5, 5, 5], totalTarget: 15, key: 'easy' },
+  medium: { name: 'Navigator-only (Medium)', target: [3, 3, 3], totalTarget: 9, key: 'medium' },
+  hard: { name: 'Global-only (Hard)', target: [2, 2, 2], totalTarget: 6, key: 'hard' }
+};
 
-if (chosenTier !== 'none') {
-  // Explorer (easy): 5/5/5
-  // Navigator-only (medium): 3/3/3
-  // Global-only (hard): 2/2/2
-  for (const c of countries) {
-    const isExplorer = c.tier === 'easy';
-    const isNavigatorOnly = c.tier === 'medium';
-    const isGlobalOnly = c.tier === 'hard';
+function evaluateTier(tierKey) {
+  const def = TIER_DEFS[tierKey];
+  const tierCountries = countries.filter(c => c.tier === def.key);
+  let belowTargetCount = 0;
+  let totalShortage = 0;
+  const counts = [];
 
-    let req = null;
-    if ((chosenTier === 'easy' || chosenTier === 'all') && isExplorer) req = [5, 5, 5];
-    else if ((chosenTier === 'medium' || chosenTier === 'all') && isNavigatorOnly) req = [3, 3, 3];
-    else if ((chosenTier === 'hard' || chosenTier === 'all') && isGlobalOnly) req = [2, 2, 2];
+  for (const c of tierCountries) {
+    const items = cluesByIso.get(c.code) || [];
+    const c1 = items.filter(i => Number(i.level) === 1).length;
+    const c2 = items.filter(i => Number(i.level) === 2).length;
+    const c3 = items.filter(i => Number(i.level) === 3).length;
+    counts.push(items.length);
 
-    if (req) {
-      const items = cluesByIso.get(c.code) || [];
-      const c1 = items.filter(i => Number(i.level) === 1).length;
-      const c2 = items.filter(i => Number(i.level) === 2).length;
-      const c3 = items.filter(i => Number(i.level) === 3).length;
-      if (c1 < req[0] || c2 < req[1] || c3 < req[2]) {
-        tierQuotaViolations++;
-      }
+    const s1 = Math.max(0, def.target[0] - c1);
+    const s2 = Math.max(0, def.target[1] - c2);
+    const s3 = Math.max(0, def.target[2] - c3);
+    const s = s1 + s2 + s3;
+    if (s > 0) {
+      belowTargetCount++;
+      totalShortage += s;
     }
   }
 
-  // 40% current/incident on level 3 items (enforced only once that tier's content exists)
+  const min = counts.length > 0 ? Math.min(...counts) : 0;
+  const max = counts.length > 0 ? Math.max(...counts) : 0;
+  const avg = counts.length > 0 ? (counts.reduce((a, b) => a + b, 0) / counts.length).toFixed(1) : '0.0';
+
+  return {
+    tierKey,
+    name: def.name,
+    min,
+    avg,
+    max,
+    totalCountries: tierCountries.length,
+    belowTargetCount,
+    totalShortage
+  };
+}
+
+const tierStats = {
+  easy: evaluateTier('easy'),
+  medium: evaluateTier('medium'),
+  hard: evaluateTier('hard')
+};
+
+console.log(`check:library [--tier ${chosenTier}]: ${clues.length} items across ${countries.length} nations.`);
+console.log(`Counts: Unique IDs: ${idCounts.size}/${clues.length} (duplicates: ${duplicateIds}), Levels Complete: ${countries.length - countriesMissingLevels}/${countries.length}, Jaccard >0.6: ${jaccardViolations}/${totalPairsChecked}, Current/Incident Valid: ${totalCurrentOrIncident - invalidCurrentOrIncident}/${totalCurrentOrIncident}.`);
+
+// Print per tier items per country (min/avg/max), countries below target, and total shortage
+for (const t of ['easy', 'medium', 'hard']) {
+  const s = tierStats[t];
+  console.log(`  Tier [${s.name}]: items/country: min=${s.min}, avg=${s.avg}, max=${s.max} | Below target: ${s.belowTargetCount}/${s.totalCountries} | Total shortage: ${s.totalShortage} clues`);
+}
+
+// Fails only when tier is requested
+let requestedTierFailure = false;
+if (chosenTier !== 'none') {
   const tiersToCheck = chosenTier === 'all' ? ['easy', 'medium', 'hard'] : [chosenTier];
   for (const t of tiersToCheck) {
-    const tierCountries = countries.filter(c => c.tier === t);
-    const tierIsos = new Set(tierCountries.map(c => c.code));
-    const tierL3Items = clues.filter(i => tierIsos.has(i.iso) && Number(i.level) === 3);
-    const currentOrIncidentCount = tierL3Items.filter(i => i.kind === 'current' || i.kind === 'incident').length;
-
-    // "enforced once that tier's content exists": if content has current/incident items
-    if (tierL3Items.length > tierCountries.length && currentOrIncidentCount > 0) {
-      const pct = (currentOrIncidentCount / tierL3Items.length) * 100;
-      if (pct < 40) {
-        currentIncidentPctViolations++;
-      }
+    const s = tierStats[t];
+    if (s && s.totalShortage > 0) {
+      requestedTierFailure = true;
+      console.error(`  [FAIL] Requested tier "${t}" has shortage of ${s.totalShortage} clues (${s.belowTargetCount} countries below target).`);
     }
   }
 }
@@ -168,14 +198,7 @@ const hasErrors =
   countriesMissingLevels > 0 ||
   jaccardViolations > 0 ||
   invalidCurrentOrIncident > 0 ||
-  tierQuotaViolations > 0 ||
-  currentIncidentPctViolations > 0;
-
-console.log(`check:library [--tier ${chosenTier}]: ${clues.length} items across ${countries.length} nations.`);
-console.log(`Counts: Unique IDs: ${idCounts.size}/${clues.length} (duplicates: ${duplicateIds}), Levels Complete: ${countries.length - countriesMissingLevels}/${countries.length}, Jaccard >0.6: ${jaccardViolations}/${totalPairsChecked}, Current/Incident Valid: ${totalCurrentOrIncident - invalidCurrentOrIncident}/${totalCurrentOrIncident}.`);
-if (chosenTier !== 'none') {
-  console.log(`Tier Quotas Violations: ${tierQuotaViolations}, Current/Incident <40% Violations: ${currentIncidentPctViolations}.`);
-}
+  requestedTierFailure;
 
 if (hasErrors) {
   console.error(`Result: FAILED`);

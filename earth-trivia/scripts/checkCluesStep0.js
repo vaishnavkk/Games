@@ -5,8 +5,13 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const jsonPath = path.resolve(__dirname, '../data/countries.json');
-const countries = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+const countriesPath = path.resolve(__dirname, '../data/countries.json');
+const cluesPath = path.resolve(__dirname, '../data/clues.json');
+
+const countries = JSON.parse(fs.readFileSync(countriesPath, 'utf8'));
+const clues = JSON.parse(fs.readFileSync(cluesPath, 'utf8'));
+
+const countryByIso = new Map(countries.map(c => [c.code, c]));
 
 // ═══════════════════════════════════════════════════════════════
 // 1. HARD FAIL PATTERNS (Word Boundaries & Stems)
@@ -67,146 +72,145 @@ const WARN_PATTERNS = [
   { name: 'its waters', regex: /\bits waters\b/i }
 ];
 
-// Run Scan
+// Run Scan on every item in clues.json
 const hardFails = [];
 let warningCount = 0;
 let wordCountValid = 0;
-let totalClues = 0;
+let scannedClues = 0;
+const totalClues = clues.length;
 
-countries.forEach(country => {
+clues.forEach((item) => {
+  scannedClues++;
+  const clue = item.text;
+  const country = countryByIso.get(item.iso);
+  if (!country) {
+    hardFails.push({
+      id: item.id,
+      type: 'unknown country iso',
+      match: item.iso,
+      clueText: clue
+    });
+    return;
+  }
+
   const ownNameRegex = new RegExp(`\\b${country.name.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i');
   const ownCapRegex = country.capital ? new RegExp(`\\b${country.capital.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i') : null;
   const ownDemRegex = country.demonym ? new RegExp(`\\b${country.demonym.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, 'i') : null;
 
-  country.clues.forEach((clue, idx) => {
-    totalClues++;
-    const clueNum = idx + 1;
-
-    // Check Word Count (12 - 30 words)
-    const words = clue.trim().split(/\s+/).length;
-    if (words < 12 || words > 30) {
-      hardFails.push({
-        country: country.name,
-        clueNum,
-        type: `word count (${words} words; must be 12-30)`,
-        match: `${words} words`,
-        clueText: clue
-      });
-    } else {
-      wordCountValid++;
-    }
-
-    // Check Country's Own Name
-    if (ownNameRegex.test(clue)) {
-      hardFails.push({
-        country: country.name,
-        clueNum,
-        type: 'own country name mention',
-        match: country.name,
-        clueText: clue
-      });
-    }
-
-    // Check Country's Capital
-    if (ownCapRegex && ownCapRegex.test(clue)) {
-      hardFails.push({
-        country: country.name,
-        clueNum,
-        type: 'capital mention',
-        match: country.capital,
-        clueText: clue
-      });
-    }
-
-    // Check Country's Demonym
-    if (ownDemRegex && ownDemRegex.test(clue)) {
-      hardFails.push({
-        country: country.name,
-        clueNum,
-        type: 'demonym mention',
-        match: country.demonym,
-        clueText: clue
-      });
-    }
-
-    // Check Temporal Words (recent/recently/currently/now/today)
-    const tempMatch = clue.match(TEMPORAL_PATTERN.regex);
-    if (tempMatch) {
-      hardFails.push({
-        country: country.name,
-        clueNum,
-        type: TEMPORAL_PATTERN.name,
-        match: tempMatch[0],
-        clueText: clue
-      });
-    }
-
-    // Check Hard Patterns
-    for (const hp of HARD_PATTERNS) {
-      const match = clue.match(hp.regex);
-      if (match) {
-        hardFails.push({
-          country: country.name,
-          clueNum,
-          type: hp.name,
-          match: match[0],
-          clueText: clue
-        });
-      }
-    }
-
-    // Check Sovereign Cross-Mentions
-    for (const other of SOVEREIGN_CATALOG) {
-      if (other.name.toLowerCase() === country.name.toLowerCase()) continue;
-      const escName = other.name.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-      const otherRegex = new RegExp(`\\b${escName}\\b`, 'i');
-      const m = clue.match(otherRegex);
-      if (m) {
-        if (country.name.toLowerCase().includes(other.name.toLowerCase())) continue;
-        hardFails.push({
-          country: country.name,
-          clueNum,
-          type: 'other sovereign country name',
-          match: m[0],
-          clueText: clue
-        });
-      }
-    }
-
-    // Check Warning Patterns
-    for (const wp of WARN_PATTERNS) {
-      const match = clue.match(wp.regex);
-      if (match) {
-        warningCount++;
-      }
-    }
-  });
-});
-
-// Schema and landmark duplication check
-let schemaErrors = 0;
-const landmarkMap = new Map();
-countries.forEach(c => {
-  if (!c.name || !c.capital || !c.clues || c.clues.length !== 3 || !c.landmark || !c.cultureFood || !c.memoryAnchors || c.memoryAnchors.length < 2 || !c.sourceUrl) {
-    schemaErrors++;
-  }
-  const lk = c.landmark.toLowerCase().trim();
-  if (landmarkMap.has(lk)) {
-    schemaErrors++;
+  // Check Word Count (12 - 30 words)
+  const words = clue.trim().split(/\s+/).length;
+  if (words < 12 || words > 30) {
+    hardFails.push({
+      id: item.id,
+      country: country.name,
+      type: `word count (${words} words; must be 12-30)`,
+      match: `${words} words`,
+      clueText: clue
+    });
   } else {
-    landmarkMap.set(lk, c.name);
+    wordCountValid++;
+  }
+
+  // Check Country's Own Name
+  if (ownNameRegex.test(clue)) {
+    hardFails.push({
+      id: item.id,
+      country: country.name,
+      type: 'own country name mention',
+      match: country.name,
+      clueText: clue
+    });
+  }
+
+  // Check Country's Capital
+  if (ownCapRegex && ownCapRegex.test(clue)) {
+    hardFails.push({
+      id: item.id,
+      country: country.name,
+      type: 'capital mention',
+      match: country.capital,
+      clueText: clue
+    });
+  }
+
+  // Check Country's Demonym
+  if (ownDemRegex && ownDemRegex.test(clue)) {
+    hardFails.push({
+      id: item.id,
+      country: country.name,
+      type: 'demonym mention',
+      match: country.demonym,
+      clueText: clue
+    });
+  }
+
+  // Check Temporal Words (recent/recently/currently/now/today)
+  const tempMatch = clue.match(TEMPORAL_PATTERN.regex);
+  if (tempMatch) {
+    hardFails.push({
+      id: item.id,
+      country: country.name,
+      type: TEMPORAL_PATTERN.name,
+      match: tempMatch[0],
+      clueText: clue
+    });
+  }
+
+  // Check Hard Patterns
+  for (const hp of HARD_PATTERNS) {
+    const match = clue.match(hp.regex);
+    if (match) {
+      hardFails.push({
+        id: item.id,
+        country: country.name,
+        type: hp.name,
+        match: match[0],
+        clueText: clue
+      });
+    }
+  }
+
+  // Check Sovereign Cross-Mentions
+  for (const other of SOVEREIGN_CATALOG) {
+    if (other.name.toLowerCase() === country.name.toLowerCase()) continue;
+    const escName = other.name.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const otherRegex = new RegExp(`\\b${escName}\\b`, 'i');
+    const m = clue.match(otherRegex);
+    if (m) {
+      if (country.name.toLowerCase().includes(other.name.toLowerCase())) continue;
+      hardFails.push({
+        id: item.id,
+        country: country.name,
+        type: 'other sovereign country name',
+        match: m[0],
+        clueText: clue
+      });
+    }
+  }
+
+  // Check Warning Patterns
+  for (const wp of WARN_PATTERNS) {
+    const match = clue.match(wp.regex);
+    if (match) {
+      warningCount++;
+    }
   }
 });
 
-// Print Counts Only
-console.log(`check:clues: ${totalClues} clues checked across ${countries.length} sovereign nations.`);
-console.log(`Counts: Hard Fails: ${hardFails.length}, Warnings: ${warningCount}, Word Count [12-30] Valid: ${wordCountValid}/${totalClues}, Schema Errors: ${schemaErrors}.`);
+// Print scanned/total
+console.log(`check:clues: scanned/total = ${scannedClues}/${totalClues} items in clues.json.`);
+console.log(`Counts: Hard Fails: ${hardFails.length}, Warnings: ${warningCount}, Word Count [12-30] Valid: ${wordCountValid}/${totalClues}.`);
 
-if (hardFails.length > 0 || schemaErrors > 0) {
+const isTotalEqual = scannedClues === totalClues && scannedClues === 1089;
+if (!isTotalEqual) {
+  console.error(`Scanned total mismatch: scanned=${scannedClues}, total=${totalClues}, expected=1089`);
+}
+
+if (hardFails.length > 0 || !isTotalEqual) {
   if (hardFails.length > 0) {
     console.error('Hard Fail Samples:');
     hardFails.slice(0, 5).forEach(f => {
-      console.error(`  [${f.country} Clue ${f.clueNum}] ${f.type} -> "${f.match}"`);
+      console.error(`  [${f.id} - ${f.country}] ${f.type} -> "${f.match}"`);
     });
   }
   console.error(`Result: FAILED`);

@@ -5,6 +5,7 @@ dist/*
 !earth-trivia/dist/bundle.js
 report/
 /report/
+.cache/
 *.png
 *.pdf
 *.zip

@@ -3,6 +3,7 @@ dist/*
 !dist/bundle.js
 /report/
 report/
+.cache/
 *.png
 *.pdf
 .DS_Store
