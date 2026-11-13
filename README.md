@@ -97,7 +97,7 @@ An interactive 3D WebGL Globe trivia experience designed to test geography knowl
   - High-DPI 3D globe distance badge with dynamic zoom scaling.
   - One-click direct links to **Google Maps** and **OpenStreetMap** to inspect real-world routes and terrain.
 - **Free Clue System**: Take up to 3 clues freely per round without penalty; score potential stays at 800 pts.
-- **Game Modes**: Clues Mode, Country Names Mode, and Flag Mode across Easy (42 nations), Medium (100 nations), and Hard (195 sovereign nations).
+- **Game Modes**: Clues Mode, Country Names Mode, and Flag Mode across Easy (42 nations, continent-balanced), Medium (100 nations), and Hard (195 sovereign nations).
 
 👉 *Full details, architecture documentation, and test gates in the [GeoTrivia README](earth-trivia/README.md).*
 

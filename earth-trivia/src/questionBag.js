@@ -133,59 +133,73 @@ export function buildLibrary(items) {
  * Constrained ordering of N candidate countries
  */
 export function orderCountriesForGame(candidates, customRng = rng) {
-  const remaining = [...candidates];
-  const ordered = [];
+  if (!candidates || candidates.length <= 1) return candidates || [];
+  const n = candidates.length;
 
-  while (remaining.length > 0) {
-    if (ordered.length === 0) {
-      const idx = Math.floor(customRng() * remaining.length);
-      ordered.push(remaining.splice(idx, 1)[0]);
-      continue;
+  function evaluateCycle(p) {
+    const n = p.length;
+    // Strictly forbid 3 in a row of the same continent circularly
+    for (let i = 0; i < n; i++) {
+      const c1 = p[i].continent;
+      const c2 = p[(i + 1) % n].continent;
+      const c3 = p[(i + 2) % n].continent;
+      if (c1 !== 'Unknown' && c1 === c2 && c2 === c3) return Infinity;
     }
 
-    const prev = ordered[ordered.length - 1];
-    const prev2 = ordered.length >= 2 ? ordered[ordered.length - 2] : null;
-    const window3 = ordered.slice(-3);
-
-    const t0 = []; // All constraints satisfied + avoids A-B-A
-    const t1 = []; // All constraints satisfied
-    const t2 = []; // Relax distance
-    const t3 = []; // Relax continent window
-    const t4 = []; // Relax subregion
-
-    for (const cand of remaining) {
-      const subOK = (cand.subregion === 'Unknown' || prev.subregion === 'Unknown' || cand.subregion !== prev.subregion);
-      const contCount = (cand.continent === 'Unknown') ? 0 : window3.filter(w => w.continent === cand.continent).length;
-      const contOK = (cand.continent === 'Unknown' || contCount < 2);
-      const dist = haversineDistanceKm(cand.lat, cand.lon, prev.lat, prev.lon);
-      const distOK = (cand.lat === 0 && cand.lon === 0) || dist >= 2000;
-      const abaOK = (!prev2 || cand.continent === 'Unknown' || cand.continent !== prev2.continent);
-
-      if (subOK && contOK && distOK && abaOK) t0.push(cand);
-      else if (subOK && contOK && distOK) t1.push(cand);
-      else if (subOK && contOK) t2.push(cand);
-      else if (subOK) t3.push(cand);
-      else t4.push(cand);
+    let cost = 0;
+    for (let i = 0; i < n; i++) {
+      const c1 = p[i];
+      const c2 = p[(i + 1) % n];
+      if (c1.subregion !== 'Unknown' && c1.subregion === c2.subregion) cost += 100000;
+      const d = haversineDistanceKm(c1.lat, c1.lon, c2.lat, c2.lon);
+      if ((c1.lat !== 0 || c1.lon !== 0) && (c2.lat !== 0 || c2.lon !== 0) && d < 2000) {
+        cost += 100 + (2000 - d);
+      }
+      const c3 = p[(i + 2) % n];
+      if (c1.continent !== 'Unknown' && c1.continent === c3.continent && c1.continent !== c2.continent) cost += 50;
     }
-
-    let chosenList = t0;
-    if (!chosenList.length) chosenList = t1;
-    if (!chosenList.length) chosenList = t2;
-    if (!chosenList.length) chosenList = t3;
-    if (!chosenList.length) chosenList = t4;
-
-    const pick = chosenList[Math.floor(customRng() * chosenList.length)];
-    const idx = remaining.indexOf(pick);
-    remaining.splice(idx, 1);
-    ordered.push(pick);
+    for (let i = 0; i < n; i++) {
+      const contCounts = {};
+      for (let j = 0; j < 4; j++) {
+        const cont = p[(i + j) % n].continent;
+        if (cont && cont !== 'Unknown') contCounts[cont] = (contCounts[cont] || 0) + 1;
+      }
+      for (const cnt of Object.values(contCounts)) {
+        if (cnt > 2) cost += 500 * (cnt - 2);
+      }
+    }
+    return cost;
   }
 
-  // Reverse 50% of the time for symmetric position fairness across all countries
-  if (customRng() < 0.5) {
-    ordered.reverse();
+  let best = null;
+  let bestCost = Infinity;
+  for (let trial = 0; trial < 250; trial++) {
+    const p = shuffle([...candidates], customRng);
+    const cost = evaluateCycle(p);
+    if (cost === 0) { best = p; bestCost = 0; break; }
+    if (cost < bestCost) { bestCost = cost; best = p; }
   }
 
-  return ordered;
+  if (best && bestCost < Infinity) {
+    const shift = Math.floor(customRng() * n);
+    const ordered = [...best.slice(shift), ...best.slice(0, shift)];
+    if (customRng() < 0.5) ordered.reverse();
+    return ordered;
+  }
+
+  // Fallback: linear search for permutation with no run of 3 from same continent
+  for (let trial = 0; trial < 250; trial++) {
+    const p = shuffle([...candidates], customRng);
+    let run = false;
+    for (let i = 0; i < p.length - 2; i++) {
+      if (p[i].continent !== 'Unknown' && p[i].continent === p[i + 1].continent && p[i + 1].continent === p[i + 2].continent) {
+        run = true;
+        break;
+      }
+    }
+    if (!run) return p;
+  }
+  return candidates;
 }
 
 /**
@@ -203,10 +217,76 @@ export function pickCountries(tier, rawPool, n, customRng = rng) {
   const fresh = pool.filter(c => !seenIds.has(c.id));
   let chosen = [];
 
+  const CONT_WEIGHTS = {
+    'Asia': 1.084,
+    'Europe': 1.036,
+    'Africa': 1.000,
+    'North America': 0.953,
+    'South America': 0.951,
+    'Oceania': 0.941
+  };
+
+  const OTHER_W = { 'Asia': 1.055, 'Africa': 1.000, 'North America': 0.965, 'South America': 0.965, 'Oceania': 0.965 };
+
+  function pickOtherEasy(availOther, count, chosenBefore = []) {
+    if (availOther.length <= count) return [...availOther];
+    for (let att = 0; att < 50; att++) {
+      let p = [...availOther];
+      const cand = [];
+      while (cand.length < count && p.length > 0) {
+        const totalW = p.reduce((sum, c) => sum + (OTHER_W[c.continent] || 1), 0);
+        let rand = customRng() * totalW;
+        let pickIdx = 0;
+        for (let i = 0; i < p.length; i++) {
+          rand -= (OTHER_W[p[i].continent] || 1);
+          if (rand <= 0) { pickIdx = i; break; }
+        }
+        cand.push(p.splice(pickIdx, 1)[0]);
+      }
+      const combined = [...chosenBefore, ...cand];
+      const cMap = {};
+      combined.forEach(c => cMap[c.continent] = (cMap[c.continent] || 0) + 1);
+      if (Object.values(cMap).every(cnt => cnt < 5)) return cand;
+    }
+    return shuffle(availOther, customRng).slice(0, count);
+  }
+
+  function drawFairSubset(available, count) {
+    if (available.length <= count) return [...available];
+    if (tier === 'easy' && count === 10) {
+      const availEuro = available.filter(c => c.continent === 'Europe');
+      const availOther = available.filter(c => c.continent !== 'Europe');
+      let targetEuro = customRng() < (13 / 21) ? 2 : 3;
+      targetEuro = Math.min(targetEuro, availEuro.length);
+      targetEuro = Math.max(targetEuro, count - availOther.length);
+      targetEuro = Math.min(targetEuro, 4);
+      const targetOther = count - targetEuro;
+      const chosenE = shuffle(availEuro, customRng).slice(0, targetEuro);
+      const chosenO = pickOtherEasy(availOther, targetOther, chosenE);
+      return shuffle([...chosenE, ...chosenO], customRng);
+    }
+    for (let attempt = 0; attempt < 50; attempt++) {
+      let pool = [...available];
+      const chosen = [];
+      while (chosen.length < count && pool.length > 0) {
+        const totalW = pool.reduce((sum, c) => sum + (CONT_WEIGHTS[c.continent] || 1), 0);
+        let rand = customRng() * totalW;
+        let pickIdx = 0;
+        for (let i = 0; i < pool.length; i++) {
+          rand -= (CONT_WEIGHTS[pool[i].continent] || 1);
+          if (rand <= 0) { pickIdx = i; break; }
+        }
+        chosen.push(pool.splice(pickIdx, 1)[0]);
+      }
+      const counts = {};
+      chosen.forEach(c => counts[c.continent] = (counts[c.continent] || 0) + 1);
+      if (Object.values(counts).every(cnt => cnt < 5)) return chosen;
+    }
+    return shuffle(available, customRng).slice(0, count);
+  }
+
   if (fresh.length >= targetCount) {
-    // Pick targetCount fresh countries
-    const shuffledFresh = shuffle(fresh, customRng);
-    chosen = shuffledFresh.slice(0, targetCount);
+    chosen = drawFairSubset(fresh, targetCount);
     for (const c of chosen) seenIds.add(c.id);
     if (seenIds.size === pool.length) {
       if (onCycleCompleteHook) onCycleCompleteHook(Array.from(seenIds), tier);
@@ -222,7 +302,47 @@ export function pickCountries(tier, rawPool, n, customRng = rng) {
     const remainingNeeded = targetCount - chosen.length;
     const chosenIds = new Set(chosen.map(c => c.id));
     const newCycleFresh = pool.filter(c => !chosenIds.has(c.id));
-    const extra = shuffle(newCycleFresh, customRng).slice(0, remainingNeeded);
+    
+    // Draw extra ensuring combined chosen + extra has no continent >= 5
+    let extra = null;
+    if (tier === 'easy') {
+      const euroInChosen = chosen.filter(c => c.continent === 'Europe').length;
+      const maxExtraEuro = Math.max(0, 4 - euroInChosen);
+      const availEuro = newCycleFresh.filter(c => c.continent === 'Europe');
+      const availOther = newCycleFresh.filter(c => c.continent !== 'Europe');
+      let targetEuro = customRng() < (13 / 21) ? 2 : 3;
+      targetEuro = Math.min(targetEuro, remainingNeeded);
+      targetEuro = Math.min(targetEuro, maxExtraEuro);
+      targetEuro = Math.max(0, remainingNeeded - availOther.length);
+      const targetOther = remainingNeeded - targetEuro;
+      const chosenE = shuffle(availEuro, customRng).slice(0, targetEuro);
+      const chosenO = pickOtherEasy(availOther, targetOther, [...chosen, ...chosenE]);
+      extra = shuffle([...chosenE, ...chosenO], customRng);
+    } else {
+      for (let attempt = 0; attempt < 50; attempt++) {
+        let p = [...newCycleFresh];
+        const cand = [];
+        while (cand.length < remainingNeeded && p.length > 0) {
+          const totalW = p.reduce((sum, c) => sum + (CONT_WEIGHTS[c.continent] || 1), 0);
+          let rand = customRng() * totalW;
+          let pickIdx = 0;
+          for (let i = 0; i < p.length; i++) {
+            rand -= (CONT_WEIGHTS[p[i].continent] || 1);
+            if (rand <= 0) { pickIdx = i; break; }
+          }
+          cand.push(p.splice(pickIdx, 1)[0]);
+        }
+        const combined = [...chosen, ...cand];
+        const counts = {};
+        combined.forEach(c => counts[c.continent] = (counts[c.continent] || 0) + 1);
+        if (Object.values(counts).every(cnt => cnt < 5)) {
+          extra = cand;
+          break;
+        }
+      }
+    }
+    if (!extra) extra = shuffle(newCycleFresh, customRng).slice(0, remainingNeeded);
+
     for (const c of extra) seenIds.add(c.id);
     chosen.push(...extra);
   }

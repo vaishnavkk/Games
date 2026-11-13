@@ -39,7 +39,10 @@ Built with **Three.js**, **Natural Earth 50m TopoJSON** (bundled offline), and a
   - Strict zero-geographical-spoiler rule: no continents, oceans, mountain ranges, or compass directions in clue text.
 - **Game Modes & Tiers (`src/game.js`, `src/scoring.js`)**:
   - **Modes**: Clue Mode (progressive hints), Country Name Mode, Flag Mode.
-  - **Tiers**: Easy (42 major iconic nations), Medium (100 diverse nations), Hard (all 195 sovereign nations: 193 UN members + Vatican City + Palestine).
+  - **Tiers**:
+    - **Easy (42 iconic nations)**: Balanced across continents using offline Natural Earth POP_EST familiarity score (Asia 11, Europe 10, Africa 9, North America 5, South America 4, Oceania 3).
+    - **Medium (100 diverse nations)**: Globally representative subset (Asia 26, Africa 26, Europe 24, North America 11, South America 8, Oceania 5).
+    - **Hard (195 nations)**: All 193 UN members + Vatican City + Palestine.
   - **Pacing**: 10 rounds, 20 rounds, or Endless. Toggleable 25s timer vs Practice Mode (scores unrecorded).
 
 ---
