@@ -230,9 +230,9 @@ async function validatePhase(page, phase, { viewport, mode = 'clue', tier = 'eas
     const isMobile = vp.width <= 600 || (vp.width <= 900 && vp.height > vp.width);
 
     // 1. Forbidden text check: "undefined|NaN|null|[object|Infinity"
-    const bodyText = document.body.innerText;
-    const forbiddenRegex = /\b(undefined|NaN|null|Infinity)\b|\[object /i;
-    const forbiddenMatch = bodyText.match(forbiddenRegex);
+    const bodyText = document.body.textContent;
+    const forbiddenRegex = /\b(undefined|null|Infinity)\b/i;
+    const forbiddenMatch = bodyText.match(forbiddenRegex) || (bodyText.includes('NaN') ? ['NaN'] : null) || bodyText.match(/\[object /);
     if (forbiddenMatch) {
       errors.push({
         signature: `FORBIDDEN_TEXT: "${forbiddenMatch[0]}"`,
@@ -246,9 +246,16 @@ async function validatePhase(page, phase, { viewport, mode = 'clue', tier = 'eas
     const scrollW = Math.max(docEl.scrollWidth, body.scrollWidth);
     const clientW = Math.min(docEl.clientWidth, body.clientWidth);
     if (scrollW > clientW + 1) {
+      let offending = [];
+      for (const el of document.querySelectorAll('*')) {
+        const r = el.getBoundingClientRect();
+        if (r.right > clientW + 1) {
+          offending.push(`${el.tagName}#${el.id || ''}.${(el.className || '').toString().slice(0, 30)}(right=${r.right.toFixed(1)},w=${r.width.toFixed(1)})`);
+        }
+      }
       errors.push({
         signature: `HORIZONTAL_OVERFLOW: scrollWidth=${scrollW} > clientWidth=${clientW}`,
-        details: `Page has horizontal scroll overflow of ${scrollW - clientW}px`
+        details: `Page has horizontal scroll overflow of ${scrollW - clientW}px. Offending: ${offending.join(' | ').slice(0, 300)}`
       });
     }
 
@@ -372,7 +379,8 @@ async function validatePhase(page, phase, { viewport, mode = 'clue', tier = 'eas
     if (md === 'flag') {
       const confirmPill = document.getElementById('touchConfirmBtn');
       if (confirmPill) {
-        const hasFlagIcon = confirmPill.querySelector('.fi, [class*="flag"]');
+        const hasFlagIcon = confirmPill.querySelector('.confirm-flag-slot svg, .confirm-flag-slot img, .confirm-flag-slot .fi') ||
+                            (confirmPill.querySelector('#touchSelectedFlag')?.innerHTML.trim().length > 0);
         const text = confirmPill.textContent || '';
         const flagEmojiRegex = /[\uD83C][\uDDE6-\uDDFF]{2}/;
         if (hasFlagIcon || flagEmojiRegex.test(text)) {
@@ -650,6 +658,10 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   const url = `${baseUrl}${isNormalSpeed ? '' : '?fast=1'}`;
   await page.goto(url, { waitUntil: 'load' });
   await page.waitForSelector('#startScreen');
+  await page.waitForFunction(() => {
+    const loader = document.getElementById('loadingScreen');
+    return !loader || loader.classList.contains('hidden') || loader.style.display === 'none' || window.getComputedStyle(loader).display === 'none';
+  }, { timeout: 6000 }).catch(() => {});
 
   // Inject performance frame monitor and WebGL context loss listener
   await page.evaluate(() => {
@@ -720,8 +732,18 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   }, mode, tier, rounds, hasTimer, isPractice);
 
   // Click Start Expedition
-  await page.click('#startExpeditionBtn');
-  await new Promise(r => setTimeout(r, isNormalSpeed ? 800 : 250));
+  try {
+    await page.click('#startExpeditionBtn');
+  } catch {
+    await page.evaluate(() => document.getElementById('startExpeditionBtn')?.click());
+  }
+  await page.waitForFunction(() => {
+    const g = window.game;
+    return g && (g.phase === 'question' || g.isAnswering);
+  }, { timeout: 3000 }).catch(async () => {
+    await page.evaluate(() => document.getElementById('startExpeditionBtn')?.click());
+  });
+  await new Promise(r => setTimeout(r, isNormalSpeed ? 500 : 200));
 
   let scoreBefore = 0;
   let streakBefore = 0;
@@ -850,6 +872,10 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       reloadedThisGame = true;
       await page.reload({ waitUntil: 'load' });
       await page.waitForSelector('#startScreen');
+      await page.waitForFunction(() => {
+        const loader = document.getElementById('loadingScreen');
+        return !loader || loader.classList.contains('hidden') || loader.style.display === 'none' || window.getComputedStyle(loader).display === 'none';
+      }, { timeout: 6000 }).catch(() => {});
 
       // Re-inject perf monitor and webgl context listener
       await page.evaluate(() => {
@@ -905,8 +931,18 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       streakBefore = 0;
       playedCountries.length = 0;
       missedCountries.length = 0;
-      await page.click('#startExpeditionBtn');
-      await new Promise(res => setTimeout(res, isNormalSpeed ? 800 : 250));
+      try {
+        await page.click('#startExpeditionBtn');
+      } catch {
+        await page.evaluate(() => document.getElementById('startExpeditionBtn')?.click());
+      }
+      await page.waitForFunction(() => {
+        const g = window.game;
+        return g && (g.phase === 'question' || g.isAnswering);
+      }, { timeout: 3000 }).catch(async () => {
+        await page.evaluate(() => document.getElementById('startExpeditionBtn')?.click());
+      });
+      await new Promise(res => setTimeout(res, isNormalSpeed ? 500 : 200));
       continue;
     }
 
@@ -1360,7 +1396,7 @@ async function main() {
 
   const gameConfigs = [];
 
-  const targetViewports = isFull ? viewportsFull : viewportsQuick;
+  const targetViewports = (isFull || configArg) ? viewportsFull : viewportsQuick;
 
   for (const vp of targetViewports) {
     let normalSpeedAssigned = false;
