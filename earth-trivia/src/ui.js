@@ -263,7 +263,9 @@ export class UIManager {
       if (this.nextClueBtn) {
         if (clueIndex < 2) {
           this.nextClueBtn.style.display = 'inline-flex';
-          this.nextClueBtn.innerHTML = `${ICONS.lightbulb} <span>Reveal Clue ${clueIndex + 2}</span>`;
+          const clueBtnLabel = `Show clue ${clueIndex + 2}`;
+          this.nextClueBtn.innerHTML = `${ICONS.lightbulb} <span>${clueBtnLabel}</span>`;
+          this.nextClueBtn.setAttribute('aria-label', clueBtnLabel);
         } else {
           this.nextClueBtn.style.display = 'none';
         }
@@ -342,7 +344,7 @@ export class UIManager {
       } else if (breakdown) {
         if (isCorrect) {
           const speedTxt = breakdown.speedBonus > 0 ? ` | Speed: +${breakdown.speedBonus}` : '';
-          this.vaultBreakdown.innerHTML = `<span class="breakdown-tag scored"><strong>+${breakdown.points.toLocaleString()} pts</strong> (Base: ${breakdown.base} | Clues: +${breakdown.clueBonus}${speedTxt} | Streak: ${breakdown.streakMultiplier}x)</span>`;
+          this.vaultBreakdown.innerHTML = `<span class="breakdown-tag scored"><strong>+${breakdown.points.toLocaleString()} pts</strong> (Base: ${breakdown.base}${speedTxt} | Streak: ${breakdown.streakMultiplier}x)</span>`;
         } else {
           this.vaultBreakdown.innerHTML = breakdown.points > 0
             ? `<span class="breakdown-tag partial"><strong>+${breakdown.points.toLocaleString()} pts</strong> (Distance proximity credit)</span>`

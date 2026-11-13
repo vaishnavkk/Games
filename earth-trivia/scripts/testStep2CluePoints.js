@@ -1,6 +1,5 @@
 import {
   BASE_POINTS,
-  CLUE_BONUSES,
   MAX_ROUND_POINTS,
   STREAK_STEP,
   STREAK_MAX,
@@ -33,6 +32,16 @@ const testCases = [
     desc: 'Clue 3 (idx 2), streak 0 (mult 1.0x) - FREE clue',
     fn: () => pointsIfCorrect({ clueIndex: 2, streakBefore: 0, speedBonus: 0, mode: 'clue' }),
     expected: 800
+  },
+  {
+    desc: 'pointsIfCorrect() points are identical for clue index 0, 1 and 2',
+    fn: () => {
+      const p0 = pointsIfCorrect({ clueIndex: 0, streakBefore: 0, speedBonus: 0 });
+      const p1 = pointsIfCorrect({ clueIndex: 1, streakBefore: 0, speedBonus: 0 });
+      const p2 = pointsIfCorrect({ clueIndex: 2, streakBefore: 0, speedBonus: 0 });
+      return p0 === 800 && p1 === 800 && p2 === 800 && p0 === p1 && p1 === p2;
+    },
+    expected: true
   },
 
   // 2. Reveal cost countdown (all clues free, cost = 0)
@@ -76,19 +85,19 @@ const testCases = [
 
   // 4. Result breakdown formatting
   {
-    desc: 'breakdownText() standard uncapped (clue 0, streak 0)',
+    desc: 'breakdownText() standard uncapped (speed 0, streak 0)',
     fn: () => breakdownText({ clueIndex: 0, speedBonus: 0, streakBefore: 0, mode: 'clue' }),
-    expected: 'Base 500 + clue 300 + speed 0 = 800 × streak 1.0 = 800'
+    expected: 'Base 800 + speed 0 = 800 × streak 1.0 = 800'
   },
   {
-    desc: 'breakdownText() with speed bonus and streak 2 (clue 1)',
+    desc: 'breakdownText() with speed bonus and streak 2',
     fn: () => breakdownText({ clueIndex: 1, speedBonus: 50, streakBefore: 2, mode: 'clue' }),
-    expected: 'Base 500 + clue 300 + speed 50 = 850 × streak 1.2 = 1000 (capped at 1,000)'
+    expected: 'Base 800 + speed 50 = 850 × streak 1.2 = 1000 (capped at 1,000)'
   },
   {
-    desc: 'breakdownText() capped at 1,000 (clue 0, streak 5)',
+    desc: 'breakdownText() capped at 1,000 (speed 0, streak 5)',
     fn: () => breakdownText({ clueIndex: 0, speedBonus: 0, streakBefore: 5, mode: 'clue' }),
-    expected: 'Base 500 + clue 300 + speed 0 = 800 × streak 1.5 = 1000 (capped at 1,000)'
+    expected: 'Base 800 + speed 0 = 800 × streak 1.5 = 1000 (capped at 1,000)'
   }
 ];
 

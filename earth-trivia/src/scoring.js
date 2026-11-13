@@ -2,22 +2,16 @@
  * GeoTrivia Scoring - Single Source of Truth
  *
  * Scoring Rules:
- * - Base correct answer: 500 pts
- * - Fewer-clues bonus:
- *     - Clue 1 (idx 0): +300 pts
- *     - Clue 2 (idx 1): +150 pts
- *     - Clue 3 (idx 2): +0 pts
- *     - Name/Flag modes: +300 pts
+ * - Flat base correct answer: 800 pts (clues are 100% free, no clue bonus / penalty)
  * - Timer speed bonus: Up to +200 pts proportional to remaining time (timer ON only)
  * - Streak multiplier: 1.0x to 1.5x (+0.1x per consecutive correct answer before current)
  * - Max round score: 1,000 pts (hard cap)
- * - Reveal Clue cost: pointsIfCorrect(clue N) - pointsIfCorrect(clue N+1)
+ * - Reveal Clue cost: 0 pts (free)
  * - Wrong answer partial credit: round(300 * max(0, 1 - d / 2000))
  * - Practice mode: score unrecorded (0 pts)
  */
 
-export const BASE_POINTS = 500;
-export const CLUE_BONUSES = [300, 300, 300];
+export const BASE_POINTS = 800;
 export const MAX_ROUND_POINTS = 1000;
 export const STREAK_STEP = 0.1;
 export const STREAK_MAX = 1.5;
@@ -27,25 +21,23 @@ export const PARTIAL_MAX_POINTS = 300;
 export const streakMultiplierIfCorrect = (streakBefore) =>
   Math.min(STREAK_MAX, 1 + STREAK_STEP * (streakBefore || 0));
 
-export function pointsIfCorrect({ clueIndex = 0, streakBefore = 0, speedBonus = 0, mode = 'clue' }) {
-  const clueBonus = mode === 'clue' ? (CLUE_BONUSES[clueIndex] !== undefined ? CLUE_BONUSES[clueIndex] : 0) : CLUE_BONUSES[0];
+export function pointsIfCorrect({ clueIndex = 0, streakBefore = 0, speedBonus = 0, mode = 'clue' } = {}) {
   const mult = streakMultiplierIfCorrect(streakBefore);
-  return Math.min(MAX_ROUND_POINTS, Math.round((BASE_POINTS + clueBonus + speedBonus) * mult));
+  return Math.min(MAX_ROUND_POINTS, Math.round((BASE_POINTS + speedBonus) * mult));
 }
 
-export function revealCost({ clueIndex = 0, streakBefore = 0, speedBonus = 0 }) {
-  if (clueIndex >= CLUE_BONUSES.length - 1) return null; // last clue: nothing left to reveal
-  const now = pointsIfCorrect({ clueIndex, streakBefore, speedBonus });
-  const next = pointsIfCorrect({ clueIndex: clueIndex + 1, streakBefore, speedBonus });
+export function revealCost({ clueIndex = 0, streakBefore = 0, speedBonus = 0 } = {}) {
+  if (clueIndex >= 2) return null; // last clue: nothing left to reveal
+  const now = pointsIfCorrect({ streakBefore, speedBonus });
+  const next = pointsIfCorrect({ streakBefore, speedBonus });
   return { now, next, cost: now - next };
 }
 
-export function breakdownText({ clueIndex = 0, speedBonus = 0, streakBefore = 0, mode = 'clue' }) {
+export function breakdownText({ clueIndex = 0, speedBonus = 0, streakBefore = 0, mode = 'clue' } = {}) {
   const mult = streakMultiplierIfCorrect(streakBefore);
-  const clue = mode === 'clue' ? (CLUE_BONUSES[clueIndex] !== undefined ? CLUE_BONUSES[clueIndex] : 0) : CLUE_BONUSES[0];
-  const raw = BASE_POINTS + clue + speedBonus;
+  const raw = BASE_POINTS + speedBonus;
   const total = Math.min(MAX_ROUND_POINTS, Math.round(raw * mult));
-  return `Base ${BASE_POINTS} + clue ${clue} + speed ${speedBonus} = ${raw} × streak ${mult.toFixed(1)} = ${total}` +
+  return `Base ${BASE_POINTS} + speed ${speedBonus} = ${raw} × streak ${mult.toFixed(1)} = ${total}` +
     (raw * mult > MAX_ROUND_POINTS ? ' (capped at 1,000)' : '');
 }
 
@@ -56,8 +48,7 @@ export function calculatePartialCredit(d) {
 
 export const SCORING = {
   BASE_POINTS,
-  CLUE_BONUSES,
-  NAME_FLAG_BONUS: 300,
+  NAME_FLAG_BONUS: 0,
   MAX_SPEED_BONUS: 200,
   MAX_ROUND_POINTS,
   MAX_PARTIAL_CREDIT: PARTIAL_MAX_POINTS,
@@ -96,7 +87,7 @@ export function getRevealClueCost(targetClueNumber) {
 
 export function getRevealClueButtonText(currentClueIndex) {
   const targetClueNum = currentClueIndex + 2;
-  return `Reveal Clue ${targetClueNum} (Free)`;
+  return `Show clue ${targetClueNum}`;
 }
 
 export function calculateRoundScore({
@@ -133,14 +124,13 @@ export function calculateRoundScore({
 
   if (isCorrect) {
     const mult = streakMultiplierIfCorrect(sBefore);
-    const clueBonus = mode === 'clue' ? (CLUE_BONUSES[clueIndex] !== undefined ? CLUE_BONUSES[clueIndex] : 0) : CLUE_BONUSES[0];
-    const points = pointsIfCorrect({ clueIndex, streakBefore: sBefore, speedBonus, mode });
-    const bText = breakdownText({ clueIndex, speedBonus, streakBefore: sBefore, mode });
+    const points = pointsIfCorrect({ streakBefore: sBefore, speedBonus, mode });
+    const bText = breakdownText({ speedBonus, streakBefore: sBefore, mode });
 
     return {
       isCorrect: true,
       base: BASE_POINTS,
-      clueBonus,
+      clueBonus: 0,
       speedBonus,
       streakMultiplier: Math.round(mult * 10) / 10,
       points,
@@ -184,7 +174,7 @@ export function countTo(el, from, to, ms = 450) {
 }
 
 // Call on round start (prev = null) and after every reveal (prev = value before reveal).
-export function renderClueWorth({ clueIndex = 0, streak = 0, speedBonus = 0, mode = 'clue', prev = null }) {
+export function renderClueWorth({ clueIndex = 0, streak = 0, speedBonus = 0, mode = 'clue', prev = null } = {}) {
   const worth = pointsIfCorrect({ clueIndex, streakBefore: streak, speedBonus, mode });
   const valueEl = document.getElementById('cwValue');
   if (valueEl) {

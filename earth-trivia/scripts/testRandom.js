@@ -1,6 +1,7 @@
 import assert from 'assert';
 import fs from 'fs';
 import path from 'path';
+import http from 'http';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
 
@@ -499,6 +500,34 @@ testResults.T9 = true;
 // ═══════════════════════════════════════════════════════════════════════════════
 log('\n--- T10: E2E Verification in Real WebApp ---');
 async function runE2E() {
+  let localServer = null;
+  try {
+    await fetch('http://localhost:8080');
+  } catch (e) {
+    const rootDir = path.resolve(__dirname, '..');
+    const mimeTypes = {
+      '.html': 'text/html; charset=utf-8',
+      '.js': 'application/javascript; charset=utf-8',
+      '.json': 'application/json; charset=utf-8',
+      '.css': 'text/css; charset=utf-8',
+      '.svg': 'image/svg+xml'
+    };
+    localServer = http.createServer((req, res) => {
+      let reqPath = decodeURI(req.url.split('?')[0]);
+      if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
+      let filePath = path.join(rootDir, reqPath);
+      if (!filePath.startsWith(rootDir) || !fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+        res.writeHead(404);
+        res.end('Not found');
+        return;
+      }
+      const ext = path.extname(filePath).toLowerCase();
+      res.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' });
+      fs.createReadStream(filePath).pipe(res);
+    });
+    await new Promise((resolve) => localServer.listen(8080, resolve));
+  }
+
   const browser = await puppeteer.launch({
     executablePath: CHROME_PATH,
     headless: true,
@@ -566,6 +595,9 @@ async function runE2E() {
     testResults.T10 = true;
   } finally {
     await browser.close();
+    if (localServer) {
+      await new Promise((resolve) => localServer.close(resolve));
+    }
   }
 }
 

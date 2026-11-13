@@ -18,52 +18,52 @@ const testCases = [
   {
     name: 'Case 01: Clue mode, Clue 1, timer OFF, streak 1',
     input: { isCorrect: true, mode: 'clue', clueIndex: 0, hasTimer: false, streak: 1 },
-    expected: { points: 800, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.0 }
+    expected: { points: 800, base: 800, clueBonus: 0, speedBonus: 0, mult: 1.0 }
   },
   {
     name: 'Case 02: Clue mode, Clue 2, timer OFF, streak 1',
     input: { isCorrect: true, mode: 'clue', clueIndex: 1, hasTimer: false, streak: 1 },
-    expected: { points: 800, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.0 }
+    expected: { points: 800, base: 800, clueBonus: 0, speedBonus: 0, mult: 1.0 }
   },
   {
     name: 'Case 03: Clue mode, Clue 3, timer OFF, streak 1',
     input: { isCorrect: true, mode: 'clue', clueIndex: 2, hasTimer: false, streak: 1 },
-    expected: { points: 800, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.0 }
+    expected: { points: 800, base: 800, clueBonus: 0, speedBonus: 0, mult: 1.0 }
   },
   {
     name: 'Case 04: Name mode, timer OFF, streak 1',
     input: { isCorrect: true, mode: 'name', clueIndex: 0, hasTimer: false, streak: 1 },
-    expected: { points: 800, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.0 }
+    expected: { points: 800, base: 800, clueBonus: 0, speedBonus: 0, mult: 1.0 }
   },
   {
     name: 'Case 05: Flag mode, timer OFF, streak 1',
     input: { isCorrect: true, mode: 'flag', clueIndex: 0, hasTimer: false, streak: 1 },
-    expected: { points: 800, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.0 }
+    expected: { points: 800, base: 800, clueBonus: 0, speedBonus: 0, mult: 1.0 }
   },
   {
     name: 'Case 06: Clue mode, Clue 1, timer ON (100% time left), streak 1',
     input: { isCorrect: true, mode: 'clue', clueIndex: 0, hasTimer: true, timerDuration: 25, timerRemaining: 25, streak: 1 },
-    expected: { points: 1000, base: 500, clueBonus: 300, speedBonus: 200, mult: 1.0 }
+    expected: { points: 1000, base: 800, clueBonus: 0, speedBonus: 200, mult: 1.0 }
   },
   {
     name: 'Case 07: Clue mode, Clue 1, timer ON (50% time left), streak 1',
     input: { isCorrect: true, mode: 'clue', clueIndex: 0, hasTimer: true, timerDuration: 25, timerRemaining: 12.5, streak: 1 },
-    expected: { points: 900, base: 500, clueBonus: 300, speedBonus: 100, mult: 1.0 }
+    expected: { points: 900, base: 800, clueBonus: 0, speedBonus: 100, mult: 1.0 }
   },
   {
     name: 'Case 08: Clue mode, Clue 1, timer OFF, streak 3 (1.2x)',
     input: { isCorrect: true, mode: 'clue', clueIndex: 0, hasTimer: false, streak: 3 },
-    expected: { points: 960, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.2 }
+    expected: { points: 960, base: 800, clueBonus: 0, speedBonus: 0, mult: 1.2 }
   },
   {
     name: 'Case 09: Clue mode, Clue 1, timer OFF, streak 6 (1.5x cap check)',
     input: { isCorrect: true, mode: 'clue', clueIndex: 0, hasTimer: false, streak: 6 },
-    expected: { points: 1000, base: 500, clueBonus: 300, speedBonus: 0, mult: 1.5 } // 800 * 1.5 = 1200 -> capped at 1000
+    expected: { points: 1000, base: 800, clueBonus: 0, speedBonus: 0, mult: 1.5 } // 800 * 1.5 = 1200 -> capped at 1000
   },
   {
     name: 'Case 10: Name mode, timer ON (100%), streak 4 (1.3x cap check)',
     input: { isCorrect: true, mode: 'name', clueIndex: 0, hasTimer: true, timerDuration: 25, timerRemaining: 25, streak: 4 },
-    expected: { points: 1000, base: 500, clueBonus: 300, speedBonus: 200, mult: 1.3 } // 1000 * 1.3 = 1300 -> capped at 1000
+    expected: { points: 1000, base: 800, clueBonus: 0, speedBonus: 200, mult: 1.3 } // 1000 * 1.3 = 1300 -> capped at 1000
   },
   {
     name: 'Case 11: Wrong answer, 0 km distance (d = 0)',
@@ -149,8 +149,11 @@ console.log(`Clue 3 cost: ${costClue3} pts (expected: 0) | Button: "${btnClue3}"
 if (costClue2 !== 0 || costClue3 !== 0) {
   console.error('✗ Reveal clue cost does not match expected 0 pts (Free)');
   allPassed = false;
+} else if (btnClue2 !== 'Show clue 2' || btnClue3 !== 'Show clue 3') {
+  console.error(`✗ Button text mismatch: got "${btnClue2}" and "${btnClue3}", expected "Show clue 2" and "Show clue 3"`);
+  allPassed = false;
 } else {
-  console.log('✓ Reveal clue cost check PASSED (All 3 clues free)');
+  console.log('✓ Reveal clue cost and button text check PASSED (Show clue N, all 3 clues free)');
 }
 
 // Verify Real Country DB Pools vs SCORING.TIERS
