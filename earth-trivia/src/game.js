@@ -80,6 +80,7 @@ export class GameManager {
     this.currentCountry = null;
     this.correctCount = 0;
     this.missedCountries = [];
+    this.playedCountryIds = new Set();
     this.phase = 'start';
     this.lastRoundBreakdown = null;
 
@@ -94,6 +95,14 @@ export class GameManager {
       const countryMap = new Map(pool.map(c => [c.code || String(c.id), c]));
       this.roundQueue = pickedIsos.map(iso => countryMap.get(iso)).filter(Boolean);
     }
+    // Deduplicate roundQueue so every country in this game is unique
+    const seenInQueue = new Set();
+    this.roundQueue = this.roundQueue.filter(c => {
+      const key = c.code || String(c.id);
+      if (seenInQueue.has(key)) return false;
+      seenInQueue.add(key);
+      return true;
+    });
 
     this.ui.showGameHUD(this.totalRounds, this.hasTimer, this.isPractice);
     this.nextRound();
@@ -123,6 +132,16 @@ export class GameManager {
         this.roundQueue = (this.roundQueue || []).concat(nextBatch);
       }
     } else {
+      // Deduplicate next candidate so no country played earlier in this game ever repeats
+      while (this.roundQueue && this.roundQueue.length > 0) {
+        const peek = this.roundQueue[0];
+        const peekKey = typeof peek === 'string' ? peek : (peek.code || String(peek.id));
+        if (!this.playedCountryIds.has(peekKey)) {
+          break;
+        }
+        this.roundQueue.shift();
+      }
+
       // Finite modes (10 / 20 rounds): check completion
       if (this.round >= this.totalRounds || this.roundQueue.length === 0) {
         this.endGame();
@@ -137,6 +156,8 @@ export class GameManager {
       const found = this.fullDatabase.find(c => c.code === this.currentCountry || String(c.id) === this.currentCountry);
       if (found) this.currentCountry = found;
     }
+    const currentKey = this.currentCountry ? (this.currentCountry.code || String(this.currentCountry.id)) : null;
+    if (currentKey) this.playedCountryIds.add(currentKey);
     this.clueIndex = 0;
 
     // Pick clue set via questionBag (shown in level order)
@@ -455,17 +476,11 @@ export class GameManager {
         this.score += roundPoints;
       }
 
-      // Spaced repetition: requeue missed country once later in session (deduplicated by ID)
+      // Track missed country once for end-of-game review & "Replay Missed" feature
+      // Note: do not reinsert into active roundQueue so no country repeats within one game
       if (!this.missedCountries.some(c => (c.id && c.id === target.id) || c.name === target.name)) {
         this.missedCountries.push(target);
       }
-      const prevClueIds = (this.currentClues || []).map(c => c.id).filter(Boolean);
-      const reinsertTarget = {
-        ...target,
-        forcedExcludeClueIds: prevClueIds
-      };
-      const reinsertIndex = findReinsertIndex(this.roundQueue, reinsertTarget);
-      this.roundQueue.splice(reinsertIndex, 0, reinsertTarget);
 
       // Visuals: Translucent red fill on guess (if any), green on target; sharp 3D Line2 outlines
       const guessId = guessCountry ? guessCountry.id : null;

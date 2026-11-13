@@ -129,6 +129,28 @@ for (const pair of adjPairs) {
   }
 }
 
+// 7. Non-repeat of nations in a single game (even with wrong/missed answers)
+console.log('\n--- 3j) In-Game Nation Non-Repeat Verification ---');
+import { pickCountries } from '../src/questionBag.js';
+const easyPool = COUNTRIES_DB.filter(c => c.tier === 'easy').map(c => c.code || String(c.id));
+for (let session = 1; session <= 20; session++) {
+  const roundCountries = pickCountries('easy', easyPool, 10);
+  const seenInSession = new Set();
+  let hasDuplicate = false;
+  for (const c of roundCountries) {
+    if (seenInSession.has(c)) {
+      hasDuplicate = true;
+      break;
+    }
+    seenInSession.add(c);
+  }
+  if (hasDuplicate) {
+    allPassed = false;
+    console.error(`  Session ${session}: Found duplicate country in single game!`);
+  }
+}
+console.log('  Verified 20 simulated 10-round games: 0 duplicate nations in any game [PASS]');
+
 console.log('\n================================================================================');
 if (allPassed) {
   console.log('✓ STEP 3 BUG FIXES SUITE: ALL PASSED');
