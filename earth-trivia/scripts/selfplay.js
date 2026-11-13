@@ -745,6 +745,7 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   });
   await new Promise(r => setTimeout(r, isNormalSpeed ? 500 : 200));
 
+  const initialHeap = (await page.metrics()).JSHeapUsedSize;
   let scoreBefore = 0;
   let streakBefore = 0;
   let correctCount = 0;
@@ -1327,6 +1328,22 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
 
   // Measure JS Heap metric
   const heapUsed = (await page.metrics()).JSHeapUsedSize;
+  if (totalRounds >= 20 && heapUsed - initialHeap > 40 * 1024 * 1024) {
+    gameFailures.push({
+      signature: `MEMORY_LEAK_EXCEEDED: +${((heapUsed - initialHeap) / 1e6).toFixed(1)}MB > 40MB`,
+      details: `JS heap growth over ${totalRounds} rounds was ${((heapUsed - initialHeap) / 1e6).toFixed(1)}MB (> 40MB limit)`
+    });
+  }
+
+  // Replay-missed test if requested
+  if (gameConfig.doReplayMissed && endMetrics.replayVisible) {
+    try {
+      await page.click('#replayMissedBtn');
+      await page.waitForFunction(() => window.game && window.game.phase === 'question', { timeout: 4000 });
+      const replayQFails = await validatePhase(page, 'question', { viewport, mode, tier });
+      gameFailures.push(...replayQFails);
+    } catch {}
+  }
 
   // Log events to events.jsonl
   const eventRecord = {
@@ -1429,12 +1446,14 @@ async function main() {
     gameConfigs.push({ mode: 'flag', tier: 'easy', viewport: viewportsFull[0], rounds: 10, hasTimer: true });
     // Practice mode
     gameConfigs.push({ mode: 'clue', tier: 'easy', viewport: viewportsFull[1], rounds: 10, isPractice: true });
+    // Replay-missed
+    gameConfigs.push({ mode: 'clue', tier: 'easy', viewport: viewportsFull[0], rounds: 10, doReplayMissed: true });
   }
 
   // Filter if --config provided
   let filteredConfigs = gameConfigs;
   if (configArg) {
-    const exact = gameConfigs.filter(c => `${c.mode}-${c.tier}-${c.viewport.width}x${c.viewport.height}` === configArg && !c.throwStorage && !c.offlineAfterLoad);
+    const exact = gameConfigs.filter(c => `${c.mode}-${c.tier}-${c.viewport.width}x${c.viewport.height}` === configArg);
     if (exact.length > 0) {
       filteredConfigs = exact;
     } else {
@@ -1454,23 +1473,33 @@ async function main() {
   let heap1 = 0;
   let heap5 = 0;
 
-  const rng = mulberry32(baseSeed);
+  const seedsToRun = (isFull && !configArg) ? [baseSeed, (baseSeed + 101) % 1000000, (baseSeed + 202) % 1000000] : [baseSeed];
+  console.log(`[GeoTrivia QA Selfplay] Seeds to run (${seedsToRun.length}): ${seedsToRun.join(', ')}`);
 
-  for (let idx = 0; idx < filteredConfigs.length; idx++) {
-    const cfg = filteredConfigs[idx];
-    const res = await playGame(browser, baseUrl, cfg, eventsFile, reportDir, rng);
-    results.push(res);
+  for (let sIdx = 0; sIdx < seedsToRun.length; sIdx++) {
+    const currentSeed = seedsToRun[sIdx];
+    console.log(`\n=== RUNNING SUITE FOR SEED: ${currentSeed} (${sIdx + 1}/${seedsToRun.length}) ===\n`);
+    const rng = mulberry32(currentSeed);
 
-    if (idx === 0) heap1 = res.heapUsed;
-    if (idx === 4) heap5 = res.heapUsed;
+    for (let idx = 0; idx < filteredConfigs.length; idx++) {
+      const cfg = filteredConfigs[idx];
+      const isNormal = (sIdx === 0) ? cfg.isNormalSpeed : false;
+      const effectiveCfg = { ...cfg, isNormalSpeed: isNormal };
 
-    for (const fail of res.failures) {
-      const sig = fail.signature;
-      if (!failureSignatures.has(sig)) {
-        const reproCmd = `npm run selfplay -- --config=${cfg.mode}-${cfg.tier}-${cfg.viewport.width}x${cfg.viewport.height} --seed=${baseSeed}`;
-        failureSignatures.set(sig, { count: 0, reproCmd, details: fail.details });
+      const res = await playGame(browser, baseUrl, effectiveCfg, eventsFile, reportDir, rng);
+      results.push(res);
+
+      if (idx === 0 && sIdx === 0) heap1 = res.heapUsed;
+      if (idx === 4 && sIdx === 0) heap5 = res.heapUsed;
+
+      for (const fail of res.failures) {
+        const sig = fail.signature;
+        if (!failureSignatures.has(sig)) {
+          const reproCmd = `npm run selfplay -- --config=${cfg.mode}-${cfg.tier}-${cfg.viewport.width}x${cfg.viewport.height} --seed=${currentSeed}`;
+          failureSignatures.set(sig, { count: 0, reproCmd, details: fail.details });
+        }
+        failureSignatures.get(sig).count++;
       }
-      failureSignatures.get(sig).count++;
     }
   }
 
@@ -1510,13 +1539,14 @@ async function main() {
   const isPass = totalFails === 0;
 
   const summaryLines = [];
-  summaryLines.push(`commit: ${commitHash} | duration: ${durationSec}s | seed: ${baseSeed}`);
+  summaryLines.push(`commit: ${commitHash} | duration: ${durationSec}s | seeds: ${seedsToRun.join(',')}`);
   summaryLines.push('config | games | rounds | FAIL | WARN');
 
-  // Add rows (up to 18 rows)
-  for (const r of results.slice(0, 18)) {
+  // Add rows (up to 16 rows)
+  for (const r of results.slice(0, 16)) {
     summaryLines.push(`${r.configKey} | ${r.games} | ${r.rounds} | ${r.failures.length} | ${r.warnCount}`);
   }
+  summaryLines.push(`TOTAL | ${results.length} | ${results.reduce((s, r) => s + r.rounds, 0)} | ${totalFails} | ${totalWarns}`);
 
   // Add failure signatures (up to 10)
   if (failureSignatures.size > 0) {
