@@ -3,7 +3,7 @@ import { CLUES_LIBRARY } from '../data/clues.js';
 import { buildLibrary, pickCountries, pickClueSet, findReinsertIndex } from './questionBag.js';
 import { rng, shuffle } from './rng.js';
 import { getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
-import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getCountryBoundingBox } from './frame_union.js';
+import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getLargestLandmassBox, getCountryBoundingBox } from './frame_union.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
@@ -456,7 +456,7 @@ export class GameManager {
           plan.km = distanceKm;
           plan.nearestPoint = nearestPoint;
           plan.clickPoint = fromCoords;
-          plan.bbox = getCountryBoundingBox(targetWc);
+          plan.bbox = getLargestLandmassBox(targetWc);
         }
       }
       this.lastPlan = plan;

@@ -196,7 +196,8 @@ export function getLargestLandmassBox(country) {
     minLon,
     maxLon,
     centerLat: (minLat + maxLat) / 2,
-    centerLon: (minLon + maxLon) / 2
+    centerLon: (minLon + maxLon) / 2,
+    spanDeg: Math.max(maxLat - minLat, maxLon - minLon)
   };
 }
 
