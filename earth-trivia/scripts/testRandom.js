@@ -13,7 +13,8 @@ import {
   orderCountriesForGame,
   haversineDistanceKm,
   setOnCycleCompleteHook,
-  _reload
+  _reload,
+  findReinsertIndex
 } from '../src/questionBag.js';
 import { COUNTRIES_DB } from '../data/countries.js';
 
@@ -105,7 +106,12 @@ log('  T6 Position Fairness:       Mean game position within +-15% of game midpo
 log('  T7 Clue Selection:          Chi-Square p > 0.001; 0 repeats per cycle; distinct topics');
 log('  T8 Persistence:             State survives reload; storage block fallback; reset works');
 log('  T9 Mutants Killed:          4/4 broken samplers killed');
-log('  T10 E2E WebApp Queues:      Real in-app queues pass T3-T5; targets asked equal queues\n');
+log('  T10 E2E WebApp Queues:      Real in-app queues pass T3-T5; targets asked equal queues');
+log('  T11 First-Position Fairness: Chi-Square p in (0.001, 0.999) for Pos 1 and Pos 5 (20k games)');
+log('  T12 Continent Clumping:      Longest same-continent run <= 2 in 100% of games; >= 5 from one cont <= 2%');
+log('  T13 Easy Europeans / Game:   Mean Europeans within 10% of 10 x pool share; max <= 5');
+log('  T14 Baseline Sampler Mutant: Original sampler on 16-European pool must fail T12 & T13');
+log('  T15 Re-queue Adjacency:      Same-subregion rate after re-queue <= 2.0%\n');
 
 const testResults = {};
 
@@ -565,13 +571,295 @@ async function runE2E() {
 
 await runE2E();
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// T11: First-Position & Position 5 Fairness (20,000 games, fresh storage)
+// ═══════════════════════════════════════════════════════════════════════════════
+log('--- T11: First-Position Fairness & Position 5 Fairness (20,000 games) ---');
+const prng11 = mulberry32(44332211);
+const pos1Counts = new Map();
+const pos5Counts = new Map();
+const easyCodesList = tiers.easy.map(c => c.code);
+
+for (let g = 0; g < 20000; g++) {
+  resetHistory();
+  const game = pickCountries('easy', easyCodesList, 10, prng11);
+  pos1Counts.set(game[0], (pos1Counts.get(game[0]) || 0) + 1);
+  pos5Counts.set(game[4], (pos5Counts.get(game[4]) || 0) + 1);
+}
+
+const exp11 = 20000 / tiers.easy.length;
+let chi2Pos1 = 0, chi2Pos5 = 0;
+for (const code of easyCodesList) {
+  const c1 = pos1Counts.get(code) || 0;
+  const c5 = pos5Counts.get(code) || 0;
+  chi2Pos1 += Math.pow(c1 - exp11, 2) / exp11;
+  chi2Pos5 += Math.pow(c5 - exp11, 2) / exp11;
+}
+const pPos1 = chiSquarePValue(chi2Pos1, tiers.easy.length - 1);
+const pPos5 = chiSquarePValue(chi2Pos5, tiers.easy.length - 1);
+
+log(`  Position 1: Chi2 = ${chi2Pos1.toFixed(2)} (df = ${tiers.easy.length - 1}), p-value = ${pPos1.toFixed(4)} (Threshold: in (0.001, 0.999))`);
+assert.ok(pPos1 > 0.001 && pPos1 < 0.999, `Position 1 p-value ${pPos1} outside (0.001, 0.999)`);
+log(`  Position 5: Chi2 = ${chi2Pos5.toFixed(2)} (df = ${tiers.easy.length - 1}), p-value = ${pPos5.toFixed(4)} (Threshold: in (0.001, 0.999))`);
+assert.ok(pPos5 > 0.001 && pPos5 < 0.999, `Position 5 p-value ${pPos5} outside (0.001, 0.999)`);
+log('  [PASS] T11 First-position and position 5 fairness verified.\n');
+testResults.T11 = true;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// T12: Clumping per 10-round game (5,000 games)
+// ═══════════════════════════════════════════════════════════════════════════════
+log('--- T12: Continent Clumping (Longest Run <= 2, >= 5 from one continent <= 2%) ---');
+const prng12 = mulberry32(88776655);
+resetHistory();
+let maxRunOver2 = 0;
+let gamesGe5OneContinent = 0;
+const N_GAMES_T12 = 5000;
+
+for (let g = 0; g < N_GAMES_T12; g++) {
+  const gameCodes = pickCountries('easy', easyCodesList, 10, prng12);
+  const gameCountries = gameCodes.map(code => countryByCode.get(code));
+
+  let maxRun = 1, curRun = 1;
+  for (let i = 1; i < gameCountries.length; i++) {
+    if (gameCountries[i].continent === gameCountries[i-1].continent) {
+      curRun++;
+      if (curRun > maxRun) maxRun = curRun;
+    } else {
+      curRun = 1;
+    }
+  }
+  if (maxRun > 2) maxRunOver2++;
+
+  const contCounts = {};
+  gameCountries.forEach(c => contCounts[c.continent] = (contCounts[c.continent] || 0) + 1);
+  if (Object.values(contCounts).some(cnt => cnt >= 5)) gamesGe5OneContinent++;
+}
+
+const runOver2Rate = maxRunOver2 / N_GAMES_T12;
+const ge5Rate = gamesGe5OneContinent / N_GAMES_T12;
+log(`  Games with longest same-continent run > 2: ${(runOver2Rate * 100).toFixed(2)}% (Threshold: <= 0.0%)`);
+assert.strictEqual(maxRunOver2, 0, `Found ${maxRunOver2} games with same-continent run > 2`);
+log(`  Games with >= 5 rounds from one continent: ${(ge5Rate * 100).toFixed(2)}% (Threshold: <= 2.0%)`);
+assert.ok(ge5Rate <= 0.02, `Rate of >= 5 from one continent ${(ge5Rate * 100).toFixed(2)}% > 2.0%`);
+log('  [PASS] T12 Continent clumping bounds verified.\n');
+testResults.T12 = true;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// T13: Easy Tier European Rounds per Game (5,000 games)
+// ═══════════════════════════════════════════════════════════════════════════════
+log('--- T13: Easy Europeans per 10-Round Game (Mean within 10%, Max <= 5) ---');
+const prng13 = mulberry32(33221144);
+resetHistory();
+let totalEuroRounds = 0;
+let maxEuroInGame = 0;
+const N_GAMES_T13 = 5000;
+
+for (let g = 0; g < N_GAMES_T13; g++) {
+  const gameCodes = pickCountries('easy', easyCodesList, 10, prng13);
+  const euroCount = gameCodes.filter(code => countryByCode.get(code)?.continent === 'Europe').length;
+  totalEuroRounds += euroCount;
+  if (euroCount > maxEuroInGame) maxEuroInGame = euroCount;
+}
+
+const meanEuroPerGame = totalEuroRounds / N_GAMES_T13;
+const euroPoolShare = tiers.easy.filter(c => c.continent === 'Europe').length / tiers.easy.length; // 10/42
+const expectedEuroMean = 10 * euroPoolShare;
+const euroMeanDiffPct = Math.abs(meanEuroPerGame - expectedEuroMean) / expectedEuroMean * 100;
+
+log(`  Mean Europeans per game: ${meanEuroPerGame.toFixed(3)} vs expected ${expectedEuroMean.toFixed(3)} (Diff: ${euroMeanDiffPct.toFixed(2)}%, Threshold: <= 10.0%)`);
+assert.ok(euroMeanDiffPct <= 10.0, `Mean European rounds diff ${euroMeanDiffPct.toFixed(2)}% > 10.0%`);
+log(`  Max Europeans in any game: ${maxEuroInGame} (Threshold: <= 5)`);
+assert.ok(maxEuroInGame <= 5, `Max Europeans in game ${maxEuroInGame} > 5`);
+log('  [PASS] T13 European rounds per game verified.\n');
+testResults.T13 = true;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// T14: Baseline-Sampler Check (Original Sampler on Old 16-European Composition)
+// ═══════════════════════════════════════════════════════════════════════════════
+log('--- T14: Baseline-Sampler Check (Original Sampler on Old 16-European Composition) ---');
+const oldEasyCodes = [
+  'RUS', 'DEU', 'FRA', 'GBR', 'ITA', 'ESP', 'POL', 'NLD', 'SWE', 'GRC', 'PRT', 'AUT', 'CHE', 'NOR', 'IRL', 'ISL',
+  'IND', 'CHN', 'IDN', 'JPN', 'VNM', 'TUR', 'THA', 'KOR', 'SAU', 'ARE', 'SGP',
+  'NGA', 'EGY', 'ZAF', 'KEN', 'MAR',
+  'USA', 'MEX', 'CAN',
+  'BRA', 'COL', 'ARG', 'PER', 'CHL',
+  'AUS', 'NZL'
+];
+const oldEasyPool = oldEasyCodes.map(code => countryByCode.get(code));
+assert.strictEqual(oldEasyPool.filter(c => c.continent === 'Europe').length, 16, 'Old pool must have 16 Europeans');
+
+// Emulate original sampler (git show 822ca77^:earth-trivia/src/questionBag.js)
+function runOriginalOldSampler(pool, n = 10, customRng = Math.random) {
+  let seen = {};
+  const drawFresh = (bucket, poolArr) => {
+    const s = new Set(seen[bucket] || []);
+    let fresh = poolArr.filter(x => !s.has(x.id));
+    if (!fresh.length) { s.clear(); fresh = poolArr.slice(); }
+    const pick = fresh[Math.floor(customRng() * fresh.length)];
+    s.add(pick.id);
+    seen[bucket] = [...s];
+    return pick;
+  };
+  const poolMapped = pool.map(c => ({ id: c.code, ...c }));
+  const chosen = new Set(), out = [];
+  while (out.length < Math.min(n, poolMapped.length)) {
+    const p = drawFresh('c:easy', poolMapped, (x) => chosen.has(x.id));
+    chosen.add(p.id);
+    out.push(p);
+  }
+  return out;
+}
+
+const prng14 = mulberry32(77665544);
+let oldMaxRunOver2 = 0;
+let oldGamesGe5Europe = 0;
+let oldMaxEuroInGame = 0;
+const N_GAMES_T14 = 5000;
+
+for (let g = 0; g < N_GAMES_T14; g++) {
+  const game = runOriginalOldSampler(oldEasyPool, 10, prng14);
+  let maxRun = 1, curRun = 1;
+  for (let i = 1; i < game.length; i++) {
+    if (game[i].continent === game[i-1].continent) {
+      curRun++;
+      if (curRun > maxRun) maxRun = curRun;
+    } else {
+      curRun = 1;
+    }
+  }
+  if (maxRun > 2) oldMaxRunOver2++;
+
+  const euroCount = game.filter(c => c.continent === 'Europe').length;
+  if (euroCount >= 5) oldGamesGe5Europe++;
+  if (euroCount > oldMaxEuroInGame) oldMaxEuroInGame = euroCount;
+}
+
+const oldRunOver2Rate = oldMaxRunOver2 / N_GAMES_T14;
+const oldGe5Rate = oldGamesGe5Europe / N_GAMES_T14;
+log(`  Original Sampler: Longest same-continent run > 2 in ${(oldRunOver2Rate * 100).toFixed(2)}% of games (Failed T12 threshold: <= 0.0%)`);
+log(`  Original Sampler: Games with >= 5 European rounds in ${(oldGe5Rate * 100).toFixed(2)}% of games (Failed T12 threshold: <= 2.0%)`);
+log(`  Original Sampler: Max Europeans in a single game: ${oldMaxEuroInGame} (Failed T13 threshold: <= 5)`);
+
+assert.ok(oldRunOver2Rate > 0.05, `Original sampler should have failed T12 run rate, got ${(oldRunOver2Rate * 100).toFixed(2)}%`);
+assert.ok(oldGe5Rate > 0.10, `Original sampler should have failed T12 ge5 rate, got ${(oldGe5Rate * 100).toFixed(2)}%`);
+assert.ok(oldMaxEuroInGame > 5, `Original sampler should have failed T13 max Europeans, got ${oldMaxEuroInGame}`);
+log('  [PASS] T14 Baseline-sampler check: confirmed original sampler fails T12 & T13 on old composition.\n');
+testResults.T14 = true;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// T15: Re-queued Missed Countries Obey Adjacency Constraints (5,000 simulations)
+// ═══════════════════════════════════════════════════════════════════════════════
+log('--- T15: Re-queued Missed Countries Adjacency Constraints (Threshold: <= 2.0%) ---');
+const prng15 = mulberry32(11335577);
+let reinsertSubViolations = 0;
+const N_REINSERTS = 5000;
+
+for (let g = 0; g < N_REINSERTS; g++) {
+  const game = pickCountries('easy', easyCodesList, 10, prng15).map(code => countryByCode.get(code));
+  const missedCountry = game[0];
+  const remainingQueue = game.slice(1);
+  const insertIdx = findReinsertIndex(remainingQueue, missedCountry, prng15);
+  remainingQueue.splice(insertIdx, 0, missedCountry);
+
+  const prev = insertIdx > 0 ? remainingQueue[insertIdx - 1] : null;
+  const next = insertIdx < remainingQueue.length - 1 ? remainingQueue[insertIdx + 1] : null;
+
+  if ((prev && prev.subregion === missedCountry.subregion) || (next && next.subregion === missedCountry.subregion)) {
+    reinsertSubViolations++;
+  }
+}
+
+const reinsertSubRate = reinsertSubViolations / N_REINSERTS;
+log(`  Re-queue same-subregion rate: ${(reinsertSubRate * 100).toFixed(2)}% (Threshold: <= 2.0%)`);
+log('  Re-queue mechanism: findReinsertIndex scores insertion slots >= offset 2 by matching non-adjacent subregions, continent spacing, and distance >= 2000 km.');
+assert.ok(reinsertSubRate <= 0.02, `Re-queue subregion rate ${(reinsertSubRate * 100).toFixed(2)}% > 2.0%`);
+log('  [PASS] T15 Re-queued missed country adjacency constraints verified.\n');
+testResults.T15 = true;
+
 // Final Test Summary Log
 fs.writeFileSync(path.join(logDir, 'random_audit.txt'), logLines.join('\n'), 'utf8');
 
-const allTestsPassed = Object.values(testResults).length === 10 && Object.values(testResults).every(Boolean);
+// Generate tier_rebalance.txt
+const rebalanceLog = [];
+rebalanceLog.push('================================================================================');
+rebalanceLog.push('                 GEOTRIVIA TIER REBALANCING AUDIT REPORT                        ');
+rebalanceLog.push('================================================================================\n');
+
+rebalanceLog.push('FAMILIARITY SCORE PROXY:');
+rebalanceLog.push('  Proxy Name: Natural Earth POP_EST (Estimated Population)');
+rebalanceLog.push('  Definition: Offline population estimate attribute from Natural Earth (c.population). Higher population indicates greater global prominence.\n');
+
+rebalanceLog.push('CONTINENT DISTRIBUTION (BEFORE VS AFTER REBALANCING):');
+rebalanceLog.push('Continent      | Easy Before | Easy After  | Med Before  | Med After   | All 195');
+rebalanceLog.push('---------------|-------------|-------------|-------------|-------------|--------');
+for (const cont of allContinents) {
+  const eb = oldEasyPool.filter(c => c.continent === cont).length;
+  const ea = tiers.easy.filter(c => c.continent === cont).length;
+  const mb = oldEasyPool.filter(c => c.continent === cont).length; // old easy
+  const ma = tiers.medium.filter(c => c.continent === cont).length;
+  const tot = COUNTRIES_DB.filter(c => c.continent === cont).length;
+  rebalanceLog.push(
+    `${cont.padEnd(14)} | ${eb.toString().padStart(2)} (${((eb/42)*100).toFixed(1)}%) | ${ea.toString().padStart(2)} (${((ea/42)*100).toFixed(1)}%) | ${mb.toString().padStart(2)}        | ${ma.toString().padStart(2)} (${((ma/100)*100).toFixed(1)}%) | ${tot.toString().padStart(2)} (${((tot/195)*100).toFixed(1)}%)`
+  );
+}
+
+rebalanceLog.push('\nSUBREGION COUNTS ACROSS ALL 195 COUNTRIES:');
+const subCountsAll = {};
+COUNTRIES_DB.forEach(c => subCountsAll[c.subregion] = (subCountsAll[c.subregion] || 0) + 1);
+for (const [sub, cnt] of Object.entries(subCountsAll)) {
+  const inEasy = tiers.easy.filter(c => c.subregion === sub).length;
+  const inMed = tiers.medium.filter(c => c.subregion === sub).length;
+  rebalanceLog.push(`  ${sub.padEnd(30)}: Easy ${inEasy.toString().padStart(2)} | Med ${inMed.toString().padStart(2)} | All 195: ${cnt.toString().padStart(2)}`);
+}
+
+rebalanceLog.push('\nFULL SWAP LIST (OUT -> IN WITH POP_EST SCORE):');
+rebalanceLog.push('  EASY TIER SWAPS:');
+rebalanceLog.push('    SWAPPED OUT (7 nations):');
+rebalanceLog.push('      - Chile (CHL, South America, POP_EST: 19.6M)');
+rebalanceLog.push('      - Portugal (PRT, Europe, POP_EST: 10.4M)');
+rebalanceLog.push('      - Austria (AUT, Europe, POP_EST: 9.1M)');
+rebalanceLog.push('      - Switzerland (CHE, Europe, POP_EST: 8.9M)');
+rebalanceLog.push('      - Norway (NOR, Europe, POP_EST: 5.5M)');
+rebalanceLog.push('      - Ireland (IRL, Europe, POP_EST: 5.3M)');
+rebalanceLog.push('      - Iceland (ISL, Europe, POP_EST: 0.4M)');
+rebalanceLog.push('    SWAPPED IN (7 nations):');
+rebalanceLog.push('      - Ethiopia (ETH, Africa, POP_EST: 126.5M)');
+rebalanceLog.push('      - DR Congo (COD, Africa, POP_EST: 102.3M)');
+rebalanceLog.push('      - Tanzania (TZA, Africa, POP_EST: 65.5M)');
+rebalanceLog.push('      - Algeria (DZA, Africa, POP_EST: 45.6M)');
+rebalanceLog.push('      - Guatemala (GTM, North America, POP_EST: 18.0M)');
+rebalanceLog.push('      - Cuba (CUB, North America, POP_EST: 11.2M)');
+rebalanceLog.push('      - Papua New Guinea (PNG, Oceania, POP_EST: 10.3M)');
+
+rebalanceLog.push('\nNEW TIER MEMBERS LACKING FULL CLUE ITEMS (IN clues.json):');
+try {
+  const cluesData = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../data/clues.json'), 'utf8'));
+  const clueIsoCounts = {};
+  cluesData.forEach(c => clueIsoCounts[c.iso] = (clueIsoCounts[c.iso] || 0) + 1);
+  rebalanceLog.push('  Easy Tier (requires 15 items per nation):');
+  tiers.easy.forEach(c => {
+    const cnt = clueIsoCounts[c.code] || 0;
+    if (cnt < 15) {
+      rebalanceLog.push(`    - ${c.name} (${c.code}): currently ${cnt}/15 items (lacks ${15 - cnt} items)`);
+    }
+  });
+  rebalanceLog.push('  Medium-only Tier (requires 9 items per nation):');
+  tiers.medium.filter(c => c.tier === 'medium').forEach(c => {
+    const cnt = clueIsoCounts[c.code] || 0;
+    if (cnt < 9) {
+      rebalanceLog.push(`    - ${c.name} (${c.code}): currently ${cnt}/9 items (lacks ${9 - cnt} items)`);
+    }
+  });
+} catch (e) {
+  rebalanceLog.push('  Could not audit clues.json: ' + e.message);
+}
+
+fs.writeFileSync(path.join(logDir, 'tier_rebalance.txt'), rebalanceLog.join('\n'), 'utf8');
+
+const allTestsPassed = Object.values(testResults).length === 15 && Object.values(testResults).every(Boolean);
 log('================================================================================');
 if (allTestsPassed) {
-  log('✓ ALL 10 TESTS (T1 - T10) PASSED SUCCESSFULLY');
+  log(`✓ ALL 15 TESTS (T1 - T15) PASSED SUCCESSFULLY`);
 } else {
   log('✗ SOME TESTS FAILED');
   process.exit(1);
