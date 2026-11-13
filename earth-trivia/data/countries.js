@@ -39,7 +39,8 @@ export const COUNTRIES_DB = [
     "currency": "Japanese Yen (JPY, ¥)",
     "neighbors": [],
     "maritimeStatus": "Stratovolcanic Archipelago (6,852 islands)",
-    "fieldNotes": "Extends along the Pacific Rim of Fire with over 100 active volcanoes. Its forested mountainous terrain covers 73% of total land area, necessitating world-class subterranean transport and seismic engineering."
+    "fieldNotes": "Extends along the Pacific Rim of Fire with over 100 active volcanoes. Its forested mountainous terrain covers 73% of total land area, necessitating world-class subterranean transport and seismic engineering.",
+    "continent": "Asia"
   },
   {
     "name": "Egypt",
@@ -85,7 +86,8 @@ export const COUNTRIES_DB = [
       "Palestine"
     ],
     "maritimeStatus": "Dual-Sea Coastal (Mediterranean & Red Sea)",
-    "fieldNotes": "Home to the Nile River basin and the strategic Suez Canal connecting European and Asian maritime routes. Over 95% of its population inhabits the fertile strip flanking the world's longest river."
+    "fieldNotes": "Home to the Nile River basin and the strategic Suez Canal connecting European and Asian maritime routes. Over 95% of its population inhabits the fertile strip flanking the world's longest river.",
+    "continent": "Africa"
   },
   {
     "name": "Brazil",
@@ -136,7 +138,8 @@ export const COUNTRIES_DB = [
       "Venezuela"
     ],
     "maritimeStatus": "Atlantic Coastal (7,491 km coastline)",
-    "fieldNotes": "Encompasses roughly 60% of the Amazon Rainforest—the planet's richest biological repository—and produces one third of global coffee output across fertile southeastern highlands."
+    "fieldNotes": "Encompasses roughly 60% of the Amazon Rainforest—the planet's richest biological repository—and produces one third of global coffee output across fertile southeastern highlands.",
+    "continent": "South America"
   },
   {
     "name": "Australia",
@@ -177,7 +180,8 @@ export const COUNTRIES_DB = [
     "currency": "Australian Dollar (AUD, A$)",
     "neighbors": [],
     "maritimeStatus": "Island Continent / Megadiverse",
-    "fieldNotes": "The lowest, flattest, and oldest continental landmass on Earth. Isolation over 40 million years allowed unique marsupial biodiversity and the Great Barrier Reef ecosystem to evolve."
+    "fieldNotes": "The lowest, flattest, and oldest continental landmass on Earth. Isolation over 40 million years allowed unique marsupial biodiversity and the Great Barrier Reef ecosystem to evolve.",
+    "continent": "Oceania"
   },
   {
     "name": "Italy",
@@ -225,7 +229,8 @@ export const COUNTRIES_DB = [
       "Vatican City"
     ],
     "maritimeStatus": "Peninsular Mediterranean",
-    "fieldNotes": "Boasts 59 UNESCO World Heritage sites—the most of any nation on Earth. Its boot-shaped peninsula forms the geographic spine dividing the western and eastern Mediterranean basins."
+    "fieldNotes": "Boasts 59 UNESCO World Heritage sites—the most of any nation on Earth. Its boot-shaped peninsula forms the geographic spine dividing the western and eastern Mediterranean basins.",
+    "continent": "Europe"
   },
   {
     "name": "India",
@@ -275,7 +280,8 @@ export const COUNTRIES_DB = [
       "Myanmar"
     ],
     "maritimeStatus": "Indian Ocean Peninsula (7,516 km coastline)",
-    "fieldNotes": "The world's most populous nation and largest democracy. Defined geographically by the northern Himalayan ramparts, the fertile Indo-Gangetic plain, and the triangular peninsular Deccan plateau with sovereign territory uniting J&K, Ladakh, and Arunachal Pradesh."
+    "fieldNotes": "The world's most populous nation and largest democracy. Defined geographically by the northern Himalayan ramparts, the fertile Indo-Gangetic plain, and the triangular peninsular Deccan plateau with sovereign territory uniting J&K, Ladakh, and Arunachal Pradesh.",
+    "continent": "Asia"
   },
   {
     "name": "Peru",
@@ -324,7 +330,8 @@ export const COUNTRIES_DB = [
       "Chile"
     ],
     "maritimeStatus": "Pacific Coastal (Humboldt Current)",
-    "fieldNotes": "Encompasses three sharply contrasting natural regions: the hyper-arid coastal desert, the towering central Andes cordillera, and the vast Amazonian lowland rainforest."
+    "fieldNotes": "Encompasses three sharply contrasting natural regions: the hyper-arid coastal desert, the towering central Andes cordillera, and the vast Amazonian lowland rainforest.",
+    "continent": "South America"
   },
   {
     "name": "Canada",
@@ -368,7 +375,8 @@ export const COUNTRIES_DB = [
       "United States"
     ],
     "maritimeStatus": "Tri-Oceanic (Atlantic, Pacific, Arctic)",
-    "fieldNotes": "The second-largest country by land area with the world's longest coastline (202,080 km). Contains over 2 million freshwater lakes, holding 20% of the planet's surface freshwater."
+    "fieldNotes": "The second-largest country by land area with the world's longest coastline (202,080 km). Contains over 2 million freshwater lakes, holding 20% of the planet's surface freshwater.",
+    "continent": "North America"
   },
   {
     "name": "France",
@@ -418,7 +426,8 @@ export const COUNTRIES_DB = [
       "Andorra"
     ],
     "maritimeStatus": "Hexagonal Atlantic & Mediterranean",
-    "fieldNotes": "Acts as Western Europe's agricultural powerhouse and historic diplomatic nexus. Its overseas territories extend its exclusive economic zone across 11 million square kilometers of ocean."
+    "fieldNotes": "Acts as Western Europe's agricultural powerhouse and historic diplomatic nexus. Its overseas territories extend its exclusive economic zone across 11 million square kilometers of ocean.",
+    "continent": "Europe"
   },
   {
     "name": "Kenya",
@@ -466,7 +475,8 @@ export const COUNTRIES_DB = [
       "Uganda"
     ],
     "maritimeStatus": "Indian Ocean Coastal",
-    "fieldNotes": "Bisected directly by the Earth's equator and the Great Rift Valley. Serves as East Africa's economic, financial, and logistics epicenter with leading geothermal energy adoption."
+    "fieldNotes": "Bisected directly by the Earth's equator and the Great Rift Valley. Serves as East Africa's economic, financial, and logistics epicenter with leading geothermal energy adoption.",
+    "continent": "Africa"
   },
   {
     "name": "Iceland",
@@ -507,7 +517,8 @@ export const COUNTRIES_DB = [
     "currency": "Icelandic Króna (ISK, kr)",
     "neighbors": [],
     "maritimeStatus": "Mid-Atlantic Volcanic Island",
-    "fieldNotes": "Straddles the spreading boundary of the Eurasian and North American tectonic plates. Derives 100% of its electricity and district heating from renewable geothermal and hydro sources."
+    "fieldNotes": "Straddles the spreading boundary of the Eurasian and North American tectonic plates. Derives 100% of its electricity and district heating from renewable geothermal and hydro sources.",
+    "continent": "Europe"
   },
   {
     "name": "Mexico",
@@ -539,7 +550,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "United Mexican States (Estados Unidos Mexicanos)",
     "region": "Americas",
-    "subregion": "North America",
+    "subregion": "Central America",
     "population": 129000000,
     "areaKm2": 1964375,
     "languages": [
@@ -552,7 +563,8 @@ export const COUNTRIES_DB = [
       "Belize"
     ],
     "maritimeStatus": "Pacific & Gulf/Caribbean Coastal",
-    "fieldNotes": "The cradle of Mesoamerican civilizations including the Maya and Aztec empires. Features high central volcanic plateaus bounded by the Sierra Madre mountain systems."
+    "fieldNotes": "The cradle of Mesoamerican civilizations including the Maya and Aztec empires. Features high central volcanic plateaus bounded by the Sierra Madre mountain systems.",
+    "continent": "North America"
   },
   {
     "name": "Norway",
@@ -598,7 +610,8 @@ export const COUNTRIES_DB = [
       "Russia"
     ],
     "maritimeStatus": "Glaciated Fjord Coastline (Atlantic/Arctic)",
-    "fieldNotes": "Features deep sea fjords carved by Pleistocene glaciers. Holds the world's largest sovereign wealth fund funded by offshore petroleum while leading global electric vehicle adoption."
+    "fieldNotes": "Features deep sea fjords carved by Pleistocene glaciers. Holds the world's largest sovereign wealth fund funded by offshore petroleum while leading global electric vehicle adoption.",
+    "continent": "Europe"
   },
   {
     "name": "Greece",
@@ -644,7 +657,8 @@ export const COUNTRIES_DB = [
       "Turkey"
     ],
     "maritimeStatus": "Aegean & Ionian Archipelago (6,000 islands)",
-    "fieldNotes": "The philosophical, mathematical, and democratic foundation of Western civilization. Controls the world's largest commercial merchant shipping fleet by tonnage."
+    "fieldNotes": "The philosophical, mathematical, and democratic foundation of Western civilization. Controls the world's largest commercial merchant shipping fleet by tonnage.",
+    "continent": "Europe"
   },
   {
     "name": "South Africa",
@@ -692,7 +706,8 @@ export const COUNTRIES_DB = [
       "Zimbabwe"
     ],
     "maritimeStatus": "Cape Basin (Atlantic meets Indian Ocean)",
-    "fieldNotes": "Features three distinct capital cities (Pretoria, Cape Town, Bloemfontein). Its high central plateau (Highveld) hosts the world's deepest platinum and gold mineral reserves."
+    "fieldNotes": "Features three distinct capital cities (Pretoria, Cape Town, Bloemfontein). Its high central plateau (Highveld) hosts the world's deepest platinum and gold mineral reserves.",
+    "continent": "Africa"
   },
   {
     "name": "New Zealand",
@@ -735,7 +750,8 @@ export const COUNTRIES_DB = [
     "currency": "New Zealand Dollar (NZD, NZ$)",
     "neighbors": [],
     "maritimeStatus": "South Pacific Dual-Island Nation",
-    "fieldNotes": "Located on the submerged continent of Zealandia. Features dramatic alpine glaciated peaks, thermal geysers, and ancient Gondwanan podocarp rainforests."
+    "fieldNotes": "Located on the submerged continent of Zealandia. Features dramatic alpine glaciated peaks, thermal geysers, and ancient Gondwanan podocarp rainforests.",
+    "continent": "Oceania"
   },
   {
     "name": "Morocco",
@@ -781,7 +797,8 @@ export const COUNTRIES_DB = [
       "Spain (Ceuta/Melilla)"
     ],
     "maritimeStatus": "Strait of Gibraltar Coastal Gateway",
-    "fieldNotes": "Guards the 14-kilometer naval bottleneck connecting the Atlantic Ocean with the Mediterranean Sea. Holds over 70% of the world's proven phosphate reserves."
+    "fieldNotes": "Guards the 14-kilometer naval bottleneck connecting the Atlantic Ocean with the Mediterranean Sea. Holds over 70% of the world's proven phosphate reserves.",
+    "continent": "Africa"
   },
   {
     "name": "Switzerland",
@@ -831,7 +848,8 @@ export const COUNTRIES_DB = [
       "Liechtenstein"
     ],
     "maritimeStatus": "Landlocked Alpine Hydrological Tower",
-    "fieldNotes": "Maintains armed permanent neutrality recognized since 1815. Its high Alpine glaciers feed the headwaters of the Rhine, Rhône, Inn, and Ticino river systems."
+    "fieldNotes": "Maintains armed permanent neutrality recognized since 1815. Its high Alpine glaciers feed the headwaters of the Rhine, Rhône, Inn, and Ticino river systems.",
+    "continent": "Europe"
   },
   {
     "name": "Thailand",
@@ -877,7 +895,8 @@ export const COUNTRIES_DB = [
       "Malaysia"
     ],
     "maritimeStatus": "Gulf of Thailand & Andaman Sea Coastal",
-    "fieldNotes": "The only Southeast Asian nation never colonized by European powers. Anchored by the Chao Phraya river delta, making it a leading global exporter of rice and natural rubber."
+    "fieldNotes": "The only Southeast Asian nation never colonized by European powers. Anchored by the Chao Phraya river delta, making it a leading global exporter of rice and natural rubber.",
+    "continent": "Asia"
   },
   {
     "name": "Argentina",
@@ -924,7 +943,8 @@ export const COUNTRIES_DB = [
       "Uruguay"
     ],
     "maritimeStatus": "South Atlantic Maritime Gateway",
-    "fieldNotes": "Spans 3,700 km north to south from subtropical scrubland to subantarctic Tierra del Fuego. Contains Aconcagua (6,961 m), the highest peak outside the Himalayas."
+    "fieldNotes": "Spans 3,700 km north to south from subtropical scrubland to subantarctic Tierra del Fuego. Contains Aconcagua (6,961 m), the highest peak outside the Himalayas.",
+    "continent": "South America"
   },
   {
     "name": "United Kingdom",
@@ -967,7 +987,8 @@ export const COUNTRIES_DB = [
       "Ireland"
     ],
     "maritimeStatus": "North Atlantic Archipelagic State",
-    "fieldNotes": "Comprises four nations (England, Scotland, Wales, Northern Ireland). The birthplace of the Industrial Revolution and parliamentary constitutional democracy."
+    "fieldNotes": "Comprises four nations (England, Scotland, Wales, Northern Ireland). The birthplace of the Industrial Revolution and parliamentary constitutional democracy.",
+    "continent": "Europe"
   },
   {
     "name": "Germany",
@@ -1018,7 +1039,8 @@ export const COUNTRIES_DB = [
       "Netherlands"
     ],
     "maritimeStatus": "North Sea & Baltic Coastal",
-    "fieldNotes": "Europe's largest national economy and leading industrial engineering powerhouse. Traversed by the Rhine and Danube river commercial corridors."
+    "fieldNotes": "Europe's largest national economy and leading industrial engineering powerhouse. Traversed by the Rhine and Danube river commercial corridors.",
+    "continent": "Europe"
   },
   {
     "name": "Spain",
@@ -1068,7 +1090,8 @@ export const COUNTRIES_DB = [
       "Gibraltar"
     ],
     "maritimeStatus": "Iberian Atlantic & Mediterranean Peninsula",
-    "fieldNotes": "Dominates the Iberian Peninsula with extensive arid meseta plateaus. The world's largest olive oil producer and second-most visited tourist nation globally."
+    "fieldNotes": "Dominates the Iberian Peninsula with extensive arid meseta plateaus. The world's largest olive oil producer and second-most visited tourist nation globally.",
+    "continent": "Europe"
   },
   {
     "name": "United States",
@@ -1113,7 +1136,8 @@ export const COUNTRIES_DB = [
       "Mexico"
     ],
     "maritimeStatus": "Dual-Ocean Maritime Supercontinent",
-    "fieldNotes": "Composed of 50 states, a federal district, and overseas territories. Features the world's largest economy, spanning from subarctic Alaska to tropical Hawaii."
+    "fieldNotes": "Composed of 50 states, a federal district, and overseas territories. Features the world's largest economy, spanning from subarctic Alaska to tropical Hawaii.",
+    "continent": "North America"
   },
   {
     "name": "China",
@@ -1169,7 +1193,8 @@ export const COUNTRIES_DB = [
       "North Korea"
     ],
     "maritimeStatus": "East & South China Sea Coastal",
-    "fieldNotes": "Extends across five geographical tiers from the Tibetan 'Roof of the World' down to Pacific coastal plains. The world's largest manufacturing powerhouse."
+    "fieldNotes": "Extends across five geographical tiers from the Tibetan 'Roof of the World' down to Pacific coastal plains. The world's largest manufacturing powerhouse.",
+    "continent": "Asia"
   },
   {
     "name": "Russia",
@@ -1201,7 +1226,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Russian Federation (Rossiyskaya Federatsiya)",
     "region": "Europe",
-    "subregion": "Eastern Europe / Northern Asia",
+    "subregion": "Eastern Europe",
     "population": 144200000,
     "areaKm2": 17098246,
     "languages": [
@@ -1225,7 +1250,8 @@ export const COUNTRIES_DB = [
       "North Korea"
     ],
     "maritimeStatus": "Tri-Oceanic Eurasian Landmass (11 time zones)",
-    "fieldNotes": "The world's largest country by geographic land area, covering over one eighth of Earth's inhabited land area and containing Lake Baikal, the deepest freshwater lake."
+    "fieldNotes": "The world's largest country by geographic land area, covering over one eighth of Earth's inhabited land area and containing Lake Baikal, the deepest freshwater lake.",
+    "continent": "Europe"
   },
   {
     "name": "Turkey",
@@ -1257,7 +1283,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Republic of Türkiye",
     "region": "Asia",
-    "subregion": "Western Asia / Southeastern Europe",
+    "subregion": "Western Asia",
     "population": 85300000,
     "areaKm2": 783562,
     "languages": [
@@ -1275,7 +1301,8 @@ export const COUNTRIES_DB = [
       "Syria"
     ],
     "maritimeStatus": "Transcontinental Bosporus / Black & Mediterranean Seas",
-    "fieldNotes": "Controls the Turkish Straits (Bosphorus and Dardanelles), the vital naval link between the Black Sea and the Mediterranean. Acts as an ancient transcontinental bridge."
+    "fieldNotes": "Controls the Turkish Straits (Bosphorus and Dardanelles), the vital naval link between the Black Sea and the Mediterranean. Acts as an ancient transcontinental bridge.",
+    "continent": "Asia"
   },
   {
     "name": "Vietnam",
@@ -1320,7 +1347,8 @@ export const COUNTRIES_DB = [
       "Cambodia"
     ],
     "maritimeStatus": "South China Sea S-Curved Littoral (3,260 km)",
-    "fieldNotes": "Features an S-shaped coastline flanking the Annamite Range. Anchored by the fertile agricultural basins of the Red River Delta in the north and Mekong Delta in the south."
+    "fieldNotes": "Features an S-shaped coastline flanking the Annamite Range. Anchored by the fertile agricultural basins of the Red River Delta in the north and Mekong Delta in the south.",
+    "continent": "Asia"
   },
   {
     "name": "South Korea",
@@ -1363,7 +1391,8 @@ export const COUNTRIES_DB = [
       "North Korea"
     ],
     "maritimeStatus": "Yellow Sea & Sea of Japan Peninsula",
-    "fieldNotes": "Occupies the southern half of the Korean Peninsula. World leader in semiconductor technology, shipbuilding, and consumer electronics, centered around the Seoul capital region."
+    "fieldNotes": "Occupies the southern half of the Korean Peninsula. World leader in semiconductor technology, shipbuilding, and consumer electronics, centered around the Seoul capital region.",
+    "continent": "Asia"
   },
   {
     "name": "Netherlands",
@@ -1407,7 +1436,8 @@ export const COUNTRIES_DB = [
       "Belgium"
     ],
     "maritimeStatus": "North Sea Rhine Delta / Polder Coastal",
-    "fieldNotes": "Over 26% of its territory lies below mean sea level, protected by the Zuiderzee Works and Delta Works mega-engineering dams. Hosts Europe's busiest seaport at Rotterdam."
+    "fieldNotes": "Over 26% of its territory lies below mean sea level, protected by the Zuiderzee Works and Delta Works mega-engineering dams. Hosts Europe's busiest seaport at Rotterdam.",
+    "continent": "Europe"
   },
   {
     "name": "Sweden",
@@ -1451,7 +1481,8 @@ export const COUNTRIES_DB = [
       "Finland"
     ],
     "maritimeStatus": "Baltic Coastal & Skagerrak Littoral",
-    "fieldNotes": "Covered by boreal taiga forests (69%) and over 100,000 lakes. Known for pioneering social welfare models, green steel innovation, and deep engineering design heritage."
+    "fieldNotes": "Covered by boreal taiga forests (69%) and over 100,000 lakes. Known for pioneering social welfare models, green steel innovation, and deep engineering design heritage.",
+    "continent": "Europe"
   },
   {
     "name": "Portugal",
@@ -1494,7 +1525,8 @@ export const COUNTRIES_DB = [
       "Spain"
     ],
     "maritimeStatus": "Atlantic Continental Shelf Gateway",
-    "fieldNotes": "The westernmost nation of mainland Europe. Pioneered the Age of Discovery maritime navigation routes and is the world's leading producer of commercial oak cork bark."
+    "fieldNotes": "The westernmost nation of mainland Europe. Pioneered the Age of Discovery maritime navigation routes and is the world's leading producer of commercial oak cork bark.",
+    "continent": "Europe"
   },
   {
     "name": "Indonesia",
@@ -1539,7 +1571,8 @@ export const COUNTRIES_DB = [
       "Timor-Leste"
     ],
     "maritimeStatus": "World's Largest Archipelagic State (17,508 islands)",
-    "fieldNotes": "Spans 5,100 km across the equator between the Indian and Pacific Oceans. Home to the Wallace Line separating Asian and Australasian evolutionary fauna."
+    "fieldNotes": "Spans 5,100 km across the equator between the Indian and Pacific Oceans. Home to the Wallace Line separating Asian and Australasian evolutionary fauna.",
+    "continent": "Asia"
   },
   {
     "name": "Colombia",
@@ -1586,7 +1619,8 @@ export const COUNTRIES_DB = [
       "Ecuador"
     ],
     "maritimeStatus": "Dual-Ocean Coastal (Pacific & Caribbean)",
-    "fieldNotes": "The only South American country with coastlines on both the Pacific and Atlantic (Caribbean) Oceans. Second most biodiverse country on Earth per square kilometer."
+    "fieldNotes": "The only South American country with coastlines on both the Pacific and Atlantic (Caribbean) Oceans. Second most biodiverse country on Earth per square kilometer.",
+    "continent": "South America"
   },
   {
     "name": "Chile",
@@ -1631,7 +1665,8 @@ export const COUNTRIES_DB = [
       "Peru"
     ],
     "maritimeStatus": "Pacific Ribbon Littoral (4,270 km long, 177 km avg width)",
-    "fieldNotes": "The longest north-to-south country in the world. Encompasses the Atacama Desert—the driest non-polar desert on Earth—and the glaciated fjords of Patagonia."
+    "fieldNotes": "The longest north-to-south country in the world. Encompasses the Atacama Desert—the driest non-polar desert on Earth—and the glaciated fjords of Patagonia.",
+    "continent": "South America"
   },
   {
     "name": "Austria",
@@ -1663,7 +1698,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Republic of Austria (Republik Österreich)",
     "region": "Europe",
-    "subregion": "Central Europe",
+    "subregion": "Western Europe",
     "population": 9100000,
     "areaKm2": 83871,
     "languages": [
@@ -1681,7 +1716,8 @@ export const COUNTRIES_DB = [
       "Liechtenstein"
     ],
     "maritimeStatus": "Landlocked Alpine & Danubian",
-    "fieldNotes": "A predominantly mountainous country dominated by the Central Eastern Alps. Long served as the imperial Habsburg political nexus of Central Europe along the Danube."
+    "fieldNotes": "A predominantly mountainous country dominated by the Central Eastern Alps. Long served as the imperial Habsburg political nexus of Central Europe along the Danube.",
+    "continent": "Europe"
   },
   {
     "name": "Belgium",
@@ -1729,7 +1765,8 @@ export const COUNTRIES_DB = [
       "France"
     ],
     "maritimeStatus": "North Sea Coastal & Estuarine",
-    "fieldNotes": "Straddles the Germanic and Latin cultural boundary. Serves as the headquarters for the European Union and NATO in Brussels."
+    "fieldNotes": "Straddles the Germanic and Latin cultural boundary. Serves as the headquarters for the European Union and NATO in Brussels.",
+    "continent": "Europe"
   },
   {
     "name": "Ireland",
@@ -1773,7 +1810,8 @@ export const COUNTRIES_DB = [
       "United Kingdom"
     ],
     "maritimeStatus": "North Atlantic Island Nation",
-    "fieldNotes": "Known as the Emerald Isle due to its lush pastoral landscape sustained by the North Atlantic Current. Major European headquarters for global technology and pharmaceutical enterprises."
+    "fieldNotes": "Known as the Emerald Isle due to its lush pastoral landscape sustained by the North Atlantic Current. Major European headquarters for global technology and pharmaceutical enterprises.",
+    "continent": "Europe"
   },
   {
     "name": "Poland",
@@ -1805,7 +1843,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Republic of Poland (Rzeczpospolita Polska)",
     "region": "Europe",
-    "subregion": "Central Europe",
+    "subregion": "Eastern Europe",
     "population": 36700000,
     "areaKm2": 312696,
     "languages": [
@@ -1822,7 +1860,8 @@ export const COUNTRIES_DB = [
       "Russia"
     ],
     "maritimeStatus": "Baltic Sea Coastal",
-    "fieldNotes": "Occupies the North European Plain between the Baltic Sea and the Carpathian Mountains. The sixth-largest economy in the EU, centered on the Vistula river basin."
+    "fieldNotes": "Occupies the North European Plain between the Baltic Sea and the Carpathian Mountains. The sixth-largest economy in the EU, centered on the Vistula river basin.",
+    "continent": "Europe"
   },
   {
     "name": "Malaysia",
@@ -1867,7 +1906,8 @@ export const COUNTRIES_DB = [
       "Brunei"
     ],
     "maritimeStatus": "Strait of Malacca & South China Sea Maritime",
-    "fieldNotes": "Separated into Peninsular Malaysia and Malaysian Borneo by the South China Sea. Controls navigation flanking the Strait of Malacca, the world's busiest maritime oil transit choke point."
+    "fieldNotes": "Separated into Peninsular Malaysia and Malaysian Borneo by the South China Sea. Controls navigation flanking the Strait of Malacca, the world's busiest maritime oil transit choke point.",
+    "continent": "Asia"
   },
   {
     "name": "Singapore",
@@ -1911,7 +1951,8 @@ export const COUNTRIES_DB = [
     "currency": "Singapore Dollar (SGD, S$)",
     "neighbors": [],
     "maritimeStatus": "Equatorial Island City-State",
-    "fieldNotes": "A highly urbanized global trade, financial, and automated maritime hub. Expanded its physical land area by over 25% through innovative land reclamation since independence."
+    "fieldNotes": "A highly urbanized global trade, financial, and automated maritime hub. Expanded its physical land area by over 25% through innovative land reclamation since independence.",
+    "continent": "Asia"
   },
   {
     "name": "Saudi Arabia",
@@ -1960,7 +2001,8 @@ export const COUNTRIES_DB = [
       "Yemen"
     ],
     "maritimeStatus": "Red Sea & Persian Gulf Littoral",
-    "fieldNotes": "Occupies roughly 80% of the Arabian Peninsula. Holds 17% of the world's proven petroleum reserves and houses Islam's two holiest sanctuaries at Mecca and Medina."
+    "fieldNotes": "Occupies roughly 80% of the Arabian Peninsula. Holds 17% of the world's proven petroleum reserves and houses Islam's two holiest sanctuaries at Mecca and Medina.",
+    "continent": "Asia"
   },
   {
     "name": "United Arab Emirates",
@@ -2004,7 +2046,8 @@ export const COUNTRIES_DB = [
       "Oman"
     ],
     "maritimeStatus": "Persian Gulf & Gulf of Oman Coastal",
-    "fieldNotes": "A federation of seven hereditary monarchies (emirates) anchored by Abu Dhabi and Dubai. Evolved into an international aviation crossroads and financial capital."
+    "fieldNotes": "A federation of seven hereditary monarchies (emirates) anchored by Abu Dhabi and Dubai. Evolved into an international aviation crossroads and financial capital.",
+    "continent": "Asia"
   },
   {
     "name": "Nigeria",
@@ -2050,7 +2093,8 @@ export const COUNTRIES_DB = [
       "Cameroon"
     ],
     "maritimeStatus": "Gulf of Guinea Atlantic Coastal",
-    "fieldNotes": "Africa's most populous nation, housing over 250 distinct ethnic groups. Anchored economically by the Niger Delta oil basin and the megacity of Lagos."
+    "fieldNotes": "Africa's most populous nation, housing over 250 distinct ethnic groups. Anchored economically by the Niger Delta oil basin and the megacity of Lagos.",
+    "continent": "Africa"
   },
   {
     "name": "Ecuador",
@@ -2096,7 +2140,8 @@ export const COUNTRIES_DB = [
       "Peru"
     ],
     "maritimeStatus": "Pacific Coastal & Galápagos Archipelago",
-    "fieldNotes": "Named for the Equator that crosses it. Its sovereign Galápagos Islands served as Charles Darwin's living laboratory for evolutionary natural selection."
+    "fieldNotes": "Named for the Equator that crosses it. Its sovereign Galápagos Islands served as Charles Darwin's living laboratory for evolutionary natural selection.",
+    "continent": "South America"
   },
   {
     "name": "Croatia",
@@ -2143,7 +2188,8 @@ export const COUNTRIES_DB = [
       "Montenegro"
     ],
     "maritimeStatus": "Adriatic Karst Coastline (1,244 islands)",
-    "fieldNotes": "Features a dramatic Dalmatian karst coastline formed of dissolved limestone. Famous for Plitvice Lakes cascading terraced pools and Venetian fortified ports."
+    "fieldNotes": "Features a dramatic Dalmatian karst coastline formed of dissolved limestone. Famous for Plitvice Lakes cascading terraced pools and Venetian fortified ports.",
+    "continent": "Europe"
   },
   {
     "name": "Czechia",
@@ -2175,7 +2221,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Czech Republic (Česká republika)",
     "region": "Europe",
-    "subregion": "Central Europe",
+    "subregion": "Eastern Europe",
     "population": 10800000,
     "areaKm2": 78866,
     "languages": [
@@ -2189,7 +2235,8 @@ export const COUNTRIES_DB = [
       "Austria"
     ],
     "maritimeStatus": "Landlocked Bohemian Basin",
-    "fieldNotes": "Surrounded by low mountain ranges enclosing the fertile Bohemian and Moravian river basins. Has the highest beer consumption per capita in the world."
+    "fieldNotes": "Surrounded by low mountain ranges enclosing the fertile Bohemian and Moravian river basins. Has the highest beer consumption per capita in the world.",
+    "continent": "Europe"
   },
   {
     "name": "Hungary",
@@ -2221,7 +2268,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Hungary (Magyarország)",
     "region": "Europe",
-    "subregion": "Central Europe",
+    "subregion": "Eastern Europe",
     "population": 9600000,
     "areaKm2": 93028,
     "languages": [
@@ -2238,7 +2285,8 @@ export const COUNTRIES_DB = [
       "Slovenia"
     ],
     "maritimeStatus": "Landlocked Pannonian Basin",
-    "fieldNotes": "Occupies the flat plains of the Carpathian Basin bisected by the Danube River. Renowned for its rich subterranean thermal springs and Lake Balaton."
+    "fieldNotes": "Occupies the flat plains of the Carpathian Basin bisected by the Danube River. Renowned for its rich subterranean thermal springs and Lake Balaton.",
+    "continent": "Europe"
   },
   {
     "name": "Denmark",
@@ -2281,7 +2329,8 @@ export const COUNTRIES_DB = [
       "Germany"
     ],
     "maritimeStatus": "Jutland Peninsula & Archipelago (443 islands)",
-    "fieldNotes": "Controls the Danish Straits linking the North Sea to the Baltic Sea. World pioneer in offshore wind turbine technology, generating over 50% of its electricity from wind."
+    "fieldNotes": "Controls the Danish Straits linking the North Sea to the Baltic Sea. World pioneer in offshore wind turbine technology, generating over 50% of its electricity from wind.",
+    "continent": "Europe"
   },
   {
     "name": "Finland",
@@ -2327,7 +2376,8 @@ export const COUNTRIES_DB = [
       "Russia"
     ],
     "maritimeStatus": "Baltic Sea & Gulf of Bothnia Coastal",
-    "fieldNotes": "Known as the Land of a Thousand Lakes (contains 188,000 lakes). Over 75% forested, Finland consistently ranks as the happiest nation in the world."
+    "fieldNotes": "Known as the Land of a Thousand Lakes (contains 188,000 lakes). Over 75% forested, Finland consistently ranks as the happiest nation in the world.",
+    "continent": "Europe"
   },
   {
     "id": "400",
@@ -2373,7 +2423,8 @@ export const COUNTRIES_DB = [
       "Saudi Arabia"
     ],
     "maritimeStatus": "Aqaba Gulf Red Sea Outlet (26 km coast)",
-    "fieldNotes": "Home to the rose-red rock-cut Nabataean city of Petra and the Dead Sea—the lowest land elevation on Earth at 430 meters below sea level."
+    "fieldNotes": "Home to the rose-red rock-cut Nabataean city of Petra and the Dead Sea—the lowest land elevation on Earth at 430 meters below sea level.",
+    "continent": "Asia"
   },
   {
     "id": "524",
@@ -2416,7 +2467,8 @@ export const COUNTRIES_DB = [
       "India"
     ],
     "maritimeStatus": "Landlocked Himalayan Highland",
-    "fieldNotes": "Contains eight of the world's ten highest mountain peaks, including Mount Everest (Sagarmatha) at 8,848.86 meters. Features dramatic bioclimatic zones from tropical plains to arctic tundra."
+    "fieldNotes": "Contains eight of the world's ten highest mountain peaks, including Mount Everest (Sagarmatha) at 8,848.86 meters. Features dramatic bioclimatic zones from tropical plains to arctic tundra.",
+    "continent": "Asia"
   },
   {
     "id": "450",
@@ -2457,7 +2509,8 @@ export const COUNTRIES_DB = [
     "currency": "Malagasy Ariary (MGA, Ar)",
     "neighbors": [],
     "maritimeStatus": "World's 4th Largest Island (Indian Ocean)",
-    "fieldNotes": "Isolated from continental landmasses for roughly 88 million years, leading over 90% of its native flora and fauna—including lemurs and baobabs—to be found nowhere else."
+    "fieldNotes": "Isolated from continental landmasses for roughly 88 million years, leading over 90% of its native flora and fauna—including lemurs and baobabs—to be found nowhere else.",
+    "continent": "Africa"
   },
   {
     "id": "192",
@@ -2497,7 +2550,8 @@ export const COUNTRIES_DB = [
     "currency": "Cuban Peso (CUP, $)",
     "neighbors": [],
     "maritimeStatus": "Largest Caribbean Island State",
-    "fieldNotes": "Guards the maritime entrance to the Gulf of Mexico. Renowned for its rich musical heritage (Son cubano), vintage automobiles, and biodiverse coral reef systems."
+    "fieldNotes": "Guards the maritime entrance to the Gulf of Mexico. Renowned for its rich musical heritage (Son cubano), vintage automobiles, and biodiverse coral reef systems.",
+    "continent": "North America"
   },
   {
     "id": "608",
@@ -2538,7 +2592,8 @@ export const COUNTRIES_DB = [
     "currency": "Philippine Peso (PHP, ₱)",
     "neighbors": [],
     "maritimeStatus": "Archipelago of 7,641 Islands (Western Pacific)",
-    "fieldNotes": "Located along the Pacific Ring of Fire and Typhoon Belt. Contains the world's second-deepest oceanic trench (Philippine Trench) and immense marine coral biodiversity."
+    "fieldNotes": "Located along the Pacific Ring of Fire and Typhoon Belt. Contains the world's second-deepest oceanic trench (Philippine Trench) and immense marine coral biodiversity.",
+    "continent": "Asia"
   },
   {
     "id": "804",
@@ -2586,7 +2641,8 @@ export const COUNTRIES_DB = [
       "Moldova"
     ],
     "maritimeStatus": "Black Sea & Sea of Azov Littoral",
-    "fieldNotes": "The largest nation entirely within Europe. Renowned as the breadbasket of Europe due to its rich black chernozem soil, producing major global grain and sunflower oil harvests."
+    "fieldNotes": "The largest nation entirely within Europe. Renowned as the breadbasket of Europe due to its rich black chernozem soil, producing major global grain and sunflower oil harvests.",
+    "continent": "Europe"
   },
   {
     "id": "858",
@@ -2629,7 +2685,8 @@ export const COUNTRIES_DB = [
       "Argentina"
     ],
     "maritimeStatus": "Río de la Plata & South Atlantic Coastal",
-    "fieldNotes": "Features rolling plains (pampas) ideal for cattle ranching. Generates over 98% of its electricity from renewable sources (wind, hydro, and solar)."
+    "fieldNotes": "Features rolling plains (pampas) ideal for cattle ranching. Generates over 98% of its electricity from renewable sources (wind, hydro, and solar).",
+    "continent": "South America"
   },
   {
     "id": "188",
@@ -2672,7 +2729,8 @@ export const COUNTRIES_DB = [
       "Panama"
     ],
     "maritimeStatus": "Dual-Coast Central American Isthmus",
-    "fieldNotes": "Abolished its standing army in 1948. Houses roughly 5% of the planet's total biodiversity within its protected national parks and biological reserves."
+    "fieldNotes": "Abolished its standing army in 1948. Houses roughly 5% of the planet's total biodiversity within its protected national parks and biological reserves.",
+    "continent": "North America"
   },
   {
     "id": "496",
@@ -2715,7 +2773,8 @@ export const COUNTRIES_DB = [
       "China"
     ],
     "maritimeStatus": "Landlocked Steppe & Gobi Desert",
-    "fieldNotes": "The world's second-largest landlocked country and most sparsely populated sovereign state, with endless grassy steppes and nomadic pastoralist traditions."
+    "fieldNotes": "The world's second-largest landlocked country and most sparsely populated sovereign state, with endless grassy steppes and nomadic pastoralist traditions.",
+    "continent": "Asia"
   },
   {
     "id": "144",
@@ -2756,7 +2815,8 @@ export const COUNTRIES_DB = [
     "currency": "Sri Lankan Rupee (LKR, Rs)",
     "neighbors": [],
     "maritimeStatus": "Indian Ocean Island Nation (Tear of India)",
-    "fieldNotes": "Situated along vital Indian Ocean east-west shipping lanes. Celebrated for high-altitude Ceylon tea estates, cinnamon spice origin, and ancient hydraulic tanks."
+    "fieldNotes": "Situated along vital Indian Ocean east-west shipping lanes. Celebrated for high-altitude Ceylon tea estates, cinnamon spice origin, and ancient hydraulic tanks.",
+    "continent": "Asia"
   },
   {
     "id": "268",
@@ -2787,7 +2847,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Georgia (Sakartvelo)",
     "region": "Asia",
-    "subregion": "Western Asia / Caucasus",
+    "subregion": "Western Asia",
     "population": 3700000,
     "areaKm2": 69700,
     "languages": [
@@ -2801,7 +2861,8 @@ export const COUNTRIES_DB = [
       "Azerbaijan"
     ],
     "maritimeStatus": "Black Sea Littoral",
-    "fieldNotes": "The recognized birthplace of viticulture, with 8,000 years of unbroken subterranean clay vessel (qvevri) winemaking traditions amid the Greater Caucasus ranges."
+    "fieldNotes": "The recognized birthplace of viticulture, with 8,000 years of unbroken subterranean clay vessel (qvevri) winemaking traditions amid the Greater Caucasus ranges.",
+    "continent": "Asia"
   },
   {
     "id": "591",
@@ -2844,7 +2905,8 @@ export const COUNTRIES_DB = [
       "Colombia"
     ],
     "maritimeStatus": "Interoceanic Continental Isthmus",
-    "fieldNotes": "Connects North and South America. Its 82-kilometer Panama Canal handles approximately 5% of global maritime commerce through gravity-fed freshwater lock systems."
+    "fieldNotes": "Connects North and South America. Its 82-kilometer Panama Canal handles approximately 5% of global maritime commerce through gravity-fed freshwater lock systems.",
+    "continent": "North America"
   },
   {
     "id": "642",
@@ -2890,7 +2952,8 @@ export const COUNTRIES_DB = [
       "Hungary"
     ],
     "maritimeStatus": "Black Sea & Danube Delta Coastal",
-    "fieldNotes": "Contains Europe's largest virgin forest ecosystems and brown bear population within the sweeping arc of the Carpathian Mountains."
+    "fieldNotes": "Contains Europe's largest virgin forest ecosystems and brown bear population within the sweeping arc of the Carpathian Mountains.",
+    "continent": "Europe"
   },
   {
     "id": "688",
@@ -2939,7 +3002,8 @@ export const COUNTRIES_DB = [
       "Croatia"
     ],
     "maritimeStatus": "Landlocked Danubian Crossroads",
-    "fieldNotes": "Located at the geopolitical crossroads of Central and Southeast Europe. The confluence of the Danube and Sava rivers anchors its historic capital Belgrade."
+    "fieldNotes": "Located at the geopolitical crossroads of Central and Southeast Europe. The confluence of the Danube and Sava rivers anchors its historic capital Belgrade.",
+    "continent": "Europe"
   },
   {
     "id": "703",
@@ -2970,7 +3034,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Slovak Republic (Slovenská republika)",
     "region": "Europe",
-    "subregion": "Central Europe",
+    "subregion": "Eastern Europe",
     "population": 5430000,
     "areaKm2": 49035,
     "languages": [
@@ -2985,7 +3049,8 @@ export const COUNTRIES_DB = [
       "Austria"
     ],
     "maritimeStatus": "Landlocked Tatra Mountain Realm",
-    "fieldNotes": "Features the dramatic High Tatras alpine peaks and hundreds of karst caves. The world's largest producer of automobiles per capita."
+    "fieldNotes": "Features the dramatic High Tatras alpine peaks and hundreds of karst caves. The world's largest producer of automobiles per capita.",
+    "continent": "Europe"
   },
   {
     "id": "705",
@@ -3016,7 +3081,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Republic of Slovenia (Republika Slovenija)",
     "region": "Europe",
-    "subregion": "Central Europe",
+    "subregion": "Southern Europe",
     "population": 2110000,
     "areaKm2": 20273,
     "languages": [
@@ -3030,7 +3095,8 @@ export const COUNTRIES_DB = [
       "Croatia"
     ],
     "maritimeStatus": "Adriatic Coastal Pocket (46 km coastline)",
-    "fieldNotes": "The intersection of the Alps, the Mediterranean, and the Pannonian Plain. Over 60% forested with world-famous underground karst chambers like Postojna."
+    "fieldNotes": "The intersection of the Alps, the Mediterranean, and the Pannonian Plain. Over 60% forested with world-famous underground karst chambers like Postojna.",
+    "continent": "Europe"
   },
   {
     "id": "100",
@@ -3061,7 +3127,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Republic of Bulgaria (Republika Balgariya)",
     "region": "Europe",
-    "subregion": "Southeast Europe",
+    "subregion": "Eastern Europe",
     "population": 6450000,
     "areaKm2": 110879,
     "languages": [
@@ -3076,7 +3142,8 @@ export const COUNTRIES_DB = [
       "Turkey"
     ],
     "maritimeStatus": "Black Sea Coastal",
-    "fieldNotes": "The historic cradle of the Cyrillic alphabet. Famous for the Valley of Roses, supplying the majority of the world's luxury damask rose attar oil."
+    "fieldNotes": "The historic cradle of the Cyrillic alphabet. Famous for the Valley of Roses, supplying the majority of the world's luxury damask rose attar oil.",
+    "continent": "Europe"
   },
   {
     "id": "233",
@@ -3119,7 +3186,8 @@ export const COUNTRIES_DB = [
       "Russia"
     ],
     "maritimeStatus": "Baltic Sea & Gulf of Finland Coastal (2,222 islands)",
-    "fieldNotes": "The most digitally advanced society in the world, with 99% of public government services accessible online 24/7. Nearly half its territory is covered by boreal forests."
+    "fieldNotes": "The most digitally advanced society in the world, with 99% of public government services accessible online 24/7. Nearly half its territory is covered by boreal forests.",
+    "continent": "Europe"
   },
   {
     "id": "428",
@@ -3164,7 +3232,8 @@ export const COUNTRIES_DB = [
       "Belarus"
     ],
     "maritimeStatus": "Baltic Sea & Gulf of Riga Littoral",
-    "fieldNotes": "Features 500 kilometers of white sand Baltic coastline and extensive peat bogs. Its capital Riga boasts Europe's highest concentration of Art Nouveau architecture."
+    "fieldNotes": "Features 500 kilometers of white sand Baltic coastline and extensive peat bogs. Its capital Riga boasts Europe's highest concentration of Art Nouveau architecture.",
+    "continent": "Europe"
   },
   {
     "id": "440",
@@ -3209,7 +3278,8 @@ export const COUNTRIES_DB = [
       "Russia (Kaliningrad)"
     ],
     "maritimeStatus": "Baltic Coastal & Curonian Lagoon",
-    "fieldNotes": "Home to the Curonian Spit sand dunes and the historic Grand Duchy legacy. Its language is the oldest surviving Indo-European tongue retaining ancient grammatical archaisms."
+    "fieldNotes": "Home to the Curonian Spit sand dunes and the historic Grand Duchy legacy. Its language is the oldest surviving Indo-European tongue retaining ancient grammatical archaisms.",
+    "continent": "Europe"
   },
   {
     "id": "398",
@@ -3256,7 +3326,8 @@ export const COUNTRIES_DB = [
       "Turkmenistan"
     ],
     "maritimeStatus": "World's Largest Landlocked Nation / Caspian Littoral",
-    "fieldNotes": "Spans from the Caspian Sea to the Altai Mountains. Houses the Baikonur Cosmodrome—the world's first and largest operational space launch facility."
+    "fieldNotes": "Spans from the Caspian Sea to the Altai Mountains. Houses the Baikonur Cosmodrome—the world's first and largest operational space launch facility.",
+    "continent": "Asia"
   },
   {
     "id": "860",
@@ -3302,7 +3373,8 @@ export const COUNTRIES_DB = [
       "Turkmenistan"
     ],
     "maritimeStatus": "Doubly Landlocked Sovereign State",
-    "fieldNotes": "One of only two doubly-landlocked countries globally (along with Liechtenstein). Preserves the legendary Silk Road turquoise-domed cities of Samarkand and Bukhara."
+    "fieldNotes": "One of only two doubly-landlocked countries globally (along with Liechtenstein). Preserves the legendary Silk Road turquoise-domed cities of Samarkand and Bukhara.",
+    "continent": "Asia"
   },
   {
     "id": "586",
@@ -3348,7 +3420,8 @@ export const COUNTRIES_DB = [
       "India"
     ],
     "maritimeStatus": "Arabian Sea Coastal Littoral",
-    "fieldNotes": "Traversed by the Indus River system from the Karakoram mountain crest down to the Arabian Sea port of Karachi. Home to ancient Indus Valley sites such as Mohenjo-daro."
+    "fieldNotes": "Traversed by the Indus River system from the Karakoram mountain crest down to the Arabian Sea port of Karachi. Home to ancient Indus Valley sites such as Mohenjo-daro.",
+    "continent": "Asia"
   },
   {
     "id": "050",
@@ -3391,7 +3464,8 @@ export const COUNTRIES_DB = [
       "Myanmar"
     ],
     "maritimeStatus": "Bay of Bengal Coastal Delta",
-    "fieldNotes": "Forms the largest river delta in the world (Ganges-Brahmaputra-Meghna). Houses the Sundarbans mangrove forest, the world's largest contiguous mangrove habitat."
+    "fieldNotes": "Forms the largest river delta in the world (Ganges-Brahmaputra-Meghna). Houses the Sundarbans mangrove forest, the world's largest contiguous mangrove habitat.",
+    "continent": "Asia"
   },
   {
     "id": "834",
@@ -3441,7 +3515,8 @@ export const COUNTRIES_DB = [
       "Mozambique"
     ],
     "maritimeStatus": "Indian Ocean Littoral & Zanzibar Archipelago",
-    "fieldNotes": "Contains Africa's highest peak (Mount Kilimanjaro at 5,895 m), its lowest point (Lake Tanganyika), and the world-famous Serengeti wildlife migration corridor."
+    "fieldNotes": "Contains Africa's highest peak (Mount Kilimanjaro at 5,895 m), its lowest point (Lake Tanganyika), and the world-famous Serengeti wildlife migration corridor.",
+    "continent": "Africa"
   },
   {
     "id": "116",
@@ -3485,7 +3560,8 @@ export const COUNTRIES_DB = [
       "Vietnam"
     ],
     "maritimeStatus": "Gulf of Thailand Coastal",
-    "fieldNotes": "Centered around the fertile Tonle Sap freshwater lake basin, which expands dramatically during seasonal monsoons. Home to the Angkor Wat temple complex."
+    "fieldNotes": "Centered around the fertile Tonle Sap freshwater lake basin, which expands dramatically during seasonal monsoons. Home to the Angkor Wat temple complex.",
+    "continent": "Asia"
   },
   {
     "id": "231",
@@ -3535,7 +3611,8 @@ export const COUNTRIES_DB = [
       "Sudan"
     ],
     "maritimeStatus": "Landlocked Horn of Africa Highland",
-    "fieldNotes": "One of the oldest sovereign nations on Earth and the only African nation to defeat European colonization attempts. The evolutionary cradle of Arabica coffee."
+    "fieldNotes": "One of the oldest sovereign nations on Earth and the only African nation to defeat European colonization attempts. The evolutionary cradle of Arabica coffee.",
+    "continent": "Africa"
   },
   {
     "id": "068",
@@ -3584,7 +3661,8 @@ export const COUNTRIES_DB = [
       "Peru"
     ],
     "maritimeStatus": "Landlocked Andean Highland & Amazon Basin",
-    "fieldNotes": "Holds the world's largest salt flat (Salar de Uyuni) containing massive lithium reserves. Its administrative seat La Paz sits at 3,640 meters altitude."
+    "fieldNotes": "Holds the world's largest salt flat (Salar de Uyuni) containing massive lithium reserves. Its administrative seat La Paz sits at 3,640 meters altitude.",
+    "continent": "South America"
   },
   {
     "id": "288",
@@ -3628,7 +3706,8 @@ export const COUNTRIES_DB = [
       "Togo"
     ],
     "maritimeStatus": "Gulf of Guinea Atlantic Coastal",
-    "fieldNotes": "The first sub-Saharan African nation to gain independence from colonial rule (1957). Contains Lake Volta, the world's largest artificial reservoir by surface area."
+    "fieldNotes": "The first sub-Saharan African nation to gain independence from colonial rule (1957). Contains Lake Volta, the world's largest artificial reservoir by surface area.",
+    "continent": "Africa"
   },
   {
     "id": "004",
@@ -3676,7 +3755,8 @@ export const COUNTRIES_DB = [
       "China"
     ],
     "maritimeStatus": "Landlocked Hindu Kush Mountain Crossroads",
-    "fieldNotes": "Dominated by the rugged Hindu Kush mountain range and the historic Khyber Pass trade route connecting South Asia with Central Asia."
+    "fieldNotes": "Dominated by the rugged Hindu Kush mountain range and the historic Khyber Pass trade route connecting South Asia with Central Asia.",
+    "continent": "Asia"
   },
   {
     "id": "012",
@@ -3725,7 +3805,8 @@ export const COUNTRIES_DB = [
       "Morocco"
     ],
     "maritimeStatus": "Mediterranean Coastal / Largest Country in Africa",
-    "fieldNotes": "The largest country in Africa and tenth-largest in the world. Over 80% of its landmass is covered by the Sahara Desert."
+    "fieldNotes": "The largest country in Africa and tenth-largest in the world. Over 80% of its landmass is covered by the Sahara Desert.",
+    "continent": "Africa"
   },
   {
     "id": "020",
@@ -3768,7 +3849,8 @@ export const COUNTRIES_DB = [
       "Spain"
     ],
     "maritimeStatus": "Landlocked Pyrenean Microstate",
-    "fieldNotes": "High-altitude microstate in the Pyrenees co-ruled under a unique 700-year diarchy by the President of France and Bishop of Urgell."
+    "fieldNotes": "High-altitude microstate in the Pyrenees co-ruled under a unique 700-year diarchy by the President of France and Bishop of Urgell.",
+    "continent": "Europe"
   },
   {
     "id": "024",
@@ -3813,7 +3895,8 @@ export const COUNTRIES_DB = [
       "Namibia"
     ],
     "maritimeStatus": "South Atlantic Coastal (1,600 km)",
-    "fieldNotes": "Extensive coastline and sub-Saharan tropical plateau rich in offshore petroleum reserves and diamond fields."
+    "fieldNotes": "Extensive coastline and sub-Saharan tropical plateau rich in offshore petroleum reserves and diamond fields.",
+    "continent": "Africa"
   },
   {
     "id": "028",
@@ -3853,7 +3936,8 @@ export const COUNTRIES_DB = [
     "currency": "East Caribbean Dollar (XCD, EC$)",
     "neighbors": [],
     "maritimeStatus": "Leeward Islands Dual-Island Nation",
-    "fieldNotes": "Renowned for its 365 white and pink sand beaches and historical English Harbour naval dockyard."
+    "fieldNotes": "Renowned for its 365 white and pink sand beaches and historical English Harbour naval dockyard.",
+    "continent": "North America"
   },
   {
     "id": "052",
@@ -3893,7 +3977,8 @@ export const COUNTRIES_DB = [
     "currency": "Barbadian Dollar (BBD, Bds$)",
     "neighbors": [],
     "maritimeStatus": "Eastern Caribbean Coral Limestone Island",
-    "fieldNotes": "The easternmost Caribbean island, composed largely of coral limestone with subterranean caverns like Harrison's Cave."
+    "fieldNotes": "The easternmost Caribbean island, composed largely of coral limestone with subterranean caverns like Harrison's Cave.",
+    "continent": "North America"
   },
   {
     "id": "064",
@@ -3936,7 +4021,8 @@ export const COUNTRIES_DB = [
       "India"
     ],
     "maritimeStatus": "Landlocked Himalayan Kingdom",
-    "fieldNotes": "Pioneered the Gross National Happiness index and remains one of the world's only carbon-negative nations, preserving over 70% forest cover."
+    "fieldNotes": "Pioneered the Gross National Happiness index and remains one of the world's only carbon-negative nations, preserving over 70% forest cover.",
+    "continent": "Asia"
   },
   {
     "id": "070",
@@ -3982,7 +4068,8 @@ export const COUNTRIES_DB = [
       "Montenegro"
     ],
     "maritimeStatus": "Neum Adriatic Corridor (20 km coast)",
-    "fieldNotes": "Features dramatic Dinaric Alps limestone gorges and the iconic reconstructed 16th-century Ottoman Stari Most bridge in Mostar."
+    "fieldNotes": "Features dramatic Dinaric Alps limestone gorges and the iconic reconstructed 16th-century Ottoman Stari Most bridge in Mostar.",
+    "continent": "Europe"
   },
   {
     "id": "854",
@@ -4030,7 +4117,8 @@ export const COUNTRIES_DB = [
       "Côte d'Ivoire"
     ],
     "maritimeStatus": "Landlocked Sahelian Plateau",
-    "fieldNotes": "Savannah plateau historically recognized as the cradle of West African cinema, hosting the biennial FESPACO film festival."
+    "fieldNotes": "Savannah plateau historically recognized as the cradle of West African cinema, hosting the biennial FESPACO film festival.",
+    "continent": "Africa"
   },
   {
     "id": "108",
@@ -4076,7 +4164,8 @@ export const COUNTRIES_DB = [
       "DR Congo"
     ],
     "maritimeStatus": "Landlocked Great Lakes Highland",
-    "fieldNotes": "Perched along the Albertine Rift on the northeastern shores of Lake Tanganyika, world-famed for its royal master drummers."
+    "fieldNotes": "Perched along the Albertine Rift on the northeastern shores of Lake Tanganyika, world-famed for its royal master drummers.",
+    "continent": "Africa"
   },
   {
     "id": "132",
@@ -4117,7 +4206,8 @@ export const COUNTRIES_DB = [
     "currency": "Cape Verdean Escudo (CVE, Esc)",
     "neighbors": [],
     "maritimeStatus": "Central Atlantic Volcanic Archipelago (10 islands)",
-    "fieldNotes": "Located 570 km west of Senegal, known for its distinctive Morna musical heritage and volcanic landscapes like Pico do Fogo."
+    "fieldNotes": "Located 570 km west of Senegal, known for its distinctive Morna musical heritage and volcanic landscapes like Pico do Fogo.",
+    "continent": "Africa"
   },
   {
     "id": "120",
@@ -4165,7 +4255,8 @@ export const COUNTRIES_DB = [
       "Equatorial Guinea"
     ],
     "maritimeStatus": "Gulf of Guinea Atlantic Coastal",
-    "fieldNotes": "Often described as 'Africa in miniature' for containing every major climate and biome: desert, rainforest, savannah, and volcanic coast."
+    "fieldNotes": "Often described as 'Africa in miniature' for containing every major climate and biome: desert, rainforest, savannah, and volcanic coast.",
+    "continent": "Africa"
   },
   {
     "id": "140",
@@ -4213,7 +4304,8 @@ export const COUNTRIES_DB = [
       "Cameroon"
     ],
     "maritimeStatus": "Landlocked Equatorial Plateau",
-    "fieldNotes": "Occupies the flat plateau dividing the Chad and Congo River drainage basins, hosting dense Dzanga-Sangha rainforests."
+    "fieldNotes": "Occupies the flat plateau dividing the Chad and Congo River drainage basins, hosting dense Dzanga-Sangha rainforests.",
+    "continent": "Africa"
   },
   {
     "id": "148",
@@ -4261,7 +4353,8 @@ export const COUNTRIES_DB = [
       "Niger"
     ],
     "maritimeStatus": "Landlocked Sahelian & Saharan Basin",
-    "fieldNotes": "Known as the 'Dead Heart of Africa' due to its central continental distance from oceans. Contains the dramatic volcanic Tibesti Mountains."
+    "fieldNotes": "Known as the 'Dead Heart of Africa' due to its central continental distance from oceans. Contains the dramatic volcanic Tibesti Mountains.",
+    "continent": "Africa"
   },
   {
     "id": "174",
@@ -4303,7 +4396,8 @@ export const COUNTRIES_DB = [
     "currency": "Comorian Franc (KMF, CF)",
     "neighbors": [],
     "maritimeStatus": "Mozambique Channel Volcanic Archipelago",
-    "fieldNotes": "Known as the Perfume Islands because it is the world's leading producer of ylang-ylang flower oil used in luxury French perfumes."
+    "fieldNotes": "Known as the Perfume Islands because it is the world's leading producer of ylang-ylang flower oil used in luxury French perfumes.",
+    "continent": "Africa"
   },
   {
     "id": "178",
@@ -4351,7 +4445,8 @@ export const COUNTRIES_DB = [
       "Angola (Cabinda)"
     ],
     "maritimeStatus": "South Atlantic Littoral & Congo Basin",
-    "fieldNotes": "Borders the western banks of the massive Congo River. Its capital Brazzaville sits directly across the river from Kinshasa."
+    "fieldNotes": "Borders the western banks of the massive Congo River. Its capital Brazzaville sits directly across the river from Kinshasa.",
+    "continent": "Africa"
   },
   {
     "id": "180",
@@ -4405,7 +4500,8 @@ export const COUNTRIES_DB = [
       "Angola"
     ],
     "maritimeStatus": "Narrow Atlantic Outlet (37 km coast)",
-    "fieldNotes": "The second-largest country in Africa, home to the second-largest rainforest on Earth and over 70% of the world's cobalt reserves."
+    "fieldNotes": "The second-largest country in Africa, home to the second-largest rainforest on Earth and over 70% of the world's cobalt reserves.",
+    "continent": "Africa"
   },
   {
     "id": "262",
@@ -4450,7 +4546,8 @@ export const COUNTRIES_DB = [
       "Somalia"
     ],
     "maritimeStatus": "Bab-el-Mandeb Strait Maritime Bottleneck",
-    "fieldNotes": "Strategically guards the Bab-el-Mandeb strait between the Red Sea and Gulf of Aden. Lake Assal is the lowest point in Africa (-155 m)."
+    "fieldNotes": "Strategically guards the Bab-el-Mandeb strait between the Red Sea and Gulf of Aden. Lake Assal is the lowest point in Africa (-155 m).",
+    "continent": "Africa"
   },
   {
     "id": "212",
@@ -4490,7 +4587,8 @@ export const COUNTRIES_DB = [
     "currency": "East Caribbean Dollar (XCD, EC$)",
     "neighbors": [],
     "maritimeStatus": "Windward Islands Volcanic Nature Isle",
-    "fieldNotes": "Known as the 'Nature Isle of the Caribbean' due to its lush mountainous rainforests, 365 rivers, and the world's second-largest boiling lake."
+    "fieldNotes": "Known as the 'Nature Isle of the Caribbean' due to its lush mountainous rainforests, 365 rivers, and the world's second-largest boiling lake.",
+    "continent": "North America"
   },
   {
     "id": "222",
@@ -4533,7 +4631,8 @@ export const COUNTRIES_DB = [
       "Honduras"
     ],
     "maritimeStatus": "Pacific Coastal (Only Central American country with no Caribbean coast)",
-    "fieldNotes": "The smallest and most densely populated nation in Central America, known as the 'Land of Volcanoes' with over 20 active volcanic peaks."
+    "fieldNotes": "The smallest and most densely populated nation in Central America, known as the 'Land of Volcanoes' with over 20 active volcanic peaks.",
+    "continent": "North America"
   },
   {
     "id": "226",
@@ -4578,7 +4677,8 @@ export const COUNTRIES_DB = [
       "Gabon"
     ],
     "maritimeStatus": "Gulf of Guinea Mainland & Bioko Island",
-    "fieldNotes": "The only sovereign African country with Spanish as an official language. Its historic capital Malabo sits on volcanic Bioko Island."
+    "fieldNotes": "The only sovereign African country with Spanish as an official language. Its historic capital Malabo sits on volcanic Bioko Island.",
+    "continent": "Africa"
   },
   {
     "id": "232",
@@ -4624,7 +4724,8 @@ export const COUNTRIES_DB = [
       "Djibouti"
     ],
     "maritimeStatus": "Red Sea Coastal & Dahlak Archipelago (1,151 km coast)",
-    "fieldNotes": "Dominates the southern Red Sea coast. Its capital Asmara is celebrated as a UNESCO World Heritage modernist architecture city."
+    "fieldNotes": "Dominates the southern Red Sea coast. Its capital Asmara is celebrated as a UNESCO World Heritage modernist architecture city.",
+    "continent": "Africa"
   },
   {
     "id": "748",
@@ -4668,7 +4769,8 @@ export const COUNTRIES_DB = [
       "Mozambique"
     ],
     "maritimeStatus": "Landlocked Lubombo Plateau",
-    "fieldNotes": "One of the last remaining absolute monarchies in Africa, featuring four distinct ecological zones from highveld savannah to lowveld bush."
+    "fieldNotes": "One of the last remaining absolute monarchies in Africa, featuring four distinct ecological zones from highveld savannah to lowveld bush.",
+    "continent": "Africa"
   },
   {
     "id": "266",
@@ -4712,7 +4814,8 @@ export const COUNTRIES_DB = [
       "Congo (Republic)"
     ],
     "maritimeStatus": "Atlantic Equatorial Coastal",
-    "fieldNotes": "Over 88% covered by dense equatorial rainforests, Gabon has preserved 11% of its entire landmass within 13 national parks."
+    "fieldNotes": "Over 88% covered by dense equatorial rainforests, Gabon has preserved 11% of its entire landmass within 13 national parks.",
+    "continent": "Africa"
   },
   {
     "id": "270",
@@ -4754,7 +4857,8 @@ export const COUNTRIES_DB = [
       "Senegal"
     ],
     "maritimeStatus": "Atlantic Estuarine Ribbon",
-    "fieldNotes": "The smallest country in mainland Africa, forming a narrow ribbon along both banks of the navigable Gambia River entirely inside Senegal."
+    "fieldNotes": "The smallest country in mainland Africa, forming a narrow ribbon along both banks of the navigable Gambia River entirely inside Senegal.",
+    "continent": "Africa"
   },
   {
     "id": "308",
@@ -4794,7 +4898,8 @@ export const COUNTRIES_DB = [
     "currency": "East Caribbean Dollar (XCD, EC$)",
     "neighbors": [],
     "maritimeStatus": "Southern Grenadines Island Nation",
-    "fieldNotes": "Known as the 'Spice Isle of the Caribbean' as one of the world's leading exporters of nutmeg, mace, and organic cocoa."
+    "fieldNotes": "Known as the 'Spice Isle of the Caribbean' as one of the world's leading exporters of nutmeg, mace, and organic cocoa.",
+    "continent": "North America"
   },
   {
     "id": "324",
@@ -4841,7 +4946,8 @@ export const COUNTRIES_DB = [
       "Sierra Leone"
     ],
     "maritimeStatus": "Atlantic Coastal & Fouta Djallon Water Tower",
-    "fieldNotes": "Holds more than one third of the world's proven bauxite (aluminum ore) reserves and contains the headwaters of the Niger, Senegal, and Gambia rivers."
+    "fieldNotes": "Holds more than one third of the world's proven bauxite (aluminum ore) reserves and contains the headwaters of the Niger, Senegal, and Gambia rivers.",
+    "continent": "Africa"
   },
   {
     "id": "624",
@@ -4885,7 +4991,8 @@ export const COUNTRIES_DB = [
       "Guinea"
     ],
     "maritimeStatus": "Atlantic Coastal & Bijagós Archipelago (88 islands)",
-    "fieldNotes": "Features extensive coastal mangrove estuaries and the pristine Bijagós biosphere reserve where saltwater hippopotamuses thrive."
+    "fieldNotes": "Features extensive coastal mangrove estuaries and the pristine Bijagós biosphere reserve where saltwater hippopotamuses thrive.",
+    "continent": "Africa"
   },
   {
     "id": "328",
@@ -4929,7 +5036,8 @@ export const COUNTRIES_DB = [
       "Suriname"
     ],
     "maritimeStatus": "North Atlantic Coastal & Guiana Shield",
-    "fieldNotes": "The only English-speaking nation in South America. Features Kaieteur Falls—the world's largest single-drop waterfall by volume—and offshore deepwater oil reserves."
+    "fieldNotes": "The only English-speaking nation in South America. Features Kaieteur Falls—the world's largest single-drop waterfall by volume—and offshore deepwater oil reserves.",
+    "continent": "South America"
   },
   {
     "id": "332",
@@ -4972,7 +5080,8 @@ export const COUNTRIES_DB = [
       "Dominican Republic"
     ],
     "maritimeStatus": "Hispaniola Western Island Half",
-    "fieldNotes": "The world's first independent Black-led republic (1804) established through a successful revolt against enslavement, home to the mountain fortress Citadelle Laferrière."
+    "fieldNotes": "The world's first independent Black-led republic (1804) established through a successful revolt against enslavement, home to the mountain fortress Citadelle Laferrière.",
+    "continent": "North America"
   },
   {
     "id": "368",
@@ -5020,7 +5129,8 @@ export const COUNTRIES_DB = [
       "Syria"
     ],
     "maritimeStatus": "Persian Gulf Narrow Access (58 km coast)",
-    "fieldNotes": "The historic heart of ancient Mesopotamia between the Tigris and Euphrates rivers, the cradle of cuneiform writing and urban civilization."
+    "fieldNotes": "The historic heart of ancient Mesopotamia between the Tigris and Euphrates rivers, the cradle of cuneiform writing and urban civilization.",
+    "continent": "Asia"
   },
   {
     "id": "364",
@@ -5068,7 +5178,8 @@ export const COUNTRIES_DB = [
       "Turkey"
     ],
     "maritimeStatus": "Caspian Sea & Persian Gulf / Strait of Hormuz",
-    "fieldNotes": "Dominates the high Iranian Plateau and controls the northern side of the Strait of Hormuz, where one fifth of world petroleum transits."
+    "fieldNotes": "Dominates the high Iranian Plateau and controls the northern side of the Strait of Hormuz, where one fifth of world petroleum transits.",
+    "continent": "Asia"
   },
   {
     "id": "296",
@@ -5109,7 +5220,8 @@ export const COUNTRIES_DB = [
     "currency": "Australian Dollar (AUD) / Kiribati Dollar",
     "neighbors": [],
     "maritimeStatus": "Trans-Hemispheric Pacific Atoll Nation (33 atolls)",
-    "fieldNotes": "The only nation in the world situated in all four Earth hemispheres, spanning 3.5 million square kilometers of the central Pacific Ocean."
+    "fieldNotes": "The only nation in the world situated in all four Earth hemispheres, spanning 3.5 million square kilometers of the central Pacific Ocean.",
+    "continent": "Oceania"
   },
   {
     "id": "414",
@@ -5152,7 +5264,8 @@ export const COUNTRIES_DB = [
       "Saudi Arabia"
     ],
     "maritimeStatus": "Persian Gulf Coastal & Bubiyan Island",
-    "fieldNotes": "Holds approximately 6% of the world's petroleum reserves within the Burgan oilfield and boasts the highest-valued sovereign currency unit globally."
+    "fieldNotes": "Holds approximately 6% of the world's petroleum reserves within the Burgan oilfield and boasts the highest-valued sovereign currency unit globally.",
+    "continent": "Asia"
   },
   {
     "id": "417",
@@ -5198,7 +5311,8 @@ export const COUNTRIES_DB = [
       "China"
     ],
     "maritimeStatus": "Landlocked Tian Shan Mountain Range",
-    "fieldNotes": "Over 90% mountainous, anchored by the snow-capped Tian Shan peaks and Issyk-Kul, the world's second-largest alpine saline lake."
+    "fieldNotes": "Over 90% mountainous, anchored by the snow-capped Tian Shan peaks and Issyk-Kul, the world's second-largest alpine saline lake.",
+    "continent": "Asia"
   },
   {
     "id": "418",
@@ -5244,7 +5358,8 @@ export const COUNTRIES_DB = [
       "Thailand"
     ],
     "maritimeStatus": "Only Landlocked Southeast Asian Nation",
-    "fieldNotes": "Traversed by the Mekong River through rugged limestone karst topography, rapidly transforming into the 'battery of Southeast Asia' through hydroelectric power."
+    "fieldNotes": "Traversed by the Mekong River through rugged limestone karst topography, rapidly transforming into the 'battery of Southeast Asia' through hydroelectric power.",
+    "continent": "Asia"
   },
   {
     "id": "426",
@@ -5287,7 +5402,8 @@ export const COUNTRIES_DB = [
       "South Africa"
     ],
     "maritimeStatus": "Enclaved Highland Kingdom (Entirely within South Africa)",
-    "fieldNotes": "Known as the 'Kingdom in the Sky', it is the only independent state in the world lying entirely above 1,000 meters in elevation."
+    "fieldNotes": "Known as the 'Kingdom in the Sky', it is the only independent state in the world lying entirely above 1,000 meters in elevation.",
+    "continent": "Africa"
   },
   {
     "id": "430",
@@ -5331,7 +5447,8 @@ export const COUNTRIES_DB = [
       "Côte d'Ivoire"
     ],
     "maritimeStatus": "Atlantic Coastal (579 km)",
-    "fieldNotes": "Africa's oldest modern republic, founded in 1847 by freed African Americans. Controls one of the world's largest open maritime ship registries."
+    "fieldNotes": "Africa's oldest modern republic, founded in 1847 by freed African Americans. Controls one of the world's largest open maritime ship registries.",
+    "continent": "Africa"
   },
   {
     "id": "434",
@@ -5378,7 +5495,8 @@ export const COUNTRIES_DB = [
       "Tunisia"
     ],
     "maritimeStatus": "Mediterranean Coastal (1,770 km)",
-    "fieldNotes": "Contains Africa's largest proven crude oil reserves and the Great Man-Made River, the world's largest underground pipe network supplying fossil freshwater."
+    "fieldNotes": "Contains Africa's largest proven crude oil reserves and the Great Man-Made River, the world's largest underground pipe network supplying fossil freshwater.",
+    "continent": "Africa"
   },
   {
     "id": "438",
@@ -5409,7 +5527,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Principality of Liechtenstein (Fürstentum Liechtenstein)",
     "region": "Europe",
-    "subregion": "Central Europe",
+    "subregion": "Western Europe",
     "population": 39500,
     "areaKm2": 160,
     "languages": [
@@ -5421,7 +5539,8 @@ export const COUNTRIES_DB = [
       "Austria"
     ],
     "maritimeStatus": "Doubly Landlocked Alpine Principality",
-    "fieldNotes": "Nestled between Switzerland and Austria along the Rhine river valley, one of the world's wealthiest nations per capita and a global precision manufacturing center."
+    "fieldNotes": "Nestled between Switzerland and Austria along the Rhine river valley, one of the world's wealthiest nations per capita and a global precision manufacturing center.",
+    "continent": "Europe"
   },
   {
     "id": "454",
@@ -5466,7 +5585,8 @@ export const COUNTRIES_DB = [
       "Zambia"
     ],
     "maritimeStatus": "Landlocked East African Rift Valley",
-    "fieldNotes": "Known as the 'Warm Heart of Africa'. Lake Malawi occupies one fifth of the country's total area and contains more cichlid fish species than any lake on Earth."
+    "fieldNotes": "Known as the 'Warm Heart of Africa'. Lake Malawi occupies one fifth of the country's total area and contains more cichlid fish species than any lake on Earth.",
+    "continent": "Africa"
   },
   {
     "id": "462",
@@ -5506,7 +5626,8 @@ export const COUNTRIES_DB = [
     "currency": "Maldivian Rufiyaa (MVR, Rf)",
     "neighbors": [],
     "maritimeStatus": "Indian Ocean Double-Chain Atoll Nation (1,192 coral islands)",
-    "fieldNotes": "The lowest-lying nation on Earth with an average ground elevation of 1.5 meters above sea level, dispersed across 26 natural coral atolls."
+    "fieldNotes": "The lowest-lying nation on Earth with an average ground elevation of 1.5 meters above sea level, dispersed across 26 natural coral atolls.",
+    "continent": "Asia"
   },
   {
     "id": "466",
@@ -5555,7 +5676,8 @@ export const COUNTRIES_DB = [
       "Mauritania"
     ],
     "maritimeStatus": "Landlocked Sahelian & Saharan Basin",
-    "fieldNotes": "The seat of the ancient Mali Empire ruled by Mansa Musa. Home to the legendary mud-brick Great Mosque of Djenné and the scholarly oasis of Timbuktu."
+    "fieldNotes": "The seat of the ancient Mali Empire ruled by Mansa Musa. Home to the legendary mud-brick Great Mosque of Djenné and the scholarly oasis of Timbuktu.",
+    "continent": "Africa"
   },
   {
     "id": "584",
@@ -5596,7 +5718,8 @@ export const COUNTRIES_DB = [
     "currency": "United States Dollar (USD, $)",
     "neighbors": [],
     "maritimeStatus": "Micronesian Coral Atoll Nation (29 atolls, 5 islands)",
-    "fieldNotes": "Spans across 750,000 square miles of the Pacific Ocean, renowned for ancient indigenous stick-chart ocean navigation techniques."
+    "fieldNotes": "Spans across 750,000 square miles of the Pacific Ocean, renowned for ancient indigenous stick-chart ocean navigation techniques.",
+    "continent": "Oceania"
   },
   {
     "id": "478",
@@ -5641,7 +5764,8 @@ export const COUNTRIES_DB = [
       "Senegal"
     ],
     "maritimeStatus": "Atlantic Coastal & Saharan Dunes",
-    "fieldNotes": "Connects the Maghreb and sub-Saharan Africa. Contains the surreal 40-kilometer Richat Structure ('Eye of the Sahara') visible from outer space."
+    "fieldNotes": "Connects the Maghreb and sub-Saharan Africa. Contains the surreal 40-kilometer Richat Structure ('Eye of the Sahara') visible from outer space.",
+    "continent": "Africa"
   },
   {
     "id": "583",
@@ -5685,7 +5809,8 @@ export const COUNTRIES_DB = [
     "currency": "United States Dollar (USD, $)",
     "neighbors": [],
     "maritimeStatus": "Western Pacific Archipelago (607 islands across 4 states)",
-    "fieldNotes": "Home to the monumental megalithic basalt canal ruins of Nan Madol on Pohnpei, often called the 'Venice of the Pacific'."
+    "fieldNotes": "Home to the monumental megalithic basalt canal ruins of Nan Madol on Pohnpei, often called the 'Venice of the Pacific'.",
+    "continent": "Oceania"
   },
   {
     "id": "498",
@@ -5728,7 +5853,8 @@ export const COUNTRIES_DB = [
       "Ukraine"
     ],
     "maritimeStatus": "Landlocked Black Sea Basin",
-    "fieldNotes": "Nestled between the Prut and Dniester rivers, holding the world's largest underground wine cellars at Mileștii Mici (over 200 km of subterranean limestone tunnels)."
+    "fieldNotes": "Nestled between the Prut and Dniester rivers, holding the world's largest underground wine cellars at Mileștii Mici (over 200 km of subterranean limestone tunnels).",
+    "continent": "Europe"
   },
   {
     "id": "492",
@@ -5771,7 +5897,8 @@ export const COUNTRIES_DB = [
       "France"
     ],
     "maritimeStatus": "Mediterranean French Riviera Coastal Microstate",
-    "fieldNotes": "The second-smallest independent state in the world and the most densely populated, famous for its deepwater yacht harbor, Grand Prix, and Belle Époque casinos."
+    "fieldNotes": "The second-smallest independent state in the world and the most densely populated, famous for its deepwater yacht harbor, Grand Prix, and Belle Époque casinos.",
+    "continent": "Europe"
   },
   {
     "id": "499",
@@ -5816,7 +5943,8 @@ export const COUNTRIES_DB = [
       "Albania"
     ],
     "maritimeStatus": "Adriatic Coastal & Bay of Kotor Fjord",
-    "fieldNotes": "Features the dramatic Bay of Kotor—Europe's southernmost fjord-like ria—and the sheer limestone peaks of the Dinaric Alps."
+    "fieldNotes": "Features the dramatic Bay of Kotor—Europe's southernmost fjord-like ria—and the sheer limestone peaks of the Dinaric Alps.",
+    "continent": "Europe"
   },
   {
     "id": "508",
@@ -5863,7 +5991,8 @@ export const COUNTRIES_DB = [
       "Eswatini"
     ],
     "maritimeStatus": "Indian Ocean Channel Coastline (2,470 km)",
-    "fieldNotes": "Fronts the Mozambique Channel opposite Madagascar with rich offshore natural gas deposits and the Bazaruto marine coral archipelago."
+    "fieldNotes": "Fronts the Mozambique Channel opposite Madagascar with rich offshore natural gas deposits and the Bazaruto marine coral archipelago.",
+    "continent": "Africa"
   },
   {
     "id": "104",
@@ -5909,7 +6038,8 @@ export const COUNTRIES_DB = [
       "Thailand"
     ],
     "maritimeStatus": "Bay of Bengal & Andaman Sea Coastal",
-    "fieldNotes": "The largest country in mainland Southeast Asia, celebrated for thousands of ancient Buddhist pagodas rising across the plains of Bagan along the Irrawaddy River."
+    "fieldNotes": "The largest country in mainland Southeast Asia, celebrated for thousands of ancient Buddhist pagodas rising across the plains of Bagan along the Irrawaddy River.",
+    "continent": "Asia"
   },
   {
     "id": "520",
@@ -5950,7 +6080,8 @@ export const COUNTRIES_DB = [
     "currency": "Australian Dollar (AUD, A$)",
     "neighbors": [],
     "maritimeStatus": "Central Pacific Raised Coral Island Microstate",
-    "fieldNotes": "The world's smallest independent republic and third-smallest state, consisting of a single raised phosphate rock island just south of the Equator."
+    "fieldNotes": "The world's smallest independent republic and third-smallest state, consisting of a single raised phosphate rock island just south of the Equator.",
+    "continent": "Oceania"
   },
   {
     "id": "558",
@@ -5993,7 +6124,8 @@ export const COUNTRIES_DB = [
       "Costa Rica"
     ],
     "maritimeStatus": "Dual-Coast Central American Nation",
-    "fieldNotes": "The largest country in Central America, home to Lake Nicaragua—the largest freshwater lake in Central America, hosting freshwater bull sharks."
+    "fieldNotes": "The largest country in Central America, home to Lake Nicaragua—the largest freshwater lake in Central America, hosting freshwater bull sharks.",
+    "continent": "North America"
   },
   {
     "id": "562",
@@ -6042,7 +6174,8 @@ export const COUNTRIES_DB = [
       "Algeria"
     ],
     "maritimeStatus": "Landlocked Saharan & Sahelian Basin",
-    "fieldNotes": "Named after the Niger River. Contains the dramatic Aïr Mountains and Ténéré desert dunes, holding major global uranium ore reserves."
+    "fieldNotes": "Named after the Niger River. Contains the dramatic Aïr Mountains and Ténéré desert dunes, holding major global uranium ore reserves.",
+    "continent": "Africa"
   },
   {
     "id": "408",
@@ -6086,7 +6219,8 @@ export const COUNTRIES_DB = [
       "South Korea"
     ],
     "maritimeStatus": "Yellow Sea & Sea of Japan Littoral",
-    "fieldNotes": "Occupies the northern half of the mountainous Korean Peninsula, bounded by the sacred volcanic caldera of Mount Paektu and the Yalu River."
+    "fieldNotes": "Occupies the northern half of the mountainous Korean Peninsula, bounded by the sacred volcanic caldera of Mount Paektu and the Yalu River.",
+    "continent": "Asia"
   },
   {
     "id": "807",
@@ -6133,7 +6267,8 @@ export const COUNTRIES_DB = [
       "Albania"
     ],
     "maritimeStatus": "Landlocked Balkan Mountain Basin",
-    "fieldNotes": "Perched around the Vardar River valley and Lake Ohrid, one of Europe's deepest and oldest tectonic lakes with over 200 endemic species."
+    "fieldNotes": "Perched around the Vardar River valley and Lake Ohrid, one of Europe's deepest and oldest tectonic lakes with over 200 endemic species.",
+    "continent": "Europe"
   },
   {
     "id": "585",
@@ -6174,7 +6309,8 @@ export const COUNTRIES_DB = [
     "currency": "United States Dollar (USD, $)",
     "neighbors": [],
     "maritimeStatus": "Western Pacific Coral & Limestone Archipelago (340 islands)",
-    "fieldNotes": "Renowned for its emerald mushroom-shaped Rock Islands, stingless marine Jellyfish Lake, and creating the world's first national shark sanctuary."
+    "fieldNotes": "Renowned for its emerald mushroom-shaped Rock Islands, stingless marine Jellyfish Lake, and creating the world's first national shark sanctuary.",
+    "continent": "Oceania"
   },
   {
     "id": "275",
@@ -6218,7 +6354,8 @@ export const COUNTRIES_DB = [
       "Egypt"
     ],
     "maritimeStatus": "Gaza Mediterranean Coastline & West Bank",
-    "fieldNotes": "Centuries-old cultural crossroads home to the historic religious shrines of Jerusalem, Bethlehem, and ancient Jericho."
+    "fieldNotes": "Centuries-old cultural crossroads home to the historic religious shrines of Jerusalem, Bethlehem, and ancient Jericho.",
+    "continent": "Asia"
   },
   {
     "id": "598",
@@ -6263,7 +6400,8 @@ export const COUNTRIES_DB = [
       "Indonesia"
     ],
     "maritimeStatus": "Southwestern Pacific Continental Island Half",
-    "fieldNotes": "The most linguistically diverse nation on Earth with over 840 living languages, featuring cloud-cloaked highlands and birds-of-paradise."
+    "fieldNotes": "The most linguistically diverse nation on Earth with over 840 living languages, featuring cloud-cloaked highlands and birds-of-paradise.",
+    "continent": "Oceania"
   },
   {
     "id": "659",
@@ -6303,7 +6441,8 @@ export const COUNTRIES_DB = [
     "currency": "East Caribbean Dollar (XCD, EC$)",
     "neighbors": [],
     "maritimeStatus": "Leeward Islands Dual-Island Federation",
-    "fieldNotes": "The smallest sovereign state in the Americas in both area and population, crowned by Mount Liamuiga volcano and the historic Brimstone Hill Fortress."
+    "fieldNotes": "The smallest sovereign state in the Americas in both area and population, crowned by Mount Liamuiga volcano and the historic Brimstone Hill Fortress.",
+    "continent": "North America"
   },
   {
     "id": "662",
@@ -6344,7 +6483,8 @@ export const COUNTRIES_DB = [
     "currency": "East Caribbean Dollar (XCD, EC$)",
     "neighbors": [],
     "maritimeStatus": "Windward Islands Volcanic State",
-    "fieldNotes": "Celebrated for the twin volcanic spires of the Gros Piton and Petit Piton rising sheer from the Caribbean Sea, and its drive-in volcano sulfur springs."
+    "fieldNotes": "Celebrated for the twin volcanic spires of the Gros Piton and Petit Piton rising sheer from the Caribbean Sea, and its drive-in volcano sulfur springs.",
+    "continent": "North America"
   },
   {
     "id": "670",
@@ -6384,7 +6524,8 @@ export const COUNTRIES_DB = [
     "currency": "East Caribbean Dollar (XCD, EC$)",
     "neighbors": [],
     "maritimeStatus": "Windward Islands Volcanic Chain (32 islands/cays)",
-    "fieldNotes": "Anchored by the active stratovolcano La Soufrière on the main island, cascading south through the turquoise coral reefs of the Tobago Cays marine park."
+    "fieldNotes": "Anchored by the active stratovolcano La Soufrière on the main island, cascading south through the turquoise coral reefs of the Tobago Cays marine park.",
+    "continent": "North America"
   },
   {
     "id": "882",
@@ -6425,7 +6566,8 @@ export const COUNTRIES_DB = [
     "currency": "Samoan Tālā (WST, WS$)",
     "neighbors": [],
     "maritimeStatus": "Polynesian Volcanic Archipelago (Savai'i & Upolu)",
-    "fieldNotes": "Preserves the ancient Fa'a Samoa (the Samoan way of life) communitarian cultural code amid tropical rainforest waterfalls and deep blowholes."
+    "fieldNotes": "Preserves the ancient Fa'a Samoa (the Samoan way of life) communitarian cultural code amid tropical rainforest waterfalls and deep blowholes.",
+    "continent": "Oceania"
   },
   {
     "id": "674",
@@ -6467,7 +6609,8 @@ export const COUNTRIES_DB = [
       "Italy"
     ],
     "maritimeStatus": "Landlocked Enclave Microstate (Entirely inside Italy)",
-    "fieldNotes": "The world's oldest surviving sovereign republic and constitutional state, founded in 301 CE atop the three fortified peaks of Mount Titano."
+    "fieldNotes": "The world's oldest surviving sovereign republic and constitutional state, founded in 301 CE atop the three fortified peaks of Mount Titano.",
+    "continent": "Europe"
   },
   {
     "id": "678",
@@ -6507,7 +6650,8 @@ export const COUNTRIES_DB = [
     "currency": "São Tomé and Príncipe Dobra (STN, Db)",
     "neighbors": [],
     "maritimeStatus": "Gulf of Guinea Equatorial Dual-Island State",
-    "fieldNotes": "The second-smallest African sovereign nation, dominated by the surreal phonolite volcanic needle of Pico Cão Grande and premier organic cocoa estates."
+    "fieldNotes": "The second-smallest African sovereign nation, dominated by the surreal phonolite volcanic needle of Pico Cão Grande and premier organic cocoa estates.",
+    "continent": "Africa"
   },
   {
     "id": "690",
@@ -6549,7 +6693,8 @@ export const COUNTRIES_DB = [
     "currency": "Seychellois Rupee (SCR, SR)",
     "neighbors": [],
     "maritimeStatus": "Western Indian Ocean Archipelago (115 granitic & coral islands)",
-    "fieldNotes": "Home to the world's only mid-ocean granitic islands with pink boulder beaches, giant Aldabra tortoises, and the rare double coco de mer palm."
+    "fieldNotes": "Home to the world's only mid-ocean granitic islands with pink boulder beaches, giant Aldabra tortoises, and the rare double coco de mer palm.",
+    "continent": "Africa"
   },
   {
     "id": "694",
@@ -6593,7 +6738,8 @@ export const COUNTRIES_DB = [
       "Liberia"
     ],
     "maritimeStatus": "Atlantic Coastal & Natural Deepwater Harbor",
-    "fieldNotes": "Freetown hosts the third-largest natural harbor in the world. Renowned for rich alluvial diamond reserves and coastal mangrove conservation."
+    "fieldNotes": "Freetown hosts the third-largest natural harbor in the world. Renowned for rich alluvial diamond reserves and coastal mangrove conservation.",
+    "continent": "Africa"
   },
   {
     "id": "090",
@@ -6634,7 +6780,8 @@ export const COUNTRIES_DB = [
     "currency": "Solomon Islands Dollar (SBD, SI$)",
     "neighbors": [],
     "maritimeStatus": "Southwestern Pacific Archipelago (6 major islands, 900+ islets)",
-    "fieldNotes": "Encompasses the Marovo Lagoon—the largest saltwater lagoon in the world—surrounded by double barrier reefs and dense volcanic rain forests."
+    "fieldNotes": "Encompasses the Marovo Lagoon—the largest saltwater lagoon in the world—surrounded by double barrier reefs and dense volcanic rain forests.",
+    "continent": "Oceania"
   },
   {
     "id": "706",
@@ -6679,7 +6826,8 @@ export const COUNTRIES_DB = [
       "Kenya"
     ],
     "maritimeStatus": "Longest Coastline in Mainland Africa (3,333 km)",
-    "fieldNotes": "Forms the outer horn of Africa flanking the Gulf of Aden and Indian Ocean trade lanes, historically renowned for ancient frankincense and myrrh production."
+    "fieldNotes": "Forms the outer horn of Africa flanking the Gulf of Aden and Indian Ocean trade lanes, historically renowned for ancient frankincense and myrrh production.",
+    "continent": "Africa"
   },
   {
     "id": "728",
@@ -6726,7 +6874,8 @@ export const COUNTRIES_DB = [
       "Central African Republic"
     ],
     "maritimeStatus": "Landlocked White Nile Basin",
-    "fieldNotes": "The world's newest sovereign nation (gained independence in 2011). Contains the vast Sudd wetland swamp formed by the White Nile River."
+    "fieldNotes": "The world's newest sovereign nation (gained independence in 2011). Contains the vast Sudd wetland swamp formed by the White Nile River.",
+    "continent": "Africa"
   },
   {
     "id": "729",
@@ -6775,7 +6924,8 @@ export const COUNTRIES_DB = [
       "Libya"
     ],
     "maritimeStatus": "Red Sea Coastal Littoral (853 km)",
-    "fieldNotes": "The confluence of the Blue Nile and White Nile at Khartoum. Houses over 250 ancient Nubian pyramids at Meroë—more than in all of Egypt."
+    "fieldNotes": "The confluence of the Blue Nile and White Nile at Khartoum. Houses over 250 ancient Nubian pyramids at Meroë—more than in all of Egypt.",
+    "continent": "Africa"
   },
   {
     "id": "740",
@@ -6820,7 +6970,8 @@ export const COUNTRIES_DB = [
       "French Guiana"
     ],
     "maritimeStatus": "Atlantic Coastal & Guiana Shield",
-    "fieldNotes": "The smallest sovereign state in South America, covered by roughly 93% pristine primary tropical rainforest—making it the most forested country in the world."
+    "fieldNotes": "The smallest sovereign state in South America, covered by roughly 93% pristine primary tropical rainforest—making it the most forested country in the world.",
+    "continent": "South America"
   },
   {
     "id": "760",
@@ -6866,7 +7017,8 @@ export const COUNTRIES_DB = [
       "Lebanon"
     ],
     "maritimeStatus": "Eastern Mediterranean Littoral (193 km)",
-    "fieldNotes": "Anchored by Damascus and Aleppo, among the world's oldest continuously inhabited cities, and the fertile Euphrates River valley."
+    "fieldNotes": "Anchored by Damascus and Aleppo, among the world's oldest continuously inhabited cities, and the fertile Euphrates River valley.",
+    "continent": "Asia"
   },
   {
     "id": "762",
@@ -6911,7 +7063,8 @@ export const COUNTRIES_DB = [
       "Uzbekistan"
     ],
     "maritimeStatus": "Landlocked Pamir Mountain Highland",
-    "fieldNotes": "Over 93% mountainous, dominated by the dramatic Pamir Mountains ('Roof of the World') and Fedchenko Glacier, the longest glacier outside polar regions."
+    "fieldNotes": "Over 93% mountainous, dominated by the dramatic Pamir Mountains ('Roof of the World') and Fedchenko Glacier, the longest glacier outside polar regions.",
+    "continent": "Asia"
   },
   {
     "id": "626",
@@ -6954,7 +7107,8 @@ export const COUNTRIES_DB = [
       "Indonesia"
     ],
     "maritimeStatus": "Timor Sea & Ombai Strait Coastal",
-    "fieldNotes": "Occupies the eastern half of Timor Island in the Coral Triangle, boasting some of the highest marine biodiversity on Earth at Atauro Island."
+    "fieldNotes": "Occupies the eastern half of Timor Island in the Coral Triangle, boasting some of the highest marine biodiversity on Earth at Atauro Island.",
+    "continent": "Asia"
   },
   {
     "id": "768",
@@ -7000,7 +7154,8 @@ export const COUNTRIES_DB = [
       "Benin"
     ],
     "maritimeStatus": "Gulf of Guinea Atlantic Coastal (56 km)",
-    "fieldNotes": "A narrow north-south strip in West Africa known for the fortified mud-tower compounds of Koutammakou, a UNESCO World Heritage site."
+    "fieldNotes": "A narrow north-south strip in West Africa known for the fortified mud-tower compounds of Koutammakou, a UNESCO World Heritage site.",
+    "continent": "Africa"
   },
   {
     "id": "776",
@@ -7041,7 +7196,8 @@ export const COUNTRIES_DB = [
     "currency": "Tongan Paʻanga (TOP, T$)",
     "neighbors": [],
     "maritimeStatus": "Polynesian Kingdom Archipelago (171 islands)",
-    "fieldNotes": "Known as the 'Friendly Islands', the only Pacific monarchy never to have relinquished its indigenous sovereignty to a foreign power."
+    "fieldNotes": "Known as the 'Friendly Islands', the only Pacific monarchy never to have relinquished its indigenous sovereignty to a foreign power.",
+    "continent": "Oceania"
   },
   {
     "id": "780",
@@ -7081,7 +7237,8 @@ export const COUNTRIES_DB = [
     "currency": "Trinidad and Tobago Dollar (TTD, TT$)",
     "neighbors": [],
     "maritimeStatus": "Continental Shelf Dual-Island Nation",
-    "fieldNotes": "Located just 11 km off the Venezuelan coast. The birthplace of the steelpan instrument, calypso music, and Pitch Lake—the world's largest natural asphalt deposit."
+    "fieldNotes": "Located just 11 km off the Venezuelan coast. The birthplace of the steelpan instrument, calypso music, and Pitch Lake—the world's largest natural asphalt deposit.",
+    "continent": "North America"
   },
   {
     "id": "795",
@@ -7126,7 +7283,8 @@ export const COUNTRIES_DB = [
       "Iran"
     ],
     "maritimeStatus": "Landlocked Caspian Sea Littoral",
-    "fieldNotes": "Covered roughly 80% by the Karakum Desert. Holds the world's fourth-largest natural gas reserves and the glowing Darvaza gas crater ('Door to Hell')."
+    "fieldNotes": "Covered roughly 80% by the Karakum Desert. Holds the world's fourth-largest natural gas reserves and the glowing Darvaza gas crater ('Door to Hell').",
+    "continent": "Asia"
   },
   {
     "id": "798",
@@ -7167,7 +7325,8 @@ export const COUNTRIES_DB = [
     "currency": "Australian Dollar / Tuvaluan Dollar",
     "neighbors": [],
     "maritimeStatus": "Polynesian Low-Lying Atoll State (9 atolls)",
-    "fieldNotes": "The fourth-smallest nation in the world, with a maximum elevation of only 4.6 meters above sea level, famously managing the .tv top-level internet domain."
+    "fieldNotes": "The fourth-smallest nation in the world, with a maximum elevation of only 4.6 meters above sea level, famously managing the .tv top-level internet domain.",
+    "continent": "Oceania"
   },
   {
     "id": "800",
@@ -7214,7 +7373,8 @@ export const COUNTRIES_DB = [
       "DR Congo"
     ],
     "maritimeStatus": "Landlocked Lake Victoria Shoreline",
-    "fieldNotes": "Known as the 'Pearl of Africa'. Home to the glaciated Rwenzori Mountains ('Mountains of the Moon') and over half the world's remaining mountain gorillas in Bwindi."
+    "fieldNotes": "Known as the 'Pearl of Africa'. Home to the glaciated Rwenzori Mountains ('Mountains of the Moon') and over half the world's remaining mountain gorillas in Bwindi.",
+    "continent": "Africa"
   },
   {
     "id": "548",
@@ -7256,7 +7416,8 @@ export const COUNTRIES_DB = [
     "currency": "Vanuatu Vatu (VUV, VT)",
     "neighbors": [],
     "maritimeStatus": "South Pacific Volcanic Archipelago (83 islands)",
-    "fieldNotes": "Known for the land-diving ritual (Naghol) on Pentecost Island that inspired modern bungee jumping, and Mount Yasur's accessible active molten eruptions."
+    "fieldNotes": "Known for the land-diving ritual (Naghol) on Pentecost Island that inspired modern bungee jumping, and Mount Yasur's accessible active molten eruptions.",
+    "continent": "Oceania"
   },
   {
     "id": "336",
@@ -7299,7 +7460,8 @@ export const COUNTRIES_DB = [
       "Italy"
     ],
     "maritimeStatus": "Landlocked Enclave City-State (Entirely inside Rome)",
-    "fieldNotes": "The smallest independent sovereign state in the world by both area and population, serving as the spiritual and administrative heart of the global Catholic Church."
+    "fieldNotes": "The smallest independent sovereign state in the world by both area and population, serving as the spiritual and administrative heart of the global Catholic Church.",
+    "continent": "Europe"
   },
   {
     "id": "862",
@@ -7343,7 +7505,8 @@ export const COUNTRIES_DB = [
       "Guyana"
     ],
     "maritimeStatus": "Caribbean Coastal & Orinoco Basin",
-    "fieldNotes": "Holds the largest proven petroleum reserves on Earth. Contains Angel Falls (Kerepakupai Merú), the world's tallest uninterrupted waterfall at 979 meters."
+    "fieldNotes": "Holds the largest proven petroleum reserves on Earth. Contains Angel Falls (Kerepakupai Merú), the world's tallest uninterrupted waterfall at 979 meters.",
+    "continent": "South America"
   },
   {
     "id": "887",
@@ -7386,7 +7549,8 @@ export const COUNTRIES_DB = [
       "Oman"
     ],
     "maritimeStatus": "Red Sea & Gulf of Aden Maritime Bottleneck",
-    "fieldNotes": "Guards the southern entrance to the Red Sea. Its ancient walled city of Shibam features 16th-century adobe mudbrick skyscrapers, known as the 'Manhattan of the Desert'."
+    "fieldNotes": "Guards the southern entrance to the Red Sea. Its ancient walled city of Shibam features 16th-century adobe mudbrick skyscrapers, known as the 'Manhattan of the Desert'.",
+    "continent": "Asia"
   },
   {
     "id": "008",
@@ -7431,7 +7595,8 @@ export const COUNTRIES_DB = [
       "Greece"
     ],
     "maritimeStatus": "Adriatic & Ionian Seas Coastal",
-    "fieldNotes": "Features the rugged Accursed Mountains (Albanian Alps) and the pristine Vjosa River, recognized as Europe's first wild river national park."
+    "fieldNotes": "Features the rugged Accursed Mountains (Albanian Alps) and the pristine Vjosa River, recognized as Europe's first wild river national park.",
+    "continent": "Europe"
   },
   {
     "id": "051",
@@ -7462,7 +7627,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Republic of Armenia (Hayastani Hanrapetut'yun)",
     "region": "Asia",
-    "subregion": "Western Asia / Caucasus",
+    "subregion": "Western Asia",
     "population": 2780000,
     "areaKm2": 29743,
     "languages": [
@@ -7476,7 +7641,8 @@ export const COUNTRIES_DB = [
       "Turkey"
     ],
     "maritimeStatus": "Landlocked Transcaucasian Highland",
-    "fieldNotes": "The first nation in the world to adopt Christianity as its state religion (in 301 CE), crowned by Mount Aragats and ancient stone monasteries like Geghard."
+    "fieldNotes": "The first nation in the world to adopt Christianity as its state religion (in 301 CE), crowned by Mount Aragats and ancient stone monasteries like Geghard.",
+    "continent": "Asia"
   },
   {
     "id": "031",
@@ -7507,7 +7673,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Republic of Azerbaijan (Azərbaycan Respublikası)",
     "region": "Asia",
-    "subregion": "Western Asia / Caucasus",
+    "subregion": "Western Asia",
     "population": 10140000,
     "areaKm2": 86600,
     "languages": [
@@ -7521,7 +7687,8 @@ export const COUNTRIES_DB = [
       "Iran"
     ],
     "maritimeStatus": "Caspian Sea Coastal Littoral",
-    "fieldNotes": "Known as the 'Land of Fire' for natural subterranean gas vents like Yanar Dag. Contains nearly half the world's mud volcanoes and the historic oil hub of Baku."
+    "fieldNotes": "Known as the 'Land of Fire' for natural subterranean gas vents like Yanar Dag. Contains nearly half the world's mud volcanoes and the historic oil hub of Baku.",
+    "continent": "Asia"
   },
   {
     "id": "044",
@@ -7561,7 +7728,8 @@ export const COUNTRIES_DB = [
     "currency": "Bahamian Dollar (BSD, B$)",
     "neighbors": [],
     "maritimeStatus": "Lucayan Archipelago (700 coral islands, 2,400 cays)",
-    "fieldNotes": "Features the Great Bahama Bank's transparent shallow turquoise waters, Dean's Blue Hole (202 m deep), and world-famous swimming pigs at Exuma."
+    "fieldNotes": "Features the Great Bahama Bank's transparent shallow turquoise waters, Dean's Blue Hole (202 m deep), and world-famous swimming pigs at Exuma.",
+    "continent": "North America"
   },
   {
     "id": "048",
@@ -7601,7 +7769,8 @@ export const COUNTRIES_DB = [
     "currency": "Bahraini Dinar (BHD, .د.ب) [Second highest currency unit]",
     "neighbors": [],
     "maritimeStatus": "Persian Gulf Island Kingdom (50 natural & 33 artificial islands)",
-    "fieldNotes": "Historically celebrated for millennia as the pearl-diving nexus of the Persian Gulf and the ancient mercantile Dilmun civilization."
+    "fieldNotes": "Historically celebrated for millennia as the pearl-diving nexus of the Persian Gulf and the ancient mercantile Dilmun civilization.",
+    "continent": "Asia"
   },
   {
     "id": "112",
@@ -7648,7 +7817,8 @@ export const COUNTRIES_DB = [
       "Latvia"
     ],
     "maritimeStatus": "Landlocked East European Lowland",
-    "fieldNotes": "Over 40% covered by forests and extensive marshlands. Contains the Białowieża Forest, the last remaining primeval lowland forest in Europe."
+    "fieldNotes": "Over 40% covered by forests and extensive marshlands. Contains the Białowieża Forest, the last remaining primeval lowland forest in Europe.",
+    "continent": "Europe"
   },
   {
     "id": "084",
@@ -7693,7 +7863,8 @@ export const COUNTRIES_DB = [
       "Guatemala"
     ],
     "maritimeStatus": "Caribbean Coastal & Barrier Reef (386 km coast)",
-    "fieldNotes": "The only English-speaking country in Central America, home to the Great Blue Hole submarine sinkhole and the second-largest barrier reef in the world."
+    "fieldNotes": "The only English-speaking country in Central America, home to the Great Blue Hole submarine sinkhole and the second-largest barrier reef in the world.",
+    "continent": "North America"
   },
   {
     "id": "204",
@@ -7740,7 +7911,8 @@ export const COUNTRIES_DB = [
       "Nigeria"
     ],
     "maritimeStatus": "Gulf of Guinea Atlantic Coastal (121 km)",
-    "fieldNotes": "The historic birthplace of the Vodun religion and heart of the Kingdom of Dahomey, known for the Royal Palaces of Abomey and stilt village of Ganvié."
+    "fieldNotes": "The historic birthplace of the Vodun religion and heart of the Kingdom of Dahomey, known for the Royal Palaces of Abomey and stilt village of Ganvié.",
+    "continent": "Africa"
   },
   {
     "id": "072",
@@ -7786,7 +7958,8 @@ export const COUNTRIES_DB = [
       "Zimbabwe"
     ],
     "maritimeStatus": "Landlocked Kalahari Basin",
-    "fieldNotes": "Dominated by the Kalahari Desert and the Okavango Delta, the world's largest inland river delta that floods seasonally into desert sands."
+    "fieldNotes": "Dominated by the Kalahari Desert and the Okavango Delta, the world's largest inland river delta that floods seasonally into desert sands.",
+    "continent": "Africa"
   },
   {
     "id": "096",
@@ -7828,7 +8001,8 @@ export const COUNTRIES_DB = [
       "Malaysia"
     ],
     "maritimeStatus": "South China Sea Coastal Sultanate (Borneo)",
-    "fieldNotes": "Wealthy petroleum-producing sultanate on the island of Borneo with pristine primary rainforest covering over 70% of its land."
+    "fieldNotes": "Wealthy petroleum-producing sultanate on the island of Borneo with pristine primary rainforest covering over 70% of its land.",
+    "continent": "Asia"
   },
   {
     "id": "384",
@@ -7874,7 +8048,8 @@ export const COUNTRIES_DB = [
       "Ghana"
     ],
     "maritimeStatus": "Gulf of Guinea Atlantic Coastal (515 km)",
-    "fieldNotes": "The world's largest producer and exporter of cocoa beans. Its political capital Yamoussoukro houses the Basilica of Our Lady of Peace."
+    "fieldNotes": "The world's largest producer and exporter of cocoa beans. Its political capital Yamoussoukro houses the Basilica of Our Lady of Peace.",
+    "continent": "Africa"
   },
   {
     "id": "196",
@@ -7905,7 +8080,7 @@ export const COUNTRIES_DB = [
     ],
     "officialName": "Republic of Cyprus (Kypriaki Dimokratia)",
     "region": "Europe",
-    "subregion": "Southern Europe / Eastern Mediterranean",
+    "subregion": "Southern Europe",
     "population": 1250000,
     "areaKm2": 9251,
     "languages": [
@@ -7915,7 +8090,8 @@ export const COUNTRIES_DB = [
     "currency": "Euro (EUR, €)",
     "neighbors": [],
     "maritimeStatus": "Eastern Mediterranean Island Crossroads",
-    "fieldNotes": "The third-largest island in the Mediterranean Sea, celebrated in classical antiquity as the legendary birthplace of Aphrodite at Petra tou Romiou."
+    "fieldNotes": "The third-largest island in the Mediterranean Sea, celebrated in classical antiquity as the legendary birthplace of Aphrodite at Petra tou Romiou.",
+    "continent": "Europe"
   },
   {
     "id": "214",
@@ -7957,7 +8133,8 @@ export const COUNTRIES_DB = [
       "Haiti"
     ],
     "maritimeStatus": "Hispaniola Eastern Two-Thirds Coastal",
-    "fieldNotes": "Contains Pico Duarte (3,098 m), the highest peak in the Caribbean, and Lake Enriquillo, the lowest elevation in the Caribbean at 46 m below sea level."
+    "fieldNotes": "Contains Pico Duarte (3,098 m), the highest peak in the Caribbean, and Lake Enriquillo, the lowest elevation in the Caribbean at 46 m below sea level.",
+    "continent": "North America"
   },
   {
     "id": "242",
@@ -7999,7 +8176,8 @@ export const COUNTRIES_DB = [
     "currency": "Fijian Dollar (FJD, FJ$)",
     "neighbors": [],
     "maritimeStatus": "South Pacific Volcanic Archipelago (330 islands)",
-    "fieldNotes": "Spans 1.3 million square kilometers of the South Pacific Ocean, celebrated for vibrant soft coral reefs and the ceremonial Yaqona (Kava) traditions."
+    "fieldNotes": "Spans 1.3 million square kilometers of the South Pacific Ocean, celebrated for vibrant soft coral reefs and the ceremonial Yaqona (Kava) traditions.",
+    "continent": "Oceania"
   },
   {
     "id": "320",
@@ -8045,7 +8223,8 @@ export const COUNTRIES_DB = [
       "El Salvador"
     ],
     "maritimeStatus": "Pacific & Caribbean Coastal",
-    "fieldNotes": "The heart of the ancient Maya civilization, home to the soaring pyramids of Tikal rising above the Petén jungle canopy and Lake Atitlán's volcanic caldera."
+    "fieldNotes": "The heart of the ancient Maya civilization, home to the soaring pyramids of Tikal rising above the Petén jungle canopy and Lake Atitlán's volcanic caldera.",
+    "continent": "North America"
   },
   {
     "id": "340",
@@ -8089,7 +8268,8 @@ export const COUNTRIES_DB = [
       "Nicaragua"
     ],
     "maritimeStatus": "Caribbean Coastline (820 km) & Pacific Gulf of Fonseca",
-    "fieldNotes": "Renowned for the intricately carved hieroglyphic stairway of the Maya ruins of Copán and the coral reefs of the Bay Islands (Roatán)."
+    "fieldNotes": "Renowned for the intricately carved hieroglyphic stairway of the Maya ruins of Copán and the coral reefs of the Bay Islands (Roatán).",
+    "continent": "North America"
   },
   {
     "id": "376",
@@ -8136,7 +8316,8 @@ export const COUNTRIES_DB = [
       "Palestine"
     ],
     "maritimeStatus": "Mediterranean & Red Sea (Gulf of Aqaba)",
-    "fieldNotes": "Pioneered drip irrigation and seawater desalination. Contains the Dead Sea hypersaline lake and the historic cultural landmarks of Jerusalem."
+    "fieldNotes": "Pioneered drip irrigation and seawater desalination. Contains the Dead Sea hypersaline lake and the historic cultural landmarks of Jerusalem.",
+    "continent": "Asia"
   },
   {
     "id": "388",
@@ -8177,7 +8358,8 @@ export const COUNTRIES_DB = [
     "currency": "Jamaican Dollar (JMD, J$)",
     "neighbors": [],
     "maritimeStatus": "Greater Antilles Island Nation",
-    "fieldNotes": "The birthplace of reggae music, Rastafarian culture, and Blue Mountain coffee. Famous for Dunn's River terraced limestone waterfalls."
+    "fieldNotes": "The birthplace of reggae music, Rastafarian culture, and Blue Mountain coffee. Famous for Dunn's River terraced limestone waterfalls.",
+    "continent": "North America"
   },
   {
     "id": "422",
@@ -8220,7 +8402,8 @@ export const COUNTRIES_DB = [
       "Israel"
     ],
     "maritimeStatus": "Levantine Mediterranean Coastal (225 km)",
-    "fieldNotes": "Ancient Phoenician seafaring homeland renowned for the Cedars of God, Roman temple complexes of Baalbek, and vibrant culinary traditions."
+    "fieldNotes": "Ancient Phoenician seafaring homeland renowned for the Cedars of God, Roman temple complexes of Baalbek, and vibrant culinary traditions.",
+    "continent": "Asia"
   },
   {
     "id": "442",
@@ -8266,7 +8449,8 @@ export const COUNTRIES_DB = [
       "France"
     ],
     "maritimeStatus": "Landlocked Ardennes Micro-State",
-    "fieldNotes": "The world's only sovereign Grand Duchy and one of the founding members of the European Union, featuring the fortified Bock Casemates."
+    "fieldNotes": "The world's only sovereign Grand Duchy and one of the founding members of the European Union, featuring the fortified Bock Casemates.",
+    "continent": "Europe"
   },
   {
     "id": "470",
@@ -8307,7 +8491,8 @@ export const COUNTRIES_DB = [
     "currency": "Euro (EUR, €)",
     "neighbors": [],
     "maritimeStatus": "Central Mediterranean Archipelago (Malta, Gozo, Comino)",
-    "fieldNotes": "One of the most densely populated countries in the world, home to megalithic temples older than Stonehenge and the fortified Baroque capital of Valletta."
+    "fieldNotes": "One of the most densely populated countries in the world, home to megalithic temples older than Stonehenge and the fortified Baroque capital of Valletta.",
+    "continent": "Europe"
   },
   {
     "id": "480",
@@ -8349,7 +8534,8 @@ export const COUNTRIES_DB = [
     "currency": "Mauritian Rupee (MUR, ₨)",
     "neighbors": [],
     "maritimeStatus": "Southwest Indian Ocean Volcanic Island",
-    "fieldNotes": "Historic home of the extinct flightless dodo bird, famous for the Chamarel Seven Coloured Earths geological sand dunes and coral lagoons."
+    "fieldNotes": "Historic home of the extinct flightless dodo bird, famous for the Chamarel Seven Coloured Earths geological sand dunes and coral lagoons.",
+    "continent": "Africa"
   },
   {
     "id": "516",
@@ -8394,7 +8580,8 @@ export const COUNTRIES_DB = [
       "South Africa"
     ],
     "maritimeStatus": "South Atlantic Skeleton Coast (1,572 km)",
-    "fieldNotes": "Home to the ancient Namib Desert—the oldest desert in the world—featuring colossal red dunes at Sossusvlei and the Skeleton Coast shipwrecks."
+    "fieldNotes": "Home to the ancient Namib Desert—the oldest desert in the world—featuring colossal red dunes at Sossusvlei and the Skeleton Coast shipwrecks.",
+    "continent": "Africa"
   },
   {
     "id": "512",
@@ -8438,7 +8625,8 @@ export const COUNTRIES_DB = [
       "Yemen"
     ],
     "maritimeStatus": "Arabian Sea, Gulf of Oman & Musandam Peninsula",
-    "fieldNotes": "Guards the southern entrance to the Strait of Hormuz via its rugged Musandam fjords. Famous for ancient falaj irrigation channels and frankincense groves."
+    "fieldNotes": "Guards the southern entrance to the Strait of Hormuz via its rugged Musandam fjords. Famous for ancient falaj irrigation channels and frankincense groves.",
+    "continent": "Asia"
   },
   {
     "id": "600",
@@ -8483,7 +8671,8 @@ export const COUNTRIES_DB = [
       "Argentina"
     ],
     "maritimeStatus": "Landlocked Paraná-Paraguay Fluvial Access",
-    "fieldNotes": "One of only two landlocked South American nations, co-operating the Itaipu Dam—one of the largest hydroelectric power generators in the world."
+    "fieldNotes": "One of only two landlocked South American nations, co-operating the Itaipu Dam—one of the largest hydroelectric power generators in the world.",
+    "continent": "South America"
   },
   {
     "id": "634",
@@ -8525,7 +8714,8 @@ export const COUNTRIES_DB = [
       "Saudi Arabia"
     ],
     "maritimeStatus": "Persian Gulf Peninsula (563 km coast)",
-    "fieldNotes": "Thumb-shaped peninsula holding the massive North Field offshore natural gas reservoir, making it one of the world's leading LNG exporters."
+    "fieldNotes": "Thumb-shaped peninsula holding the massive North Field offshore natural gas reservoir, making it one of the world's leading LNG exporters.",
+    "continent": "Asia"
   },
   {
     "id": "646",
@@ -8573,7 +8763,8 @@ export const COUNTRIES_DB = [
       "DR Congo"
     ],
     "maritimeStatus": "Landlocked Albertine Rift Highland",
-    "fieldNotes": "Known as the 'Land of a Thousand Hills', celebrated for mountain gorilla sanctuaries in the Virunga Volcanoes and world-leading environmental policies."
+    "fieldNotes": "Known as the 'Land of a Thousand Hills', celebrated for mountain gorilla sanctuaries in the Virunga Volcanoes and world-leading environmental policies.",
+    "continent": "Africa"
   },
   {
     "id": "686",
@@ -8620,7 +8811,8 @@ export const COUNTRIES_DB = [
       "The Gambia"
     ],
     "maritimeStatus": "Atlantic Westernmost Tip of Africa (531 km coast)",
-    "fieldNotes": "The westernmost point of the African continent at Cap-Vert peninsula, home to the pink algae waters of Lake Retba and the historic Gorée Island."
+    "fieldNotes": "The westernmost point of the African continent at Cap-Vert peninsula, home to the pink algae waters of Lake Retba and the historic Gorée Island.",
+    "continent": "Africa"
   },
   {
     "id": "788",
@@ -8663,7 +8855,8 @@ export const COUNTRIES_DB = [
       "Libya"
     ],
     "maritimeStatus": "Mediterranean Coastal & Cape Angela (1,148 km coast)",
-    "fieldNotes": "The northernmost point of the African continent at Cape Angela. Preserves the ancient ruins of Carthage and the amphitheater of El Jem."
+    "fieldNotes": "The northernmost point of the African continent at Cape Angela. Preserves the ancient ruins of Carthage and the amphitheater of El Jem.",
+    "continent": "Africa"
   },
   {
     "id": "894",
@@ -8712,7 +8905,8 @@ export const COUNTRIES_DB = [
       "Angola"
     ],
     "maritimeStatus": "Landlocked Zambezi Plateau",
-    "fieldNotes": "Home to Victoria Falls (Mosi-oa-Tunya, 'The Smoke That Thunders') on the Zambezi River, one of the greatest water curtains on Earth, and major copper mines."
+    "fieldNotes": "Home to Victoria Falls (Mosi-oa-Tunya, 'The Smoke That Thunders') on the Zambezi River, one of the greatest water curtains on Earth, and major copper mines.",
+    "continent": "Africa"
   },
   {
     "id": "716",
@@ -8757,6 +8951,7 @@ export const COUNTRIES_DB = [
       "Botswana"
     ],
     "maritimeStatus": "Landlocked Highveld Plateau",
-    "fieldNotes": "Named after Great Zimbabwe, the massive medieval stone ruins constructed without mortar that served as the capital of the Kingdom of Zimbabwe."
+    "fieldNotes": "Named after Great Zimbabwe, the massive medieval stone ruins constructed without mortar that served as the capital of the Kingdom of Zimbabwe.",
+    "continent": "Africa"
   }
 ];

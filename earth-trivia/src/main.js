@@ -27,7 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
     ui,
     game,
     questionBag,
+    startGame: (opts) => game.startExpedition(opts || {}),
     getState: () => ({
+      queue: [
+        ...(game.currentCountry ? [game.currentCountry.code || String(game.currentCountry.id)] : []),
+        ...(game.roundQueue || []).map(c => (typeof c === 'string' ? c : (c.code || String(c.id))))
+      ],
       mode: game.mode,
       tier: game.tier,
       round: game.round,

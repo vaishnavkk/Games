@@ -1,6 +1,7 @@
 import { COUNTRIES_DB } from '../data/countries.js';
 import { CLUES_LIBRARY } from '../data/clues.js';
-import { buildLibrary, pickCountries, pickClueSet } from './questionBag.js';
+import { buildLibrary, pickCountries, pickClueSet, findReinsertIndex } from './questionBag.js';
+import { rng, shuffle } from './rng.js';
 import { getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
 import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getCountryBoundingBox } from './frame_union.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
@@ -86,7 +87,7 @@ export class GameManager {
     const pool = customPool && customPool.length > 0 ? customPool : this.getTierPool(tier);
     const count = (rounds === 'endless' || rounds === Infinity) ? 10 : rounds;
     if (customPool) {
-      this.roundQueue = this.shuffle([...pool]);
+      this.roundQueue = shuffle([...pool]);
     } else {
       const isoList = pool.map(c => c.code || String(c.id));
       const pickedIsos = pickCountries(tier, isoList, count);
@@ -103,11 +104,7 @@ export class GameManager {
   }
 
   shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
+    return shuffle(arr);
   }
 
   nextRound() {
@@ -467,7 +464,7 @@ export class GameManager {
         ...target,
         forcedExcludeClueIds: prevClueIds
       };
-      const reinsertIndex = Math.min(this.roundQueue.length, 2 + Math.floor(Math.random() * 3));
+      const reinsertIndex = findReinsertIndex(this.roundQueue, reinsertTarget);
       this.roundQueue.splice(reinsertIndex, 0, reinsertTarget);
 
       // Visuals: Translucent red fill on guess (if any), green on target; sharp 3D Line2 outlines
