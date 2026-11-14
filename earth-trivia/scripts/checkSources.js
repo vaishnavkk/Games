@@ -299,11 +299,28 @@ async function main() {
     return;
   }
 
-  const clues = JSON.parse(fs.readFileSync(cluesPath, 'utf8'));
+  const args = process.argv.slice(2);
+  let chosenTier = 'none';
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg.startsWith('--tier=')) chosenTier = arg.split('=')[1].toLowerCase();
+    else if (arg === '--tier' && args[i + 1]) chosenTier = args[i + 1].toLowerCase();
+  }
+
+  const rawClues = JSON.parse(fs.readFileSync(cluesPath, 'utf8'));
   const countries = JSON.parse(fs.readFileSync(countriesPath, 'utf8'));
 
   const countryByIso = new Map();
   countries.forEach(c => countryByIso.set(c.code, c));
+
+  let clues = rawClues;
+  if (chosenTier === 'easy') {
+    const easyCodes = new Set(countries.filter(c => c.tier === 'easy').map(c => c.code));
+    clues = rawClues.filter(c => easyCodes.has(c.iso));
+  } else if (chosenTier === 'medium') {
+    const medCodes = new Set(countries.filter(c => c.tier === 'easy' || c.tier === 'medium').map(c => c.code));
+    clues = rawClues.filter(c => medCodes.has(c.iso));
+  }
 
   let cache = {};
   if (fs.existsSync(cachePath)) {
@@ -510,7 +527,8 @@ async function main() {
 
   // Print results
   const totalClues = clues.length;
-  console.log(`check:sources: ${uniqueUrls.length} URLs checked across ${totalClues} clues (cache hits: ${cacheHits}/${uniqueUrls.length}).`);
+  const tierLabel = chosenTier !== 'none' ? ` [--tier ${chosenTier}]` : '';
+  console.log(`check:sources${tierLabel}: ${uniqueUrls.length} unique URLs checked across ${totalClues} clues (cache hits: ${cacheHits}/${uniqueUrls.length}).`);
   console.log(`ok: ${okCount} | failed: ${failedCount} | unreachable: ${unreachableCount} | failing the quality rule: ${failingQualityCount}`);
 
   // Print domain counts for unreachable
@@ -518,10 +536,18 @@ async function main() {
   console.log(`Unreachable by domain: ${domainSummary || 'none (0 URLs)'}`);
   console.log(`Quality fails logged: ${qualityFailIds.length} items in ${qualityFailsLog}`);
 
-  // Exit conditions
-  const hasHardFail = failedCount > 0 || ungrandfatheredUnreachable.length > 0 || excessiveReuseUrls.length > 0;
+  // Exit conditions: fail on evidence-quality failure for easy tier, or hard fails
+  const hasHardFail =
+    failedCount > 0 ||
+    ungrandfatheredUnreachable.length > 0 ||
+    excessiveReuseUrls.length > 0 ||
+    (chosenTier === 'easy' && failingQualityCount > 0);
+
   if (hasHardFail) {
     console.error('Result: FAILED');
+    if (chosenTier === 'easy' && failingQualityCount > 0) {
+      console.error(`[FAIL] Evidence quality failures in Easy tier: ${failingQualityCount}`);
+    }
     if (ungrandfatheredUnreachable.length > 0) {
       console.error(`Un-grandfathered unreachable URLs:`, ungrandfatheredUnreachable);
     }
