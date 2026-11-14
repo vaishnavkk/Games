@@ -379,11 +379,11 @@
       display: none !important;
     }
     #finishEndlessBtn {
-      border-color: rgba(245, 158, 11, 0.4);
-      color: #f59e0b;
+      border-color: rgba(217, 125, 16, 0.4);
+      color: var(--color-accent, #d97d10);
     }
     #finishEndlessBtn svg {
-      color: #f59e0b;
+      color: var(--color-accent, #d97d10);
     }
 
     /* Vault primary action button */
@@ -836,8 +836,8 @@
       animation: modalFadeIn var(--duration-normal) var(--ease-out);
     }
     @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .modal-brand-header {
@@ -1792,16 +1792,16 @@
                 <span class="subtext">Freely explore and identify nations without timer or score tracking</span>
               </div>
             </label>
-            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-subtle, #d1d5db); display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--color-border-subtle, #e2d9c8); display: flex; align-items: center; justify-content: space-between; gap: 12px;">
               <div>
-                <strong style="display: block; font-size: 0.85rem; color: var(--text-primary, #1f2937);">Question History</strong>
-                <span class="subtext" style="font-size: 0.75rem; color: var(--text-muted, #6b7280);">Clear non-repeating drawer memory to replay all questions fresh</span>
+                <strong style="display: block; font-size: 0.85rem; color: var(--color-text-primary, #12202f);">Question History</strong>
+                <span class="subtext" style="font-size: 0.75rem; color: var(--color-text-muted, #4c5e6e);">Clear non-repeating drawer memory to replay all questions fresh</span>
               </div>
-              <button type="button" id="resetQuestionHistoryBtn" class="btn-subtle" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-subtle, #d1d5db); background: var(--bg-surface, #ffffff); cursor: pointer; white-space: nowrap;">
+              <button type="button" id="resetQuestionHistoryBtn" class="btn-subtle" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--color-border-subtle, #e2d9c8); background: var(--color-surface-elevated, #faf7f0); cursor: pointer; white-space: nowrap;">
                 Reset question history
               </button>
             </div>
-            <div id="resetHistoryToast" style="display: none; font-size: 0.78rem; color: #16a34a; font-weight: 600; text-align: right; margin-top: 4px;">
+            <div id="resetHistoryToast" style="display: none; font-size: 0.78rem; color: var(--color-success, #1d733e); font-weight: 600; text-align: right; margin-top: 4px;">
               Question history reset!
             </div>
           </div>

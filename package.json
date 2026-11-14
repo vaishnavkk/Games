@@ -6,6 +6,11 @@
   "scripts": {
     "selfplay": "node scripts/selfplay.js",
     "test": "npm --prefix earth-trivia test",
-    "build": "npm --prefix earth-trivia run build"
+    "build": "npm --prefix earth-trivia run build",
+    "check:clues": "npm --prefix earth-trivia run check:clues",
+    "check:library": "npm --prefix earth-trivia run check:library --",
+    "check:sources": "npm --prefix earth-trivia run check:sources --",
+    "check:palette": "npm --prefix earth-trivia run check:palette",
+    "check:contrast": "npm --prefix earth-trivia run check:contrast"
   }
 }
