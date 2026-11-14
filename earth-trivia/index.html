@@ -1316,9 +1316,9 @@
         display: none;
       }
       .vault-content-grid {
-        flex: 0 1 auto;
+        flex: 1 1 auto;
         min-height: 0;
-        overflow: hidden;
+        overflow-y: auto;
         margin-bottom: 2px;
         display: flex;
         flex-direction: column;
@@ -1331,6 +1331,7 @@
         display: none !important;
       }
       .vault-fact-card.highlight {
+        min-height: 0;
         margin-bottom: 0;
         padding: 2px 5px;
       }
@@ -1364,9 +1365,12 @@
         font-size: 13px;
       }
       .memory-vault-panel .btn-primary-action {
-        position: static;
+        width: 100%;
+        margin-top: auto;
         flex-shrink: 0;
-        margin-top: 2px;
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
         min-height: 44px;
         height: 44px;
       }
