@@ -8955,3 +8955,4 @@ export const COUNTRIES_DB = [
     "continent": "Africa"
   }
 ];
+export const COUNTRIES = COUNTRIES_DB;

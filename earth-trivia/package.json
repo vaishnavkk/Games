@@ -17,7 +17,7 @@
     "test:random": "node scripts/testRandom.js",
     "test:framing": "node scripts/testMidRangeFraming.js",
     "selfplay": "node scripts/selfplay.js",
-    "test": "node scripts/validateData.js && node scripts/testQuestionBag.js && node scripts/testStep1CameraFlight.js && node scripts/testMidRangeFraming.js && node scripts/testStep2CluePoints.js && node scripts/testScoring.js && node scripts/testStep3BugFixes.js && node scripts/testRandom.js && node scripts/testEndlessFinish.js"
+    "test": "node scripts/validateData.js && node scripts/testQuestionBag.js && node scripts/testStep1CameraFlight.js && node scripts/testMidRangeFraming.js && node scripts/testStep2CluePoints.js && node scripts/testScoring.js && node scripts/testStep3BugFixes.js && node scripts/testRandom.js && node scripts/testEndlessFinish.js && node scripts/testTiers.js"
   },
   "keywords": [
     "geography",

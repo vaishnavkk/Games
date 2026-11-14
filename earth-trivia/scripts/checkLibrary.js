@@ -116,13 +116,13 @@ for (const item of clues) {
 }
 
 // 5. Tier Targets:
-// Easy (Explorer): 15 = 5/5/5
+// Easy (Release Gate: 3 = 1/1/1; Informational v1.0.1 Target: 15 = 5/5/5)
 // Medium (Navigator-only): 9 = 3/3/3
 // Hard (Global-only): 6 = 2/2/2
 const TIER_DEFS = {
-  easy: { name: 'Easy', target: [5, 5, 5], totalTarget: 15, key: 'easy' },
-  medium: { name: 'Navigator-only (Medium)', target: [3, 3, 3], totalTarget: 9, key: 'medium' },
-  hard: { name: 'Global-only (Hard)', target: [2, 2, 2], totalTarget: 6, key: 'hard' }
+  easy: { name: 'Easy', target: [5, 5, 5], totalTarget: 15, key: 'easy', gate: [1, 1, 1], totalGate: 3 },
+  medium: { name: 'Navigator-only (Medium)', target: [3, 3, 3], totalTarget: 9, key: 'medium', gate: [1, 1, 1], totalGate: 3 },
+  hard: { name: 'Global-only (Hard)', target: [2, 2, 2], totalTarget: 6, key: 'hard', gate: [1, 1, 1], totalGate: 3 }
 };
 
 function evaluateTier(tierKey) {
@@ -130,6 +130,8 @@ function evaluateTier(tierKey) {
   const tierCountries = countries.filter(c => c.tier === def.key);
   let belowTargetCount = 0;
   let totalShortage = 0;
+  let gateBelowCount = 0;
+  let gateShortage = 0;
   const counts = [];
 
   for (const c of tierCountries) {
@@ -139,6 +141,17 @@ function evaluateTier(tierKey) {
     const c3 = items.filter(i => Number(i.level) === 3).length;
     counts.push(items.length);
 
+    // Gate checks
+    const g1 = Math.max(0, def.gate[0] - c1);
+    const g2 = Math.max(0, def.gate[1] - c2);
+    const g3 = Math.max(0, def.gate[2] - c3);
+    const g = g1 + g2 + g3;
+    if (g > 0) {
+      gateBelowCount++;
+      gateShortage += g;
+    }
+
+    // Target checks
     const s1 = Math.max(0, def.target[0] - c1);
     const s2 = Math.max(0, def.target[1] - c2);
     const s3 = Math.max(0, def.target[2] - c3);
@@ -160,6 +173,8 @@ function evaluateTier(tierKey) {
     avg,
     max,
     totalCountries: tierCountries.length,
+    gateBelowCount,
+    gateShortage,
     belowTargetCount,
     totalShortage
   };
@@ -177,7 +192,11 @@ console.log(`Counts: Unique IDs: ${idCounts.size}/${clues.length} (duplicates: $
 // Print per tier items per country (min/avg/max), countries below target, and total shortage
 for (const t of ['easy', 'medium', 'hard']) {
   const s = tierStats[t];
-  console.log(`  Tier [${s.name}]: items/country: min=${s.min}, avg=${s.avg}, max=${s.max} | Below target: ${s.belowTargetCount}/${s.totalCountries} | Total shortage: ${s.totalShortage} clues`);
+  if (t === 'easy') {
+    console.log(`  Tier [${s.name}]: items/country: min=${s.min}, avg=${s.avg}, max=${s.max} | Gate: ${s.totalCountries - s.gateBelowCount}/${s.totalCountries} passed (gate shortage: ${s.gateShortage}) | Target (v1.0.1): ${s.belowTargetCount}/${s.totalCountries} below target (target shortage: ${s.totalShortage} clues)`);
+  } else {
+    console.log(`  Tier [${s.name}]: items/country: min=${s.min}, avg=${s.avg}, max=${s.max} | Below target: ${s.belowTargetCount}/${s.totalCountries} | Total shortage: ${s.totalShortage} clues`);
+  }
 }
 
 // Fails only when tier is requested
@@ -186,9 +205,16 @@ if (chosenTier !== 'none') {
   const tiersToCheck = chosenTier === 'all' ? ['easy', 'medium', 'hard'] : [chosenTier];
   for (const t of tiersToCheck) {
     const s = tierStats[t];
-    if (s && s.totalShortage > 0) {
-      requestedTierFailure = true;
-      console.error(`  [FAIL] Requested tier "${t}" has shortage of ${s.totalShortage} clues (${s.belowTargetCount} countries below target).`);
+    if (t === 'easy') {
+      if (s && s.gateShortage > 0) {
+        requestedTierFailure = true;
+        console.error(`  [FAIL] Requested Easy Gate has shortage of ${s.gateShortage} clues (${s.gateBelowCount} countries below gate).`);
+      }
+    } else {
+      if (s && s.totalShortage > 0) {
+        requestedTierFailure = true;
+        console.error(`  [FAIL] Requested tier "${t}" has shortage of ${s.totalShortage} clues (${s.belowTargetCount} countries below target).`);
+      }
     }
   }
 }
