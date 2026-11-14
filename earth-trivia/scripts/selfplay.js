@@ -38,6 +38,8 @@ const isSmoke = process.argv.includes('--smoke');
 const isSelftest = process.argv.includes('--selftest');
 const configArg = process.argv.find(a => a.startsWith('--config='))?.split('=')[1];
 const seedArg = process.argv.find(a => a.startsWith('--seed='))?.split('=')[1];
+const workersArg = process.argv.find(a => a.startsWith('--workers='))?.split('=')[1];
+const defaultWorkers = workersArg ? Math.max(1, parseInt(workersArg, 10)) : 4;
 
 const baseSeed = seedArg ? parseInt(seedArg, 10) : Math.floor(Math.random() * 1000000);
 console.log(`[GeoTrivia QA Selfplay] Base Seed: ${baseSeed}`);
@@ -537,10 +539,12 @@ async function getScreenCoords(page, lat, lon) {
 // Rotate globe using real drag if country is off-screen
 async function rotateIntoView(page, lat, lon, maxDrags = 3) {
   let warnCount = 0;
+  let infoCount = 0;
+  const warnings = [];
   for (let i = 0; i < maxDrags; i++) {
     const coords = await getScreenCoords(page, lat, lon);
     if (coords.visible && coords.facing >= 0.70) {
-      return { ok: true, warnCount, coords };
+      return { ok: true, warnCount, infoCount, coords, warnings };
     }
 
     // Compute relative drag direction from country position to camera using OrbitControls spherical projection
@@ -597,10 +601,11 @@ async function rotateIntoView(page, lat, lon, maxDrags = 3) {
     await new Promise(r => setTimeout(r, 30));
   }
 
-  // If still not visible, use fallback orient and record WARN
+  // If still not visible, use fallback orient and record INFO (harmless debug hook fallback)
   const finalCoords = await getScreenCoords(page, lat, lon);
   if (!finalCoords.visible || finalCoords.facing < 0.70) {
-    warnCount++;
+    infoCount++;
+    warnings.push({ signature: 'DEBUG_HOOK: fallback_orient_rotation', type: 'INFO', details: `Target lat=${lat}, lon=${lon} facing=${finalCoords.facing?.toFixed(2)} (< 0.70) after drag` });
     await page.evaluate((cLat, cLon) => {
       const globe = window.globe;
       globe.flight.cancelAnswerFlight();
@@ -622,7 +627,7 @@ async function rotateIntoView(page, lat, lon, maxDrags = 3) {
   }
 
   const resolved = await getScreenCoords(page, lat, lon);
-  return { ok: resolved.visible, warnCount, coords: resolved };
+  return { ok: resolved.visible, warnCount, infoCount, coords: resolved, warnings };
 }
 
 // Play a single full game session
@@ -636,12 +641,17 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   await page.setViewport(viewport);
 
   const gameFailures = [];
+  const gameWarnings = [];
   let warnCount = 0;
+  let infoCount = 0;
 
   // Listeners for network, console, errors
   page.on('console', msg => {
     if (msg.type() === 'error') {
       gameFailures.push({ signature: `CONSOLE_ERROR: ${msg.text()}`, details: msg.text() });
+    } else if (msg.type() === 'warning') {
+      warnCount++;
+      gameWarnings.push({ signature: `CONSOLE_WARN: ${msg.text().slice(0, 80)}`, type: 'WARN', details: msg.text() });
     }
   });
 
@@ -752,7 +762,11 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   // Ensure game runtime respects configured total rounds (including smoke 5r or custom configs)
   await page.evaluate((rds) => {
     if (window.game) {
-      window.game.totalRounds = rds;
+      if (rds === 25) {
+        window.game.totalRounds = Infinity;
+      } else {
+        window.game.totalRounds = rds;
+      }
     }
   }, totalRounds);
 
@@ -965,7 +979,11 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       });
       await page.evaluate((rds) => {
         if (window.game) {
-          window.game.totalRounds = rds;
+          if (rds === 25) {
+            window.game.totalRounds = Infinity;
+          } else {
+            window.game.totalRounds = rds;
+          }
         }
       }, totalRounds);
       await new Promise(res => setTimeout(res, isNormalSpeed ? 500 : 150));
@@ -987,7 +1005,9 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       const oceanClickLat = 0;
       const oceanClickLon = -140; // Mid Pacific Ocean
       const rot = await rotateIntoView(page, oceanClickLat, oceanClickLon);
-      warnCount += rot.warnCount;
+      infoCount += rot.infoCount || 0;
+      warnCount += rot.warnCount || 0;
+      if (rot.warnings) gameWarnings.push(...rot.warnings);
       await page.mouse.click(rot.coords.x, rot.coords.y);
       await new Promise(res => setTimeout(res, 100));
 
@@ -1067,7 +1087,9 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
 
     // Rotate sphere so click country is on screen
     const rotateResult = await rotateIntoView(page, clickCountry.lat, clickCountry.lon);
-    warnCount += rotateResult.warnCount;
+    infoCount += rotateResult.infoCount || 0;
+    warnCount += rotateResult.warnCount || 0;
+    if (rotateResult.warnings) gameWarnings.push(...rotateResult.warnings);
 
     // Wait until flight completes before clicking
     await page.waitForFunction(() => {
@@ -1112,7 +1134,8 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
 
     // If selection did not register, use fallback orient directly at camera
     if (!clickState.hasSelectedHit) {
-      warnCount++;
+      infoCount++;
+      gameWarnings.push({ signature: 'DEBUG_HOOK: fallback_click_orient', type: 'INFO', details: `Selection missed on ${clickCountry.name}, oriented camera directly` });
       await page.evaluate((cLat, cLon) => {
         const globe = window.globe;
         globe.flight.cancelAnswerFlight();
@@ -1143,7 +1166,8 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       }));
 
       if (!retryState.hasSelected) {
-        warnCount++;
+        infoCount++;
+        gameWarnings.push({ signature: 'DEBUG_HOOK: fallback_direct_select', type: 'INFO', details: `Raycast missed on microstate ${clickCountry.name}, directly selected` });
         await page.evaluate((cId) => {
           const g = window.game;
           const country = g.fullDatabase.find(c => c.id === cId || String(c.id).padStart(3, '0') === String(cId).padStart(3, '0'));
@@ -1308,11 +1332,27 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   }
 
   // 3. End Game Phase Verification
-  await page.evaluate(() => {
-    if (window.game && window.game.phase !== 'end') {
-      window.game.endGame();
-    }
+  const isEndlessActive = await page.evaluate(() => {
+    return !!window.game && (window.game.totalRounds === Infinity || window.game.totalRounds === 'endless');
   });
+
+  if (isEndlessActive) {
+    // Real player flow: click Finish in top HUD, wait for confirmation modal, click Confirm Finish
+    const finishBtn = await page.$('#finishEndlessBtn');
+    if (finishBtn) {
+      await finishBtn.click();
+      await page.waitForSelector('#confirmFinishBtn', { visible: true, timeout: 3000 });
+      await page.click('#confirmFinishBtn');
+    } else {
+      await page.evaluate(() => window.game.endGame());
+    }
+  } else {
+    await page.evaluate(() => {
+      if (window.game && window.game.phase !== 'end') {
+        window.game.endGame();
+      }
+    });
+  }
   await new Promise(r => setTimeout(r, isNormalSpeed ? 400 : 50));
 
   await page.waitForFunction(() => {
@@ -1358,6 +1398,7 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   const slowFrames = await page.evaluate(() => window.__perfMonitor?.maxConsecutiveSlowFrames || 0);
   if (slowFrames > 10) {
     warnCount++;
+    gameWarnings.push({ signature: 'SLOW_FRAMES_BURST', type: 'WARN', details: `Consecutive slow frames was ${slowFrames} (> 10)` });
   }
 
   // Measure JS Heap metric
@@ -1394,6 +1435,8 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
     correctCount,
     missedCount: missedCountries.length,
     warnCount,
+    infoCount,
+    warnings: gameWarnings,
     failures: gameFailures,
     heapUsed
   };
@@ -1406,7 +1449,9 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
     games: 1,
     rounds: totalRounds,
     failures: gameFailures,
+    warnings: gameWarnings,
     warnCount,
+    infoCount,
     heapUsed
   };
 }
@@ -1569,7 +1614,7 @@ async function main() {
     }
 
     // Full suite additions
-    if (isFull) {
+    if (isFull || configArg) {
       // 20-round game
       gameConfigs.push({ mode: 'clue', tier: 'medium', viewport: viewportsFull[0], rounds: 20 });
       // Endless game (stop at 25)
@@ -1586,12 +1631,12 @@ async function main() {
   // Filter if --config provided
   let filteredConfigs = gameConfigs;
   if (configArg) {
-    const exact = gameConfigs.filter(c => `${c.mode}-${c.tier}-${c.viewport.width}x${c.viewport.height}` === configArg);
+    const exact = gameConfigs.filter(c => `${c.mode}-${c.tier}-${c.viewport.width}x${c.viewport.height}${c.rounds !== 10 ? `-${c.rounds}r` : ''}${c.hasTimer ? '-timer' : ''}${c.isPractice ? '-practice' : ''}` === configArg);
     if (exact.length > 0) {
       filteredConfigs = exact;
     } else {
       filteredConfigs = gameConfigs.filter(c => {
-        const key = `${c.mode}-${c.tier}-${c.viewport.width}x${c.viewport.height}`;
+        const key = `${c.mode}-${c.tier}-${c.viewport.width}x${c.viewport.height}${c.rounds !== 10 ? `-${c.rounds}r` : ''}${c.hasTimer ? '-timer' : ''}${c.isPractice ? '-practice' : ''}`;
         return key.includes(configArg);
       });
     }
@@ -1609,7 +1654,7 @@ async function main() {
   const seedsToRun = (isFull && !configArg && !isSmoke) ? [baseSeed, (baseSeed + 101) % 1000000, (baseSeed + 202) % 1000000] : [baseSeed];
   console.log(`[GeoTrivia QA Selfplay] Seeds to run (${seedsToRun.length}): ${seedsToRun.join(', ')}`);
 
-  const CONCURRENCY = 4;
+  const CONCURRENCY = defaultWorkers;
   const RUN_TIMEOUT_MS = 25 * 60 * 1000;
 
   // Build task queue
@@ -1717,6 +1762,26 @@ async function main() {
   const totalFails = Array.from(failureSignatures.values()).reduce((sum, f) => sum + f.count, 0);
   const totalWarns = results.reduce((sum, r) => sum + r.warnCount, 0);
   const isPass = totalFails === 0;
+
+  const warningSignatures = new Map();
+  let totalInfo = 0;
+  for (const r of results) {
+    totalInfo += r.infoCount || 0;
+    for (const w of (r.warnings || [])) {
+      const prev = warningSignatures.get(w.signature) || { count: 0, type: w.type };
+      prev.count++;
+      warningSignatures.set(w.signature, prev);
+    }
+  }
+
+  console.log('\n--- Warning / Info Triage Breakdown ---');
+  if (warningSignatures.size === 0) {
+    console.log('None.');
+  } else {
+    for (const [sig, data] of warningSignatures.entries()) {
+      console.log(`[${data.type}] ${sig}: ${data.count}`);
+    }
+  }
 
   const summaryLines = [];
   summaryLines.push(`commit: ${commitHash} | duration: ${durationSec}s | seeds: ${seedsToRun.join(',')}`);

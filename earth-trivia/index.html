@@ -375,6 +375,16 @@
     .hud-menu-btn svg {
       color: var(--color-accent);
     }
+    #finishEndlessBtn.hidden {
+      display: none !important;
+    }
+    #finishEndlessBtn {
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #f59e0b;
+    }
+    #finishEndlessBtn svg {
+      color: #f59e0b;
+    }
 
     /* Vault primary action button */
     .memory-vault-panel .btn-primary-action {
@@ -1173,6 +1183,13 @@
         padding: 3px 6px;
         min-height: var(--touch-target-min, 44px);
       }
+      #finishEndlessBtn {
+        min-width: var(--touch-target-min, 44px);
+        min-height: var(--touch-target-min, 44px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
       .hud-tag .val {
         font-size: 18px; /* >= 18px constraint */
         line-height: 1;
@@ -1472,8 +1489,13 @@
         width: 11px;
         height: 11px;
       }
+      #finishEndlessBtn {
+        width: auto;
+        min-width: var(--touch-target-min, 44px);
+        min-height: var(--touch-target-min, 44px);
+      }
       .floating-clue-card {
-        top: 42px;
+        top: 52px;
         left: 2px;
         right: 2px;
         width: calc(100% - 4px);
@@ -1519,6 +1541,10 @@
         </div>
         <button class="icon-action-btn" id="soundBtn" title="Toggle Audio Feedback" aria-label="Toggle Audio">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        </button>
+        <button class="hud-menu-btn hidden" id="finishEndlessBtn" title="Finish Endless Expedition & View Summary" aria-label="Finish Expedition">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+          <span class="hud-menu-text">Finish</span>
         </button>
         <button class="hud-menu-btn" id="mainMenuBtn" title="Return to Main Menu / Switch Mode" aria-label="Main Menu">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -1834,6 +1860,18 @@
         <button class="btn-secondary-action" id="restartBtn">
           <span>New Expedition</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Endless Mode Finish Confirmation Modal -->
+  <div class="modal-overlay-container hidden" id="finishConfirmModal" role="dialog" aria-modal="true" aria-labelledby="finishModalTitle">
+    <div class="modal-dialog-surface finish-confirm-dialog" style="max-width: 360px; text-align: center; padding: 24px 20px;">
+      <h3 id="finishModalTitle" class="modal-hero-title" style="font-size: 18px; margin: 0 0 8px 0;">Finish Expedition?</h3>
+      <p class="modal-sub-label" style="margin: 0 0 20px 0; font-size: 13.5px;">Wrap up your endless run and review your final score summary?</p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button id="cancelFinishBtn" class="btn-secondary-action" style="min-height: 44px; min-width: 110px; padding: 8px 16px; font-size: 13px;">Keep Playing</button>
+        <button id="confirmFinishBtn" class="btn-primary-action" style="min-height: 44px; min-width: 110px; padding: 8px 16px; font-size: 13px;">Finish & Review</button>
       </div>
     </div>
   </div>

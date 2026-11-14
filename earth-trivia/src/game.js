@@ -105,6 +105,18 @@ export class GameManager {
     });
 
     this.ui.showGameHUD(this.totalRounds, this.hasTimer, this.isPractice);
+
+    const isEndless = this.totalRounds === Infinity || this.totalRounds === 'endless';
+    if (this.ui.finishEndlessBtn) {
+      if (isEndless) {
+        this.ui.finishEndlessBtn.classList.remove('hidden');
+        this.ui.finishEndlessBtn.style.display = 'inline-flex';
+      } else {
+        this.ui.finishEndlessBtn.classList.add('hidden');
+        this.ui.finishEndlessBtn.style.display = 'none';
+      }
+    }
+
     this.nextRound();
   }
 
@@ -603,6 +615,14 @@ export class GameManager {
     this.globe.controls.enabled = true;
     this.globe.isAutoRotating = true;
 
+    if (this.ui.finishConfirmModal) {
+      this.ui.finishConfirmModal.classList.add('hidden');
+    }
+    if (this.ui.finishEndlessBtn) {
+      this.ui.finishEndlessBtn.classList.add('hidden');
+      this.ui.finishEndlessBtn.style.display = 'none';
+    }
+
     this.ui.hideTouchConfirm();
     this.ui.showStartScreen();
     if (typeof window !== 'undefined' && window.__updateBestScoreDisplay) {
@@ -620,6 +640,14 @@ export class GameManager {
     // Reset visual map and clear arcs on end screen
     this.globe.flight.clearVisuals();
     this.globe.mapRenderer.resetHighlights();
+
+    if (this.ui.finishConfirmModal) {
+      this.ui.finishConfirmModal.classList.add('hidden');
+    }
+    if (this.ui.finishEndlessBtn) {
+      this.ui.finishEndlessBtn.classList.add('hidden');
+      this.ui.finishEndlessBtn.style.display = 'none';
+    }
 
     // Save best score per mode and tier in localStorage inside try/catch
     if (!this.isPractice) {
@@ -714,6 +742,11 @@ export class GameManager {
           }
         }
       } else if (e.key === 'Escape') {
+        if (this.ui.finishConfirmModal && !this.ui.finishConfirmModal.classList.contains('hidden')) {
+          e.preventDefault();
+          this.ui.finishConfirmModal.classList.add('hidden');
+          return;
+        }
         if (this.phase === 'question' || this.phase === 'selected' || this.phase === 'result') {
           e.preventDefault();
           this.returnToMainMenu();
@@ -744,6 +777,37 @@ export class GameManager {
     // Main Menu Navigation (quit in-between and restart fresh)
     if (this.ui.mainMenuBtn) {
       this.ui.mainMenuBtn.onclick = () => this.returnToMainMenu();
+    }
+
+    // Endless Mode Finish Control & Confirmation Dialog
+    if (this.ui.finishEndlessBtn) {
+      this.ui.finishEndlessBtn.onclick = () => {
+        if (this.ui.finishConfirmModal) {
+          this.ui.finishConfirmModal.classList.remove('hidden');
+        }
+      };
+    }
+    if (this.ui.cancelFinishBtn) {
+      this.ui.cancelFinishBtn.onclick = () => {
+        if (this.ui.finishConfirmModal) {
+          this.ui.finishConfirmModal.classList.add('hidden');
+        }
+      };
+    }
+    if (this.ui.confirmFinishBtn) {
+      this.ui.confirmFinishBtn.onclick = () => {
+        if (this.ui.finishConfirmModal) {
+          this.ui.finishConfirmModal.classList.add('hidden');
+        }
+        this.endGame();
+      };
+    }
+    if (this.ui.finishConfirmModal) {
+      this.ui.finishConfirmModal.onclick = (e) => {
+        if (e.target === this.ui.finishConfirmModal) {
+          this.ui.finishConfirmModal.classList.add('hidden');
+        }
+      };
     }
   }
 }

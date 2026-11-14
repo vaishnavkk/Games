@@ -17,6 +17,10 @@ export class UIManager {
     this.timerBar = document.getElementById('timerBar');
     this.soundBtn = document.getElementById('soundBtn');
     this.mainMenuBtn = document.getElementById('mainMenuBtn');
+    this.finishEndlessBtn = document.getElementById('finishEndlessBtn');
+    this.finishConfirmModal = document.getElementById('finishConfirmModal');
+    this.cancelFinishBtn = document.getElementById('cancelFinishBtn');
+    this.confirmFinishBtn = document.getElementById('confirmFinishBtn');
 
     // Clue Card Elements
     this.cluePrompt = document.getElementById('cluePrompt');
