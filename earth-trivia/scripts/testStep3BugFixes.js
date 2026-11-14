@@ -66,6 +66,23 @@ for (const vp of vatPicks) {
   console.log(`  Pick at ${vp.label} (${vp.lat}, ${vp.lon}): ${res?.country?.name} (ID: ${res?.country?.id}) [${pass ? 'PASS' : 'FAIL'}]`);
 }
 
+// 3c.2 Archipelago & Island Label Point Hit Tests
+console.log('\n--- 3c.2) Archipelago & Island Label Point Hit Tests ---');
+const labelPicks = [
+  { name: 'Philippines', lat: 12.87, lon: 121.77 },
+  { name: 'Kiribati', lat: 1.45, lon: 172.98 },
+  { name: 'Haiti', lat: 18.97, lon: -72.28 },
+  { name: 'Japan', lat: 36.20, lon: 138.25 },
+  { name: 'Bahamas', lat: 25.03, lon: -77.39 }
+];
+
+for (const lp of labelPicks) {
+  const res = picker._resolveCountryAtLatLon(lp.lat, lp.lon);
+  const pass = res && res.country.name === lp.name;
+  if (!pass) allPassed = false;
+  console.log('  Pick at ' + lp.name + ' label point (' + lp.lat + ', ' + lp.lon + '): ' + res?.country?.name + ' [' + (pass ? 'PASS' : 'FAIL') + ']');
+}
+
 // 4. Minimum Camera Distance & Land Texture Resolution
 console.log('\n--- 3d) Minimum Camera Distance & Land Texel Resolution ---');
 const minCamDist = 2.52;

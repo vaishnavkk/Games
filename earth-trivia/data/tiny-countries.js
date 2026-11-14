@@ -12,6 +12,7 @@ const TINY_COUNTRIES = [
   { id: "702", name: "Singapore", centroid: [103.82, 1.35], hitRadius: 0.6 },
   { id: "048", name: "Bahrain", centroid: [50.55, 26.07], hitRadius: 0.7 },
   { id: "462", name: "Maldives", centroid: [73.50, 4.17], hitRadius: 1.2 },
+  { id: "608", name: "Philippines", centroid: [121.77, 12.87], hitRadius: 1.8 },
 
   // Pacific Microstates (reduced to prevent overlap)
   { id: "520", name: "Nauru", centroid: [166.93, -0.52], hitRadius: 0.9 },

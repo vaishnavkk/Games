@@ -210,7 +210,11 @@ async function runClickAudit() {
     { name: 'Indonesia', lat: -0.78, lon: 113.92 },
     { name: 'Peru', lat: -9.18, lon: -75.01 },
     { name: 'Sweden', lat: 62.00, lon: 15.00 },
-    { name: 'Morocco', lat: 31.79, lon: -7.09 }
+    { name: 'Morocco', lat: 31.79, lon: -7.09 },
+    { name: 'Philippines', lat: 12.87, lon: 121.77 },
+    { name: 'Kiribati', lat: 1.45, lon: 172.98 },
+    { name: 'Haiti', lat: 18.97, lon: -72.28 },
+    { name: 'Bahamas', lat: 25.03, lon: -77.39 }
   ];
 
   for (const c of diverse30) {

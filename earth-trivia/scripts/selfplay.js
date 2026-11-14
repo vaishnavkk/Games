@@ -11,17 +11,41 @@ import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
 import { pointsIfCorrect, calculatePartialCredit, SCORING } from '../src/scoring.js';
 import { getLargestLandmassCenter } from '../src/cameraFlight.js';
+import { CountryPicker } from '../src/picker.js';
+import { COUNTRIES_DB } from '../data/countries.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
+
+const auditPicker = new CountryPicker(null, null);
 
 function getBestCountryCoords(countryOrId) {
   const cId = typeof countryOrId === 'object' ? countryOrId.id : countryOrId;
   const cName = typeof countryOrId === 'object' ? countryOrId.name : null;
+  const dbMatch = COUNTRIES_DB.find(c => String(c.id).padStart(3, '0') === String(cId).padStart(3, '0') || (cName && c.name === cName));
   const tc = WORLD_COUNTRIES.find(c => String(c.id).padStart(3, '0') === String(cId).padStart(3, '0') || (cName && c.name === cName));
+
+  // 1. Check if DB label point (lat, lon) resolves directly to this country
+  if (dbMatch && dbMatch.lat !== undefined && dbMatch.lon !== undefined) {
+    const hit = auditPicker.findCountryAtLatLon(dbMatch.lat, dbMatch.lon);
+    if (hit && (hit.name === dbMatch.name || String(hit.id) === String(dbMatch.id))) {
+      return { lat: dbMatch.lat, lon: dbMatch.lon };
+    }
+  }
+
+  // 2. Next check if largest landmass center resolves
+  if (tc) {
+    const lmc = getLargestLandmassCenter(tc);
+    const hitLmc = auditPicker.findCountryAtLatLon(lmc.lat, lmc.lon);
+    if (hitLmc && (hitLmc.name === tc.name || String(hitLmc.id) === String(tc.id))) {
+      return lmc;
+    }
+  }
+
+  // 3. Fallback to DB lat/lon or largest landmass center
+  if (dbMatch && dbMatch.lat !== undefined) {
+    return { lat: dbMatch.lat, lon: dbMatch.lon };
+  }
   if (tc) {
     return getLargestLandmassCenter(tc);
-  }
-  if (typeof countryOrId === 'object' && countryOrId.lat !== undefined) {
-    return { lat: countryOrId.lat, lon: countryOrId.lon };
   }
   return { lat: 0, lon: 0 };
 }
