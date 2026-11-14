@@ -1184,11 +1184,15 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       });
     }
 
-    // Wait for flight / result phase
+    // Wait for flight / result phase and ensure CSS animations on memoryVault have settled
     await page.waitForFunction(() => {
       const g = window.game;
       const vault = document.getElementById('memoryVault');
-      return g && !g.isAnswering && vault && !vault.classList.contains('hidden') && vault.style.display !== 'none';
+      if (!g || g.isAnswering || !vault || vault.classList.contains('hidden') || vault.style.display === 'none') {
+        return false;
+      }
+      const anims = vault.getAnimations ? vault.getAnimations() : [];
+      return anims.length === 0 || anims.every(a => a.playState === 'finished' || a.playState === 'idle');
     }, { timeout: 10000 });
 
     await new Promise(res => setTimeout(res, isNormalSpeed ? 500 : 150));
