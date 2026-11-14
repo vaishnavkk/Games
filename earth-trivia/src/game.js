@@ -784,6 +784,9 @@ export class GameManager {
       this.ui.finishEndlessBtn.onclick = () => {
         if (this.ui.finishConfirmModal) {
           this.ui.finishConfirmModal.classList.remove('hidden');
+          if (this.ui.cancelFinishBtn) {
+            this.ui.cancelFinishBtn.focus();
+          }
         }
       };
     }

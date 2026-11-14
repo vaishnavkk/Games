@@ -148,10 +148,11 @@ async function runSelftest() {
     await page.goto(baseUrl, { waitUntil: 'load' });
     await page.waitForSelector('#startScreen');
 
-    // Plant 3 defects:
+    // Plant 4 defects:
     // 1. "undefined" in HUD text
     // 2. Invisible overlay covering Continue
     // 3. 45vh mobile sheet
+    // 4. Dialog with 600px wide button inside overflow:auto 400px box
     await page.evaluate(() => {
       // Hide start screen so we are in result phase
       const start = document.getElementById('startScreen');
@@ -196,6 +197,20 @@ async function runSelftest() {
         overlay.style.cssText = `position:fixed;top:${rect.top}px;left:${rect.left}px;width:${rect.width}px;height:${rect.height}px;z-index:999999;background:rgba(0,0,0,0.001);pointer-events:auto;`;
         document.body.appendChild(overlay);
       }
+
+      // 4. Dialog with 600px wide button inside overflow:auto 400px box
+      const modalBox = document.createElement('div');
+      modalBox.id = 'selftest-planted-dialog';
+      modalBox.setAttribute('role', 'dialog');
+      modalBox.className = 'modal-card modal-dialog-surface';
+      modalBox.style.cssText = 'position:fixed;top:40px;left:40px;width:400px;max-width:400px;overflow-x:auto;overflow-y:auto;z-index:999999;background:#102a36;padding:16px;box-sizing:border-box;';
+      const wideBtn = document.createElement('button');
+      wideBtn.id = 'selftest-wide-btn';
+      wideBtn.className = 'btn';
+      wideBtn.textContent = 'Selftest Planted 600px Wide Button';
+      wideBtn.style.cssText = 'width:600px;min-width:600px;height:48px;display:block;';
+      modalBox.appendChild(wideBtn);
+      document.body.appendChild(modalBox);
     });
 
     // Run phase validation
@@ -223,19 +238,21 @@ async function runSelftest() {
     const hasUndefined = detectedFailures.some(f => f.signature.includes('FORBIDDEN_TEXT') && f.signature.includes('undefined'));
     const hasCoveredContinue = detectedFailures.some(f => f.signature.includes('BUTTON_COVERED') && f.signature.includes('vaultNextBtn'));
     const has45vhSheet = detectedFailures.some(f => f.signature.includes('MOBILE_SHEET_TOO_TALL'));
+    const hasModalDefect = detectedFailures.some(f => f.signature.includes('selftest-planted-dialog') || f.signature.includes('selftest-wide-btn') || f.signature.includes('ELEMENT_HORIZONTAL_OVERFLOW'));
 
-    const exactly3 = detectedFailures.length === 3 && hasUndefined && hasCoveredContinue && has45vhSheet;
+    const all4 = hasUndefined && hasCoveredContinue && has45vhSheet && hasModalDefect;
 
-    if (exactly3) {
-      console.log('\n[PASS] SELFTEST PASSED: Exactly 3 planted defects correctly flagged:');
+    if (all4) {
+      console.log('\n[PASS] SELFTEST PASSED: Exactly 4 planted defects correctly caught (4/4):');
       console.log('  1. Forbidden text "undefined" in HUD');
       console.log('  2. Invisible overlay blocking Continue button');
       console.log('  3. Mobile sheet height 45vh > 30vh');
+      console.log('  4. Dialog with 600px wide button inside overflow:auto 400px box');
       await browser.close();
       server.close();
       process.exit(0);
     } else {
-      console.error('\n[FAIL] SELFTEST FAILED: Expected exactly 3 planted defects, got:', detectedFailures);
+      console.error('\n[FAIL] SELFTEST FAILED: Expected all 4 planted defects to be caught, got:', detectedFailures);
       await browser.close();
       server.close();
       process.exit(1);
@@ -286,6 +303,103 @@ async function validatePhase(page, phase, { viewport, mode = 'clue', tier = 'eas
       });
     }
 
+    // Element-level overflow & scrollbar check (No exemption for overflow auto/scroll)
+    for (const el of document.querySelectorAll('*')) {
+      if (el.offsetWidth === 0 && el.offsetHeight === 0 && el.getClientRects().length === 0) continue;
+      const s = window.getComputedStyle(el);
+      if (s.display === 'none' || s.visibility === 'hidden' || s.display === 'inline' || s.display === 'contents') continue;
+
+      const ox = s.overflowX;
+      // Rule: any element with overflow-x auto/scroll whose scrollWidth > clientWidth FAILS unless it has data-allow-hscroll
+      if ((ox === 'auto' || ox === 'scroll') && el.scrollWidth > el.clientWidth && !el.hasAttribute('data-allow-hscroll')) {
+        errors.push({
+          signature: `ELEMENT_HORIZONTAL_OVERFLOW: ${el.tagName}#${el.id || ''}.${(el.className || '').toString().slice(0, 30)} (scrollWidth=${el.scrollWidth} > clientWidth=${el.clientWidth})`,
+          details: `Element with overflow-x:${ox} has scrollWidth=${el.scrollWidth} > clientWidth=${el.clientWidth} without data-allow-hscroll`
+        });
+      }
+
+      // Rule: any visible horizontal scrollbar FAILS
+      if (ox === 'scroll' || ox === 'auto') {
+        const bTop = parseFloat(s.borderTopWidth) || 0;
+        const bBottom = parseFloat(s.borderBottomWidth) || 0;
+        const hScrollbar = el.offsetHeight - el.clientHeight - bTop - bBottom;
+        if (hScrollbar > 2 && !el.hasAttribute('data-allow-hscroll')) {
+          errors.push({
+            signature: `VISIBLE_HORIZONTAL_SCROLLBAR: ${el.tagName}#${el.id || ''}.${(el.className || '').toString().slice(0, 30)} (scrollbarHeight=${hScrollbar.toFixed(1)}px)`,
+            details: `Element has visible horizontal scrollbar of ${hScrollbar.toFixed(1)}px`
+          });
+        }
+      }
+    }
+
+    // Dialog & Button Invariants
+    const dialogSelectors = '.modal-dialog-surface, .modal-card, .start-screen-panel, .finish-confirm-dialog, [role="dialog"]:not(.modal-overlay-container)';
+    const visibleDialogs = Array.from(document.querySelectorAll(dialogSelectors)).filter(d => {
+      if (d.offsetWidth === 0 && d.offsetHeight === 0) return false;
+      const st = window.getComputedStyle(d);
+      if (st.display === 'none' || st.visibility === 'hidden') return false;
+      const overlay = d.closest('.modal-overlay-container');
+      if (overlay && (overlay.classList.contains('hidden') || overlay.style.display === 'none' || window.getComputedStyle(overlay).display === 'none')) {
+        return false;
+      }
+      return true;
+    });
+
+    for (const d of visibleDialogs) {
+      const dRect = d.getBoundingClientRect();
+      // Every dialog must be fully inside the viewport
+      if (dRect.top < -1 || dRect.left < -1 || dRect.bottom > vp.height + 1 || dRect.right > vp.width + 1) {
+        errors.push({
+          signature: `DIALOG_OUT_OF_VIEWPORT: ${d.id || d.className}`,
+          details: `Dialog rect [${dRect.top.toFixed(1)}, ${dRect.left.toFixed(1)}, ${dRect.bottom.toFixed(1)}, ${dRect.right.toFixed(1)}] exceeds viewport [${vp.width}x${vp.height}]`
+        });
+      }
+
+      const dialogBtns = d.querySelectorAll('button, [role="button"], .btn, .btn-primary-action, .btn-secondary-action');
+      for (const btn of dialogBtns) {
+        if (btn.offsetWidth === 0 && btn.offsetHeight === 0) continue;
+        const bStyle = window.getComputedStyle(btn);
+        if (bStyle.display === 'none' || bStyle.visibility === 'hidden') continue;
+        const bRect = btn.getBoundingClientRect();
+
+        // Every button fully inside its dialog rect horizontally
+        if (bRect.left < dRect.left - 1 || bRect.right > dRect.right + 1) {
+          errors.push({
+            signature: `BUTTON_OUTSIDE_DIALOG_RECT: ${btn.id || btn.className} outside ${d.id || d.className}`,
+            details: `Button rect [${bRect.left.toFixed(1)}, ${bRect.right.toFixed(1)}] outside dialog [${dRect.left.toFixed(1)}, ${dRect.right.toFixed(1)}]`
+          });
+        }
+
+        // Buttons >= 44 px tall on touch
+        if (isMobile && bRect.height < 43.5) {
+          errors.push({
+            signature: `BUTTON_TOO_SMALL_TOUCH: ${btn.id || btn.className} height=${bRect.height.toFixed(1)}px < 44px`,
+            details: `Touch button height must be >= 44px, was ${bRect.height.toFixed(1)}px`
+          });
+        }
+
+        // No clipped text in button
+        if (btn.scrollWidth > btn.clientWidth + 1 || btn.scrollHeight > btn.clientHeight + 1) {
+          errors.push({
+            signature: `CLIPPED_TEXT_IN_BUTTON: ${btn.id || btn.className} (scroll=${btn.scrollWidth}x${btn.scrollHeight}, client=${btn.clientWidth}x${btn.clientHeight})`,
+            details: `Button text clipped due to overflow`
+          });
+        }
+      }
+
+      // No clipped text in dialog headings and paragraphs
+      const textEls = d.querySelectorAll('h1, h2, h3, h4, p, label, .modal-sub-label, .modal-hero-title');
+      for (const t of textEls) {
+        if (t.offsetWidth === 0 && t.offsetHeight === 0) continue;
+        if (t.scrollWidth > t.clientWidth + 1 && !t.hasAttribute('data-allow-hscroll')) {
+          errors.push({
+            signature: `CLIPPED_TEXT_IN_DIALOG: ${t.id || t.className || t.tagName} (scrollWidth=${t.scrollWidth} > clientWidth=${t.clientWidth})`,
+            details: `Text in dialog overflows and is clipped`
+          });
+        }
+      }
+    }
+
     // 3. Primary buttons check
     const primaryButtonIds = [
       { id: 'startExpeditionBtn', name: 'Start', phase: 'start' },
@@ -314,7 +428,12 @@ async function validatePhase(page, phase, { viewport, mode = 'clue', tier = 'eas
       }
       if (!isVisible) continue;
 
-      const rect = el.getBoundingClientRect();
+      let rect = el.getBoundingClientRect();
+      const scrollParent = el.closest('.modal-card, .modal-dialog-surface, .start-screen-panel');
+      if (scrollParent && (rect.top < -1 || rect.bottom > vp.height + 1)) {
+        el.scrollIntoView({ block: 'nearest' });
+        rect = el.getBoundingClientRect();
+      }
 
       // Check fully inside viewport
       if (rect.top < -1 || rect.left < -1 || rect.bottom > vp.height + 1 || rect.right > vp.width + 1) {
@@ -1361,11 +1480,25 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   });
 
   if (isEndlessActive) {
-    // Real player flow: click Finish in top HUD, wait for confirmation modal, click Confirm Finish
+    // Real player flow: click Finish in top HUD, wait for confirmation modal, check modal, click Keep playing,
+    // then click Finish again, wait for confirmation modal, check modal, click Finish & Review
     const finishBtn = await page.$('#finishEndlessBtn');
     if (finishBtn) {
+      // 1. Finish click
       await finishBtn.click();
-      await page.waitForSelector('#confirmFinishBtn', { visible: true, timeout: 3000 });
+      await page.waitForSelector('#finishConfirmModal:not(.hidden)', { timeout: 3000 });
+      // 2. modal -> check
+      const modalFails1 = await validatePhase(page, 'finish_modal', { viewport, mode, tier });
+      gameFailures.push(...modalFails1);
+      // 3. Keep playing
+      await page.click('#cancelFinishBtn');
+      await page.waitForSelector('#finishConfirmModal.hidden', { timeout: 3000 });
+      // 4. Then again -> Finish click
+      await finishBtn.click();
+      await page.waitForSelector('#finishConfirmModal:not(.hidden)', { timeout: 3000 });
+      const modalFails2 = await validatePhase(page, 'finish_modal', { viewport, mode, tier });
+      gameFailures.push(...modalFails2);
+      // 5. Finish & Review
       await page.click('#confirmFinishBtn');
     } else {
       await page.evaluate(() => window.game.endGame());
@@ -1559,6 +1692,79 @@ async function playGameWithTimeout(browser, baseUrl, gameConfig, eventsFile, rep
   return outcome.res;
 }
 
+// Verify all dialogs across 6 viewports: 320x568, 360x740, 390x844, 768x1024, 1440x900, 1920x1080
+async function verifyAllDialogsAcrossSixViewports(browser, baseUrl) {
+  const dialogViewports = [
+    { width: 320, height: 568, name: '320x568' },
+    { width: 360, height: 740, name: '360x740' },
+    { width: 390, height: 844, name: '390x844' },
+    { width: 768, height: 1024, name: '768x1024' },
+    { width: 1440, height: 900, name: '1440x900' },
+    { width: 1920, height: 1080, name: '1920x1080' }
+  ];
+
+  const allFailures = [];
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+
+  try {
+    for (const vp of dialogViewports) {
+      await page.setViewport({ width: vp.width, height: vp.height });
+      await page.goto(baseUrl, { waitUntil: 'load' });
+      await page.waitForSelector('#startScreen');
+      await page.waitForFunction(() => {
+        const ls = document.getElementById('loadingScreen');
+        const isGone = !ls || ls.style.display === 'none' || window.getComputedStyle(ls).display === 'none';
+        return isGone && !!window.game && !!window.game.ui;
+      }, { timeout: 10000 });
+
+      // 1. Start dialog
+      const startFails = await validatePhase(page, 'start', { viewport: vp });
+      allFailures.push(...startFails);
+
+      // 2. Finish confirm modal
+      await page.evaluate(() => {
+        document.getElementById('startScreen')?.classList.add('hidden');
+        const modal = document.getElementById('finishConfirmModal');
+        if (modal) {
+          modal.classList.remove('hidden');
+          document.getElementById('cancelFinishBtn')?.focus();
+        }
+      });
+      const finishFails = await validatePhase(page, 'finish_modal', { viewport: vp });
+      allFailures.push(...finishFails);
+
+      // 3. End screen dialog
+      await page.evaluate(() => {
+        document.getElementById('finishConfirmModal')?.classList.add('hidden');
+        if (window.game && window.game.ui) {
+          window.game.ui.showEndScreen({
+            score: 1200,
+            accuracy: 85,
+            bestStreak: 4,
+            missedCountries: [{ name: 'Brazil', capital: 'Brasilia' }],
+            isPractice: false,
+            mode: 'clue',
+            tier: 'easy'
+          });
+        }
+      });
+      const endFails = await validatePhase(page, 'end', { viewport: vp });
+      allFailures.push(...endFails);
+    }
+  } catch (err) {
+    allFailures.push({
+      signature: `DIALOG_VERIFICATION_EXCEPTION: ${err.message}`,
+      details: err.stack
+    });
+  } finally {
+    await page.close();
+    await context.close();
+  }
+
+  return allFailures;
+}
+
 // Main execution function
 async function main() {
   if (isSelftest) {
@@ -1697,6 +1903,21 @@ async function main() {
         sIdx
       });
     }
+  }
+
+  // Verify all dialogs across all 6 viewports: 320x568, 360x740, 390x844, 768x1024, 1440x900, 1920x1080
+  console.log('[GeoTrivia QA Selfplay] Verifying all game dialogs across 6 viewports...');
+  const dialogFailures = await verifyAllDialogsAcrossSixViewports(browser, baseUrl);
+  if (dialogFailures.length > 0) {
+    console.error(`[GeoTrivia QA Selfplay] FAIL: ${dialogFailures.length} dialog invariant violations found:`, dialogFailures);
+    for (const f of dialogFailures) {
+      if (!failureSignatures.has(f.signature)) {
+        failureSignatures.set(f.signature, { count: 0, reproCmd: 'node scripts/testModals.js' });
+      }
+      failureSignatures.get(f.signature).count++;
+    }
+  } else {
+    console.log('[GeoTrivia QA Selfplay] PASS: All dialogs verified across 6 viewports with 0 failures.');
   }
 
   const taskResults = new Array(queue.length);

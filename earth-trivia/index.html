@@ -690,10 +690,17 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      overflow-x: hidden;
       overflow-y: auto;
       margin-bottom: 10px;
       flex: 1;
       min-height: 0;
+      box-sizing: border-box;
+    }
+    .vault-content-grid * {
+      box-sizing: border-box;
+      min-width: 0;
+      word-break: break-word;
     }
     .vault-fact-card {
       padding: 6px 10px;
@@ -795,9 +802,14 @@
       padding: var(--space-6) var(--space-6) var(--space-4) var(--space-6);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: hidden;
       box-sizing: border-box;
       animation: modalFadeIn var(--duration-normal) var(--ease-out);
+    }
+    .start-screen-panel * {
+      box-sizing: border-box;
+      min-width: 0;
     }
 
     .start-hero-title {
@@ -813,6 +825,7 @@
     .start-scrollable-body {
       flex: 1;
       overflow-y: auto;
+      overflow-x: hidden;
       min-height: 0;
       padding-right: 4px;
       margin-bottom: 8px;
@@ -823,17 +836,47 @@
       padding-top: 6px;
     }
 
+    .modal-card,
     .modal-dialog-surface {
+      box-sizing: border-box;
+      width: min(440px, calc(100vw - 32px));
+      max-width: min(440px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      max-height: calc(100dvh - 32px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 24px;
       background: var(--color-surface-bg);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-component);
-      max-width: 520px;
-      width: 100%;
-      max-height: 92vh;
-      overflow-y: auto;
-      padding: var(--space-6);
       box-shadow: var(--shadow-lg);
       animation: modalFadeIn var(--duration-normal) var(--ease-out);
+    }
+    .modal-card *,
+    .modal-dialog-surface * {
+      box-sizing: border-box;
+      min-width: 0;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+      justify-content: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .modal-actions .btn,
+    .modal-actions button,
+    .modal-actions .btn-primary-action,
+    .modal-actions .btn-secondary-action {
+      flex: 1 1 150px;
+      min-height: 44px;
+      white-space: normal;
+      box-sizing: border-box;
+      width: auto;
     }
     @keyframes modalFadeIn {
       from { opacity: 0; }
@@ -1046,6 +1089,7 @@
     .missed-items-container {
       max-height: 180px;
       overflow-y: auto;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -1234,6 +1278,18 @@
         align-items: center;
         justify-content: center;
       }
+      .segmented-btn {
+        min-height: var(--touch-target-min, 44px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #resetQuestionHistoryBtn {
+        min-height: var(--touch-target-min, 44px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       /* Mobile Start Card with Pinned Sticky CTA (Step 4a) */
       #startScreen.modal-overlay-container {
@@ -1249,12 +1305,19 @@
         max-width: 100%;
         height: auto;
         max-height: calc(100vh - 16px);
+        max-height: calc(100dvh - 16px);
         border: 1px solid var(--color-border);
         border-radius: var(--radius-component);
         padding: 12px 12px 8px;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        box-sizing: border-box;
+      }
+      .start-screen-panel * {
+        box-sizing: border-box;
+        min-width: 0;
       }
       .start-hero-title {
         font-size: var(--font-size-xl); /* 38px >= 36px mobile constraint */
@@ -1265,6 +1328,7 @@
       .start-scrollable-body {
         flex: 1;
         overflow-y: auto;
+        overflow-x: hidden;
         min-height: 0;
         margin-bottom: 6px;
         padding-right: 2px;
@@ -1341,10 +1405,12 @@
       .vault-content-grid {
         flex: 1 1 0%;
         min-height: 0;
+        overflow-x: hidden;
         overflow-y: auto;
         margin-bottom: 2px;
         display: flex;
         flex-direction: column;
+        box-sizing: border-box;
       }
       .vault-fact-card {
         padding: 2px 5px;
@@ -1693,7 +1759,7 @@
   </div><!-- /app-shell -->
 
   <!-- Start Screen Modal (Designed Atlas Expedition Interface - 2-Column Desktop, Pinned Mobile CTA) -->
-  <div class="modal-overlay-container" id="startScreen">
+  <div class="modal-overlay-container" id="startScreen" role="dialog" aria-modal="true" aria-label="Start Expedition">
     <div class="start-screen-panel" id="startScreenPanel">
       <div class="modal-brand-header">
         <span class="hero-icon">
@@ -1792,12 +1858,12 @@
                 <span class="subtext">Freely explore and identify nations without timer or score tracking</span>
               </div>
             </label>
-            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--color-border-subtle, #e2d9c8); display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-              <div>
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--color-border-subtle, #e2d9c8); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;">
+              <div style="flex: 1 1 160px; min-width: 0;">
                 <strong style="display: block; font-size: 0.85rem; color: var(--color-text-primary, #12202f);">Question History</strong>
                 <span class="subtext" style="font-size: 0.75rem; color: var(--color-text-muted, #4c5e6e);">Clear non-repeating drawer memory to replay all questions fresh</span>
               </div>
-              <button type="button" id="resetQuestionHistoryBtn" class="btn-subtle" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--color-border-subtle, #e2d9c8); background: var(--color-surface-elevated, #faf7f0); cursor: pointer; white-space: nowrap;">
+              <button type="button" id="resetQuestionHistoryBtn" class="btn-subtle" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--color-border-subtle, #e2d9c8); background: var(--color-surface-elevated, #faf7f0); cursor: pointer; white-space: normal;">
                 Reset question history
               </button>
             </div>
@@ -1818,8 +1884,8 @@
   </div>
 
   <!-- End Summary Screen Modal -->
-  <div class="modal-overlay-container hidden" id="endScreen">
-    <div class="modal-dialog-surface">
+  <div class="modal-overlay-container hidden" id="endScreen" role="dialog" aria-modal="true" aria-label="Expedition Summary">
+    <div class="modal-card modal-dialog-surface">
       <div class="modal-brand-header">
         <span class="hero-icon">
           <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
@@ -1852,12 +1918,12 @@
         <div class="missed-items-container" id="missedList"></div>
       </div>
 
-      <div class="button-stack">
-        <button class="btn-primary-action" id="replayMissedBtn" style="display:none;">
+      <div class="modal-actions">
+        <button class="btn btn-primary-action" id="replayMissedBtn" style="display:none;">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
           <span>Replay Missed Countries</span>
         </button>
-        <button class="btn-secondary-action" id="restartBtn">
+        <button class="btn btn-secondary-action" id="restartBtn">
           <span>New Expedition</span>
         </button>
       </div>
@@ -1866,12 +1932,12 @@
 
   <!-- Endless Mode Finish Confirmation Modal -->
   <div class="modal-overlay-container hidden" id="finishConfirmModal" role="dialog" aria-modal="true" aria-labelledby="finishModalTitle">
-    <div class="modal-dialog-surface finish-confirm-dialog" style="max-width: 360px; text-align: center; padding: 24px 20px;">
+    <div class="modal-card modal-dialog-surface finish-confirm-dialog" style="text-align: center;">
       <h3 id="finishModalTitle" class="modal-hero-title" style="font-size: 18px; margin: 0 0 8px 0;">Finish Expedition?</h3>
       <p class="modal-sub-label" style="margin: 0 0 20px 0; font-size: 13.5px;">Wrap up your endless run and review your final score summary?</p>
-      <div style="display: flex; gap: 12px; justify-content: center;">
-        <button id="cancelFinishBtn" class="btn-secondary-action" style="min-height: 44px; min-width: 110px; padding: 8px 16px; font-size: 13px;">Keep Playing</button>
-        <button id="confirmFinishBtn" class="btn-primary-action" style="min-height: 44px; min-width: 110px; padding: 8px 16px; font-size: 13px;">Finish & Review</button>
+      <div class="modal-actions">
+        <button id="cancelFinishBtn" class="btn btn-secondary-action" autofocus>Keep Playing</button>
+        <button id="confirmFinishBtn" class="btn btn-primary-action">Finish & Review</button>
       </div>
     </div>
   </div>
