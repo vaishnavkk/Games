@@ -1281,6 +1281,14 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   }
 
   // 3. End Game Phase Verification
+  if (rounds === 25) {
+    await page.evaluate(() => {
+      if (window.game && window.game.phase !== 'end') {
+        window.game.endGame();
+      }
+    });
+  }
+
   await page.waitForFunction(() => {
     const end = document.getElementById('endScreen');
     return end && !end.classList.contains('hidden') && end.style.display !== 'none';
