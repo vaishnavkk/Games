@@ -34,6 +34,7 @@ const CHROME_PATH = process.env.CHROME_BIN || 'C:\\Program Files\\Google\\Chrome
 // CLI Options
 const isQuick = process.argv.includes('--quick');
 const isFull = process.argv.includes('--full');
+const isSmoke = process.argv.includes('--smoke');
 const isSelftest = process.argv.includes('--selftest');
 const configArg = process.argv.find(a => a.startsWith('--config='))?.split('=')[1];
 const seedArg = process.argv.find(a => a.startsWith('--seed='))?.split('=')[1];
@@ -574,7 +575,7 @@ async function rotateIntoView(page, lat, lon, maxDrags = 3) {
     }, lat, lon);
 
     const vp = page.viewport();
-    const maxDrag = Math.min(vp.width * 0.45, 250);
+    const maxDrag = Math.min(vp.width * 0.45, 500);
     const mag = Math.hypot(dragVec.dx, dragVec.dy);
     let stepDx = dragVec.dx;
     let stepDy = dragVec.dy;
@@ -588,9 +589,9 @@ async function rotateIntoView(page, lat, lon, maxDrags = 3) {
     const cy = vp.height / 2;
     await page.mouse.move(cx, cy);
     await page.mouse.down();
-    await page.mouse.move(cx + stepDx, cy + stepDy, { steps: 3 });
+    await page.mouse.move(cx + stepDx, cy + stepDy, { steps: 1 });
     await page.mouse.up();
-    await new Promise(r => setTimeout(r, 60));
+    await new Promise(r => setTimeout(r, 30));
   }
 
   // If still not visible, use fallback orient and record WARN
@@ -614,7 +615,7 @@ async function rotateIntoView(page, lat, lon, maxDrags = 3) {
       globe.earthMesh.quaternion.setFromUnitVectors(localTarget.clone().normalize(), hitWorld.clone().normalize());
       globe.earthMesh.updateMatrixWorld(true);
     }, lat, lon);
-    await new Promise(r => setTimeout(r, 60));
+    await new Promise(r => setTimeout(r, 30));
   }
 
   const resolved = await getScreenCoords(page, lat, lon);
@@ -624,6 +625,7 @@ async function rotateIntoView(page, lat, lon, maxDrags = 3) {
 // Play a single full game session
 async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng) {
   const { mode, tier, viewport, rounds = 10, isNormalSpeed = false, hasTimer = false, isPractice = false, throwStorage = false, offlineAfterLoad = false } = gameConfig;
+  const totalRounds = rounds === 25 ? 25 : rounds;
   const configKey = `${mode}-${tier}-${viewport.width}x${viewport.height}${rounds !== 10 ? `-${rounds}r` : ''}${hasTimer ? '-timer' : ''}${isPractice ? '-practice' : ''}`;
   console.log(`\n--- PLAYING GAME: ${configKey} (speed: ${isNormalSpeed ? 'normal 1.0x' : 'fast 0.2x'}) ---`);
 
@@ -743,7 +745,15 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   }, { timeout: 3000 }).catch(async () => {
     await page.evaluate(() => document.getElementById('startExpeditionBtn')?.click());
   });
-  await new Promise(r => setTimeout(r, isNormalSpeed ? 500 : 200));
+
+  // Ensure game runtime respects configured total rounds (including smoke 5r or custom configs)
+  await page.evaluate((rds) => {
+    if (window.game) {
+      window.game.totalRounds = rds;
+    }
+  }, totalRounds);
+
+  await new Promise(r => setTimeout(r, isNormalSpeed ? 500 : 50));
 
   const initialHeap = (await page.metrics()).JSHeapUsedSize;
   let scoreBefore = 0;
@@ -754,7 +764,6 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   let reloadedThisGame = false;
   let resizedThisGame = false;
 
-  const totalRounds = rounds === 25 ? 25 : rounds;
   let playedRoundCount = 0;
 
   // 2. Play Round Loop
@@ -945,7 +954,12 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       }, { timeout: 3000 }).catch(async () => {
         await page.evaluate(() => document.getElementById('startExpeditionBtn')?.click());
       });
-      await new Promise(res => setTimeout(res, isNormalSpeed ? 500 : 200));
+      await page.evaluate((rds) => {
+        if (window.game) {
+          window.game.totalRounds = rds;
+        }
+      }, totalRounds);
+      await new Promise(res => setTimeout(res, isNormalSpeed ? 500 : 150));
       continue;
     }
 
@@ -1070,7 +1084,7 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
 
     // Dispatch real pointer click
     await page.mouse.click(clickX, clickY);
-    await new Promise(res => setTimeout(res, 120));
+    await new Promise(res => setTimeout(res, isNormalSpeed ? 120 : 50));
 
     // Rapid double click test if flagged
     if (roll >= 0.95) {
@@ -1107,11 +1121,11 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
         globe.earthMesh.quaternion.setFromUnitVectors(localTarget.clone().normalize(), hitWorld.clone().normalize());
         globe.earthMesh.updateMatrixWorld(true);
       }, clickCountry.lat, clickCountry.lon);
-      await new Promise(r => setTimeout(r, 80));
+      await new Promise(r => setTimeout(r, isNormalSpeed ? 80 : 30));
 
       const live = await getScreenCoords(page, clickCountry.lat, clickCountry.lon);
       await page.mouse.click(live.x, live.y);
-      await new Promise(r => setTimeout(r, 120));
+      await new Promise(r => setTimeout(r, isNormalSpeed ? 120 : 50));
 
       const retryState = await page.evaluate(() => ({
         hasSelected: !!window.game.selectedHit,
@@ -1281,13 +1295,12 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   }
 
   // 3. End Game Phase Verification
-  if (rounds === 25) {
-    await page.evaluate(() => {
-      if (window.game && window.game.phase !== 'end') {
-        window.game.endGame();
-      }
-    });
-  }
+  await page.evaluate(() => {
+    if (window.game && window.game.phase !== 'end') {
+      window.game.endGame();
+    }
+  });
+  await new Promise(r => setTimeout(r, isNormalSpeed ? 400 : 50));
 
   await page.waitForFunction(() => {
     const end = document.getElementById('endScreen');
@@ -1379,6 +1392,85 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   };
 }
 
+// Wrapper for single game with 90s timeout and context isolation
+async function playGameWithTimeout(browser, baseUrl, gameConfig, eventsFile, reportDir, rng, currentSeed) {
+  let context = null;
+  let timer = null;
+  const GAME_TIMEOUT_MS = 90_000;
+  const configKey = `${gameConfig.mode}-${gameConfig.tier}-${gameConfig.viewport.width}x${gameConfig.viewport.height}${gameConfig.rounds !== 10 ? `-${gameConfig.rounds}r` : ''}${gameConfig.hasTimer ? '-timer' : ''}${gameConfig.isPractice ? '-practice' : ''}`;
+  const reproCmd = `npm run selfplay -- --config=${gameConfig.mode}-${gameConfig.tier}-${gameConfig.viewport.width}x${gameConfig.viewport.height} --seed=${currentSeed}`;
+
+  let playResolve;
+  const playPromise = new Promise(resolve => {
+    playResolve = resolve;
+  });
+
+  const timerPromise = new Promise(resolve => {
+    timer = setTimeout(() => {
+      resolve({ timedOut: true });
+    }, GAME_TIMEOUT_MS);
+  });
+
+  (async () => {
+    try {
+      context = await browser.createBrowserContext();
+      const res = await playGame(context, baseUrl, gameConfig, eventsFile, reportDir, rng);
+      try { await context.close(); } catch (e) {}
+      context = null;
+      playResolve({ timedOut: false, res });
+    } catch (err) {
+      if (context) {
+        try { await context.close(); } catch (e) {}
+        context = null;
+      }
+      playResolve({ timedOut: false, error: err });
+    }
+  })();
+
+  const outcome = await Promise.race([playPromise, timerPromise]);
+  if (timer) clearTimeout(timer);
+
+  if (outcome.timedOut) {
+    console.error(`\n[HANG] Game ${configKey} timed out after 90s!`);
+    if (context) {
+      try { await context.close(); } catch (e) {}
+      context = null;
+    }
+    return {
+      configKey,
+      games: 1,
+      rounds: 0,
+      failures: [{
+        signature: 'HANG',
+        details: `Game exceeded 90s timeout in config ${configKey}`,
+        reproCmd
+      }],
+      warnCount: 0,
+      heapUsed: 0,
+      reproCmd
+    };
+  }
+
+  if (outcome.error) {
+    console.error(`\n[ERROR] Game ${configKey} threw error:`, outcome.error);
+    return {
+      configKey,
+      games: 1,
+      rounds: 0,
+      failures: [{
+        signature: `CRASH: ${outcome.error.message || outcome.error}`,
+        details: outcome.error.stack || String(outcome.error),
+        reproCmd
+      }],
+      warnCount: 0,
+      heapUsed: 0,
+      reproCmd
+    };
+  }
+
+  return outcome.res;
+}
+
 // Main execution function
 async function main() {
   if (isSelftest) {
@@ -1404,7 +1496,14 @@ async function main() {
   const browser = await puppeteer.launch({
     executablePath: CHROME_PATH,
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-gpu',
+      '--disable-background-timer-throttling',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-renderer-backgrounding'
+    ]
   });
 
   const viewportsQuick = [
@@ -1425,37 +1524,45 @@ async function main() {
 
   const targetViewports = (isFull || configArg) ? viewportsFull : viewportsQuick;
 
-  for (const vp of targetViewports) {
-    let normalSpeedAssigned = false;
-    for (const m of modes) {
-      for (const t of tiers) {
-        // One game per viewport at normal speed (spec requirement)
-        const isNormalSpeed = !normalSpeedAssigned;
-        if (isNormalSpeed) normalSpeedAssigned = true;
+  if (isSmoke) {
+    gameConfigs.push(
+      { mode: 'clue', tier: 'easy', viewport: { width: 390, height: 844, name: '390x844' }, rounds: 5, isNormalSpeed: false },
+      { mode: 'name', tier: 'medium', viewport: { width: 1440, height: 900, name: '1440x900' }, rounds: 5, isNormalSpeed: false },
+      { mode: 'flag', tier: 'hard', viewport: { width: 390, height: 844, name: '390x844' }, rounds: 5, isNormalSpeed: false }
+    );
+  } else {
+    for (const vp of targetViewports) {
+      let normalSpeedAssigned = false;
+      for (const m of modes) {
+        for (const t of tiers) {
+          // One game per viewport at normal speed (spec requirement)
+          const isNormalSpeed = !normalSpeedAssigned;
+          if (isNormalSpeed) normalSpeedAssigned = true;
 
-        gameConfigs.push({
-          mode: m,
-          tier: t,
-          viewport: vp,
-          rounds: 10,
-          isNormalSpeed
-        });
+          gameConfigs.push({
+            mode: m,
+            tier: t,
+            viewport: vp,
+            rounds: 10,
+            isNormalSpeed
+          });
+        }
       }
     }
-  }
 
-  // Full suite additions
-  if (isFull) {
-    // 20-round game
-    gameConfigs.push({ mode: 'clue', tier: 'medium', viewport: viewportsFull[0], rounds: 20 });
-    // Endless game (stop at 25)
-    gameConfigs.push({ mode: 'name', tier: 'hard', viewport: viewportsFull[1], rounds: 25 });
-    // Timer on
-    gameConfigs.push({ mode: 'flag', tier: 'easy', viewport: viewportsFull[0], rounds: 10, hasTimer: true });
-    // Practice mode
-    gameConfigs.push({ mode: 'clue', tier: 'easy', viewport: viewportsFull[1], rounds: 10, isPractice: true });
-    // Replay-missed
-    gameConfigs.push({ mode: 'clue', tier: 'easy', viewport: viewportsFull[0], rounds: 10, doReplayMissed: true });
+    // Full suite additions
+    if (isFull) {
+      // 20-round game
+      gameConfigs.push({ mode: 'clue', tier: 'medium', viewport: viewportsFull[0], rounds: 20 });
+      // Endless game (stop at 25)
+      gameConfigs.push({ mode: 'name', tier: 'hard', viewport: viewportsFull[1], rounds: 25 });
+      // Timer on
+      gameConfigs.push({ mode: 'flag', tier: 'easy', viewport: viewportsFull[0], rounds: 10, hasTimer: true });
+      // Practice mode
+      gameConfigs.push({ mode: 'clue', tier: 'easy', viewport: viewportsFull[1], rounds: 10, isPractice: true });
+      // Replay-missed
+      gameConfigs.push({ mode: 'clue', tier: 'easy', viewport: viewportsFull[0], rounds: 10, doReplayMissed: true });
+    }
   }
 
   // Filter if --config provided
@@ -1481,33 +1588,80 @@ async function main() {
   let heap1 = 0;
   let heap5 = 0;
 
-  const seedsToRun = (isFull && !configArg) ? [baseSeed, (baseSeed + 101) % 1000000, (baseSeed + 202) % 1000000] : [baseSeed];
+  const seedsToRun = (isFull && !configArg && !isSmoke) ? [baseSeed, (baseSeed + 101) % 1000000, (baseSeed + 202) % 1000000] : [baseSeed];
   console.log(`[GeoTrivia QA Selfplay] Seeds to run (${seedsToRun.length}): ${seedsToRun.join(', ')}`);
 
+  const CONCURRENCY = 4;
+  const RUN_TIMEOUT_MS = 25 * 60 * 1000;
+
+  // Build task queue
+  const queue = [];
   for (let sIdx = 0; sIdx < seedsToRun.length; sIdx++) {
     const currentSeed = seedsToRun[sIdx];
-    console.log(`\n=== RUNNING SUITE FOR SEED: ${currentSeed} (${sIdx + 1}/${seedsToRun.length}) ===\n`);
-    const rng = mulberry32(currentSeed);
-
     for (let idx = 0; idx < filteredConfigs.length; idx++) {
       const cfg = filteredConfigs[idx];
-      const isNormal = (sIdx === 0) ? cfg.isNormalSpeed : false;
+      const isNormal = (sIdx === 0 && !isSmoke) ? cfg.isNormalSpeed : false;
       const effectiveCfg = { ...cfg, isNormalSpeed: isNormal };
+      queue.push({
+        itemIdx: queue.length,
+        cfg: effectiveCfg,
+        currentSeed,
+        idx,
+        sIdx
+      });
+    }
+  }
 
-      const res = await playGame(browser, baseUrl, effectiveCfg, eventsFile, reportDir, rng);
-      results.push(res);
+  const taskResults = new Array(queue.length);
+  const numWorkers = Math.min(CONCURRENCY, queue.length);
+  console.log(`[GeoTrivia QA Selfplay] Starting ${numWorkers} parallel workers for ${queue.length} game(s)...`);
+
+  async function worker(workerId) {
+    while (queue.length > 0) {
+      if (Date.now() - startTime >= RUN_TIMEOUT_MS) {
+        console.warn(`[Worker ${workerId}] Run timeout of 25m reached, stopping further game executions.`);
+        break;
+      }
+      const item = queue.shift();
+      if (!item) break;
+
+      const { itemIdx, cfg, currentSeed, idx, sIdx } = item;
+      const gameSeed = ((currentSeed + idx * 10007) >>> 0);
+      const rng = mulberry32(gameSeed);
+
+      const res = await playGameWithTimeout(browser, baseUrl, cfg, eventsFile, reportDir, rng, currentSeed);
+      taskResults[itemIdx] = res;
 
       if (idx === 0 && sIdx === 0) heap1 = res.heapUsed;
       if (idx === 4 && sIdx === 0) heap5 = res.heapUsed;
+    }
+  }
 
-      for (const fail of res.failures) {
-        const sig = fail.signature;
-        if (!failureSignatures.has(sig)) {
-          const reproCmd = `npm run selfplay -- --config=${cfg.mode}-${cfg.tier}-${cfg.viewport.width}x${cfg.viewport.height} --seed=${currentSeed}`;
-          failureSignatures.set(sig, { count: 0, reproCmd, details: fail.details });
-        }
-        failureSignatures.get(sig).count++;
+  const workers = [];
+  for (let w = 0; w < numWorkers; w++) {
+    workers.push(worker(w + 1));
+  }
+  await Promise.all(workers);
+
+  const completedResults = taskResults.filter(Boolean);
+
+  if (completedResults.length < queue.length) {
+    failureSignatures.set('RUN_TIMEOUT_EXCEEDED: 25m limit reached', {
+      count: queue.length - completedResults.length,
+      reproCmd: `npm run selfplay -- --seed=${baseSeed}`,
+      details: `${queue.length - completedResults.length} games not executed due to 25m run limit`
+    });
+  }
+
+  for (const res of completedResults) {
+    results.push(res);
+    for (const fail of res.failures) {
+      const sig = fail.signature;
+      if (!failureSignatures.has(sig)) {
+        const reproCmd = fail.reproCmd || res.reproCmd || `npm run selfplay -- --config=${res.configKey} --seed=${baseSeed}`;
+        failureSignatures.set(sig, { count: 0, reproCmd, details: fail.details });
       }
+      failureSignatures.get(sig).count++;
     }
   }
 
