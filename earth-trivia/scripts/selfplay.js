@@ -292,9 +292,12 @@ async function validatePhase(page, phase, { viewport, mode = 'clue', tier = 'eas
 
       // Check fully inside viewport
       if (rect.top < -1 || rect.left < -1 || rect.bottom > vp.height + 1 || rect.right > vp.width + 1) {
+        const vEl = document.getElementById('memoryVault');
+        const vr = vEl ? vEl.getBoundingClientRect() : {};
+        const cName = window.game?.currentCountry?.name || 'unknown';
         errors.push({
           signature: `BUTTON_OUT_OF_VIEWPORT: ${bInfo.name} (${bInfo.id})`,
-          details: `Button rect [${rect.top.toFixed(1)}, ${rect.left.toFixed(1)}, ${rect.bottom.toFixed(1)}, ${rect.right.toFixed(1)}] exceeds viewport [${vp.width}x${vp.height}]`
+          details: `Button rect [${rect.top.toFixed(1)}, ${rect.left.toFixed(1)}, ${rect.bottom.toFixed(1)}, ${rect.right.toFixed(1)}] exceeds viewport [${vp.width}x${vp.height}] | vRect=[${vr.top?.toFixed(1)}, ${vr.bottom?.toFixed(1)}, ${vr.height?.toFixed(1)}] | country=${cName}`
         });
       }
 
