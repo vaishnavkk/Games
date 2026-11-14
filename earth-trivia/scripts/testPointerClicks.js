@@ -26,7 +26,7 @@ async function runClickAudit() {
   page.on('pageerror', err => console.error(`[Browser PageError] ${err.message}`));
 
   // Navigate to local GeoTrivia server
-  await page.goto('http://localhost:8080/index.html', { waitUntil: 'networkidle0' });
+  await page.goto('http://localhost:8080/index.html', { waitUntil: 'load' });
 
   // Wait for globe to initialize
   await page.waitForFunction(() => {

@@ -194,6 +194,7 @@ export class MapRenderer {
 
     // 4. Subtle microstate resting markers (unfilled ring for tiny countries)
     for (const tiny of TINY_COUNTRIES) {
+      if (tiny.id === '608') continue; // Philippines is a large archipelago, skip microstate circle
       const [tx, ty] = this.toPixel(tiny.centroid[0], tiny.centroid[1]);
       ctx.strokeStyle = 'rgba(74, 90, 102, 0.55)';
       ctx.lineWidth = this.width >= 8192 ? 2.5 : (this.width >= 4096 ? 1.5 : 1.0);

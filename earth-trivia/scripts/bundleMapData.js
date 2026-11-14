@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import * as topojson from 'topojson-client';
+import { SOI_WEST_JK, SOI_NORTH_LADAKH } from '../data/soi-boundaries.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -115,64 +116,26 @@ if (ind && pak && chn) {
   // A. Western border of J&K / Gilgit-Baltistan (border with Pakistan KP/Punjab)
   // Starts at Punjab-Jammu border: origIndRing[158] / pakPoly[81] = [ 74.65934659346595, 32.51944375084378 ]
   // Ends at Wakhan Corridor tripoint: pakPoly[530] = [ 74.1949419494195, 36.89764446128838 ]
-  const westJkBorder = [
-    [ 74.65934659346595, 32.51944375084378 ],
-    [ 74.35, 32.75 ],
-    [ 74.15, 33.00 ],
-    [ 73.80, 33.30 ],
-    [ 73.72, 33.65 ],
-    [ 73.48, 34.00 ],
-    [ 73.45, 34.40 ],
-    [ 73.35, 34.80 ],
-    [ 73.45, 35.20 ],
-    [ 73.30, 35.70 ],
-    [ 73.15, 36.10 ],
-    [ 73.40, 36.60 ],
-    [ 73.80, 36.90 ],
-    [ 74.1949419494195, 36.89764446128838 ]
+  // Verified authentic Survey of India boundary (SOI_WEST_JK)
+
+  // B. Northern border along Wakhan Corridor connecting pakPoly[530] to chnPoly11[696]
+  const afgWakhan = [
+    [ 74.43254432544327, 36.9844446339776 ],
+    [ 74.54054540545405, 37.022636709960864 ],
+    [ 74.60174601746019, 37.03652473759114 ]
   ];
 
-  // B. Northern border along Wakhan Corridor and Karakoram / Shaksgam (pakPoly 531 to 570)
-  const northKarakoram = pakPoly.slice(531, 571);
-
-  // C. Northern Siachen Glacier crest connecting to Karakoram Pass
-  const siachenCrest = [
-    [ 76.88056880568809, 35.61300190548782 ],
-    [ 77.08937089370897, 35.55224178460536 ],
-    [ 77.29457294572944, 35.50884169826075 ],
-    [ 77.44577445774456, 35.47585763263885 ],
-    [ 77.52137521375215, 35.47412162918506 ],
-    [ 77.57177571775719, 35.47238562573128 ],
-    [ 77.72297722977231, 35.48106564300019 ],
-    [ 77.79857798577984, 35.49668967408425 ]
-  ];
-
-  // D. Aksai Chin Kunlun crest and eastern Ladakh border connecting back to Point 266 (chnPoly11[624])
-  const aksaiChinBoundary = [
-    [ 78.05, 35.68 ],
-    [ 78.35, 35.88 ],
-    [ 78.75, 36.05 ],
-    [ 79.15, 36.14 ],
-    [ 79.60, 36.12 ],
-    [ 80.05, 35.92 ],
-    [ 80.32, 35.60 ],
-    [ 80.38, 35.35 ],
-    [ 80.20, 35.00 ],
-    [ 79.95, 34.68 ],
-    [ 79.62, 34.42 ],
-    [ 79.25, 34.28 ],
-    [ 78.93258932589328, 34.189479073384504 ],
-    [ 78.75258752587524, 34.08705486961121 ],
-    [ 78.72738727387275, 34.01414272455226 ]
-  ];
+  // C. Northern border along Karakoram, Siachen, Kunlun Mountains, Aksai Chin
+  // Starts at chnPoly11[696] = [ 74.60174601746019, 37.03652473759114 ]
+  // Ends at chnPoly11[624] / origIndRing[266] = [ 78.72738727387275, 34.01414272455226 ]
+  // Verified authentic Survey of India boundary (SOI_NORTH_LADAKH)
 
   // 1. Update India (356)
   const updatedIndRing = [
     ...origIndRing.slice(0, 159), // Up to index 158 [74.659, 32.519]
-    ...westJkBorder.slice(1),    // Western J&K border up to [74.1949, 36.8976]
-    ...northKarakoram,           // Northern Karakoram crest [pakPoly 531..570]
-    ...siachenCrest,             // Siachen crest to [77.7985, 35.4966]
-    ...aksaiChinBoundary,        // Aksai Chin Kunlun crest to [78.7273, 34.0141]
+    ...SOI_WEST_JK.slice(1),     // Official Western J&K border up to [74.1949, 36.8976]
+    ...afgWakhan,                // Wakhan Corridor connection to [74.6017, 37.0365]
+    ...SOI_NORTH_LADAKH.slice(1),// Official Northern Karakoram & Aksai Chin to [78.7273, 34.0141]
     ...origIndRing.slice(267)    // Resumes at index 267 along Tibet/Himachal border
   ];
   ind.geometry.coordinates[0][0] = updatedIndRing;
@@ -183,11 +146,11 @@ if (ind && pak && chn) {
   ind.angularSpan = angularSpan;
 
   // 2. Adjust Pakistan (586)
-  // Retains international borders (pakPoly 81 to 530), closes along reverse of westJkBorder back to pakPoly[81]
-  const reverseWestJk = [...westJkBorder].reverse();
+  // Retains international borders (pakPoly 81 to 530), closes along reverse of SOI_WEST_JK back to pakPoly[81]
+  const revWestJk = [...SOI_WEST_JK].reverse();
   const pakUpdatedRing = [
     ...pakPoly.slice(81, 531),
-    ...reverseWestJk.slice(1)
+    ...revWestJk.slice(1)
   ];
   pak.geometry.coordinates[0] = pakUpdatedRing;
   const pMetrics = computeBoundsAndCentroid(pak.geometry);
@@ -196,12 +159,12 @@ if (ind && pak && chn) {
   pak.angularSpan = pMetrics.angularSpan;
 
   // 3. Adjust China (156)
-  // Replaces mainland poly 11 points 625 through 650 with the reverse of aksaiChinBoundary (excluding endpoints)
-  const revAksai = [...aksaiChinBoundary.slice(0, -1)].reverse();
+  // Replaces mainland poly 11 points 625 through 695 with the reverse of SOI_NORTH_LADAKH (excluding endpoints)
+  const revNorthLadakh = [...SOI_NORTH_LADAKH].reverse();
   const chnUpdatedPoly11 = [
     ...chnPoly11.slice(0, 625),
-    ...revAksai,
-    ...chnPoly11.slice(651)
+    ...revNorthLadakh.slice(1, -1),
+    ...chnPoly11.slice(696)
   ];
   chn.geometry.coordinates[11][0] = chnUpdatedPoly11;
   const cMetrics = computeBoundsAndCentroid(chn.geometry);
