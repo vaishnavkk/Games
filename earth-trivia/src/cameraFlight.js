@@ -115,7 +115,7 @@ export function animateAfterAnswer(camera, controls, o) {
       const e = easeInOutCubic(raw);
       greatCircle(startDir, endDir, e, dir).normalize();
       limitLatitude(dir);
-      const dist = lerp(startDist, endDist, e) + bump * Math.sin(Math.PI * raw);
+      const dist = clamp(lerp(startDist, endDist, e) + bump * Math.sin(Math.PI * raw), controls.minDistance, controls.maxDistance);
       camera.position.copy(dir).multiplyScalar(dist);
       camera.up.set(0, 1, 0);
       camera.lookAt(0, 0, 0);
@@ -899,7 +899,7 @@ export class CameraFlightController {
       greatCircle(startDir, endDir, ease, curDir).normalize();
       limitLatitude(curDir);
 
-      const curDist = THREE.MathUtils.lerp(startDist, targetDist, ease);
+      const curDist = clamp(THREE.MathUtils.lerp(startDist, targetDist, ease), this.controls.minDistance, this.controls.maxDistance);
       this.camera.position.copy(curDir).multiplyScalar(curDist);
       this.camera.up.set(0, 1, 0);
       this.camera.lookAt(0, 0, 0);
