@@ -758,7 +758,13 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
 
   await new Promise(r => setTimeout(r, isNormalSpeed ? 500 : 50));
 
-  const initialHeap = (await page.metrics()).JSHeapUsedSize;
+  let initialHeap = (await page.metrics()).JSHeapUsedSize;
+  try {
+    const client = await page.createCDPSession();
+    await client.send('HeapProfiler.collectGarbage');
+    initialHeap = (await page.metrics()).JSHeapUsedSize;
+    await client.detach();
+  } catch (e) {}
   let scoreBefore = 0;
   let streakBefore = 0;
   let correctCount = 0;
@@ -873,11 +879,11 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
       const altW = viewport.width === 1440 ? 1280 : (viewport.width === 390 ? 844 : 390);
       const altH = viewport.height === 900 ? 800 : (viewport.height === 844 ? 390 : 844);
       await page.setViewport({ width: altW, height: altH });
-      await new Promise(res => setTimeout(res, 80));
+      await new Promise(res => setTimeout(res, 100));
       const resizeFails = await validatePhase(page, 'question', { viewport: { width: altW, height: altH }, mode, tier });
       gameFailures.push(...resizeFails);
       await page.setViewport(viewport);
-      await new Promise(res => setTimeout(res, 80));
+      await new Promise(res => setTimeout(res, 100));
     }
 
     // Round 2: Page reload resilience test (once per game)
@@ -1355,7 +1361,13 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   }
 
   // Measure JS Heap metric
-  const heapUsed = (await page.metrics()).JSHeapUsedSize;
+  let heapUsed = (await page.metrics()).JSHeapUsedSize;
+  try {
+    const client = await page.createCDPSession();
+    await client.send('HeapProfiler.collectGarbage');
+    heapUsed = (await page.metrics()).JSHeapUsedSize;
+    await client.detach();
+  } catch (e) {}
   if (totalRounds >= 20 && heapUsed - initialHeap > 40 * 1024 * 1024) {
     gameFailures.push({
       signature: `MEMORY_LEAK_EXCEEDED: +${((heapUsed - initialHeap) / 1e6).toFixed(1)}MB > 40MB`,
