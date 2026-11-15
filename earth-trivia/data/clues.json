@@ -5,11 +5,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "Known for traditional tea Ceremonies, Calligraphy, and delicate seasonal cherry blossom appreciation.",
+    "text": "Known for traditional Zen tea ceremonies, Kanji calligraphy, and delicate seasonal cherry blossom appreciation.",
     "source": "https://en.wikipedia.org/wiki/Japan",
     "evidence": [
-      "Calligraphy",
-      "Ceremonies"
+      "Zen",
+      "Kanji"
     ],
     "checked": "2026-11-11"
   },
@@ -19,11 +19,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Operating with average delays under a minute, high-speed Shinkansen bullet trains connect historic wooden Shrine sites with neon metropolises.",
+    "text": "Operating with average delays under a minute, high-speed Shinkansen bullet trains connect historic wooden Shinto shrines with neon metropolises.",
     "source": "https://en.wikipedia.org/wiki/Japan",
     "evidence": [
       "Shinkansen",
-      "Shrine"
+      "Shinto"
     ],
     "checked": "2026-11-11"
   },
@@ -47,12 +47,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "A Civilization renowned for ancient Hieroglyphic Writing, papyrus scrolls, and limestone tombs.",
+    "text": "An ancient Nile civilization renowned for hieroglyphic writing, papyrus scrolls, and Old Kingdom limestone tombs.",
     "source": "https://en.wikipedia.org/wiki/Egypt",
     "evidence": [
-      "Civilization",
-      "Hieroglyphic",
-      "Writing"
+      "Nile",
+      "Old Kingdom"
     ],
     "checked": "2026-11-11"
   },
@@ -62,12 +61,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "Traditional wooden felucca sailboats cruise along Fertile Banks flanked by Arid Desert dunes.",
+    "text": "Traditional wooden felucca sailboats cruise along the Nile River flanked by arid desert dunes.",
     "source": "https://en.wikipedia.org/wiki/Egypt",
     "evidence": [
-      "Arid Desert",
-      "Fertile",
-      "Banks"
+      "Nile",
+      "River"
     ],
     "checked": "2026-11-11"
   },
@@ -106,12 +104,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "Celebrates an annual Nationwide Street festival Filled With elaborate feathered parade floats and samba beats.",
+    "text": "Celebrates the annual Rio Carnival, a nationwide street festival filled with elaborate feathered parade floats and samba beats.",
     "source": "https://en.wikipedia.org/wiki/Brazil",
     "evidence": [
-      "Filled With",
-      "Nationwide",
-      "Street"
+      "Rio",
+      "Carnival"
     ],
     "checked": "2026-11-11"
   },
@@ -136,12 +133,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "Home to distinctive ancient Dreamtime folklore Passed Down through Generations of musical didgeridoos.",
+    "text": "Home to ancient Aboriginal cultures practicing the Dreaming, with human habitation dating back over 65000 years.",
     "source": "https://en.wikipedia.org/wiki/Australia",
     "evidence": [
-      "Generations",
-      "Passed",
-      "Down"
+      "Aboriginal",
+      "65000"
     ],
     "checked": "2026-11-11"
   },
@@ -151,12 +147,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Features vast expanses of red sandstone monoliths and Arid shrublands Populated by pouched Marsupials.",
+    "text": "Features the sandstone formation of Uluru rising 348 meters above arid desert plains populated by pouched marsupials.",
     "source": "https://en.wikipedia.org/wiki/Australia",
     "evidence": [
-      "Marsupials",
-      "Populated",
-      "Arid"
+      "Uluru",
+      "348"
     ],
     "checked": "2026-11-11"
   },
@@ -166,7 +161,7 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Co-hosted the record-breaking 2023 Women's World Cup, pioneered massive grid-scale renewable battery storage, and home to an iconic harbor opera house with sail-shaped roofs.",
+    "text": "Co-hosted the record-breaking 2023 Women's world Cup, pioneered massive grid-scale renewable battery storage, and home to an iconic harbor opera house with sail-shaped roofs.",
     "source": "https://en.wikipedia.org/wiki/Australia",
     "evidence": [
       "2023",
@@ -181,12 +176,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "The historic Classical Birthplace of Opera, Renaissance fine art painting, and monumental marble sculptural masterpieces.",
+    "text": "The historic classical birthplace of opera in Florence, Renaissance fine art painting, and monumental marble sculptural masterpieces.",
     "source": "https://en.wikipedia.org/wiki/Italy",
     "evidence": [
-      "Renaissance",
-      "Birthplace",
-      "Classical"
+      "Florence",
+      "Renaissance"
     ],
     "checked": "2026-11-11"
   },
@@ -210,12 +204,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "culture",
-    "text": "World-famous for hand-stretched wood-fired Pizza, Rich espresso Coffee bars, and gondola canals.",
+    "text": "World-famous for Neapolitan wood-fired pizza, rich espresso coffee bars, and Venetian gondola canals.",
     "source": "https://en.wikipedia.org/wiki/Italy",
     "evidence": [
-      "Coffee",
-      "Pizza",
-      "Rich"
+      "Neapolitan",
+      "Venetian"
     ],
     "checked": "2026-11-11"
   },
@@ -225,7 +218,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "The historic Cradle of yoga, Meditation, ayurvedic wellness, and Classical sitar ragas.",
+    "text": "The historic Cradle of yoga, Meditation, ayurvedic wellness, and classical sitar ragas.",
     "source": "https://en.wikipedia.org/wiki/India",
     "evidence": [
       "Meditation",
@@ -240,12 +233,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Celebrates vibrant Nationwide Holidays where crowds Light clay lamps or shower colored powders.",
+    "text": "Celebrates vibrant nationwide festivals like Holi and Navratri where crowds light lamps or shower colored powders.",
     "source": "https://en.wikipedia.org/wiki/India",
     "evidence": [
-      "Nationwide",
-      "Holidays",
-      "Light"
+      "Holi",
+      "Navratri"
     ],
     "checked": "2026-11-11"
   },
@@ -255,11 +247,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "culture",
-    "text": "Made Space History by landing the robotic Chandrayaan spacecraft near the rugged lunar pole and home to a magnificent white marble mausoleum.",
+    "text": "Home to the magnificent white marble Taj Mahal along the holy Ganges river, illuminated under moonlit skies.",
     "source": "https://en.wikipedia.org/wiki/India",
     "evidence": [
-      "History",
-      "Space"
+      "Taj Mahal",
+      "Ganges"
     ],
     "checked": "2026-11-11"
   },
@@ -269,7 +261,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "Famous for Vibrant hand-woven Alpaca Wool textiles and ancient stone masonry fitted without mortar.",
+    "text": "Famous for Vibrant hand-woven Alpaca wool textiles and ancient stone masonry fitted without mortar.",
     "source": "https://en.wikipedia.org/wiki/Peru",
     "evidence": [
       "Alpaca Wool",
@@ -312,11 +304,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "A nation Whose national Winter pastime involves skates, ice rinks, and sliding vulcanized rubber pucks.",
+    "text": "A winter nation where Ice Hockey and Lacrosse serve as official national sports played with skates, sticks, and pucks.",
     "source": "https://en.wikipedia.org/wiki/Canada",
     "evidence": [
-      "Winter",
-      "Whose"
+      "Ice Hockey",
+      "Lacrosse"
     ],
     "checked": "2026-11-11"
   },
@@ -326,7 +318,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Famous for pristine turquoise Glacial lakes, sprawling Pine Forests, and sweet tree-tapped syrup.",
+    "text": "Famous for pristine turquoise Glacial lakes, sprawling Pine forests, and sweet tree-tapped syrup.",
     "source": "https://en.wikipedia.org/wiki/Canada",
     "evidence": [
       "Forests",
@@ -515,7 +507,7 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "culture",
-    "text": "Famous for Mariachi brass Music, masked Wrestling spectacles, and hand-pressed corn tortilla tacos.",
+    "text": "Famous for Mariachi brass music, masked Wrestling spectacles, and hand-pressed corn tortilla tacos.",
     "source": "https://en.wikipedia.org/wiki/Mexico",
     "evidence": [
       "Wrestling",
@@ -587,7 +579,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Known for Thousands of islands Featuring whitewashed cliffside chapels with vibrant Blue domes.",
+    "text": "Known for Thousands of islands Featuring whitewashed cliffside chapels with vibrant blue domes.",
     "source": "https://en.wikipedia.org/wiki/Greece",
     "evidence": [
       "Thousands",
@@ -602,7 +594,7 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Famous for ancient Doric Columns on an Acropolis citadel, rich olive oil, and feta-layered casseroles.",
+    "text": "Famous for ancient Doric columns on an Acropolis citadel, rich olive oil, and feta-layered casseroles.",
     "source": "https://en.wikipedia.org/wiki/Greece",
     "evidence": [
       "Acropolis",
@@ -661,12 +653,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "Features Rich Indigenous Māori cultural traditions Including Ceremonial ancestral haka challenges and wood carvings.",
+    "text": "Features rich indigenous Maori cultural traditions including ancestral Haka posture dances and intricate wood carvings.",
     "source": "https://en.wikipedia.org/wiki/New_Zealand",
     "evidence": [
-      "Including Ceremonial",
-      "Indigenous",
-      "Rich"
+      "Maori",
+      "Haka"
     ],
     "checked": "2026-11-11"
   },
@@ -676,11 +667,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "Rugby players Perform an intimidating coordinated vocal Dance and posture challenge before matches.",
+    "text": "Rugby players representing the All Blacks perform the Maori Haka challenge before international matches.",
     "source": "https://en.wikipedia.org/wiki/New_Zealand",
     "evidence": [
-      "Perform",
-      "Dance"
+      "All Blacks",
+      "Haka"
     ],
     "checked": "2026-11-11"
   },
@@ -705,7 +696,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "Famous for labyrinthine walled historic Quarters with leather tanning Vats and Spice souks.",
+    "text": "Famous for labyrinthine walled historic Quarters with leather tanning Vats and spice souks.",
     "source": "https://en.wikipedia.org/wiki/Morocco",
     "evidence": [
       "Quarters",
@@ -720,11 +711,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Hosts a striking mountain Town where all houses, staircases, and alleyways are painted in shades of Blue.",
+    "text": "Hosts the striking mountain town of Chefchaouen in the Rif, where all houses and staircases are washed in shades of blue.",
     "source": "https://en.wikipedia.org/wiki/Morocco",
     "evidence": [
-      "Town",
-      "Blue"
+      "Chefchaouen",
+      "Rif"
     ],
     "checked": "2026-11-11"
   },
@@ -808,12 +799,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "The new Year is celebrated with a cheerful Nationwide Water festival where entire towns engage in friendly Water fights.",
+    "text": "The new year is celebrated with Buddhist Songkran traditions, where entire towns engage in cheerful water fights.",
     "source": "https://en.wikipedia.org/wiki/Thailand",
     "evidence": [
-      "Nationwide",
-      "Water",
-      "Year"
+      "Buddhist",
+      "Songkran"
     ],
     "checked": "2026-11-11"
   },
@@ -823,12 +813,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Famous for stir-fried Rice noodles with tamarind, fragrant Lemongrass soups, and the Martial art of eight limbs.",
+    "text": "Famous for stir-fried Pad Thai noodles, fragrant lemongrass soups, and the martial art of Muay Thai.",
     "source": "https://en.wikipedia.org/wiki/Thailand",
     "evidence": [
-      "Lemongrass",
-      "Martial",
-      "Rice"
+      "Pad Thai",
+      "Muay Thai"
     ],
     "checked": "2026-11-11"
   },
@@ -852,7 +841,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Skilled horsemen Patrol sweeping fertile Grasslands and roast Side cuts of beef over open wood embers.",
+    "text": "Skilled horsemen Patrol sweeping fertile grasslands and roast Side cuts of beef over open wood embers.",
     "source": "https://en.wikipedia.org/wiki/Argentina",
     "evidence": [
       "Grasslands",
@@ -881,7 +870,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "The Birthplace of Industrial steam railways, Parliamentary Democracy conventions, and literary detective fiction.",
+    "text": "The birthplace of Industrial steam railways, Parliamentary Democracy conventions, and literary detective fiction.",
     "source": "https://en.wikipedia.org/wiki/United_Kingdom",
     "evidence": [
       "Parliamentary Democracy",
@@ -896,7 +885,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "Traditional Daily Social gatherings feature steeped black tea Served With scones, clotted cream, and strawberry jam.",
+    "text": "Traditional Daily Social gatherings feature steeped black tea served with scones, clotted cream, and strawberry jam.",
     "source": "https://en.wikipedia.org/wiki/United_Kingdom",
     "evidence": [
       "Served With",
@@ -940,7 +929,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Celebrates autumn Folk gatherings under massive Tents with twisted salted sourdough dough Pastries and brass bands.",
+    "text": "Celebrates autumn Folk gatherings under massive Tents with twisted salted sourdough dough pastries and brass bands.",
     "source": "https://en.wikipedia.org/wiki/Germany",
     "evidence": [
       "Pastries",
@@ -955,11 +944,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Hosted the massive 2024 international Football championship tournament, completed its transition away from atomic reactors, and renowned for highways without general speed limits.",
+    "text": "Hosted the UEFA Euro 2024 football tournament, completed its nuclear phase-out, and famous for the Autobahn highway network.",
     "source": "https://en.wikipedia.org/wiki/Germany",
     "evidence": [
       "2024",
-      "Football"
+      "Autobahn"
     ],
     "checked": "2026-11-11"
   },
@@ -984,7 +973,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Evenings Frequently revolve Around moving between vibrant Street bars while enjoying small shared savory plates.",
+    "text": "Evenings Frequently revolve Around moving between vibrant street bars while enjoying small shared savory plates.",
     "source": "https://en.wikipedia.org/wiki/Spain",
     "evidence": [
       "Frequently",
@@ -999,12 +988,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Famous for a monumental Basilica with nature-inspired Forest pillars that has Been under construction since 1882.",
+    "text": "Famous for the monumental Sagrada Família basilica designed by Antoni Gaudí, under construction since 1882.",
     "source": "https://en.wikipedia.org/wiki/Sagrada_Fam%C3%ADlia",
     "evidence": [
       "1882",
-      "Basilica",
-      "Forest"
+      "Gaudí"
     ],
     "checked": "2026-11-15"
   },
@@ -1014,7 +1002,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "The birthplace of Musical Genres Including jazz, blues, rock and roll, and modern cinema entertainment studios.",
+    "text": "The birthplace of musical Genres Including jazz, blues, rock and roll, and modern cinema entertainment studios.",
     "source": "https://en.wikipedia.org/wiki/United_States",
     "evidence": [
       "Including",
@@ -1029,7 +1017,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Known for pioneering modern Aerospace Lunar landings, National Park wilderness conservation, and computer microchips.",
+    "text": "Known for pioneering modern Aerospace Lunar landings, National park wilderness conservation, and computer microchips.",
     "source": "https://en.wikipedia.org/wiki/United_States",
     "evidence": [
       "National Park",
@@ -1058,7 +1046,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "The ancient Birthplace of Paper Making, compass navigation, gunpowder formulation, and silkworm sericulture.",
+    "text": "The ancient birthplace of Paper Making, compass navigation, gunpowder formulation, and silkworm sericulture.",
     "source": "https://en.wikipedia.org/wiki/China",
     "evidence": [
       "Birthplace",
@@ -1073,7 +1061,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "Features delicate tea ceremonies, intricate ink Brush Calligraphy, and an Imperial Palace complex with 9,999 rooms.",
+    "text": "Features delicate tea ceremonies, intricate ink Brush calligraphy, and an Imperial palace complex with 9,999 rooms.",
     "source": "https://en.wikipedia.org/wiki/China",
     "evidence": [
       "Imperial Palace",
@@ -1103,7 +1091,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "The birthplace of World-renowned Classical Ballet traditions, epic multi-generational novels, and human spaceflight firsts.",
+    "text": "The birthplace of World-renowned classical Ballet traditions, epic multi-generational novels, and human spaceflight firsts.",
     "source": "https://en.wikipedia.org/wiki/Russia",
     "evidence": [
       "World-renowned",
@@ -1132,7 +1120,7 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Famous for colorful Onion-shaped candy-striped Cathedral Domes, lacquered nesting dolls, and hearty beet soup.",
+    "text": "Famous for colorful Onion-shaped candy-striped Cathedral domes, lacquered nesting dolls, and hearty beet soup.",
     "source": "https://en.wikipedia.org/wiki/Russia",
     "evidence": [
       "Onion-shaped",
@@ -1147,12 +1135,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "Renowned for Fine silk Carpets, centuries-old bathhouse steam Traditions, and hot copper pots brewing unfiltered coffee.",
+    "text": "Renowned for fine silk carpets woven across Anatolia, historic Ottoman steam bath traditions, and hot copper pots brewing coffee.",
     "source": "https://en.wikipedia.org/wiki/Turkey",
     "evidence": [
-      "Traditions",
-      "Carpets",
-      "Fine"
+      "Anatolia",
+      "Ottoman"
     ],
     "checked": "2026-11-11"
   },
@@ -1162,7 +1149,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Features Landscapes where Hundreds of colorful hot-air balloons glide over cone-shaped volcanic Tuff rock towers.",
+    "text": "Features Landscapes where Hundreds of colorful hot-air balloons glide over cone-shaped volcanic tuff rock towers.",
     "source": "https://en.wikipedia.org/wiki/Turkey",
     "evidence": [
       "Landscapes",
@@ -1191,7 +1178,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "Known for traditional Water puppet Theater Performed in flooded rice paddies and conical woven palm hats.",
+    "text": "Known for traditional water puppet Theater Performed in flooded rice paddies and conical woven palm hats.",
     "source": "https://en.wikipedia.org/wiki/Vietnam",
     "evidence": [
       "Performed",
@@ -1221,7 +1208,7 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "culture",
-    "text": "Famous for aromatic Beef Noodle soup brewed with star anise, crispy baguettes filled with pâté, and drip Iced Coffee.",
+    "text": "Famous for aromatic beef Noodle soup brewed with star anise, crispy baguettes filled with pâté, and drip Iced coffee.",
     "source": "https://en.wikipedia.org/wiki/Vietnam",
     "evidence": [
       "Iced Coffee",
@@ -1236,11 +1223,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "A global Cultural Phenomenon renowned for electronic esports arenas, synchronized pop choreography, and Television Dramas.",
+    "text": "A cultural phenomenon renowned for electronic esports arenas, synchronized K-pop choreography, and Busan broadcast festivals.",
     "source": "https://en.wikipedia.org/wiki/South_Korea",
     "evidence": [
-      "Cultural Phenomenon",
-      "Television Dramas"
+      "K-pop",
+      "Busan"
     ],
     "checked": "2026-11-11"
   },
@@ -1250,12 +1237,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Pioneered an Ingenious Scientific Alphabet invented in 1443 to increase literacy across all social classes.",
+    "text": "Pioneered the Hangul writing system created in 1443 under King Sejong to increase literacy across all social classes.",
     "source": "https://en.wikipedia.org/wiki/Hangul",
     "evidence": [
       "1443",
-      "Alphabet",
-      "Ingenious"
+      "Hangul"
     ],
     "checked": "2026-11-15"
   },
@@ -1408,12 +1394,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "Composed of over 17,000 Tropical Volcanic Islands spanning across three Tropical time zones.",
+    "text": "An immense tropical archipelago composed of volcanic islands spanning between Sumatra and Java with rich biodiversity.",
     "source": "https://en.wikipedia.org/wiki/Indonesia",
     "evidence": [
-      "Tropical",
-      "Volcanic",
-      "Islands"
+      "Sumatra",
+      "Java"
     ],
     "checked": "2026-11-11"
   },
@@ -1423,7 +1408,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "Traditional Performing Arts Include shadow puppet plays accompanied by bronze gong gamelan orchestras.",
+    "text": "Traditional Performing arts Include shadow puppet plays accompanied by bronze gong gamelan orchestras.",
     "source": "https://en.wikipedia.org/wiki/Indonesia",
     "evidence": [
       "Performing",
@@ -1509,7 +1494,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "The crystal-clear dry atmosphere of the high Atacama Desert plateaus hosts the world's Most Powerful optical telescope observatories.",
+    "text": "The crystal-clear dry atmosphere of the high Atacama desert plateaus hosts the world's Most Powerful optical telescope observatories.",
     "source": "https://en.wikipedia.org/wiki/Chile",
     "evidence": [
       "Atacama Desert",
@@ -1523,12 +1508,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Famous for jagged granite mountain horns, sweet corn and Minced Beef pies, and distant Volcanic islands with giant stone moai statues.",
+    "text": "Famous for jagged granite peaks in Torres del Paine, sweet corn pies, and distant Easter Island with giant moai statues.",
     "source": "https://en.wikipedia.org/wiki/Chile",
     "evidence": [
-      "Volcanic",
-      "Minced",
-      "Beef"
+      "Torres del Paine",
+      "Easter Island"
     ],
     "checked": "2026-11-11"
   },
@@ -1819,11 +1803,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Building the futuristic NEOM zero-emission linear metropolis, officially confirmed to host the 2034 World Cup, and famed for ancient sandstone rock tombs.",
+    "text": "Developing massive renewable investments, officially confirmed to host the 2034 FIFA World Cup tournament.",
     "source": "https://en.wikipedia.org/wiki/Saudi_Arabia",
     "evidence": [
-      "2034 World",
-      "World Cup"
+      "2034",
+      "FIFA"
     ],
     "checked": "2026-11-11"
   },
@@ -1893,7 +1877,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "Energetic Musical rhythms Originating here have Evolved Into an influential worldwide pop phenomenon.",
+    "text": "Energetic musical rhythms Originating here have Evolved Into an influential worldwide pop phenomenon.",
     "source": "https://en.wikipedia.org/wiki/Nigeria",
     "evidence": [
       "Evolved Into",
@@ -1908,7 +1892,7 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "history",
-    "text": "Famous for passionate Cultural debates over spiced Tomato Jollof Rice and a massive granite monolith near its planned capital.",
+    "text": "Famous for passionate cultural debates over spiced Tomato Jollof rice and a massive granite monolith near its planned capital.",
     "source": "https://en.wikipedia.org/wiki/Nigeria",
     "evidence": [
       "Cultural",
@@ -2232,7 +2216,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "The Only Sovereign nation in the world whose National Flag is non-rectangular, consisting of two stacked pennants.",
+    "text": "The Only sovereign nation in the world whose National Flag is non-rectangular, consisting of two stacked pennants.",
     "source": "https://en.wikipedia.org/wiki/Nepal",
     "evidence": [
       "National Flag",
@@ -2277,7 +2261,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Features unearthly Groves of colossal upside-down-looking Baobab Trees with massive swollen water-storing trunks.",
+    "text": "Features unearthly groves of colossal upside-down-looking Baobab Trees with massive swollen water-storing trunks.",
     "source": "https://en.wikipedia.org/wiki/Madagascar",
     "evidence": [
       "Baobab",
@@ -2307,7 +2291,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "Famous for handcrafted premium Tobacco rolls, Salsa Music ensembles, and historic coastal colonial fortresses.",
+    "text": "Famous for handcrafted premium Tobacco rolls, Salsa music ensembles, and historic coastal colonial fortresses.",
     "source": "https://en.wikipedia.org/wiki/Cuba",
     "evidence": [
       "Salsa Music",
@@ -3189,7 +3173,7 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "Home to the Highest solitary Free-standing Mountain summit on planet Earth, topped with glaciated snowfields.",
+    "text": "Home to the Highest solitary Free-standing mountain summit on planet Earth, topped with glaciated snowfields.",
     "source": "https://en.wikipedia.org/wiki/Tanzania",
     "evidence": [
       "Free-standing Mountain",
@@ -3204,12 +3188,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Expansive Wildlife Parks encompass an immense unbroken Volcanic Caldera harboring thousands of grazing animals.",
+    "text": "Expansive wildlife parks encompass the immense Ngorongoro volcanic caldera and the vast plains of the Serengeti.",
     "source": "https://en.wikipedia.org/wiki/Tanzania",
     "evidence": [
-      "Volcanic Caldera",
-      "Wildlife",
-      "Parks"
+      "Ngorongoro",
+      "Serengeti"
     ],
     "checked": "2026-11-11"
   },
@@ -3275,12 +3258,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "The ancient botanical Birthplace of the Wild Coffea arabica Coffee plant, celebrated in traditional ceremonial roasting rituals.",
+    "text": "The ancient botanical birthplace of coffee in the highland forests of Kaffa, home to diverse Oromo cultural traditions.",
     "source": "https://en.wikipedia.org/wiki/Ethiopia",
     "evidence": [
-      "Birthplace",
-      "Coffee",
-      "Wild"
+      "Kaffa",
+      "Oromo"
     ],
     "checked": "2026-11-11"
   },
@@ -3304,12 +3286,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "culture",
-    "text": "Famous for eleven Monolithic churches chiseled straight Down Into solid red volcanic bedrock, and spongy Sourdough Flatbread.",
+    "text": "Famous for the eleven monolithic rock-hewn churches of Lalibela in the Amhara highlands, and spongy sourdough flatbread.",
     "source": "https://en.wikipedia.org/wiki/Ethiopia",
     "evidence": [
-      "Sourdough Flatbread",
-      "Monolithic",
-      "Down Into"
+      "Lalibela",
+      "Amhara"
     ],
     "checked": "2026-11-11"
   },
@@ -3361,11 +3342,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "history",
-    "text": "Historically known for ancient Golden Stool regalia and vibrant, colorful hand-woven geometric Kente Cloth strips.",
+    "text": "Historically known for royal Ashanti golden stool regalia and vibrant, hand-woven geometric Kente cloth strips.",
     "source": "https://en.wikipedia.org/wiki/Ghana",
     "evidence": [
-      "Golden Stool",
-      "Kente Cloth"
+      "Ashanti",
+      "Kente"
     ],
     "checked": "2026-11-11"
   },
@@ -3375,7 +3356,7 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "The First Colony in its territory to Achieve Sovereign independence in 1957, symbolized by a Black Star on its national flag.",
+    "text": "The First colony in its territory to Achieve sovereign independence in 1957, symbolized by a black star on its national flag.",
     "source": "https://en.wikipedia.org/wiki/Ghana",
     "evidence": [
       "1957",
@@ -7521,12 +7502,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "An Archipelago of over 300 Volcanic islands famous for the traditional kava Ceremonial drink prepared from crushed yaqona roots.",
+    "text": "An archipelago of over 300 volcanic islands centered around Viti Levu, famous for traditional yaqona ceremonial drink rituals.",
     "source": "https://en.wikipedia.org/wiki/Fiji",
     "evidence": [
-      "Archipelago",
-      "Ceremonial",
-      "Volcanic"
+      "300",
+      "Viti Levu"
     ],
     "checked": "2026-11-11"
   },
@@ -7536,12 +7516,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "culture",
-    "text": "Welcomes Visitors with a Ceremonial herbal beverage prepared from Pounded pepper roots in carved wooden bowls.",
+    "text": "Welcomes visitors with ceremonial Yaqona drink rituals prepared from pepper roots in carved Tanoa wooden bowls.",
     "source": "https://en.wikipedia.org/wiki/Fiji",
     "evidence": [
-      "Ceremonial",
-      "Visitors",
-      "Pounded"
+      "Yaqona",
+      "Tanoa"
     ],
     "checked": "2026-11-11"
   },
@@ -7692,12 +7671,11 @@
     "level": 1,
     "topic": "heritage",
     "kind": "culture",
-    "text": "The Musical Birthplace of reggae and ska, developed in vibrant studio sound Systems With deep rolling basslines.",
+    "text": "The musical birthplace of Reggae and Ska, developed in vibrant studio sound systems with deep rolling basslines.",
     "source": "https://en.wikipedia.org/wiki/Jamaica",
     "evidence": [
-      "Systems With",
-      "Birthplace",
-      "Musical"
+      "Reggae",
+      "Ska"
     ],
     "checked": "2026-11-11"
   },
@@ -7707,12 +7685,11 @@
     "level": 2,
     "topic": "landmark",
     "kind": "history",
-    "text": "Features cascading terraced Natural Limestone waterfalls that Visitors climb hand-in-hand directly from the sea.",
+    "text": "Features cascading limestone waterfalls in Ocho Rios and scenic hiking paths across the misty Blue Mountains.",
     "source": "https://en.wikipedia.org/wiki/Jamaica",
     "evidence": [
-      "Limestone",
-      "Visitors",
-      "Natural"
+      "Ocho Rios",
+      "Blue Mountains"
     ],
     "checked": "2026-11-11"
   },
@@ -7722,11 +7699,11 @@
     "level": 3,
     "topic": "iconic landmark",
     "kind": "culture",
-    "text": "Famous for spicy pimento-wood smoked Jerk barbecue, Blue Mountain Coffee beans, and legendary world sprint champions.",
+    "text": "Famous for spicy pimento-wood smoked jerk barbecue, Blue Mountains coffee beans, and sprint champion Usain Bolt.",
     "source": "https://en.wikipedia.org/wiki/Jamaica",
     "evidence": [
-      "Blue Mountain Coffee",
-      "Jerk"
+      "Blue Mountains",
+      "Usain Bolt"
     ],
     "checked": "2026-11-11"
   },
@@ -8282,7 +8259,7 @@
     "level": 1,
     "topic": "theatre",
     "kind": "culture",
-    "text": "Noh Theater Mask Traditions dating to the fourteenth century, featuring slow stylized dance-drama performed on a polished cypress stage.",
+    "text": "Noh Theater Mask traditions dating to the fourteenth century, featuring slow stylized dance-drama performed on a polished cypress stage.",
     "source": "https://en.wikipedia.org/wiki/Noh",
     "evidence": [
       "Traditions",
@@ -8297,11 +8274,11 @@
     "level": 1,
     "topic": "pottery",
     "kind": "culture",
-    "text": "Centuries-old Ceramic philosophy of repairing fractured Pottery With golden lacquer to celebrate and honor its breakage history.",
+    "text": "Centuries-old Kintsugi philosophy mends broken ceramic pottery with precious gold Urushi lacquer seams, embracing aesthetic flaws.",
     "source": "https://en.wikipedia.org/wiki/Kintsugi",
     "evidence": [
-      "Pottery With",
-      "Ceramic"
+      "Kintsugi",
+      "Urushi"
     ],
     "checked": "2026-11-11"
   },
@@ -8311,7 +8288,7 @@
     "level": 1,
     "topic": "carpentry",
     "kind": "culture",
-    "text": "Traditional Architectural joinery techniques that construct multi-story Wooden Structures With timber joints without a single metallic nail or screw.",
+    "text": "Traditional Architectural joinery techniques that construct multi-story wooden Structures with timber joints without a single metallic nail or screw.",
     "source": "https://en.wikipedia.org/wiki/Japanese_carpentry",
     "evidence": [
       "Architectural",
@@ -8326,12 +8303,11 @@
     "level": 1,
     "topic": "origami",
     "kind": "culture",
-    "text": "Ancient paper-folding Craft that evolved from Ceremonial Gift decorations into complex geometric artistic representations.",
+    "text": "Ancient Origami paper-folding craft developed during the Edo period into complex geometric sculptural art.",
     "source": "https://en.wikipedia.org/wiki/Origami",
     "evidence": [
-      "Ceremonial",
-      "Craft",
-      "Gift"
+      "Origami",
+      "Edo"
     ],
     "checked": "2026-11-11"
   },
@@ -8341,7 +8317,7 @@
     "level": 2,
     "topic": "fortress",
     "kind": "history",
-    "text": "The Himeji Castle Complex survives in White Plaster elegance as an exceptional wooden feudal fortress with maze-like defensive alleys.",
+    "text": "The Himeji Castle Complex survives in white Plaster elegance as an exceptional wooden feudal fortress with maze-like defensive alleys.",
     "source": "https://en.wikipedia.org/wiki/Himeji_Castle",
     "evidence": [
       "White Plaster",
@@ -8384,7 +8360,7 @@
     "level": 2,
     "topic": "shrine",
     "kind": "history",
-    "text": "Fushimi Inari Shrine features thousands of vibrant wooden Torii Gates winding up the sacred forested mountain paths.",
+    "text": "Fushimi Inari shrine features thousands of vibrant wooden Torii gates winding up the sacred forested mountain paths.",
     "source": "https://en.wikipedia.org/wiki/Fushimi_Inari-taisha",
     "evidence": [
       "Torii Gates",
@@ -8399,7 +8375,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for delicate raw Fish Sliced over seasoned Vinegar Rice, savory ramen noodles, and centuries of sword-making mastery.",
+    "text": "Famous for delicate raw Fish Sliced over seasoned Vinegar rice, savory ramen noodles, and centuries of sword-making mastery.",
     "source": "https://en.wikipedia.org/wiki/Sushi",
     "evidence": [
       "Vinegar Rice",
@@ -8429,11 +8405,11 @@
     "topic": "olympics",
     "kind": "current",
     "year": 2021,
-    "text": "Hosted the delayed Summer Olympic Games in 2021 inside empty stadiums under rigorous health protocols and robotic athlete guidance.",
+    "text": "Hosted the delayed summer Olympic Games in 2021 inside empty stadiums under rigorous health protocols and robotic guidance.",
     "source": "https://en.wikipedia.org/wiki/2020_Summer_Olympics",
     "evidence": [
       "2021",
-      "Summer Olympic Games"
+      "Olympic Games"
     ],
     "checked": "2026-11-11"
   },
@@ -8474,11 +8450,11 @@
     "level": 1,
     "topic": "portraiture",
     "kind": "culture",
-    "text": "Naturalistic Encaustic wax funeral portraits painted on Wooden Boards that blended classical artistic realism with ancient embalming traditions.",
+    "text": "Naturalistic Fayum encaustic wax funeral portraits painted on wooden panels that blended Roman realism with embalming.",
     "source": "https://en.wikipedia.org/wiki/Fayum_mummy_portraits",
     "evidence": [
-      "Wooden Boards",
-      "Encaustic"
+      "Fayum",
+      "Roman"
     ],
     "checked": "2026-11-11"
   },
@@ -8488,7 +8464,7 @@
     "level": 1,
     "topic": "ostraca",
     "kind": "history",
-    "text": "Limestone Flakes and Broken Pottery Sherds utilized by ancient artisans to sketch drafts, write poems, and track labor disputes.",
+    "text": "Limestone Flakes and Broken pottery Sherds utilized by ancient artisans to sketch drafts, write poems, and track labor disputes.",
     "source": "https://en.wikipedia.org/wiki/Ostracon",
     "evidence": [
       "Pottery",
@@ -8545,11 +8521,11 @@
     "level": 2,
     "topic": "epigraphy",
     "kind": "history",
-    "text": "Discovery of the trilingual granodiorite slab in 1799 provided the vital linguistic key that unlocked the translation of ancient hieroglyphs.",
+    "text": "Discovery of the trilingual granodiorite slab in 1799 near Memphis unlocked the translation of ancient hieroglyphs.",
     "source": "https://en.wikipedia.org/wiki/Rosetta_Stone",
     "evidence": [
-      "1799 provided",
-      "1799"
+      "1799",
+      "Memphis"
     ],
     "checked": "2026-11-11"
   },
@@ -8603,7 +8579,7 @@
     "topic": "parade",
     "kind": "current",
     "year": 2021,
-    "text": "In 2021, held the televised Pharaohs Golden Parade, transporting twenty-two preserved royal mummies inside custom shock-absorbing vehicles.",
+    "text": "In 2021, held the televised Pharaohs golden parade, transporting twenty-two preserved royal mummies inside custom shock-absorbing vehicles.",
     "source": "https://en.wikipedia.org/wiki/Pharaohs%27_Golden_Parade",
     "evidence": [
       "2021",
@@ -8632,12 +8608,11 @@
     "level": 1,
     "topic": "martialart",
     "kind": "culture",
-    "text": "Afro-descendant Martial art Combining Acrobatic kicks, deceptive sweeps, and continuous rhythmic sway guided by traditional berimbau musical bows.",
+    "text": "Afro-descendant martial art Capoeira developed in Bahia combining acrobatic kicks, deceptive sweeps, and rhythmic movement.",
     "source": "https://en.wikipedia.org/wiki/Capoeira",
     "evidence": [
-      "Combining",
-      "Acrobatic",
-      "Martial"
+      "Capoeira",
+      "Bahia"
     ],
     "checked": "2026-11-11"
   },
@@ -8662,11 +8637,11 @@
     "level": 1,
     "topic": "music",
     "kind": "culture",
-    "text": "Lyrical Musical movement blending gentle syncopated guitar rhythms with understated vocals, popularizing poetic melodies worldwide in the Late 1950s.",
+    "text": "The lyrical Bossa Nova musical movement blended gentle syncopated guitar rhythms with vocals, emerging in the late 1950s.",
     "source": "https://en.wikipedia.org/wiki/Bossa_nova",
     "evidence": [
-      "Musical",
-      "Late"
+      "Bossa Nova",
+      "1950s"
     ],
     "checked": "2026-11-11"
   },
@@ -8676,7 +8651,7 @@
     "level": 1,
     "topic": "ceramics",
     "kind": "culture",
-    "text": "Ancient Pre-Columbian Ceramic traditions featuring intricate geometric incised designs and painted Funerary Urns recovered from major river delta mounds.",
+    "text": "Ancient Pre-Columbian ceramic traditions featuring intricate geometric incised designs and painted Funerary Urns recovered from major river delta mounds.",
     "source": "https://en.wikipedia.org/wiki/Marajoara_culture",
     "evidence": [
       "Pre-Columbian",
@@ -8734,7 +8709,7 @@
     "level": 2,
     "topic": "sambadrome",
     "kind": "culture",
-    "text": "The Sambadrome exhibition street was designed specifically to host dazzling competing Samba School Parades with towering floats and feathered dancers.",
+    "text": "The Sambadrome exhibition street was designed specifically to host dazzling competing samba School Parades with towering floats and feathered dancers.",
     "source": "https://en.wikipedia.org/wiki/Sambadrome_Marqu%C3%AAs_de_Sapuca%C3%AD",
     "evidence": [
       "Sambadrome",
@@ -8763,7 +8738,7 @@
     "level": 3,
     "topic": "football",
     "kind": "record",
-    "text": "Holds the all-time world record of five men’s FIFA World Cup championship victories, celebrated for vibrant yellow jerseys and flair.",
+    "text": "Holds the all-time world record of five men’s FIFA world Cup championship victories, celebrated for vibrant yellow jerseys and flair.",
     "source": "https://en.wikipedia.org/wiki/FIFA_World_Cup",
     "evidence": [
       "FIFA World Cup",
@@ -8778,11 +8753,11 @@
     "topic": "olympics",
     "kind": "current",
     "year": 2016,
-    "text": "In 2016, hosted the Summer Olympic Games, staging the global sporting competition across coastal beach venues and modernized arenas.",
+    "text": "In 2016, hosted the summer Olympic Games across coastal venues in Rio de Janeiro and modernized sporting arenas.",
     "source": "https://en.wikipedia.org/wiki/2016_Summer_Olympics",
     "evidence": [
       "2016",
-      "Summer Olympic Games"
+      "Olympic Games"
     ],
     "checked": "2026-11-11"
   },
@@ -8793,7 +8768,7 @@
     "topic": "worldcup",
     "kind": "current",
     "year": 2014,
-    "text": "Staged the worldwide FIFA World Cup tournament in 2014 across twelve modernized stadiums throughout diverse metropolitan centers.",
+    "text": "Staged the worldwide FIFA world Cup tournament in 2014 across twelve modernized stadiums throughout diverse metropolitan centers.",
     "source": "https://en.wikipedia.org/wiki/2014_FIFA_World_Cup",
     "evidence": [
       "2014",
@@ -8850,7 +8825,7 @@
     "level": 1,
     "topic": "songlines",
     "kind": "culture",
-    "text": "Ancient Indigenous navigational Songlines mapped across vast arid Landscapes through memorized verses describing natural landmarks and sacred waterholes.",
+    "text": "Ancient indigenous navigational Songlines mapped across vast arid Landscapes through memorized verses describing natural landmarks and sacred waterholes.",
     "source": "https://en.wikipedia.org/wiki/Songline",
     "evidence": [
       "Indigenous",
@@ -8895,7 +8870,7 @@
     "level": 2,
     "topic": "hydroelectric",
     "kind": "history",
-    "text": "The Snowy Mountains Hydroelectric Scheme, constructed between 1949 and 1974, diverted rivers through tunnels to generate vast renewable power.",
+    "text": "The Snowy mountains Hydroelectric Scheme, constructed between 1949 and 1974, diverted rivers through tunnels to generate vast renewable power.",
     "source": "https://en.wikipedia.org/wiki/Snowy_Mountains_Scheme",
     "evidence": [
       "1949 and",
@@ -8925,7 +8900,7 @@
     "level": 3,
     "topic": "operahouse",
     "kind": "culture",
-    "text": "Famous for the Sydney Opera House with sail-shaped roof shells, hopping red kangaroos, and yeast-extract savory spreads.",
+    "text": "Famous for the Sydney opera House with sail-shaped roof shells, hopping red kangaroos, and yeast-extract savory spreads.",
     "source": "https://en.wikipedia.org/wiki/Sydney_Opera_House",
     "evidence": [
       "Sydney Opera House",
@@ -8939,7 +8914,7 @@
     "level": 3,
     "topic": "barrierreef",
     "kind": "culture",
-    "text": "Home to the colossal Great Barrier Reef, the largest living coral organism system on Earth visible from orbiting spacecraft.",
+    "text": "Home to the colossal Great Barrier reef, the largest living coral organism system on Earth visible from orbiting spacecraft.",
     "source": "https://en.wikipedia.org/wiki/Great_Barrier_Reef",
     "evidence": [
       "Great Barrier Reef",
@@ -8954,7 +8929,7 @@
     "topic": "olympics",
     "kind": "current",
     "year": 2000,
-    "text": "In 2000, hosted the millennium Summer Olympic Games in Sydney, celebrated when indigenous sprinter Cathy Freeman ignited the stadium flame cauldron.",
+    "text": "In 2000, hosted the millennium summer Olympic Games in Sydney, celebrated when indigenous sprinter Cathy Freeman ignited the stadium flame cauldron.",
     "source": "https://en.wikipedia.org/wiki/2000_Summer_Olympics",
     "evidence": [
       "2000",
@@ -8970,11 +8945,11 @@
     "topic": "bushfires",
     "kind": "incident",
     "year": 2020,
-    "text": "Endured the catastrophic Black Summer bushfire crisis in 2020 that burned tens of millions of woodland acres, prompting massive global relief.",
+    "text": "Endured the catastrophic Black Summer bushfire crisis in 2020 that burned tens of millions of woodland acres across the continent.",
     "source": "https://en.wikipedia.org/wiki/2019%E2%80%9320_Australian_bushfire_season",
     "evidence": [
-      "2020 that",
-      "Black Summer"
+      "Black Summer",
+      "2020"
     ],
     "checked": "2026-11-11"
   },
@@ -8984,7 +8959,7 @@
     "level": 1,
     "topic": "theatre",
     "kind": "culture",
-    "text": "Commedia Dell arte Theatrical Tradition developed in the sixteenth century, featuring masked Stock Characters performing comedic improvised social satire.",
+    "text": "Commedia Dell arte Theatrical tradition developed in the sixteenth century, featuring masked Stock Characters performing comedic improvised social satire.",
     "source": "https://en.wikipedia.org/wiki/Commedia_dell%27arte",
     "evidence": [
       "Theatrical Tradition",
@@ -9013,11 +8988,10 @@
     "level": 1,
     "topic": "pietradura",
     "kind": "culture",
-    "text": "Intricate Pietra Dura Decorative Arts perfected in Florence, inlaying meticulously cut semi-precious Colored Stones to produce painterly marble tabletops.",
+    "text": "Intricate Pietra Dura decorative stone arts perfected in Florence, inlaying meticulously cut colored stones into marble tabletops.",
     "source": "https://en.wikipedia.org/wiki/Pietra_dura",
     "evidence": [
-      "Colored Stones",
-      "Decorative",
+      "Pietra Dura",
       "Florence"
     ],
     "checked": "2026-11-11"
@@ -9028,7 +9002,7 @@
     "level": 1,
     "topic": "frescoes",
     "kind": "culture",
-    "text": "Ancient Etruscan Subterranean Chamber tombs Decorated With colorful frescoes depicting banquets, athletic contests, and mythological journeys to the afterlife.",
+    "text": "Ancient Etruscan subterranean Chamber tombs Decorated with colorful frescoes depicting banquets, athletic contests, and mythological journeys to the afterlife.",
     "source": "https://en.wikipedia.org/wiki/Necropolis_of_Monterozzi",
     "evidence": [
       "Decorated With",
@@ -9117,7 +9091,7 @@
     "level": 3,
     "topic": "cuisine",
     "kind": "culture",
-    "text": "Global homeland of Thin-crust Wood-fired Pizza, rich espresso coffee bars, creamy gelato, and handmade pasta traditions.",
+    "text": "Global homeland of Thin-crust Wood-fired pizza, rich espresso coffee bars, creamy gelato, and handmade pasta traditions.",
     "source": "https://en.wikipedia.org/wiki/Pizza",
     "evidence": [
       "Thin-crust",
@@ -9133,7 +9107,7 @@
     "topic": "winterolympics",
     "kind": "current",
     "year": 2006,
-    "text": "In 2006, hosted the Winter Olympic Games in Turin, staging figure skating, ice hockey, and bobsleigh across modern mountain resort arenas.",
+    "text": "In 2006, hosted the winter Olympic Games in Turin, staging figure skating, ice hockey, and bobsleigh across modern mountain resort arenas.",
     "source": "https://en.wikipedia.org/wiki/2006_Winter_Olympics",
     "evidence": [
       "2006",
@@ -9149,7 +9123,7 @@
     "topic": "football",
     "kind": "current",
     "year": 2021,
-    "text": "In 2021, triumphed at the Continental Football Championship Final, capturing the prestigious trophy following a thrilling penalty shootout.",
+    "text": "In 2021, triumphed at the continental football Championship Final, capturing the prestigious trophy following a thrilling penalty shootout.",
     "source": "https://en.wikipedia.org/wiki/UEFA_Euro_2020",
     "evidence": [
       "2021",
@@ -9164,12 +9138,11 @@
     "level": 1,
     "topic": "dance",
     "kind": "culture",
-    "text": "Bharatanatyam classical Temple Dance Tradition, combining intricate rhythmic footwork, Symbolic Hand mudras, and expressive facial poetry.",
+    "text": "The sacred Bharatanatyam classical dance originating in Tamil Nadu combines intricate rhythmic footwork with expressive gestures.",
     "source": "https://en.wikipedia.org/wiki/Bharatanatyam",
     "evidence": [
-      "Symbolic Hand",
-      "Tradition",
-      "Temple"
+      "Bharatanatyam",
+      "Tamil Nadu"
     ],
     "checked": "2026-11-11"
   },
@@ -9338,7 +9311,7 @@
     "level": 1,
     "topic": "textiles",
     "kind": "culture",
-    "text": "Ancient Paracas Textile culture produced extraordinary Finely Woven wool mantles embroidered with intricate supernatural deities and vibrant dyes.",
+    "text": "Ancient Paracas textile culture produced extraordinary Finely Woven wool mantles embroidered with intricate supernatural deities and vibrant dyes.",
     "source": "https://en.wikipedia.org/wiki/Paracas_culture",
     "evidence": [
       "Finely Woven",
@@ -9367,7 +9340,7 @@
     "level": 1,
     "topic": "beverage",
     "kind": "culture",
-    "text": "Traditional chicha fermented beverage prepared From Purple or sprouted corn, Consumed During communal festivals and Agricultural Rituals for centuries.",
+    "text": "Traditional chicha fermented beverage prepared from Purple or sprouted corn, Consumed During communal festivals and Agricultural Rituals for centuries.",
     "source": "https://en.wikipedia.org/wiki/Chicha",
     "evidence": [
       "Agricultural Rituals",
@@ -9411,11 +9384,11 @@
     "level": 2,
     "topic": "royalroad",
     "kind": "history",
-    "text": "Qhapaq Nan, an expansive pre-Columbian stone roadway network spanning thousands of kilometers across rugged highlands with suspension bridges.",
+    "text": "Qhapaq Nan, an expansive Inca stone roadway network spanning thousands of kilometers across rugged highlands from Cuzco.",
     "source": "https://en.wikipedia.org/wiki/Inca_road_system",
     "evidence": [
-      "Columbian",
-      "Nan"
+      "Inca",
+      "Cuzco"
     ],
     "checked": "2026-11-11"
   },
@@ -9440,7 +9413,7 @@
     "level": 2,
     "topic": "stonework",
     "kind": "history",
-    "text": "The ancient Fortress of Sacsayhuaman showcases Precision masonry with massive megalithic limestone blocks weighing over one hundred tons fitted seamlessly.",
+    "text": "The ancient fortress of Sacsayhuaman showcases Precision masonry with massive megalithic limestone blocks weighing over one hundred tons fitted seamlessly.",
     "source": "https://en.wikipedia.org/wiki/Sacsayhuam%C3%A1n",
     "evidence": [
       "Sacsayhuaman",
@@ -9469,7 +9442,7 @@
     "level": 3,
     "topic": "ceviche",
     "kind": "culture",
-    "text": "Renowned Culinary Culture famous for fresh citrus-cured raw fish ceviche Served With roasted giant Corn Kernels and sweet sweet-potatoes.",
+    "text": "Renowned Culinary Culture famous for fresh citrus-cured raw fish ceviche served with roasted giant Corn kernels and sweet sweet-potatoes.",
     "source": "https://en.wikipedia.org/wiki/Ceviche",
     "evidence": [
       "Corn Kernels",
@@ -9529,11 +9502,11 @@
     "level": 1,
     "topic": "canoe",
     "kind": "culture",
-    "text": "Birchbark Canoes engineered by Indigenous Peoples using birch skin and spruce roots, enabling swift exploration across intricate inland waterways.",
+    "text": "Lightweight Birchbark canoes engineered by indigenous First Nations enabled swift travel across inland waterways and lakes.",
     "source": "https://en.wikipedia.org/wiki/Canoe",
     "evidence": [
-      "Indigenous Peoples",
-      "Canoes"
+      "Birchbark",
+      "First Nations"
     ],
     "checked": "2026-11-11"
   },
@@ -9543,11 +9516,11 @@
     "level": 1,
     "topic": "maplesyrup",
     "kind": "culture",
-    "text": "Springtime tradition of tapping Sugar Maple Trees to collect sap, boiling it in rustic sugar shacks into amber Golden Syrup.",
+    "text": "Springtime tradition of tapping sugar maple trees across Quebec and Ontario to boil sap in rustic sugar shacks into amber syrup.",
     "source": "https://en.wikipedia.org/wiki/Maple_syrup",
     "evidence": [
-      "Sugar Maple Trees",
-      "Golden Syrup"
+      "Quebec",
+      "Ontario"
     ],
     "checked": "2026-11-11"
   },
@@ -9557,11 +9530,11 @@
     "level": 1,
     "topic": "inukshuk",
     "kind": "culture",
-    "text": "Inukshuk Stone cairns constructed across treeless tundra terrain by traditional indigenous hunters as Navigational Markers and spiritual waypoints.",
+    "text": "Iconic stone landmarks known as an Inuksuk erected by Inuit communities across frozen tundra for navigation and hunting guidance.",
     "source": "https://en.wikipedia.org/wiki/Inuksuk",
     "evidence": [
-      "Navigational Markers",
-      "Stone"
+      "Inuksuk",
+      "Inuit"
     ],
     "checked": "2026-11-11"
   },
@@ -9601,7 +9574,7 @@
     "level": 2,
     "topic": "canal",
     "kind": "history",
-    "text": "The historic Rideau Canal, opened in 1832 as a military waterway, transforms each winter into one of the world longest skating rinks.",
+    "text": "The historic Rideau canal, opened in 1832 as a military waterway, transforms each winter into one of the world longest skating rinks.",
     "source": "https://en.wikipedia.org/wiki/Rideau_Canal",
     "evidence": [
       "1832",
@@ -9615,7 +9588,7 @@
     "level": 2,
     "topic": "spacearm",
     "kind": "history",
-    "text": "Engineered the famous Robotic Shuttle arm Canadarm, which deployed, captured, and repaired orbiting satellites throughout thirty Space Shuttle missions.",
+    "text": "Engineered the famous Robotic Shuttle arm Canadarm, which deployed, captured, and repaired orbiting satellites throughout thirty space Shuttle missions.",
     "source": "https://en.wikipedia.org/wiki/Canadarm",
     "evidence": [
       "Space Shuttle",
@@ -9661,7 +9634,7 @@
     "topic": "olympics",
     "kind": "current",
     "year": 2010,
-    "text": "In 2010, hosted the Winter Olympic Games in Vancouver, culminating in an iconic golden goal in men ice hockey.",
+    "text": "In 2010, hosted the winter Olympic Games in Vancouver, culminating in an iconic golden goal in men ice hockey.",
     "source": "https://en.wikipedia.org/wiki/2010_Winter_Olympics",
     "evidence": [
       "2010",
@@ -9779,7 +9752,7 @@
     "level": 2,
     "topic": "palace",
     "kind": "history",
-    "text": "The lavish Palace of Versailles Hall of Mirrors was engineered with 357 mirror surfaces reflecting light onto opulent painted barrel-vaulted ceilings.",
+    "text": "The lavish palace of Versailles Hall of Mirrors was engineered with 357 mirror surfaces reflecting light onto opulent painted barrel-vaulted ceilings.",
     "source": "https://en.wikipedia.org/wiki/Hall_of_Mirrors",
     "evidence": [
       "Versailles",
@@ -9823,7 +9796,7 @@
     "level": 3,
     "topic": "cycling",
     "kind": "culture",
-    "text": "Hosts the world premier multi-week Bicycle Race, where elite competitors contest the Yellow Jersey across scenic Mountain Passes.",
+    "text": "Hosts the world premier multi-week Bicycle Race, where elite competitors contest the Yellow Jersey across scenic mountain Passes.",
     "source": "https://en.wikipedia.org/wiki/Tour_de_France",
     "evidence": [
       "Mountain Passes",
@@ -9839,7 +9812,7 @@
     "topic": "olympics",
     "kind": "current",
     "year": 2024,
-    "text": "In 2024, hosted the Summer Olympic Games, staging a spectacular open-air parade of international athletes along an iconic urban waterway.",
+    "text": "In 2024, hosted the summer Olympic Games, staging a spectacular open-air parade of international athletes along an iconic urban waterway.",
     "source": "https://en.wikipedia.org/wiki/2024_Summer_Olympics",
     "evidence": [
       "2024",
@@ -9869,11 +9842,11 @@
     "level": 1,
     "topic": "beadwork",
     "kind": "culture",
-    "text": "Intricate glass beads and collars crafted by Indigenous Pastoralist women, using symbolic color patterns to signify age, marital status, and clan identity.",
+    "text": "Traditional pastoral Maasai communities are known for vibrant red robes and the leaping Adumu dance.",
     "source": "https://en.wikipedia.org/wiki/Maasai_people",
     "evidence": [
-      "Pastoralist",
-      "Indigenous"
+      "Maasai",
+      "Adumu"
     ],
     "checked": "2026-11-11"
   },
@@ -9883,12 +9856,11 @@
     "level": 1,
     "topic": "stonearchitecture",
     "kind": "culture",
-    "text": "Ancient coral Stone Town architecture on Lamu Island featuring intricately carved wooden doors and narrow pedestrian streets undisturbed by automobiles.",
+    "text": "Ancient Swahili coastal trade settlements on Lamu island showcase coral rag stone architecture and carved wooden doors.",
     "source": "https://en.wikipedia.org/wiki/Lamu",
     "evidence": [
-      "Lamu Island",
-      "Stone",
-      "Town"
+      "Swahili",
+      "Lamu"
     ],
     "checked": "2026-11-11"
   },
@@ -9898,11 +9870,11 @@
     "level": 1,
     "topic": "woodcraft",
     "kind": "culture",
-    "text": "Akamba woodcarving traditions producing detailed hardwood Wildlife sculptures, evolving from utilitarian Tool craftsmanship into globally recognized folk art.",
+    "text": "Traditional Akamba craftsmen across Machakos crafted intricate brass amulets and tools traded along historic caravan routes.",
     "source": "https://en.wikipedia.org/wiki/Kamba_people",
     "evidence": [
-      "Wildlife",
-      "Tool"
+      "Akamba",
+      "Machakos"
     ],
     "checked": "2026-11-11"
   },
@@ -10000,7 +9972,7 @@
     "level": 3,
     "topic": "tea",
     "kind": "record",
-    "text": "Leads the world as a premier global Exporter of fragrant Black tea, cultivated across cool lush Highland tea estates.",
+    "text": "Leads the world as a premier global Exporter of fragrant black tea, cultivated across cool lush Highland tea estates.",
     "source": "https://en.wikipedia.org/wiki/Tea_production_in_Kenya",
     "evidence": [
       "Exporter",
@@ -10031,7 +10003,7 @@
     "topic": "locusts",
     "kind": "incident",
     "year": 2020,
-    "text": "In 2020, battled devastating Desert Locust Swarms That surged across agricultural valleys, threatening harvests across multiple rural communities.",
+    "text": "In 2020, battled devastating desert Locust Swarms That surged across agricultural valleys, threatening harvests across multiple rural communities.",
     "source": "https://en.wikipedia.org/wiki/2019%E2%80%932021_locust_infestation",
     "evidence": [
       "2020",
@@ -10075,11 +10047,11 @@
     "level": 1,
     "topic": "folklore",
     "kind": "culture",
-    "text": "Centuries-old Folk Tradition respecting Hidden Folk living within mossy volcanic rocks, sometimes prompting civil builders to alter highway paths.",
+    "text": "Folk tradition respecting the Huldufolk hidden people living within volcanic rocks, documented in modern surveys dating back to 1971.",
     "source": "https://en.wikipedia.org/wiki/Hulduf%C3%B3lk",
     "evidence": [
-      "Hidden Folk",
-      "Tradition"
+      "Huldufolk",
+      "1971"
     ],
     "checked": "2026-11-11"
   },
@@ -10146,11 +10118,11 @@
     "level": 2,
     "topic": "church",
     "kind": "history",
-    "text": "Hallgrimskirkja Sanctuary Stands tall with dramatic stepped concrete wings inspired by natural basalt columns and cooling volcanic lava flows.",
+    "text": "The landmark church of Hallgrimskirkja stands 74.5 meters tall with stepped concrete wings inspired by basalt columns.",
     "source": "https://en.wikipedia.org/wiki/Hallgr%C3%ADmskirkja",
     "evidence": [
-      "Sanctuary",
-      "Stands"
+      "Hallgrimskirkja",
+      "74.5"
     ],
     "checked": "2026-11-11"
   },
@@ -10175,7 +10147,7 @@
     "level": 3,
     "topic": "beach",
     "kind": "culture",
-    "text": "Reynisfjara shoreline features Dramatic towering Basalt Columns and crashing white foam against pitch-black volcanic sand.",
+    "text": "Reynisfjara shoreline features Dramatic towering Basalt columns and crashing white foam against pitch-black volcanic sand.",
     "source": "https://en.wikipedia.org/wiki/Reynisfjara",
     "evidence": [
       "Basalt Columns",
@@ -10205,7 +10177,7 @@
     "topic": "football",
     "kind": "current",
     "year": 2016,
-    "text": "In 2016, the National Football squad captivated global fans with an underdog tournament run and their thunderous rhythmic thunderclap chant.",
+    "text": "In 2016, the National football squad captivated global fans with an underdog tournament run and their thunderous rhythmic thunderclap chant.",
     "source": "https://en.wikipedia.org/wiki/Viking_clap",
     "evidence": [
       "2016",
@@ -10234,7 +10206,7 @@
     "level": 1,
     "topic": "art",
     "kind": "culture",
-    "text": "Celebrated for colorful alebrijes folk sculptures depicting fantastical chimeric creatures Carved From Copal Wood and decorated with intricate motifs.",
+    "text": "Celebrated for colorful alebrijes folk sculptures depicting fantastical chimeric creatures Carved from Copal Wood and decorated with intricate motifs.",
     "source": "https://en.wikipedia.org/wiki/Alebrije",
     "evidence": [
       "Carved From Copal Wood",
@@ -10248,12 +10220,11 @@
     "level": 1,
     "topic": "music",
     "kind": "culture",
-    "text": "Traditional son Jarocho Musical Style combines stringed jarana instruments with percussive Wooden Platform dancing known as zapateado.",
+    "text": "Traditional son Jarocho music from Veracruz combines stringed jarana instruments with percussive wooden zapateado platform dancing.",
     "source": "https://en.wikipedia.org/wiki/Son_jarocho",
     "evidence": [
-      "Wooden Platform",
       "Jarocho",
-      "Musical"
+      "Veracruz"
     ],
     "checked": "2026-11-11"
   },
@@ -10278,11 +10249,11 @@
     "level": 2,
     "topic": "cenote",
     "kind": "history",
-    "text": "Natural Limestone sinkholes Filled With clear freshwater served as sacred ritual sites and essential water reservoirs for ancient civilizations.",
+    "text": "Natural limestone sinkholes known as cenotes across the Yucatan peninsula served as sacred Maya ritual and freshwater sites.",
     "source": "https://en.wikipedia.org/wiki/Cenote",
     "evidence": [
-      "Filled With",
-      "Limestone"
+      "Yucatan",
+      "Maya"
     ],
     "checked": "2026-11-11"
   },
@@ -10292,7 +10263,7 @@
     "level": 2,
     "topic": "painting",
     "kind": "history",
-    "text": "Painter Frida Kahlo created world-renowned self-portraits exploring identity and pain from her vibrant cobalt-walled home known as the Blue House.",
+    "text": "Painter Frida Kahlo created world-renowned self-portraits exploring identity and pain from her vibrant cobalt-walled home known as the blue House.",
     "source": "https://en.wikipedia.org/wiki/Frida_Kahlo",
     "evidence": [
       "Blue House",
@@ -10366,7 +10337,7 @@
     "topic": "heritage",
     "kind": "current",
     "year": 2010,
-    "text": "In 2010, the ancestral national cuisine received formal inscription on the UNESCO Intangible Cultural Heritage list for its ancient cooking methods.",
+    "text": "In 2010, the ancestral national cuisine received formal inscription on the UNESCO Intangible cultural Heritage list for its ancient cooking methods.",
     "source": "https://en.wikipedia.org/wiki/Mexican_cuisine",
     "evidence": [
       "2010",
@@ -10567,7 +10538,7 @@
     "level": 1,
     "topic": "games",
     "kind": "history",
-    "text": "Ancient Sanctuary of Olympia hosted quadrennial Athletic Competitions honoring the gods, inspiring the modern global athletic games movement.",
+    "text": "Ancient sanctuary of Olympia hosted quadrennial Athletic Competitions honoring the gods, inspiring the modern global athletic games movement.",
     "source": "https://en.wikipedia.org/wiki/Ancient_Olympic_Games",
     "evidence": [
       "Athletic Competitions",
@@ -10582,7 +10553,7 @@
     "level": 1,
     "topic": "theatre",
     "kind": "history",
-    "text": "The Ancient Theatre of Epidaurus demonstrates miraculous acoustics where a spectator in the uppermost limestone tier clearly hears a coin drop.",
+    "text": "The ancient Theatre of Epidaurus demonstrates miraculous acoustics where a spectator in the uppermost limestone tier clearly hears a coin drop.",
     "source": "https://en.wikipedia.org/wiki/Ancient_Theatre_of_Epidaurus",
     "evidence": [
       "Epidaurus",
@@ -10641,7 +10612,7 @@
     "level": 2,
     "topic": "monastery",
     "kind": "history",
-    "text": "Meteora hosts Medieval monastic communities built atop dramatic sheer sandstone Rock Pillars rising hundreds of meters into the sky.",
+    "text": "Meteora hosts Medieval monastic communities built atop dramatic sheer sandstone Rock pillars rising hundreds of meters into the sky.",
     "source": "https://en.wikipedia.org/wiki/Meteora",
     "evidence": [
       "Rock Pillars",
@@ -10655,11 +10626,11 @@
     "level": 2,
     "topic": "canal",
     "kind": "history",
-    "text": "The Corinth Canal cuts through narrow rock with steep vertical limestone walls to connect two important marine bodies.",
+    "text": "The historic Corinth Canal cuts across the limestone Isthmus to connect the Gulf of Corinth with the Saronic Gulf.",
     "source": "https://en.wikipedia.org/wiki/Corinth_Canal",
     "evidence": [
-      "Corinth",
-      "Canal"
+      "Corinth Canal",
+      "Isthmus"
     ],
     "checked": "2026-11-11"
   },
@@ -10683,7 +10654,7 @@
     "level": 3,
     "topic": "temple",
     "kind": "history",
-    "text": "The Parthenon Temple stands atop a rocky citadel as an Iconic classical monument featuring refined marble peristyle colonnades.",
+    "text": "The Parthenon temple stands atop a rocky citadel as an Iconic classical monument featuring refined marble peristyle colonnades.",
     "source": "https://en.wikipedia.org/wiki/Parthenon",
     "evidence": [
       "Parthenon",
@@ -10698,7 +10669,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for skewered Souvlaki meats Served With warm Pita Bread, crisp cucumber yogurt dip, and delicate honey-soaked baklava pastries.",
+    "text": "Famous for skewered Souvlaki meats served with warm Pita Bread, crisp cucumber yogurt dip, and delicate honey-soaked baklava pastries.",
     "source": "https://en.wikipedia.org/wiki/Souvlaki",
     "evidence": [
       "Served With",
@@ -10714,11 +10685,11 @@
     "topic": "football",
     "kind": "current",
     "year": 2004,
-    "text": "In 2004, the national football squad stunned the athletic world by winning the continental championship tournament as massive underdogs.",
+    "text": "In 2004, the national football squad stunned the athletic world by winning UEFA Euro championship matches as massive underdogs.",
     "source": "https://en.wikipedia.org/wiki/UEFA_Euro_2004",
     "evidence": [
-      "2004, the",
-      "2004"
+      "2004",
+      "UEFA"
     ],
     "checked": "2026-11-11"
   },
@@ -10758,7 +10729,7 @@
     "level": 1,
     "topic": "beadwork",
     "kind": "culture",
-    "text": "Vibrant geometric Beadwork Patterns Traditionally communicate social status, courtship intentions, and clan identity across indigenous communities.",
+    "text": "Vibrant geometric Beadwork patterns Traditionally communicate social status, courtship intentions, and clan identity across indigenous communities.",
     "source": "https://en.wikipedia.org/wiki/Zulu_beadwork",
     "evidence": [
       "Traditionally",
@@ -10773,12 +10744,11 @@
     "level": 1,
     "topic": "jazz",
     "kind": "culture",
-    "text": "Township Musical Culture emerged from vibrant communities, blending expressive brass melodies With Marabi rhythms and political defiance.",
+    "text": "Township music culture emerged around Johannesburg, blending expressive brass melodies with Marabi rhythms and political defiance.",
     "source": "https://en.wikipedia.org/wiki/Marabi",
     "evidence": [
-      "With Marabi",
-      "Musical",
-      "Culture"
+      "Johannesburg",
+      "Marabi"
     ],
     "checked": "2026-11-11"
   },
@@ -10788,12 +10758,11 @@
     "level": 1,
     "topic": "rock art",
     "kind": "culture",
-    "text": "Historic sandstone Caves showcase thousands of Ancient Rock Paintings created by San artists depicting eland antelopes and ritual trance visions.",
+    "text": "Ancient sandstone caves showcase rock paintings created by San artists depicting sacred Eland antelopes.",
     "source": "https://en.wikipedia.org/wiki/San_rock_art",
     "evidence": [
-      "Ancient Rock Paintings",
-      "Caves",
-      "San"
+      "San",
+      "Eland"
     ],
     "checked": "2026-11-11"
   },
@@ -10832,11 +10801,11 @@
     "level": 2,
     "topic": "island",
     "kind": "history",
-    "text": "Robben Island served for decades as a maximum-security Prison holding anti-apartheid leaders, preserved as a poignant historical museum.",
+    "text": "Robben Island in Table Bay served for decades as a maximum-security prison holding Nelson Mandela and anti-apartheid leaders.",
     "source": "https://en.wikipedia.org/wiki/Robben_Island",
     "evidence": [
-      "Island",
-      "Prison"
+      "Table Bay",
+      "Nelson Mandela"
     ],
     "checked": "2026-11-11"
   },
@@ -10861,7 +10830,7 @@
     "level": 3,
     "topic": "wine",
     "kind": "culture",
-    "text": "Historic Wine estates Feature ornate whitewashed gables nestled amidst Rolling vineyards renowned for distinct Pinotage red Wine varieties.",
+    "text": "Historic wine estates Feature ornate whitewashed gables nestled amidst Rolling vineyards renowned for distinct Pinotage red wine varieties.",
     "source": "https://en.wikipedia.org/wiki/Pinotage",
     "evidence": [
       "Pinotage",
@@ -10876,7 +10845,7 @@
     "level": 3,
     "topic": "canyon",
     "kind": "landmark",
-    "text": "Blyde River Canyon forms one of the largest vegetated canyons in the world, renowned for the cylindrical rock towers of the Three Rondavels.",
+    "text": "Blyde river Canyon forms one of the largest vegetated canyons in the world, renowned for the cylindrical rock towers of the Three Rondavels.",
     "source": "https://en.wikipedia.org/wiki/Blyde_River_Canyon",
     "evidence": [
       "Three Rondavels",
@@ -10892,7 +10861,7 @@
     "topic": "world cup",
     "kind": "current",
     "year": 2010,
-    "text": "In 2010, made sporting history by hosting the FIFA World Cup, memorable for buzzing plastic vuvuzela horns and vibrant fan celebrations.",
+    "text": "In 2010, made sporting history by hosting the FIFA world Cup, memorable for buzzing plastic vuvuzela horns and vibrant fan celebrations.",
     "source": "https://en.wikipedia.org/wiki/2010_FIFA_World_Cup",
     "evidence": [
       "2010",
@@ -10907,11 +10876,11 @@
     "topic": "rugby",
     "kind": "current",
     "year": 2023,
-    "text": "In 2023, the national rugby squad won a record fourth global championship tournament title with a thrilling one-point final victory.",
+    "text": "In 2023, the Springboks rugby squad won a record fourth Rugby World Cup championship with a thrilling one-point final victory.",
     "source": "https://en.wikipedia.org/wiki/South_Africa_national_rugby_union_team",
     "evidence": [
-      "2023, the",
-      "2023"
+      "2023",
+      "Springboks"
     ],
     "checked": "2026-11-11"
   },
@@ -10936,7 +10905,7 @@
     "level": 1,
     "topic": "tattoo",
     "kind": "culture",
-    "text": "Ta Moko Facial and body Tattooing Traditions utilize chisel carving techniques to mark lineage, social ranking, and personal rites of passage.",
+    "text": "Ta Moko Facial and body Tattooing traditions utilize chisel carving techniques to mark lineage, social ranking, and personal rites of passage.",
     "source": "https://en.wikipedia.org/wiki/T%C4%81_moko",
     "evidence": [
       "Tattooing Traditions",
@@ -11024,11 +10993,11 @@
     "level": 2,
     "topic": "glowworm",
     "kind": "landmark",
-    "text": "The subterranean Waitomo Caves feature limestone grottoes illuminated by thousands of luminescent insect larvae twinkling like star constellations.",
+    "text": "The subterranean Waitomo Caves feature limestone grottoes illuminated by thousands of luminescent Arachnocampa glowworms.",
     "source": "https://en.wikipedia.org/wiki/Waitomo_Glowworm_Caves",
     "evidence": [
       "Waitomo Caves",
-      "Waitomo"
+      "Arachnocampa"
     ],
     "checked": "2026-11-11"
   },
@@ -11052,7 +11021,7 @@
     "level": 3,
     "topic": "bungee",
     "kind": "culture",
-    "text": "Commercial Bungy Jumping was pioneered at the historic Kawarau Suspension Bridge, turning leap diving into a worldwide adrenaline pastime.",
+    "text": "Commercial Bungy Jumping was pioneered at the historic Kawarau Suspension bridge, turning leap diving into a worldwide adrenaline pastime.",
     "source": "https://en.wikipedia.org/wiki/Bungy_jumping",
     "evidence": [
       "Suspension",
@@ -11129,7 +11098,7 @@
     "level": 1,
     "topic": "carpet",
     "kind": "culture",
-    "text": "Indigenous Berber artisans Craft Plush wool rugs using traditional hand-knotting looms, characterized by asymmetric abstract diamond patterns.",
+    "text": "Indigenous Berber artisans craft Plush wool rugs using traditional hand-knotting looms, characterized by asymmetric abstract diamond patterns.",
     "source": "https://en.wikipedia.org/wiki/Berber_carpet",
     "evidence": [
       "Berber",
@@ -11144,7 +11113,7 @@
     "level": 1,
     "topic": "argan",
     "kind": "culture",
-    "text": "Ancient Argan Tree groves produce precious culinary and cosmetic oil extracted from kernels, traditionally cracked by women's Cooperatives.",
+    "text": "Ancient Argan Tree groves produce precious culinary and cosmetic oil extracted from kernels, traditionally cracked by women's cooperatives.",
     "source": "https://en.wikipedia.org/wiki/Argan_oil",
     "evidence": [
       "Argan Tree",
@@ -11231,7 +11200,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for steaming couscous Topped With spiced vegetables and slow-cooked lamb, sweetened With Cinnamon, Toasted Almonds, and raisins.",
+    "text": "Famous for steaming couscous Topped with spiced vegetables and slow-cooked lamb, sweetened with cinnamon, Toasted Almonds, and raisins.",
     "source": "https://en.wikipedia.org/wiki/Couscous",
     "evidence": [
       "Toasted Almonds",
@@ -11247,7 +11216,7 @@
     "topic": "football",
     "kind": "current",
     "year": 2022,
-    "text": "In 2022, made sporting history at the FIFA World Cup by becoming the first squad of its regional confederation to advance to the tournament semifinals.",
+    "text": "In 2022, made sporting history at the FIFA world Cup by becoming the first squad of its regional confederation to advance to the tournament semifinals.",
     "source": "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup",
     "evidence": [
       "2022",
@@ -11307,7 +11276,7 @@
     "level": 1,
     "topic": "singing",
     "kind": "culture",
-    "text": "Traditional folk singing characterized by rapid Vocal Register shifts originated as a communicative Call Between Mountain meadows and livestock herds.",
+    "text": "Traditional folk singing characterized by rapid Vocal Register shifts originated as a communicative Call Between mountain meadows and livestock herds.",
     "source": "https://en.wikipedia.org/wiki/Yodeling",
     "evidence": [
       "Call Between Mountain",
@@ -11321,7 +11290,7 @@
     "level": 1,
     "topic": "botany",
     "kind": "culture",
-    "text": "The delicate White Edelweiss Flower grows upon rugged limestone cliffs and serves as a beloved national botanical emblem.",
+    "text": "The delicate white Edelweiss Flower grows upon rugged limestone cliffs and serves as a beloved national botanical emblem.",
     "source": "https://en.wikipedia.org/wiki/Leontopodium_nivale",
     "evidence": [
       "Edelweiss",
@@ -11365,11 +11334,11 @@
     "level": 2,
     "topic": "bridge",
     "kind": "history",
-    "text": "Chapel Bridge in Lucerne survives as one of the oldest covered wooden bridges, adorned with seventeenth-century interior triangular paintings.",
+    "text": "The historic Chapel Bridge across the Reuss in Lucerne survives as a covered wooden footbridge adorned with triangular interior paintings.",
     "source": "https://en.wikipedia.org/wiki/Kapellbr%C3%BCcke",
     "evidence": [
-      "Lucerne",
-      "Bridge"
+      "Reuss",
+      "Lucerne"
     ],
     "checked": "2026-11-11"
   },
@@ -11409,7 +11378,7 @@
     "level": 3,
     "topic": "mountain",
     "kind": "landmark",
-    "text": "The Distinct pyramid-shaped Peak of the Matterhorn rises majestically, inspiring the triangular packaging design of world-famous honey almond Chocolate Bars.",
+    "text": "The Distinct pyramid-shaped Peak of the Matterhorn rises majestically, inspiring the triangular packaging design of world-famous honey almond Chocolate bars.",
     "source": "https://en.wikipedia.org/wiki/Matterhorn",
     "evidence": [
       "Chocolate Bars",
@@ -11484,7 +11453,7 @@
     "level": 1,
     "topic": "festival",
     "kind": "culture",
-    "text": "Loy Krathong Festival celebrates water spirits by floating decorated lotus-shaped baskets Adorned With Flowers, incense, and glowing candles onto rivers.",
+    "text": "Loy Krathong Festival celebrates water spirits by floating decorated lotus-shaped baskets Adorned with Flowers, incense, and glowing candles onto rivers.",
     "source": "https://en.wikipedia.org/wiki/Loi_Krathong",
     "evidence": [
       "Krathong",
@@ -11527,11 +11496,11 @@
     "level": 2,
     "topic": "buddha",
     "kind": "history",
-    "text": "Wat Traimit houses the Golden Buddha statue, an astounding solid gold seated sculpture weighing over five tons that was long concealed in plaster.",
+    "text": "The temple of Wat Traimit houses a solid gold seated Buddha sculpture weighing over five tons dating from the Sukhothai period.",
     "source": "https://en.wikipedia.org/wiki/Golden_Buddha_(statue)",
     "evidence": [
-      "Golden Buddha",
-      "Traimit"
+      "Wat Traimit",
+      "Sukhothai"
     ],
     "checked": "2026-11-11"
   },
@@ -11541,11 +11510,11 @@
     "level": 2,
     "topic": "railway",
     "kind": "history",
-    "text": "The historic railway bridge over the River Kwai was constructed during wartime under brutal conditions, immortalized in renowned literature and film.",
+    "text": "The historic railway bridge over the River Kwai was constructed during wartime under brutal conditions along the Burma Railway.",
     "source": "https://en.wikipedia.org/wiki/Burma_Railway",
     "evidence": [
       "River Kwai",
-      "River"
+      "Burma Railway"
     ],
     "checked": "2026-11-11"
   },
@@ -11555,7 +11524,7 @@
     "level": 2,
     "topic": "temple",
     "kind": "history",
-    "text": "Wat Rong Khun, renowned as the White Temple, features unconventional contemporary art and dazzling mirrored plaster symbolizing spiritual purity.",
+    "text": "Wat Rong Khun, renowned as the white temple, features unconventional contemporary art and dazzling mirrored plaster symbolizing spiritual purity.",
     "source": "https://en.wikipedia.org/wiki/Wat_Rong_Khun",
     "evidence": [
       "White Temple",
@@ -11570,7 +11539,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for sweet Mango Sticky Rice drizzled with warm Coconut Cream, spicy green papaya salad, and aromatic red curry.",
+    "text": "Famous for sweet Mango Sticky rice drizzled with warm Coconut Cream, spicy green papaya salad, and aromatic red curry.",
     "source": "https://en.wikipedia.org/wiki/Mango_sticky_rice",
     "evidence": [
       "Mango Sticky Rice",
@@ -11615,7 +11584,7 @@
     "topic": "tsunami",
     "kind": "incident",
     "year": 2004,
-    "text": "In 2004, massive Tsunami Waves struck Coastal Resort communities, prompting heroic community rebuilding and modernized oceanic Early Warning networks.",
+    "text": "In 2004, massive Tsunami Waves struck coastal Resort communities, prompting heroic community rebuilding and modernized oceanic Early Warning networks.",
     "source": "https://en.wikipedia.org/wiki/2004_Indian_Ocean_earthquake_and_tsunami",
     "evidence": [
       "2004",
@@ -11630,11 +11599,11 @@
     "level": 1,
     "topic": "folklore",
     "kind": "culture",
-    "text": "Vibrant Gaucho horseback traditions celebrate a country Lifestyle of self-reliance, acoustic Folklore songs, and artisanal leatherwork craft.",
+    "text": "Vibrant Gaucho horseback traditions celebrate self-reliance and artisanal leatherwork across the fertile Pampas grasslands.",
     "source": "https://en.wikipedia.org/wiki/Gaucho",
     "evidence": [
       "Gaucho",
-      "Folklore"
+      "Pampas"
     ],
     "checked": "2026-11-11"
   },
@@ -11644,7 +11613,7 @@
     "level": 1,
     "topic": "pastry",
     "kind": "culture",
-    "text": "Alfajores sweet Sandwich Cookies Filled With rich caramelized dulce de leche and rolled in Grated Coconut or dipped in chocolate.",
+    "text": "Alfajores sweet Sandwich Cookies filled with rich caramelized dulce de leche and rolled in Grated Coconut or dipped in chocolate.",
     "source": "https://en.wikipedia.org/wiki/Alfajor",
     "evidence": [
       "Grated Coconut",
@@ -11775,7 +11744,7 @@
     "topic": "world cup",
     "kind": "current",
     "year": 2022,
-    "text": "In 2022, captain Lionel Messi led the national football squad to an emotional World Cup championship victory in an unforgettable penalty shootout.",
+    "text": "In 2022, captain Lionel Messi led the national football squad to an emotional world Cup championship victory in an unforgettable penalty shootout.",
     "source": "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup",
     "evidence": [
       "2022",
@@ -11821,7 +11790,7 @@
     "level": 1,
     "topic": "tartan",
     "kind": "culture",
-    "text": "Highland Clans wore Woven Wool kilt garments with distinctive criss-crossed Tartan Patterns signifying lineage, heritage, and regional identity.",
+    "text": "Highland Clans wore Woven wool kilt garments with distinctive criss-crossed Tartan patterns signifying lineage, heritage, and regional identity.",
     "source": "https://en.wikipedia.org/wiki/Tartan",
     "evidence": [
       "Tartan Patterns",
@@ -11910,7 +11879,7 @@
     "level": 2,
     "topic": "computing",
     "kind": "history",
-    "text": "Mathematician Alan Turing broke enigma cryptographic ciphers at Bletchley Park and pioneered foundational concepts of modern theoretical computing.",
+    "text": "Mathematician Alan Turing broke enigma cryptographic ciphers at Bletchley park and pioneered foundational concepts of modern theoretical computing.",
     "source": "https://en.wikipedia.org/wiki/Alan_Turing",
     "evidence": [
       "Bletchley Park",
@@ -11956,7 +11925,7 @@
     "topic": "olympics",
     "kind": "current",
     "year": 2012,
-    "text": "In 2012, hosted the Summer Olympic Games highlighted by a spectacular opening ceremony celebrating the National Health Service and literary history.",
+    "text": "In 2012, hosted the summer Olympic Games highlighted by a spectacular opening ceremony celebrating the National Health Service and literary history.",
     "source": "https://en.wikipedia.org/wiki/2012_Summer_Olympics",
     "evidence": [
       "2012",
@@ -12001,7 +11970,7 @@
     "level": 1,
     "topic": "fairy tales",
     "kind": "culture",
-    "text": "The Brothers Grimm collected and published legendary folkloric fairy tales including Cinderella, Rapunzel, Hansel and Gretel, and Snow White.",
+    "text": "The Brothers Grimm collected and published legendary folkloric fairy tales including Cinderella, Rapunzel, Hansel and Gretel, and snow white.",
     "source": "https://en.wikipedia.org/wiki/Brothers_Grimm",
     "evidence": [
       "Snow White",
@@ -12104,7 +12073,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for hearty Bratwurst Sausages Served With tangy fermented sauerkraut, twisted pretzels, and sweet mustard.",
+    "text": "Famous for hearty Bratwurst Sausages served with tangy fermented sauerkraut, twisted pretzels, and sweet mustard.",
     "source": "https://en.wikipedia.org/wiki/Bratwurst",
     "evidence": [
       "Bratwurst",
@@ -12135,7 +12104,7 @@
     "topic": "world cup",
     "kind": "current",
     "year": 2014,
-    "text": "In 2014, the national football squad won the FIFA World Cup championship, highlighted by an astonishing 7-1 semifinal victory.",
+    "text": "In 2014, the national football squad won the FIFA world Cup championship, highlighted by an astonishing 7-1 semifinal victory.",
     "source": "https://en.wikipedia.org/wiki/2014_FIFA_World_Cup",
     "evidence": [
       "2014, the",
@@ -12284,12 +12253,11 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for savory Saffron Rice paella simmered in wide flat pans With Seafood, crispy potato bravas, and cured jamon iberico ham.",
+    "text": "Famous for saffron rice paella originating in Valencia around lake Albufera, simmered in wide flat pans with savory seafood.",
     "source": "https://en.wikipedia.org/wiki/Paella",
     "evidence": [
-      "With Seafood",
-      "Saffron",
-      "Rice"
+      "Valencia",
+      "Albufera"
     ],
     "checked": "2026-11-11"
   },
@@ -12314,7 +12282,7 @@
     "topic": "world cup",
     "kind": "current",
     "year": 2010,
-    "text": "In 2010, the national football squad captured its first FIFA World Cup title thanks to an extra-time goal in the tournament final.",
+    "text": "In 2010, the national football squad captured its first FIFA world Cup title thanks to an extra-time goal in the tournament final.",
     "source": "https://en.wikipedia.org/wiki/2010_FIFA_World_Cup",
     "evidence": [
       "2010, the",
@@ -12344,7 +12312,7 @@
     "level": 1,
     "topic": "declaration",
     "kind": "history",
-    "text": "The Declaration of Independence was adopted in 1776 in Philadelphia, proclaiming unalienable human rights including life, liberty, and the pursuit of happiness.",
+    "text": "The Declaration of independence was adopted in 1776 in Philadelphia, proclaiming unalienable human rights including life, liberty, and the pursuit of happiness.",
     "source": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence",
     "evidence": [
       "1776 in",
@@ -12359,7 +12327,7 @@
     "level": 1,
     "topic": "jazz",
     "kind": "culture",
-    "text": "New Orleans gave birth to vibrant Musical Traditions blending Brass Band Marches, blues chords, ragtime syncopation, and spontaneous instrumental improvisation.",
+    "text": "New Orleans gave birth to vibrant musical traditions blending Brass Band Marches, blues chords, ragtime syncopation, and spontaneous instrumental improvisation.",
     "source": "https://en.wikipedia.org/wiki/Jazz",
     "evidence": [
       "Musical Traditions",
@@ -12388,7 +12356,7 @@
     "level": 1,
     "topic": "park",
     "kind": "history",
-    "text": "Yellowstone was established in 1872 as the World's First National Park, protecting geothermal geysers and wild herds of bison.",
+    "text": "Yellowstone was established in 1872 as the World's First National park, protecting geothermal geysers and wild herds of bison.",
     "source": "https://en.wikipedia.org/wiki/Yellowstone_National_Park",
     "evidence": [
       "1872",
@@ -12417,7 +12385,7 @@
     "level": 2,
     "topic": "canyon",
     "kind": "landmark",
-    "text": "The Grand Canyon exposes billions of years of geological strata carved by the Colorado River across immense colorful layered rock chasms.",
+    "text": "The Grand Canyon exposes billions of years of geological strata carved by the Colorado river across immense colorful layered rock chasms.",
     "source": "https://en.wikipedia.org/wiki/Grand_Canyon",
     "evidence": [
       "Colorado River",
@@ -12477,12 +12445,11 @@
     "level": 3,
     "topic": "bridge",
     "kind": "landmark",
-    "text": "The Golden Gate Bridge spans ocean waters with majestic International Orange suspension towers often shrouded in rolling maritime fog banks.",
+    "text": "The Golden Gate Bridge spans San Francisco Bay with majestic International Orange suspension towers shrouded in rolling fog.",
     "source": "https://en.wikipedia.org/wiki/Golden_Gate_Bridge",
     "evidence": [
-      "International Orange",
-      "Golden",
-      "Bridge"
+      "Golden Gate",
+      "San Francisco"
     ],
     "checked": "2026-11-11"
   },
@@ -12493,7 +12460,7 @@
     "topic": "telescope",
     "kind": "current",
     "year": 2021,
-    "text": "In 2021, space scientists launched the James Webb Space Telescope to observe early cosmic galaxies and atmospheres of distant exoplanets.",
+    "text": "In 2021, space scientists launched the James Webb space Telescope to observe early cosmic galaxies and atmospheres of distant exoplanets.",
     "source": "https://en.wikipedia.org/wiki/James_Webb_Space_Telescope",
     "evidence": [
       "2021",
@@ -12508,7 +12475,7 @@
     "topic": "mars",
     "kind": "current",
     "year": 2021,
-    "text": "In 2021, the robotic rover Perseverance landed inside Jezero Crater on Mars alongside the miniature robotic helicopter Ingenuity.",
+    "text": "In 2021, the robotic rover Perseverance landed inside Jezero crater on Mars alongside the miniature robotic helicopter Ingenuity.",
     "source": "https://en.wikipedia.org/wiki/Perseverance_(rover)",
     "evidence": [
       "2021, the",
@@ -12537,11 +12504,11 @@
     "level": 1,
     "topic": "porcelain",
     "kind": "culture",
-    "text": "Jingdezhen Developed exquisite White and cobalt-blue porcelain ceramics admired across worldwide trade routes as fine artistic treasures.",
+    "text": "Kilns in Jingdezhen developed exquisite white and cobalt-blue porcelain ceramics during the Ming era, celebrated as global trade treasures.",
     "source": "https://en.wikipedia.org/wiki/Chinese_ceramics",
     "evidence": [
-      "Developed",
-      "White"
+      "Jingdezhen",
+      "Ming"
     ],
     "checked": "2026-11-11"
   },
@@ -12551,12 +12518,11 @@
     "level": 1,
     "topic": "philosophy",
     "kind": "history",
-    "text": "Philosopher Confucius taught ethics, filial piety, and social harmony during the Spring and Autumn period, shaping societal values for millennia.",
+    "text": "Philosopher Confucius taught ethics, filial piety, and social harmony during the Spring and Autumn period of the Zhou Dynasty.",
     "source": "https://en.wikipedia.org/wiki/Confucius",
     "evidence": [
       "Confucius",
-      "Spring",
-      "Autumn"
+      "Spring and Autumn"
     ],
     "checked": "2026-11-11"
   },
@@ -12580,11 +12546,11 @@
     "level": 2,
     "topic": "canal",
     "kind": "history",
-    "text": "The Grand Canal forms the world's longest artificial waterway, constructed over centuries to transport grain between major economic river basins.",
+    "text": "The Grand Canal forms the world longest artificial waterway, built to transport grain between the Yellow and Yangtze rivers.",
     "source": "https://en.wikipedia.org/wiki/Grand_Canal_(China)",
     "evidence": [
-      "Grand",
-      "Canal"
+      "Grand Canal",
+      "Yangtze"
     ],
     "checked": "2026-11-11"
   },
@@ -12624,7 +12590,7 @@
     "level": 2,
     "topic": "gorge",
     "kind": "record",
-    "text": "Three Gorges Dam harnesses hydraulic energy from the Yangtze River as the world's largest hydroelectric power generation station.",
+    "text": "Three gorges Dam harnesses hydraulic energy from the Yangtze river as the world's largest hydroelectric power generation station.",
     "source": "https://en.wikipedia.org/wiki/Three_Gorges_Dam",
     "evidence": [
       "Yangtze River",
@@ -12639,7 +12605,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for Crispy Roast Duck With thin pancakes, steamed pork soup dumplings, and hand-pulled wheat noodles simmered in aromatic broth.",
+    "text": "Famous for Crispy Roast Duck with thin pancakes, steamed pork soup dumplings, and hand-pulled wheat noodles simmered in aromatic broth.",
     "source": "https://en.wikipedia.org/wiki/Peking_duck",
     "evidence": [
       "Crispy",
@@ -12654,11 +12620,11 @@
     "level": 3,
     "topic": "panda",
     "kind": "record",
-    "text": "Beloved Giant Pandas dwell in misty bamboo forests, serving as national animal treasures protected within dedicated nature Sanctuaries.",
+    "text": "Beloved Giant Pandas dwell in misty bamboo forests across Sichuan, protected within dedicated nature reserves.",
     "source": "https://en.wikipedia.org/wiki/Giant_panda",
     "evidence": [
       "Giant Pandas",
-      "Sanctuaries"
+      "Sichuan"
     ],
     "checked": "2026-11-11"
   },
@@ -12669,7 +12635,7 @@
     "topic": "olympics",
     "kind": "current",
     "year": 2022,
-    "text": "In 2022, hosted the Olympic Winter Games, becoming the first city to have staged both summer and winter editions of the games.",
+    "text": "In 2022, hosted the Olympic winter Games, becoming the first city to have staged both summer and winter editions of the games.",
     "source": "https://en.wikipedia.org/wiki/2022_Winter_Olympics",
     "evidence": [
       "2022",
@@ -12698,7 +12664,7 @@
     "level": 1,
     "topic": "lake",
     "kind": "record",
-    "text": "Lake Baikal holds twenty percent of global unfrozen freshwater as the World's Oldest and Deepest Continental lake, inhabited by freshwater seals.",
+    "text": "Lake Baikal holds twenty percent of global unfrozen freshwater as the World's Oldest and Deepest continental lake, inhabited by freshwater seals.",
     "source": "https://en.wikipedia.org/wiki/Lake_Baikal",
     "evidence": [
       "Deepest Continental",
@@ -12802,7 +12768,7 @@
     "level": 2,
     "topic": "museum",
     "kind": "history",
-    "text": "The State Hermitage Museum houses millions of art treasures within the lavish Baroque rooms of the former imperial Winter Palace.",
+    "text": "The State Hermitage Museum houses millions of art treasures within the lavish Baroque rooms of the former imperial winter palace.",
     "source": "https://en.wikipedia.org/wiki/Hermitage_Museum",
     "evidence": [
       "Winter Palace",
@@ -12817,11 +12783,11 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for Beef Stroganoff sautéed with mushrooms and Sour Cream, savory pelmeni dumplings, and pickled cucumbers.",
+    "text": "Famous for beef Stroganoff sautéed with mushrooms and sour cream, named after the influential Russian Stroganov family.",
     "source": "https://en.wikipedia.org/wiki/Beef_Stroganoff",
     "evidence": [
-      "Beef Stroganoff",
-      "Sour Cream"
+      "Stroganoff",
+      "Stroganov"
     ],
     "checked": "2026-11-11"
   },
@@ -12847,7 +12813,7 @@
     "topic": "world cup",
     "kind": "current",
     "year": 2018,
-    "text": "In 2018, hosted the FIFA World Cup across eleven host cities, memorable for stunning underdog tournament upsets and packed fan festivals.",
+    "text": "In 2018, hosted the FIFA world Cup across eleven host cities, memorable for stunning underdog tournament upsets and packed fan festivals.",
     "source": "https://en.wikipedia.org/wiki/2018_FIFA_World_Cup",
     "evidence": [
       "2018",
@@ -12891,7 +12857,7 @@
     "level": 1,
     "topic": "dervishes",
     "kind": "culture",
-    "text": "The whirling dervishes of the Mevlevi order perform spiritual Sema Ceremonies, spinning in flowing White Robes to meditative Reed Flute melodies.",
+    "text": "The whirling dervishes of the Mevlevi order perform spiritual Sema ceremonies, spinning in flowing white Robes to meditative Reed Flute melodies.",
     "source": "https://en.wikipedia.org/wiki/Mevlevi_Order",
     "evidence": [
       "Sema Ceremonies",
@@ -12965,7 +12931,7 @@
     "level": 2,
     "topic": "bazaar",
     "kind": "history",
-    "text": "The Grand Bazaar dates to 1461 as one of the world's oldest covered markets, housing thousands of shops under vaulted painted ceilings.",
+    "text": "The Grand bazaar dates to 1461 as one of the world's oldest covered markets, housing thousands of shops under vaulted painted ceilings.",
     "source": "https://en.wikipedia.org/wiki/Grand_Bazaar,_Istanbul",
     "evidence": [
       "1461",
@@ -12995,7 +12961,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for savory Grilled Doner Kebabs Sliced From rotating spits, flaky pistachio baklava pastry, and chewy fruit delight confections.",
+    "text": "Famous for savory grilled Doner Kebabs Sliced from rotating spits, flaky pistachio baklava pastry, and chewy fruit delight confections.",
     "source": "https://en.wikipedia.org/wiki/Doner_kebab",
     "evidence": [
       "Grilled",
@@ -13010,11 +12976,11 @@
     "level": 3,
     "topic": "strait",
     "kind": "landmark",
-    "text": "Suspension Bridges Span the historic oceanic maritime waterway that directly separates two landmasses within a single bustling metropolis.",
+    "text": "Suspension bridges across the Bosphorus strait connect two bustling continents within the single metropolis of Istanbul.",
     "source": "https://en.wikipedia.org/wiki/Bosphorus_Bridge",
     "evidence": [
-      "Bridges",
-      "Span"
+      "Bosphorus",
+      "Istanbul"
     ],
     "checked": "2026-11-11"
   },
@@ -13041,7 +13007,7 @@
     "topic": "bridge",
     "kind": "current",
     "year": 2022,
-    "text": "In 2022, opened the 1915 Canakkale Bridge across the Dardanelles, achieving the world's longest mid-span suspension bridge distance.",
+    "text": "In 2022, opened the 1915 Canakkale bridge across the Dardanelles, achieving the world's longest mid-span suspension bridge distance.",
     "source": "https://en.wikipedia.org/wiki/1915_%C3%87anakkale_Bridge",
     "evidence": [
       "1915 Canakkale",
@@ -13056,7 +13022,7 @@
     "level": 1,
     "topic": "temple",
     "kind": "history",
-    "text": "The Temple of Literature was established in 1070 as the first national imperial academy, honoring scholarly achievement with engraved stone stelae.",
+    "text": "The temple of Literature was established in 1070 as the first national imperial academy, honoring scholarly achievement with engraved stone stelae.",
     "source": "https://en.wikipedia.org/wiki/Temple_of_Literature,_Hanoi",
     "evidence": [
       "1070",
@@ -13085,7 +13051,7 @@
     "level": 1,
     "topic": "citadel",
     "kind": "history",
-    "text": "The Imperial City of Hue retains walled palaces, ornamental pavilions, and royal tombs built by the Nguyen dynasty along the Perfume River.",
+    "text": "The Imperial City of Hue retains walled palaces, ornamental pavilions, and royal tombs built by the Nguyen dynasty along the Perfume river.",
     "source": "https://en.wikipedia.org/wiki/Complex_of_Hu%E1%BA%BF_Monuments",
     "evidence": [
       "Imperial",
@@ -13100,7 +13066,7 @@
     "level": 1,
     "topic": "lantern",
     "kind": "culture",
-    "text": "Hoi An ancient river Town glows during Full moon nights when electric lights are extinguished and thousands of handmade silk lanterns illuminate.",
+    "text": "Hoi An ancient river town glows during Full moon nights when electric lights are extinguished and thousands of handmade silk lanterns illuminate.",
     "source": "https://en.wikipedia.org/wiki/H%E1%BB%99i_An",
     "evidence": [
       "Town",
@@ -13157,12 +13123,11 @@
     "level": 2,
     "topic": "bridge",
     "kind": "landmark",
-    "text": "The Golden Bridge at Ba Na Hills appears held aloft by two colossal weathered mossy stone-effect sculpture hands emerging from mountainsides.",
+    "text": "The Golden Bridge at Ba Na Hills near Da Nang appears held aloft by two colossal weathered stone sculpture hands.",
     "source": "https://en.wikipedia.org/wiki/Golden_Bridge_(Vietnam)",
     "evidence": [
       "Ba Na Hills",
-      "Golden",
-      "Bridge"
+      "Da Nang"
     ],
     "checked": "2026-11-11"
   },
@@ -13186,7 +13151,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for steaming pho Noodle Soup garnished with Fresh herbs, savory banh mi pork baguettes, and rich egg custard drip coffee.",
+    "text": "Famous for steaming pho Noodle soup garnished with Fresh herbs, savory banh mi pork baguettes, and rich egg custard drip coffee.",
     "source": "https://en.wikipedia.org/wiki/B%C3%A1nh_m%C3%AC",
     "evidence": [
       "Noodle",
@@ -13232,7 +13197,7 @@
     "level": 1,
     "topic": "pottery",
     "kind": "culture",
-    "text": "Historic Goryeo Dynasty celadon ceramics earned renown for delicate jade-green translucent glazes and inlaid crane and Cloud motifs.",
+    "text": "Historic Goryeo Dynasty celadon ceramics earned renown for delicate jade-green translucent glazes and inlaid crane and cloud motifs.",
     "source": "https://en.wikipedia.org/wiki/Goryeo_ware",
     "evidence": [
       "Goryeo Dynasty",
@@ -13260,7 +13225,7 @@
     "level": 1,
     "topic": "palace",
     "kind": "history",
-    "text": "Gyeongbokgung Palace preserves majestic royal throne halls and pavilion ponds constructed in 1395 as the primary seat of the Joseon dynasty.",
+    "text": "Gyeongbokgung palace preserves majestic royal throne halls and pavilion ponds constructed in 1395 as the primary seat of the Joseon dynasty.",
     "source": "https://en.wikipedia.org/wiki/Gyeongbokgung",
     "evidence": [
       "1395",
@@ -13318,7 +13283,7 @@
     "level": 2,
     "topic": "temple",
     "kind": "history",
-    "text": "Haeinsa Temple preserves the Tripitaka Koreana, a complete collection of Buddhist scriptures carved across more than eighty thousand wooden printing blocks.",
+    "text": "Haeinsa temple preserves the Tripitaka Koreana, a complete collection of Buddhist scriptures carved across more than eighty thousand wooden printing blocks.",
     "source": "https://en.wikipedia.org/wiki/Tripitaka_Koreana",
     "evidence": [
       "Tripitaka Koreana",
@@ -13333,12 +13298,11 @@
     "level": 2,
     "topic": "island",
     "kind": "landmark",
-    "text": "Jeju Volcanic Island features subterranean Lava Tubes, dormant volcanic craters, and hardy haenyeo women free-divers harvesting sea urchins.",
+    "text": "The volcanic island of Jeju features the shield volcano Hallasan, subterranean lava tubes, and haenyeo women free-divers.",
     "source": "https://en.wikipedia.org/wiki/Jeju_Province",
     "evidence": [
-      "Lava Tubes",
-      "Volcanic",
-      "Island"
+      "Jeju",
+      "Hallasan"
     ],
     "checked": "2026-11-11"
   },
@@ -13364,7 +13328,7 @@
     "topic": "music",
     "kind": "current",
     "year": 2012,
-    "text": "In 2012, music artist Psy achieved global viral phenomenon status with Gangnam Style, becoming the first video to reach one billion views.",
+    "text": "In 2012, music artist Psy achieved global viral phenomenon status with Gangnam style, becoming the first video to reach one billion views.",
     "source": "https://en.wikipedia.org/wiki/Gangnam_Style",
     "evidence": [
       "2012",
@@ -13410,7 +13374,7 @@
     "level": 1,
     "topic": "pottery",
     "kind": "culture",
-    "text": "Delftware ceramics gained international prestige in the seventeenth century for delicate Tin-glazed Earthenware Decorated With blue floral scenes.",
+    "text": "Delftware ceramics gained international prestige in the seventeenth century for delicate Tin-glazed Earthenware Decorated with blue floral scenes.",
     "source": "https://en.wikipedia.org/wiki/Delftware",
     "evidence": [
       "Earthenware",
@@ -13425,7 +13389,7 @@
     "level": 1,
     "topic": "clogs",
     "kind": "culture",
-    "text": "Carved Wooden Klompen Clogs were traditionally worn by farmers and artisans for foot protection against wet marshland soil.",
+    "text": "Carved wooden Klompen Clogs were traditionally worn by farmers and artisans for foot protection against wet marshland soil.",
     "source": "https://en.wikipedia.org/wiki/Klompen",
     "evidence": [
       "Klompen",
@@ -13499,11 +13463,11 @@
     "level": 2,
     "topic": "delta works",
     "kind": "record",
-    "text": "The Delta Works storm surge barriers represent a monumental flood prevention engineering wonder protecting low-lying coastal territory from catastrophic inundation.",
+    "text": "The Delta Works storm surge barriers in Zeeland were built following the 1953 flood to protect low-lying coastal polders from inundation.",
     "source": "https://en.wikipedia.org/wiki/Delta_Works",
     "evidence": [
-      "Delta",
-      "Works"
+      "1953",
+      "Zeeland"
     ],
     "checked": "2026-11-11"
   },
@@ -13513,7 +13477,7 @@
     "level": 2,
     "topic": "peace palace",
     "kind": "history",
-    "text": "The Peace Palace in The Hague houses the International Court of Justice, serving as a global symbol of international law and arbitration.",
+    "text": "The Peace palace in The Hague houses the International Court of Justice, serving as a global symbol of international law and arbitration.",
     "source": "https://en.wikipedia.org/wiki/Peace_Palace",
     "evidence": [
       "International Court",
@@ -13543,12 +13507,11 @@
     "level": 3,
     "topic": "windmills",
     "kind": "landmark",
-    "text": "Kinderdijk features an iconic network of nineteen historic drainage windmills built in the eighteenth century to Pump Water From marshy polders.",
+    "text": "Features the iconic network of 19 historic drainage windmills at Kinderdijk built in the eighteenth century to pump water.",
     "source": "https://en.wikipedia.org/wiki/Windmills_at_Kinderdijk",
     "evidence": [
-      "Water",
-      "Pump",
-      "From"
+      "Kinderdijk",
+      "19"
     ],
     "checked": "2026-11-11"
   },
@@ -13559,7 +13522,7 @@
     "topic": "racing",
     "kind": "current",
     "year": 2021,
-    "text": "In 2021, motor racing driver Max Verstappen won his dramatic maiden Formula One World Championship title with a thrilling last-lap pass.",
+    "text": "In 2021, motor racing driver Max Verstappen won his dramatic maiden Formula One world Championship title with a thrilling last-lap pass.",
     "source": "https://en.wikipedia.org/wiki/Max_Verstappen",
     "evidence": [
       "2021",
@@ -13930,7 +13893,7 @@
     "level": 1,
     "topic": "batik",
     "kind": "culture",
-    "text": "Batik textile art uses hot wax Applied With a canting copper pen to resist dyes and Create Intricate Geometric Patterns.",
+    "text": "Batik textile art uses hot wax Applied with a canting copper pen to resist dyes and Create Intricate geometric patterns.",
     "source": "https://en.wikipedia.org/wiki/Batik",
     "evidence": [
       "Applied With",
@@ -13945,7 +13908,7 @@
     "level": 1,
     "topic": "volcano",
     "kind": "history",
-    "text": "The cataclysmic 1815 eruption of Mount Tambora caused the historical Year Without a Summer across global agricultural regions.",
+    "text": "The cataclysmic 1815 eruption of Mount Tambora caused the historical year Without a summer across global agricultural regions.",
     "source": "https://en.wikipedia.org/wiki/1815_eruption_of_Mount_Tambora",
     "evidence": [
       "1815 eruption",
@@ -13975,11 +13938,11 @@
     "level": 1,
     "topic": "spice",
     "kind": "history",
-    "text": "The historic Spice Islands were the sole historical source of nutmeg and cloves, driving centuries of intense oceanic colonial trade conflicts.",
+    "text": "The historic Maluku Islands of Banda were the sole historical source of nutmeg and cloves, driving colonial trade wars.",
     "source": "https://en.wikipedia.org/wiki/Maluku_Islands",
     "evidence": [
-      "Spice Islands",
-      "Islands"
+      "Maluku Islands",
+      "Banda"
     ],
     "checked": "2026-11-11"
   },
@@ -14018,11 +13981,11 @@
     "level": 2,
     "topic": "wildlife",
     "kind": "record",
-    "text": "Komodo National Park protects the largest living lizard species, capable of growing over three meters in length with venomous predatory bites.",
+    "text": "Komodo National Park on Flores and Rinca protects the largest living lizard species, growing up to three meters with venomous bites.",
     "source": "https://en.wikipedia.org/wiki/Komodo_dragon",
     "evidence": [
-      "National",
-      "Park"
+      "Flores",
+      "Rinca"
     ],
     "checked": "2026-11-11"
   },
@@ -14032,11 +13995,11 @@
     "level": 2,
     "topic": "lake",
     "kind": "record",
-    "text": "Lake Toba fills a colossal prehistoric Volcanic caldera, holding a massive island within its calm sapphire crater waters.",
+    "text": "Lake Toba on the island of Sumatra fills a colossal prehistoric volcanic caldera holding the large island of Samosir.",
     "source": "https://en.wikipedia.org/wiki/Lake_Toba",
     "evidence": [
-      "Volcanic",
-      "Toba"
+      "Sumatra",
+      "Samosir"
     ],
     "checked": "2026-11-11"
   },
@@ -14046,12 +14009,11 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for fragrant fried rice With Sweet soy sauce, skewered chicken satay with Peanut Sauce, and slow-cooked caramelized Beef Rendang.",
+    "text": "Famous for fragrant fried rice, skewered chicken satay, and slow-cooked caramelized beef Rendang originating from Minangkabau cuisine.",
     "source": "https://en.wikipedia.org/wiki/Rendang",
     "evidence": [
-      "Peanut Sauce",
-      "Beef Rendang",
-      "With Sweet"
+      "Rendang",
+      "Minangkabau"
     ],
     "checked": "2026-11-11"
   },
@@ -14061,7 +14023,7 @@
     "level": 3,
     "topic": "dance",
     "kind": "culture",
-    "text": "The dramatic Kecak Fire Dance features a circle of chanting performers rhythmically vocalizing chattering sounds around flickering coconut torches.",
+    "text": "The dramatic Kecak Fire dance features a circle of chanting performers rhythmically vocalizing chattering sounds around flickering coconut torches.",
     "source": "https://en.wikipedia.org/wiki/Kecak",
     "evidence": [
       "Kecak",
@@ -14277,11 +14239,11 @@
     "level": 1,
     "topic": "mapuche",
     "kind": "culture",
-    "text": "Traditional Mapuche indigenous communities weave intricate wool Textiles and craft silver pectoral jewelry known as trapelacucha holding deep autonomy.",
+    "text": "Traditional Mapuche indigenous communities weave intricate wool textiles and craft silver pectoral jewelry known as Trapelacucha.",
     "source": "https://en.wikipedia.org/wiki/Mapuche",
     "evidence": [
       "Mapuche",
-      "Textiles"
+      "Trapelacucha"
     ],
     "checked": "2026-11-11"
   },
@@ -14321,7 +14283,7 @@
     "level": 1,
     "topic": "cueca",
     "kind": "culture",
-    "text": "The Cueca national Courtship Dance mimics the mating ritual of a rooster and hen, featuring dancers fluttering white handkerchiefs in rhythmic circles.",
+    "text": "The Cueca national Courtship dance mimics the mating ritual of a rooster and hen, featuring dancers fluttering white handkerchiefs in rhythmic circles.",
     "source": "https://en.wikipedia.org/wiki/Cueca",
     "evidence": [
       "Courtship",
@@ -14365,7 +14327,7 @@
     "level": 2,
     "topic": "park",
     "kind": "landmark",
-    "text": "Torres del Paine National Park showcases soaring granite spires, vibrant turquoise glacial lakes, and roaming herds of wild guanacos.",
+    "text": "Torres del Paine National park showcases soaring granite spires, vibrant turquoise glacial lakes, and roaming herds of wild guanacos.",
     "source": "https://en.wikipedia.org/wiki/Torres_del_Paine_National_Park",
     "evidence": [
       "Paine National Park",
@@ -14393,7 +14355,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for Pastel de Choclo sweet baked corn and Ground Beef casserole, empanadas de pino with olives, and refreshing pisco sour cocktails.",
+    "text": "Famous for Pastel de Choclo sweet baked corn and ground beef casserole, empanadas de pino with olives, and refreshing pisco sour cocktails.",
     "source": "https://en.wikipedia.org/wiki/Pastel_de_choclo",
     "evidence": [
       "Ground Beef",
@@ -14408,11 +14370,11 @@
     "level": 3,
     "topic": "island",
     "kind": "landmark",
-    "text": "Easter Island features nearly one thousand monumental stone moai statues with prominent chins and brows Carved From Volcanic Tuff.",
+    "text": "Easter Island features nearly 1000 monumental stone Moai statues with prominent brows carved at Rano Raraku.",
     "source": "https://en.wikipedia.org/wiki/Moai",
     "evidence": [
-      "Carved From Volcanic Tuff",
-      "Island"
+      "1000",
+      "Moai"
     ],
     "checked": "2026-11-11"
   },
@@ -14438,7 +14400,7 @@
     "topic": "football",
     "kind": "current",
     "year": 2015,
-    "text": "In 2015, the National Football squad captured its first continental championship tournament title on home soil in a dramatic penalty shootout.",
+    "text": "In 2015, the National football squad captured its first continental championship tournament title on home soil in a dramatic penalty shootout.",
     "source": "https://en.wikipedia.org/wiki/2015_Copa_Am%C3%A9rica",
     "evidence": [
       "2015",
@@ -15132,12 +15094,11 @@
     "level": 1,
     "topic": "hospitality",
     "kind": "culture",
-    "text": "Traditional Coffee Culture involves brewing lightly roasted beans With Cardamom and saffron in copper dallah pots, served alongside sweet dates.",
+    "text": "Traditional coffee culture involves brewing lightly roasted beans with cardamom and saffron in copper Dallah pots for Bedouin guests.",
     "source": "https://en.wikipedia.org/wiki/Arabic_coffee",
     "evidence": [
-      "With Cardamom",
-      "Culture",
-      "Coffee"
+      "Dallah",
+      "Bedouin"
     ],
     "checked": "2026-11-11"
   },
@@ -15175,7 +15136,7 @@
     "level": 1,
     "topic": "falconry",
     "kind": "culture",
-    "text": "Ancient heritage of Hunting With Trained falcons across arid desert plateaus, celebrated through international breeding festivals and auctions.",
+    "text": "Ancient heritage of Hunting with Trained falcons across arid desert plateaus, celebrated through international breeding festivals and auctions.",
     "source": "https://en.wikipedia.org/wiki/Falconry",
     "evidence": [
       "Hunting",
@@ -15205,11 +15166,11 @@
     "level": 2,
     "topic": "fortress",
     "kind": "history",
-    "text": "Masmak Fortress was captured in 1902 in a daring dawn assault, marking a pivotal turning point in the unification of the kingdom.",
+    "text": "Masmak Fortress was captured in 1902 by Ibn Saud in a dawn assault, marking a turning point in the unification of the kingdom.",
     "source": "https://en.wikipedia.org/wiki/Masmak_fort",
     "evidence": [
       "1902",
-      "Fortress"
+      "Ibn Saud"
     ],
     "checked": "2026-11-11"
   },
@@ -15219,11 +15180,11 @@
     "level": 2,
     "topic": "oasis",
     "kind": "record",
-    "text": "Al-Ahsa Oasis forms the largest self-contained desert oasis on Earth, nurturing over two million date palm trees fed by thermal springs.",
+    "text": "Al-Ahsa Oasis near Hofuf forms the largest self-contained desert oasis on Earth, nurturing over 2.5 million date palm trees.",
     "source": "https://en.wikipedia.org/wiki/Al-Ahsa_Oasis",
     "evidence": [
-      "Oasis",
-      "Earth"
+      "Hofuf",
+      "2.5"
     ],
     "checked": "2026-11-11"
   },
@@ -15233,7 +15194,7 @@
     "level": 2,
     "topic": "edge of the world",
     "kind": "landmark",
-    "text": "The Tuwaiq escarpment, renowned as the Edge of the World, features dramatic sheer limestone cliffs dropping hundreds of meters to ancient plains.",
+    "text": "The Tuwaiq escarpment, renowned as the Edge of the world, features dramatic sheer limestone cliffs dropping hundreds of meters to ancient plains.",
     "source": "https://en.wikipedia.org/wiki/Tuwaiq",
     "evidence": [
       "Tuwaiq",
@@ -15279,7 +15240,7 @@
     "topic": "football",
     "kind": "current",
     "year": 2022,
-    "text": "In 2022, the national football squad produced one of the greatest World Cup upsets in sporting history by defeating the eventual champions 2-1.",
+    "text": "In 2022, the national football squad produced one of the greatest world Cup upsets in sporting history by defeating the eventual champions 2-1.",
     "source": "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup",
     "evidence": [
       "2022, the",
@@ -15295,7 +15256,7 @@
     "topic": "space",
     "kind": "current",
     "year": 2023,
-    "text": "In 2023, biomedical researcher Rayyanah Barnawi made history by flying to the International Space Station aboard the Axiom Mission 2.",
+    "text": "In 2023, biomedical researcher Rayyanah Barnawi made history by flying to the International space Station aboard the Axiom Mission 2.",
     "source": "https://en.wikipedia.org/wiki/Rayyanah_Barnawi",
     "evidence": [
       "2023",
@@ -15310,7 +15271,7 @@
     "level": 1,
     "topic": "falaj",
     "kind": "history",
-    "text": "Ancient Aflaj Irrigation systems channeled fresh Water From mountain aquifers through underground gravity tunnels to nurture desert date oases.",
+    "text": "Ancient Aflaj Irrigation systems channeled fresh water from mountain aquifers through underground gravity tunnels to nurture desert date oases.",
     "source": "https://en.wikipedia.org/wiki/Al_Ain",
     "evidence": [
       "Irrigation",
@@ -15325,11 +15286,11 @@
     "level": 1,
     "topic": "pearls",
     "kind": "history",
-    "text": "Historic Pearl Diving formed the economic backbone along coastal creeks, where free-divers plunged to seabed reefs with nose clips.",
+    "text": "Historic pearl diving formed the economic backbone of coastal trade around Dubai before the 1930s, where divers plunged for oysters.",
     "source": "https://en.wikipedia.org/wiki/Pearl_hunting",
     "evidence": [
-      "Pearl Diving",
-      "Diving"
+      "Dubai",
+      "1930s"
     ],
     "checked": "2026-11-11"
   },
@@ -15339,7 +15300,7 @@
     "level": 1,
     "topic": "dhow",
     "kind": "culture",
-    "text": "Traditional Wooden Dhow boats with triangular Lateen Sails have navigated oceanic trade routes for centuries transporting textiles and spices.",
+    "text": "Traditional wooden Dhow boats with triangular Lateen Sails have navigated oceanic trade routes for centuries transporting textiles and spices.",
     "source": "https://en.wikipedia.org/wiki/Dhow",
     "evidence": [
       "Lateen Sails",
@@ -15354,11 +15315,11 @@
     "level": 1,
     "topic": "weaving",
     "kind": "culture",
-    "text": "Al-Sadu Traditional Weaving uses dyed sheep and camel wool on floor looms to craft geometric patterned tents and camel blankets.",
+    "text": "Traditional Al-Sadu Bedouin weaving uses dyed sheep and camel wool on floor looms to craft geometric patterned textiles.",
     "source": "https://en.wikipedia.org/wiki/Al_Sadu",
     "evidence": [
-      "Traditional",
-      "Weaving"
+      "Al-Sadu",
+      "Bedouin"
     ],
     "checked": "2026-11-11"
   },
@@ -15425,7 +15386,7 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for Savory al Harees Cracked Wheat slow-simmered with tender meat, sweet saffron luqaimat dumplings, and fragrant cardamon tea.",
+    "text": "Famous for savory al Harees Cracked Wheat slow-simmered with tender meat, sweet saffron luqaimat dumplings, and fragrant cardamon tea.",
     "source": "https://en.wikipedia.org/wiki/Harees",
     "evidence": [
       "Cracked",
@@ -15500,7 +15461,7 @@
     "level": 1,
     "topic": "nok",
     "kind": "history",
-    "text": "The ancient Nok Culture Sculpted remarkable stylized terracotta Human Heads and animal figures with pierced pupils dating back over two millennia.",
+    "text": "The ancient Nok Culture Sculpted remarkable stylized terracotta Human heads and animal figures with pierced pupils dating back over two millennia.",
     "source": "https://en.wikipedia.org/wiki/Nok_culture",
     "evidence": [
       "Human Heads",
@@ -15543,7 +15504,7 @@
     "level": 2,
     "topic": "literature",
     "kind": "history",
-    "text": "Author Chinua Achebe published Things Fall Apart in 1958, chronicling the clash of traditional village customs and foreign colonial domination.",
+    "text": "Author Chinua Achebe published Things fall Apart in 1958, chronicling the clash of traditional village customs and foreign colonial domination.",
     "source": "https://en.wikipedia.org/wiki/Things_Fall_Apart",
     "evidence": [
       "1958",
@@ -15573,7 +15534,7 @@
     "level": 2,
     "topic": "grove",
     "kind": "landmark",
-    "text": "The Osun-Osogbo Sacred Grove protects dense primary rain forest and sanctuaries along riverbanks dedicated to the fertility goddess Osun.",
+    "text": "The Osun-Osogbo Sacred grove protects dense primary rain forest and sanctuaries along riverbanks dedicated to the fertility goddess Osun.",
     "source": "https://en.wikipedia.org/wiki/Osun-Osogbo",
     "evidence": [
       "Osun-Osogbo",
@@ -15602,12 +15563,11 @@
     "level": 3,
     "topic": "gastronomy",
     "kind": "culture",
-    "text": "Famous for spicy Suya Grilled beef skewers coated in Ground Peanut pepper spices, rich egusi melon soup, and pounded yam.",
+    "text": "Famous for spicy Suya beef skewers seasoned with Hausa yaji pepper spices, rich egusi melon soup, and pounded yam.",
     "source": "https://en.wikipedia.org/wiki/Suya",
     "evidence": [
-      "Ground Peanut",
-      "Grilled",
-      "Suya"
+      "Suya",
+      "Hausa"
     ],
     "checked": "2026-11-11"
   },
@@ -15617,7 +15577,7 @@
     "level": 3,
     "topic": "music",
     "kind": "culture",
-    "text": "Fela Kuti created the infectious Afrobeat musical genre at the Afrika Shrine, blending energetic jazz improvisation with highlife and political satire.",
+    "text": "Fela Kuti created the infectious Afrobeat musical genre at the Afrika shrine, blending energetic jazz improvisation with highlife and political satire.",
     "source": "https://en.wikipedia.org/wiki/Fela_Kuti",
     "evidence": [
       "Afrika Shrine",
@@ -15633,7 +15593,7 @@
     "topic": "athletics",
     "kind": "current",
     "year": 2022,
-    "text": "In 2022, track star Tobi Amusan shattered the world record in the 100-meter hurdles at the World Athletics Championships, clocking 12.12 seconds.",
+    "text": "In 2022, track star Tobi Amusan shattered the world record in the 100-meter hurdles at the world Athletics championships, clocking 12.12 seconds.",
     "source": "https://en.wikipedia.org/wiki/Tobi_Amusan",
     "evidence": [
       "2022",
@@ -15649,7 +15609,7 @@
     "topic": "super eagles",
     "kind": "current",
     "year": 2024,
-    "text": "In 2024, the Men's National Football squad surged to the final of the continental championship tournament, earning tournament silver.",
+    "text": "In 2024, the Men's National football squad surged to the final of the continental championship tournament, earning tournament silver.",
     "source": "https://en.wikipedia.org/wiki/2023_Africa_Cup_of_Nations",
     "evidence": [
       "2024",
