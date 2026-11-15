@@ -7,7 +7,7 @@ import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, ge
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
-import { calculateRoundScore } from './scoring.js';
+import { calculateRoundScore, buildExpeditionSummary } from './scoring.js';
 
 export class GameManager {
   constructor(globeApp, ui) {
@@ -27,6 +27,7 @@ export class GameManager {
     this.bestStreak = 0;
     this.round = 0;
     this.correctCount = 0;
+    this.wrongCount = 0;
     this.phase = 'start';     // 'start' | 'question' | 'selected' | 'result' | 'end'
 
     // Country Pools
@@ -79,6 +80,7 @@ export class GameManager {
     this.round = 0;
     this.currentCountry = null;
     this.correctCount = 0;
+    this.wrongCount = 0;
     this.missedCountries = [];
     this.playedCountryIds = new Set();
     this.phase = 'start';
@@ -397,6 +399,7 @@ export class GameManager {
     } else {
       // ── INCORRECT GUESS / TIMEOUT ─────────────────────────
       sound.playWrong();
+      this.wrongCount++;
       this.streak = 0;
 
       let isAdjacent = false;
@@ -649,6 +652,12 @@ export class GameManager {
       this.ui.finishEndlessBtn.style.display = 'none';
     }
 
+    const answered = this.correctCount + this.wrongCount;
+    if (answered === 0) {
+      this.returnToMainMenu();
+      return;
+    }
+
     // Save best score per mode and tier in localStorage inside try/catch
     if (!this.isPractice) {
       try {
@@ -667,16 +676,19 @@ export class GameManager {
       }
     }
 
-    const accuracy = Math.min(100, Math.max(0, this.round > 0 ? Math.round((this.correctCount / this.round) * 100) : 0));
-
-    this.ui.showEndScreen({
+    const summary = buildExpeditionSummary({
+      correct: this.correctCount,
+      wrong: this.wrongCount,
       score: this.score,
-      accuracy,
       bestStreak: this.bestStreak,
       missedCountries: this.getUniqueMissedCountries(),
       isPractice: this.isPractice,
       mode: this.mode,
-      tier: this.tier,
+      tier: this.tier
+    });
+
+    this.ui.showEndScreen({
+      ...summary,
       onRestart: () => {
         this.ui.showStartScreen();
         if (typeof window !== 'undefined' && window.__updateBestScoreDisplay) {
@@ -782,10 +794,28 @@ export class GameManager {
     // Endless Mode Finish Control & Confirmation Dialog
     if (this.ui.finishEndlessBtn) {
       this.ui.finishEndlessBtn.onclick = () => {
+        const answered = this.correctCount + this.wrongCount;
         if (this.ui.finishConfirmModal) {
+          const titleEl = document.getElementById('finishModalTitle');
+          const descEl = document.getElementById('finishModalDesc');
+          const cancelBtn = this.ui.cancelFinishBtn;
+          const confirmBtn = this.ui.confirmFinishBtn;
+
+          if (answered === 0) {
+            if (titleEl) titleEl.textContent = 'Leave Expedition?';
+            if (descEl) descEl.textContent = "You haven't answered anything yet. Leave this expedition?";
+            if (cancelBtn) cancelBtn.textContent = 'Keep playing';
+            if (confirmBtn) confirmBtn.textContent = 'Leave';
+          } else {
+            if (titleEl) titleEl.textContent = 'Finish Expedition?';
+            if (descEl) descEl.textContent = 'Wrap up your endless run and review your final score summary?';
+            if (cancelBtn) cancelBtn.textContent = 'Keep playing';
+            if (confirmBtn) confirmBtn.textContent = 'Finish & Review';
+          }
+
           this.ui.finishConfirmModal.classList.remove('hidden');
-          if (this.ui.cancelFinishBtn) {
-            this.ui.cancelFinishBtn.focus();
+          if (cancelBtn) {
+            cancelBtn.focus();
           }
         }
       };
@@ -802,7 +832,12 @@ export class GameManager {
         if (this.ui.finishConfirmModal) {
           this.ui.finishConfirmModal.classList.add('hidden');
         }
-        this.endGame();
+        const answered = this.correctCount + this.wrongCount;
+        if (answered === 0) {
+          this.returnToMainMenu();
+        } else {
+          this.endGame();
+        }
       };
     }
     if (this.ui.finishConfirmModal) {

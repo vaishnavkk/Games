@@ -211,6 +211,23 @@ async function runSelftest() {
       wideBtn.style.cssText = 'width:600px;min-width:600px;height:48px;display:block;';
       modalBox.appendChild(wideBtn);
       document.body.appendChild(modalBox);
+
+      // 5. Planted defect #5: a flawless banner next to 0% accuracy
+      const endScreen = document.getElementById('endScreen');
+      if (endScreen) {
+        endScreen.classList.remove('hidden');
+        endScreen.style.display = 'block';
+        const accEl = document.getElementById('endAccuracy');
+        if (accEl) accEl.textContent = '0%';
+        const missedList = document.getElementById('missedList');
+        if (missedList) {
+          missedList.innerHTML = '<div class="perfect-notice">Flawless Expedition — 100% Identification Accuracy!</div>';
+        }
+        if (window.game) {
+          window.game.correctCount = 0;
+          window.game.wrongCount = 1;
+        }
+      }
     });
 
     // Run phase validation
@@ -239,20 +256,22 @@ async function runSelftest() {
     const hasCoveredContinue = detectedFailures.some(f => f.signature.includes('BUTTON_COVERED') && f.signature.includes('vaultNextBtn'));
     const has45vhSheet = detectedFailures.some(f => f.signature.includes('MOBILE_SHEET_TOO_TALL'));
     const hasModalDefect = detectedFailures.some(f => f.signature.includes('selftest-planted-dialog') || f.signature.includes('selftest-wide-btn') || f.signature.includes('ELEMENT_HORIZONTAL_OVERFLOW'));
+    const hasFlawlessDefect = detectedFailures.some(f => f.signature.includes('SUMMARY_INVARIANT_FLAWLESS_INVALID') || f.signature.includes('SUMMARY_INVARIANT_100_PERCENT_WITHOUT_100_TILE'));
 
-    const all4 = hasUndefined && hasCoveredContinue && has45vhSheet && hasModalDefect;
+    const all5 = hasUndefined && hasCoveredContinue && has45vhSheet && hasModalDefect && hasFlawlessDefect;
 
-    if (all4) {
-      console.log('\n[PASS] SELFTEST PASSED: Exactly 4 planted defects correctly caught (4/4):');
+    if (all5) {
+      console.log('\n[PASS] SELFTEST PASSED: Exactly 5 planted defects correctly caught (5/5):');
       console.log('  1. Forbidden text "undefined" in HUD');
       console.log('  2. Invisible overlay blocking Continue button');
       console.log('  3. Mobile sheet height 45vh > 30vh');
       console.log('  4. Dialog with 600px wide button inside overflow:auto 400px box');
+      console.log('  5. Flawless banner next to 0% accuracy');
       await browser.close();
       server.close();
       process.exit(0);
     } else {
-      console.error('\n[FAIL] SELFTEST FAILED: Expected all 4 planted defects to be caught, got:', detectedFailures);
+      console.error('\n[FAIL] SELFTEST FAILED: Expected all 5 planted defects to be caught, got:', detectedFailures);
       await browser.close();
       server.close();
       process.exit(1);
@@ -536,6 +555,49 @@ async function validatePhase(page, phase, { viewport, mode = 'clue', tier = 'eas
           errors.push({
             signature: `FLAG_IN_SELECTION_UI: flag displayed in selection confirm pill`,
             details: `Flag mode must not show flag in selection UI before confirmation`
+          });
+        }
+      }
+    }
+
+    // 7. End Screen Summary Invariants
+    const endScreen = document.getElementById('endScreen');
+    if (endScreen && !endScreen.classList.contains('hidden') && window.getComputedStyle(endScreen).display !== 'none') {
+      const g = window.game;
+      const accTile = document.getElementById('endAccuracy');
+      const accText = accTile ? (accTile.textContent || '').trim() : '';
+      const tileMatch = accText.match(/^(\d+)%?$/);
+      const tileAcc = tileMatch ? parseInt(tileMatch[1], 10) : null;
+
+      const correct = g ? (g.correctCount || 0) : 0;
+      const wrong = g ? (g.wrongCount || 0) : 0;
+      const answered = correct + wrong;
+      const expAcc = answered > 0 ? Math.round((100 * correct) / answered) : 0;
+
+      // Invariant 1: accuracy tile equals round(100*correct/answered)
+      if (tileAcc !== null && tileAcc !== expAcc) {
+        errors.push({
+          signature: `SUMMARY_INVARIANT_ACCURACY_TILE_MISMATCH: tile=${tileAcc}% expected=${expAcc}%`,
+          details: `Accuracy tile (${tileAcc}%) does not match round(100*correct/answered) (${expAcc}% with correct=${correct}, wrong=${wrong}, answered=${answered})`
+        });
+      }
+
+      const endText = endScreen.textContent || '';
+
+      // Invariant 2: "100%" appears only when the tile is 100%
+      if (endText.includes('100%') && tileAcc !== 100) {
+        errors.push({
+          signature: `SUMMARY_INVARIANT_100_PERCENT_WITHOUT_100_TILE: tile=${tileAcc}%`,
+          details: `"100%" appears in summary text when accuracy tile is ${tileAcc}% (!= 100%)`
+        });
+      }
+
+      // Invariant 3: "Flawless" only when wrong == 0 and answered >= 1
+      if (endText.includes('Flawless')) {
+        if (wrong !== 0 || answered < 1) {
+          errors.push({
+            signature: `SUMMARY_INVARIANT_FLAWLESS_INVALID: wrong=${wrong} answered=${answered}`,
+            details: `"Flawless" appears when wrong=${wrong} and answered=${answered} (must be wrong == 0 and answered >= 1)`
           });
         }
       }
@@ -1738,10 +1800,15 @@ async function verifyAllDialogsAcrossSixViewports(browser, baseUrl) {
       await page.evaluate(() => {
         document.getElementById('finishConfirmModal')?.classList.add('hidden');
         if (window.game && window.game.ui) {
+          window.game.correctCount = 17;
+          window.game.wrongCount = 3;
           window.game.ui.showEndScreen({
             score: 1200,
             accuracy: 85,
             bestStreak: 4,
+            answered: 20,
+            correct: 17,
+            wrong: 3,
             missedCountries: [{ name: 'Brazil', capital: 'Brasilia' }],
             isPractice: false,
             mode: 'clue',
@@ -1763,6 +1830,177 @@ async function verifyAllDialogsAcrossSixViewports(browser, baseUrl) {
   }
 
   return allFailures;
+}
+
+// Verify Endless Mode Finish scenarios: at 0, after 1 correct, after 1 wrong
+async function verifyEndlessFinishScenarios(browser, baseUrl) {
+  const failures = [];
+  const context = await browser.createBrowserContext();
+  const page = await context.newPage();
+  try {
+    await page.setViewport({ width: 390, height: 844 });
+    await page.goto(`${baseUrl}?fast=1`, { waitUntil: 'load' });
+    await page.waitForSelector('#startScreen');
+    await page.waitForFunction(() => {
+      const ls = document.getElementById('loadingScreen');
+      return (!ls || ls.style.display === 'none' || window.getComputedStyle(ls).display === 'none') && !!window.game;
+    }, { timeout: 15000 });
+
+    // Scenario 1: endless finish at 0
+    await page.evaluate(() => {
+      document.querySelectorAll('.round-btn').forEach(b => {
+        if (b.dataset.rounds === 'endless') b.click();
+      });
+      document.getElementById('startExpeditionBtn').click();
+    });
+    await page.waitForFunction(() => window.game && window.game.phase === 'question');
+
+    await page.click('#finishEndlessBtn');
+    await page.waitForSelector('#finishConfirmModal:not(.hidden)');
+
+    const modalAtZero = await page.evaluate(() => {
+      const desc = document.getElementById('finishModalDesc')?.textContent?.trim() || '';
+      const cancel = document.getElementById('cancelFinishBtn')?.textContent?.trim() || '';
+      const confirm = document.getElementById('confirmFinishBtn')?.textContent?.trim() || '';
+      return { desc, cancel, confirm };
+    });
+
+    if (!modalAtZero.desc.includes("You haven't answered anything yet. Leave this expedition?")) {
+      failures.push({
+        signature: 'ENDLESS_FINISH_AT_0_PROMPT_MISMATCH',
+        details: `Expected desc to include "You haven't answered anything yet. Leave this expedition?", got "${modalAtZero.desc}"`
+      });
+    }
+    if (!modalAtZero.cancel.toLowerCase().includes('keep playing') || modalAtZero.confirm.trim() !== 'Leave') {
+      failures.push({
+        signature: 'ENDLESS_FINISH_AT_0_BUTTONS_MISMATCH',
+        details: `Expected buttons "Keep playing" / "Leave", got "${modalAtZero.cancel}" / "${modalAtZero.confirm}"`
+      });
+    }
+
+    // Cancel -> Keep playing
+    await page.click('#cancelFinishBtn');
+    await page.waitForSelector('#finishConfirmModal.hidden');
+
+    // Finish -> Leave
+    await page.click('#finishEndlessBtn');
+    await page.waitForSelector('#finishConfirmModal:not(.hidden)');
+    await page.click('#confirmFinishBtn');
+    await page.waitForSelector('#startScreen:not(.hidden)');
+
+    const endHiddenAtZero = await page.evaluate(() => {
+      const end = document.getElementById('endScreen');
+      return end.classList.contains('hidden') || window.getComputedStyle(end).display === 'none';
+    });
+    if (!endHiddenAtZero) {
+      failures.push({
+        signature: 'ENDLESS_FINISH_AT_0_SUMMARY_SHOWN',
+        details: 'End summary screen was shown when leaving at 0 answers'
+      });
+    }
+
+    // Scenario 2: endless finish after 1 correct
+    await page.evaluate(() => {
+      document.querySelectorAll('.round-btn').forEach(b => {
+        if (b.dataset.rounds === 'endless') b.click();
+      });
+      document.getElementById('startExpeditionBtn').click();
+    });
+    await page.waitForFunction(() => window.game && window.game.phase === 'question' && window.game.currentCountry);
+
+    await page.evaluate(() => {
+      const g = window.game;
+      const c = g.currentCountry;
+      const lat = c.lat !== undefined ? c.lat : (c.centroid ? c.centroid[1] : 0);
+      const lon = c.lon !== undefined ? c.lon : (c.centroid ? c.centroid[0] : 0);
+      g.handleGuess(c, lat, lon);
+    });
+
+    await page.waitForFunction(() => {
+      const v = document.getElementById('memoryVault');
+      return v && !v.classList.contains('hidden');
+    });
+
+    await page.click('#finishEndlessBtn');
+    await page.waitForSelector('#finishConfirmModal:not(.hidden)');
+    await page.click('#confirmFinishBtn');
+
+    await page.waitForFunction(() => {
+      const end = document.getElementById('endScreen');
+      return end && !end.classList.contains('hidden') && window.game.phase === 'end';
+    });
+
+    const s2Fails = await validatePhase(page, 'end', { viewport: { width: 390, height: 844 } });
+    failures.push(...s2Fails);
+
+    const s2Metrics = await page.evaluate(() => ({
+      acc: document.getElementById('endAccuracy')?.textContent?.trim(),
+      hasFlawless: !!document.querySelector('.perfect-notice')
+    }));
+    if (s2Metrics.acc !== '100%' || !s2Metrics.hasFlawless) {
+      failures.push({
+        signature: 'ENDLESS_FINISH_1_CORRECT_FAILED',
+        details: `Expected 100% and Flawless banner, got acc=${s2Metrics.acc}, hasFlawless=${s2Metrics.hasFlawless}`
+      });
+    }
+
+    // Scenario 3: endless finish after 1 wrong
+    await page.click('#restartBtn');
+    await page.waitForSelector('#startScreen:not(.hidden)');
+
+    await page.evaluate(() => {
+      document.querySelectorAll('.round-btn').forEach(b => {
+        if (b.dataset.rounds === 'endless') b.click();
+      });
+      document.getElementById('startExpeditionBtn').click();
+    });
+    await page.waitForFunction(() => window.game && window.game.phase === 'question' && window.game.currentCountry);
+
+    await page.evaluate(() => {
+      window.game.handleGuess(null, null, null, true);
+    });
+
+    await page.waitForFunction(() => {
+      const v = document.getElementById('memoryVault');
+      return v && !v.classList.contains('hidden');
+    });
+
+    await page.click('#finishEndlessBtn');
+    await page.waitForSelector('#finishConfirmModal:not(.hidden)');
+    await page.click('#confirmFinishBtn');
+
+    await page.waitForFunction(() => {
+      const end = document.getElementById('endScreen');
+      return end && !end.classList.contains('hidden') && window.game.phase === 'end';
+    });
+
+    const s3Fails = await validatePhase(page, 'end', { viewport: { width: 390, height: 844 } });
+    failures.push(...s3Fails);
+
+    const s3Metrics = await page.evaluate(() => {
+      const endEl = document.getElementById('endScreen');
+      return {
+        acc: document.getElementById('endAccuracy')?.textContent?.trim(),
+        text: endEl ? endEl.textContent : '',
+        missed: document.querySelectorAll('#missedList .missed-item').length
+      };
+    });
+    if (s3Metrics.acc !== '0%' || s3Metrics.text.includes('Flawless') || s3Metrics.text.includes('100%') || s3Metrics.missed !== 1) {
+      failures.push({
+        signature: 'ENDLESS_FINISH_1_WRONG_FAILED',
+        details: `Expected 0%, no Flawless, no 100%, 1 missed, got acc=${s3Metrics.acc}, missed=${s3Metrics.missed}`
+      });
+    }
+  } catch (err) {
+    failures.push({
+      signature: `ENDLESS_SCENARIOS_EXCEPTION: ${err.message}`,
+      details: err.stack
+    });
+  } finally {
+    await page.close();
+    await context.close();
+  }
+  return failures;
 }
 
 // Main execution function
@@ -1918,6 +2156,21 @@ async function main() {
     }
   } else {
     console.log('[GeoTrivia QA Selfplay] PASS: All dialogs verified across 6 viewports with 0 failures.');
+  }
+
+  // Verify Endless Mode Finish Scenarios: at 0, after 1 correct, after 1 wrong
+  console.log('[GeoTrivia QA Selfplay] Verifying endless finish scenarios (at 0, after 1 correct, after 1 wrong)...');
+  const endlessFailures = await verifyEndlessFinishScenarios(browser, baseUrl);
+  if (endlessFailures.length > 0) {
+    console.error(`[GeoTrivia QA Selfplay] FAIL: ${endlessFailures.length} endless scenario violations found:`, endlessFailures);
+    for (const f of endlessFailures) {
+      if (!failureSignatures.has(f.signature)) {
+        failureSignatures.set(f.signature, { count: 0, reproCmd: 'node scripts/testEndlessFinish.js' });
+      }
+      failureSignatures.get(f.signature).count++;
+    }
+  } else {
+    console.log('[GeoTrivia QA Selfplay] PASS: All endless finish scenarios verified with 0 failures.');
   }
 
   const taskResults = new Array(queue.length);

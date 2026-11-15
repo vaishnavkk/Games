@@ -114,10 +114,29 @@ async function run() {
     if (!noOverlap) throw new Error('finishEndlessBtn in top HUD overlaps clue card');
     console.log('   [PASS] No panel overlap verified.');
 
-    console.log('5. Clicking Finish button -> checking confirmation modal opens...');
+    console.log('5. SCENARIO 1: Endless finish at 0 answers...');
+    console.log('   Clicking Finish button -> checking confirmation modal opens...');
     await page.click('#finishEndlessBtn');
     await page.waitForSelector('#finishConfirmModal:not(.hidden)');
     console.log('   [PASS] Confirmation modal opened.');
+
+    const modalAtZero = await page.evaluate(() => {
+      const desc = document.getElementById('finishModalDesc')?.textContent?.trim() || '';
+      const cancel = document.getElementById('cancelFinishBtn')?.textContent?.trim() || '';
+      const confirm = document.getElementById('confirmFinishBtn')?.textContent?.trim() || '';
+      return { desc, cancel, confirm };
+    });
+
+    if (!modalAtZero.desc.includes("You haven't answered anything yet. Leave this expedition?")) {
+      throw new Error(`Expected description to contain "You haven't answered anything yet. Leave this expedition?", got "${modalAtZero.desc}"`);
+    }
+    if (!modalAtZero.cancel.toLowerCase().includes('keep playing')) {
+      throw new Error(`Expected cancel button "Keep playing", got "${modalAtZero.cancel}"`);
+    }
+    if (modalAtZero.confirm.trim() !== 'Leave') {
+      throw new Error(`Expected confirm button "Leave", got "${modalAtZero.confirm}"`);
+    }
+    console.log('   [PASS] Modal at 0 correctly shows "Leave" prompt and buttons.');
 
     console.log('6. Clicking "Keep Playing" -> checking modal closes and game continues...');
     await page.click('#cancelFinishBtn');
@@ -128,7 +147,121 @@ async function run() {
     }
     console.log('   [PASS] Modal dismissed; expedition continues.');
 
-    console.log('7. Clicking Finish button -> Confirming finish...');
+    console.log('7. Clicking Finish -> Confirming "Leave" at 0 answers...');
+    await page.click('#finishEndlessBtn');
+    await page.waitForSelector('#finishConfirmModal:not(.hidden)');
+    await page.click('#confirmFinishBtn');
+
+    // Should return to start screen and NOT show end screen
+    await page.waitForFunction(() => {
+      const start = document.getElementById('startScreen');
+      const end = document.getElementById('endScreen');
+      return start && !start.classList.contains('hidden') && end && end.classList.contains('hidden');
+    }, { timeout: 5000 });
+
+    const localCheck = await page.evaluate(() => {
+      const keys = Object.keys(localStorage);
+      return keys.filter(k => k.startsWith('geotrivia_best_'));
+    });
+    if (localCheck.length > 0) {
+      throw new Error(`Expected no best score saved on leave at 0, found: ${localCheck.join(', ')}`);
+    }
+    console.log('   [PASS] Leave at 0 returned to start screen with no best score saved.');
+
+    // ─────────────────────────────────────────────────────────────────────────
+    console.log('\n8. SCENARIO 2: Endless finish after 1 correct answer...');
+    // Start endless game again
+    await page.evaluate(() => {
+      document.querySelectorAll('.round-btn').forEach(b => {
+        if (b.dataset.rounds === 'endless') b.click();
+      });
+      document.getElementById('startExpeditionBtn').click();
+    });
+    await page.waitForFunction(() => window.game && window.game.phase === 'question' && window.game.currentCountry);
+
+    // Answer 1 question correctly
+    await page.evaluate(() => {
+      const g = window.game;
+      const c = g.currentCountry;
+      const lat = c.lat !== undefined ? c.lat : (c.centroid ? c.centroid[1] : 0);
+      const lon = c.lon !== undefined ? c.lon : (c.centroid ? c.centroid[0] : 0);
+      g.handleGuess(c, lat, lon);
+    });
+
+    // Wait for result / memory vault
+    await page.waitForFunction(() => {
+      const vault = document.getElementById('memoryVault');
+      return vault && !vault.classList.contains('hidden');
+    }, { timeout: 5000 });
+
+    // Click finish in endless
+    await page.click('#finishEndlessBtn');
+    await page.waitForSelector('#finishConfirmModal:not(.hidden)');
+
+    const modalAfter1Correct = await page.evaluate(() => {
+      const desc = document.getElementById('finishModalDesc')?.textContent?.trim() || '';
+      const cancel = document.getElementById('cancelFinishBtn')?.textContent?.trim() || '';
+      const confirm = document.getElementById('confirmFinishBtn')?.textContent?.trim() || '';
+      return { desc, cancel, confirm };
+    });
+
+    if (!modalAfter1Correct.desc.includes('Wrap up your endless run and review your final score summary?')) {
+      throw new Error(`Expected summary desc after 1 correct, got "${modalAfter1Correct.desc}"`);
+    }
+    if (modalAfter1Correct.confirm.trim() !== 'Finish & Review') {
+      throw new Error(`Expected confirm button "Finish & Review", got "${modalAfter1Correct.confirm}"`);
+    }
+
+    await page.click('#confirmFinishBtn');
+    await page.waitForFunction(() => {
+      const end = document.getElementById('endScreen');
+      return end && !end.classList.contains('hidden') && window.game.phase === 'end';
+    }, { timeout: 5000 });
+
+    const endScreenCorrect = await page.evaluate(() => {
+      const accText = document.getElementById('endAccuracy')?.textContent?.trim() || '';
+      const perfectNotice = document.querySelector('.perfect-notice')?.textContent?.trim() || '';
+      const missedCount = document.querySelectorAll('#missedList .missed-item').length;
+      return { accText, perfectNotice, missedCount };
+    });
+
+    if (endScreenCorrect.accText !== '100%') {
+      throw new Error(`Expected accuracy 100% after 1 correct, got "${endScreenCorrect.accText}"`);
+    }
+    if (!endScreenCorrect.perfectNotice.includes('Flawless Expedition — 100% Identification Accuracy!')) {
+      throw new Error(`Expected Flawless banner after 1 correct, got "${endScreenCorrect.perfectNotice}"`);
+    }
+    if (endScreenCorrect.missedCount !== 0) {
+      throw new Error(`Expected 0 missed items, got ${endScreenCorrect.missedCount}`);
+    }
+    console.log('   [PASS] 1 correct answer produced 100% accuracy and Flawless banner.');
+
+    // ─────────────────────────────────────────────────────────────────────────
+    console.log('\n9. SCENARIO 3: Endless finish after 1 wrong answer...');
+    // Return to start
+    await page.click('#restartBtn');
+    await page.waitForSelector('#startScreen:not(.hidden)');
+
+    // Start endless game again
+    await page.evaluate(() => {
+      document.querySelectorAll('.round-btn').forEach(b => {
+        if (b.dataset.rounds === 'endless') b.click();
+      });
+      document.getElementById('startExpeditionBtn').click();
+    });
+    await page.waitForFunction(() => window.game && window.game.phase === 'question' && window.game.currentCountry);
+
+    // Answer 1 question wrongly (timeout with no selection)
+    await page.evaluate(() => {
+      window.game.handleGuess(null, null, null, true);
+    });
+
+    await page.waitForFunction(() => {
+      const vault = document.getElementById('memoryVault');
+      return vault && !vault.classList.contains('hidden');
+    }, { timeout: 5000 });
+
+    // Click finish in endless
     await page.click('#finishEndlessBtn');
     await page.waitForSelector('#finishConfirmModal:not(.hidden)');
     await page.click('#confirmFinishBtn');
@@ -138,16 +271,27 @@ async function run() {
       return end && !end.classList.contains('hidden') && window.game.phase === 'end';
     }, { timeout: 5000 });
 
-    const endScreenData = await page.evaluate(() => ({
-      score: parseInt(document.getElementById('endScore')?.textContent || '0', 10),
-      gameScore: window.game.score,
-      finishBtnHidden: document.getElementById('finishEndlessBtn').classList.contains('hidden')
-    }));
+    const endScreenWrong = await page.evaluate(() => {
+      const endEl = document.getElementById('endScreen');
+      const text = endEl ? endEl.textContent : '';
+      const accText = document.getElementById('endAccuracy')?.textContent?.trim() || '';
+      const missedCount = document.querySelectorAll('#missedList .missed-item').length;
+      return { text, accText, missedCount };
+    });
 
-    if (endScreenData.finishBtnHidden !== true) {
-      throw new Error('finishEndlessBtn should be hidden on end summary screen');
+    if (endScreenWrong.accText !== '0%') {
+      throw new Error(`Expected accuracy 0% after 1 wrong, got "${endScreenWrong.accText}"`);
     }
-    console.log(`   [PASS] Expedition ended cleanly! Final Score: ${endScreenData.score} pts.`);
+    if (endScreenWrong.text.includes('Flawless')) {
+      throw new Error(`"Flawless" banner should NOT appear after 1 wrong answer`);
+    }
+    if (endScreenWrong.text.includes('100%')) {
+      throw new Error(`"100%" should NOT appear after 1 wrong answer (accuracy is 0%)`);
+    }
+    if (endScreenWrong.missedCount !== 1) {
+      throw new Error(`Expected 1 missed item after 1 wrong, got ${endScreenWrong.missedCount}`);
+    }
+    console.log('   [PASS] 1 wrong answer produced 0% accuracy, study-missed list, and NO Flawless banner.');
 
     console.log('\n================================================================================');
     console.log('✓ ALL ENDLESS FINISH TESTS PASSED');

@@ -196,3 +196,56 @@ export function calculateAccuracy(correct, roundsAnswered) {
   if (!roundsAnswered || roundsAnswered <= 0) return 0;
   return Math.min(100, Math.max(0, Math.round((correct / roundsAnswered) * 100)));
 }
+
+export function buildExpeditionSummary({
+  correct = 0,
+  wrong = 0,
+  score = 0,
+  bestStreak = 0,
+  missedCountries = [],
+  isPractice = false,
+  mode = 'clue',
+  tier = 'easy'
+} = {}) {
+  const c = typeof correct === 'number' && !isNaN(correct) ? Math.max(0, correct) : 0;
+  const w = typeof wrong === 'number' && !isNaN(wrong) ? Math.max(0, wrong) : 0;
+  const answered = c + w;
+
+  if (answered === 0) {
+    return {
+      answered: 0,
+      correct: 0,
+      wrong: 0,
+      accuracy: 0,
+      hasSummary: false,
+      isFlawless: false,
+      flawlessBanner: null,
+      score: isPractice ? 0 : score,
+      bestStreak: 0,
+      missedCountries: [],
+      isPractice,
+      mode,
+      tier
+    };
+  }
+
+  const accuracy = Math.min(100, Math.max(0, Math.round((100 * c) / answered)));
+  const isFlawless = (w === 0 && answered >= 1);
+  const flawlessBanner = isFlawless ? 'Flawless Expedition — 100% Identification Accuracy!' : null;
+
+  return {
+    answered,
+    correct: c,
+    wrong: w,
+    accuracy,
+    hasSummary: true,
+    isFlawless,
+    flawlessBanner,
+    score: isPractice ? 0 : score,
+    bestStreak,
+    missedCountries,
+    isPractice,
+    mode,
+    tier
+  };
+}

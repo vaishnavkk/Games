@@ -412,7 +412,7 @@ export class UIManager {
     }
   }
 
-  showEndScreen({ score, accuracy, bestStreak, missedCountries, isPractice, mode, tier, onRestart, onReplayMissed }) {
+  showEndScreen({ score, accuracy, bestStreak, missedCountries, isPractice, mode, tier, isFlawless, correct, wrong, answered, onRestart, onReplayMissed }) {
     this.hideTouchConfirm();
     if (this.topHud) this.topHud.classList.add('hidden');
     if (this.clueCard) this.clueCard.classList.add('hidden');
@@ -422,7 +422,8 @@ export class UIManager {
     if (this.endScore) {
       this.endScore.textContent = isPractice ? 'Practice' : score.toLocaleString();
     }
-    if (this.endAccuracy) this.endAccuracy.textContent = `${accuracy}%`;
+    const accVal = typeof accuracy === 'number' ? accuracy : 0;
+    if (this.endAccuracy) this.endAccuracy.textContent = `${accVal}%`;
     if (this.endStreak) this.endStreak.textContent = bestStreak;
 
     // Display saved best score
@@ -438,15 +439,23 @@ export class UIManager {
 
     if (this.missedList) {
       this.missedList.innerHTML = '';
-      if (!missedCountries || missedCountries.length === 0) {
+      const wCount = typeof wrong === 'number' ? wrong : (Array.isArray(missedCountries) ? missedCountries.length : 0);
+      const ansCount = typeof answered === 'number' ? answered : (wCount + (accVal > 0 ? 1 : 0));
+      const flawless = (isFlawless !== undefined)
+        ? (isFlawless && accVal === 100)
+        : (wCount === 0 && ansCount >= 1 && accVal === 100);
+
+      if (flawless) {
         this.missedList.innerHTML = '<div class="perfect-notice">Flawless Expedition — 100% Identification Accuracy!</div>';
         if (this.replayMissedBtn) this.replayMissedBtn.style.display = 'none';
       } else {
-        if (this.replayMissedBtn) this.replayMissedBtn.style.display = 'inline-flex';
         const uniqueMissed = Array.isArray(missedCountries)
-        ? Array.from(new Map(missedCountries.map(c => [c.id || c.name, c])).values())
-        : [];
-      uniqueMissed.forEach(c => {
+          ? Array.from(new Map(missedCountries.map(c => [c.id || c.name, c])).values())
+          : [];
+        if (this.replayMissedBtn) {
+          this.replayMissedBtn.style.display = uniqueMissed.length > 0 ? 'inline-flex' : 'none';
+        }
+        uniqueMissed.forEach(c => {
           const item = document.createElement('div');
           item.className = 'missed-item';
           item.innerHTML = `
