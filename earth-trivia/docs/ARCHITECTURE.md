@@ -23,9 +23,9 @@
   - `modals.css`: Start dialog, confirmation prompts, summary screens
   - `responsive.css`: Mobile and responsive viewport queries
 - `data/`: Game data and geographic boundaries
-  - `world-50m.js` / `world-50m.json`: 50m Natural Earth vector boundaries with Survey of India sovereign borders
-  - `countries.js` / `countries.json`: Country metadata, capitals, populations
-  - `clues.js` / `clues.json`: Verified clue libraries and hints
+  - `world-50m.js`: 50m Natural Earth vector boundaries with Survey of India sovereign borders
+  - `countries.json`: Country metadata, capitals, populations
+  - `clues.json`: Verified clue libraries and hints
   - `tiny-countries.js`: Precision coordinates for microstates
   - `soi-boundaries.js`: Survey of India official boundary coordinates
 - `scripts/`: Tooling & automation

@@ -5,7 +5,7 @@ import {
   pointsIfCorrect,
   breakdownText
 } from '../src/scoring.js';
-import { COUNTRIES_DB } from '../data/countries.js';
+import COUNTRIES_DB from '../data/countries.json' with { type: 'json' };
 
 console.log('================================================================================');
 console.log('                 STEP 2 & 3: SCORING & PARTIAL CREDIT UNIT TESTS                ');

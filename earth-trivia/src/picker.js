@@ -1,7 +1,7 @@
 import * as THREE from './three.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
-import { COUNTRIES_DB } from '../data/countries.js';
+import COUNTRIES_DB from '../data/countries.json' with { type: 'json' };
 import { latLonToVector3, vector3ToLatLon } from './frame_union.js';
 
 function computeGeometryArea(geometry) {

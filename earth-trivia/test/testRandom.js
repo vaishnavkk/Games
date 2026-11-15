@@ -17,7 +17,7 @@ import {
   _reload,
   findReinsertIndex
 } from '../src/questionBag.js';
-import { COUNTRIES_DB } from '../data/countries.js';
+import COUNTRIES_DB from '../data/countries.json' with { type: 'json' };
 
 // Ensure localStorage is available in Node.js test environment
 if (!globalThis.localStorage) {

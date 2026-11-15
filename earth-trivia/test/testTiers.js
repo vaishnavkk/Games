@@ -6,28 +6,13 @@ import { fileURLToPath, pathToFileURL } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const jsonPath = path.resolve(__dirname, '../data/countries.json');
-const jsPath = path.resolve(__dirname, '../data/countries.js');
-
-const countries = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
-const { COUNTRIES_DB } = await import(pathToFileURL(jsPath).href);
+import countries from '../data/countries.json' with { type: 'json' };
 
 console.log('================================================================================');
 console.log('                   TIER COMPOSITION & CHAIN INTEGRITY TESTS                     ');
 console.log('================================================================================\n');
 
-// 1. Consistency between countries.json and countries.js
-if (countries.length !== COUNTRIES_DB.length) {
-  console.error(`FAIL: countries.json length (${countries.length}) !== countries.js length (${COUNTRIES_DB.length})`);
-  process.exit(1);
-}
-for (let i = 0; i < countries.length; i++) {
-  if (countries[i].code !== COUNTRIES_DB[i].code || countries[i].tier !== COUNTRIES_DB[i].tier) {
-    console.error(`FAIL: mismatch at index ${i}: ${countries[i].code} (${countries[i].tier} vs ${COUNTRIES_DB[i].tier})`);
-    process.exit(1);
-  }
-}
-console.log('✓ PASS: countries.json and countries.js are 100% synchronized (195 nations).');
+console.log(`✓ PASS: Loaded single source of truth data/countries.json (${countries.length} nations).`);
 
 // 2. Exact continent counts for Easy (42)
 const expectedEasy = {

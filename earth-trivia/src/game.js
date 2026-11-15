@@ -1,5 +1,5 @@
-import { COUNTRIES_DB } from '../data/countries.js';
-import { CLUES_LIBRARY } from '../data/clues.js';
+import COUNTRIES_DB from '../data/countries.json' with { type: 'json' };
+import CLUES_LIBRARY from '../data/clues.json' with { type: 'json' };
 import { buildLibrary, pickCountries, pickClueSet } from './questionBag.js';
 import { shuffle } from './rng.js';
 import { getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';

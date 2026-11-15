@@ -12,7 +12,7 @@ import puppeteer from 'puppeteer-core';
 import { pointsIfCorrect, calculatePartialCredit, SCORING } from '../../src/scoring.js';
 import { getLargestLandmassCenter } from '../../src/cameraFlight.js';
 import { CountryPicker } from '../../src/picker.js';
-import { COUNTRIES_DB } from '../../data/countries.js';
+import COUNTRIES_DB from '../../data/countries.json' with { type: 'json' };
 import { WORLD_COUNTRIES } from '../../data/world-50m.js';
 import { startPageCoverage, stopPageCoverage, generateCoverageReport } from './coverageReporter.js';
 

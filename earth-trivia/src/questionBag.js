@@ -1,5 +1,5 @@
 import { rng, shuffle } from './rng.js';
-import { COUNTRIES_DB } from '../data/countries.js';
+import COUNTRIES_DB from '../data/countries.json' with { type: 'json' };
 import { haversineDistanceKm } from './frame_union.js';
 
 const KEY = 'geotrivia_seen_v1';

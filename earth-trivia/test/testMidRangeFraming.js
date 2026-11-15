@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
-import { COUNTRIES_DB } from '../data/countries.js';
+import COUNTRIES_DB from '../data/countries.json' with { type: 'json' };
 import {
   distanceToCountryWithNearest,
   planCloseWrongFlight,
