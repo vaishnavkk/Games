@@ -1,23 +1,36 @@
 {
   "name": "geotrivia-earth-explorer",
-  "version": "2.0.0",
+  "version": "1.0.1",
   "description": "3D Interactive Globe Geography Trivia Game with Direct Country Clicking",
   "main": "src/main.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaishnavkk/friendly-lovelace.git"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
-    "validate": "node scripts/validateData.js",
-    "check:clues": "node scripts/checkCluesStep0.js",
-    "check:library": "node scripts/checkLibrary.js",
-    "check:sources": "node scripts/checkSources.js",
-    "check:palette": "node scripts/checkPalette.js",
-    "check:contrast": "node scripts/checkContrast.js",
-    "bundle:map": "node scripts/bundleMapData.js",
+    "dev": "node scripts/build/serve.js",
+    "start": "node scripts/build/serve.js",
+    "serve": "node scripts/build/serve.js",
     "build": "esbuild src/main.js --bundle --outfile=dist/bundle.js --format=esm --minify",
-    "serve": "node scripts/serve.js",
-    "test:random": "node scripts/testRandom.js",
-    "test:framing": "node scripts/testMidRangeFraming.js",
-    "selfplay": "node scripts/selfplay.js",
-    "test": "node scripts/validateData.js && node scripts/testQuestionBag.js && node scripts/testStep1CameraFlight.js && node scripts/testMidRangeFraming.js && node scripts/testStep2CluePoints.js && node scripts/testScoring.js && node scripts/testStep3BugFixes.js && node scripts/testRandom.js && node scripts/testSummaryBuilder.js && node scripts/testEndlessFinish.js && node scripts/testTiers.js && node scripts/testModals.js"
+    "build:debug": "esbuild src/main.js --bundle --outfile=dist/debug/bundle.js --format=esm --sourcemap",
+    "build:data": "node scripts/build/bundleMapData.js",
+    "bundle:map": "node scripts/build/bundleMapData.js",
+    "lint": "eslint src/",
+    "check:clues": "node scripts/validate/checkCluesStep0.js",
+    "check:library": "node scripts/validate/checkLibrary.js",
+    "check:sources": "node scripts/validate/checkSources.js",
+    "check:claims": "node scripts/validate/checkClaims.js",
+    "check:palette": "node scripts/validate/checkPalette.js",
+    "check:contrast": "node scripts/validate/checkContrast.js",
+    "validate": "node test/testDataSync.js && node scripts/validate/validateData.js && npm run check:clues && npm run check:library && npm run check:sources && npm run check:claims && npm run check:palette && npm run check:contrast",
+    "test:random": "node test/testRandom.js",
+    "test:framing": "node test/testMidRangeFraming.js",
+    "selfplay": "node scripts/qa/selfplay.js",
+    "test": "node test/testDataSync.js && node scripts/validate/validateData.js && node test/testQuestionBag.js && node test/testStep1CameraFlight.js && node test/testMidRangeFraming.js && node test/testStep2CluePoints.js && node test/testScoring.js && node test/testStep3BugFixes.js && node test/testRandom.js && node test/testSummaryBuilder.js && node test/testEndlessFinish.js && node test/testTiers.js && node test/testModals.js"
   },
   "keywords": [
     "geography",
@@ -25,23 +38,22 @@
     "3d",
     "threejs",
     "globe",
-    "educational"
+    "educational",
+    "cartography",
+    "interactive"
   ],
   "author": "vaishnavkk",
   "license": "MIT",
   "dependencies": {
     "canvas-confetti": "^1.9.4",
-    "flag-icons": "^7.6.0",
     "three": "^0.182.0",
-    "topojson-client": "^3.1.0",
-    "world-atlas": "^2.0.2"
+    "topojson-client": "^3.1.0"
   },
   "devDependencies": {
-    "@fontsource-variable/dm-sans": "^5.3.0",
-    "@fontsource-variable/fraunces": "^5.3.0",
-    "canvas": "^3.2.3",
     "esbuild": "^0.28.2",
+    "eslint": "^10.15.0",
     "puppeteer-core": "^25.16.0",
-    "tailwindcss": "^3.4.19"
+    "tailwindcss": "^3.4.19",
+    "world-atlas": "^2.0.2"
   }
 }

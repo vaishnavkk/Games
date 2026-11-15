@@ -1,10 +1,13 @@
 node_modules/
 dist/*
 !dist/bundle.js
+*.map
+dist/debug/
 /report/
 report/
 .cache/
 *.png
+!docs/social-preview.png
 *.pdf
 .DS_Store
 Thumbs.db

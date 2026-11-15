@@ -1,14 +1,13 @@
-import * as THREE from 'three';
+import * as THREE from './three.js';
 import { Line2 } from 'three/addons/lines/Line2.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { CountryPicker } from './picker.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
-import { COUNTRIES_DB } from '../data/countries.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
-import { distanceToCountryWithNearest } from './frame_union.js';
+import { distanceToCountryWithNearest, haversineDistanceKm, getLargestPolygon } from './frame_union.js';
 
-export { distanceToCountryWithNearest };
+export { distanceToCountryWithNearest, haversineDistanceKm };
 
 export const FLIGHT = {
   zoomOutWrong: 1.18,   // final distance = fitDistance * this
@@ -140,172 +139,11 @@ export function animateAfterAnswer(camera, controls, o) {
   });
 }
 
-export function haversineDistanceKm(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Earth radius in km
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLon = ((lon2 - lon1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return Math.round(R * c);
-}
-
-function normalizeName(name) {
-  if (!name) return '';
-  return name.toLowerCase().replace(/[^a-z0-9]/g, '');
-}
-
-export function areCountriesAdjacent(c1, c2) {
-  if (!c1 || !c2) return false;
-  const id1 = String(c1.id || '').padStart(3, '0');
-  const id2 = String(c2.id || '').padStart(3, '0');
-  if (id1 && id1 === id2) return true; // Same country
-
-  const db1 = COUNTRIES_DB.find(c => String(c.id).padStart(3, '0') === id1 || c.name === c1.name) || c1;
-  const db2 = COUNTRIES_DB.find(c => String(c.id).padStart(3, '0') === id2 || c.name === c2.name) || c2;
-
-  const n1 = normalizeName(db1.name || c1.name);
-  const n2 = normalizeName(db2.name || c2.name);
-
-  // 1. Check neighbors array in DB (both directions)
-  if (db1.neighbors && Array.isArray(db1.neighbors)) {
-    if (db1.neighbors.some(nb => {
-      const nnb = normalizeName(nb);
-      return nnb === n2 || n2.includes(nnb) || nnb.includes(n2);
-    })) return true;
-  }
-  if (db2.neighbors && Array.isArray(db2.neighbors)) {
-    if (db2.neighbors.some(nb => {
-      const nnb = normalizeName(nb);
-      return nnb === n1 || n1.includes(nnb) || nnb.includes(n1);
-    })) return true;
-  }
-
-  return false;
-}
-
-function extractBoundaryPoints(geom) {
-  if (!geom || !geom.coordinates) return [];
-  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
-  const pts = [];
-  for (const poly of polys) {
-    const ring = poly[0];
-    if (!ring || ring.length < 2) continue;
-    const step = Math.max(1, Math.floor(ring.length / 100));
-    for (let i = 0; i < ring.length; i += step) {
-      pts.push({ lat: ring[i][1], lon: ring[i][0] });
-    }
-  }
-  return pts;
-}
-
-export function getShortestDistanceBetweenCountries(countryA, countryB) {
-  if (!countryA || !countryB) {
-    return { distanceKm: 0, isAdjacent: false, closestA: { lat: 0, lon: 0 }, closestB: { lat: 0, lon: 0 } };
-  }
-
-  // 1. Check if adjacent by database definition
-  const isAdjacent = areCountriesAdjacent(countryA, countryB);
-  if (isAdjacent) {
-    const latA = countryA.lat !== undefined ? countryA.lat : (countryA.centroid ? countryA.centroid[1] : 0);
-    const lonA = countryA.lon !== undefined ? countryA.lon : (countryA.centroid ? countryA.centroid[0] : 0);
-    const latB = countryB.lat !== undefined ? countryB.lat : (countryB.centroid ? countryB.centroid[1] : 0);
-    const lonB = countryB.lon !== undefined ? countryB.lon : (countryB.centroid ? countryB.centroid[0] : 0);
-    return {
-      distanceKm: 0,
-      isAdjacent: true,
-      closestA: { lat: latA, lon: lonA },
-      closestB: { lat: latB, lon: lonB }
-    };
-  }
-
-  // 2. Resolve geometries
-  const cidA = String(countryA.id || '').padStart(3, '0');
-  const cidB = String(countryB.id || '').padStart(3, '0');
-  const wcA = countryA.geometry ? countryA : (WORLD_COUNTRIES.find(w => String(w.id).padStart(3, '0') === cidA || w.name === countryA.name) || countryA);
-  const wcB = countryB.geometry ? countryB : (WORLD_COUNTRIES.find(w => String(w.id).padStart(3, '0') === cidB || w.name === countryB.name) || countryB);
-
-  const ptsA = extractBoundaryPoints(wcA.geometry);
-  const ptsB = extractBoundaryPoints(wcB.geometry);
-
-  if (ptsA.length === 0 || ptsB.length === 0) {
-    const latA = countryA.lat !== undefined ? countryA.lat : (countryA.centroid ? countryA.centroid[1] : 0);
-    const lonA = countryA.lon !== undefined ? countryA.lon : (countryA.centroid ? countryA.centroid[0] : 0);
-    const latB = countryB.lat !== undefined ? countryB.lat : (countryB.centroid ? countryB.centroid[1] : 0);
-    const lonB = countryB.lon !== undefined ? countryB.lon : (countryB.centroid ? countryB.centroid[0] : 0);
-    const dist = Math.round(haversineDistanceKm(latA, lonA, latB, lonB));
-    return {
-      distanceKm: dist,
-      isAdjacent: false,
-      closestA: { lat: latA, lon: lonA },
-      closestB: { lat: latB, lon: lonB }
-    };
-  }
-
-  let minDist = Infinity;
-  let bestA = ptsA[0], bestB = ptsB[0];
-
-  for (let i = 0; i < ptsA.length; i++) {
-    const pA = ptsA[i];
-    for (let j = 0; j < ptsB.length; j++) {
-      const pB = ptsB[j];
-      const d = haversineDistanceKm(pA.lat, pA.lon, pB.lat, pB.lon);
-      if (d < minDist) {
-        minDist = d;
-        bestA = pA;
-        bestB = pB;
-      }
-    }
-  }
-
-  const roundedDist = Math.round(minDist);
-  // Geometric adjacency check: if boundary points touch within 15 km
-  if (roundedDist <= 15) {
-    return {
-      distanceKm: 0,
-      isAdjacent: true,
-      closestA: bestA,
-      closestB: bestB
-    };
-  }
-
-  return {
-    distanceKm: roundedDist,
-    isAdjacent: false,
-    closestA: bestA,
-    closestB: bestB
-  };
-}
-
-// Distance from clicked point to nearest point on target country boundary
-export function distanceToCountryKm(latClick, lonClick, targetGeometry) {
-  const res = distanceToCountryWithNearest(latClick, lonClick, targetGeometry);
-  return res.km;
-}
-
 // Largest landmass center for multi-part countries
 export function getLargestLandmassCenter(country) {
   if (!country) return { lat: 0, lon: 0 };
   const geom = country.geometry;
-  if (!geom || !geom.coordinates) {
-    return {
-      lat: country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0),
-      lon: country.lon !== undefined ? country.lon : (country.centroid ? country.centroid[0] : 0)
-    };
-  }
-  let maxPts = 0;
-  let bestPoly = null;
-  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
-  for (const p of polys) {
-    if (p[0] && p[0].length > maxPts) {
-      maxPts = p[0].length;
-      bestPoly = p;
-    }
-  }
+  const bestPoly = getLargestPolygon(geom);
   if (!bestPoly || !bestPoly[0]) {
     return {
       lat: country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0),
@@ -352,18 +190,7 @@ export function getTargetCameraDir(country, globeMesh) {
 // Compute angular diameter of country's largest landmass
 export function getCountryAngularDiameter(country) {
   if (!country) return 5;
-  const geom = country.geometry;
-  if (!geom || !geom.coordinates) return 5;
-
-  let maxPts = 0;
-  let bestPoly = null;
-  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
-  for (const p of polys) {
-    if (p[0] && p[0].length > maxPts) {
-      maxPts = p[0].length;
-      bestPoly = p;
-    }
-  }
+  const bestPoly = getLargestPolygon(country.geometry);
   if (!bestPoly || !bestPoly[0]) return 5;
 
   const ext = bestPoly[0];
@@ -695,7 +522,6 @@ export class CameraFlightController {
     const sprite = new THREE.Sprite(spriteMat);
     sprite.position.copy(positionVec);
 
-    const W = typeof window !== 'undefined' ? window.innerWidth : 1440;
     const H = typeof window !== 'undefined' ? window.innerHeight : 900;
     const fov = (this.camera && this.camera.fov) ? this.camera.fov : 45;
     const fy = (H / 2) / Math.tan((fov * Math.PI) / 360);
@@ -805,45 +631,7 @@ export class CameraFlightController {
     cancelAnswerFlight();
   }
 
-  // Backwards compatible wrapper for flyToCountry
-  flyToCountry(targetLat, targetLon, {
-    duration = 1400,
-    isDesktopOffset = false,
-    angularSpan = 10,
-    guessLat = null,
-    guessLon = null,
-    onComplete
-  } = {}) {
-    const isMobile = (typeof window !== 'undefined') ? (window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth)) : false;
-    const fitDistance = this.computeTargetDistance(angularSpan, isMobile);
-    const centerVec = CountryPicker.latLonToVector3(targetLat, targetLon, 1.0);
-    if (this.globeMesh) {
-      this.globeMesh.updateMatrixWorld(true);
-      centerVec.applyMatrix4(this.globeMesh.matrixWorld);
-    }
-    const targetDir = centerVec.normalize();
-    if (isDesktopOffset && !isMobile) {
-      targetDir.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.12);
-    } else if (isMobile) {
-      const right = new THREE.Vector3().crossVectors(targetDir, new THREE.Vector3(0, 1, 0)).normalize();
-      if (right.lengthSq() > 1e-4) targetDir.applyAxisAngle(right, -0.10);
-    }
-
-    return this.animateAfterAnswer({
-      wasCorrect: false,
-      targetDir,
-      fitDistance,
-      targetHiddenByUi: false
-    }).then((status) => {
-      if (onComplete) onComplete();
-      return status;
-    });
-  }
-
-  zoomOutToOverview({ targetCountry = null, duration = 600, onComplete } = {}) {
-    const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
-      (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
-    if (isFast) duration = Math.round(duration * 0.2);
+  _prepareFlight() {
     this.cancelAnswerFlight();
     const job = { cancelled: false };
     this._resetJob = job;
@@ -852,6 +640,24 @@ export class CameraFlightController {
     if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
     if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
     this.clearVisuals();
+    return job;
+  }
+
+  _finishFlight(onComplete) {
+    this.isFlying = false;
+    this.controls.enabled = true;
+    if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
+    if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
+    this.controls.target.set(0, 0, 0);
+    this.controls.update();
+    if (onComplete) onComplete();
+  }
+
+  zoomOutToOverview({ targetCountry = null, duration = 600, onComplete } = {}) {
+    const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
+      (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
+    if (isFast) duration = Math.round(duration * 0.2);
+    const job = this._prepareFlight();
 
     const isMobile = (typeof window !== 'undefined')
       ? (window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth))
@@ -917,15 +723,7 @@ export class CameraFlightController {
         this.camera.up.set(0, 1, 0);
         this.camera.lookAt(0, 0, 0);
         if (this.camera.clearViewOffset) this.camera.clearViewOffset();
-
-        this.isFlying = false;
-        this.controls.enabled = true;
-        if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
-        if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
-        this.controls.target.set(0, 0, 0);
-        this.controls.update();
-
-        if (onComplete) onComplete();
+        this._finishFlight(onComplete);
       }
     };
 
@@ -936,20 +734,15 @@ export class CameraFlightController {
     const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
       (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
     if (isFast) duration = Math.round(duration * 0.2);
-    this.cancelAnswerFlight();
     if (this.camera && this.camera.clearViewOffset) this.camera.clearViewOffset();
-    const job = { cancelled: false };
-    this._resetJob = job;
-    this.isFlying = true;
-    this.controls.enabled = false;
-    if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
-    if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
-    this.clearVisuals();
+    const job = this._prepareFlight();
 
-    const startCamX = this.camera.position.x || 0;
-    const startCamY = this.camera.position.y || 0;
-    const startCamZ = this.camera.position.z;
-    const targetCamZ = 4.0;
+    const startDir = this.camera.position.clone().normalize();
+    const startDist = this.camera.position.length();
+    const endDir = new THREE.Vector3(0, 0, 1);
+    const targetDist = 4.0;
+    const minD = (this.controls && this.controls.minDistance) || 2.52;
+    const maxD = (this.controls && this.controls.maxDistance) || 6.5;
     const startTime = performance.now();
 
     const animateReset = (now) => {
@@ -961,24 +754,21 @@ export class CameraFlightController {
           ? 2 * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      const camX = THREE.MathUtils.lerp(startCamX, 0, ease);
-      const camY = THREE.MathUtils.lerp(startCamY, 0, ease);
-      const camZ = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
-      this.camera.position.set(camX, camY, camZ);
+      const curDir = new THREE.Vector3();
+      greatCircle(startDir, endDir, ease, curDir).normalize();
+      limitLatitude(curDir);
+      const curDist = clamp(THREE.MathUtils.lerp(startDist, targetDist, ease), minD, maxD);
+      this.camera.position.copy(curDir).multiplyScalar(curDist);
+      this.camera.up.set(0, 1, 0);
       this.camera.lookAt(0, 0, 0);
 
       if (progress < 1) {
         requestAnimationFrame(animateReset);
       } else {
-        this.camera.position.set(0, 0, targetCamZ);
+        this.camera.position.copy(endDir).multiplyScalar(targetDist);
+        this.camera.up.set(0, 1, 0);
         this.camera.lookAt(0, 0, 0);
-        this.isFlying = false;
-        this.controls.enabled = true;
-        if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
-        if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
-        this.controls.target.set(0, 0, 0);
-        this.controls.update();
-        if (onComplete) onComplete();
+        this._finishFlight(onComplete);
       }
     };
 

@@ -1,6 +1,7 @@
-import * as THREE from 'three';
+import * as THREE from './three.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
+import { isAntimeridianSeam } from './frame_union.js';
 
 /**
  * GeoTrivia MapRenderer (Production Quality Pass)
@@ -23,7 +24,7 @@ export class MapRenderer {
       if (gl) {
         maxDim = gl.getParameter(gl.MAX_TEXTURE_SIZE) || 4096;
       }
-    } catch (e) {}
+    } catch (e) { /* defensive */ }
 
     const isMobileDevice = (typeof window !== 'undefined' && window.innerWidth < 640) ||
       (typeof window !== 'undefined' && 'ontouchstart' in window && window.innerWidth < 900);
@@ -108,9 +109,7 @@ export class MapRenderer {
             const nextIdx = (i + 1) % ring.length;
             const p1 = ring[i];
             const p2 = ring[nextIdx];
-            // Skip antimeridian seam edges and wrapping chords
-            if (Math.abs(p2[0] - p1[0]) > 180) continue;
-            if (Math.abs(p1[0]) >= 179.99 && Math.abs(p2[0]) >= 179.99) continue;
+            if (isAntimeridianSeam(p1, p2)) continue;
             const [x1, y1] = this.toPixel(p1[0], p1[1]);
             const [x2, y2] = this.toPixel(p2[0], p2[1]);
             ctx.moveTo(x1, y1);

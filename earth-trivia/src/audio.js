@@ -7,7 +7,7 @@ class SoundManager {
       if (typeof localStorage !== 'undefined') {
         isMuted = localStorage.getItem('geotrivia_muted') === 'true';
       }
-    } catch (e) {}
+    } catch (e) { /* defensive */ }
     this.muted = isMuted;
   }
 

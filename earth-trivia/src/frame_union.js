@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from './three.js';
 
 export function haversineDistanceKm(lat1, lon1, lat2, lon2) {
   const R = 6371; // Earth radius in km
@@ -131,44 +131,12 @@ export function distanceToCountryWithNearest(latClick, lonClick, targetGeometry)
   };
 }
 
-export function getCountryBoundingBox(country) {
-  const geom = country ? country.geometry : null;
-  if (!geom || !geom.coordinates) {
-    const lat = country && country.lat !== undefined ? country.lat : (country && country.centroid ? country.centroid[1] : 0);
-    const lon = country && country.lon !== undefined ? country.lon : (country && country.centroid ? country.centroid[0] : 0);
-    return { minLat: lat - 0.5, maxLat: lat + 0.5, minLon: lon - 0.5, maxLon: lon + 0.5, spanDeg: 1.0 };
-  }
-  let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;
-  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
-  for (const poly of polys) {
-    const ring = poly[0];
-    if (!ring) continue;
-    for (const [lon, lat] of ring) {
-      if (lat < minLat) minLat = lat;
-      if (lat > maxLat) maxLat = lat;
-      if (lon < minLon) minLon = lon;
-      if (lon > maxLon) maxLon = lon;
-    }
-  }
-  const spanLat = maxLat - minLat;
-  const spanLon = maxLon - minLon;
-  return {
-    minLat,
-    maxLat,
-    minLon,
-    maxLon,
-    spanDeg: Math.max(spanLat, spanLon)
-  };
+export function isAntimeridianSeam(p1, p2) {
+  return Math.abs(p2[0] - p1[0]) > 180 || (Math.abs(p1[0]) >= 179.99 && Math.abs(p2[0]) >= 179.99);
 }
 
-export function getLargestLandmassBox(country) {
-  if (!country) return { minLat: 0, maxLat: 0, minLon: 0, maxLon: 0, centerLat: 0, centerLon: 0 };
-  const geom = country.geometry;
-  if (!geom || !geom.coordinates) {
-    const lat = country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0);
-    const lon = country.lon !== undefined ? country.lon : (country.centroid ? country.centroid[0] : 0);
-    return { minLat: lat - 0.5, maxLat: lat + 0.5, minLon: lon - 0.5, maxLon: lon + 0.5, centerLat: lat, centerLon: lon };
-  }
+export function getLargestPolygon(geom) {
+  if (!geom || !geom.coordinates) return null;
   let maxPts = 0;
   let bestPoly = null;
   const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
@@ -178,6 +146,13 @@ export function getLargestLandmassBox(country) {
       bestPoly = p;
     }
   }
+  return bestPoly;
+}
+
+export function getLargestLandmassBox(country) {
+  if (!country) return { minLat: 0, maxLat: 0, minLon: 0, maxLon: 0, centerLat: 0, centerLon: 0 };
+  const geom = country.geometry;
+  const bestPoly = getLargestPolygon(geom);
   if (!bestPoly || !bestPoly[0]) {
     const lat = country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0);
     const lon = country.lon !== undefined ? country.lon : (country.centroid ? country.centroid[0] : 0);

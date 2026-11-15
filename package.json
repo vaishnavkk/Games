@@ -6,11 +6,14 @@
   "scripts": {
     "selfplay": "node scripts/selfplay.js",
     "test": "npm --prefix earth-trivia test",
+    "lint": "npm --prefix earth-trivia run lint",
     "build": "npm --prefix earth-trivia run build",
     "check:clues": "npm --prefix earth-trivia run check:clues",
     "check:library": "npm --prefix earth-trivia run check:library --",
     "check:sources": "npm --prefix earth-trivia run check:sources --",
+    "check:claims": "npm --prefix earth-trivia run check:claims --",
     "check:palette": "npm --prefix earth-trivia run check:palette",
-    "check:contrast": "npm --prefix earth-trivia run check:contrast"
+    "check:contrast": "npm --prefix earth-trivia run check:contrast",
+    "validate": "npm --prefix earth-trivia run validate"
   }
 }

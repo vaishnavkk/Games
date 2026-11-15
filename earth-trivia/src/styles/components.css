@@ -1,0 +1,590 @@
+/* ═══════════════════════════════════════════════════════════
+   SLIM FLOATING CLUE CARD (Max ~2 Lines)
+   ═══════════════════════════════════════════════════════════ */
+.floating-clue-card {
+  pointer-events: auto;
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 520px;
+  background: var(--color-surface-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-component);
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-md);
+  z-index: 20;
+}
+
+.timer-track-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-border-subtle);
+  overflow: hidden;
+  border-top-left-radius: var(--radius-component);
+  border-top-right-radius: var(--radius-component);
+}
+.timer-fill-bar {
+  height: 100%;
+  width: 100%;
+  background: var(--color-accent);
+  transition: width 0.1s linear, background 0.2s ease;
+}
+
+.clue-meta-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.clue-instruction {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--color-accent-text);
+}
+.clue-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.clue-step-badge {
+  font-size: 11px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-card);
+  padding: 2px 7px;
+  border-radius: var(--radius-tag);
+  border: 1px solid var(--color-border-subtle);
+}
+.toggle-expand-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+}
+.toggle-expand-btn:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+}
+
+.clue-content-body {
+  transition: opacity var(--duration-fast) ease;
+}
+.clue-content-body.collapsed {
+  display: none;
+}
+.clue-text-main {
+  font-size: var(--font-size-base);
+  line-height: 1.4;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.target-name-spotlight {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+.target-flag-spotlight {
+  display: flex;
+  justify-content: center;
+  font-size: 34px;
+  padding: 4px 0;
+}
+
+/* Step 2 Clue Worth & Reveal Countdown */
+.clue-worth {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+.clue-worth strong {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-accent-text);
+}
+.cw-drop {
+  color: var(--color-error-text, #992e1e);
+  font-weight: 700;
+  animation: dropIn .25s ease-out;
+}
+@keyframes dropIn {
+  from { transform: translateY(-6px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cw-drop { animation: none; }
+}
+#revealBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-text);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+#revealBtn:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-accent-border);
+}
+#revealBtn:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+}
+.clue-actions-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.action-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-text);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-component);
+  padding: 4px 10px;
+  cursor: pointer;
+  min-height: 28px;
+  transition: background var(--transition-ui), border-color var(--transition-ui);
+}
+.action-secondary-btn:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-border-hover);
+}
+
+/* Main Menu Navigation Button in Top HUD */
+.hud-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  padding: 3px 8px;
+  border-radius: var(--radius-component);
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.hud-menu-btn:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-accent-border);
+  color: var(--color-accent-text);
+}
+.hud-menu-btn svg {
+  color: var(--color-accent);
+}
+#finishEndlessBtn.hidden {
+  display: none !important;
+}
+#finishEndlessBtn {
+  border-color: rgba(217, 125, 16, 0.4);
+  color: var(--color-accent, #d97d10);
+}
+#finishEndlessBtn svg {
+  color: var(--color-accent, #d97d10);
+}
+
+/* Vault primary action button */
+.memory-vault-panel .btn-primary-action {
+  width: 100%;
+  margin-top: auto;
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  box-shadow: 0 -4px 12px rgba(8, 26, 36, 0.15);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONFIRM SELECTION BAR (Desktop & Mobile Tap Ergonomics)
+   ═══════════════════════════════════════════════════════════ */
+.selection-confirm-panel {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 45;
+  background: var(--color-surface-bg);
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--radius-component);
+  padding: 6px var(--space-4);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  pointer-events: auto;
+  min-height: var(--touch-target-min);
+  cursor: pointer;
+  color: var(--color-text-primary);
+  transition: background var(--transition-ui), transform var(--transition-ui);
+}
+.selection-confirm-panel:hover {
+  background: var(--color-surface-hover);
+}
+.selection-confirm-panel:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+.selection-confirm-panel:active {
+  transform: translateX(-50%) translateY(1px);
+}
+.confirm-flag-slot {
+  display: inline-flex;
+  align-items: center;
+  font-size: 18px;
+}
+.confirm-name-slot {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+}
+.selection-confirm-panel.continue-only {
+  background: var(--color-accent);
+  border-color: var(--color-accent-border);
+  color: var(--color-accent-btn-text);
+  padding: 8px 24px;
+  gap: 8px;
+  font-weight: var(--font-weight-bold);
+  font-size: 14px;
+  box-shadow: 0 4px 16px rgba(6, 22, 31, 0.35);
+}
+.selection-confirm-panel.continue-only:hover {
+  background: var(--color-accent-hover);
+}
+.selection-confirm-panel.continue-only .confirm-submit-chip {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: 14px;
+}
+.confirm-submit-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: var(--color-accent);
+  color: var(--color-accent-btn-text);
+  border-radius: var(--radius-component);
+  font-size: 13px;
+  font-weight: var(--font-weight-bold);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   POST-ANSWER MEMORY VAULT CARD
+   Desktop: Side card (≤320px). Mobile: Bottom sheet (≤30% height).
+   ═══════════════════════════════════════════════════════════ */
+.memory-vault-panel {
+  pointer-events: auto;
+  position: fixed;
+  right: var(--space-5);
+  top: 68px;
+  width: 320px;
+  max-height: calc(100vh - 84px);
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-component);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-lg);
+  z-index: 30;
+  animation: fadeInSide var(--duration-normal) var(--ease-out);
+}
+@keyframes fadeInSide {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.vault-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--radius-tag);
+  margin-bottom: 0;
+  width: fit-content;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.vault-status.correct {
+  background: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
+  color: var(--color-success-text);
+}
+.vault-status.missed {
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  color: var(--color-error-text);
+}
+
+.vault-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+  gap: 6px;
+}
+.vault-region-badge {
+  font-size: 10.5px;
+  font-weight: var(--font-weight-bold);
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
+}
+.vault-official-name {
+  font-size: 11.5px;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  line-height: 1.25;
+  margin-bottom: 2px;
+}
+.vault-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+.stat-cell {
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 4px;
+  padding: 4px 6px;
+  display: flex;
+  flex-direction: column;
+}
+.stat-label {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.4px;
+}
+.stat-val {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vault-status-pill {
+  font-size: 11px;
+  line-height: 1.3;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.vault-status-pill svg {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+.vault-fact-card.field-notes {
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-surface-card);
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+
+/* Exact Phrasing Requirement: "You clicked Spain, 1,240 km from Morocco" */
+.vault-distance-box {
+  font-size: 12.5px;
+  line-height: 1.35;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  border-radius: var(--radius-component);
+  color: var(--color-error-text);
+}
+.vault-distance-box .distance-main {
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--color-error-text);
+}
+.vault-distance-box .distance-mi {
+  font-weight: 500;
+  opacity: 0.9;
+}
+.vault-distance-box .distance-coords {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: var(--color-error-text);
+  margin-top: 4px;
+  margin-bottom: 4px;
+  opacity: 0.92;
+}
+.vault-distance-box .coord-arrow {
+  opacity: 0.7;
+}
+
+
+.vault-breakdown-box {
+  margin-bottom: 8px;
+}
+.breakdown-tag {
+  display: block;
+  font-size: 11.5px;
+  line-height: 1.3;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-secondary);
+}
+.breakdown-tag.scored {
+  background: var(--color-surface-card);
+  color: var(--color-text-primary);
+}
+.breakdown-tag.partial {
+  color: var(--color-text-secondary);
+}
+
+.vault-header-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.vault-flag-slot {
+  display: inline-flex;
+  align-items: center;
+  font-size: 24px;
+}
+.vault-country-name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+.vault-capital-label {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.vault-content-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  flex: 1;
+  min-height: 0;
+  box-sizing: border-box;
+}
+.vault-content-grid * {
+  box-sizing: border-box;
+  min-width: 0;
+  word-break: break-word;
+}
+.vault-fact-card {
+  padding: 6px 10px;
+  background: var(--color-surface-card);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-component);
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--color-text-primary);
+}
+.vault-fact-card.highlight {
+  border-color: var(--color-accent-border);
+  background: var(--color-accent-subtle);
+}
+.vault-fact-title {
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.btn-primary-action {
+  flex-shrink: 0;
+  width: 100%;
+  min-height: var(--touch-target-min);
+  padding: 10px var(--space-3);
+  background: var(--color-accent);
+  color: var(--color-accent-btn-text);
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--radius-component);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  transition: background var(--transition-ui), border-color var(--transition-ui);
+  box-shadow: 0 1px 3px rgba(217, 125, 16, 0.25);
+}
+.btn-primary-action:hover {
+  background: var(--color-accent-hover);
+}
+.btn-primary-action:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+.btn-primary-action:active {
+  background: var(--color-accent-active);
+}
+

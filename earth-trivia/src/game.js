@@ -1,9 +1,9 @@
-import { COUNTRIES_DB } from '../data/countries.js';
-import { CLUES_LIBRARY } from '../data/clues.js';
-import { buildLibrary, pickCountries, pickClueSet, findReinsertIndex } from './questionBag.js';
-import { rng, shuffle } from './rng.js';
+import COUNTRIES_DB from '../data/countries.json' with { type: 'json' };
+import CLUES_LIBRARY from '../data/clues.json' with { type: 'json' };
+import { buildLibrary, pickCountries, pickClueSet } from './questionBag.js';
+import { shuffle } from './rng.js';
 import { getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
-import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getLargestLandmassBox, getCountryBoundingBox } from './frame_union.js';
+import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getLargestLandmassBox } from './frame_union.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
@@ -175,7 +175,6 @@ export class GameManager {
     this.clueIndex = 0;
 
     // Pick clue set via questionBag (shown in level order)
-    const excludeIds = this.currentCountry.forcedExcludeClueIds || [];
     const pickedClues = pickClueSet(this.currentCountry.code, this.cluesLibrary);
     if (pickedClues && pickedClues.length === 3) {
       this.currentClues = pickedClues;
@@ -196,28 +195,23 @@ export class GameManager {
     cancelAnswerFlight();
     this.globe.flight.cancelAnswerFlight();
     // Reset visual map and camera (clears all markers, arcs, and highlights)
+    const onOverviewComplete = () => {
+      this.globe.isAutoRotating = true;
+      this.globe.lastInteractionTime = performance.now();
+    };
     if (previousCountry) {
       this.globe.flight.zoomOutToOverview({
         targetCountry: previousCountry,
         duration: 600,
-        onComplete: () => {
-          this.globe.isAutoRotating = true;
-          this.globe.lastInteractionTime = performance.now();
-        }
+        onComplete: onOverviewComplete
       });
-      this.globe.isAutoRotating = true;
-      this.globe.lastInteractionTime = performance.now();
     } else {
       this.globe.flight.resetToOverview({
         duration: 800,
-        onComplete: () => {
-          this.globe.isAutoRotating = true;
-          this.globe.lastInteractionTime = performance.now();
-        }
+        onComplete: onOverviewComplete
       });
-      this.globe.isAutoRotating = true;
-      this.globe.lastInteractionTime = performance.now();
     }
+    onOverviewComplete();
     this.globe.setMicrostateTarget(this.currentCountry);
     this.globe.mapRenderer.resetHighlights();
 
@@ -594,6 +588,16 @@ export class GameManager {
     });
   }
 
+  _hideFinishElements() {
+    if (this.ui.finishConfirmModal) {
+      this.ui.finishConfirmModal.classList.add('hidden');
+    }
+    if (this.ui.finishEndlessBtn) {
+      this.ui.finishEndlessBtn.classList.add('hidden');
+      this.ui.finishEndlessBtn.style.display = 'none';
+    }
+  }
+
   returnToMainMenu() {
     this.stopTimer();
     this.isAnswering = false;
@@ -618,13 +622,7 @@ export class GameManager {
     this.globe.controls.enabled = true;
     this.globe.isAutoRotating = true;
 
-    if (this.ui.finishConfirmModal) {
-      this.ui.finishConfirmModal.classList.add('hidden');
-    }
-    if (this.ui.finishEndlessBtn) {
-      this.ui.finishEndlessBtn.classList.add('hidden');
-      this.ui.finishEndlessBtn.style.display = 'none';
-    }
+    this._hideFinishElements();
 
     this.ui.hideTouchConfirm();
     this.ui.showStartScreen();
@@ -644,13 +642,7 @@ export class GameManager {
     this.globe.flight.clearVisuals();
     this.globe.mapRenderer.resetHighlights();
 
-    if (this.ui.finishConfirmModal) {
-      this.ui.finishConfirmModal.classList.add('hidden');
-    }
-    if (this.ui.finishEndlessBtn) {
-      this.ui.finishEndlessBtn.classList.add('hidden');
-      this.ui.finishEndlessBtn.style.display = 'none';
-    }
+    this._hideFinishElements();
 
     const answered = this.correctCount + this.wrongCount;
     if (answered === 0) {
@@ -672,6 +664,7 @@ export class GameManager {
           localStorage.setItem('geotrivia_highscore', String(this.score));
         }
       } catch (e) {
+        // defensive
         console.warn('localStorage access failed:', e);
       }
     }

@@ -1,7 +1,8 @@
-import * as THREE from 'three';
+import * as THREE from './three.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
-import { COUNTRIES_DB } from '../data/countries.js';
+import COUNTRIES_DB from '../data/countries.json' with { type: 'json' };
+import { latLonToVector3, vector3ToLatLon } from './frame_union.js';
 
 function computeGeometryArea(geometry) {
   if (!geometry || !geometry.coordinates) return Infinity;
@@ -56,33 +57,12 @@ export class CountryPicker {
 
   // Convert 3D Sphere Local Point to (lat, lon)
   static vector3ToLatLon(localVec) {
-    const norm = localVec.clone().normalize();
-
-    // lat in [-90, 90]
-    const lat = Math.asin(Math.max(-1, Math.min(1, norm.y))) * (180 / Math.PI);
-
-    // theta in [0, 2PI] => lon in [-180, 180]
-    let theta = Math.atan2(norm.z, -norm.x);
-    if (theta < 0) theta += Math.PI * 2;
-    let lon = (theta * 180 / Math.PI) - 180;
-
-    // Normalize
-    while (lon < -180) lon += 360;
-    while (lon > 180) lon -= 360;
-
-    return { lat, lon };
+    return vector3ToLatLon(localVec);
   }
 
   // Convert (lat, lon) to 3D Sphere Local Vector
   static latLonToVector3(lat, lon, radius = 1.7) {
-    const phi = (90 - lat) * (Math.PI / 180);
-    const theta = (lon + 180) * (Math.PI / 180);
-
-    const x = -radius * Math.cos(theta) * Math.sin(phi);
-    const y = radius * Math.cos(phi);
-    const z = radius * Math.sin(theta) * Math.sin(phi);
-
-    return new THREE.Vector3(x, y, z);
+    return latLonToVector3(lat, lon, radius);
   }
 
   // Standard raycasting Point-in-Polygon test

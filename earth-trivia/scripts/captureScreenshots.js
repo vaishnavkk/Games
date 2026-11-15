@@ -1,36 +1,58 @@
 import puppeteer from 'puppeteer-core';
-import path from 'path';
+import http from 'http';
 import fs from 'fs';
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const rootDir = path.resolve(__dirname, '..');
+const CHROME_PATH = process.env.CHROME_BIN || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
-const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const ARTIFACT_DIR = 'C:\\Users\\vaish\\.gemini\\antigravity\\brain\\3106128c-f0f1-4ad1-9467-733dd4e82da7';
-const SCREENSHOT_DIR = path.resolve(__dirname, '..', 'screenshots');
+function startServer(port = 0) {
+  const MIME_TYPES = {
+    '.html': 'text/html; charset=utf-8',
+    '.js': 'application/javascript; charset=utf-8',
+    '.json': 'application/json; charset=utf-8',
+    '.css': 'text/css; charset=utf-8',
+    '.svg': 'image/svg+xml',
+    '.webp': 'image/webp',
+    '.png': 'image/png',
+    '.woff2': 'font/woff2'
+  };
 
-if (!fs.existsSync(SCREENSHOT_DIR)) {
-  fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
+  const server = http.createServer((req, res) => {
+    let reqPath = decodeURI(req.url.split('?')[0]);
+    if (reqPath === '/' || reqPath === '') reqPath = '/index.html';
+    const filePath = path.join(rootDir, reqPath);
+    if (!fs.existsSync(filePath) || !fs.statSync(filePath).isFile()) {
+      res.writeHead(404);
+      res.end('Not Found');
+      return;
+    }
+    const ext = path.extname(filePath).toLowerCase();
+    res.writeHead(200, {
+      'Content-Type': MIME_TYPES[ext] || 'application/octet-stream',
+      'Access-Control-Allow-Origin': '*'
+    });
+    fs.createReadStream(filePath).pipe(res);
+  });
+
+  return new Promise((resolve, reject) => {
+    server.listen(port, '127.0.0.1', () => resolve(server));
+    server.on('error', reject);
+  });
 }
 
-async function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+async function capture() {
+  const server = await startServer(0);
+  const port = server.address().port;
+  const url = `http://127.0.0.1:${port}/index.html`;
 
-async function saveScreenshot(page, filename, description) {
-  const localPath = path.join(SCREENSHOT_DIR, filename);
-  const artifactPath = path.join(ARTIFACT_DIR, filename);
-
-  await page.screenshot({ path: localPath, type: 'png' });
-  fs.copyFileSync(localPath, artifactPath);
-  console.log(`[Screenshot Saved] ${filename}: ${description}`);
-  console.log(`  Local: ${localPath}`);
-  console.log(`  Artifact: ${artifactPath}`);
-}
-
-async function main() {
-  console.log('Launching headless Chrome for verification and screenshots...');
+  const outDir = path.join(rootDir, 'docs', 'img');
+  if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir, { recursive: true });
+  }
 
   const browser = await puppeteer.launch({
     executablePath: CHROME_PATH,
@@ -38,195 +60,111 @@ async function main() {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      '--disable-web-security',
-      '--enable-webgl',
+      '--disable-gpu',
       '--use-gl=angle',
-      '--window-size=1280,800'
+      '--use-angle=swiftshader',
+      '--window-size=1440,900'
     ]
   });
 
-  const page = await browser.newPage();
-  await page.setViewport({ width: 1280, height: 800, deviceScaleFactor: 1 });
+  try {
+    const page = await browser.newPage();
 
-  // Listen to browser console
-  page.on('console', msg => {
-    const text = msg.text();
-    if (!text.includes('THREE.WebGLRenderer: Context')) {
-      console.log(`[Browser Console] ${msg.type().toUpperCase()}: ${text}`);
-    }
-  });
+    // 1. Start Screen (1440x900)
+    await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 1 });
+    await page.goto(url, { waitUntil: 'load' });
+    await page.waitForSelector('#startScreen');
+    await page.waitForFunction(() => {
+      const ls = document.getElementById('loadingScreen');
+      const isGone = !ls || ls.style.display === 'none' || window.getComputedStyle(ls).display === 'none';
+      return isGone && !!window.game && !!window.game.ui;
+    }, { timeout: 15000 });
+    await new Promise(r => setTimeout(r, 1200));
 
-  page.on('response', res => {
-    if (res.status() >= 400) {
-      console.log(`[HTTP ${res.status()}]: ${res.url()}`);
-    }
-  });
+    const startPath = path.join(outDir, 'start-screen.webp');
+    await page.screenshot({ path: startPath, type: 'webp', quality: 85 });
+    console.log(`Saved start screen: ${startPath} (${(fs.statSync(startPath).size / 1024).toFixed(1)} KB)`);
 
-  page.on('pageerror', err => {
-    console.error(`[Browser Error]:`, err);
-  });
-
-  console.log('Navigating to http://localhost:8080 ...');
-  await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
-
-  // Wait for loading screen to disappear
-  console.log('Waiting for offline vector texture generation and globe mount...');
-  await page.waitForFunction(() => {
-    const el = document.getElementById('loadingScreen');
-    return !el || el.style.display === 'none' || window.getComputedStyle(el).opacity === '0';
-  }, { timeout: 15000 });
-
-  await sleep(1000);
-
-  // 1. Screenshot: Start Screen
-  await saveScreenshot(page, 'start-screen.png', 'Expedition setup start modal with 3D globe in background');
-
-  // 2. Start Expedition & Screenshot: Question with Globe Visible
-  console.log('Starting expedition in Clue Mode...');
-  await page.click('#startExpeditionBtn');
-  await sleep(1200);
-
-  // Verify globe dominates screen
-  const layoutRatio = await page.evaluate(() => {
-    const canvas = document.querySelector('#webgl-container canvas');
-    const w = canvas ? canvas.clientWidth : 0;
-    const h = canvas ? canvas.clientHeight : 0;
-    const totalArea = window.innerWidth * window.innerHeight;
-    const canvasArea = w * h;
-    return {
-      canvasArea,
-      totalArea,
-      ratio: canvasArea / totalArea,
-      activeClue: document.getElementById('clueText')?.textContent?.trim()
-    };
-  });
-  console.log(`Globe screen ratio: ${(layoutRatio.ratio * 100).toFixed(1)}% (Requirement: ≥75%)`);
-  console.log(`Active Clue displayed: "${layoutRatio.activeClue}"`);
-
-  await saveScreenshot(page, 'question-globe.png', 'Question view with slim progressive clue bar and 3D globe dominating screen');
-
-  // 3. Screenshot: Right Answer View
-  console.log('Simulating correct answer...');
-  const rightAnswerData = await page.evaluate(() => {
-    const g = window.__geotrivia;
-    const target = g.game.currentCountry;
-    g.game.handleGuess(target, target.lat, target.lon);
-    return { targetName: target.name, lat: target.lat, lon: target.lon };
-  });
-  console.log(`Submitted correct guess for: ${rightAnswerData.targetName} (${rightAnswerData.lat}, ${rightAnswerData.lon})`);
-
-  // Wait for smooth camera flight and Memory Vault slide-in
-  await sleep(2200);
-  await saveScreenshot(page, 'right-answer.png', 'Right answer view: target highlighted green with Memory Vault anchor card');
-
-  // 4. Advance to Next Round & Screenshot: Wrong Answer View with Great-Circle Arc
-  console.log('Advancing to next round to test incorrect answer & distance arc...');
-  await page.evaluate(() => {
-    const g = window.__geotrivia;
-    g.game.nextRound();
-  });
-  await sleep(1000);
-
-  const wrongAnswerData = await page.evaluate(() => {
-    const g = window.__geotrivia;
-    const target = g.game.currentCountry;
-    // Guess a deliberately distant country (e.g. Australia if target is in Americas/Europe, or Brazil)
-    const guessCandidate = g.game.fullDatabase.find(c => Math.abs(c.lat - target.lat) > 40 && Math.abs(c.lon - target.lon) > 50) || g.game.fullDatabase[0];
-    g.game.handleGuess(guessCandidate, guessCandidate.lat, guessCandidate.lon);
-    return {
-      targetName: target.name,
-      targetCoords: [target.lat, target.lon],
-      guessName: guessCandidate.name,
-      guessCoords: [guessCandidate.lat, guessCandidate.lon]
-    };
-  });
-  console.log(`Submitted wrong guess: Guessed ${wrongAnswerData.guessName} for Target ${wrongAnswerData.targetName}`);
-
-  // Wait for camera flight, arc rendering, and memory vault
-  await sleep(2400);
-  await saveScreenshot(page, 'wrong-answer-arc.png', 'Wrong answer view: red guess pin, green target, great-circle 3D arc with km distance');
-
-  // 5. Screenshot: Mobile View (390px width)
-  console.log('Testing mobile responsive layout (390px x 844px)...');
-  await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
-  await page.evaluate(() => {
-    const g = window.__geotrivia;
-    if (g && g.globeApp) {
-      g.globeApp.onResize();
-    }
-    window.dispatchEvent(new Event('resize'));
-  });
-  await sleep(1500);
-
-  await saveScreenshot(page, 'mobile-view.png', 'Mobile view at 390px width with responsive HUD and bottom sheet Memory Vault');
-
-  // 6. Automated Coordinate Accuracy Edge-Case Testing
-  console.log('\n--- Running Coordinate Accuracy & Microstate Edge-Case Tests ---');
-  const edgeTestResults = await page.evaluate(() => {
-    const picker = window.__geotrivia.globeApp.picker;
-
-    const testCoords = [
-      { name: 'Equator - Ecuador', lat: -1.83, lon: -78.18, expectedId: '218' },
-      { name: 'Equator - Kenya', lat: -0.02, lon: 37.90, expectedId: '404' },
-      { name: 'Equator - Indonesia', lat: -0.78, lon: 113.92, expectedId: '360' },
-      { name: 'High North - Norway', lat: 60.47, lon: 8.46, expectedId: '578' },
-      { name: 'Date Line - Russia (Chukotka)', lat: 65.0, lon: 178.0, expectedId: '643' },
-      { name: 'Date Line - Fiji', lat: -17.71, lon: 178.06, expectedId: '242' },
-      { name: 'Microstate - Singapore', lat: 1.35, lon: 103.81, expectedId: '702' },
-      { name: 'Microstate - Malta', lat: 35.93, lon: 14.37, expectedId: '470' },
-      { name: 'Microstate - Monaco', lat: 43.73, lon: 7.42, expectedId: '492' },
-      { name: 'Microstate - Vatican City', lat: 41.90, lon: 12.45, expectedId: '336' },
-      { name: 'Microstate - Maldives', lat: 3.20, lon: 73.22, expectedId: '462' },
-      { name: 'Microstate - Tuvalu', lat: -7.10, lon: 177.64, expectedId: '798' }
-    ];
-
-    return testCoords.map(tc => {
-      // Test spherical projection roundtrip
-      const phi = (90 - tc.lat) * (Math.PI / 180);
-      const theta = (tc.lon + 180) * (Math.PI / 180);
-      const radius = 2.0;
-
-      // Three.js spherical coords matching globe geometry
-      const nx = -(radius * Math.sin(phi) * Math.cos(theta)) / radius;
-      const ny = (radius * Math.cos(phi)) / radius;
-      const nz = (radius * Math.sin(phi) * Math.sin(theta)) / radius;
-
-      // Project back
-      const projLat = Math.asin(ny) * (180 / Math.PI);
-      let pTheta = Math.atan2(nz, -nx);
-      if (pTheta < 0) pTheta += Math.PI * 2;
-      const projLon = (pTheta * 180 / Math.PI) - 180;
-
-      const latDiff = Math.abs(projLat - tc.lat);
-      const lonDiff = Math.abs(projLon - tc.lon);
-
-      // Point in polygon or microstate test
-      const foundCountry = picker.findCountryAtLatLon(tc.lat, tc.lon);
-      const idMatch = foundCountry && String(foundCountry.id).padStart(3, '0') === tc.expectedId;
-
-      return {
-        name: tc.name,
-        targetId: tc.expectedId,
-        foundId: foundCountry ? String(foundCountry.id).padStart(3, '0') : null,
-        foundName: foundCountry ? foundCountry.name : 'NONE',
-        idMatch,
-        latDiff: latDiff.toFixed(5),
-        lonDiff: lonDiff.toFixed(5),
-        projectionAccurate: latDiff < 0.001 && lonDiff < 0.001
-      };
+    // 2. Question Screen (1440x900)
+    await page.evaluate(() => {
+      document.getElementById('startExpeditionBtn')?.click();
     });
-  });
+    await page.waitForFunction(() => window.game && window.game.isAnswering, { timeout: 10000 });
+    await new Promise(r => setTimeout(r, 1500));
 
-  console.table(edgeTestResults);
+    const qPath = path.join(outDir, 'question.webp');
+    await page.screenshot({ path: qPath, type: 'webp', quality: 85 });
+    console.log(`Saved question screen: ${qPath} (${(fs.statSync(qPath).size / 1024).toFixed(1)} KB)`);
 
-  const allPassed = edgeTestResults.every(r => r.projectionAccurate && (r.idMatch || r.foundName !== 'NONE'));
-  console.log(`\nEdge Case Accuracy Test Result: ${allPassed ? 'ALL PASSED' : 'SOME FLAGGED'}`);
+    // 3. Close-miss Result Screen (1440x900)
+    await page.evaluate(() => {
+      const g = window.game;
+      const target = g.currentCountry;
+      const db = g.fullDatabase;
+      // find a country in same continent ~500-1500 km away
+      let guess = db.find(c => c.id !== target.id && c.continent === target.continent && Math.hypot(c.lat - target.lat, c.lon - target.lon) > 4 && Math.hypot(c.lat - target.lat, c.lon - target.lon) < 18);
+      if (!guess) {
+        guess = db.find(c => c.id !== target.id);
+      }
+      g.handleGuess(guess, guess.lat, guess.lon);
+    });
 
-  await browser.close();
-  console.log('\nHeadless Chrome testing complete!');
+    await page.waitForFunction(() => window.game && window.game.phase === 'result', { timeout: 10000 });
+    await new Promise(r => setTimeout(r, 2000));
+
+    const missPath = path.join(outDir, 'close-miss.webp');
+    await page.screenshot({ path: missPath, type: 'webp', quality: 85 });
+    console.log(`Saved close-miss screen: ${missPath} (${(fs.statSync(missPath).size / 1024).toFixed(1)} KB)`);
+
+    // 4. Mobile Screen (390x844)
+    const mobilePage = await browser.newPage();
+    await mobilePage.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true, deviceScaleFactor: 2 });
+    await mobilePage.goto(url, { waitUntil: 'load' });
+    await mobilePage.waitForSelector('#startScreen');
+    await mobilePage.waitForFunction(() => {
+      const ls = document.getElementById('loadingScreen');
+      const isGone = !ls || ls.style.display === 'none' || window.getComputedStyle(ls).display === 'none';
+      return isGone && !!window.game && !!window.game.ui;
+    }, { timeout: 15000 });
+    await mobilePage.evaluate(() => {
+      document.getElementById('startExpeditionBtn')?.click();
+    });
+    await mobilePage.waitForFunction(() => window.game && window.game.isAnswering, { timeout: 10000 });
+    await new Promise(r => setTimeout(r, 1500));
+
+    const mobilePath = path.join(outDir, 'mobile.webp');
+    await mobilePage.screenshot({ path: mobilePath, type: 'webp', quality: 85 });
+    console.log(`Saved mobile screen: ${mobilePath} (${(fs.statSync(mobilePath).size / 1024).toFixed(1)} KB)`);
+    await mobilePage.close();
+
+    // 5. Social Preview (1280x640 PNG)
+    const socialPage = await browser.newPage();
+    await socialPage.setViewport({ width: 1280, height: 640, deviceScaleFactor: 1 });
+    await socialPage.goto(url, { waitUntil: 'load' });
+    await socialPage.waitForSelector('#startScreen');
+    await socialPage.waitForFunction(() => {
+      const ls = document.getElementById('loadingScreen');
+      const isGone = !ls || ls.style.display === 'none' || window.getComputedStyle(ls).display === 'none';
+      return isGone && !!window.game && !!window.game.ui;
+    }, { timeout: 15000 });
+    await socialPage.evaluate(() => {
+      document.getElementById('startExpeditionBtn')?.click();
+    });
+    await socialPage.waitForFunction(() => window.game && window.game.isAnswering, { timeout: 10000 });
+    await new Promise(r => setTimeout(r, 1500));
+
+    const socialPath = path.join(rootDir, 'docs', 'social-preview.png');
+    await socialPage.screenshot({ path: socialPath, type: 'png' });
+    console.log(`Saved social preview: ${socialPath} (${(fs.statSync(socialPath).size / 1024).toFixed(1)} KB)`);
+    await socialPage.close();
+
+  } finally {
+    await browser.close();
+    server.close();
+  }
 }
 
-main().catch(err => {
-  console.error('Test execution failed:', err);
+capture().catch(err => {
+  console.error(err);
   process.exit(1);
 });

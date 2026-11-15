@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const earthTriviaDir = path.resolve(__dirname, '../earth-trivia');
-const targetScript = path.resolve(earthTriviaDir, 'scripts/selfplay.js');
+const targetScript = path.resolve(earthTriviaDir, 'scripts/qa/selfplay.js');
 
 const child = spawn(process.execPath, [targetScript, ...process.argv.slice(2)], {
   cwd: earthTriviaDir,

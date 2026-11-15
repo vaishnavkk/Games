@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from './three.js';
 import { GlobeApp } from './globe.js';
 import { UIManager } from './ui.js';
 import { GameManager } from './game.js';
