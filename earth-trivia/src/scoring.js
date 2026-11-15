@@ -15,8 +15,8 @@ export const BASE_POINTS = 800;
 export const MAX_ROUND_POINTS = 1000;
 export const STREAK_STEP = 0.1;
 export const STREAK_MAX = 1.5;
-export const PARTIAL_MAX_KM = 2000;
-export const PARTIAL_MAX_POINTS = 300;
+const PARTIAL_MAX_KM = 2000;
+const PARTIAL_MAX_POINTS = 300;
 
 export const streakMultiplierIfCorrect = (streakBefore) =>
   Math.min(STREAK_MAX, 1 + STREAK_STEP * (streakBefore || 0));
@@ -157,21 +157,6 @@ export function calculateRoundScore({
 }
 
 const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-US') : n);
-
-export function countTo(el, from, to, ms = 450) {
-  if (!el) return;
-  if (typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    el.textContent = fmt(to);
-    return;
-  }
-  const t0 = performance.now();
-  const step = (now) => {
-    const k = Math.min(1, (now - t0) / ms);
-    el.textContent = fmt(Math.round(from + (to - from) * k));
-    if (k < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-}
 
 // Call on round start (prev = null) and after every reveal (prev = value before reveal).
 export function renderClueWorth({ clueIndex = 0, streak = 0, speedBonus = 0, mode = 'clue', prev = null } = {}) {
