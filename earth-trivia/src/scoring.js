@@ -26,13 +26,6 @@ export function pointsIfCorrect({ clueIndex = 0, streakBefore = 0, speedBonus = 
   return Math.min(MAX_ROUND_POINTS, Math.round((BASE_POINTS + speedBonus) * mult));
 }
 
-export function revealCost({ clueIndex = 0, streakBefore = 0, speedBonus = 0 } = {}) {
-  if (clueIndex >= 2) return null; // last clue: nothing left to reveal
-  const now = pointsIfCorrect({ streakBefore, speedBonus });
-  const next = pointsIfCorrect({ streakBefore, speedBonus });
-  return { now, next, cost: now - next };
-}
-
 export function breakdownText({ clueIndex = 0, speedBonus = 0, streakBefore = 0, mode = 'clue' } = {}) {
   const mult = streakMultiplierIfCorrect(streakBefore);
   const raw = BASE_POINTS + speedBonus;
@@ -80,15 +73,6 @@ export const SCORING = {
     }
   }
 };
-
-export function getRevealClueCost(targetClueNumber) {
-  return 0; // Clues are 100% free
-}
-
-export function getRevealClueButtonText(currentClueIndex) {
-  const targetClueNum = currentClueIndex + 2;
-  return `Show clue ${targetClueNum}`;
-}
 
 export function calculateRoundScore({
   isCorrect,
@@ -214,7 +198,7 @@ export function buildExpeditionSummary({
     };
   }
 
-  const accuracy = Math.min(100, Math.max(0, Math.round((100 * c) / answered)));
+  const accuracy = calculateAccuracy(c, answered);
   const isFlawless = (w === 0 && answered >= 1);
   const flawlessBanner = isFlawless ? 'Flawless Expedition — 100% Identification Accuracy!' : null;
 

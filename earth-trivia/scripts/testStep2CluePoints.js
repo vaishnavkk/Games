@@ -5,7 +5,6 @@ import {
   STREAK_MAX,
   streakMultiplierIfCorrect,
   pointsIfCorrect,
-  revealCost,
   breakdownText,
   calculateRoundScore
 } from '../src/scoring.js';
@@ -44,46 +43,19 @@ const testCases = [
     expected: true
   },
 
-  // 2. Reveal cost countdown (all clues free, cost = 0)
-  {
-    desc: 'Reveal Clue 2 cost from Clue 1 (streak 0): 800 -> 800 (cost 0, Free)',
-    fn: () => revealCost({ clueIndex: 0, streakBefore: 0, speedBonus: 0 }),
-    verify: (r) => r && r.now === 800 && r.next === 800 && r.cost === 0
-  },
-  {
-    desc: 'Reveal Clue 3 cost from Clue 2 (streak 0): 800 -> 800 (cost 0, Free)',
-    fn: () => revealCost({ clueIndex: 1, streakBefore: 0, speedBonus: 0 }),
-    verify: (r) => r && r.now === 800 && r.next === 800 && r.cost === 0
-  },
-  {
-    desc: 'Reveal cost from Clue 3 (idx 2): null (nothing left to reveal)',
-    fn: () => revealCost({ clueIndex: 2, streakBefore: 0, speedBonus: 0 }),
-    expected: null
-  },
-
-  // 3. Streak multiplier and 1,000 pt cap integration
+  // 2. Streak multiplier and 1,000 pt cap integration
   {
     desc: 'Clue 1, streak 2 (mult 1.2x): 800 * 1.2 = 960 pts',
     fn: () => pointsIfCorrect({ clueIndex: 0, streakBefore: 2, speedBonus: 0 }),
     expected: 960
   },
   {
-    desc: 'Reveal Clue 2 cost at streak 2 (mult 1.2x): 960 -> 960 (cost 0, Free)',
-    fn: () => revealCost({ clueIndex: 0, streakBefore: 2, speedBonus: 0 }),
-    verify: (r) => r && r.now === 960 && r.next === 960 && r.cost === 0
-  },
-  {
     desc: 'Clue 1, streak 5 (mult 1.5x cap): 800 * 1.5 = 1200 -> capped at 1000 pts',
     fn: () => pointsIfCorrect({ clueIndex: 0, streakBefore: 5, speedBonus: 0 }),
     expected: 1000
   },
-  {
-    desc: 'Reveal Clue 2 cost at streak 5 (cap interaction): 1000 -> 1000 (cost 0, Free)',
-    fn: () => revealCost({ clueIndex: 0, streakBefore: 5, speedBonus: 0 }),
-    verify: (r) => r && r.now === 1000 && r.next === 1000 && r.cost === 0
-  },
 
-  // 4. Result breakdown formatting
+  // 3. Result breakdown formatting
   {
     desc: 'breakdownText() standard uncapped (speed 0, streak 0)',
     fn: () => breakdownText({ clueIndex: 0, speedBonus: 0, streakBefore: 0, mode: 'clue' }),

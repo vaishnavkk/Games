@@ -1,11 +1,8 @@
 import {
   SCORING,
   calculateRoundScore,
-  getRevealClueCost,
-  getRevealClueButtonText,
   calculatePartialCredit,
   pointsIfCorrect,
-  revealCost,
   breakdownText
 } from '../src/scoring.js';
 import { COUNTRIES_DB } from '../data/countries.js';
@@ -134,26 +131,6 @@ for (const dt of distTests) {
   const p = pts === dt.exp;
   if (!p) allPassed = false;
   console.log(`  d = ${String(dt.d).padEnd(5)} km -> ${pts} pts (expected: ${dt.exp}) [${p ? 'PASS' : 'FAIL'}]`);
-}
-
-// Verify Reveal Clue Cost (Free Clues)
-console.log('\n--- Reveal Clue Cost & Button Text Verification (Free Clues) ---');
-const costClue2 = getRevealClueCost(2);
-const costClue3 = getRevealClueCost(3);
-const btnClue2 = getRevealClueButtonText(0);
-const btnClue3 = getRevealClueButtonText(1);
-
-console.log(`Clue 2 cost: ${costClue2} pts (expected: 0) | Button: "${btnClue2}"`);
-console.log(`Clue 3 cost: ${costClue3} pts (expected: 0) | Button: "${btnClue3}"`);
-
-if (costClue2 !== 0 || costClue3 !== 0) {
-  console.error('✗ Reveal clue cost does not match expected 0 pts (Free)');
-  allPassed = false;
-} else if (btnClue2 !== 'Show clue 2' || btnClue3 !== 'Show clue 3') {
-  console.error(`✗ Button text mismatch: got "${btnClue2}" and "${btnClue3}", expected "Show clue 2" and "Show clue 3"`);
-  allPassed = false;
-} else {
-  console.log('✓ Reveal clue cost and button text check PASSED (Show clue N, all 3 clues free)');
 }
 
 // Verify Real Country DB Pools vs SCORING.TIERS
