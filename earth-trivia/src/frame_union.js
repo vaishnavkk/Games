@@ -131,36 +131,6 @@ export function distanceToCountryWithNearest(latClick, lonClick, targetGeometry)
   };
 }
 
-export function getCountryBoundingBox(country) {
-  const geom = country ? country.geometry : null;
-  if (!geom || !geom.coordinates) {
-    const lat = country && country.lat !== undefined ? country.lat : (country && country.centroid ? country.centroid[1] : 0);
-    const lon = country && country.lon !== undefined ? country.lon : (country && country.centroid ? country.centroid[0] : 0);
-    return { minLat: lat - 0.5, maxLat: lat + 0.5, minLon: lon - 0.5, maxLon: lon + 0.5, spanDeg: 1.0 };
-  }
-  let minLat = 90, maxLat = -90, minLon = 180, maxLon = -180;
-  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
-  for (const poly of polys) {
-    const ring = poly[0];
-    if (!ring) continue;
-    for (const [lon, lat] of ring) {
-      if (lat < minLat) minLat = lat;
-      if (lat > maxLat) maxLat = lat;
-      if (lon < minLon) minLon = lon;
-      if (lon > maxLon) maxLon = lon;
-    }
-  }
-  const spanLat = maxLat - minLat;
-  const spanLon = maxLon - minLon;
-  return {
-    minLat,
-    maxLat,
-    minLon,
-    maxLon,
-    spanDeg: Math.max(spanLat, spanLon)
-  };
-}
-
 export function getLargestLandmassBox(country) {
   if (!country) return { minLat: 0, maxLat: 0, minLon: 0, maxLon: 0, centerLat: 0, centerLon: 0 };
   const geom = country.geometry;
