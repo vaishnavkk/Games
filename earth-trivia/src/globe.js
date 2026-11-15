@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from './three.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { MapRenderer } from './mapRenderer.js';
 import { CameraFlightController } from './cameraFlight.js';
