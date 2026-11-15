@@ -228,6 +228,30 @@ async function runSelftest() {
           window.game.wrongCount = 1;
         }
       }
+
+      // 6. Planted defect #6: rename the @font-face src so it falls back
+      const styleFont = document.createElement('style');
+      styleFont.id = 'selftest-font-defect';
+      styleFont.textContent = `
+        @font-face {
+          font-family: 'Fraunces Variable';
+          src: url('./vendor/@fontsource-variable/fraunces/files/broken-src.woff2') format('woff2');
+        }
+        .start-hero-title, .hud-brand-title {
+          font-family: Arial, sans-serif !important;
+        }
+      `;
+      document.head.appendChild(styleFont);
+
+      // 7. Planted defect #7: hide the flag source
+      const styleFlag = document.createElement('style');
+      styleFlag.id = 'selftest-flag-defect';
+      styleFlag.textContent = `
+        .fi, #vaultFlag .fi, .vault-flag-slot .fi {
+          background-image: none !important;
+        }
+      `;
+      document.head.appendChild(styleFlag);
     });
 
     // Run phase validation
@@ -257,21 +281,25 @@ async function runSelftest() {
     const has45vhSheet = detectedFailures.some(f => f.signature.includes('MOBILE_SHEET_TOO_TALL'));
     const hasModalDefect = detectedFailures.some(f => f.signature.includes('selftest-planted-dialog') || f.signature.includes('selftest-wide-btn') || f.signature.includes('ELEMENT_HORIZONTAL_OVERFLOW'));
     const hasFlawlessDefect = detectedFailures.some(f => f.signature.includes('SUMMARY_INVARIANT_FLAWLESS_INVALID') || f.signature.includes('SUMMARY_INVARIANT_100_PERCENT_WITHOUT_100_TILE'));
+    const hasFontDefect = detectedFailures.some(f => f.signature.includes('FONT_INVARIANT_FAILED'));
+    const hasFlagDefect = detectedFailures.some(f => f.signature.includes('FLAG_INVARIANT_'));
 
-    const all5 = hasUndefined && hasCoveredContinue && has45vhSheet && hasModalDefect && hasFlawlessDefect;
+    const all7 = hasUndefined && hasCoveredContinue && has45vhSheet && hasModalDefect && hasFlawlessDefect && hasFontDefect && hasFlagDefect;
 
-    if (all5) {
-      console.log('\n[PASS] SELFTEST PASSED: Exactly 5 planted defects correctly caught (5/5):');
+    if (all7) {
+      console.log('\n[PASS] SELFTEST PASSED: Exactly 7 planted defects correctly caught (7/7):');
       console.log('  1. Forbidden text "undefined" in HUD');
       console.log('  2. Invisible overlay blocking Continue button');
       console.log('  3. Mobile sheet height 45vh > 30vh');
       console.log('  4. Dialog with 600px wide button inside overflow:auto 400px box');
       console.log('  5. Flawless banner next to 0% accuracy');
+      console.log('  6. Font fallback defect (renamed @font-face src / fallback headline font)');
+      console.log('  7. Hidden flag source in result/question card');
       await browser.close();
       server.close();
       process.exit(0);
     } else {
-      console.error('\n[FAIL] SELFTEST FAILED: Expected all 5 planted defects to be caught, got:', detectedFailures);
+      console.error('\n[FAIL] SELFTEST FAILED: Expected all 7 planted defects to be caught, got:', detectedFailures);
       await browser.close();
       server.close();
       process.exit(1);
@@ -599,6 +627,105 @@ async function validatePhase(page, phase, { viewport, mode = 'clue', tier = 'eas
             signature: `SUMMARY_INVARIANT_FLAWLESS_INVALID: wrong=${wrong} answered=${answered}`,
             details: `"Flawless" appears when wrong=${wrong} and answered=${answered} (must be wrong == 0 and answered >= 1)`
           });
+        }
+      }
+    }
+
+    // 8. Font Invariant: Fraunces & DM Sans loaded, >= 2 loaded faces, headline starts with web font
+    if (ph === 'start' || ph === 'question' || ph === 'result') {
+      const hasFraunces = document.fonts.check('700 24px Fraunces') || document.fonts.check('700 24px "Fraunces Variable"');
+      const hasDMSans = document.fonts.check('400 16px "DM Sans"') || document.fonts.check('400 16px "DM Sans Variable"');
+      let loadedFaces = 0;
+      for (const font of document.fonts) {
+        if (font.status === 'loaded') loadedFaces++;
+      }
+
+      let headlineFontOk = true;
+      let headlineFont = '';
+      const headline = document.querySelector('.start-hero-title') || document.querySelector('.hud-brand-title') || document.querySelector('h1');
+      if (headline) {
+        headlineFont = window.getComputedStyle(headline).fontFamily.replace(/['"]/g, '');
+        if (!headlineFont.startsWith('Fraunces')) headlineFontOk = false;
+      }
+
+      if (!hasFraunces || !hasDMSans || loadedFaces < 2 || !headlineFontOk) {
+        errors.push({
+          signature: `FONT_INVARIANT_FAILED: fraunces=${hasFraunces}, dmSans=${hasDMSans}, loadedFaces=${loadedFaces}, headline=${headlineFont}`,
+          details: `Font loading invariant failed: Fraunces=${hasFraunces}, DMSans=${hasDMSans}, loadedCount=${loadedFaces}, headlineFont="${headlineFont}"`
+        });
+      }
+    }
+
+    // 9. Flag Invariants
+    if (ph === 'question') {
+      // In Flag mode: question card shows a flag (img naturalWidth > 0 or a non-'none' background-image, rendered size >= 24x16)
+      if (md === 'flag') {
+        const card = document.getElementById('clueCard');
+        const flagEl = card ? (card.querySelector('.target-flag-spotlight .fi') || card.querySelector('.target-flag-spotlight img') || card.querySelector('.fi')) : null;
+        if (!flagEl) {
+          errors.push({
+            signature: 'FLAG_INVARIANT_QUESTION_MISSING',
+            details: 'Flag mode question card does not contain a flag element'
+          });
+        } else {
+          const rect = flagEl.getBoundingClientRect();
+          const bg = window.getComputedStyle(flagEl).backgroundImage;
+          const isImg = flagEl.tagName === 'IMG' && flagEl.naturalWidth > 0;
+          const hasBg = bg && bg !== 'none' && !bg.includes('none');
+          if ((!isImg && !hasBg) || rect.width < 24 || rect.height < 16) {
+            errors.push({
+              signature: `FLAG_INVARIANT_QUESTION_INVALID: w=${rect.width.toFixed(1)}, h=${rect.height.toFixed(1)}, bg=${bg}`,
+              details: `Flag mode flag rendered invalid: width=${rect.width}, height=${rect.height}, bg=${bg}`
+            });
+          }
+        }
+      }
+
+      // In Name mode: question card shows flag next to the name
+      if (md === 'name') {
+        const card = document.getElementById('clueCard');
+        const spotlight = card ? card.querySelector('.target-name-spotlight') : null;
+        const flagEl = spotlight ? (spotlight.querySelector('.fi') || spotlight.querySelector('img')) : null;
+        if (!flagEl) {
+          errors.push({
+            signature: 'FLAG_INVARIANT_NAME_MODE_MISSING',
+            details: 'Name mode question card does not contain flag next to name in .target-name-spotlight'
+          });
+        } else {
+          const bg = window.getComputedStyle(flagEl).backgroundImage;
+          const isImg = flagEl.tagName === 'IMG' && flagEl.naturalWidth > 0;
+          const hasBg = bg && bg !== 'none' && !bg.includes('none');
+          if (!isImg && !hasBg) {
+            errors.push({
+              signature: `FLAG_INVARIANT_NAME_MODE_INVALID: bg=${bg}`,
+              details: `Name mode flag invalid: bg=${bg}`
+            });
+          }
+        }
+      }
+    }
+
+    if (ph === 'result') {
+      // Result card in every mode shows the flag
+      const vault = document.getElementById('memoryVault');
+      if (vault && !vault.classList.contains('hidden') && vault.style.display !== 'none' && window.getComputedStyle(vault).display !== 'none') {
+        const flagEl = vault.querySelector('#vaultFlag .fi') || vault.querySelector('#vaultFlag img') || vault.querySelector('.vault-flag-slot .fi');
+        if (!flagEl) {
+          errors.push({
+            signature: 'FLAG_INVARIANT_RESULT_MISSING',
+            details: 'Result card (memoryVault) does not contain a flag element in #vaultFlag'
+          });
+        } else {
+          const rect = flagEl.getBoundingClientRect();
+          const bg = window.getComputedStyle(flagEl).backgroundImage;
+          const isImg = flagEl.tagName === 'IMG' && flagEl.naturalWidth > 0;
+          const hasBg = bg && bg !== 'none' && !bg.includes('none');
+          if ((!isImg && !hasBg) || rect.width < 24 || rect.height < 16) {
+            errors.push({
+              signature: `FLAG_INVARIANT_RESULT_INVALID: w=${rect.width.toFixed(1)}, h=${rect.height.toFixed(1)}, bg=${bg}`,
+              details: `Result card flag invalid: width=${rect.width}, height=${rect.height}, bg=${bg}`
+            });
+          }
         }
       }
     }
