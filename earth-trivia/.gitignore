@@ -7,6 +7,7 @@ dist/debug/
 report/
 .cache/
 *.png
+!docs/social-preview.png
 *.pdf
 .DS_Store
 Thumbs.db
