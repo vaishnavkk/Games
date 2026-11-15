@@ -5,7 +5,7 @@ import tailwindColors from 'tailwindcss/colors.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, '../..');
 
 console.log('================================================================================');
 console.log('       TAILWIND DEFAULT COLOR COLLISION AUDIT ACROSS ALL CSS/JS (Step 4f)       ');

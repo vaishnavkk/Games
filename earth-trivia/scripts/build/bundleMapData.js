@@ -2,12 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import * as topojson from 'topojson-client';
-import { SOI_WEST_JK, SOI_NORTH_LADAKH } from '../data/soi-boundaries.js';
+import { SOI_WEST_JK, SOI_NORTH_LADAKH } from '../../data/soi-boundaries.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const worldAtlasPath = path.join(__dirname, '../node_modules/world-atlas/countries-50m.json');
+const worldAtlasPath = path.join(__dirname, '../../node_modules/world-atlas/countries-50m.json');
 const worldTopo = JSON.parse(fs.readFileSync(worldAtlasPath, 'utf-8'));
 
 console.log('Extracting countries from world-atlas/countries-50m.json...');
@@ -281,7 +281,7 @@ const optimizedCountries = countries.map(c => ({
   }
 }));
 
-const dataDir = path.join(__dirname, '../data');
+const dataDir = path.join(__dirname, '../../data');
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 
 fs.writeFileSync(

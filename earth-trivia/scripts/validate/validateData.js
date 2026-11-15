@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 console.log('Running Data Validator on data/countries.json...');
 
-const dataPath = path.join(__dirname, '../data/countries.json');
+const dataPath = path.join(__dirname, '../../data/countries.json');
 if (!fs.existsSync(dataPath)) {
   console.error('FAIL: data/countries.json does not exist!');
   process.exit(1);

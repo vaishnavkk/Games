@@ -5,7 +5,7 @@ import { takeFullSnapshot } from './snapshotComputedStyles.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, '../..');
 
 async function main() {
   const baselinePath = path.resolve(rootDir, '../report/cleanup/computed_styles_baseline.json');

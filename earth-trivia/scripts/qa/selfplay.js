@@ -9,11 +9,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
-import { pointsIfCorrect, calculatePartialCredit, SCORING } from '../src/scoring.js';
-import { getLargestLandmassCenter } from '../src/cameraFlight.js';
-import { CountryPicker } from '../src/picker.js';
-import { COUNTRIES_DB } from '../data/countries.js';
-import { WORLD_COUNTRIES } from '../data/world-50m.js';
+import { pointsIfCorrect, calculatePartialCredit, SCORING } from '../../src/scoring.js';
+import { getLargestLandmassCenter } from '../../src/cameraFlight.js';
+import { CountryPicker } from '../../src/picker.js';
+import { COUNTRIES_DB } from '../../data/countries.js';
+import { WORLD_COUNTRIES } from '../../data/world-50m.js';
 import { startPageCoverage, stopPageCoverage, generateCoverageReport } from './coverageReporter.js';
 
 const auditPicker = new CountryPicker(null, null);
@@ -55,7 +55,7 @@ function getBestCountryCoords(countryOrId) {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, '../..');
 const CHROME_PATH = process.env.CHROME_BIN || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 
 // CLI Options
@@ -2147,7 +2147,7 @@ async function main() {
   }
 
   const timestamp = new Date().toISOString().replace(/[-:]/g, '').replace('T', '_').split('.')[0];
-  const reportDir = path.resolve(__dirname, `../../report/selfplay/${timestamp}`);
+  const reportDir = path.resolve(__dirname, `../../../report/selfplay/${timestamp}`);
   fs.mkdirSync(reportDir, { recursive: true });
 
   const eventsFile = path.resolve(reportDir, 'events.jsonl');
@@ -2383,9 +2383,9 @@ async function main() {
   // Read git commit hash
   let commitHash = 'unknown';
   try {
-    const head = fs.readFileSync(path.resolve(__dirname, '../../.git/HEAD'), 'utf8').trim();
+    const head = fs.readFileSync(path.resolve(__dirname, '../../../.git/HEAD'), 'utf8').trim();
     if (head.startsWith('ref:')) {
-      const refPath = path.resolve(__dirname, '../../.git', head.split(' ')[1]);
+      const refPath = path.resolve(__dirname, '../../../.git', head.split(' ')[1]);
       commitHash = fs.readFileSync(refPath, 'utf8').trim().slice(0, 7);
     } else {
       commitHash = head.slice(0, 7);

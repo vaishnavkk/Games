@@ -5,8 +5,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const cluesPath = path.resolve(__dirname, '../data/clues.json');
-const countriesPath = path.resolve(__dirname, '../data/countries.json');
+const cluesPath = path.resolve(__dirname, '../../data/clues.json');
+const countriesPath = path.resolve(__dirname, '../../data/countries.json');
 
 const clues = JSON.parse(fs.readFileSync(cluesPath, 'utf8'));
 const countries = JSON.parse(fs.readFileSync(countriesPath, 'utf8'));

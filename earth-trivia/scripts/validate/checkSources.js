@@ -5,11 +5,11 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const cluesPath = path.resolve(__dirname, '../data/clues.json');
-const countriesPath = path.resolve(__dirname, '../data/countries.json');
-const cachePath = path.resolve(__dirname, '../.cache/sources.json');
-const grandfatheredPath = path.resolve(__dirname, '../.cache/grandfathered_sources.json');
-const logDir = path.resolve(__dirname, '../../report/sources/logs');
+const cluesPath = path.resolve(__dirname, '../../data/clues.json');
+const countriesPath = path.resolve(__dirname, '../../data/countries.json');
+const cachePath = path.resolve(__dirname, '../../.cache/sources.json');
+const grandfatheredPath = path.resolve(__dirname, '../../.cache/grandfathered_sources.json');
+const logDir = path.resolve(__dirname, '../../../report/sources/logs');
 
 export const DEMONYMS_LIST = [
   'Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Argentine', 'Armenian', 'Australian', 'Austrian',

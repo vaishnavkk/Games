@@ -1,0 +1,37 @@
+# GeoTrivia Project Architecture
+
+## Directory Layout
+- `src/`: Core game application code
+  - `main.js`: Main entry point, UI binding, event coordination
+  - `globe.js`: 3D WebGL sphere rendering, Three.js scene setup
+  - `three.js`: Tree-shakeable Three.js barrel module
+  - `mapRenderer.js`: Equirectangular offline canvas texture generation
+  - `picker.js`: Point-in-polygon raycasting & country detection
+  - `cameraFlight.js`: Smooth spherical interpolation & framing flights
+  - `frame_union.js`: Bounding box & bounding sphere utilities
+  - `game.js`: Expedition flow, mode logic, state management
+  - `ui.js`: HUD updates, modals, touch confirm controls
+  - `scoring.js`: Scoring algorithms, tier modifiers, accuracy calculation
+  - `questionBag.js`: Uniform clue sampler, cycle exhaustion, history tracking
+  - `audio.js`: Synthesized Web Audio API sound effects
+  - `rng.js`: Seeded PRNG algorithms (mulberry32)
+  - `icons.js`: Vector SVG icons
+- `src/styles/`: Modularized CSS stylesheets
+  - `tokens.css`: Design tokens, colors, typography, spacing
+  - `layout.css`: WebGL container, shell, top HUD layout
+  - `components.css`: Floating clue card, buttons, memory vault cards
+  - `modals.css`: Start dialog, confirmation prompts, summary screens
+  - `responsive.css`: Mobile and responsive viewport queries
+- `data/`: Game data and geographic boundaries
+  - `world-50m.js` / `world-50m.json`: 50m Natural Earth vector boundaries with Survey of India sovereign borders
+  - `countries.js` / `countries.json`: Country metadata, capitals, populations
+  - `clues.js` / `clues.json`: Verified clue libraries and hints
+  - `tiny-countries.js`: Precision coordinates for microstates
+  - `soi-boundaries.js`: Survey of India official boundary coordinates
+- `scripts/`: Tooling & automation
+  - `build/`: Build and bundling tools (`bundleMapData.js`, `serve.js`)
+  - `validate/`: Data validators, clue audits, contrast and palette checks
+  - `qa/`: Autonomous selfplay harness and coverage reporting
+- `test/`: Automated unit and integration test suites
+- `docs/`: Technical specifications and architecture documentation
+- `dist/`: Bundled production distribution (`bundle.js`)
