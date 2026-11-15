@@ -281,12 +281,6 @@ export function getShortestDistanceBetweenCountries(countryA, countryB) {
   };
 }
 
-// Distance from clicked point to nearest point on target country boundary
-export function distanceToCountryKm(latClick, lonClick, targetGeometry) {
-  const res = distanceToCountryWithNearest(latClick, lonClick, targetGeometry);
-  return res.km;
-}
-
 // Largest landmass center for multi-part countries
 export function getLargestLandmassCenter(country) {
   if (!country) return { lat: 0, lon: 0 };
@@ -695,7 +689,6 @@ export class CameraFlightController {
     const sprite = new THREE.Sprite(spriteMat);
     sprite.position.copy(positionVec);
 
-    const W = typeof window !== 'undefined' ? window.innerWidth : 1440;
     const H = typeof window !== 'undefined' ? window.innerHeight : 900;
     const fov = (this.camera && this.camera.fov) ? this.camera.fov : 45;
     const fy = (H / 2) / Math.tan((fov * Math.PI) / 360);
