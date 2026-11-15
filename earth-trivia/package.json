@@ -13,6 +13,7 @@
     "check:contrast": "node scripts/checkContrast.js",
     "bundle:map": "node scripts/bundleMapData.js",
     "build": "esbuild src/main.js --bundle --outfile=dist/bundle.js --format=esm --minify",
+    "lint": "eslint src/",
     "serve": "node scripts/serve.js",
     "test:random": "node scripts/testRandom.js",
     "test:framing": "node scripts/testMidRangeFraming.js",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
+    "eslint": "^10.15.0",
     "puppeteer-core": "^25.16.0",
     "tailwindcss": "^3.4.19",
     "world-atlas": "^2.0.2"
