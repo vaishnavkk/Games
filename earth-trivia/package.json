@@ -16,6 +16,7 @@
     "start": "node scripts/build/serve.js",
     "serve": "node scripts/build/serve.js",
     "build": "esbuild src/main.js --bundle --outfile=dist/bundle.js --format=esm --minify",
+    "build:debug": "esbuild src/main.js --bundle --outfile=dist/debug/bundle.js --format=esm --sourcemap",
     "bundle:map": "node scripts/build/bundleMapData.js",
     "lint": "eslint src/",
     "check:clues": "node scripts/validate/checkCluesStep0.js",

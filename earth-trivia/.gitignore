@@ -1,6 +1,8 @@
 node_modules/
 dist/*
 !dist/bundle.js
+*.map
+dist/debug/
 /report/
 report/
 .cache/
