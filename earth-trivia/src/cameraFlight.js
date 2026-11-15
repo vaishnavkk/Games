@@ -5,9 +5,9 @@ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { CountryPicker } from './picker.js';
 import { TINY_COUNTRIES } from '../data/tiny-countries.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
-import { distanceToCountryWithNearest } from './frame_union.js';
+import { distanceToCountryWithNearest, haversineDistanceKm, getLargestPolygon } from './frame_union.js';
 
-export { distanceToCountryWithNearest };
+export { distanceToCountryWithNearest, haversineDistanceKm };
 
 export const FLIGHT = {
   zoomOutWrong: 1.18,   // final distance = fitDistance * this
@@ -139,39 +139,11 @@ export function animateAfterAnswer(camera, controls, o) {
   });
 }
 
-export function haversineDistanceKm(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Earth radius in km
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLon = ((lon2 - lon1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((lat1 * Math.PI) / 180) *
-      Math.cos((lat2 * Math.PI) / 180) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return Math.round(R * c);
-}
-
 // Largest landmass center for multi-part countries
 export function getLargestLandmassCenter(country) {
   if (!country) return { lat: 0, lon: 0 };
   const geom = country.geometry;
-  if (!geom || !geom.coordinates) {
-    return {
-      lat: country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0),
-      lon: country.lon !== undefined ? country.lon : (country.centroid ? country.centroid[0] : 0)
-    };
-  }
-  let maxPts = 0;
-  let bestPoly = null;
-  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
-  for (const p of polys) {
-    if (p[0] && p[0].length > maxPts) {
-      maxPts = p[0].length;
-      bestPoly = p;
-    }
-  }
+  const bestPoly = getLargestPolygon(geom);
   if (!bestPoly || !bestPoly[0]) {
     return {
       lat: country.lat !== undefined ? country.lat : (country.centroid ? country.centroid[1] : 0),
@@ -218,18 +190,7 @@ export function getTargetCameraDir(country, globeMesh) {
 // Compute angular diameter of country's largest landmass
 export function getCountryAngularDiameter(country) {
   if (!country) return 5;
-  const geom = country.geometry;
-  if (!geom || !geom.coordinates) return 5;
-
-  let maxPts = 0;
-  let bestPoly = null;
-  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
-  for (const p of polys) {
-    if (p[0] && p[0].length > maxPts) {
-      maxPts = p[0].length;
-      bestPoly = p;
-    }
-  }
+  const bestPoly = getLargestPolygon(country.geometry);
   if (!bestPoly || !bestPoly[0]) return 5;
 
   const ext = bestPoly[0];
@@ -670,10 +631,7 @@ export class CameraFlightController {
     cancelAnswerFlight();
   }
 
-  zoomOutToOverview({ targetCountry = null, duration = 600, onComplete } = {}) {
-    const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
-      (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
-    if (isFast) duration = Math.round(duration * 0.2);
+  _prepareFlight() {
     this.cancelAnswerFlight();
     const job = { cancelled: false };
     this._resetJob = job;
@@ -682,6 +640,24 @@ export class CameraFlightController {
     if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
     if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
     this.clearVisuals();
+    return job;
+  }
+
+  _finishFlight(onComplete) {
+    this.isFlying = false;
+    this.controls.enabled = true;
+    if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
+    if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
+    this.controls.target.set(0, 0, 0);
+    this.controls.update();
+    if (onComplete) onComplete();
+  }
+
+  zoomOutToOverview({ targetCountry = null, duration = 600, onComplete } = {}) {
+    const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
+      (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
+    if (isFast) duration = Math.round(duration * 0.2);
+    const job = this._prepareFlight();
 
     const isMobile = (typeof window !== 'undefined')
       ? (window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth))
@@ -747,15 +723,7 @@ export class CameraFlightController {
         this.camera.up.set(0, 1, 0);
         this.camera.lookAt(0, 0, 0);
         if (this.camera.clearViewOffset) this.camera.clearViewOffset();
-
-        this.isFlying = false;
-        this.controls.enabled = true;
-        if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
-        if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
-        this.controls.target.set(0, 0, 0);
-        this.controls.update();
-
-        if (onComplete) onComplete();
+        this._finishFlight(onComplete);
       }
     };
 
@@ -766,15 +734,8 @@ export class CameraFlightController {
     const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
       (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
     if (isFast) duration = Math.round(duration * 0.2);
-    this.cancelAnswerFlight();
     if (this.camera && this.camera.clearViewOffset) this.camera.clearViewOffset();
-    const job = { cancelled: false };
-    this._resetJob = job;
-    this.isFlying = true;
-    this.controls.enabled = false;
-    if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
-    if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
-    this.clearVisuals();
+    const job = this._prepareFlight();
 
     const startCamX = this.camera.position.x || 0;
     const startCamY = this.camera.position.y || 0;
@@ -802,13 +763,7 @@ export class CameraFlightController {
       } else {
         this.camera.position.set(0, 0, targetCamZ);
         this.camera.lookAt(0, 0, 0);
-        this.isFlying = false;
-        this.controls.enabled = true;
-        if (this.controls.sphericalDelta) this.controls.sphericalDelta.set(0, 0, 0);
-        if (this.controls.panOffset) this.controls.panOffset.set(0, 0, 0);
-        this.controls.target.set(0, 0, 0);
-        this.controls.update();
-        if (onComplete) onComplete();
+        this._finishFlight(onComplete);
       }
     };
 

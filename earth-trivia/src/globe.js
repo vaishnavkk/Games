@@ -4,6 +4,7 @@ import { MapRenderer } from './mapRenderer.js';
 import { CameraFlightController } from './cameraFlight.js';
 import { CountryPicker } from './picker.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
+import { isAntimeridianSeam } from './frame_union.js';
 
 export class GlobeApp {
   constructor(containerEl) {
@@ -110,10 +111,7 @@ export class GlobeApp {
             const nextIdx = (i + 1) % ring.length;
             const p1 = ring[i];
             const p2 = ring[nextIdx];
-            // Skip segments crossing the antimeridian seam
-            if (Math.abs(p2[0] - p1[0]) > 180) continue;
-            // Skip artificial antimeridian split seam
-            if (Math.abs(p1[0]) >= 179.99 && Math.abs(p2[0]) >= 179.99) continue;
+            if (isAntimeridianSeam(p1, p2)) continue;
 
             const v1 = CountryPicker.latLonToVector3(p1[1], p1[0], radius);
             const v2 = CountryPicker.latLonToVector3(p2[1], p2[0], radius);

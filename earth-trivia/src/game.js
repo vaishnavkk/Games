@@ -195,28 +195,23 @@ export class GameManager {
     cancelAnswerFlight();
     this.globe.flight.cancelAnswerFlight();
     // Reset visual map and camera (clears all markers, arcs, and highlights)
+    const onOverviewComplete = () => {
+      this.globe.isAutoRotating = true;
+      this.globe.lastInteractionTime = performance.now();
+    };
     if (previousCountry) {
       this.globe.flight.zoomOutToOverview({
         targetCountry: previousCountry,
         duration: 600,
-        onComplete: () => {
-          this.globe.isAutoRotating = true;
-          this.globe.lastInteractionTime = performance.now();
-        }
+        onComplete: onOverviewComplete
       });
-      this.globe.isAutoRotating = true;
-      this.globe.lastInteractionTime = performance.now();
     } else {
       this.globe.flight.resetToOverview({
         duration: 800,
-        onComplete: () => {
-          this.globe.isAutoRotating = true;
-          this.globe.lastInteractionTime = performance.now();
-        }
+        onComplete: onOverviewComplete
       });
-      this.globe.isAutoRotating = true;
-      this.globe.lastInteractionTime = performance.now();
     }
+    onOverviewComplete();
     this.globe.setMicrostateTarget(this.currentCountry);
     this.globe.mapRenderer.resetHighlights();
 
@@ -593,6 +588,16 @@ export class GameManager {
     });
   }
 
+  _hideFinishElements() {
+    if (this.ui.finishConfirmModal) {
+      this.ui.finishConfirmModal.classList.add('hidden');
+    }
+    if (this.ui.finishEndlessBtn) {
+      this.ui.finishEndlessBtn.classList.add('hidden');
+      this.ui.finishEndlessBtn.style.display = 'none';
+    }
+  }
+
   returnToMainMenu() {
     this.stopTimer();
     this.isAnswering = false;
@@ -617,13 +622,7 @@ export class GameManager {
     this.globe.controls.enabled = true;
     this.globe.isAutoRotating = true;
 
-    if (this.ui.finishConfirmModal) {
-      this.ui.finishConfirmModal.classList.add('hidden');
-    }
-    if (this.ui.finishEndlessBtn) {
-      this.ui.finishEndlessBtn.classList.add('hidden');
-      this.ui.finishEndlessBtn.style.display = 'none';
-    }
+    this._hideFinishElements();
 
     this.ui.hideTouchConfirm();
     this.ui.showStartScreen();
@@ -643,13 +642,7 @@ export class GameManager {
     this.globe.flight.clearVisuals();
     this.globe.mapRenderer.resetHighlights();
 
-    if (this.ui.finishConfirmModal) {
-      this.ui.finishConfirmModal.classList.add('hidden');
-    }
-    if (this.ui.finishEndlessBtn) {
-      this.ui.finishEndlessBtn.classList.add('hidden');
-      this.ui.finishEndlessBtn.style.display = 'none';
-    }
+    this._hideFinishElements();
 
     const answered = this.correctCount + this.wrongCount;
     if (answered === 0) {

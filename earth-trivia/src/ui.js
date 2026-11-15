@@ -87,34 +87,24 @@ export class UIManager {
       if (this.touchConfirmChip) {
         this.touchConfirmChip.innerHTML = `<span>Continue</span> ${ICONS.arrowRight}`;
       }
-    } else if (mode === 'flag') {
-      this.touchConfirmBtn.classList.remove('continue-only');
-      this.touchConfirmBtn.setAttribute('aria-label', 'Confirm Country Selection');
-      if (this.touchSelectedFlag) {
-        this.touchSelectedFlag.innerHTML = '';
-        this.touchSelectedFlag.style.display = 'none';
-      }
-      if (this.touchSelectedName) {
-        this.touchSelectedName.style.display = 'inline-block';
-        this.touchSelectedName.textContent = country.name;
-      }
-      if (this.touchConfirmChip) {
-        this.touchConfirmChip.innerHTML = `${ICONS.check} <span>Confirm</span>`;
-      }
     } else {
-      // Clue mode
       this.touchConfirmBtn.classList.remove('continue-only');
       this.touchConfirmBtn.setAttribute('aria-label', 'Confirm Country Selection');
-      if (this.touchSelectedFlag) {
-        this.touchSelectedFlag.style.display = 'inline-block';
-        this.touchSelectedFlag.innerHTML = getFlagSvg(country.flag);
-      }
       if (this.touchSelectedName) {
         this.touchSelectedName.style.display = 'inline-block';
         this.touchSelectedName.textContent = country.name;
       }
       if (this.touchConfirmChip) {
         this.touchConfirmChip.innerHTML = `${ICONS.check} <span>Confirm</span>`;
+      }
+      if (this.touchSelectedFlag) {
+        if (mode === 'flag') {
+          this.touchSelectedFlag.innerHTML = '';
+          this.touchSelectedFlag.style.display = 'none';
+        } else {
+          this.touchSelectedFlag.style.display = 'inline-block';
+          this.touchSelectedFlag.innerHTML = getFlagSvg(country.flag);
+        }
       }
     }
     this.touchConfirmBtn.classList.remove('hidden');
