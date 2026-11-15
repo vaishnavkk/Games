@@ -1,9 +1,9 @@
 import { COUNTRIES_DB } from '../data/countries.js';
 import { CLUES_LIBRARY } from '../data/clues.js';
-import { buildLibrary, pickCountries, pickClueSet, findReinsertIndex } from './questionBag.js';
-import { rng, shuffle } from './rng.js';
+import { buildLibrary, pickCountries, pickClueSet } from './questionBag.js';
+import { shuffle } from './rng.js';
 import { getCountryAngularDiameter, getTargetCameraDir, getFreeRect, isHiddenByUi, cancelAnswerFlight } from './cameraFlight.js';
-import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getLargestLandmassBox, getCountryBoundingBox } from './frame_union.js';
+import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, getLargestLandmassCornerDirs, getLargestLandmassBox } from './frame_union.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
@@ -175,7 +175,6 @@ export class GameManager {
     this.clueIndex = 0;
 
     // Pick clue set via questionBag (shown in level order)
-    const excludeIds = this.currentCountry.forcedExcludeClueIds || [];
     const pickedClues = pickClueSet(this.currentCountry.code, this.cluesLibrary);
     if (pickedClues && pickedClues.length === 3) {
       this.currentClues = pickedClues;
