@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main, cleanup]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      full_selfplay:
+        description: 'Run full selfplay matrix (--full)'
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  test-and-verify:
+    name: Build, Validate, Test & Selfplay
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: earth-trivia
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'earth-trivia/.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: 'earth-trivia/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Lint source code
+        run: npm run lint
+
+      - name: Restore sources cache
+        uses: actions/cache@v4
+        with:
+          path: earth-trivia/.cache
+          key: sources-cache-${{ hashFiles('earth-trivia/data/clues.json') }}
+          restore-keys: |
+            sources-cache-
+
+      - name: Run validators
+        run: |
+          npm run check:clues
+          npm run check:palette
+          npm run check:library -- --tier easy
+          npm run check:sources --tier easy
+
+      - name: Run test suite
+        run: npm test
+
+      - name: Install Chrome for Puppeteer
+        run: |
+          npx puppeteer browsers install chrome || true
+          CHROME_BIN=$(which google-chrome || which google-chrome-stable || which chromium-browser || which chromium || npx puppeteer browsers installed | grep chrome | awk '{print $2}')
+          echo "CHROME_BIN=$CHROME_BIN" >> $GITHUB_ENV
+
+      - name: Run Puppeteer Selfplay
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "${{ inputs.full_selfplay }}" = "true" ]; then
+            npm run selfplay -- --full --workers=4
+          else
+            npm run selfplay -- --smoke
+          fi
+
+      - name: Upload Selfplay Summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selfplay-summary
+          path: |
+            report/selfplay/**/summary.txt
+            ../report/selfplay/**/summary.txt
+          if-no-files-found: ignore
