@@ -798,41 +798,6 @@ export class CameraFlightController {
     cancelAnswerFlight();
   }
 
-  // Backwards compatible wrapper for flyToCountry
-  flyToCountry(targetLat, targetLon, {
-    duration = 1400,
-    isDesktopOffset = false,
-    angularSpan = 10,
-    guessLat = null,
-    guessLon = null,
-    onComplete
-  } = {}) {
-    const isMobile = (typeof window !== 'undefined') ? (window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth)) : false;
-    const fitDistance = this.computeTargetDistance(angularSpan, isMobile);
-    const centerVec = CountryPicker.latLonToVector3(targetLat, targetLon, 1.0);
-    if (this.globeMesh) {
-      this.globeMesh.updateMatrixWorld(true);
-      centerVec.applyMatrix4(this.globeMesh.matrixWorld);
-    }
-    const targetDir = centerVec.normalize();
-    if (isDesktopOffset && !isMobile) {
-      targetDir.applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.12);
-    } else if (isMobile) {
-      const right = new THREE.Vector3().crossVectors(targetDir, new THREE.Vector3(0, 1, 0)).normalize();
-      if (right.lengthSq() > 1e-4) targetDir.applyAxisAngle(right, -0.10);
-    }
-
-    return this.animateAfterAnswer({
-      wasCorrect: false,
-      targetDir,
-      fitDistance,
-      targetHiddenByUi: false
-    }).then((status) => {
-      if (onComplete) onComplete();
-      return status;
-    });
-  }
-
   zoomOutToOverview({ targetCountry = null, duration = 600, onComplete } = {}) {
     const isFast = (typeof window !== 'undefined' && window.__FAST_MODE) ||
       (typeof window !== 'undefined' && typeof window.location !== 'undefined' && new URLSearchParams(window.location.search).get('fast') === '1');
