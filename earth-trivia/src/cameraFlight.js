@@ -737,10 +737,12 @@ export class CameraFlightController {
     if (this.camera && this.camera.clearViewOffset) this.camera.clearViewOffset();
     const job = this._prepareFlight();
 
-    const startCamX = this.camera.position.x || 0;
-    const startCamY = this.camera.position.y || 0;
-    const startCamZ = this.camera.position.z;
-    const targetCamZ = 4.0;
+    const startDir = this.camera.position.clone().normalize();
+    const startDist = this.camera.position.length();
+    const endDir = new THREE.Vector3(0, 0, 1);
+    const targetDist = 4.0;
+    const minD = (this.controls && this.controls.minDistance) || 2.52;
+    const maxD = (this.controls && this.controls.maxDistance) || 6.5;
     const startTime = performance.now();
 
     const animateReset = (now) => {
@@ -752,16 +754,19 @@ export class CameraFlightController {
           ? 2 * progress * progress
           : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
-      const camX = THREE.MathUtils.lerp(startCamX, 0, ease);
-      const camY = THREE.MathUtils.lerp(startCamY, 0, ease);
-      const camZ = THREE.MathUtils.lerp(startCamZ, targetCamZ, ease);
-      this.camera.position.set(camX, camY, camZ);
+      const curDir = new THREE.Vector3();
+      greatCircle(startDir, endDir, ease, curDir).normalize();
+      limitLatitude(curDir);
+      const curDist = clamp(THREE.MathUtils.lerp(startDist, targetDist, ease), minD, maxD);
+      this.camera.position.copy(curDir).multiplyScalar(curDist);
+      this.camera.up.set(0, 1, 0);
       this.camera.lookAt(0, 0, 0);
 
       if (progress < 1) {
         requestAnimationFrame(animateReset);
       } else {
-        this.camera.position.set(0, 0, targetCamZ);
+        this.camera.position.copy(endDir).multiplyScalar(targetDist);
+        this.camera.up.set(0, 1, 0);
         this.camera.lookAt(0, 0, 0);
         this._finishFlight(onComplete);
       }
