@@ -257,6 +257,30 @@ if (fiji && fiji.geometry.coordinates[15]) {
 
 console.log(`Processed ${countries.length} countries.`);
 
+function round4(n) {
+  return Math.round(n * 10000) / 10000;
+}
+
+function roundCoords(coords) {
+  if (typeof coords[0] === 'number') {
+    return [round4(coords[0]), round4(coords[1])];
+  }
+  return coords.map(roundCoords);
+}
+
+const optimizedCountries = countries.map(c => ({
+  id: c.id,
+  name: c.name,
+  bbox: c.bbox.map(round4),
+  centroid: c.centroid.map(round4),
+  angularSpan: round4(c.angularSpan),
+  colorIndex: c.colorIndex,
+  geometry: {
+    type: c.geometry.type,
+    coordinates: roundCoords(c.geometry.coordinates)
+  }
+}));
+
 const dataDir = path.join(__dirname, '../data');
 if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
 
@@ -264,7 +288,7 @@ fs.writeFileSync(
   path.join(dataDir, 'world-50m.json'),
   JSON.stringify({
     type: 'FeatureCollection',
-    features: countries.map(c => ({
+    features: optimizedCountries.map(c => ({
       type: 'Feature',
       id: c.id,
       properties: { name: c.name },
@@ -275,7 +299,7 @@ fs.writeFileSync(
 
 fs.writeFileSync(
   path.join(dataDir, 'world-50m.js'),
-  `export const WORLD_COUNTRIES = ${JSON.stringify(countries)};\n`
+  `export const WORLD_COUNTRIES = ${JSON.stringify(optimizedCountries)};\n`
 );
 
 console.log('Successfully saved data/world-50m.json and data/world-50m.js with colorIndex and angularSpan!');
