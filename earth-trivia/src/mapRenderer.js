@@ -23,7 +23,7 @@ export class MapRenderer {
       if (gl) {
         maxDim = gl.getParameter(gl.MAX_TEXTURE_SIZE) || 4096;
       }
-    } catch (e) {}
+    } catch (e) { /* defensive */ }
 
     const isMobileDevice = (typeof window !== 'undefined' && window.innerWidth < 640) ||
       (typeof window !== 'undefined' && 'ontouchstart' in window && window.innerWidth < 900);

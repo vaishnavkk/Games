@@ -671,6 +671,7 @@ export class GameManager {
           localStorage.setItem('geotrivia_highscore', String(this.score));
         }
       } catch (e) {
+        // defensive
         console.warn('localStorage access failed:', e);
       }
     }
