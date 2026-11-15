@@ -32,13 +32,3 @@ export function shuffle(arr, customRng = rng) {
   }
   return a;
 }
-
-export function shuffleInPlace(arr, customRng = rng) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(customRng() * (i + 1));
-    const tmp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = tmp;
-  }
-  return arr;
-}
