@@ -14,8 +14,11 @@ import { getLargestLandmassCenter } from '../src/cameraFlight.js';
 import { CountryPicker } from '../src/picker.js';
 import { COUNTRIES_DB } from '../data/countries.js';
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
+import { startPageCoverage, stopPageCoverage, generateCoverageReport } from './coverageReporter.js';
 
 const auditPicker = new CountryPicker(null, null);
+const isCoverage = process.argv.includes('--coverage');
+const globalCoverageAccumulator = { js: [], css: [] };
 
 function getBestCountryCoords(countryOrId) {
   const cId = typeof countryOrId === 'object' ? countryOrId.id : countryOrId;
@@ -970,6 +973,7 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   console.log(`\n--- PLAYING GAME: ${configKey} (speed: ${isNormalSpeed ? 'normal 1.0x' : 'fast 0.2x'}) ---`);
 
   const page = await browser.newPage();
+  const cdp = isCoverage ? await startPageCoverage(page) : null;
   await page.setViewport(viewport);
 
   const gameFailures = [];
@@ -1788,6 +1792,7 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
   };
   fs.appendFileSync(eventsFile, JSON.stringify(eventRecord) + '\n', 'utf8');
 
+  if (cdp) await stopPageCoverage(cdp, globalCoverageAccumulator);
   await page.close();
 
   return {
@@ -1895,6 +1900,7 @@ async function verifyAllDialogsAcrossSixViewports(browser, baseUrl) {
   const allFailures = [];
   const context = await browser.createBrowserContext();
   const page = await context.newPage();
+  const cdp = isCoverage ? await startPageCoverage(page) : null;
 
   try {
     for (const vp of dialogViewports) {
@@ -1952,6 +1958,7 @@ async function verifyAllDialogsAcrossSixViewports(browser, baseUrl) {
       details: err.stack
     });
   } finally {
+    if (cdp) await stopPageCoverage(cdp, globalCoverageAccumulator);
     await page.close();
     await context.close();
   }
@@ -1964,6 +1971,7 @@ async function verifyEndlessFinishScenarios(browser, baseUrl) {
   const failures = [];
   const context = await browser.createBrowserContext();
   const page = await context.newPage();
+  const cdp = isCoverage ? await startPageCoverage(page) : null;
   try {
     await page.setViewport({ width: 390, height: 844 });
     await page.goto(`${baseUrl}?fast=1`, { waitUntil: 'load' });
@@ -2124,6 +2132,7 @@ async function verifyEndlessFinishScenarios(browser, baseUrl) {
       details: err.stack
     });
   } finally {
+    if (cdp) await stopPageCoverage(cdp, globalCoverageAccumulator);
     await page.close();
     await context.close();
   }
@@ -2436,6 +2445,13 @@ async function main() {
   console.log('\n================================================================================');
   console.log(finalSummaryText);
   console.log('================================================================================\n');
+
+  if (isCoverage) {
+    const reportOut = path.resolve(rootDir, '../report/cleanup/coverage.txt');
+    const covData = generateCoverageReport(globalCoverageAccumulator, reportOut);
+    console.log(`[Coverage] Generated report at: ${reportOut}`);
+    console.log(`[Coverage] Total functions: ${covData.totalFunctions}, executed: ${covData.executedFunctions}, zero-run: ${covData.zeroRunFunctions.length}`);
+  }
 
   if (isPass) {
     process.exit(0);
