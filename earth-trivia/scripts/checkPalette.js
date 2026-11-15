@@ -29,19 +29,21 @@ console.log(`Loaded ${tailwindHexMap.size} default Tailwind v3 color values for 
 
 // 2. Discover all relevant CSS, HTML, and JS source files
 const filesToCheck = [
-  path.resolve(rootDir, 'src/tokens.css'),
   path.resolve(rootDir, 'index.html'),
 ];
 
-const srcDir = path.resolve(rootDir, 'src');
-if (fs.existsSync(srcDir)) {
-  const srcFiles = fs.readdirSync(srcDir);
-  for (const f of srcFiles) {
-    if (f.endsWith('.js') || f.endsWith('.css')) {
-      filesToCheck.push(path.resolve(srcDir, f));
+function scanDir(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.resolve(dir, f.name);
+    if (f.isDirectory()) {
+      scanDir(full);
+    } else if (f.name.endsWith('.js') || f.name.endsWith('.css')) {
+      filesToCheck.push(full);
     }
   }
 }
+scanDir(path.resolve(rootDir, 'src'));
 
 const hexRegex = /#(?:[0-9a-fA-F]{3,4}){1,2}\b/g;
 let totalCheckedColors = 0;

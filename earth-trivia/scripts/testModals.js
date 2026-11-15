@@ -42,9 +42,17 @@ function startServer(port = 0) {
 }
 
 function runStaticCssChecks() {
-  console.log('[testModals] 1. Running Static CSS Invariant Checks on index.html...');
+  console.log('[testModals] 1. Running Static CSS Invariant Checks on index.html & src/styles...');
   const htmlPath = path.join(rootDir, 'index.html');
-  const html = fs.readFileSync(htmlPath, 'utf8');
+  let html = fs.readFileSync(htmlPath, 'utf8');
+  const stylesDir = path.join(rootDir, 'src', 'styles');
+  if (fs.existsSync(stylesDir)) {
+    for (const file of fs.readdirSync(stylesDir)) {
+      if (file.endsWith('.css')) {
+        html += '\n' + fs.readFileSync(path.join(stylesDir, file), 'utf8');
+      }
+    }
+  }
 
   const rules = [
     { name: 'modal-card or modal-dialog-surface declaration', pattern: /\.modal-card[\s\S]*?\.modal-dialog-surface|\.modal-dialog-surface[\s\S]*?\.modal-card/ },
