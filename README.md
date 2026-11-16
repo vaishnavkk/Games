@@ -2,7 +2,6 @@
 
 A collection of playable web games built with standard web technologies, featuring an interactive 3D globe geography trivia game and a 2D falling blocks arcade game.
 
-[![CI](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Live Site](https://img.shields.io/badge/Play-GitHub_Pages-06b6d4)](https://vaishnavkk.github.io/Games/)
 
