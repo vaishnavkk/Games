@@ -3,6 +3,9 @@
   "version": "2.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "selfplay": "node scripts/selfplay.js",
     "test": "npm --prefix earth-trivia test",
@@ -14,6 +17,8 @@
     "check:claims": "npm --prefix earth-trivia run check:claims --",
     "check:palette": "npm --prefix earth-trivia run check:palette",
     "check:contrast": "npm --prefix earth-trivia run check:contrast",
+    "validate:offline": "npm --prefix earth-trivia run validate:offline",
+    "validate:sources": "npm --prefix earth-trivia run validate:sources --",
     "validate": "npm --prefix earth-trivia run validate"
   }
 }

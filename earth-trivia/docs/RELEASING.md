@@ -4,7 +4,16 @@ This document details the release process, bundle production, GitHub Pages deplo
 
 ---
 
-## 1. Release Process & Tagging
+## 1. Release Checklist & Tagging
+
+### Mandatory Pre-Release Checklist
+Before tagging or cutting any release, verify locally:
+- [ ] Working tree clean (`git status -s`).
+- [ ] Run `npm run validate` locally (full suite including network sources check and cache verification).
+- [ ] Run `npm test` across all viewports.
+- [ ] Run `npm run selfplay -- --full --workers=4` (3 seeds, 123 games, 1,305 rounds, 0 failures, 0 warnings).
+- [ ] Verify `dist/bundle.js` is committed with no source maps (`.map`).
+- [ ] Ensure version is bumped in `package.json` and documented in `CHANGELOG.md`.
 
 ### Step 1: Pre-Release Verification Gate
 Before cutting a release or bumping versions, execute the full local validation suite:
