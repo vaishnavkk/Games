@@ -65,12 +65,17 @@ jobs:
             "$PUPPETEER_CHROME" --version
           fi
 
-      - name: Run validators
-        run: |
-          npm run check:clues
-          npm run check:palette
-          npm run check:library -- --tier easy
-          npm run check:contrast
+      - name: Check clues
+        run: npm run check:clues
+
+      - name: Check palette
+        run: npm run check:palette
+
+      - name: Check library (Easy)
+        run: npm run check:library -- --tier easy
+
+      - name: Check contrast
+        run: npm run check:contrast
 
       - name: Run test suite
         run: npm test

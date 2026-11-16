@@ -6,8 +6,8 @@ puppeteer.launch = function(options = {}) {
   const defaultOpts = launchOptions();
   const mergedArgs = Array.from(new Set([...(defaultOpts.args || []), ...(options.args || [])]));
   return origLaunch({
-    ...defaultOpts,
     ...options,
+    ...defaultOpts,
     executablePath: defaultOpts.executablePath,
     args: mergedArgs
   });
