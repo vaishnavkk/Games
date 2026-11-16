@@ -2,7 +2,7 @@
 
 > **An interactive 3D WebGL globe geography trivia game where players identify nations by clicking directly on the 3D Earth.**
 
-[![CI](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml/badge.svg)](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml)
+[![CI](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml)
 [![Play GeoTrivia](https://img.shields.io/badge/Play_Live-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/earth-trivia/)
 [![Three.js](https://img.shields.io/badge/Three.js-WebGL-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
 [![JavaScript](https://img.shields.io/badge/ES6+-Modular-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)

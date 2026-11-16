@@ -2,7 +2,7 @@
 
 > An arcade collection of high-performance web games built with pure HTML5, CSS3, modern JavaScript, and WebGL. Fast, responsive, dark glassmorphic UI, and 100% self-contained with zero runtime dependencies.
 
-[![CI](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml/badge.svg)](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml)
+[![CI](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml)
 [![Play Arcade](https://img.shields.io/badge/Play_Arcade-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)

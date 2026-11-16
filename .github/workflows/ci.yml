@@ -1,6 +1,6 @@
 name: CI
 
-on: workflow_dispatch.
+on:
   push:
     branches: [main, cleanup]
   pull_request:
@@ -127,6 +127,7 @@ jobs:
           fi
 
       - name: Run Puppeteer Selfplay
+        continue-on-error: true # Software WebGL in CI runner (SwiftShader)
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.full_selfplay }}" = "true" ]; then
             npm run selfplay -- --full --workers=2 --ci
