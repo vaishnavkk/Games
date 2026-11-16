@@ -3,9 +3,8 @@ import path from 'path';
 
 export function getChromeExecutablePath() {
   const envPath = process.env.CHROME_PATH || process.env.PUPPETEER_EXECUTABLE_PATH || process.env.CHROME_BIN;
-  if (envPath) {
-    if (fs.existsSync(envPath)) return envPath;
-    if (path.isAbsolute(envPath) || envPath.startsWith('/')) return envPath;
+  if (envPath && fs.existsSync(envPath)) {
+    return envPath;
   }
 
   const platform = process.platform;
@@ -40,6 +39,10 @@ export function getChromeExecutablePath() {
     if (candidate && fs.existsSync(candidate)) {
       return candidate;
     }
+  }
+
+  if (envPath) {
+    return envPath;
   }
 
   throw new Error('Set CHROME_PATH');

@@ -19,7 +19,7 @@ env:
 jobs:
   build-and-test:
     name: Build, Lint, Validate & Test
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: earth-trivia
@@ -44,6 +44,27 @@ jobs:
       - name: Lint source code
         run: npm run lint
 
+      - name: Verify Google Chrome
+        run: |
+          if google-chrome --version; then
+            echo "Google Chrome verified at $(which google-chrome)"
+          elif which google-chrome-stable; then
+            echo "CHROME_PATH=$(which google-chrome-stable)" >> $GITHUB_ENV
+            google-chrome-stable --version
+          elif which chromium-browser; then
+            echo "CHROME_PATH=$(which chromium-browser)" >> $GITHUB_ENV
+            chromium-browser --version
+          elif which chromium; then
+            echo "CHROME_PATH=$(which chromium)" >> $GITHUB_ENV
+            chromium --version
+          else
+            echo "Google Chrome not found; installing via puppeteer..."
+            npx puppeteer browsers install chrome
+            PUPPETEER_CHROME=$(npx puppeteer browsers installed | grep chrome | head -n1 | awk '{print $2}')
+            echo "CHROME_PATH=$PUPPETEER_CHROME" >> $GITHUB_ENV
+            "$PUPPETEER_CHROME" --version
+          fi
+
       - name: Run validators
         run: |
           npm run check:clues
@@ -51,16 +72,13 @@ jobs:
           npm run check:library -- --tier easy
           npm run check:contrast
 
-      - name: Verify Google Chrome
-        run: google-chrome --version
-
       - name: Run test suite
         run: npm test
 
   selfplay:
     name: Puppeteer Selfplay
     needs: build-and-test
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: earth-trivia
@@ -83,7 +101,25 @@ jobs:
         run: npm run build
 
       - name: Verify Google Chrome
-        run: google-chrome --version
+        run: |
+          if google-chrome --version; then
+            echo "Google Chrome verified at $(which google-chrome)"
+          elif which google-chrome-stable; then
+            echo "CHROME_PATH=$(which google-chrome-stable)" >> $GITHUB_ENV
+            google-chrome-stable --version
+          elif which chromium-browser; then
+            echo "CHROME_PATH=$(which chromium-browser)" >> $GITHUB_ENV
+            chromium-browser --version
+          elif which chromium; then
+            echo "CHROME_PATH=$(which chromium)" >> $GITHUB_ENV
+            chromium --version
+          else
+            echo "Google Chrome not found; installing via puppeteer..."
+            npx puppeteer browsers install chrome
+            PUPPETEER_CHROME=$(npx puppeteer browsers installed | grep chrome | head -n1 | awk '{print $2}')
+            echo "CHROME_PATH=$PUPPETEER_CHROME" >> $GITHUB_ENV
+            "$PUPPETEER_CHROME" --version
+          fi
 
       - name: Run Puppeteer Selfplay
         run: |
