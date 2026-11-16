@@ -56,17 +56,72 @@ function getBestCountryCoords(countryOrId) {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
-const CHROME_PATH = process.env.CHROME_BIN || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+
+function getChromePath() {
+  if (process.env.CHROME_BIN && fs.existsSync(process.env.CHROME_BIN)) {
+    return process.env.CHROME_BIN;
+  }
+  if (process.platform === 'win32') {
+    const winPaths = [
+      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+      process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA, 'Google\\Chrome\\Application\\chrome.exe') : null
+    ].filter(Boolean);
+    for (const p of winPaths) {
+      if (fs.existsSync(p)) return p;
+    }
+  } else if (process.platform === 'linux') {
+    const linuxPaths = [
+      '/usr/bin/google-chrome',
+      '/usr/bin/google-chrome-stable',
+      '/usr/bin/chromium',
+      '/usr/bin/chromium-browser'
+    ];
+    for (const p of linuxPaths) {
+      if (fs.existsSync(p)) return p;
+    }
+  } else if (process.platform === 'darwin') {
+    const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+    if (fs.existsSync(macPath)) return macPath;
+  }
+  return process.env.CHROME_BIN || (process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : '/usr/bin/google-chrome');
+}
+const CHROME_PATH = getChromePath();
 
 // CLI Options
+const isCI = process.argv.includes('--ci') || Boolean(process.env.CI);
 const isQuick = process.argv.includes('--quick');
 const isFull = process.argv.includes('--full');
 const isSmoke = process.argv.includes('--smoke');
 const isSelftest = process.argv.includes('--selftest');
 const configArg = process.argv.find(a => a.startsWith('--config='))?.split('=')[1];
 const seedArg = process.argv.find(a => a.startsWith('--seed='))?.split('=')[1];
+const outIdx = process.argv.indexOf('--out');
+const outArg = process.argv.find(a => a.startsWith('--out='))?.split('=')[1] ||
+  (outIdx !== -1 && outIdx + 1 < process.argv.length ? process.argv[outIdx + 1] : null);
 const workersArg = process.argv.find(a => a.startsWith('--workers='))?.split('=')[1];
 const defaultWorkers = workersArg ? Math.max(1, parseInt(workersArg, 10)) : 4;
+
+let globalIsSoftwareRenderer = false;
+
+function getLaunchArgs(extra = []) {
+  const args = [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-background-timer-throttling',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-renderer-backgrounding',
+    ...extra
+  ];
+  if (isCI) {
+    args.push(
+      '--use-gl=angle',
+      '--use-angle=swiftshader',
+      '--enable-unsafe-swiftshader'
+    );
+  }
+  return args;
+}
 
 const baseSeed = seedArg ? parseInt(seedArg, 10) : Math.floor(Math.random() * 1000000);
 console.log(`[GeoTrivia QA Selfplay] Base Seed: ${baseSeed}`);
@@ -143,7 +198,7 @@ async function runSelftest() {
     browser = await puppeteer.launch({
       executablePath: CHROME_PATH,
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
+      args: getLaunchArgs(['--disable-gpu'])
     });
 
     const page = await browser.newPage();
@@ -1744,11 +1799,15 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
     });
   }
 
-  // Check slow frames count (record as warning if high, not a fatal failure)
+  // Frame-time rule: >3 consecutive frames over 100ms
   const slowFrames = await page.evaluate(() => window.__perfMonitor?.maxConsecutiveSlowFrames || 0);
-  if (slowFrames > 10) {
-    warnCount++;
-    gameWarnings.push({ signature: 'SLOW_FRAMES_BURST', type: 'WARN', details: `Consecutive slow frames was ${slowFrames} (> 10)` });
+  if (slowFrames > 3) {
+    if (isCI && globalIsSoftwareRenderer) {
+      infoCount++;
+      gameWarnings.push({ signature: 'SLOW_FRAMES_BURST', type: 'INFO', details: `Consecutive slow frames was ${slowFrames} (> 3, software renderer under --ci)` });
+    } else {
+      gameFailures.push({ signature: 'SLOW_FRAMES_BURST', details: `Consecutive slow frames was ${slowFrames} (> 3)` });
+    }
   }
 
   // Measure JS Heap metric
@@ -1811,7 +1870,7 @@ async function playGame(browser, baseUrl, gameConfig, eventsFile, reportDir, rng
 async function playGameWithTimeout(browser, baseUrl, gameConfig, eventsFile, reportDir, rng, currentSeed) {
   let context = null;
   let timer = null;
-  const GAME_TIMEOUT_MS = 90_000;
+  const GAME_TIMEOUT_MS = (isCI || globalIsSoftwareRenderer) ? 180_000 : 90_000;
   const configKey = `${gameConfig.mode}-${gameConfig.tier}-${gameConfig.viewport.width}x${gameConfig.viewport.height}${gameConfig.rounds !== 10 ? `-${gameConfig.rounds}r` : ''}${gameConfig.hasTimer ? '-timer' : ''}${gameConfig.isPractice ? '-practice' : ''}`;
   const reproCmd = `npm run selfplay -- --config=${gameConfig.mode}-${gameConfig.tier}-${gameConfig.viewport.width}x${gameConfig.viewport.height} --seed=${currentSeed}`;
 
@@ -2147,8 +2206,14 @@ async function main() {
   }
 
   const timestamp = new Date().toISOString().replace(/[-:]/g, '').replace('T', '_').split('.')[0];
-  const reportDir = path.resolve(__dirname, `../../../report/selfplay/${timestamp}`);
+  const localReportDir = path.resolve(rootDir, `report/selfplay/${timestamp}`);
+  const rootReportDir = path.resolve(__dirname, `../../../report/selfplay/${timestamp}`);
+  const reportDir = outArg
+    ? (path.isAbsolute(outArg) ? outArg : path.resolve(process.cwd(), outArg))
+    : localReportDir;
   fs.mkdirSync(reportDir, { recursive: true });
+  fs.mkdirSync(localReportDir, { recursive: true });
+  fs.mkdirSync(rootReportDir, { recursive: true });
 
   const eventsFile = path.resolve(reportDir, 'events.jsonl');
   const summaryFile = path.resolve(reportDir, 'summary.txt');
@@ -2164,14 +2229,34 @@ async function main() {
   const browser = await puppeteer.launch({
     executablePath: CHROME_PATH,
     headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-background-timer-throttling',
-      '--disable-backgrounding-occluded-windows',
-      '--disable-renderer-backgrounding'
-    ]
+    args: getLaunchArgs()
   });
+
+  // Probe WebGL renderer
+  let webglRenderer = 'Unknown';
+  try {
+    const probePage = await browser.newPage();
+    await probePage.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+    webglRenderer = await probePage.evaluate(() => {
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return 'WebGL Not Supported';
+        const ext = gl.getExtension('WEBGL_debug_renderer_info');
+        if (ext) {
+          return gl.getParameter(ext.UNMASKED_RENDERER_WEBGL);
+        }
+        return gl.getParameter(gl.RENDERER);
+      } catch (e) {
+        return 'Unknown';
+      }
+    });
+    await probePage.close();
+  } catch (e) {
+    webglRenderer = `Unknown (${e.message})`;
+  }
+  globalIsSoftwareRenderer = /swiftshader|llvmpipe|software|mesa/i.test(webglRenderer);
+  console.log(`[GeoTrivia QA Selfplay] Detected WebGL Renderer: ${webglRenderer}${globalIsSoftwareRenderer ? ' (Software)' : ''}`);
 
   const viewportsQuick = [
     { width: 1440, height: 900, name: '1440x900' },
@@ -2258,7 +2343,7 @@ async function main() {
   const seedsToRun = (isFull && !configArg && !isSmoke) ? [baseSeed, (baseSeed + 101) % 1000000, (baseSeed + 202) % 1000000] : [baseSeed];
   console.log(`[GeoTrivia QA Selfplay] Seeds to run (${seedsToRun.length}): ${seedsToRun.join(', ')}`);
 
-  const CONCURRENCY = defaultWorkers;
+  const CONCURRENCY = workersArg ? defaultWorkers : ((isCI && globalIsSoftwareRenderer) ? 2 : defaultWorkers);
   const RUN_TIMEOUT_MS = 25 * 60 * 1000;
 
   // Build task queue
@@ -2419,6 +2504,7 @@ async function main() {
 
   const summaryLines = [];
   summaryLines.push(`commit: ${commitHash} | duration: ${durationSec}s | seeds: ${seedsToRun.join(',')}`);
+  summaryLines.push(`renderer: ${webglRenderer}`);
   summaryLines.push('config | games | rounds | FAIL | WARN');
 
   // Add rows (up to 16 rows)
@@ -2441,6 +2527,10 @@ async function main() {
 
   const finalSummaryText = summaryLines.slice(0, 30).join('\n');
   fs.writeFileSync(summaryFile, finalSummaryText, 'utf8');
+  try {
+    fs.writeFileSync(path.resolve(localReportDir, 'summary.txt'), finalSummaryText, 'utf8');
+    fs.writeFileSync(path.resolve(rootReportDir, 'summary.txt'), finalSummaryText, 'utf8');
+  } catch (e) {}
 
   console.log('\n================================================================================');
   console.log(finalSummaryText);

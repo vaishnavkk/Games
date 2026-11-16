@@ -2,6 +2,7 @@
 
 > An arcade collection of high-performance web games built with pure HTML5, CSS3, modern JavaScript, and WebGL. Fast, responsive, dark glassmorphic UI, and 100% self-contained with zero runtime dependencies.
 
+[![CI](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml/badge.svg)](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml)
 [![Play Arcade](https://img.shields.io/badge/Play_Arcade-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
@@ -99,7 +100,7 @@ An interactive 3D WebGL Globe trivia experience designed to test geography knowl
 - **Free Clue System**: Take up to 3 clues freely per round without penalty; score potential stays at 800 pts.
 - **Game Modes**: Clues Mode, Country Names Mode, and Flag Mode across Easy (42 nations, continent-balanced), Medium (100 nations), and Hard (195 sovereign nations).
 
-👉 *Full details, architecture documentation, and test gates in the [GeoTrivia README](earth-trivia/README.md).*
+👉 *Full details, architecture documentation, and test gates in the [GeoTrivia README](earth-trivia/README.md). Release history is documented in the [GeoTrivia CHANGELOG](earth-trivia/CHANGELOG.md) and deployment procedures in the [Release Guide](earth-trivia/RELEASING.md).*
 
 ---
 
