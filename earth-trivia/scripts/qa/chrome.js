@@ -52,7 +52,13 @@ export function launchOptions(customOptions = {}) {
   const executablePath = getChromeExecutablePath();
   const baseArgs = [];
   if (process.env.CI) {
-    baseArgs.push('--no-sandbox', '--disable-setuid-sandbox');
+    baseArgs.push(
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--use-gl=angle',
+      '--use-angle=swiftshader',
+      '--enable-unsafe-swiftshader'
+    );
   }
 
   if (Array.isArray(customOptions)) {
