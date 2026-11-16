@@ -1,142 +1,141 @@
-# 🎮 Web Games Collection
+# Web Games
 
-> An arcade collection of high-performance web games built with pure HTML5, CSS3, modern JavaScript, and WebGL. Fast, responsive, dark glassmorphic UI, and 100% self-contained with zero runtime dependencies.
+A collection of playable web games built with standard web technologies, featuring an interactive 3D globe geography trivia game and a 2D falling blocks arcade game.
 
 [![CI](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/vaishnavkk/Games/actions/workflows/ci.yml)
-[![Play Arcade](https://img.shields.io/badge/Play_Arcade-GitHub_Pages-06b6d4?style=for-the-badge&logo=github)](https://vaishnavkk.github.io/Games/)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![Three.js](https://img.shields.io/badge/Three.js-WebGL-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Live Site](https://img.shields.io/badge/Play-GitHub_Pages-06b6d4)](https://vaishnavkk.github.io/Games/)
+
+No CDN or third-party requests at runtime; GeoTrivia bundles Three.js, and Matrixfall uses vanilla 2D Canvas and Web Audio.
 
 ---
 
-## 🕹️ Play Instantly
+## Games
 
-| Game | Platform / Category | Description | Play Link |
-| :--- | :--- | :--- | :--- |
-| 🎮 **Arcade Hub** | Portal / Launcher | Unified glassmorphic game selector & specs dashboard | **[Launch Arcade](https://vaishnavkk.github.io/Games/)** |
-| 🧱 **Matrixfall** | 2D Canvas Arcade | Dark glassmorphic falling blocks with Matrix Surge, Quantum Phase Blocks & Dynamic Speed | **[Play Matrixfall](https://vaishnavkk.github.io/Games/matrix-fall/)** |
-| 🌍 **GeoTrivia: Earth Explorer** | 3D WebGL Globe | Interactive 3D Earth trivia with cinematic fly-to zoom, 195 nations & Memory Anchors | **[Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/)** |
+| Name | What it is (one line) | Tech | Play | Source folder |
+| :--- | :--- | :--- | :--- | :--- |
+| **GeoTrivia: Earth Explorer**<br><br>[![GeoTrivia](docs/img/geotrivia.webp)](https://vaishnavkk.github.io/Games/earth-trivia/) | Interactive 3D globe trivia identifying 195 sovereign nations directly on a Three.js Earth sphere | Three.js, TopoJSON, Web Audio | [Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/) | [earth-trivia/](earth-trivia/) |
+| **Matrixfall**<br><br>[![Matrixfall](docs/img/matrixfall.webp)](https://vaishnavkk.github.io/Games/matrix-fall/) | Falling blocks puzzle game with Matrix Surge bullet time, quantum phase blocks, and dynamic speed | HTML5 2D Canvas, Web Audio | [Play Matrixfall](https://vaishnavkk.github.io/Games/matrix-fall/) | [matrix-fall/](matrix-fall/) |
 
 ---
 
-## 📁 Repository Structure
+## Run Locally
+
+### Prerequisites
+Node.js version 20 is specified in [`.nvmrc`](.nvmrc).
+
+### GeoTrivia
+GeoTrivia uses esbuild to compile its modular client bundle:
+
+```bash
+# Navigate to GeoTrivia folder
+cd earth-trivia
+
+# Install dependencies and build bundle
+npm ci
+npm run build
+
+# Start local development server (http://localhost:8080)
+npm start
+```
+
+### Matrixfall
+Matrixfall is standalone with zero dependencies or build steps:
+
+```bash
+# Navigate to Matrixfall folder
+cd matrix-fall
+
+# Open index.html directly in a browser
+# Windows:
+start index.html
+# macOS:
+open index.html
+
+# Or serve via any HTTP server:
+python -m http.server 8080
+```
+
+### Root Portal
+To serve the complete arcade portal locally from the repository root:
+
+```bash
+# Build GeoTrivia first
+npm --prefix earth-trivia ci
+npm --prefix earth-trivia run build
+
+# Start static server from root
+python -m http.server 8080
+# Visit http://localhost:8080 to access the arcade selector
+```
+
+---
+
+## Project Structure
 
 ```
 Games/
-├── index.html                   # 🎮 Unified Arcade Portal & Game Selector
+├── .github/                     # GitHub Actions CI workflows, issue templates, PR template
+│   ├── ISSUE_TEMPLATE/          # Structured issue report templates
+│   ├── pull_request_template.md # PR verification checklist
+│   └── workflows/               # CI and scheduled source verification workflows
+├── docs/                        # Project documentation and visual media assets
+│   ├── img/                     # Game thumbnails captured from live game runs
+│   └── social-preview.png       # 1280x640 OpenGraph repository preview card
+├── earth-trivia/                # 3D interactive globe trivia game
+│   ├── data/                    # Offline 195-nation dataset, TopoJSON, boundary vectors
+│   ├── dist/                    # Bundled client distribution (esbuild)
+│   ├── docs/                    # Architecture, data sources, and contributing guides
+│   ├── scripts/                 # Build, validation, and automated self-play QA scripts
+│   ├── src/                     # Game logic, Three.js scene, coordinate projection, audio
+│   ├── test/                    # Unit, regression, and headless modal test suites
+│   ├── vendor/                  # Self-hosted offline variable fonts and flag icons
+│   ├── index.html               # Main entry HTML and HUD markup
+│   ├── package.json             # Build commands, scripts, dependencies, engines
+│   └── README.md                # GeoTrivia game architecture and mechanics guide
+├── geotrivia/                   # Backward-compatibility HTTP redirect to earth-trivia/
+│   └── index.html               # Client-side redirect stub
+├── matrix-fall/                 # 2D canvas falling blocks arcade game
+│   ├── index.html               # Self-contained game (Canvas, audio synth, responsive styles)
+│   └── README.md                # Matrixfall mechanics, controls, and scoring guide
+├── matrixfall/                  # Backward-compatibility HTTP redirect to matrix-fall/
+│   └── index.html               # Client-side redirect stub
+├── scripts/                     # Root test orchestration and self-play runners
+│   ├── selfplay.js              # Multi-tier self-play delegation script
+│   └── testTiers.js             # Question bag tier verification runner
+├── .gitignore                   # Ignored files (node_modules, caches, reports, OS files)
+├── .nvmrc                       # Node.js LTS version specification (v20)
+├── index.html                   # Arcade portal homepage and game launcher
 ├── LICENSE                      # MIT Open Source License
-├── README.md                    # Root Documentation (this file)
-│
-├── matrix-fall/                 # 🧱 Game 1: Matrixfall
-│   ├── index.html               # 100% self-contained game (Canvas + Audio + CSS)
-│   └── README.md                # Game guide, controls, surge mechanics & scoring
-│
-├── earth-trivia/                # 🌍 Game 2: GeoTrivia — Earth Explorer
-│   ├── index.html               # Game shell, UI HUD, modals & design tokens
-│   ├── README.md                # 3D globe architecture, math formulas & data schema
-│   ├── package.json             # Build and verification scripts
-│   ├── data/                    # Offline 195-nation dataset & Natural Earth 50m TopoJSON
-│   ├── dist/                    # Production bundle (esbuild)
-│   ├── scripts/                 # Pre-commit validators, clue scanners & QA test suite
-│   ├── src/                     # Modular source code (Three.js globe, picker, UI, audio)
-│   └── vendor/                  # Localized offline fonts and SVG flag assets
-│
-├── matrixfall/                  # ↪️ Direct URL redirect alias to /matrix-fall/
-│   └── index.html
-└── geotrivia/                   # ↪️ Direct URL redirect alias to /earth-trivia/
-    └── index.html
+├── package.json                 # Root script proxies for build, lint, and test suites
+└── README.md                    # Repository index and overview documentation
 ```
 
 ---
 
-## 🧱 Game 1: Matrixfall
+## Quality
 
-A dark frosted glassmorphic falling blocks game built with dual-buffered canvas rendering.
-
-### ✨ Key Features
-- **Dark Frosted Glassmorphism**: Deep radial slate gradient (`#1a1f35` to `#0b0f19`) with translucent frosted glass panels and glowing ambient lights.
-- **⚡ Matrix Surge**: Clearing rows charges the Surge Meter. At 100%, trigger Matrix Surge (<kbd>E</kbd>) to enter 20% bullet-time speed and instantly vaporize the bottom stack row.
-- **✨ Quantum Phase Blocks**: Every 10th block passes completely through existing solid blocks to fill deep buried cavities with a dedicated cyan ghost preview and 16-particle solidification burst.
-- **🚀 Dynamic Speed Acceleration**: Fall tempo accelerates with every block placed and on **every row destroyed** (with a `.speed-pulse` HUD notification).
-- **📱 Mobile Gestures & Virtual Pad**: Full touch gesture support (swipe left/right, single tap rotate, double tap hard drop, drag down soft drop, swipe up save) plus on-screen touch controls.
-- **🎵 Synthesized Audio**: Built-in Web Audio API sound synthesis with zero external audio dependencies.
-
-### 🕹️ Quick Controls
-| Key | Action |
-| :--- | :--- |
-| <kbd>←</kbd> <kbd>→</kbd> / <kbd>A</kbd> <kbd>D</kbd> | Move Left / Right |
-| <kbd>↑</kbd> / <kbd>W</kbd> / <kbd>X</kbd> | Rotate Clockwise |
-| <kbd>Z</kbd> | Rotate Counter-Clockwise |
-| <kbd>↓</kbd> / <kbd>S</kbd> | Soft Drop (+1 pt/cell) |
-| <kbd>Space</kbd> | Hard Drop (+2 pts/cell) |
-| <kbd>C</kbd> / <kbd>Shift</kbd> | Hold / Save Piece |
-| <kbd>E</kbd> | Trigger Matrix Surge |
-| <kbd>P</kbd> / <kbd>Esc</kbd> | Pause / Resume |
-
-👉 *Full details, scoring tables, and strategy tips in the [Matrixfall README](matrix-fall/README.md).*
+- **Continuous Integration**: GitHub Actions workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) validates every push and pull request on Node 20. It builds `earth-trivia`, runs ESLint, executes offline data validators (`check:clues`, `check:palette`, `check:library`, `check:contrast`), runs unit tests, and launches Puppeteer smoke tests.
+- **Automated Test Suite**: Unit and integration tests verify deterministic random selection, question bag exhaustion without replacement, camera framing math, coordinate raycasting, scoring calculations, and accessible modal navigation across multiple viewports. Run via `npm test` or `npm --prefix earth-trivia test`.
+- **Autonomous Self-Play Harness**: An automated QA bot ([`earth-trivia/scripts/qa/selfplay.js`](earth-trivia/scripts/qa/selfplay.js)) uses Puppeteer to simulate real player sessions across desktop, tablet, and mobile viewports, evaluating full game cycles, edge-case clicks, and HUD updates. Run smoke tests locally with `npm run selfplay -- --smoke`.
 
 ---
 
-## 🌍 Game 2: GeoTrivia — Earth Explorer
+## Contributing
 
-An interactive 3D WebGL Globe trivia experience designed to test geography knowledge and help players permanently remember world nations through unforgettable cultural anchors.
+Contributions are welcome. Please read the [Contributing Guide](earth-trivia/docs/CONTRIBUTING.md) for details on code style, clue factual requirements, and pre-commit validation gates.
 
-### ✨ Key Features
-- **Interactive 3D Earth Globe**: Smooth orbital controls (drag to rotate, pinch/scroll to zoom) with atmospheric rim shaders, starfields, and real-time cartographic rasterization (8192×4096) powered by Three.js.
-- **Cinematic Fly-To Zoom**: When an answer is submitted, the camera takes orbital flight, smoothly rotating along the shortest great-circle trajectory and zooming directly to the country.
-- **Sovereign Cartographic Accuracy**: Survey of India official sovereign boundaries (complete integration of Jammu & Kashmir, Ladakh, Aksai Chin, Siachen, and Arunachal Pradesh with zero disputed overlay strokes).
-- **Educational Memory Vault**:
-  - Unlocked after each identification to cement knowledge:
-    - 🏛️ **Iconic Wonder**: Unforgettable landmarks and UNESCO World Heritage sites.
-    - 🍲 **Taste & Tradition**: Signature cultural dishes and heritage.
-    - 🧠 **Memory Anchor**: Surprising historical trivia, current affairs, and geographical facts.
-    - 📋 **Rich Country Dossier**: Official sovereign title, capital, subregion, population, area, languages, and neighbors.
-- **Precision Distance & Maps Routing**:
-  - Displays exact boundary distance in kilometers and miles.
-  - High-DPI 3D globe distance badge with dynamic zoom scaling.
-  - One-click direct links to **Google Maps** and **OpenStreetMap** to inspect real-world routes and terrain.
-- **Free Clue System**: Take up to 3 clues freely per round without penalty; score potential stays at 800 pts.
-- **Game Modes**: Clues Mode, Country Names Mode, and Flag Mode across Easy (42 nations, continent-balanced), Medium (100 nations), and Hard (195 sovereign nations).
-
-👉 *Full details, architecture documentation, and test gates in the [GeoTrivia README](earth-trivia/README.md). Release history is documented in the [GeoTrivia CHANGELOG](earth-trivia/CHANGELOG.md) and deployment procedures in the [Release Guide](earth-trivia/RELEASING.md).*
+Pull requests must pass all linters, data validators, unit tests, and self-play smoke tests before merging.
 
 ---
 
-## 🚀 Running Locally
+## License and Attributions
 
-No complex dependencies, servers, or compilers required:
+This repository is open-source software licensed under the [MIT License](LICENSE).
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/vaishnavkk/Games.git
-   cd Games
-   ```
-
-2. **Run any game directly**:
-   - **Arcade Hub**: Double-click `index.html`
-   - **Matrixfall**: Open `matrix-fall/index.html` in your browser
-   - **GeoTrivia**: Open `earth-trivia/index.html` in your browser
-
-3. **Or run with a local lightweight server**:
-   ```bash
-   # Using Python 3
-   python -m http.server 8080
-   # Then visit http://localhost:8080
-   ```
-
----
-
-## 🛠️ Technical Stack
-
-- **HTML5 & CSS3**: Glassmorphic backdrop filters, responsive CSS grid/flexbox, custom animations
-- **JavaScript (ES6+)**: Delta-time game loops, SRS wall-kick algorithms, modular architecture
-- **Three.js & WebGL**: 3D globe geometry, shaders, orbital controls, and spherical camera interpolation
-- **Web Audio API**: Procedural sound synthesis across both games—zero external MP3/WAV files
-
----
-
-## 📄 License
-
-Open source and free to use under the [MIT License](LICENSE).
+### Data Sources and Third-Party Assets
+- **GeoTrivia**:
+  - Cartography and Sovereign Boundaries: Natural Earth 1:50m vectors and Survey of India boundary alignments. Details and sources documented in [GeoTrivia Data Sources](earth-trivia/docs/DATA_SOURCES.md).
+  - Upstream software and font notices are detailed in [GeoTrivia Third-Party Notices](earth-trivia/THIRD_PARTY_NOTICES.md).
+- **Matrixfall**:
+  - Standalone game with zero third-party assets; audio generated dynamically via Web Audio API. See the [Matrixfall Guide](matrix-fall/README.md).
