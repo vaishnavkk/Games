@@ -54,7 +54,9 @@ jobs:
           npm run check:clues
           npm run check:palette
           npm run check:library -- --tier easy
-          npm run check:sources --tier easy
+      - name: Check sources (network, non-blocking)
+        continue-on-error: true
+        run: npm run check:sources -- --tier easy
 
       - name: Run test suite
         run: npm test
@@ -78,7 +80,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: selfplay-summary
-          path: |
-            report/selfplay/**/summary.txt
-            ../report/selfplay/**/summary.txt
-          if-no-files-found: ignore
+          path: report/selfplay/**/summary.txt
+          if-no-files-found: warn
+          retention-days: 7
