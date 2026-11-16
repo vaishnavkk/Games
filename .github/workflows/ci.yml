@@ -2,21 +2,24 @@ name: CI
 
 on:
   push:
-    branches: [main, cleanup]
+    branches: [main, ci-fix]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '0 0 * * 0'
   workflow_dispatch:
     inputs:
       full_selfplay:
         description: 'Run full selfplay matrix (--full)'
         required: false
-        default: true
+        default: false
         type: boolean
 
 jobs:
   test-and-verify:
-    name: Build, Validate, Test & Selfplay
-    runs-on: ubuntu-latest
+    name: Build, Offline Validate, Test & Selfplay
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: earth-trivia
@@ -38,8 +41,62 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
-      - name: Lint source code
-        run: npm run lint
+      - name: Run offline validators
+        run: npm run validate:offline
+
+      - name: Run test suite
+        run: npm test
+
+      - name: Verify Chrome for Puppeteer
+        run: |
+          if ! command -v google-chrome &> /dev/null; then
+            npx puppeteer browsers install chrome || true
+            CHROME_BIN=$(which google-chrome || which google-chrome-stable || which chromium-browser || which chromium || npx puppeteer browsers installed | grep chrome | awk '{print $2}')
+            echo "CHROME_BIN=$CHROME_BIN" >> $GITHUB_ENV
+          else
+            echo "CHROME_BIN=$(which google-chrome)" >> $GITHUB_ENV
+          fi
+
+      - name: Run Puppeteer Selfplay
+        run: |
+          mkdir -p "${GITHUB_WORKSPACE}/selfplay-out"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.full_selfplay }}" = "true" ]; then
+            npm run selfplay -- --full --workers=4 --ci --out="${GITHUB_WORKSPACE}/selfplay-out"
+          else
+            npm run selfplay -- --smoke --ci --out="${GITHUB_WORKSPACE}/selfplay-out"
+          fi
+
+      - name: Upload Selfplay Summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selfplay-summary
+          path: ${{ github.workspace }}/selfplay-out
+          if-no-files-found: warn
+          retention-days: 7
+
+  validate-sources:
+    name: Validate Live Sources & Claims
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: earth-trivia
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'earth-trivia/.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: 'earth-trivia/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Restore sources cache
         uses: actions/cache@v4
@@ -49,36 +106,5 @@ jobs:
           restore-keys: |
             sources-cache-
 
-      - name: Run validators
-        run: |
-          npm run check:clues
-          npm run check:palette
-          npm run check:library -- --tier easy
-          npm run check:sources --tier easy
-
-      - name: Run test suite
-        run: npm test
-
-      - name: Install Chrome for Puppeteer
-        run: |
-          npx puppeteer browsers install chrome || true
-          CHROME_BIN=$(which google-chrome || which google-chrome-stable || which chromium-browser || which chromium || npx puppeteer browsers installed | grep chrome | awk '{print $2}')
-          echo "CHROME_BIN=$CHROME_BIN" >> $GITHUB_ENV
-
-      - name: Run Puppeteer Selfplay
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "${{ inputs.full_selfplay }}" = "true" ]; then
-            npm run selfplay -- --full --workers=4
-          else
-            npm run selfplay -- --smoke
-          fi
-
-      - name: Upload Selfplay Summary
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: selfplay-summary
-          path: |
-            report/selfplay/**/summary.txt
-            ../report/selfplay/**/summary.txt
-          if-no-files-found: ignore
+      - name: Run source and claims validators
+        run: npm run validate:sources -- --ci

@@ -11,6 +11,8 @@ const cachePath = path.resolve(__dirname, '../../.cache/sources.json');
 const grandfatheredPath = path.resolve(__dirname, '../../.cache/grandfathered_sources.json');
 const logDir = path.resolve(__dirname, '../../../report/sources/logs');
 
+const isCI = process.argv.includes('--ci') || Boolean(process.env.CI);
+
 export const DEMONYMS_LIST = [
   'Afghan', 'Albanian', 'Algerian', 'American', 'Andorran', 'Angolan', 'Argentine', 'Armenian', 'Australian', 'Austrian',
   'Azerbaijani', 'Bahamian', 'Bahraini', 'Bangladeshi', 'Barbadian', 'Belarusian', 'Belgian', 'Belizean', 'Beninese',
@@ -537,11 +539,16 @@ async function main() {
   console.log(`Quality fails logged: ${qualityFailIds.length} items in ${qualityFailsLog}`);
 
   // Exit conditions: fail on evidence-quality failure for easy tier, or hard fails
+  // In CI, unreachable URLs are logged as WARN; pages fetched but lacking evidence/claims strictly FAIL.
   const hasHardFail =
     failedCount > 0 ||
-    ungrandfatheredUnreachable.length > 0 ||
+    (!isCI && ungrandfatheredUnreachable.length > 0) ||
     excessiveReuseUrls.length > 0 ||
     (chosenTier === 'easy' && failingQualityCount > 0);
+
+  if (isCI && ungrandfatheredUnreachable.length > 0) {
+    console.warn(`[WARN] Unreachable URLs in CI environment (${ungrandfatheredUnreachable.length}):`, ungrandfatheredUnreachable);
+  }
 
   if (hasHardFail) {
     console.error('Result: FAILED');

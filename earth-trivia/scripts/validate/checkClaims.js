@@ -10,6 +10,7 @@ const cluesPath = path.resolve(__dirname, '../../data/clues.json');
 const countriesPath = path.resolve(__dirname, '../../data/countries.json');
 const cachePath = path.resolve(__dirname, '../../.cache/sources.json');
 const reportPath = path.resolve(__dirname, '../../../report/content/claims_fail.txt');
+const isCI = process.argv.includes('--ci') || Boolean(process.env.CI);
 
 export const STOPWORDS = new Set([
   'the', 'and', 'for', 'with', 'from', 'that', 'this', 'into', 'under', 'over', 'its', 'has', 'had', 'have',
@@ -356,16 +357,22 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
       continue;
     }
 
+    const isUnreachable = Boolean(cache[clue.source]?.unreachable);
     const pageText = cache[clue.source]?.pageText || '';
     const failures = validateClueClaims(clue, country, pageText);
 
     if (failures.length > 0) {
-      if (tier === 'easy') easyFailures++;
-      else if (tier === 'medium') mediumFailures++;
-      else if (tier === 'hard') hardFailures++;
+      const onlyUnreachable = isUnreachable && failures.every(f => f.entity === 'PAGE_EMPTY');
+      if (isCI && onlyUnreachable) {
+        console.warn(`[check:claims] [WARN] Source unreachable in CI: ${clue.id} (${clue.source})`);
+      } else {
+        if (tier === 'easy') easyFailures++;
+        else if (tier === 'medium') mediumFailures++;
+        else if (tier === 'hard') hardFailures++;
 
-      for (const f of failures) {
-        failureLog.push(`${clue.id} [${tier}] | ${f.entity} | ${f.reason} | Clause: "${f.clause}"`);
+        for (const f of failures) {
+          failureLog.push(`${clue.id} [${tier}] | ${f.entity} | ${f.reason} | Clause: "${f.clause}"`);
+        }
       }
     }
   }
