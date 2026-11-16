@@ -13,6 +13,9 @@ on:
         default: true
         type: boolean
 
+env:
+  CHROME_PATH: /usr/bin/google-chrome
+
 jobs:
   build-and-test:
     name: Build, Lint, Validate & Test
@@ -41,45 +44,15 @@ jobs:
       - name: Lint source code
         run: npm run lint
 
-      - name: Get current week
-        id: date
-        run: echo "week=$(date +'%Y-%U')" >> $GITHUB_OUTPUT
-
-      - name: Restore sources cache
-        uses: actions/cache@v4
-        with:
-          path: earth-trivia/.cache
-          key: sources-cache-${{ steps.date.outputs.week }}-${{ hashFiles('earth-trivia/data/clues.json') }}
-          restore-keys: |
-            sources-cache-${{ steps.date.outputs.week }}-
-            sources-cache-
-
       - name: Run validators
         run: |
           npm run check:clues
           npm run check:palette
           npm run check:library -- --tier easy
+          npm run check:contrast
 
-      - name: Check sources (network, non-blocking)
-        continue-on-error: true
-        run: npm run check:sources -- --tier easy
-
-      - name: Install Chrome for Puppeteer
-        run: |
-          CHROME_BIN=$(which google-chrome || which google-chrome-stable || which chromium-browser || which chromium || true)
-          if [ -z "$CHROME_BIN" ]; then
-            npx puppeteer browsers install chrome || true
-            CHROME_BIN=$(npx puppeteer browsers installed | grep chrome | head -n1 | awk '{print $2}')
-          fi
-          echo "CHROME_BIN=$CHROME_BIN" >> $GITHUB_ENV
-          mkdir -p "$GITHUB_WORKSPACE/C:/Program Files/Google/Chrome/Application"
-          ln -sf "$CHROME_BIN" "$GITHUB_WORKSPACE/C:/Program Files/Google/Chrome/Application/chrome.exe" || true
-          ln -sf "$CHROME_BIN" "$GITHUB_WORKSPACE/C:\Program Files\Google\Chrome\Application\chrome.exe" || true
-          mkdir -p "$GITHUB_WORKSPACE/earth-trivia/C:/Program Files/Google/Chrome/Application"
-          ln -sf "$CHROME_BIN" "$GITHUB_WORKSPACE/earth-trivia/C:/Program Files/Google/Chrome/Application/chrome.exe" || true
-          ln -sf "$CHROME_BIN" "$GITHUB_WORKSPACE/earth-trivia/C:\Program Files\Google\Chrome\Application\chrome.exe" || true
-          echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
-          echo "$GITHUB_WORKSPACE/earth-trivia" >> $GITHUB_PATH
+      - name: Verify Google Chrome
+        run: google-chrome --version
 
       - name: Run test suite
         run: npm test
@@ -109,22 +82,8 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
-      - name: Install Chrome for Puppeteer
-        run: |
-          CHROME_BIN=$(which google-chrome || which google-chrome-stable || which chromium-browser || which chromium || true)
-          if [ -z "$CHROME_BIN" ]; then
-            npx puppeteer browsers install chrome || true
-            CHROME_BIN=$(npx puppeteer browsers installed | grep chrome | head -n1 | awk '{print $2}')
-          fi
-          echo "CHROME_BIN=$CHROME_BIN" >> $GITHUB_ENV
-          mkdir -p "$GITHUB_WORKSPACE/C:/Program Files/Google/Chrome/Application"
-          ln -sf "$CHROME_BIN" "$GITHUB_WORKSPACE/C:/Program Files/Google/Chrome/Application/chrome.exe" || true
-          ln -sf "$CHROME_BIN" "$GITHUB_WORKSPACE/C:\Program Files\Google\Chrome\Application\chrome.exe" || true
-          mkdir -p "$GITHUB_WORKSPACE/earth-trivia/C:/Program Files/Google/Chrome/Application"
-          ln -sf "$CHROME_BIN" "$GITHUB_WORKSPACE/earth-trivia/C:/Program Files/Google/Chrome/Application/chrome.exe" || true
-          ln -sf "$CHROME_BIN" "$GITHUB_WORKSPACE/earth-trivia/C:\Program Files\Google\Chrome\Application\chrome.exe" || true
-          echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
-          echo "$GITHUB_WORKSPACE/earth-trivia" >> $GITHUB_PATH
+      - name: Verify Google Chrome
+        run: google-chrome --version
 
       - name: Run Puppeteer Selfplay
         run: |

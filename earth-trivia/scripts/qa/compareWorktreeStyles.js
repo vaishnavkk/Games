@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer-core';
+import { launchOptions } from './chrome.js';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
@@ -7,7 +8,6 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const CHROME_PATH = process.env.CHROME_BIN || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
 function startServer(rootDir) {
   const MIME_TYPES = {
@@ -98,11 +98,9 @@ async function snapshotTarget(targetDir) {
   const port = server.address().port;
   const baseUrl = `http://127.0.0.1:${port}/index.html?fast=1`;
 
-  const browser = await puppeteer.launch({
-    executablePath: CHROME_PATH,
-    headless: true,
+  const browser = await puppeteer.launch(launchOptions({
     args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  }));
 
   const viewports = [
     { name: '1440x900', width: 1440, height: 900 },

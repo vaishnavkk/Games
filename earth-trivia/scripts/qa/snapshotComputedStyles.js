@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer-core';
+import { launchOptions } from './chrome.js';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
@@ -8,7 +9,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
 
-const CHROME_PATH = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
 function startServer() {
   return new Promise((resolve) => {
@@ -66,11 +66,9 @@ export async function takeFullSnapshot() {
   const port = server.address().port;
   const baseUrl = `http://127.0.0.1:${port}/index.html?fast=1`;
 
-  const browser = await puppeteer.launch({
-    executablePath: CHROME_PATH,
-    headless: true,
+  const browser = await puppeteer.launch(launchOptions({
     args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  }));
 
   const viewports = [
     { name: 'desktop', width: 1440, height: 900 },

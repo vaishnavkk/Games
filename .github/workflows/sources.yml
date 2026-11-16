@@ -1,0 +1,64 @@
+name: Sources Validation
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  validate-sources:
+    name: Sources and Claims Validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: earth-trivia
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: 'earth-trivia/.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: 'earth-trivia/package-lock.json'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get current week
+        id: date
+        run: echo "week=$(date +'%Y-%U')" >> $GITHUB_OUTPUT
+
+      - name: Restore sources cache
+        uses: actions/cache@v4
+        with:
+          path: earth-trivia/.cache
+          key: sources-cache-${{ steps.date.outputs.week }}-${{ hashFiles('earth-trivia/data/clues.json') }}
+          restore-keys: |
+            sources-cache-${{ steps.date.outputs.week }}-
+            sources-cache-
+
+      - name: Run Sources Check
+        run: npm run check:sources -- --tier easy
+        continue-on-error: true
+
+      - name: Run Claims Check
+        run: npm run check:claims
+        continue-on-error: true
+
+      - name: Upload validation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sources-reports
+          path: |
+            report/sources/**
+            report/content/**
+            earth-trivia/report/sources/**
+            earth-trivia/report/content/**
+          if-no-files-found: warn
+          retention-days: 14

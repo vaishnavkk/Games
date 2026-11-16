@@ -4,6 +4,7 @@ import path from 'path';
 import http from 'http';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
+import { launchOptions } from '../scripts/qa/chrome.js';
 
 import { rng, mulberry32, shuffle } from '../src/rng.js';
 import {
@@ -32,7 +33,6 @@ if (!globalThis.localStorage) {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const logDir = path.resolve(__dirname, '../../report/random/logs');
 fs.mkdirSync(logDir, { recursive: true });
 
@@ -528,11 +528,9 @@ async function runE2E() {
     await new Promise((resolve) => localServer.listen(8080, resolve));
   }
 
-  const browser = await puppeteer.launch({
-    executablePath: CHROME_PATH,
-    headless: true,
+  const browser = await puppeteer.launch(launchOptions({
     args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  }));
 
   try {
     const page = await browser.newPage();

@@ -9,6 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
+import { launchOptions, getChromeExecutablePath } from './chrome.js';
 import { pointsIfCorrect, calculatePartialCredit, SCORING } from '../../src/scoring.js';
 import { getLargestLandmassCenter } from '../../src/cameraFlight.js';
 import { CountryPicker } from '../../src/picker.js';
@@ -57,36 +58,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
 
-function getChromePath() {
-  if (process.env.CHROME_BIN && fs.existsSync(process.env.CHROME_BIN)) {
-    return process.env.CHROME_BIN;
-  }
-  if (process.platform === 'win32') {
-    const winPaths = [
-      'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-      'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
-      process.env.LOCALAPPDATA ? path.join(process.env.LOCALAPPDATA, 'Google\\Chrome\\Application\\chrome.exe') : null
-    ].filter(Boolean);
-    for (const p of winPaths) {
-      if (fs.existsSync(p)) return p;
-    }
-  } else if (process.platform === 'linux') {
-    const linuxPaths = [
-      '/usr/bin/google-chrome',
-      '/usr/bin/google-chrome-stable',
-      '/usr/bin/chromium',
-      '/usr/bin/chromium-browser'
-    ];
-    for (const p of linuxPaths) {
-      if (fs.existsSync(p)) return p;
-    }
-  } else if (process.platform === 'darwin') {
-    const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-    if (fs.existsSync(macPath)) return macPath;
-  }
-  return process.env.CHROME_BIN || (process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : '/usr/bin/google-chrome');
-}
-const CHROME_PATH = getChromePath();
+const CHROME_PATH = getChromeExecutablePath();
 
 // CLI Options
 const isCI = process.argv.includes('--ci') || Boolean(process.env.CI);
@@ -195,11 +167,9 @@ async function runSelftest() {
 
   let browser;
   try {
-    browser = await puppeteer.launch({
-      executablePath: CHROME_PATH,
-      headless: true,
+    browser = await puppeteer.launch(launchOptions({
       args: getLaunchArgs(['--disable-gpu'])
-    });
+    }));
 
     const page = await browser.newPage();
     await page.setViewport({ width: 390, height: 844 });
@@ -2226,11 +2196,9 @@ async function main() {
   console.log(`Selfplay server running on http://localhost:${port}`);
   console.log(`Writing logs to: ${reportDir}\n`);
 
-  const browser = await puppeteer.launch({
-    executablePath: CHROME_PATH,
-    headless: true,
+  const browser = await puppeteer.launch(launchOptions({
     args: getLaunchArgs()
-  });
+  }));
 
   // Probe WebGL renderer
   let webglRenderer = 'Unknown';

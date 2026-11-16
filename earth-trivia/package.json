@@ -25,7 +25,7 @@
     "check:sources": "node scripts/validate/checkSources.js",
     "check:claims": "node scripts/validate/checkClaims.js",
     "check:palette": "node scripts/validate/checkPalette.js",
-    "check:contrast": "node scripts/validate/checkContrast.js",
+    "check:contrast": "node scripts/qa/runCheckContrast.js",
     "validate": "node test/testDataSync.js && node scripts/validate/validateData.js && npm run check:clues && npm run check:library && npm run check:sources && npm run check:claims && npm run check:palette && npm run check:contrast",
     "test:random": "node test/testRandom.js",
     "test:framing": "node test/testMidRangeFraming.js",
