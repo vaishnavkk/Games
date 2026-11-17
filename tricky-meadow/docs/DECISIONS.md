@@ -10,7 +10,8 @@
 8. Stage 5 Accessibility: Web Speech API synthesis read-aloud support, :focus-visible outlines, and semantic ARIA labeling.
 9. Stage 6 Deployment: Root Pages serves unbundled redirect to /dist/ with un-ignored dist in root .gitignore and Arcade Hub card integration.
 10. Task 1 Icons & Layout: UI aliases mapped directly to sprite symbol IDs; header grid minmax(0,1fr) auto minmax(0,1fr) balances controls; selfplay invariant verifies button pixel stddev > 3.0 and geometry.
-11. Task 2 Content & Sources: Replaced bot-shielded sources with 100% fetchable government sources (NASA, NPS, NOAA, MedlinePlus) with 0 WARN / 0 FAIL; balanced Me & My Body (2 pick, 2 tapall, 2 order).
+11. Task 2 Content & Sources: Replaced bot-shielded sources with 100% fetchable government sources (NASA, NPS, NOAA, MedlinePlus) with 0 WARN / 0 FAIL.
+12. Task 3 Fact Consistency: Dropped 2/2/2 rule for Me & My Body (now 3 pick, 1 tapall, 2 order); restored body-02 to pick largest organ (Outer Skin).
 
 ## Clever-Child Ambiguity Check
 - garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.
@@ -26,7 +27,7 @@
 - sky-05: Child argues seasonal warmth puts Earth closer to Sun, but planetary orbital radii from Sun strictly order Mercury, Venus, Earth, Mars.
 - sky-06: Child argues Sun is closer than night stars, but Moon is in Earth orbit (384,400 km), vastly closer than the Sun (150M km).
 - body-01: Child argues bigger adults must have more bones, but human infants are born with ~300 bones that fuse into 206 adult bones.
-- body-02: Child argues skin is just outer wrapping, but skin is an organ on the outside while heart and brain are inside the body cavity.
+- body-02: Child argues skin is just outer wrapping, but skin is anatomically the largest organ of the human body.
 - body-03: Child argues heavy skeleton bones are hardest, but tooth enamel is 96% mineral crystal, physically harder than bone.
 - body-04: Child argues knees feel touch, but the face houses the primary sensory organs for sight, smell, and taste.
 - body-05: Child argues toddlers and children are synonymous, but human development orders chronologically infant to child to grown adult.

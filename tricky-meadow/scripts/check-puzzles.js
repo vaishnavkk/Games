@@ -17,6 +17,99 @@ function countWords(str) {
   return str.trim().split(/\s+/).filter(Boolean).length;
 }
 
+export function stem(word) {
+  word = word.toLowerCase().replace(/[^a-z]/g, '');
+  if (!word) return '';
+  const irregulars = {
+    teeth: 'tooth',
+    children: 'child',
+    babies: 'baby',
+    baby: 'baby',
+    butterflies: 'butterfly',
+    butterfly: 'butterfly'
+  };
+  if (irregulars[word]) return irregulars[word];
+  if (word.endsWith('ies') && word.length > 4) return word.slice(0, -3) + 'y';
+  if (/(ches|shes|xes|zes|sses)$/.test(word)) return word.slice(0, -2);
+  if (word.endsWith('s') && !word.endsWith('ss') && word.length > 2) return word.slice(0, -1);
+  return word;
+}
+
+const MODIFIERS = new Set(['tiny', 'forest', 'box', 'bald', 'brown', 'red', 'shiny', 'green', 'bright', 'rocky', 'dusty', 'night', 'silver', 'golden', 'distant', 'outer', 'pumping', 'clever', 'strong', 'seeing', 'sniffing', 'tasting', 'kicking', 'playful', 'grown', 'both', 'the', 'of', 'in', 'and']);
+
+export function getItemKeywords(item) {
+  const words = item.label.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+  const sig = words.filter(w => !MODIFIERS.has(w));
+  return sig.length > 0 ? sig : words;
+}
+
+export function itemMatchesText(item, text) {
+  const textWords = text.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+  const textStems = new Set(textWords.map(stem));
+  const keywords = getItemKeywords(item);
+  return keywords.some(kw => textStems.has(stem(kw)));
+}
+
+export function checkFactSupportsAnswer(puzzle) {
+  const factText = puzzle.fact && puzzle.fact.text ? puzzle.fact.text : '';
+  if (!factText) return { pass: false, reason: 'Missing fact text' };
+
+  if (puzzle.type === 'pick' || puzzle.type === 'tapall') {
+    const correctIds = Array.isArray(puzzle.answer) ? puzzle.answer : [puzzle.answer];
+    const correctItems = puzzle.items.filter(it => correctIds.includes(it.id));
+    const matchedCorrect = correctItems.filter(it => itemMatchesText(it, factText));
+    if (matchedCorrect.length === 0) {
+      return { pass: false, reason: 'Fact does not name any correct item' };
+    }
+    return { pass: true, reason: `Names correct item(s): ${matchedCorrect.map(i => i.label).join(', ')}` };
+  } else if (puzzle.type === 'order') {
+    const matchedItems = puzzle.items.filter(it => itemMatchesText(it, factText));
+    if (matchedItems.length < 2) {
+      return { pass: false, reason: `Order fact must name at least 2 ordered items (found ${matchedItems.length}: ${matchedItems.map(i => i.label).join(', ')})` };
+    }
+    return { pass: true, reason: `Names ${matchedItems.length} ordered items: ${matchedItems.map(i => i.label).join(', ')}` };
+  }
+  return { pass: true, reason: 'OK' };
+}
+
+// Planted-defect verification test
+const oldGarden06 = {
+  id: 'garden-06',
+  type: 'order',
+  items: [
+    { id: 'a', label: 'Seed' },
+    { id: 'b', label: 'Tiny Sprout' },
+    { id: 'c', label: 'Green Stem' },
+    { id: 'd', label: 'Sunflower' }
+  ],
+  answer: ['a', 'b', 'c', 'd'],
+  fact: {
+    text: 'Instead of falling to soil, mangrove seeds begin growing while still attached to the plant!'
+  }
+};
+
+const oldBody02 = {
+  id: 'body-02',
+  type: 'tapall',
+  items: [
+    { id: 'a', label: 'Pumping Heart' },
+    { id: 'b', label: 'Clever Brain' },
+    { id: 'c', label: 'Outer Skin' }
+  ],
+  answer: ['a', 'b'],
+  fact: {
+    text: 'Your skin is the largest organ of the human body, protecting everything inside your body.'
+  }
+};
+
+const plantGardenRes = checkFactSupportsAnswer(oldGarden06);
+const plantBodyRes = checkFactSupportsAnswer(oldBody02);
+if (plantGardenRes.pass || plantBodyRes.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: defective facts unexpectedly passed!');
+  process.exit(1);
+}
+console.log('[check:puzzles] Planted defect verification PASSED: old garden-06 and old body-02 both correctly rejected.');
+
 if (!fs.existsSync(PUZZLES_PATH)) {
   console.error(`[check:puzzles] Error: File not found: ${PUZZLES_PATH}`);
   process.exit(1);
@@ -138,6 +231,13 @@ puzzles.forEach((p, idx) => {
     }
   }
 
+  // 9. Fact supports answer check
+  const factSupport = checkFactSupportsAnswer(p);
+  console.log(`[check:puzzles] ${p.id.padEnd(10)} [${factSupport.pass ? 'PASS' : 'FAIL'}]: ${factSupport.reason}`);
+  if (!factSupport.pass) {
+    errors.push(`${prefix} Fact does not support answer: ${factSupport.reason}`);
+  }
+
   // Check prompt for banned words
   if (BANNED_REGEX.test(p.prompt || '')) {
     errors.push(`${prefix} Prompt contains banned word: "${p.prompt}"`);
@@ -150,5 +250,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`[check:puzzles] PASSED: All ${puzzles.length} puzzles verified (schema, IDs, words, banned-list, SVGs).`);
+console.log(`[check:puzzles] PASSED: All ${puzzles.length} puzzles verified (schema, IDs, words, banned-list, SVGs, fact support).`);
 process.exit(0);

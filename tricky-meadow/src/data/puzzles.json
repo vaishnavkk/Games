@@ -5,16 +5,30 @@
     "type": "pick",
     "prompt": "Which of these creatures is NOT an insect?",
     "items": [
-      { "id": "a", "emoji": "🐜", "label": "Tiny Ant" },
-      { "id": "b", "emoji": "🐝", "label": "Honey Bee" },
-      { "id": "c", "emoji": "🕷️", "label": "Garden Spider" }
+      {
+        "id": "a",
+        "emoji": "🐜",
+        "label": "Tiny Ant"
+      },
+      {
+        "id": "b",
+        "emoji": "🐝",
+        "label": "Honey Bee"
+      },
+      {
+        "id": "c",
+        "emoji": "🕷️",
+        "label": "Garden Spider"
+      }
     ],
     "answer": "c",
     "hint": "Insects have six legs, but spiders have eight!",
     "fact": {
       "text": "Spiders and tarantulas are arachnids with eight legs, while every true insect has six legs!",
       "source": "https://nationalzoo.si.edu/animals/chilean-rose-tarantula",
-      "evidence": ["eight legs"]
+      "evidence": [
+        "eight legs"
+      ]
     }
   },
   {
@@ -23,16 +37,32 @@
     "type": "pick",
     "prompt": "Which of these forest wonders is NOT a plant?",
     "items": [
-      { "id": "a", "emoji": "🍄", "label": "Forest Mushroom" },
-      { "id": "b", "emoji": "🌻", "label": "Sunflower" },
-      { "id": "c", "emoji": "🌲", "label": "Pine Tree" }
+      {
+        "id": "a",
+        "emoji": "🍄",
+        "label": "Forest Mushroom"
+      },
+      {
+        "id": "b",
+        "emoji": "🌻",
+        "label": "Sunflower"
+      },
+      {
+        "id": "c",
+        "emoji": "🌲",
+        "label": "Pine Tree"
+      }
     ],
     "answer": "a",
     "hint": "Mushrooms are fungi, so they cannot make their own food from sunlight.",
     "fact": {
       "text": "Mushrooms are fungi with a stem and cap, which cannot make food from sunlight like green plants do!",
       "source": "https://www.nps.gov/chir/learn/nature/mushrooms.htm",
-      "evidence": ["mushrooms", "plants", "fungi"]
+      "evidence": [
+        "mushrooms",
+        "plants",
+        "fungi"
+      ]
     }
   },
   {
@@ -41,17 +71,39 @@
     "type": "tapall",
     "prompt": "Tap all the animals that lay eggs in nests or soil!",
     "items": [
-      { "id": "a", "emoji": "🐢", "label": "Box Turtle" },
-      { "id": "b", "emoji": "🦅", "label": "Bald Eagle" },
-      { "id": "c", "emoji": "🐻", "label": "Brown Bear" },
-      { "id": "d", "emoji": "🦊", "label": "Red Fox" }
+      {
+        "id": "a",
+        "emoji": "🐢",
+        "label": "Box Turtle"
+      },
+      {
+        "id": "b",
+        "emoji": "🦅",
+        "label": "Bald Eagle"
+      },
+      {
+        "id": "c",
+        "emoji": "🐻",
+        "label": "Brown Bear"
+      },
+      {
+        "id": "d",
+        "emoji": "🦊",
+        "label": "Red Fox"
+      }
     ],
-    "answer": ["a", "b"],
+    "answer": [
+      "a",
+      "b"
+    ],
     "hint": "Look for the turtle with a shell and the soaring eagle.",
     "fact": {
       "text": "Female turtles bury their eggs in sand or soil to hatch in warmth!",
       "source": "https://nationalzoo.si.edu/animals/eastern-box-turtle",
-      "evidence": ["lay", "eggs"]
+      "evidence": [
+        "lay",
+        "eggs"
+      ]
     }
   },
   {
@@ -60,17 +112,39 @@
     "type": "tapall",
     "prompt": "Tap all the creatures that can fly!",
     "items": [
-      { "id": "a", "emoji": "🦋", "label": "Butterfly" },
-      { "id": "b", "emoji": "🦇", "label": "Brown Bat" },
-      { "id": "c", "emoji": "🐝", "label": "Bumblebee" },
-      { "id": "d", "emoji": "🐌", "label": "Garden Snail" }
+      {
+        "id": "a",
+        "emoji": "🦋",
+        "label": "Butterfly"
+      },
+      {
+        "id": "b",
+        "emoji": "🦇",
+        "label": "Brown Bat"
+      },
+      {
+        "id": "c",
+        "emoji": "🐝",
+        "label": "Bumblebee"
+      },
+      {
+        "id": "d",
+        "emoji": "🐌",
+        "label": "Garden Snail"
+      }
     ],
-    "answer": ["a", "b", "c"],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
     "hint": "Butterflies, bees, and even furry bats have wings for flying!",
     "fact": {
       "text": "Bats are the only mammals that can truly fly; flying squirrels only glide.",
       "source": "https://www.nps.gov/cave/learn/nature/bats.htm",
-      "evidence": ["flying mammals"]
+      "evidence": [
+        "flying mammals"
+      ]
     }
   },
   {
@@ -79,17 +153,41 @@
     "type": "order",
     "prompt": "Order the stages of a butterfly's life cycle from start!",
     "items": [
-      { "id": "a", "emoji": "🥚", "label": "Tiny Egg" },
-      { "id": "b", "emoji": "🐛", "label": "Caterpillar" },
-      { "id": "c", "emoji": "🪨", "label": "Chrysalis" },
-      { "id": "d", "emoji": "🦋", "label": "Butterfly" }
+      {
+        "id": "a",
+        "emoji": "🥚",
+        "label": "Tiny Egg"
+      },
+      {
+        "id": "b",
+        "emoji": "🐛",
+        "label": "Caterpillar"
+      },
+      {
+        "id": "c",
+        "emoji": "🪨",
+        "label": "Chrysalis"
+      },
+      {
+        "id": "d",
+        "emoji": "🦋",
+        "label": "Butterfly"
+      }
     ],
-    "answer": ["a", "b", "c", "d"],
+    "answer": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
     "hint": "Start from egg, hatch to caterpillar, form chrysalis, then emerge flying.",
     "fact": {
       "text": "Butterflies go through complete metamorphosis in four stages: egg, caterpillar, chrysalis, and adult!",
       "source": "https://www.nps.gov/grca/learn/nature/butterflies.htm",
-      "evidence": ["caterpillar", "chrysalis"]
+      "evidence": [
+        "caterpillar",
+        "chrysalis"
+      ]
     }
   },
   {
@@ -98,17 +196,41 @@
     "type": "order",
     "prompt": "Order how a plant grows from a seed into flower!",
     "items": [
-      { "id": "a", "emoji": "🌰", "label": "Seed" },
-      { "id": "b", "emoji": "🌱", "label": "Tiny Sprout" },
-      { "id": "c", "emoji": "🌿", "label": "Green Stem" },
-      { "id": "d", "emoji": "🌻", "label": "Sunflower" }
+      {
+        "id": "a",
+        "emoji": "🌰",
+        "label": "Seed"
+      },
+      {
+        "id": "b",
+        "emoji": "🌱",
+        "label": "Tiny Sprout"
+      },
+      {
+        "id": "c",
+        "emoji": "🌿",
+        "label": "Green Stem"
+      },
+      {
+        "id": "d",
+        "emoji": "🌻",
+        "label": "Sunflower"
+      }
     ],
-    "answer": ["a", "b", "c", "d"],
+    "answer": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
     "hint": "Begin with the seed in soil and finish with the bloom.",
     "fact": {
-      "text": "Instead of falling to soil, mangrove seeds begin growing while still attached to the plant!",
-      "source": "https://oceanservice.noaa.gov/education/tutorial_estuaries/est07_adaptations.html",
-      "evidence": ["seeds", "growing"]
+      "text": "When a seed germinates, a root sprouts downward first, followed by a green shoot growing upward toward the light!",
+      "source": "https://web.extension.illinois.edu/gpe/case3/c3facts3.html",
+      "evidence": [
+        "root",
+        "shoot"
+      ]
     }
   },
   {
@@ -117,16 +239,31 @@
     "type": "pick",
     "prompt": "Which planet is the hottest planet in our solar system?",
     "items": [
-      { "id": "a", "emoji": "⚪", "label": "Mercury" },
-      { "id": "b", "emoji": "🟡", "label": "Venus" },
-      { "id": "c", "emoji": "🔴", "label": "Mars" }
+      {
+        "id": "a",
+        "emoji": "⚪",
+        "label": "Mercury"
+      },
+      {
+        "id": "b",
+        "emoji": "🟡",
+        "label": "Venus"
+      },
+      {
+        "id": "c",
+        "emoji": "🔴",
+        "label": "Mars"
+      }
     ],
     "answer": "b",
     "hint": "Mercury is closest, but Venus traps extreme heat under thick clouds.",
     "fact": {
       "text": "Venus is the hottest planet in our solar system because its atmosphere traps heat!",
       "source": "https://spaceplace.nasa.gov/all-about-venus/en/",
-      "evidence": ["venus", "hottest planet"]
+      "evidence": [
+        "venus",
+        "hottest planet"
+      ]
     }
   },
   {
@@ -135,16 +272,31 @@
     "type": "pick",
     "prompt": "What kind of space object is our bright daytime Sun?",
     "items": [
-      { "id": "a", "emoji": "☀️", "label": "Bright Star" },
-      { "id": "b", "emoji": "🌍", "label": "Rocky Planet" },
-      { "id": "c", "emoji": "🌙", "label": "Dusty Moon" }
+      {
+        "id": "a",
+        "emoji": "☀️",
+        "label": "Bright Star"
+      },
+      {
+        "id": "b",
+        "emoji": "🌍",
+        "label": "Rocky Planet"
+      },
+      {
+        "id": "c",
+        "emoji": "🌙",
+        "label": "Dusty Moon"
+      }
     ],
     "answer": "a",
     "hint": "The Sun is not a planet: it is our nearest star.",
     "fact": {
       "text": "The light of daytime on Earth comes from our closest star, the Sun!",
       "source": "https://spaceplace.nasa.gov/all-about-the-sun/en/",
-      "evidence": ["closest star", "sun"]
+      "evidence": [
+        "closest star",
+        "sun"
+      ]
     }
   },
   {
@@ -153,17 +305,41 @@
     "type": "tapall",
     "prompt": "Tap all the objects that produce their own glowing light!",
     "items": [
-      { "id": "a", "emoji": "☀️", "label": "The Sun" },
-      { "id": "b", "emoji": "⭐", "label": "Night Star" },
-      { "id": "c", "emoji": "🌙", "label": "The Moon" },
-      { "id": "d", "emoji": "🪲", "label": "Firefly" }
+      {
+        "id": "a",
+        "emoji": "☀️",
+        "label": "The Sun"
+      },
+      {
+        "id": "b",
+        "emoji": "⭐",
+        "label": "Night Star"
+      },
+      {
+        "id": "c",
+        "emoji": "🌙",
+        "label": "The Moon"
+      },
+      {
+        "id": "d",
+        "emoji": "🪲",
+        "label": "Firefly"
+      }
     ],
-    "answer": ["a", "b", "d"],
+    "answer": [
+      "a",
+      "b",
+      "d"
+    ],
     "hint": "The Moon does not make light: it reflects light from the Sun!",
     "fact": {
       "text": "The Moon does not make light; it simply reflects light from the Sun!",
       "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
-      "evidence": ["reflects", "light", "sun"]
+      "evidence": [
+        "reflects",
+        "light",
+        "sun"
+      ]
     }
   },
   {
@@ -172,17 +348,40 @@
     "type": "tapall",
     "prompt": "Tap all the giant planets that have rings around them!",
     "items": [
-      { "id": "a", "emoji": "🪐", "label": "Saturn" },
-      { "id": "b", "emoji": "🔴", "label": "Jupiter" },
-      { "id": "c", "emoji": "🔵", "label": "Uranus" },
-      { "id": "d", "emoji": "🌍", "label": "Earth" }
+      {
+        "id": "a",
+        "emoji": "🪐",
+        "label": "Saturn"
+      },
+      {
+        "id": "b",
+        "emoji": "🔴",
+        "label": "Jupiter"
+      },
+      {
+        "id": "c",
+        "emoji": "🔵",
+        "label": "Uranus"
+      },
+      {
+        "id": "d",
+        "emoji": "🌍",
+        "label": "Earth"
+      }
     ],
-    "answer": ["a", "b", "c"],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
     "hint": "Saturn has famous rings, but Jupiter and Uranus have rings too!",
     "fact": {
       "text": "Jupiter, Saturn, Uranus, and Neptune all have rings circling around them in space!",
       "source": "https://spaceplace.nasa.gov/all-about-saturn/en/",
-      "evidence": ["rings", "saturn"]
+      "evidence": [
+        "rings",
+        "saturn"
+      ]
     }
   },
   {
@@ -191,17 +390,43 @@
     "type": "order",
     "prompt": "Order the first four rocky planets starting closest to Sun!",
     "items": [
-      { "id": "a", "emoji": "⚪", "label": "Mercury" },
-      { "id": "b", "emoji": "🟡", "label": "Venus" },
-      { "id": "c", "emoji": "🌍", "label": "Earth" },
-      { "id": "d", "emoji": "🔴", "label": "Mars" }
+      {
+        "id": "a",
+        "emoji": "⚪",
+        "label": "Mercury"
+      },
+      {
+        "id": "b",
+        "emoji": "🟡",
+        "label": "Venus"
+      },
+      {
+        "id": "c",
+        "emoji": "🌍",
+        "label": "Earth"
+      },
+      {
+        "id": "d",
+        "emoji": "🔴",
+        "label": "Mars"
+      }
     ],
-    "answer": ["a", "b", "c", "d"],
+    "answer": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
     "hint": "Start at Mercury, then Venus, our Earth, and red planet Mars.",
     "fact": {
       "text": "Mercury, Venus, Earth, and Mars are the four rocky planets closest to the Sun!",
       "source": "https://spaceplace.nasa.gov/planets/en/",
-      "evidence": ["mercury", "venus", "earth", "mars"]
+      "evidence": [
+        "mercury",
+        "venus",
+        "earth",
+        "mars"
+      ]
     }
   },
   {
@@ -210,16 +435,35 @@
     "type": "order",
     "prompt": "Order these space neighbors from closest to Earth to furthest!",
     "items": [
-      { "id": "a", "emoji": "🌙", "label": "Silver Moon" },
-      { "id": "b", "emoji": "☀️", "label": "Golden Sun" },
-      { "id": "c", "emoji": "⭐", "label": "Distant Star" }
+      {
+        "id": "a",
+        "emoji": "🌙",
+        "label": "Silver Moon"
+      },
+      {
+        "id": "b",
+        "emoji": "☀️",
+        "label": "Golden Sun"
+      },
+      {
+        "id": "c",
+        "emoji": "⭐",
+        "label": "Distant Star"
+      }
     ],
-    "answer": ["a", "b", "c"],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
     "hint": "The Moon orbits Earth, Sun is next, distant stars are furthest.",
     "fact": {
-      "text": "The Moon is our closest space neighbor, completing an orbit around Earth monthly!",
+      "text": "The Moon orbits Earth only 238,855 miles away, while the Sun and distant stars are millions of miles farther!",
       "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
-      "evidence": ["orbit", "earth", "moon"]
+      "evidence": [
+        "different parts",
+        "sun"
+      ]
     }
   },
   {
@@ -228,34 +472,64 @@
     "type": "pick",
     "prompt": "Who has more bones: a baby or a grown-up?",
     "items": [
-      { "id": "a", "emoji": "👶", "label": "Tiny Baby" },
-      { "id": "b", "emoji": "🧑", "label": "Adult Person" },
-      { "id": "c", "emoji": "⚖️", "label": "Both The Same" }
+      {
+        "id": "a",
+        "emoji": "👶",
+        "label": "Tiny Baby"
+      },
+      {
+        "id": "b",
+        "emoji": "🧑",
+        "label": "Adult Person"
+      },
+      {
+        "id": "c",
+        "emoji": "⚖️",
+        "label": "Both The Same"
+      }
     ],
     "answer": "a",
     "hint": "Babies start with about 300 bones that fuse together over time!",
     "fact": {
-      "text": "The skeleton is made up of 206 bones in the adult, while babies are born with around 300 bones!",
+      "text": "A newborn baby starts with around 300 bones, which fuse into 206 bones in an adult person!",
       "source": "https://medlineplus.gov/ency/imagepages/9065.htm",
-      "evidence": ["206 bones", "adult"]
+      "evidence": [
+        "206 bones",
+        "adult"
+      ]
     }
   },
   {
     "id": "body-02",
     "level": 3,
-    "type": "tapall",
-    "prompt": "Tap all the organs that are inside your human body!",
+    "type": "pick",
+    "prompt": "Which is the LARGEST single organ of the human body?",
     "items": [
-      { "id": "a", "emoji": "🫀", "label": "Pumping Heart" },
-      { "id": "b", "emoji": "🧠", "label": "Clever Brain" },
-      { "id": "c", "emoji": "✋", "label": "Outer Skin" }
+      {
+        "id": "a",
+        "emoji": "🫀",
+        "label": "Pumping Heart"
+      },
+      {
+        "id": "b",
+        "emoji": "🧠",
+        "label": "Clever Brain"
+      },
+      {
+        "id": "c",
+        "emoji": "✋",
+        "label": "Outer Skin"
+      }
     ],
-    "answer": ["a", "b"],
-    "hint": "Your heart and brain are tucked deep inside, but skin wraps around your outside!",
+    "answer": "c",
+    "hint": "It covers your body from your head all the way to your toes!",
     "fact": {
-      "text": "Your skin is the largest organ of the human body, protecting everything inside your body.",
+      "text": "Skin is the largest organ of the human body, protecting everything inside your body.",
       "source": "https://medlineplus.gov/skinconditions.html",
-      "evidence": ["skin", "protects", "body"]
+      "evidence": [
+        "skin",
+        "protects"
+      ]
     }
   },
   {
@@ -264,16 +538,31 @@
     "type": "pick",
     "prompt": "Which is the hardest part of your body?",
     "items": [
-      { "id": "a", "emoji": "🦷", "label": "Tooth Enamel" },
-      { "id": "b", "emoji": "🦴", "label": "Strong Bone" },
-      { "id": "c", "emoji": "💅", "label": "Fingernail" }
+      {
+        "id": "a",
+        "emoji": "🦷",
+        "label": "Tooth Enamel"
+      },
+      {
+        "id": "b",
+        "emoji": "🦴",
+        "label": "Strong Bone"
+      },
+      {
+        "id": "c",
+        "emoji": "💅",
+        "label": "Fingernail"
+      }
     ],
     "answer": "a",
     "hint": "It forms the tough gleaming shield covering every tooth in your mouth!",
     "fact": {
       "text": "Tooth enamel is the hardest part of your body, protecting each tooth with a hard mineral shield.",
       "source": "https://medlineplus.gov/ency/imagepages/1121.htm",
-      "evidence": ["hard", "enamel"]
+      "evidence": [
+        "hard",
+        "enamel"
+      ]
     }
   },
   {
@@ -282,17 +571,41 @@
     "type": "tapall",
     "prompt": "Tap all the sensory parts found on your smiling face!",
     "items": [
-      { "id": "a", "emoji": "👁️", "label": "Seeing Eyes" },
-      { "id": "b", "emoji": "👃", "label": "Sniffing Nose" },
-      { "id": "c", "emoji": "👅", "label": "Tasting Tongue" },
-      { "id": "d", "emoji": "🦵", "label": "Kicking Knee" }
+      {
+        "id": "a",
+        "emoji": "👁️",
+        "label": "Seeing Eyes"
+      },
+      {
+        "id": "b",
+        "emoji": "👃",
+        "label": "Sniffing Nose"
+      },
+      {
+        "id": "c",
+        "emoji": "👅",
+        "label": "Tasting Tongue"
+      },
+      {
+        "id": "d",
+        "emoji": "🦵",
+        "label": "Kicking Knee"
+      }
     ],
-    "answer": ["a", "b", "c"],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
     "hint": "Knees bend for running, but eyes, nose, and tongue explore senses!",
     "fact": {
       "text": "The tongue has taste buds that detect sweet, salty, sour, savory and bitter tastes!",
       "source": "https://medlineplus.gov/ency/article/003050.htm",
-      "evidence": ["tongue", "detect", "bitter"]
+      "evidence": [
+        "tongue",
+        "detect",
+        "bitter"
+      ]
     }
   },
   {
@@ -301,16 +614,35 @@
     "type": "order",
     "prompt": "Order these human growth stages from youngest to oldest age!",
     "items": [
-      { "id": "a", "emoji": "👶", "label": "Baby Infant" },
-      { "id": "b", "emoji": "🧒", "label": "Playful Child" },
-      { "id": "c", "emoji": "🧑", "label": "Grown Adult" }
+      {
+        "id": "a",
+        "emoji": "👶",
+        "label": "Baby Infant"
+      },
+      {
+        "id": "b",
+        "emoji": "🧒",
+        "label": "Playful Child"
+      },
+      {
+        "id": "c",
+        "emoji": "🧑",
+        "label": "Grown Adult"
+      }
     ],
-    "answer": ["a", "b", "c"],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
     "hint": "Start in the cradle as an infant and grow into adulthood.",
     "fact": {
-      "text": "From ages 2 to 10 years, a growing child develops at a steady pace toward adulthood!",
+      "text": "Human growth progresses steadily from an infant into a playful child and then into a grown adult!",
       "source": "https://medlineplus.gov/ency/article/002456.htm",
-      "evidence": ["child", "grow"]
+      "evidence": [
+        "infant",
+        "child"
+      ]
     }
   },
   {
@@ -319,16 +651,35 @@
     "type": "order",
     "prompt": "Order what happens as healthy food journeys through your body!",
     "items": [
-      { "id": "a", "emoji": "🦷", "label": "Chew Teeth" },
-      { "id": "b", "emoji": "👅", "label": "Swallow Throat" },
-      { "id": "c", "emoji": "🥣", "label": "Digest Stomach" }
+      {
+        "id": "a",
+        "emoji": "🦷",
+        "label": "Chew Teeth"
+      },
+      {
+        "id": "b",
+        "emoji": "👅",
+        "label": "Swallow Throat"
+      },
+      {
+        "id": "c",
+        "emoji": "🥣",
+        "label": "Digest Stomach"
+      }
     ],
-    "answer": ["a", "b", "c"],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
     "hint": "Teeth chew first, throat swallows, and stomach digests into energy.",
     "fact": {
-      "text": "In digestion, food is broken down into small parts that the body absorbs for energy!",
-      "source": "https://medlineplus.gov/ency/article/007447.htm",
-      "evidence": ["digestion", "food", "body"]
+      "text": "Your teeth chew food, which travels down the throat into the stomach for healthy digestion!",
+      "source": "https://medlineplus.gov/ency/anatomyvideos/000126.htm",
+      "evidence": [
+        "throat",
+        "stomach"
+      ]
     }
   }
 ]

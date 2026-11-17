@@ -133,7 +133,21 @@ export async function checkSources() {
     if (matchedSentence) {
       okCount++;
       console.log(`[check:sources] OK [${id}]: Evidence matched in 1 sentence.`);
-      supportLines.push(`${id} | OK | ${matchedSentence.substring(0, 150)}...`);
+      let supportingSentence = matchedSentence.trim();
+      const words = supportingSentence.split(/\s+/);
+      if (words.length > 15) {
+        const lowerWords = words.map(w => w.toLowerCase());
+        const firstEv = evidenceTerms[0];
+        let idx = lowerWords.findIndex(w => w.includes(firstEv));
+        if (idx < 0) idx = 0;
+        let start = Math.max(0, idx - 4);
+        let end = Math.min(words.length, start + 15);
+        if (end - start < 15 && start > 0) {
+          start = Math.max(0, end - 15);
+        }
+        supportingSentence = words.slice(start, end).join(' ');
+      }
+      supportLines.push(`${id} | OK | ${supportingSentence}`);
     } else {
       console.error(`[check:sources] FAIL [${id}]: Missing evidence terms [${fact.evidence.join(', ')}] in any single sentence.`);
       failCount++;
