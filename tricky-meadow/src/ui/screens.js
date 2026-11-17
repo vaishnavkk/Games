@@ -86,22 +86,23 @@ export function renderMapScreen(game) {
         <span class="ambient-cloud cloud-1"></span>
         <span class="ambient-firefly"></span>
       </div>
-      <header class="hud-bar">
-        <div class="hud-left">
-          <button type="button" class="icon-btn" id="btnBackHome" aria-label="Back to Home">
-            ${renderEmoji('home', 28)}
-          </button>
-        </div>
-        <div class="hud-center">
-          <h1 class="hud-title">Meadow Map</h1>
-        </div>
-        <div class="hud-right">
-          <div class="hud-stars" title="Total Stars Earned">
-            ${renderEmoji('star', 24)}
-            <span class="star-count">${totalStars}</span>
-          </div>
-        </div>
+      <header class="hud-bar topbar">
+        <button type="button" class="icon-btn header-btn" id="btnBackHome" aria-label="Back to Home">
+          ${renderEmoji('home', 28)}
+        </button>
+        <h1 class="hud-title topbar-title">Meadow Map</h1>
+        <button type="button" class="icon-btn header-btn" id="btnSettings" aria-label="Settings">
+          ${renderEmoji('settings', 28)}
+        </button>
       </header>
+
+      <div class="progress-row map-progress-row">
+        <span>Explore Meadow Levels</span>
+        <div class="hud-stars" title="Total Stars Earned">
+          ${renderEmoji('star', 20)}
+          <span class="star-count">${totalStars} Stars</span>
+        </div>
+      </div>
 
       <main class="levels-grid">
         ${levelCardsHtml}
@@ -115,6 +116,9 @@ export function renderPuzzleScreen(game) {
   if (!puzzle) return `<div class="screen"><p>No puzzle selected.</p></div>`;
 
   const levelInfo = LEVELS.find(l => l.id === game.level);
+  const levelPuzzles = game.getLevelPuzzles();
+  const puzzleIdx = levelPuzzles.findIndex(p => p.id === game.puzzleId);
+  const totalPuzzlesInLevel = levelPuzzles.length || 6;
   const currentPotentialStars = game.hintUsed ? 2 : (game.tries === 0 ? 3 : (game.tries === 1 ? 2 : 1));
 
   const itemsHtml = puzzle.items.map(item => {
@@ -146,53 +150,38 @@ export function renderPuzzleScreen(game) {
 
   return `
     <div class="screen screen-puzzle bg-level-${game.level} ${game.isShaking ? 'shake' : ''}">
-      <header class="hud-bar">
-        <div class="hud-left">
-          <button type="button" class="icon-btn" id="btnBackMap" aria-label="Back to Map">
-            ${renderEmoji('home', 28)}
-          </button>
-          <button type="button" class="icon-btn" id="btnReadAloud" aria-label="Read prompt aloud">
-            ${renderEmoji('speaker', 28)}
-          </button>
-        </div>
-        <div class="hud-center">
-          <h1 class="hud-title hud-level-tag">${levelInfo?.name || `Level ${game.level}`}</h1>
-          <div class="hud-potential-stars" title="Potential stars for this round">${renderStarString(currentPotentialStars)}</div>
-        </div>
-        <div class="hud-right">
-          <button type="button" class="hint-btn ${game.hintUsed ? 'hint-used' : ''}" id="btnHint" aria-label="Use Hint" ${game.hintUsed ? 'disabled' : ''}>
-            ${renderEmoji('hint', 28)}
-            <span>${game.hintUsed ? 'Hint On' : 'Hint'}</span>
-          </button>
-        </div>
+      <header class="hud-bar topbar">
+        <button type="button" class="icon-btn header-btn" id="btnBackMap" aria-label="Back to Map">
+          ${renderEmoji('home', 28)}
+        </button>
+        <h1 class="hud-title topbar-title hud-level-tag">${levelInfo?.name || `Level ${game.level}`}</h1>
+        <button type="button" class="icon-btn header-btn" id="btnSettings" aria-label="Settings">
+          ${renderEmoji('settings', 28)}
+        </button>
       </header>
 
-      <section class="prompt-box">
-        <div class="mascot-puzzle-row">
-          ${renderMascot(
-            game.tries > 0 ? 'think' : (game.hintUsed ? 'think' : 'neutral'),
-            game.hintUsed ? `Hint: ${puzzle.hint}` : (game.feedback ? game.feedback : null),
-            72
-          )}
+      <div class="progress-row">
+        <span class="progress-label">Puzzle ${puzzleIdx >= 0 ? puzzleIdx + 1 : 1} of ${totalPuzzlesInLevel}</span>
+        <div class="progress-stars earned-stars" aria-label="Potential stars" title="Potential stars for this round">
+          ${renderStarString(currentPotentialStars)}
         </div>
+      </div>
+
+      <section class="mascot-puzzle-row">
+        ${renderMascot(
+          game.tries > 0 ? 'think' : (game.hintUsed ? 'think' : 'neutral'),
+          game.hintUsed ? `Hint: ${puzzle.hint}` : (game.feedback ? game.feedback : null),
+          64
+        )}
+      </section>
+
+      <section class="prompt-box">
         <h2 class="puzzle-prompt">${puzzle.prompt}</h2>
       </section>
 
       <div class="cards-area ${puzzle.type}-mode">
         ${itemsHtml}
       </div>
-
-      ${puzzle.type === 'tapall'
-        ? `
-          <div class="puzzle-actions">
-            <button type="button" class="btn btn-primary btn-submit" id="btnDoneTapAll">
-              ${renderEmoji('check', 24)}
-              <span>Done</span>
-            </button>
-          </div>
-        `
-        : ''
-      }
 
       ${puzzle.type === 'order'
         ? `
@@ -202,6 +191,25 @@ export function renderPuzzleScreen(game) {
         `
         : ''
       }
+
+      <footer class="action-bar">
+        <button type="button" class="btn btn-hint hint-btn ${game.hintUsed ? 'hint-used' : ''}" id="btnHint" aria-label="Use Hint" ${game.hintUsed ? 'disabled' : ''}>
+          ${renderEmoji('hint', 28)}
+          <span>${game.hintUsed ? 'Hint On' : 'Hint'}</span>
+        </button>
+        <button type="button" class="btn icon-btn btn-read-aloud" id="btnReadAloud" aria-label="Read prompt aloud">
+          ${renderEmoji('speaker', 28)}
+        </button>
+        ${puzzle.type === 'tapall'
+          ? `
+            <button type="button" class="btn btn-primary btn-submit" id="btnDoneTapAll">
+              ${renderEmoji('check', 24)}
+              <span>Done</span>
+            </button>
+          `
+          : ''
+        }
+      </footer>
     </div>
   `;
 }
@@ -282,9 +290,14 @@ export function renderSettingsScreen(_game) {
   return `
     <div class="screen screen-settings">
       <div class="settings-card">
-        <header class="settings-head">
-          <h2>Settings & Credits</h2>
-          <button type="button" class="icon-btn" id="btnCloseSettings" aria-label="Close Settings">✕</button>
+        <header class="hud-bar topbar settings-topbar">
+          <button type="button" class="icon-btn header-btn" id="btnCloseSettings" aria-label="Close Settings">
+            ${renderEmoji('home', 28)}
+          </button>
+          <h1 class="hud-title topbar-title">Settings & Credits</h1>
+          <button type="button" class="icon-btn header-btn" id="btnDismissSettings" aria-label="Done">
+            ${renderEmoji('check', 24)}
+          </button>
         </header>
 
         <section class="settings-section">

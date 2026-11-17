@@ -12,6 +12,8 @@
 10. Task 1 Icons & Layout: UI aliases mapped directly to sprite symbol IDs; header grid minmax(0,1fr) auto minmax(0,1fr) balances controls; selfplay invariant verifies button pixel stddev > 3.0 and geometry.
 11. Task 2 Content & Sources: Replaced bot-shielded sources with 100% fetchable government sources (NASA, NPS, NOAA, MedlinePlus) with 0 WARN / 0 FAIL.
 12. Task 3 Fact Consistency: Dropped 2/2/2 rule for Me & My Body (now 3 pick, 1 tapall, 2 order); restored body-02 to pick largest organ (Outer Skin).
+13. Task 1 Phone Layout: Single-row topbar 48px 1fr 48px, progress-row under header, 56px action bar fixed at bottom, icons <= 40px filter:none.
+14. Task 3 Content: Custom painted SVG chrysalis in sprite, true-at-scale sky-06 distances with max 2 sources, teeth count order body-05.
 
 ## Clever-Child Ambiguity Check
 - garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.
@@ -30,5 +32,5 @@
 - body-02: Child argues skin is just outer wrapping, but skin is anatomically the largest organ of the human body.
 - body-03: Child argues heavy skeleton bones are hardest, but tooth enamel is 96% mineral crystal, physically harder than bone.
 - body-04: Child argues knees feel touch, but the face houses the primary sensory organs for sight, smell, and taste.
-- body-05: Child argues toddlers and children are synonymous, but human development orders chronologically infant to child to grown adult.
+- body-05: Child argues babies have teeth, but human infants are born toothless before developing 20 baby teeth then up to 32 adult teeth.
 - body-06: Child argues stomach acid chews food, but mechanical chewing with teeth precedes swallowing down the throat into stomach.
