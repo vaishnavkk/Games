@@ -6,6 +6,14 @@
   <title>Tricky Meadow — Kids' Trick Puzzle Game</title>
 </head>
 <body>
+  <!-- Hidden SVG Filters for Watercolor Organic Effect -->
+  <svg style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true">
+    <filter id="watercolor-filter">
+      <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+  <div class="paper-grain" aria-hidden="true"></div>
   <div id="app"></div>
   <script type="module" src="./src/main.js"></script>
 </body>

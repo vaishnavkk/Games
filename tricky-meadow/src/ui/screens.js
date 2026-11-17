@@ -1,5 +1,6 @@
 import { renderEmoji } from '../sprite.js';
 import { LEVELS } from '../engine/game.js';
+import { renderMascot } from './mascot.js';
 
 export function renderStarString(count) {
   let stars = '';
@@ -11,15 +12,20 @@ export function renderStarString(count) {
 
 export function renderHomeScreen(_game) {
   return `
-    <div class="screen screen-home">
+    <div class="screen screen-home bg-home">
+      <div class="ambient-layer" aria-hidden="true">
+        <span class="ambient-cloud cloud-1"></span>
+        <span class="ambient-cloud cloud-2"></span>
+        <span class="ambient-firefly"></span>
+      </div>
+
       <div class="brand-hero">
-        <div class="hero-icons">
-          ${renderEmoji('rabbit', 64, 'hero-bounce')}
-          ${renderEmoji('sparkles', 36, 'hero-sparkle')}
-          ${renderEmoji('clover', 44, 'hero-float')}
+        <div class="hero-mascot">
+          ${renderMascot('neutral', 'Welcome to Tricky Meadow! Look closely—nothing is quite what it seems!', 96)}
         </div>
         <h1 class="game-title">Tricky Meadow</h1>
         <p class="game-tagline">Clever trick-puzzles for curious kids!</p>
+        <p class="how-to-play">Tap cards to solve tricks. Read fun science secrets!</p>
       </div>
 
       <div class="home-actions">
@@ -75,7 +81,11 @@ export function renderMapScreen(game) {
   }).join('');
 
   return `
-    <div class="screen screen-map">
+    <div class="screen screen-map bg-map">
+      <div class="ambient-layer" aria-hidden="true">
+        <span class="ambient-cloud cloud-1"></span>
+        <span class="ambient-firefly"></span>
+      </div>
       <header class="hud-bar">
         <button type="button" class="icon-btn" id="btnBackHome" aria-label="Back to Home">
           ${renderEmoji('home', 28)}
@@ -131,7 +141,7 @@ export function renderPuzzleScreen(game) {
   }).join('');
 
   return `
-    <div class="screen screen-puzzle ${game.isShaking ? 'shake' : ''}">
+    <div class="screen screen-puzzle bg-level-${game.level} ${game.isShaking ? 'shake' : ''}">
       <header class="hud-bar">
         <button type="button" class="icon-btn" id="btnBackMap" aria-label="Back to Map">
           ${renderEmoji('home', 26)}
@@ -149,15 +159,14 @@ export function renderPuzzleScreen(game) {
       </header>
 
       <section class="prompt-box">
+        <div class="mascot-puzzle-row">
+          ${renderMascot(
+            game.tries > 0 ? 'think' : (game.hintUsed ? 'think' : 'neutral'),
+            game.hintUsed ? `Hint: ${puzzle.hint}` : (game.feedback ? game.feedback : null),
+            72
+          )}
+        </div>
         <h2 class="puzzle-prompt">${puzzle.prompt}</h2>
-        ${game.hintUsed
-          ? `<div class="hint-card">${renderEmoji('hint', 20)} <span>${puzzle.hint}</span></div>`
-          : ''
-        }
-        ${game.feedback
-          ? `<div class="feedback-msg gentle-feedback">${game.feedback}</div>`
-          : ''
-        }
       </section>
 
       <div class="cards-area ${puzzle.type}-mode">
@@ -196,7 +205,7 @@ export function renderFactScreen(game) {
   const starsHtml = renderStarString(starCount);
 
   return `
-    <div class="screen screen-fact">
+    <div class="screen screen-fact bg-level-${game.level}">
       <div class="fact-card">
         <div class="fact-stars-banner">
           <div class="earned-stars">${starsHtml}</div>
@@ -205,7 +214,7 @@ export function renderFactScreen(game) {
 
         <div class="fact-content">
           <div class="fact-header">
-            ${renderEmoji('sparkles', 28)}
+            ${renderMascot('cheer', null, 56)}
             <h2 class="fact-title">Did You Know?</h2>
           </div>
           <p class="fact-text">${puzzle.fact.text}</p>
@@ -218,10 +227,6 @@ export function renderFactScreen(game) {
             `
             : ''
           }
-
-          <div class="fact-source">
-            <a href="${puzzle.fact.source}" target="_blank" rel="noopener noreferrer">Source: Wikipedia</a>
-          </div>
         </div>
 
         <div class="fact-actions">
@@ -240,9 +245,11 @@ export function renderLevelDoneScreen(game) {
   const totalLvlStars = game.getTotalStarsForLevel(game.level);
 
   return `
-    <div class="screen screen-level-done">
+    <div class="screen screen-level-done bg-level-${game.level}">
       <div class="level-done-card">
-        <div class="done-icon">${renderEmoji('trophy', 64)}</div>
+        <div class="done-icon">
+          ${renderMascot('cheer', 'Incredible work, explorer!', 96)}
+        </div>
         <h1 class="done-title">${levelInfo?.name || 'Level'} Complete!</h1>
         <p class="done-subtitle">Awesome job solving puzzles in the meadow!</p>
 
@@ -286,6 +293,17 @@ export function renderSettingsScreen(_game) {
               <strong>Celebrations:</strong> canvas-confetti by Kiril Vatev, licensed under the
               <a href="https://opensource.org/licenses/ISC" target="_blank" rel="noopener noreferrer">ISC License</a>.
             </li>
+          </ul>
+        </section>
+
+        <section class="settings-section">
+          <h3>Fact Sources (Parents & Educators)</h3>
+          <p class="reset-desc">Institutional sources consulted for educational facts (plain text):</p>
+          <ul class="credits-list plain-text-sources">
+            <li>NASA Space Place & Science Explorations</li>
+            <li>Britannica Kids & Encyclopaedia Britannica</li>
+            <li>Smithsonian National Museum of Natural History</li>
+            <li>National Geographic Kids & Educational Archives</li>
           </ul>
         </section>
 
