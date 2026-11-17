@@ -17,14 +17,14 @@ A gentle, clever trick-puzzle game designed for curious kids (ages 6–10). Expl
 Tricky Meadow features 18 carefully verified educational trick-puzzles across three levels:
 1. **Garden & Animals** (insects vs. arachnids, egg-laying mammals, fungi, life cycles)
 2. **Sky & Space** (the hottest planet, light reflection, planetary rings, inner solar system)
-3. **Me & My Body** (baby vs. adult bones, human skin as largest organ, floating pumice, sensory organs)
+3. **Me & My Body** (baby vs. adult bones, human skin as largest organ, tooth enamel hardness, sensory organs)
 
 Puzzles come in three tap-only formats:
 - **Pick**: Choose 1 of 3–4 illustrated cards.
 - **Tap All**: Tap every card that fits the rule, then tap Done.
 - **Order**: Tap cards in their true scientific sequence (e.g., life stages, planet distances).
 
-Every puzzle reveals a fascinating **"Did You Know?"** fact card backed by reputable institutions (NASA Space Place, Smithsonian, Britannica Kids).
+Every puzzle reveals a fascinating **"Did You Know?"** fact card backed by reputable institutions (NASA Space Place, Smithsonian National Zoo, NOAA, NPS, NIH/MedlinePlus).
 
 ---
 
