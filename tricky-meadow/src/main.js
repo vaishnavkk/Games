@@ -99,6 +99,19 @@ function attachEvents(container) {
       return;
     }
 
+    // Read aloud button
+    if (target.id === 'btnReadAloud' || target.closest('#btnReadAloud')) {
+      const current = game.getCurrentPuzzle();
+      if (current && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const text = `${current.prompt}. ${current.items.map(i => i.label).join(', ')}`;
+        const utterance = new window.SpeechSynthesisUtterance(text);
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      }
+      return;
+    }
+
     // Puzzle hint
     if (target.id === 'btnHint') {
       game.useHint();

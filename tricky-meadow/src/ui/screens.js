@@ -151,6 +151,9 @@ export function renderPuzzleScreen(game) {
           <span class="hud-potential-stars" title="Potential stars for this round">${renderStarString(currentPotentialStars)}</span>
         </div>
         <div class="hud-right">
+          <button type="button" class="icon-btn btn-read-aloud" id="btnReadAloud" aria-label="Read prompt aloud">
+            ${renderEmoji('speaker', 22)}
+          </button>
           <button type="button" class="btn-hint ${game.hintUsed ? 'hint-used' : ''}" id="btnHint" aria-label="Use Hint" ${game.hintUsed ? 'disabled' : ''}>
             ${renderEmoji('hint', 24)}
             <span>${game.hintUsed ? 'Hint On' : 'Hint'}</span>
