@@ -179,6 +179,13 @@
       box-shadow: 0 16px 36px var(--amber-glow);
     }
 
+    .game-card.card-meadow {
+      border-top: 2px solid rgba(46, 204, 113, 0.45);
+    }
+    .game-card.card-meadow:hover {
+      box-shadow: 0 16px 36px rgba(46, 204, 113, 0.28);
+    }
+
     .card-top {
       display: flex;
       align-items: center;
@@ -206,6 +213,11 @@
       border: 1px solid rgba(217, 125, 16, 0.3);
     }
 
+    .card-meadow .card-icon-wrap {
+      background: rgba(46, 204, 113, 0.12);
+      border: 1px solid rgba(46, 204, 113, 0.3);
+    }
+
     .card-badge {
       font-size: 11px;
       font-weight: 700;
@@ -225,6 +237,12 @@
       background: rgba(217, 125, 16, 0.14);
       color: #fb923c;
       border: 1px solid rgba(251, 146, 60, 0.3);
+    }
+
+    .card-meadow .card-badge {
+      background: rgba(46, 204, 113, 0.14);
+      color: #4ade80;
+      border: 1px solid rgba(74, 222, 128, 0.3);
     }
 
     .card-title {
@@ -304,6 +322,17 @@
       background: #e6881c;
       transform: translateY(-1px);
       box-shadow: 0 6px 20px rgba(217, 125, 16, 0.50);
+    }
+
+    .card-meadow .btn-play {
+      background: #22c55e;
+      color: #052e16;
+      box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);
+    }
+    .card-meadow .btn-play:hover {
+      background: #16a34a;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.50);
     }
 
     .btn-docs {
@@ -474,6 +503,33 @@
             <span>🌍 Play GeoTrivia</span>
           </a>
           <a href="earth-trivia/README.md" class="btn-docs" title="View GeoTrivia Documentation">
+            <span>Docs</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 3: Tricky Meadow -->
+      <article class="game-card card-meadow">
+        <div class="card-top">
+          <div class="card-icon-wrap">🌱</div>
+          <span class="card-badge">Puzzle • Educational</span>
+        </div>
+        <h2 class="card-title">Tricky Meadow</h2>
+        <p class="card-desc">
+          Kids' trick-puzzle game (ages 6–10) in a warm watercolor meadow. Solve 18 science tricks across animals, space, and the human body with Moss the leaf-sprite.
+        </p>
+        <div class="feature-tags">
+          <span class="tag">🌿 18 Verified Puzzles</span>
+          <span class="tag">🎨 Ghibli-Style Watercolor</span>
+          <span class="tag">✨ 3 Meadow Levels</span>
+          <span class="tag">🗣️ Read Aloud Voice</span>
+          <span class="tag">🔒 100% Kid-Safe &amp; Offline</span>
+        </div>
+        <div class="card-actions">
+          <a href="tricky-meadow/" class="btn-play">
+            <span>🌱 Play Tricky Meadow</span>
+          </a>
+          <a href="tricky-meadow/README.md" class="btn-docs" title="View Tricky Meadow Documentation">
             <span>Docs</span>
           </a>
         </div>

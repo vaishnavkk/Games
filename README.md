@@ -15,6 +15,7 @@ No CDN or third-party requests at runtime; GeoTrivia bundles Three.js, and Matri
 | :--- | :--- | :--- | :--- | :--- |
 | **GeoTrivia: Earth Explorer**<br><br>[![GeoTrivia](docs/img/geotrivia.webp)](https://vaishnavkk.github.io/Games/earth-trivia/) | Interactive 3D globe trivia identifying 195 sovereign nations directly on a Three.js Earth sphere | Three.js, TopoJSON, Web Audio | [Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/) | [earth-trivia/](earth-trivia/) |
 | **Matrixfall**<br><br>[![Matrixfall](docs/img/matrixfall.webp)](https://vaishnavkk.github.io/Games/matrix-fall/) | Falling blocks puzzle game with Matrix Surge bullet time, quantum phase blocks, and dynamic speed | HTML5 2D Canvas, Web Audio | [Play Matrixfall](https://vaishnavkk.github.io/Games/matrix-fall/) | [matrix-fall/](matrix-fall/) |
+| **Tricky Meadow**<br><br>[![Tricky Meadow](docs/img/trickymeadow.webp)](https://vaishnavkk.github.io/Games/tricky-meadow/) | Kids' trick-puzzle game in a watercolor meadow with 18 verified science tricks and leaf-sprite companion | Vite, Twemoji SVG, Web Speech | [Play Tricky Meadow](https://vaishnavkk.github.io/Games/tricky-meadow/) | [tricky-meadow/](tricky-meadow/) |
 
 ---
 
@@ -53,6 +54,21 @@ open index.html
 
 # Or serve via any HTTP server:
 python -m http.server 8080
+```
+
+### Tricky Meadow
+Tricky Meadow is built with Vite, vanilla JavaScript, and dynamic Twemoji SVG sprites:
+
+```bash
+# Navigate to Tricky Meadow folder
+cd tricky-meadow
+
+# Install dependencies and build
+npm ci
+npm run build
+
+# Start local development server
+npm run dev
 ```
 
 ### Root Portal
@@ -99,6 +115,16 @@ Games/
 │   └── README.md                # Matrixfall mechanics, controls, and scoring guide
 ├── matrixfall/                  # Backward-compatibility HTTP redirect to matrix-fall/
 │   └── index.html               # Client-side redirect stub
+├── tricky-meadow/               # Kids' trick-puzzle educational game (ages 6–10)
+│   ├── dist/                    # Bundled client distribution (Vite)
+│   ├── docs/                    # Architecture decisions and 640px WebP screenshots
+│   ├── public/                  # Dynamic Twemoji SVG sprite asset
+│   ├── scripts/                 # Build-sprite, source verifier, and Puppeteer self-play QA
+│   ├── src/                     # Game engine, 18 verified puzzles, screens, and styles
+│   ├── test/                    # Node test runner unit tests (stars, unlocks, storage)
+│   ├── index.html               # Vite entry and Pages redirect
+│   ├── package.json             # Build commands, scripts, dependencies
+│   └── README.md                # Tricky Meadow documentation and guide
 ├── scripts/                     # Root test orchestration and self-play runners
 │   ├── selfplay.js              # Multi-tier self-play delegation script
 │   └── testTiers.js             # Question bag tier verification runner
@@ -138,3 +164,5 @@ This repository is open-source software licensed under the [MIT License](LICENSE
   - Upstream software and font notices are detailed in [GeoTrivia Third-Party Notices](earth-trivia/THIRD_PARTY_NOTICES.md).
 - **Matrixfall**:
   - Standalone game with zero third-party assets; audio generated dynamically via Web Audio API. See the [Matrixfall Guide](matrix-fall/README.md).
+- **Tricky Meadow**:
+  - Twemoji graphics licensed under CC-BY 4.0; Fredoka and Patrick Hand fonts licensed under SIL OFL 1.1; canvas-confetti licensed under ISC. Full details documented in [Tricky Meadow Notices](tricky-meadow/THIRD_PARTY_NOTICES.md).
