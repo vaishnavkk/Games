@@ -28,13 +28,14 @@ for (const t of accuracyTests) {
   console.log(`  correct: ${String(t.correct).padStart(2)}, answered: ${String(t.answered).padStart(2)} -> accuracy: ${acc}% (expected: ${t.expected}%) [${pass ? 'PASS' : 'FAIL'}]`);
 }
 
-// 2. Partial Credit Function (round(300 * max(0, 1 - d/2000)))
-console.log('\n--- 3b) Partial Credit Function Unit Tests (d = 0, 14, 524, 2000, 14944) ---');
+// 2. Partial Credit Function (round(300 * max(0, 1 - d/5000)))
+console.log('\n--- 3b) Partial Credit Function Unit Tests (d = 0, 14, 524, 2000, 5000, 14944) ---');
 const distTests = [
   { d: 0, exp: 300 },
-  { d: 14, exp: 298 },
-  { d: 524, exp: 221 },
-  { d: 2000, exp: 0 },
+  { d: 14, exp: 299 },
+  { d: 524, exp: 269 },
+  { d: 2000, exp: 180 },
+  { d: 5000, exp: 0 },
   { d: 14944, exp: 0 }
 ];
 

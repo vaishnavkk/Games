@@ -83,8 +83,8 @@ All scoring rules are implemented directly in `src/scoring.js`:
   $$\text{multiplier} = \min(1.5, 1.0 + 0.1 \cdot \text{streak}_{\text{prior}})$$
 - **Round Maximum Score**: Hard-capped at **1,000 points**:
   $$\text{RoundScore} = \min(1000, \text{round}((800 + \text{speedBonus}) \cdot \text{multiplier}))$$
-- **Proximity Partial Credit**: If incorrect, guesses within $2,000\text{ km}$ receive partial credit:
-  $$\text{partialCredit} = \text{round}\left(300 \cdot \max\left(0, 1 - \frac{d}{2000\text{ km}}\right)\right)$$
+- **Proximity Partial Credit**: If incorrect, guesses within $5,000\text{ km}$ receive partial credit:
+  $$\text{partialCredit} = \text{round}\left(300 \cdot \max\left(0, 1 - \frac{d}{5000\text{ km}}\right)\right)$$
 - **Timer**: 25-second countdown per round (can be toggled on/off in settings).
 - **Practice Mode**: Untimed exploration with unrecorded scoring ($0\text{ pts}$).
 - **Endless Expeditions**: Play continuously without round limits; finish at any point via the Finish Expedition dialog with comprehensive accuracy summary.

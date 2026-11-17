@@ -7,7 +7,7 @@
  * - Streak multiplier: 1.0x to 1.5x (+0.1x per consecutive correct answer before current)
  * - Max round score: 1,000 pts (hard cap)
  * - Reveal Clue cost: 0 pts (free)
- * - Wrong answer partial credit: round(300 * max(0, 1 - d / 2000))
+ * - Wrong answer partial credit: round(300 * max(0, 1 - d / 5000))
  * - Practice mode: score unrecorded (0 pts)
  */
 
@@ -15,7 +15,7 @@ export const BASE_POINTS = 800;
 export const MAX_ROUND_POINTS = 1000;
 export const STREAK_STEP = 0.1;
 export const STREAK_MAX = 1.5;
-const PARTIAL_MAX_KM = 2000;
+const PARTIAL_MAX_KM = 5000;
 const PARTIAL_MAX_POINTS = 300;
 
 export const streakMultiplierIfCorrect = (streakBefore) =>

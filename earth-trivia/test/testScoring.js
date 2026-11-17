@@ -70,16 +70,21 @@ const testCases = [
   {
     name: 'Case 12: Wrong answer, 14 km distance (d = 14)',
     input: { isCorrect: false, distanceKm: 14 },
-    expected: { points: 298, base: 0, clueBonus: 0, speedBonus: 0, mult: 1.0 }
+    expected: { points: 299, base: 0, clueBonus: 0, speedBonus: 0, mult: 1.0 }
   },
   {
     name: 'Case 13: Wrong answer, 524 km distance (d = 524)',
     input: { isCorrect: false, distanceKm: 524 },
-    expected: { points: 221, base: 0, clueBonus: 0, speedBonus: 0, mult: 1.0 }
+    expected: { points: 269, base: 0, clueBonus: 0, speedBonus: 0, mult: 1.0 }
   },
   {
-    name: 'Case 14: Wrong answer, 2,000 km distance (d = 2000, cutoff)',
+    name: 'Case 14: Wrong answer, 2,000 km distance (d = 2000)',
     input: { isCorrect: false, distanceKm: 2000 },
+    expected: { points: 180, base: 0, clueBonus: 0, speedBonus: 0, mult: 1.0 }
+  },
+  {
+    name: 'Case 14b: Wrong answer, 5,000 km distance (d = 5000, cutoff)',
+    input: { isCorrect: false, distanceKm: 5000 },
     expected: { points: 0, base: 0, clueBonus: 0, speedBonus: 0, mult: 1.0 }
   },
   {
@@ -118,12 +123,13 @@ testCases.forEach((tc, idx) => {
 console.log('------------------------------------------------------------------------------------------------------------------------\n');
 
 // Verify Partial Credit Function specifically for required distances
-console.log('--- Step 3b Partial Credit Function Verification (d = 0, 14, 524, 2000, 14944) ---');
+console.log('--- Step 3b Partial Credit Function Verification (d = 0, 14, 524, 2000, 5000, 14944) ---');
 const distTests = [
   { d: 0, exp: 300 },
-  { d: 14, exp: 298 },
-  { d: 524, exp: 221 },
-  { d: 2000, exp: 0 },
+  { d: 14, exp: 299 },
+  { d: 524, exp: 269 },
+  { d: 2000, exp: 180 },
+  { d: 5000, exp: 0 },
   { d: 14944, exp: 0 }
 ];
 for (const dt of distTests) {
