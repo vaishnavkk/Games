@@ -3,330 +3,333 @@
     "id": "garden-01",
     "level": 1,
     "type": "pick",
-    "prompt": "Which tiny creature carries its spiral home on its back?",
+    "prompt": "Which eight-legged meadow creature is NOT an insect?",
     "items": [
-      { "id": "a", "emoji": "🐌", "label": "Garden Snail" },
-      { "id": "b", "emoji": "🐰", "label": "Fluffy Bunny" },
-      { "id": "c", "emoji": "🐸", "label": "Green Frog" }
+      { "id": "a", "emoji": "🐜", "label": "Tiny Ant" },
+      { "id": "b", "emoji": "🐝", "label": "Honey Bee" },
+      { "id": "c", "emoji": "🕷️", "label": "Garden Spider" }
     ],
-    "answer": "a",
-    "hint": "Look for a slimy friend with a swirl shell.",
+    "answer": "c",
+    "hint": "Insects have six legs, but spiders have eight!",
     "fact": {
-      "text": "Snails can nap for up to three whole years if the weather is too dry!",
-      "source": "https://en.wikipedia.org/wiki/Snail",
-      "evidence": ["Snails", "three years"]
+      "text": "Spiders are arachnids with eight legs, while every true insect has six legs!",
+      "source": "https://kids.britannica.com/kids/article/spider/353796",
+      "evidence": ["eight legs", "insect"]
     }
   },
   {
     "id": "garden-02",
     "level": 1,
     "type": "pick",
-    "prompt": "Who works in a buzzing team to make sweet golden honey?",
+    "prompt": "Which of these forest wonders is NOT a plant?",
     "items": [
-      { "id": "a", "emoji": "🦋", "label": "Blue Butterfly" },
-      { "id": "b", "emoji": "🐝", "label": "Honeybee" },
-      { "id": "c", "emoji": "🐞", "label": "Ladybug" }
+      { "id": "a", "emoji": "🍄", "label": "Forest Mushroom" },
+      { "id": "b", "emoji": "🌻", "label": "Sunflower" },
+      { "id": "c", "emoji": "🌲", "label": "Pine Tree" }
     ],
-    "answer": "b",
-    "hint": "They buzz around flowers and wear yellow-black stripes.",
+    "answer": "a",
+    "hint": "Mushrooms are fungi, so they cannot make their own food.",
     "fact": {
-      "text": "Honeybees dance in waggle shapes to tell friends where sweet flowers grow.",
-      "source": "https://en.wikipedia.org/wiki/Honey_bee",
-      "evidence": ["Honeybees", "waggle dance"]
+      "text": "Mushrooms are fungi, which cannot make food from sunlight like green plants do!",
+      "source": "https://kids.britannica.com/kids/article/fungus/353158",
+      "evidence": ["fungi", "plants"]
     }
   },
   {
     "id": "garden-03",
     "level": 1,
     "type": "tapall",
-    "prompt": "Tap all the animals that can flutter across the green meadow!",
+    "prompt": "Tap all the animals that lay eggs in nests or soil!",
     "items": [
-      { "id": "a", "emoji": "🦋", "label": "Butterfly" },
-      { "id": "b", "emoji": "🐢", "label": "Turtle" },
-      { "id": "c", "emoji": "🐝", "label": "Honeybee" },
-      { "id": "d", "emoji": "🦔", "label": "Hedgehog" }
+      { "id": "a", "emoji": "🐢", "label": "Box Turtle" },
+      { "id": "b", "emoji": "🦅", "label": "Bald Eagle" },
+      { "id": "c", "emoji": "🐻", "label": "Brown Bear" },
+      { "id": "d", "emoji": "🦊", "label": "Red Fox" }
     ],
-    "answer": ["a", "c"],
-    "hint": "Look for wings that flutter in the air.",
+    "answer": ["a", "b"],
+    "hint": "Look for the turtle with a shell and the soaring eagle.",
     "fact": {
-      "text": "Butterflies taste sweet flower nectar using tiny sensors on their feet!",
-      "source": "https://en.wikipedia.org/wiki/Butterfly",
-      "evidence": ["Butterflies", "feet"]
+      "text": "Female turtles bury their eggs in sand or soil to hatch in warmth!",
+      "source": "https://nationalzoo.si.edu/animals/eastern-box-turtle",
+      "evidence": ["lay", "eggs"]
     }
   },
   {
     "id": "garden-04",
     "level": 1,
     "type": "tapall",
-    "prompt": "Tap all the crunchy snacks you can harvest from a garden!",
+    "prompt": "Tap all the creatures that can flutter through the air!",
     "items": [
-      { "id": "a", "emoji": "🥕", "label": "Orange Carrot" },
-      { "id": "b", "emoji": "🍓", "label": "Red Strawberry" },
-      { "id": "c", "emoji": "🌲", "label": "Pine Tree" },
+      { "id": "a", "emoji": "🦋", "label": "Butterfly" },
+      { "id": "b", "emoji": "🦇", "label": "Brown Bat" },
+      { "id": "c", "emoji": "🐝", "label": "Bumblebee" },
       { "id": "d", "emoji": "🐌", "label": "Garden Snail" }
     ],
-    "answer": ["a", "b"],
-    "hint": "Pick the crunchy root and sweet red berry.",
+    "answer": ["a", "b", "c"],
+    "hint": "Butterflies, bees, and even furry bats have wings for flying!",
     "fact": {
-      "text": "Strawberries are the only fruit wearing their seeds on the outside!",
-      "source": "https://en.wikipedia.org/wiki/Strawberry",
-      "evidence": ["Strawberries", "seeds"]
+      "text": "Bats are the only mammals on Earth that have wings and can fly!",
+      "source": "https://kids.britannica.com/kids/article/bat/352848",
+      "evidence": ["bats", "mammals", "fly"]
     }
   },
   {
     "id": "garden-05",
     "level": 1,
     "type": "order",
-    "prompt": "Order how a sunny plant grows from seed to blossom!",
+    "prompt": "Order the stages of a butterfly's life cycle from start!",
     "items": [
-      { "id": "a", "emoji": "🌻", "label": "Tall Sunflower" },
-      { "id": "b", "emoji": "🌰", "label": "Little Seed" },
-      { "id": "c", "emoji": "🌱", "label": "Tiny Sprout" }
+      { "id": "a", "emoji": "🥚", "label": "Tiny Egg" },
+      { "id": "b", "emoji": "🐛", "label": "Caterpillar" },
+      { "id": "c", "emoji": "🌱", "label": "Chrysalis" },
+      { "id": "d", "emoji": "🦋", "label": "Butterfly" }
     ],
-    "answer": ["b", "c", "a"],
-    "hint": "Start with the seed, then sprout, then bloom.",
+    "answer": ["a", "b", "c", "d"],
+    "hint": "Start from egg, hatch to caterpillar, form chrysalis, then emerge flying.",
     "fact": {
-      "text": "Young sunflowers turn their happy faces across the sky to follow sunlight.",
-      "source": "https://en.wikipedia.org/wiki/Helianthus",
-      "evidence": ["sunflowers", "follow sun"]
+      "text": "Inside the chrysalis, a caterpillar transforms completely into a colorful flying butterfly!",
+      "source": "https://kids.britannica.com/kids/article/butterfly/352906",
+      "evidence": ["caterpillar", "chrysalis", "butterfly"]
     }
   },
   {
     "id": "garden-06",
     "level": 1,
     "type": "order",
-    "prompt": "Order these meadow critters from smallest to biggest size!",
+    "prompt": "Order how a plant grows from a seed into flower!",
     "items": [
-      { "id": "a", "emoji": "🐜", "label": "Tiny Ant" },
-      { "id": "b", "emoji": "🦊", "label": "Clever Fox" },
-      { "id": "c", "emoji": "🐸", "label": "Jumping Frog" }
+      { "id": "a", "emoji": "🌰", "label": "Plant Seed" },
+      { "id": "b", "emoji": "🌱", "label": "Tiny Sprout" },
+      { "id": "c", "emoji": "🌿", "label": "Green Stem" },
+      { "id": "d", "emoji": "🌻", "label": "Sunflower" }
     ],
-    "answer": ["a", "c", "b"],
-    "hint": "Ant is tiny, frog is medium, fox is large.",
+    "answer": ["a", "b", "c", "d"],
+    "hint": "Begin with the seed in soil and finish with the bloom.",
     "fact": {
-      "text": "Ants can lift heavy pebbles fifty times bigger than their own bodies!",
-      "source": "https://en.wikipedia.org/wiki/Ant",
-      "evidence": ["Ants", "fifty times"]
+      "text": "A planted seed sprouts tender roots downward and pushes green leaves toward sunlight!",
+      "source": "https://kids.britannica.com/kids/article/plant/353638",
+      "evidence": ["roots", "seed"]
     }
   },
   {
     "id": "sky-01",
     "level": 2,
     "type": "pick",
-    "prompt": "Which giant glowing star warms our planet Earth every single day?",
+    "prompt": "Which planet is the hottest planet in our solar system?",
     "items": [
-      { "id": "a", "emoji": "☀️", "label": "Bright Sun" },
-      { "id": "b", "emoji": "🌙", "label": "Crescent Moon" },
-      { "id": "c", "emoji": "❄️", "label": "Cold Snowflake" }
+      { "id": "a", "emoji": "🪐", "label": "Mercury" },
+      { "id": "b", "emoji": "🟡", "label": "Venus" },
+      { "id": "c", "emoji": "🔴", "label": "Mars" }
     ],
-    "answer": "a",
-    "hint": "It shines in the daytime and gives us warm golden light.",
+    "answer": "b",
+    "hint": "Mercury is closest, but Venus traps extreme heat under thick clouds.",
     "fact": {
-      "text": "Sunlight takes about eight minutes to zoom all the way to Earth!",
-      "source": "https://en.wikipedia.org/wiki/Sun",
-      "evidence": ["Sunlight", "eight minutes"]
+      "text": "Venus is the hottest planet in our solar system because its atmosphere traps heat!",
+      "source": "https://spaceplace.nasa.gov/all-about-venus/en/",
+      "evidence": ["venus", "hottest planet"]
     }
   },
   {
     "id": "sky-02",
     "level": 2,
     "type": "pick",
-    "prompt": "Which dusty silver friend glows bright in our dark night sky?",
+    "prompt": "What kind of space object is our bright daytime Sun?",
     "items": [
-      { "id": "a", "emoji": "☁️", "label": "Fluffy Cloud" },
-      { "id": "b", "emoji": "🌙", "label": "Glowing Moon" },
-      { "id": "c", "emoji": "⚡", "label": "Flash Lightning" }
+      { "id": "a", "emoji": "☀️", "label": "Bright Star" },
+      { "id": "b", "emoji": "🌍", "label": "Rocky Planet" },
+      { "id": "c", "emoji": "🌙", "label": "Dusty Moon" }
     ],
-    "answer": "b",
-    "hint": "Look for the crescent companion that visits when you sleep.",
+    "answer": "a",
+    "hint": "The Sun is not a planet: it is our nearest star.",
     "fact": {
-      "text": "The moon has zero wind, so astronaut footprints last for millions of years!",
-      "source": "https://en.wikipedia.org/wiki/Moon",
-      "evidence": ["Moon", "footprints"]
+      "text": "The light of daytime on Earth comes from our closest star, the Sun!",
+      "source": "https://spaceplace.nasa.gov/all-about-the-sun/en/",
+      "evidence": ["closest star", "sun"]
     }
   },
   {
     "id": "sky-03",
     "level": 2,
     "type": "tapall",
-    "prompt": "Tap all the icy wonders that fall down from stormy clouds!",
+    "prompt": "Tap all the objects that produce their own glowing light!",
     "items": [
-      { "id": "a", "emoji": "💧", "label": "Rain Droplet" },
-      { "id": "b", "emoji": "❄️", "label": "Ice Snowflake" },
-      { "id": "c", "emoji": "🎈", "label": "Party Balloon" },
-      { "id": "d", "emoji": "🌈", "label": "Color Rainbow" }
+      { "id": "a", "emoji": "☀️", "label": "The Sun" },
+      { "id": "b", "emoji": "⭐", "label": "Night Star" },
+      { "id": "c", "emoji": "🌙", "label": "The Moon" },
+      { "id": "d", "emoji": "🪲", "label": "Firefly" }
     ],
-    "answer": ["a", "b"],
-    "hint": "Choose the wet rain drop and cold snowflake.",
+    "answer": ["a", "b", "d"],
+    "hint": "The Moon does not make light: it reflects light from the Sun!",
     "fact": {
-      "text": "Every single falling snowflake forms with six delicate crystal arms in the clouds.",
-      "source": "https://en.wikipedia.org/wiki/Snowflake",
-      "evidence": ["snowflake", "six arms"]
+      "text": "The Moon does not make light; it simply reflects light from the Sun!",
+      "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
+      "evidence": ["reflects", "light", "sun"]
     }
   },
   {
     "id": "sky-04",
     "level": 2,
     "type": "tapall",
-    "prompt": "Tap all the glowing lights that sparkle high in the sky!",
+    "prompt": "Tap all the giant planets that have rings around them!",
     "items": [
-      { "id": "a", "emoji": "⭐", "label": "Shining Star" },
-      { "id": "b", "emoji": "🌈", "label": "Color Rainbow" },
-      { "id": "c", "emoji": "🌲", "label": "Pine Tree" },
-      { "id": "d", "emoji": "🐌", "label": "Garden Snail" }
+      { "id": "a", "emoji": "🪐", "label": "Saturn" },
+      { "id": "b", "emoji": "🔴", "label": "Jupiter" },
+      { "id": "c", "emoji": "🔵", "label": "Uranus" },
+      { "id": "d", "emoji": "🌍", "label": "Earth" }
     ],
-    "answer": ["a", "b"],
-    "hint": "Pick the twinkling night star and colorful arch.",
+    "answer": ["a", "b", "c"],
+    "hint": "Saturn has famous rings, but Jupiter and Uranus have rings too!",
     "fact": {
-      "text": "Rainbows form complete circles, but we usually see only the top half arc.",
-      "source": "https://en.wikipedia.org/wiki/Rainbow",
-      "evidence": ["Rainbows", "circles"]
+      "text": "Jupiter, Saturn, Uranus, and Neptune all have rings circling around them in space!",
+      "source": "https://spaceplace.nasa.gov/all-about-saturn/en/",
+      "evidence": ["rings", "saturn"]
     }
   },
   {
     "id": "sky-05",
     "level": 2,
     "type": "order",
-    "prompt": "Order the sky from cheerful morning sunrise to dark starry night!",
+    "prompt": "Order the first four rocky planets starting closest to Sun!",
     "items": [
-      { "id": "a", "emoji": "🌅", "label": "Morning Sunrise" },
-      { "id": "b", "emoji": "☀️", "label": "Noon Sun" },
-      { "id": "c", "emoji": "🌙", "label": "Night Moon" }
+      { "id": "a", "emoji": "⚪", "label": "Mercury" },
+      { "id": "b", "emoji": "🟡", "label": "Venus" },
+      { "id": "c", "emoji": "🌍", "label": "Earth" },
+      { "id": "d", "emoji": "🔴", "label": "Mars" }
     ],
-    "answer": ["a", "b", "c"],
-    "hint": "Start with dawn, then noon, then bedtime.",
+    "answer": ["a", "b", "c", "d"],
+    "hint": "Start at Mercury, then Venus, our Earth, and red planet Mars.",
     "fact": {
-      "text": "Earth spins once every twenty-four hours to make day turn into night.",
-      "source": "https://en.wikipedia.org/wiki/Earth%27s_rotation",
-      "evidence": ["twenty-four hours", "day and night"]
+      "text": "Mercury, Venus, Earth, and Mars are the four rocky planets closest to the Sun!",
+      "source": "https://spaceplace.nasa.gov/planets/en/",
+      "evidence": ["mercury", "venus", "earth", "mars"]
     }
   },
   {
     "id": "sky-06",
     "level": 2,
     "type": "order",
-    "prompt": "Order these sky wonders from closest to ground to farthest away!",
+    "prompt": "Order these space neighbors from closest to Earth to furthest!",
     "items": [
-      { "id": "a", "emoji": "☁️", "label": "Low Cloud" },
-      { "id": "b", "emoji": "🌙", "label": "Silver Moon" },
+      { "id": "a", "emoji": "🌙", "label": "Silver Moon" },
+      { "id": "b", "emoji": "☀️", "label": "Golden Sun" },
       { "id": "c", "emoji": "⭐", "label": "Distant Star" }
     ],
     "answer": ["a", "b", "c"],
-    "hint": "Clouds float nearby, moon is further, stars are deep in space.",
+    "hint": "The Moon orbits Earth, Sun is next, distant stars are furthest.",
     "fact": {
-      "text": "The closest twinkling night star is trillions of miles away from us.",
-      "source": "https://en.wikipedia.org/wiki/Proxima_Centauri",
-      "evidence": ["closest star", "trillions"]
+      "text": "The Moon is our closest space neighbor, completing an orbit around Earth monthly!",
+      "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
+      "evidence": ["orbit", "earth", "moon"]
     }
   },
   {
     "id": "body-01",
     "level": 3,
     "type": "pick",
-    "prompt": "Which amazing organ beats like a drum inside your chest?",
+    "prompt": "Who has MORE bones inside their human skeleton right now?",
     "items": [
-      { "id": "a", "emoji": "❤️", "label": "Kind Heart" },
-      { "id": "b", "emoji": "👂", "label": "Listening Ear" },
-      { "id": "c", "emoji": "✋", "label": "Waving Hand" }
+      { "id": "a", "emoji": "👶", "label": "Tiny Baby" },
+      { "id": "b", "emoji": "🧑", "label": "Adult Person" },
+      { "id": "c", "emoji": "⚖️", "label": "Both The Same" }
     ],
     "answer": "a",
-    "hint": "It goes thump-thump to keep you running and jumping.",
+    "hint": "Babies start with about 300 bones that fuse together over time!",
     "fact": {
-      "text": "Your heart beats about one hundred thousand times every single energetic day!",
-      "source": "https://en.wikipedia.org/wiki/Heart",
-      "evidence": ["heart", "hundred thousand"]
+      "text": "Babies are born with about 300 bones, which fuse into 206 adult bones!",
+      "source": "https://kids.britannica.com/kids/article/skeleton/353775",
+      "evidence": ["300 bones", "206"]
     }
   },
   {
     "id": "body-02",
     "level": 3,
     "type": "pick",
-    "prompt": "Which clever boss inside your head thinks and creates great ideas?",
+    "prompt": "Which is the LARGEST single organ of the human body?",
     "items": [
-      { "id": "a", "emoji": "🧠", "label": "Clever Brain" },
-      { "id": "b", "emoji": "🦷", "label": "Shiny Tooth" },
-      { "id": "c", "emoji": "🦶", "label": "Tippy Foot" }
+      { "id": "a", "emoji": "🫀", "label": "Pumping Heart" },
+      { "id": "b", "emoji": "🧠", "label": "Clever Brain" },
+      { "id": "c", "emoji": "✋", "label": "Outer Skin" }
     ],
-    "answer": "a",
-    "hint": "It helps you solve puzzles, dream, and remember stories.",
+    "answer": "c",
+    "hint": "It covers your body from your head all the way to your toes!",
     "fact": {
-      "text": "Your brain makes enough electrical energy to power a small glowing lightbulb!",
-      "source": "https://en.wikipedia.org/wiki/Brain",
-      "evidence": ["brain", "electrical"]
+      "text": "Skin is the largest organ of the human body, shielding our internal muscles!",
+      "source": "https://kids.britannica.com/kids/article/skin/353777",
+      "evidence": ["skin", "largest organ"]
     }
   },
   {
     "id": "body-03",
     "level": 3,
     "type": "tapall",
-    "prompt": "Tap all the sensory helpers on your cheerful smiling face!",
+    "prompt": "Tap all the objects that float upon the water's surface!",
     "items": [
-      { "id": "a", "emoji": "👀", "label": "Curious Eyes" },
-      { "id": "b", "emoji": "👃", "label": "Sniffing Nose" },
-      { "id": "c", "emoji": "🦵", "label": "Running Leg" },
-      { "id": "d", "emoji": "🦶", "label": "Tippy Foot" }
+      { "id": "a", "emoji": "🪵", "label": "Wood Log" },
+      { "id": "b", "emoji": "🪨", "label": "Pumice Rock" },
+      { "id": "c", "emoji": "🍎", "label": "Red Apple" },
+      { "id": "d", "emoji": "⚓", "label": "Heavy Anchor" }
     ],
-    "answer": ["a", "b"],
-    "hint": "Pick the eyes for seeing and nose for smelling.",
+    "answer": ["a", "b", "c"],
+    "hint": "Wood and apples float, and bubbly volcanic pumice rock floats too!",
     "fact": {
-      "text": "Your amazing nose can recognize more than fifty thousand different pleasant smells!",
-      "source": "https://en.wikipedia.org/wiki/Olfaction",
-      "evidence": ["nose", "fifty thousand"]
+      "text": "Pumice is a volcanic rock full of gas holes that actually floats on water!",
+      "source": "https://kids.britannica.com/kids/article/pumice/353673",
+      "evidence": ["pumice", "floats"]
     }
   },
   {
     "id": "body-04",
     "level": 3,
     "type": "tapall",
-    "prompt": "Tap all the healthy choices that make your bones grow strong!",
+    "prompt": "Tap all the sensory parts found on your smiling face!",
     "items": [
-      { "id": "a", "emoji": "🥛", "label": "Nutritious Milk" },
-      { "id": "b", "emoji": "💤", "label": "Restful Sleep" },
-      { "id": "c", "emoji": "🍬", "label": "Sweet Candy" },
-      { "id": "d", "emoji": "🌲", "label": "Pine Tree" }
+      { "id": "a", "emoji": "👁️", "label": "Seeing Eyes" },
+      { "id": "b", "emoji": "👃", "label": "Sniffing Nose" },
+      { "id": "c", "emoji": "👅", "label": "Tasting Tongue" },
+      { "id": "d", "emoji": "🦵", "label": "Kicking Knee" }
     ],
-    "answer": ["a", "b"],
-    "hint": "Select nutritious milk and deep sleep.",
+    "answer": ["a", "b", "c"],
+    "hint": "Knees bend for running, but eyes, nose, and tongue explore senses!",
     "fact": {
-      "text": "Drinking fresh milk and getting rest helps bones build sturdy calcium frames.",
-      "source": "https://en.wikipedia.org/wiki/Bone",
-      "evidence": ["bones", "calcium"]
+      "text": "Your tongue has taste buds that detect sweet, salty, sour, and bitter flavors!",
+      "source": "https://kids.britannica.com/kids/article/tongue/353866",
+      "evidence": ["tongue", "taste buds"]
     }
   },
   {
     "id": "body-05",
     "level": 3,
     "type": "order",
-    "prompt": "Order your morning routine from waking up to heading out!",
+    "prompt": "Order these human growth stages from youngest to oldest age!",
     "items": [
-      { "id": "a", "emoji": "⏰", "label": "Morning Alarm" },
-      { "id": "b", "emoji": "🧼", "label": "Wash Up" },
-      { "id": "c", "emoji": "🎒", "label": "Pack Backpack" }
+      { "id": "a", "emoji": "👶", "label": "Baby Infant" },
+      { "id": "b", "emoji": "🧒", "label": "Playful Child" },
+      { "id": "c", "emoji": "🧑", "label": "Grown Adult" }
     ],
     "answer": ["a", "b", "c"],
-    "hint": "Wake up first, wash hands and face, then grab your bag.",
+    "hint": "Start in the cradle as an infant and grow into adulthood.",
     "fact": {
-      "text": "A morning stretch brings fresh oxygen to your muscles so you feel awake!",
-      "source": "https://en.wikipedia.org/wiki/Stretching",
-      "evidence": ["stretch", "muscles"]
+      "text": "Humans grow fastest during infancy, often doubling their size in early years!",
+      "source": "https://kids.britannica.com/kids/article/growth/353215",
+      "evidence": ["grow", "infancy"]
     }
   },
   {
     "id": "body-06",
     "level": 3,
     "type": "order",
-    "prompt": "Order enjoying a snack from first chew to running fast!",
+    "prompt": "Order what happens as healthy food journeys through your body!",
     "items": [
-      { "id": "a", "emoji": "🍎", "label": "Crisp Apple" },
-      { "id": "b", "emoji": "😋", "label": "Chew Food" },
-      { "id": "c", "emoji": "🏃", "label": "Run And Play" }
+      { "id": "a", "emoji": "🦷", "label": "Chew Teeth" },
+      { "id": "b", "emoji": "👅", "label": "Swallow Throat" },
+      { "id": "c", "emoji": "🥣", "label": "Digest Stomach" }
     ],
     "answer": ["a", "b", "c"],
-    "hint": "Take the apple, chew it well, then go zoom outside.",
+    "hint": "Teeth chew first, throat swallows, and stomach digests into energy.",
     "fact": {
-      "text": "Your tummy converts wholesome food into fuel that powers your running legs!",
-      "source": "https://en.wikipedia.org/wiki/Digestion",
-      "evidence": ["food", "fuel"]
+      "text": "Your stomach churns food with digestive juices to fuel your active muscles!",
+      "source": "https://kids.britannica.com/kids/article/digestive-system/353051",
+      "evidence": ["stomach", "food"]
     }
   }
 ]
