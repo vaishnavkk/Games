@@ -9,10 +9,11 @@ sky-02 | OK | The light of daytime comes from our closest star: the Sun.
 sky-03 | OK | It simply reflects light coming from the Sun.
 sky-04 | OK | isn’t the only planet to have rings, but it definitely has the most beautiful ones.
 sky-05 | OK | Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune article last updated July 17, 2019 Explore
-sky-06 | OK | What’s actually happening is that from our spot on Earth, we see different parts of
-body-01 | OK | Overview The skeleton is made up of 206 bones in the adult and contributes to
+sky-06-1 | OK | place, roughly a quarter the size of Earth and an average of 238,855 miles away.
+sky-06-2 | OK | It’s approximately 93 million miles away from Earth.
+body-01 | OK | is made up of 206 bones in the adult and contributes to the form and
 body-02 | OK | There are many ways that your skin protects your body and helps keep you healthy.
 body-03 | OK | Above the gum line, the tooth is protected by the hard enamel covering.
 body-04 | OK | Considerations The tongue can detect sweet, salty, sour, savory and bitter tastes.
-body-05 | OK | Soon after birth, an infant normally loses about 10% to 12% of their birth weight.
+body-05 | OK | birth people usually have 20 baby (primary) teeth, which start to come in (erupt) at
 body-06 | OK | the back of the throat and down into the esophagus, which leads to the stomach.

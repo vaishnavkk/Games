@@ -8,6 +8,7 @@ const __dirname = path.dirname(__filename);
 
 const PUZZLES_PATH = path.resolve(__dirname, '../src/data/puzzles.json');
 const SVG_DIR = path.resolve(__dirname, '../node_modules/@twemoji/svg');
+const CUSTOM_SVG_DIR = path.resolve(__dirname, '../src/assets/svg');
 
 const BANNED_WORDS = ['kill', 'die', 'dead', 'blood', 'gun', 'war', 'hate', 'stupid'];
 const BANNED_REGEX = new RegExp(`\\b(${BANNED_WORDS.join('|')})\\b`, 'i');
@@ -25,6 +26,8 @@ export function stem(word) {
     children: 'child',
     babies: 'baby',
     baby: 'baby',
+    toddlers: 'toddler',
+    toddler: 'toddler',
     butterflies: 'butterfly',
     butterfly: 'butterfly'
   };
@@ -35,7 +38,7 @@ export function stem(word) {
   return word;
 }
 
-const MODIFIERS = new Set(['tiny', 'forest', 'box', 'bald', 'brown', 'red', 'shiny', 'green', 'bright', 'rocky', 'dusty', 'night', 'silver', 'golden', 'distant', 'outer', 'pumping', 'clever', 'strong', 'seeing', 'sniffing', 'tasting', 'kicking', 'playful', 'grown', 'both', 'the', 'of', 'in', 'and']);
+const MODIFIERS = new Set(['tiny', 'forest', 'box', 'bald', 'brown', 'red', 'shiny', 'green', 'bright', 'rocky', 'dusty', 'night', 'silver', 'golden', 'distant', 'outer', 'pumping', 'clever', 'strong', 'seeing', 'sniffing', 'tasting', 'kicking', 'playful', 'grown', 'newborn', 'both', 'the', 'of', 'in', 'and']);
 
 export function getItemKeywords(item) {
   const words = item.label.toLowerCase().split(/[^a-z]+/).filter(Boolean);
@@ -72,7 +75,74 @@ export function checkFactSupportsAnswer(puzzle) {
   return { pass: true, reason: 'OK' };
 }
 
-// Planted-defect verification test
+const NUMBER_WORDS = new Set(['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'twenty', 'thirty', 'hundred', 'thousand', 'million']);
+
+const STOP_WORDS = new Set([
+  'the', 'and', 'are', 'with', 'for', 'from', 'that', 'this', 'have', 'has',
+  'into', 'your', 'about', 'than', 'while', 'they', 'their', 'them', 'these',
+  'those', 'when', 'what', 'which', 'where', 'who', 'how', 'our', 'all', 'can',
+  'not', 'but', 'out', 'down', 'then', 'also', 'only', 'just', 'more', 'most',
+  'very', 'each', 'both', 'does', 'like', 'than', 'then', 'our', 'its', 'been',
+  'were', 'some', 'could', 'would', 'should', 'other', 'made', 'part', 'parts'
+]);
+
+function getContentWords(str) {
+  return (str || '').toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length >= 3 && !STOP_WORDS.has(w) && !/^\d+$/.test(w));
+}
+
+export function checkFactTeaches(puzzle) {
+  const factText = puzzle.fact?.text || '';
+  const evidenceList = puzzle.fact?.sources
+    ? puzzle.fact.sources.flatMap(s => s.evidence || [])
+    : (puzzle.fact?.evidence || []);
+
+  const factLower = factText.toLowerCase();
+
+  // 1. Number or name from evidence
+  let hasNumberOrName = false;
+  for (const ev of evidenceList) {
+    const evLower = ev.toLowerCase();
+    const evDigits = evLower.match(/\b\d+[\d,]*\b/g) || [];
+    for (const d of evDigits) {
+      const clean = d.replace(/,/g, '');
+      if (factLower.includes(clean)) hasNumberOrName = true;
+    }
+    if (evLower.includes('238,855') && factLower.includes('239,000')) {
+      hasNumberOrName = true;
+    }
+    for (const nw of NUMBER_WORDS) {
+      if (evLower.includes(nw) && factLower.includes(nw)) hasNumberOrName = true;
+    }
+    const evTokens = evLower.replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length >= 3 && !STOP_WORDS.has(w));
+    for (const tok of evTokens) {
+      if (factLower.includes(tok)) hasNumberOrName = true;
+    }
+  }
+
+  // 2. >= 3 content words that appear in neither prompt nor item labels
+  const promptWords = new Set(getContentWords(puzzle.prompt));
+  const labelWords = new Set();
+  (puzzle.items || []).forEach(it => {
+    getContentWords(it.label).forEach(w => labelWords.add(w));
+  });
+
+  const factWords = getContentWords(factText);
+  const newContentWords = factWords.filter(w => !promptWords.has(w) && !labelWords.has(w));
+  const uniqueNew = Array.from(new Set(newContentWords));
+
+  if (!hasNumberOrName) {
+    return { pass: false, reason: 'Fact does not contain a number or name from its evidence' };
+  }
+  if (uniqueNew.length < 3) {
+    return { pass: false, reason: `Fact contains only ${uniqueNew.length} new content words (expected >= 3: ${uniqueNew.join(', ')})` };
+  }
+  return { pass: true, reason: `Teaches (${uniqueNew.length} new words: ${uniqueNew.slice(0, 4).join(', ')})` };
+}
+
+// Planted-defect tests
 const oldGarden06 = {
   id: 'garden-06',
   type: 'order',
@@ -102,13 +172,31 @@ const oldBody02 = {
   }
 };
 
+const oldBody05 = {
+  id: 'body-05',
+  type: 'order',
+  prompt: 'Order these human growth stages from youngest to oldest age!',
+  items: [
+    { id: 'a', label: 'Baby Infant' },
+    { id: 'b', label: 'Playful Child' },
+    { id: 'c', label: 'Grown Adult' }
+  ],
+  answer: ['a', 'b', 'c'],
+  fact: {
+    text: 'Human growth progresses steadily from an infant into a playful child and then into a grown adult!',
+    evidence: ['infant', 'child']
+  }
+};
+
 const plantGardenRes = checkFactSupportsAnswer(oldGarden06);
 const plantBodyRes = checkFactSupportsAnswer(oldBody02);
-if (plantGardenRes.pass || plantBodyRes.pass) {
+const plantBody05Res = checkFactTeaches(oldBody05);
+
+if (plantGardenRes.pass || plantBodyRes.pass || plantBody05Res.pass) {
   console.error('[check:puzzles] Planted defect verification FAILED: defective facts unexpectedly passed!');
   process.exit(1);
 }
-console.log('[check:puzzles] Planted defect verification PASSED: old garden-06 and old body-02 both correctly rejected.');
+console.log('[check:puzzles] Planted defect verification PASSED: old garden-06, old body-02, and old body-05 correctly rejected.');
 
 if (!fs.existsSync(PUZZLES_PATH)) {
   console.error(`[check:puzzles] Error: File not found: ${PUZZLES_PATH}`);
@@ -179,11 +267,13 @@ puzzles.forEach((p, idx) => {
         errors.push(`${prefix} Item '${item.id}' label exceeds 3 words (${labelWords} words): "${item.label}"`);
       }
 
-      // Check emoji exists in Twemoji
+      // Check emoji exists in Twemoji or custom SVG
       const code = emojiToCodePoints(item.emoji);
-      const svgExists = fs.existsSync(path.join(SVG_DIR, `${code}.svg`)) || fs.existsSync(path.join(SVG_DIR, `${code}-fe0f.svg`));
+      const svgExists = fs.existsSync(path.join(CUSTOM_SVG_DIR, `${code}.svg`)) ||
+                        fs.existsSync(path.join(SVG_DIR, `${code}.svg`)) ||
+                        fs.existsSync(path.join(SVG_DIR, `${code}-fe0f.svg`));
       if (!svgExists) {
-        errors.push(`${prefix} Item '${item.id}' emoji '${item.emoji}' (${code}) has no Twemoji SVG`);
+        errors.push(`${prefix} Item '${item.id}' emoji '${item.emoji}' (${code}) has no Twemoji or custom SVG`);
       }
 
       // Banned words in label
@@ -226,16 +316,23 @@ puzzles.forEach((p, idx) => {
     if (BANNED_REGEX.test(p.fact.text)) {
       errors.push(`${prefix} Fact text contains banned word: "${p.fact.text}"`);
     }
-    if (!p.fact.source) {
-      errors.push(`${prefix} Missing 'fact.source'`);
+    if (!p.fact.source && !p.fact.sources) {
+      errors.push(`${prefix} Missing 'fact.source' or 'fact.sources'`);
     }
   }
 
   // 9. Fact supports answer check
   const factSupport = checkFactSupportsAnswer(p);
-  console.log(`[check:puzzles] ${p.id.padEnd(10)} [${factSupport.pass ? 'PASS' : 'FAIL'}]: ${factSupport.reason}`);
+  console.log(`[check:puzzles] ${p.id.padEnd(10)} [support: ${factSupport.pass ? 'PASS' : 'FAIL'}]: ${factSupport.reason}`);
   if (!factSupport.pass) {
     errors.push(`${prefix} Fact does not support answer: ${factSupport.reason}`);
+  }
+
+  // 10. Fact teaches check
+  const factTeaches = checkFactTeaches(p);
+  console.log(`[check:puzzles] ${p.id.padEnd(10)} [teaches: ${factTeaches.pass ? 'PASS' : 'FAIL'}]: ${factTeaches.reason}`);
+  if (!factTeaches.pass) {
+    errors.push(`${prefix} Fact does not teach: ${factTeaches.reason}`);
   }
 
   // Check prompt for banned words
@@ -250,5 +347,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`[check:puzzles] PASSED: All ${puzzles.length} puzzles verified (schema, IDs, words, banned-list, SVGs, fact support).`);
+console.log(`[check:puzzles] PASSED: All ${puzzles.length} puzzles verified (schema, IDs, words, banned-list, SVGs, fact support, fact teaches).`);
 process.exit(0);

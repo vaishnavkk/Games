@@ -165,7 +165,7 @@
       },
       {
         "id": "c",
-        "emoji": "🪨",
+        "emoji": "chrysalis",
         "label": "Chrysalis"
       },
       {
@@ -419,7 +419,7 @@
     ],
     "hint": "Start at Mercury, then Venus, our Earth, and red planet Mars.",
     "fact": {
-      "text": "Mercury, Venus, Earth, and Mars are the four rocky planets closest to the Sun!",
+      "text": "Mercury, Venus, Earth, and Mars are inner rocky planets made of dense metals and stone!",
       "source": "https://spaceplace.nasa.gov/planets/en/",
       "evidence": [
         "mercury",
@@ -458,11 +458,24 @@
     ],
     "hint": "The Moon orbits Earth, Sun is next, distant stars are furthest.",
     "fact": {
-      "text": "The Moon orbits Earth only 238,855 miles away, while the Sun and distant stars are millions of miles farther!",
+      "text": "The Moon is about 239,000 miles from Earth. The Sun, our closest star, is about 93 million miles away.",
       "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
       "evidence": [
-        "different parts",
-        "sun"
+        "238,855 miles"
+      ],
+      "sources": [
+        {
+          "url": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
+          "evidence": [
+            "238,855 miles"
+          ]
+        },
+        {
+          "url": "https://spaceplace.nasa.gov/all-about-the-sun/",
+          "evidence": [
+            "93 million miles"
+          ]
+        }
       ]
     }
   },
@@ -612,17 +625,17 @@
     "id": "body-05",
     "level": 3,
     "type": "order",
-    "prompt": "Order these human growth stages from youngest to oldest age!",
+    "prompt": "Order by teeth, fewest to most!",
     "items": [
       {
         "id": "a",
         "emoji": "👶",
-        "label": "Baby Infant"
+        "label": "Newborn Baby"
       },
       {
         "id": "b",
         "emoji": "🧒",
-        "label": "Playful Child"
+        "label": "Playful Toddler"
       },
       {
         "id": "c",
@@ -635,13 +648,13 @@
       "b",
       "c"
     ],
-    "hint": "Start in the cradle as an infant and grow into adulthood.",
+    "hint": "Babies start with zero teeth, toddlers grow twenty baby teeth, and adults have up to thirty-two!",
     "fact": {
-      "text": "Human growth progresses steadily from an infant into a playful child and then into a grown adult!",
-      "source": "https://medlineplus.gov/ency/article/002456.htm",
+      "text": "Babies usually start with zero teeth, toddlers get 20 baby teeth, and adults can grow up to 32 permanent teeth!",
+      "source": "https://www.mouthhealthy.org/all-topics-a-z/eruption-charts",
       "evidence": [
-        "infant",
-        "child"
+        "20 baby",
+        "teeth"
       ]
     }
   },
@@ -674,7 +687,7 @@
     ],
     "hint": "Teeth chew first, throat swallows, and stomach digests into energy.",
     "fact": {
-      "text": "Your teeth chew food, which travels down the throat into the stomach for healthy digestion!",
+      "text": "Your teeth chew meals, which travel through the esophagus into the stomach for digestion!",
       "source": "https://medlineplus.gov/ency/anatomyvideos/000126.htm",
       "evidence": [
         "throat",

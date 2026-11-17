@@ -93,65 +93,80 @@ export async function checkSources() {
 
   for (const puzzle of puzzles) {
     const { id, fact } = puzzle;
-    if (!fact || !fact.source || !fact.evidence || !Array.isArray(fact.evidence)) {
-      console.error(`[check:sources] FAIL: Puzzle ${id} missing fact.source or fact.evidence`);
+    const sourceList = Array.isArray(fact?.sources) && fact.sources.length > 0
+      ? fact.sources.slice(0, 2)
+      : (fact?.source && fact?.evidence ? [{ url: fact.source, evidence: fact.evidence }] : []);
+
+    if (sourceList.length === 0) {
+      console.error(`[check:sources] FAIL: Puzzle ${id} missing fact.source or fact.sources`);
       failCount++;
       continue;
     }
 
-    const cacheFile = path.join(CACHE_DIR, sanitizeFilename(fact.source));
-    let rawText = '';
+    let allSourcesOk = true;
 
-    if (fs.existsSync(cacheFile)) {
-      rawText = fs.readFileSync(cacheFile, 'utf8');
-    } else {
-      try {
-        const rawHtml = await fetchUrl(fact.source);
-        rawText = cleanHtmlToText(rawHtml);
-        fs.writeFileSync(cacheFile, rawText, 'utf8');
-      } catch (err) {
-        console.error(`[check:sources] FAIL: [${id}] Unreachable source ${fact.source} (${err.message})`);
-        failCount++;
-        supportLines.push(`${id} | FAIL | Unreachable: ${err.message}`);
-        continue;
-      }
-    }
+    for (let sIdx = 0; sIdx < sourceList.length; sIdx++) {
+      const src = sourceList[sIdx];
+      const sourceUrl = src.url;
+      const evidenceTerms = (src.evidence || []).map(e => e.toLowerCase().trim());
 
-    const sentences = splitIntoSentences(rawText);
-    const evidenceTerms = fact.evidence.map(e => e.toLowerCase().trim());
+      const cacheFile = path.join(CACHE_DIR, sanitizeFilename(sourceUrl));
+      let rawText = '';
 
-    let matchedSentence = null;
-    for (const sentence of sentences) {
-      const lower = sentence.toLowerCase();
-      const allFound = evidenceTerms.every(term => lower.includes(term));
-      if (allFound) {
-        matchedSentence = sentence;
-        break;
-      }
-    }
-
-    if (matchedSentence) {
-      okCount++;
-      console.log(`[check:sources] OK [${id}]: Evidence matched in 1 sentence.`);
-      let supportingSentence = matchedSentence.trim();
-      const words = supportingSentence.split(/\s+/);
-      if (words.length > 15) {
-        const lowerWords = words.map(w => w.toLowerCase());
-        const firstEv = evidenceTerms[0];
-        let idx = lowerWords.findIndex(w => w.includes(firstEv));
-        if (idx < 0) idx = 0;
-        let start = Math.max(0, idx - 4);
-        let end = Math.min(words.length, start + 15);
-        if (end - start < 15 && start > 0) {
-          start = Math.max(0, end - 15);
+      if (fs.existsSync(cacheFile)) {
+        rawText = fs.readFileSync(cacheFile, 'utf8');
+      } else {
+        try {
+          const rawHtml = await fetchUrl(sourceUrl);
+          rawText = cleanHtmlToText(rawHtml);
+          fs.writeFileSync(cacheFile, rawText, 'utf8');
+        } catch (err) {
+          console.error(`[check:sources] FAIL: [${id}] Unreachable source ${sourceUrl} (${err.message})`);
+          failCount++;
+          allSourcesOk = false;
+          supportLines.push(`${id} | FAIL | Unreachable: ${err.message}`);
+          continue;
         }
-        supportingSentence = words.slice(start, end).join(' ');
       }
-      supportLines.push(`${id} | OK | ${supportingSentence}`);
-    } else {
-      console.error(`[check:sources] FAIL [${id}]: Missing evidence terms [${fact.evidence.join(', ')}] in any single sentence.`);
-      failCount++;
-      supportLines.push(`${id} | FAIL | Terms missing: [${fact.evidence.join(', ')}]`);
+
+      const sentences = splitIntoSentences(rawText);
+      let matchedSentence = null;
+      for (const sentence of sentences) {
+        const lower = sentence.toLowerCase();
+        const allFound = evidenceTerms.every(term => lower.includes(term));
+        if (allFound) {
+          matchedSentence = sentence;
+          break;
+        }
+      }
+
+      if (matchedSentence) {
+        console.log(`[check:sources] OK [${id}${sourceList.length > 1 ? ` #${sIdx + 1}` : ''}]: Evidence matched in 1 sentence.`);
+        let supportingSentence = matchedSentence.trim();
+        const words = supportingSentence.split(/\s+/);
+        if (words.length > 15) {
+          const lowerWords = words.map(w => w.toLowerCase());
+          const firstEvToken = (evidenceTerms[0] || '').split(/\s+/)[0];
+          let idx = lowerWords.findIndex(w => w.includes(firstEvToken));
+          if (idx < 0) idx = 0;
+          let start = Math.max(0, idx - 4);
+          let end = Math.min(words.length, start + 15);
+          if (end - start < 15 && start > 0) {
+            start = Math.max(0, end - 15);
+          }
+          supportingSentence = words.slice(start, end).join(' ');
+        }
+        supportLines.push(`${id}${sourceList.length > 1 ? `-${sIdx + 1}` : ''} | OK | ${supportingSentence}`);
+      } else {
+        console.error(`[check:sources] FAIL [${id}${sourceList.length > 1 ? ` #${sIdx + 1}` : ''}]: Missing evidence terms [${evidenceTerms.join(', ')}] in any single sentence.`);
+        failCount++;
+        allSourcesOk = false;
+        supportLines.push(`${id}${sourceList.length > 1 ? `-${sIdx + 1}` : ''} | FAIL | Terms missing: [${evidenceTerms.join(', ')}]`);
+      }
+    }
+
+    if (allSourcesOk) {
+      okCount++;
     }
   }
 

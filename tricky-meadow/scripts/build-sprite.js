@@ -7,6 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const SVG_DIR = path.resolve(__dirname, '../node_modules/@twemoji/svg');
+const CUSTOM_SVG_DIR = path.resolve(__dirname, '../src/assets/svg');
 const PUZZLES_PATH = path.resolve(__dirname, '../src/data/puzzles.json');
 const OUT_JS = path.resolve(__dirname, '../src/sprite.js');
 const OUT_SVG = path.resolve(__dirname, '../public/sprite.svg');
@@ -17,6 +18,9 @@ export function emojiToCodePoints(str) {
   // If it's a known UI alias name or word alias, map via UI_ICONS if possible
   if (UI_ICONS[trimmed]) {
     return emojiToCodePoints(UI_ICONS[trimmed]);
+  }
+  if (/^[a-zA-Z0-9_-]+$/.test(trimmed) && fs.existsSync(path.join(CUSTOM_SVG_DIR, `${trimmed.toLowerCase()}.svg`))) {
+    return trimmed.toLowerCase();
   }
   if (/^[0-9a-fA-F-]+$/.test(trimmed)) return trimmed.toLowerCase();
   const codes = [];
@@ -78,15 +82,18 @@ const symbols = [];
 const missing = [];
 
 for (const [code, aliases] of emojiMap.entries()) {
-  let svgPath = path.join(SVG_DIR, `${code}.svg`);
+  let svgPath = path.join(CUSTOM_SVG_DIR, `${code}.svg`);
   if (!fs.existsSync(svgPath)) {
-    // Try with -fe0f if present
-    const altPath = path.join(SVG_DIR, `${code}-fe0f.svg`);
-    if (fs.existsSync(altPath)) {
-      svgPath = altPath;
-    } else {
-      missing.push({ code, aliases: Array.from(aliases) });
-      continue;
+    svgPath = path.join(SVG_DIR, `${code}.svg`);
+    if (!fs.existsSync(svgPath)) {
+      // Try with -fe0f if present
+      const altPath = path.join(SVG_DIR, `${code}-fe0f.svg`);
+      if (fs.existsSync(altPath)) {
+        svgPath = altPath;
+      } else {
+        missing.push({ code, aliases: Array.from(aliases) });
+        continue;
+      }
     }
   }
 
