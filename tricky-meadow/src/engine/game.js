@@ -35,6 +35,7 @@ export class GameManager {
         setScreen: (s) => { this.screen = s; this.notify(); },
         startLevel: (lvl) => this.startLevel(lvl),
         startPuzzle: (id) => this.startPuzzle(id),
+        isUnlocked: (lvl) => this.isUnlocked(lvl),
         useHint: () => this.useHint(),
         solveCurrentPuzzle: () => this.solveCurrentPuzzle(),
         resetProgress: () => this.resetAllProgress()
