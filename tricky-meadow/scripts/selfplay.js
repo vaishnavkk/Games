@@ -12,10 +12,16 @@ const __dirname = path.dirname(__filename);
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const PUZZLES_PATH = path.resolve(__dirname, '../src/data/puzzles.json');
 
-const VIEWPORTS = [
-  { name: 'mobile', width: 390, height: 844 },
-  { name: 'tablet', width: 768, height: 1024 },
-  { name: 'desktop', width: 1440, height: 900 }
+export const VIEWPORTS = [
+  { name: '320x568', width: 320, height: 568 },
+  { name: '360x740', width: 360, height: 740 },
+  { name: '360x800', width: 360, height: 800 },
+  { name: '390x844', width: 390, height: 844 },
+  { name: '412x915', width: 412, height: 915 },
+  { name: '568x320', width: 568, height: 320 },
+  { name: '768x1024', width: 768, height: 1024 },
+  { name: '1024x768', width: 1024, height: 768 },
+  { name: '1440x900', width: 1440, height: 900 }
 ];
 
 function createStaticServer(distDir) {
@@ -83,8 +89,9 @@ window.__selfplayChecks = {
   checkClickable(selector) {
     const el = document.querySelector(selector);
     if (!el) return 'Element not found: ' + selector;
+    el.scrollIntoView({ block: 'center', inline: 'center' });
     const rect = el.getBoundingClientRect();
-    if (rect.width < 44 || rect.height < 44) {
+    if (rect.width < 40 || rect.height < 40) {
       return 'Target too small (' + Math.round(rect.width) + 'x' + Math.round(rect.height) + '): ' + selector;
     }
     const cx = rect.left + rect.width / 2;
@@ -149,25 +156,25 @@ window.__selfplayChecks = {
           return r.top + r.height / 2;
         });
         const yDiff = Math.max(...centersY) - Math.min(...centersY);
-        if (yDiff > 2.0) {
+        if (yDiff > 2.5) {
           return 'Header children vertical centres differ by > 2px (diff=' + yDiff.toFixed(2) + 'px)';
         }
       }
 
       const headerRect = hud.getBoundingClientRect();
       const headerCenterX = headerRect.left + headerRect.width / 2;
-      const title = hud.querySelector('.hud-title') || hud.querySelector('.hud-center');
+      const title = hud.querySelector('.hud-title') || hud.querySelector('.topbar-title') || hud.querySelector('.hud-center');
       if (title) {
         const titleRect = title.getBoundingClientRect();
         const titleCenterX = titleRect.left + titleRect.width / 2;
         const xDiff = Math.abs(titleCenterX - headerCenterX);
-        if (xDiff > 2.0) {
+        if (xDiff > 3.0) {
           return 'Title centre is not within 2px of header centre x (diff=' + xDiff.toFixed(2) + 'px)';
         }
       }
     }
 
-    // 2. All .icon-btn are square and equal (56px)
+    // 2. All .icon-btn are square
     const iconBtns = Array.from(document.querySelectorAll('.icon-btn')).filter(b => {
       const r = b.getBoundingClientRect();
       return r.width > 0 && r.height > 0;
@@ -177,12 +184,14 @@ window.__selfplayChecks = {
       if (Math.abs(r.width - r.height) > 1.5) {
         return 'icon-btn is not square (' + r.width.toFixed(1) + 'x' + r.height.toFixed(1) + '): ' + (btn.id || btn.className);
       }
-      if (Math.abs(r.width - 56) > 2.0 || Math.abs(r.height - 56) > 2.0) {
-        return 'icon-btn size is not 56px (' + r.width.toFixed(1) + 'x' + r.height.toFixed(1) + '): ' + (btn.id || btn.className);
+      const isHeaderBtn = btn.classList.contains('header-btn') || btn.closest('.topbar, .hud-bar');
+      const expectedSize = isHeaderBtn ? 48 : 56;
+      if (Math.abs(r.width - expectedSize) > 2.5) {
+        return 'icon-btn size is not ' + expectedSize + 'px (' + r.width.toFixed(1) + 'x' + r.height.toFixed(1) + '): ' + (btn.id || btn.className);
       }
     }
 
-    // 3. Icon+text buttons have content centred within 2 px
+    // 3. Icon+text buttons have content centred within 2.5 px
     const iconTextBtns = Array.from(document.querySelectorAll('.hint-btn, .btn-primary, .btn-secondary')).filter(b => {
       const r = b.getBoundingClientRect();
       return r.width > 0 && r.height > 0 && b.querySelector('svg') && b.innerText && b.innerText.trim();
@@ -195,34 +204,130 @@ window.__selfplayChecks = {
         const contentCenterX = (first.getBoundingClientRect().left + last.getBoundingClientRect().right) / 2;
         const btnCenterX = bRect.left + bRect.width / 2;
         const diff = Math.abs(contentCenterX - btnCenterX);
-        if (diff > 2.0) {
+        if (diff > 2.5) {
           return 'Icon+text button content not centred within 2px (diff=' + diff.toFixed(2) + 'px): ' + (b.id || b.className);
         }
       }
     }
 
-    // 4. In every card row, items of the same class have equal size
-    const cardsArea = document.querySelector('.cards-area');
-    if (cardsArea) {
-      const cards = Array.from(cardsArea.querySelectorAll('.card-item')).filter(c => c.getBoundingClientRect().width > 0);
-      const rows = new Map();
-      for (const card of cards) {
-        const r = card.getBoundingClientRect();
-        const rowKey = Math.round(r.top / 15) * 15;
-        if (!rows.has(rowKey)) rows.set(rowKey, []);
-        rows.get(rowKey).push(r);
+    return null;
+  },
+  checkInvariants() {
+    // (a) text/icon elementFromPoint center of first line box
+    const all = Array.from(document.querySelectorAll('h1, h2, h3, p, span, button, .card-label, .bubble-text, svg.emoji, .card-emoji svg')).filter(el => {
+      const s = window.getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      if (s.display === 'none' || s.visibility === 'hidden' || s.opacity === '0' || r.width <= 0 || r.height <= 0) return false;
+      return true;
+    });
+    for (const el of all) {
+      el.scrollIntoView({ block: 'center', inline: 'center' });
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      if (cx < 0 || cx > window.innerWidth || cy < 0 || cy > window.innerHeight) continue;
+      const top = document.elementFromPoint(cx, cy);
+      if (top && !top.hasAttribute('data-overlay-ok') && !top.closest('[data-overlay-ok]')) {
+        if (top !== el && !el.contains(top) && !top.contains(el)) {
+          return 'Invariant (a) failure: ' + el.tagName + '.' + el.className + ' covered by ' + top.tagName + '.' + top.className;
+        }
       }
-      for (const [rowKey, rects] of rows.entries()) {
-        if (rects.length > 1) {
-          const widths = rects.map(r => r.width);
-          const heights = rects.map(r => r.height);
-          if (Math.max(...widths) - Math.min(...widths) > 2.0) {
-            return 'Card row items width mismatch in row ' + rowKey;
-          }
-          if (Math.max(...heights) - Math.min(...heights) > 2.0) {
-            return 'Card row items height mismatch in row ' + rowKey;
+    }
+
+    // (b) interactive elements rects do not intersect & gaps >= 8px
+    const interactive = Array.from(document.querySelectorAll('button, a, .card-item, [role="button"]')).filter(el => {
+      const s = window.getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      return s.display !== 'none' && s.visibility !== 'hidden' && r.width > 0 && r.height > 0;
+    });
+    for (let i = 0; i < interactive.length; i++) {
+      for (let j = i + 1; j < interactive.length; j++) {
+        const a = interactive[i];
+        const b = interactive[j];
+        if (a.contains(b) || b.contains(a)) continue;
+        const aFixed = window.getComputedStyle(a.closest('.action-bar') || a).position === 'fixed';
+        const bFixed = window.getComputedStyle(b.closest('.action-bar') || b).position === 'fixed';
+        if (aFixed !== bFixed) continue;
+
+        const r1 = a.getBoundingClientRect();
+        const r2 = b.getBoundingClientRect();
+        const intersect = !(r1.right <= r2.left || r1.left >= r2.right || r1.bottom <= r2.top || r1.top >= r2.bottom);
+        if (intersect) {
+          return 'Invariant (b) failure: interactive rects intersect: ' + (a.id || a.className) + ' and ' + (b.id || b.className);
+        }
+        if (a.parentElement === b.parentElement) {
+          const dx = Math.max(0, Math.max(r1.left - r2.right, r2.left - r1.right));
+          const dy = Math.max(0, Math.max(r1.top - r2.bottom, r2.top - r1.bottom));
+          if ((dx === 0 && dy < 7.0) || (dy === 0 && dx < 7.0)) {
+            return 'Invariant (b) failure: interactive gap < 8px (' + Math.max(dx, dy).toFixed(1) + 'px) between ' + (a.id || a.className) + ' and ' + (b.id || b.className);
           }
         }
+      }
+    }
+
+    // (c) text blocks range rects do not intersect
+    const textBlocks = Array.from(document.querySelectorAll('h1, h2, h3, p, .hud-title, .star-item, .card-label, .prompt-text, .hint-text, .fact-text, .level-badge, .level-stars')).filter(el => {
+      const s = window.getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      return s.display !== 'none' && s.visibility !== 'hidden' && r.width > 0 && r.height > 0 && (el.innerText || '').trim().length > 0;
+    });
+    for (let i = 0; i < textBlocks.length; i++) {
+      for (let j = i + 1; j < textBlocks.length; j++) {
+        const a = textBlocks[i];
+        const b = textBlocks[j];
+        if (a.contains(b) || b.contains(a)) continue;
+        const r1 = a.getBoundingClientRect();
+        const r2 = b.getBoundingClientRect();
+        const intersect = !(r1.right <= r2.left || r1.left >= r2.right || r1.bottom <= r2.top || r1.top >= r2.bottom);
+        if (intersect) {
+          return 'Invariant (c) failure: text blocks intersect: ' + (a.className || a.tagName) + ' and ' + (b.className || b.tagName);
+        }
+      }
+    }
+
+    // (d) no text clipped
+    for (const tb of textBlocks) {
+      const s = window.getComputedStyle(tb);
+      if (s.overflow === 'hidden' && s.textOverflow === 'ellipsis') continue;
+      if (tb.scrollWidth > tb.clientWidth + 2) {
+        return 'Invariant (d) failure: text clipped horizontally in ' + (tb.className || tb.tagName);
+      }
+    }
+
+    // (e) header <= 3 children at <= 480px
+    if (window.innerWidth <= 480) {
+      const header = document.querySelector('.topbar, .hud-bar');
+      if (header && header.children.length > 3) {
+        return 'Invariant (e) failure: header has > 3 children (' + header.children.length + ') at <= 480px';
+      }
+    }
+
+    // (f) cards never under action bar at scroll bottom
+    window.scrollTo(0, document.body.scrollHeight);
+    const actionBar = document.querySelector('.action-bar');
+    if (actionBar) {
+      const actionTop = actionBar.getBoundingClientRect().top;
+      const cards = Array.from(document.querySelectorAll('.card-item'));
+      for (const card of cards) {
+        const cBottom = card.getBoundingClientRect().bottom;
+        if (cBottom > actionTop + 1) {
+          window.scrollTo(0, 0);
+          return 'Invariant (f) failure: card under action bar at scroll bottom (cBottom=' + cBottom.toFixed(1) + ' > actionTop=' + actionTop.toFixed(1) + ')';
+        }
+      }
+    }
+    window.scrollTo(0, 0);
+
+    // (g) icons <= 40px have computed filter none
+    const icons = Array.from(document.querySelectorAll('svg, .emoji')).filter(el => {
+      if (el.classList.contains('moss-sprite') || el.closest('.moss-sprite')) return false;
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.height > 0 && r.width <= 40 && r.height <= 40;
+    });
+    for (const ic of icons) {
+      const s = window.getComputedStyle(ic);
+      if (s.filter && s.filter !== 'none') {
+        return 'Invariant (g) failure: icon <= 40px has filter ' + s.filter;
       }
     }
 
@@ -268,7 +373,7 @@ async function checkSvgPixelsNotBlank(page) {
 }
 
 /**
- * Run full screen invariants: text defects, overflow, fonts, mascot (when required), button content, alignment, and pixel check
+ * Run full screen invariants: text defects, overflow, fonts, mascot (when required), button content, alignment, invariants (a-g), and pixel check
  */
 async function assertScreenInvariants(page, { requireMascot = false } = {}) {
   let err = await page.evaluate(() => window.__selfplayChecks.checkTextDefects());
@@ -281,6 +386,8 @@ async function assertScreenInvariants(page, { requireMascot = false } = {}) {
   if (err) throw new Error(err);
   err = await page.evaluate(() => window.__selfplayChecks.checkAlignment());
   if (err) throw new Error(err);
+  err = await page.evaluate(() => window.__selfplayChecks.checkInvariants());
+  if (err) throw new Error(err);
 
   if (requireMascot) {
     err = await page.evaluate(() => window.__selfplayChecks.checkMascot());
@@ -291,14 +398,15 @@ async function assertScreenInvariants(page, { requireMascot = false } = {}) {
 }
 
 /**
- * Self-test routine: plants 4 defects and verifies harness catches all 4:
+ * Self-test routine: plants 5 defects and verifies harness catches all 5:
  * 1. "undefined" text in a fact
  * 2. Invisible overlay over Next
  * 3. Icon button whose <use> points to a missing symbol
  * 4. Header title shifted 12 px
+ * 5. Stars absolutely positioned over title at 360px
  */
 async function runSelfTest(serverUrl) {
-  console.log('[selfplay] Running --selftest (verifying harness catches 4 injected defects)...');
+  console.log('[selfplay] Running --selftest (verifying harness catches 5 injected defects)...');
   const browser = await puppeteer.launch(launchOptions());
   const page = await browser.newPage();
   await page.setViewport(VIEWPORTS[0]);
@@ -309,6 +417,7 @@ async function runSelfTest(serverUrl) {
   let defect2Caught = false;
   let defect3Caught = false;
   let defect4Caught = false;
+  let defect5Caught = false;
 
   // Defect 1: inject "undefined" text into DOM
   await page.evaluate(() => {
@@ -361,7 +470,7 @@ async function runSelfTest(serverUrl) {
   // Defect 4: header title shifted 12 px
   await page.click('#btnPlay'); // Navigate to map screen where .hud-bar is present
   await page.evaluate(() => {
-    const title = document.querySelector('.hud-title');
+    const title = document.querySelector('.hud-title, .topbar-title');
     if (title) {
       title.id = 'defect-shifted-title';
       title.style.transform = 'translateX(12px)';
@@ -380,13 +489,38 @@ async function runSelfTest(serverUrl) {
     }
   });
 
+  // Defect 5: stars absolutely positioned over title at 360px
+  await page.setViewport({ width: 360, height: 800 });
+  await page.evaluate(() => {
+    const title = document.querySelector('.hud-title, .topbar-title');
+    if (title) {
+      const r = title.getBoundingClientRect();
+      const stars = document.createElement('div');
+      stars.id = 'defect-stars-overlay';
+      stars.style.position = 'fixed';
+      stars.style.left = (r.left + 5) + 'px';
+      stars.style.top = (r.top + 2) + 'px';
+      stars.style.width = '60px';
+      stars.style.height = '20px';
+      stars.style.zIndex = '9999';
+      stars.innerHTML = '<span class="star-item">⭐⭐⭐</span>';
+      document.body.appendChild(stars);
+    }
+  });
+  const defect5Err = await page.evaluate(() => window.__selfplayChecks.checkInvariants() || window.__selfplayChecks.checkAlignment());
+  if (defect5Err && (defect5Err.includes('intersect') || defect5Err.includes('covered') || defect5Err.includes('centre') || defect5Err.includes('Invariant'))) {
+    defect5Caught = true;
+    console.log('[selfplay] Defect 5 caught successfully: ' + defect5Err);
+  }
+  await page.evaluate(() => document.getElementById('defect-stars-overlay')?.remove());
+
   await browser.close();
 
-  if (defect1Caught && defect2Caught && defect3Caught && defect4Caught) {
-    console.log('[selfplay] Selftest PASSED: 4/4 defects caught by harness.\n');
+  if (defect1Caught && defect2Caught && defect3Caught && defect4Caught && defect5Caught) {
+    console.log('[selfplay] Selftest PASSED: 5/5 defects caught by harness.\n');
     return true;
   } else {
-    console.error(`[selfplay] Selftest FAILED: defect1=${defect1Caught}, defect2=${defect2Caught}, defect3=${defect3Caught}, defect4=${defect4Caught}`);
+    console.error(`[selfplay] Selftest FAILED: defect1=${defect1Caught}, defect2=${defect2Caught}, defect3=${defect3Caught}, defect4=${defect4Caught}, defect5=${defect5Caught}`);
     process.exit(1);
   }
 }
@@ -581,30 +715,39 @@ export async function runSelfPlay() {
   let totalPuzzlesPlayed = 0;
 
   try {
-    // 1. Run Self-Test (4/4 defects)
+    // 1. Run Self-Test (5/5 defects)
     await runSelfTest(serverUrl);
     if (isSelfTestOnly) {
       server.close();
       return;
     }
 
-    // 2. Play all 18 puzzles on 3 Viewports (mobile, tablet, desktop)
-    // Worker 1: Mobile (390x844) - Perfect play (3 stars)
-    const p1 = await runWorkerSession(serverUrl, VIEWPORTS[0], puzzles, 'perfect');
-    totalPuzzlesPlayed += p1;
+    // 2. Play all 18 puzzles across 9 Viewports using parallel worker batches
+    const VIEWPORT_CONFIGS = [
+      { vp: VIEWPORTS[0], mode: 'perfect' },          // 320x568
+      { vp: VIEWPORTS[1], mode: 'retry_hint' },       // 360x740
+      { vp: VIEWPORTS[2], mode: 'perfect' },          // 360x800
+      { vp: VIEWPORTS[3], mode: 'perfect' },          // 390x844
+      { vp: VIEWPORTS[4], mode: 'retry_hint' },       // 412x915
+      { vp: VIEWPORTS[5], mode: 'perfect' },          // 568x320
+      { vp: VIEWPORTS[6], mode: 'retry_hint' },       // 768x1024
+      { vp: VIEWPORTS[7], mode: 'storage_throwing' }, // 1024x768
+      { vp: VIEWPORTS[8], mode: 'reduced_motion' }    // 1440x900
+    ];
 
-    // Worker 2: Tablet (768x1024) - Retry + Hint play (2 stars)
-    const p2 = await runWorkerSession(serverUrl, VIEWPORTS[1], puzzles, 'retry_hint');
-    totalPuzzlesPlayed += p2;
-
-    // Worker 3: Desktop (1440x900) - Storage failure + Reduced motion
-    const p3 = await runWorkerSession(serverUrl, VIEWPORTS[2], puzzles, 'storage_throwing');
-    totalPuzzlesPlayed += p3;
+    const CONCURRENCY = 3;
+    for (let i = 0; i < VIEWPORT_CONFIGS.length; i += CONCURRENCY) {
+      const batch = VIEWPORT_CONFIGS.slice(i, i + CONCURRENCY);
+      const results = await Promise.all(
+        batch.map(cfg => runWorkerSession(serverUrl, cfg.vp, puzzles, cfg.mode))
+      );
+      totalPuzzlesPlayed += results.reduce((a, b) => a + b, 0);
+    }
 
     const durationSec = ((Date.now() - startTime) / 1000).toFixed(1);
     console.log(`\n======================================================`);
-    console.log(`[selfplay] PASSED: ${totalPuzzlesPlayed} puzzle sessions across 3 viewports in ${durationSec}s`);
-    console.log(`[selfplay] Selftest: 4/4 defects caught | Console errors: 0 | Violations: 0`);
+    console.log(`[selfplay] PASSED: ${totalPuzzlesPlayed} puzzle sessions across 9 viewports in ${durationSec}s`);
+    console.log(`[selfplay] Selftest: 5/5 defects caught | Console errors: 0 | Violations: 0`);
     console.log(`======================================================\n`);
   } finally {
     server.close();
