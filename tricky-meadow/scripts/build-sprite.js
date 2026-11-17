@@ -1,136 +1,127 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { UI_ICONS } from '../src/data/ui-icons.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const SVG_DIR = path.resolve(__dirname, '../node_modules/@twemoji/svg');
+const PUZZLES_PATH = path.resolve(__dirname, '../src/data/puzzles.json');
 const OUT_JS = path.resolve(__dirname, '../src/sprite.js');
 const OUT_SVG = path.resolve(__dirname, '../public/sprite.svg');
 
-export const EMOJI_MAP = {
-  // Animals & Insects
-  rabbit: '1f430',
-  fox: '1f98a',
-  bear: '1f43b',
-  frog: '1f438',
-  turtle: '1f422',
-  butterfly: '1f98b',
-  honeybee: '1f41d',
-  ladybug: '1f41e',
-  caterpillar: '1f41b',
-  snail: '1f40c',
-  ant: '1f41c',
-  chick: '1f425',
-  duck: '1f986',
-  owl: '1f989',
-  hedgehog: '1f994',
-  squirrel: '1f43f',
-  deer: '1f98c',
-  bat: '1f987',
-  mouse: '1f42d',
-  hamster: '1f439',
-  cat: '1f431',
-  dog: '1f436',
-  monkey: '1f435',
-  lion: '1f981',
-  cow: '1f42e',
-  pig: '1f437',
-  sheep: '1f411',
-  horse: '1f434',
-
-  // Plants & Nature
-  flower: '1f338',
-  blossom: '1f33c',
-  sunflower: '1f33b',
-  tulip: '1f337',
-  rose: '1f339',
-  hibiscus: '1f33a',
-  seedling: '1f331',
-  herb: '1f33f',
-  clover: '1f340',
-  leaf: '1f341',
-  mushroom: '1f344',
-  evergreen: '1f332',
-  tree: '1f333',
-  palm: '1f334',
-  apple: '1f34e',
-  green_apple: '1f34f',
-  strawberry: '1f353',
-  grapes: '1f347',
-  watermelon: '1f349',
-  orange: '1f34a',
-  banana: '1f34c',
-  cherry: '1f352',
-  carrot: '1f955',
-  corn: '1f33d',
-  peanut: '1f95c',
-  chestnut: '1f330',
-
-  // Weather & Sky
-  sun: '2600',
-  sun_face: '1f31e',
-  moon: '1f319',
-  star: '2b50',
-  glow_star: '1f31f',
-  sparkles: '2728',
-  cloud: '2601',
-  rain: '1f327',
-  rainbow: '1f308',
-  lightning: '26a1',
-  snowflake: '2744',
-  droplet: '1f4a7',
-  fire: '1f525',
-
-  // Items & Badges
-  balloon: '1f388',
-  gift: '1f381',
-  trophy: '1f3c6',
-  key: '1f5dd',
-  lock: '1f512',
-  unlock: '1f513',
-  bell: '1f514',
-  search: '1f50d',
-  lightbulb: '1f4a1',
-  magic_wand: '1fa84',
-  target: '1f3af',
-  puzzle: '1f9e9',
-  circus: '1f3aa',
-  palette: '1f3a8',
-  music_note: '1f3b5'
-};
-
-const symbols = [];
-
-for (const [name, code] of Object.entries(EMOJI_MAP)) {
-  const filePath = path.join(SVG_DIR, `${code}.svg`);
-  if (!fs.existsSync(filePath)) {
-    console.warn(`Warning: SVG for ${name} (${code}) not found at ${filePath}`);
-    continue;
+export function emojiToCodePoints(str) {
+  if (!str) return '';
+  if (/^[0-9a-fA-F-]+$/.test(str.trim())) return str.trim().toLowerCase();
+  const codes = [];
+  for (const char of str) {
+    const cp = char.codePointAt(0);
+    // Ignore variation selector 16 (\uFE0F) for standard emojis
+    if (cp !== 0xfe0f) {
+      codes.push(cp.toString(16));
+    }
   }
-  const content = fs.readFileSync(filePath, 'utf8');
-  // Extract inner XML
-  const match = content.match(/<svg[^>]*>([\s\S]*?)<\/svg>/i);
-  if (match) {
-    const inner = match[1].trim();
-    symbols.push(`  <symbol id="emoji-${name}" viewBox="0 0 36 36">\n    ${inner}\n  </symbol>`);
-    symbols.push(`  <symbol id="emoji-${code}" viewBox="0 0 36 36">\n    ${inner}\n  </symbol>`);
+  return codes.join('-');
+}
+
+if (!fs.existsSync(PUZZLES_PATH)) {
+  console.error(`[build-sprite] Error: Puzzles file not found at ${PUZZLES_PATH}`);
+  process.exit(1);
+}
+
+const puzzles = JSON.parse(fs.readFileSync(PUZZLES_PATH, 'utf8'));
+
+// Collect all emojis from UI_ICONS and puzzles
+const emojiMap = new Map(); // code -> Set of alias identifiers
+
+// Add UI_ICONS
+for (const [key, emoji] of Object.entries(UI_ICONS)) {
+  const code = emojiToCodePoints(emoji);
+  if (!emojiMap.has(code)) emojiMap.set(code, new Set());
+  emojiMap.get(code).add(key);
+  emojiMap.get(code).add(code);
+  emojiMap.get(code).add(emoji);
+}
+
+// Add puzzle item emojis
+for (const puzzle of puzzles) {
+  if (Array.isArray(puzzle.items)) {
+    for (const item of puzzle.items) {
+      if (item.emoji) {
+        const code = emojiToCodePoints(item.emoji);
+        if (!emojiMap.has(code)) emojiMap.set(code, new Set());
+        emojiMap.get(code).add(code);
+        emojiMap.get(code).add(item.emoji);
+      }
+    }
   }
 }
 
-const spriteXml = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">\n<defs>\n${symbols.join('\n')}\n</defs>\n</svg>`;
+const symbols = [];
+const missing = [];
 
-// Ensure directories
+for (const [code, aliases] of emojiMap.entries()) {
+  let svgPath = path.join(SVG_DIR, `${code}.svg`);
+  if (!fs.existsSync(svgPath)) {
+    // Try with -fe0f if present
+    const altPath = path.join(SVG_DIR, `${code}-fe0f.svg`);
+    if (fs.existsSync(altPath)) {
+      svgPath = altPath;
+    } else {
+      missing.push({ code, aliases: Array.from(aliases) });
+      continue;
+    }
+  }
+
+  const rawXml = fs.readFileSync(svgPath, 'utf8');
+  const match = rawXml.match(/<svg[^>]*>([\s\S]*?)<\/svg>/i);
+  if (!match) {
+    missing.push({ code, error: 'Failed to parse SVG content' });
+    continue;
+  }
+
+  const innerXml = match[1].trim();
+  // Register symbol for code and all aliases
+  symbols.push(`  <symbol id="emoji-${code}" viewBox="0 0 36 36">\n    ${innerXml}\n  </symbol>`);
+  for (const alias of aliases) {
+    if (alias !== code && /^[a-zA-Z0-9_-]+$/.test(alias)) {
+      symbols.push(`  <symbol id="emoji-${alias}" viewBox="0 0 36 36">\n    ${innerXml}\n  </symbol>`);
+    }
+  }
+}
+
+if (missing.length > 0) {
+  console.error('[build-sprite] BUILD FAILED: Referenced emoji missing in @twemoji/svg:');
+  missing.forEach(m => console.error(`  - Code: ${m.code} (aliases: ${m.aliases?.join(', ')})`));
+  process.exit(1);
+}
+
+const spriteXml = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">\n<defs>\n${symbols.join('\n')}\n</defs>\n</svg>`;
+const spriteBytes = Buffer.byteLength(spriteXml, 'utf8');
+const iconCount = emojiMap.size;
+
 fs.mkdirSync(path.dirname(OUT_JS), { recursive: true });
 fs.mkdirSync(path.dirname(OUT_SVG), { recursive: true });
 
-// Write SVG sprite file
 fs.writeFileSync(OUT_SVG, spriteXml, 'utf8');
 
-// Write JS injector
-const jsContent = `// Auto-generated SVG Sprite with ${Object.keys(EMOJI_MAP).length} emojis
+const jsContent = `// Auto-generated SVG Sprite from puzzles.json & ui-icons.js
+// Total icons: ${iconCount} | Total size: ${spriteBytes} bytes
 export const SPRITE_SVG = ${JSON.stringify(spriteXml)};
+export const ICON_COUNT = ${iconCount};
+export const SPRITE_SIZE_BYTES = ${spriteBytes};
+
+export function emojiToSymbolId(str) {
+  if (!str) return 'sparkles';
+  if (/^[0-9a-fA-F-]+$/.test(str.trim())) return str.trim().toLowerCase();
+  const codes = [];
+  for (const char of str) {
+    const cp = char.codePointAt(0);
+    if (cp !== 0xfe0f) codes.push(cp.toString(16));
+  }
+  return codes.join('-');
+}
 
 export function initSprite() {
   if (typeof document === 'undefined') return;
@@ -142,10 +133,11 @@ export function initSprite() {
   document.body.insertBefore(div, document.body.firstChild);
 }
 
-export function renderEmoji(name, size = 36, className = '') {
-  return \`<svg class="emoji \${className}" width="\${size}" height="\${size}" aria-hidden="true"><use href="#emoji-\${name}"></use></svg>\`;
+export function renderEmoji(nameOrEmoji, size = 36, className = '') {
+  const sym = emojiToSymbolId(nameOrEmoji);
+  return \`<svg class="emoji \${className}" width="\${size}" height="\${size}" aria-hidden="true"><use href="#emoji-\${sym}"></use></svg>\`;
 }
 `;
 
 fs.writeFileSync(OUT_JS, jsContent, 'utf8');
-console.log(`[build-sprite] Successfully built sprite with ${Object.keys(EMOJI_MAP).length} emojis (${symbols.length / 2} unique) into ${OUT_JS} and ${OUT_SVG}`);
+console.log(`[build-sprite] Generated dynamic sprite: ${iconCount} icons, ${spriteBytes} bytes (${(spriteBytes / 1024).toFixed(1)} KB)`);

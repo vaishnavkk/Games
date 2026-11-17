@@ -21,6 +21,6 @@ test('scaffold files and dependencies exist', () => {
 
   const mainPath = path.resolve(__dirname, '../src/main.js');
   const mainContent = fs.readFileSync(mainPath, 'utf8');
-  assert.ok(mainContent.includes('Hello Meadow'), 'main.js must contain "Hello Meadow"');
+  assert.ok(mainContent.includes('GameManager'), 'main.js must instantiate GameManager');
   assert.ok(mainContent.includes('Fredoka') || mainContent.includes('@fontsource/fredoka'), 'main.js must load fonts');
 });

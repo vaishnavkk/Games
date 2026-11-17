@@ -14,7 +14,8 @@ export default [
         cancelAnimationFrame: 'readonly',
         performance: 'readonly',
         setTimeout: 'readonly',
-        clearTimeout: 'readonly'
+        clearTimeout: 'readonly',
+        localStorage: 'readonly'
       }
     },
     rules: {
