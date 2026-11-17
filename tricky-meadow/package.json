@@ -20,7 +20,8 @@
   "dependencies": {
     "@fontsource/fredoka": "^5.2.5",
     "@fontsource/patrick-hand": "^5.2.5",
-    "canvas-confetti": "^1.9.4"
+    "canvas-confetti": "^1.9.4",
+    "pngjs": "^7.0.0"
   },
   "devDependencies": {
     "@twemoji/svg": "^15.0.0",

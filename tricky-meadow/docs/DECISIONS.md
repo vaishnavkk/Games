@@ -9,3 +9,4 @@
 7. Stage 5 Self-Play: Puppeteer automated self-play verifying 54 sessions across 3 viewports (390x844, 768x1024, 1440x900) in 36.5s.
 8. Stage 5 Accessibility: Web Speech API synthesis read-aloud support, :focus-visible outlines, and semantic ARIA labeling.
 9. Stage 6 Deployment: Root Pages serves unbundled redirect to /dist/ with un-ignored dist in root .gitignore and Arcade Hub card integration.
+10. Task 1 Icons & Layout: UI aliases mapped directly to sprite symbol IDs; header grid minmax(0,1fr) auto minmax(0,1fr) balances controls; selfplay invariant verifies button pixel stddev > 3.0 and geometry.

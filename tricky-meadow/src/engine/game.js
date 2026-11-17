@@ -1,5 +1,5 @@
 import confetti from 'canvas-confetti';
-import puzzlesData from '../data/puzzles.json';
+import puzzlesData from '../data/puzzles.json' with { type: 'json' };
 import { calculateStars, isLevelUnlocked, checkAnswer } from './scoring.js';
 import { loadProgress, saveProgress, resetProgress as storageReset } from './storage.js';
 

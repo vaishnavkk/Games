@@ -13,9 +13,14 @@ const OUT_SVG = path.resolve(__dirname, '../public/sprite.svg');
 
 export function emojiToCodePoints(str) {
   if (!str) return '';
-  if (/^[0-9a-fA-F-]+$/.test(str.trim())) return str.trim().toLowerCase();
+  const trimmed = str.trim();
+  // If it's a known UI alias name or word alias, map via UI_ICONS if possible
+  if (UI_ICONS[trimmed]) {
+    return emojiToCodePoints(UI_ICONS[trimmed]);
+  }
+  if (/^[0-9a-fA-F-]+$/.test(trimmed)) return trimmed.toLowerCase();
   const codes = [];
-  for (const char of str) {
+  for (const char of trimmed) {
     const cp = char.codePointAt(0);
     // Ignore variation selector 16 (\uFE0F) for standard emojis
     if (cp !== 0xfe0f) {
@@ -30,6 +35,15 @@ if (!fs.existsSync(PUZZLES_PATH)) {
   process.exit(1);
 }
 
+// Assert all required UI icons exist in UI_ICONS
+const REQUIRED_UI_ICONS = ['home', 'settings', 'hint', 'star', 'check', 'lock', 'speaker'];
+for (const iconKey of REQUIRED_UI_ICONS) {
+  if (!UI_ICONS[iconKey]) {
+    console.error(`[build-sprite] BUILD FAILED: Required UI icon '${iconKey}' is missing in UI_ICONS`);
+    process.exit(1);
+  }
+}
+
 const puzzles = JSON.parse(fs.readFileSync(PUZZLES_PATH, 'utf8'));
 
 // Collect all emojis from UI_ICONS and puzzles
@@ -38,6 +52,7 @@ const emojiMap = new Map(); // code -> Set of alias identifiers
 // Add UI_ICONS
 for (const [key, emoji] of Object.entries(UI_ICONS)) {
   const code = emojiToCodePoints(emoji);
+  if (!code) continue;
   if (!emojiMap.has(code)) emojiMap.set(code, new Set());
   emojiMap.get(code).add(key);
   emojiMap.get(code).add(code);
@@ -50,6 +65,7 @@ for (const puzzle of puzzles) {
     for (const item of puzzle.items) {
       if (item.emoji) {
         const code = emojiToCodePoints(item.emoji);
+        if (!code) continue;
         if (!emojiMap.has(code)) emojiMap.set(code, new Set());
         emojiMap.get(code).add(code);
         emojiMap.get(code).add(item.emoji);
@@ -97,7 +113,16 @@ if (missing.length > 0) {
   process.exit(1);
 }
 
-const spriteXml = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">\n<defs>\n${symbols.join('\n')}\n</defs>\n</svg>`;
+// Assert every required UI icon is present as a symbol in the generated list
+for (const iconKey of REQUIRED_UI_ICONS) {
+  const symId = `emoji-${iconKey}`;
+  if (!symbols.some(s => s.includes(`id="${symId}"`))) {
+    console.error(`[build-sprite] BUILD FAILED: Required UI symbol '${symId}' is missing from sprite!`);
+    process.exit(1);
+  }
+}
+
+const spriteXml = `<svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0; overflow: hidden; pointer-events: none;" aria-hidden="true">\n<defs>\n${symbols.join('\n')}\n</defs>\n</svg>`;
 const spriteBytes = Buffer.byteLength(spriteXml, 'utf8');
 const iconCount = emojiMap.size;
 
@@ -114,9 +139,18 @@ export const SPRITE_SIZE_BYTES = ${spriteBytes};
 
 export function emojiToSymbolId(str) {
   if (!str) return 'sparkles';
-  if (/^[0-9a-fA-F-]+$/.test(str.trim())) return str.trim().toLowerCase();
+  const trimmed = String(str).trim();
+  // If it's an alias name starting with a letter, preserve the alias name
+  if (/^[a-zA-Z][a-zA-Z0-9_-]*$/.test(trimmed)) {
+    return trimmed.toLowerCase();
+  }
+  // If it's already a hex codepoint sequence (e.g. 1f331 or 2b50 or 1f441-200d-1f5e8)
+  if (/^[0-9a-fA-F]+(-[0-9a-fA-F]+)*$/.test(trimmed)) {
+    return trimmed.toLowerCase();
+  }
+  // Otherwise convert unicode emoji character(s) to hex codepoints
   const codes = [];
-  for (const char of str) {
+  for (const char of trimmed) {
     const cp = char.codePointAt(0);
     if (cp !== 0xfe0f) codes.push(cp.toString(16));
   }
@@ -128,7 +162,12 @@ export function initSprite() {
   if (document.getElementById('tricky-meadow-sprite')) return;
   const div = document.createElement('div');
   div.id = 'tricky-meadow-sprite';
-  div.style.display = 'none';
+  div.style.position = 'absolute';
+  div.style.width = '0';
+  div.style.height = '0';
+  div.style.overflow = 'hidden';
+  div.style.pointerEvents = 'none';
+  div.setAttribute('aria-hidden', 'true');
   div.innerHTML = SPRITE_SVG;
   document.body.insertBefore(div, document.body.firstChild);
 }

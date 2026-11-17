@@ -6,6 +6,7 @@ export const UI_ICONS = {
   lock: '🔒',
   unlock: '🔓',
   home: '🏠',
+  back: '🏠',
   speaker: '🔊',
   speaker_mute: '🔇',
   sparkles: '✨',

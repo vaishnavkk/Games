@@ -87,15 +87,19 @@ export function renderMapScreen(game) {
         <span class="ambient-firefly"></span>
       </div>
       <header class="hud-bar">
-        <button type="button" class="icon-btn" id="btnBackHome" aria-label="Back to Home">
-          ${renderEmoji('home', 28)}
-        </button>
+        <div class="hud-left">
+          <button type="button" class="icon-btn" id="btnBackHome" aria-label="Back to Home">
+            ${renderEmoji('home', 28)}
+          </button>
+        </div>
         <div class="hud-center">
           <h1 class="hud-title">Meadow Map</h1>
         </div>
-        <div class="hud-stars" title="Total Stars Earned">
-          ${renderEmoji('star', 24)}
-          <span class="star-count">${totalStars}</span>
+        <div class="hud-right">
+          <div class="hud-stars" title="Total Stars Earned">
+            ${renderEmoji('star', 24)}
+            <span class="star-count">${totalStars}</span>
+          </div>
         </div>
       </header>
 
@@ -143,19 +147,21 @@ export function renderPuzzleScreen(game) {
   return `
     <div class="screen screen-puzzle bg-level-${game.level} ${game.isShaking ? 'shake' : ''}">
       <header class="hud-bar">
-        <button type="button" class="icon-btn" id="btnBackMap" aria-label="Back to Map">
-          ${renderEmoji('home', 26)}
-        </button>
+        <div class="hud-left">
+          <button type="button" class="icon-btn" id="btnBackMap" aria-label="Back to Map">
+            ${renderEmoji('home', 28)}
+          </button>
+          <button type="button" class="icon-btn" id="btnReadAloud" aria-label="Read prompt aloud">
+            ${renderEmoji('speaker', 28)}
+          </button>
+        </div>
         <div class="hud-center">
-          <span class="hud-level-tag">${levelInfo?.name || `Level ${game.level}`}</span>
-          <span class="hud-potential-stars" title="Potential stars for this round">${renderStarString(currentPotentialStars)}</span>
+          <h1 class="hud-title hud-level-tag">${levelInfo?.name || `Level ${game.level}`}</h1>
+          <div class="hud-potential-stars" title="Potential stars for this round">${renderStarString(currentPotentialStars)}</div>
         </div>
         <div class="hud-right">
-          <button type="button" class="icon-btn btn-read-aloud" id="btnReadAloud" aria-label="Read prompt aloud">
-            ${renderEmoji('speaker', 22)}
-          </button>
-          <button type="button" class="btn-hint ${game.hintUsed ? 'hint-used' : ''}" id="btnHint" aria-label="Use Hint" ${game.hintUsed ? 'disabled' : ''}>
-            ${renderEmoji('hint', 24)}
+          <button type="button" class="hint-btn ${game.hintUsed ? 'hint-used' : ''}" id="btnHint" aria-label="Use Hint" ${game.hintUsed ? 'disabled' : ''}>
+            ${renderEmoji('hint', 28)}
             <span>${game.hintUsed ? 'Hint On' : 'Hint'}</span>
           </button>
         </div>
