@@ -110,9 +110,9 @@ export async function checkSources() {
         rawText = cleanHtmlToText(rawHtml);
         fs.writeFileSync(cacheFile, rawText, 'utf8');
       } catch (err) {
-        console.warn(`[check:sources] WARN: [${id}] Unreachable source ${fact.source} (${err.message})`);
-        warnCount++;
-        supportLines.push(`${id} | WARN | Unreachable: ${err.message}`);
+        console.error(`[check:sources] FAIL: [${id}] Unreachable source ${fact.source} (${err.message})`);
+        failCount++;
+        supportLines.push(`${id} | FAIL | Unreachable: ${err.message}`);
         continue;
       }
     }
@@ -145,7 +145,7 @@ export async function checkSources() {
   console.log(`[check:sources] Summary: OK=${okCount}, WARN=${warnCount}, FAIL=${failCount}`);
   console.log(`[check:sources] Support sentences written to ${SUPPORT_FILE}`);
 
-  if (failCount > 0) {
+  if (failCount > 0 || warnCount > 0) {
     process.exit(1);
   }
 }

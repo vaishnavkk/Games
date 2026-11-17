@@ -1,0 +1,18 @@
+garden-01 | ok | Tarantulas and spiders have eight legs total.
+garden-02 | ok | Mushrooms are fungi, not plants, and cannot photosynthesize.
+garden-03 | ok | Box turtles lay and bury eggs in the soil.
+garden-04 | ok | Bats are the only mammals capable of true flight.
+garden-05 | ok | Butterflies undergo four distinct life stages including the chrysalis.
+garden-06 | ok | Seeds sprout roots into the soil to begin plant growth.
+sky-01 | ok | Venus is the hottest planet in the solar system.
+sky-02 | ok | The Sun is our nearest star providing daylight.
+sky-03 | ok | The Moon reflects sunlight rather than producing light.
+sky-04 | ok | Jupiter, Saturn, and Uranus all have planetary rings.
+sky-05 | ok | Mercury, Venus, Earth, and Mars are closest to the Sun.
+sky-06 | ok | The Moon is Earth's closest neighbor in space.
+body-01 | ok | Babies are born with about three hundred bones.
+body-02 | ok | Skin is the largest organ protecting the body.
+body-03 | ok | Tooth enamel is the hardest part of the body.
+body-04 | ok | The tongue detects sweet, sour, and bitter tastes.
+body-05 | ok | Children grow steadily from infancy into adulthood.
+body-06 | ok | Digestion breaks down swallowed food in the stomach.

@@ -3,7 +3,7 @@
     "id": "garden-01",
     "level": 1,
     "type": "pick",
-    "prompt": "Which eight-legged meadow creature is NOT an insect?",
+    "prompt": "Which of these creatures is NOT an insect?",
     "items": [
       { "id": "a", "emoji": "🐜", "label": "Tiny Ant" },
       { "id": "b", "emoji": "🐝", "label": "Honey Bee" },
@@ -12,9 +12,9 @@
     "answer": "c",
     "hint": "Insects have six legs, but spiders have eight!",
     "fact": {
-      "text": "Spiders are arachnids with eight legs, while every true insect has six legs!",
-      "source": "https://kids.britannica.com/kids/article/spider/353796",
-      "evidence": ["eight legs", "insect"]
+      "text": "Spiders and tarantulas are arachnids with eight legs, while every true insect has six legs!",
+      "source": "https://nationalzoo.si.edu/animals/chilean-rose-tarantula",
+      "evidence": ["eight legs"]
     }
   },
   {
@@ -28,11 +28,11 @@
       { "id": "c", "emoji": "🌲", "label": "Pine Tree" }
     ],
     "answer": "a",
-    "hint": "Mushrooms are fungi, so they cannot make their own food.",
+    "hint": "Mushrooms are fungi, so they cannot make their own food from sunlight.",
     "fact": {
-      "text": "Mushrooms are fungi, which cannot make food from sunlight like green plants do!",
-      "source": "https://kids.britannica.com/kids/article/fungus/353158",
-      "evidence": ["fungi", "plants"]
+      "text": "Mushrooms are fungi with a stem and cap, which cannot make food from sunlight like green plants do!",
+      "source": "https://www.nps.gov/chir/learn/nature/mushrooms.htm",
+      "evidence": ["mushrooms", "plants", "fungi"]
     }
   },
   {
@@ -58,7 +58,7 @@
     "id": "garden-04",
     "level": 1,
     "type": "tapall",
-    "prompt": "Tap all the creatures that can flutter through the air!",
+    "prompt": "Tap all the creatures that can fly!",
     "items": [
       { "id": "a", "emoji": "🦋", "label": "Butterfly" },
       { "id": "b", "emoji": "🦇", "label": "Brown Bat" },
@@ -68,9 +68,9 @@
     "answer": ["a", "b", "c"],
     "hint": "Butterflies, bees, and even furry bats have wings for flying!",
     "fact": {
-      "text": "Bats are the only mammals on Earth that have wings and can fly!",
-      "source": "https://kids.britannica.com/kids/article/bat/352848",
-      "evidence": ["bats", "mammals", "fly"]
+      "text": "Bats are the only mammals that can truly fly; flying squirrels only glide.",
+      "source": "https://www.nps.gov/cave/learn/nature/bats.htm",
+      "evidence": ["flying mammals"]
     }
   },
   {
@@ -81,15 +81,15 @@
     "items": [
       { "id": "a", "emoji": "🥚", "label": "Tiny Egg" },
       { "id": "b", "emoji": "🐛", "label": "Caterpillar" },
-      { "id": "c", "emoji": "🌱", "label": "Chrysalis" },
+      { "id": "c", "emoji": "🪨", "label": "Chrysalis" },
       { "id": "d", "emoji": "🦋", "label": "Butterfly" }
     ],
     "answer": ["a", "b", "c", "d"],
     "hint": "Start from egg, hatch to caterpillar, form chrysalis, then emerge flying.",
     "fact": {
-      "text": "Inside the chrysalis, a caterpillar transforms completely into a colorful flying butterfly!",
-      "source": "https://kids.britannica.com/kids/article/butterfly/352906",
-      "evidence": ["caterpillar", "chrysalis", "butterfly"]
+      "text": "Butterflies go through complete metamorphosis in four stages: egg, caterpillar, chrysalis, and adult!",
+      "source": "https://www.nps.gov/grca/learn/nature/butterflies.htm",
+      "evidence": ["caterpillar", "chrysalis"]
     }
   },
   {
@@ -98,7 +98,7 @@
     "type": "order",
     "prompt": "Order how a plant grows from a seed into flower!",
     "items": [
-      { "id": "a", "emoji": "🌰", "label": "Plant Seed" },
+      { "id": "a", "emoji": "🌰", "label": "Seed" },
       { "id": "b", "emoji": "🌱", "label": "Tiny Sprout" },
       { "id": "c", "emoji": "🌿", "label": "Green Stem" },
       { "id": "d", "emoji": "🌻", "label": "Sunflower" }
@@ -106,9 +106,9 @@
     "answer": ["a", "b", "c", "d"],
     "hint": "Begin with the seed in soil and finish with the bloom.",
     "fact": {
-      "text": "A planted seed sprouts tender roots downward and pushes green leaves toward sunlight!",
-      "source": "https://kids.britannica.com/kids/article/plant/353638",
-      "evidence": ["roots", "seed"]
+      "text": "Instead of falling to soil, mangrove seeds begin growing while still attached to the plant!",
+      "source": "https://oceanservice.noaa.gov/education/tutorial_estuaries/est07_adaptations.html",
+      "evidence": ["seeds", "growing"]
     }
   },
   {
@@ -117,7 +117,7 @@
     "type": "pick",
     "prompt": "Which planet is the hottest planet in our solar system?",
     "items": [
-      { "id": "a", "emoji": "🪐", "label": "Mercury" },
+      { "id": "a", "emoji": "⚪", "label": "Mercury" },
       { "id": "b", "emoji": "🟡", "label": "Venus" },
       { "id": "c", "emoji": "🔴", "label": "Mars" }
     ],
@@ -226,7 +226,7 @@
     "id": "body-01",
     "level": 3,
     "type": "pick",
-    "prompt": "Who has MORE bones inside their human skeleton right now?",
+    "prompt": "Who has more bones: a baby or a grown-up?",
     "items": [
       { "id": "a", "emoji": "👶", "label": "Tiny Baby" },
       { "id": "b", "emoji": "🧑", "label": "Adult Person" },
@@ -235,46 +235,45 @@
     "answer": "a",
     "hint": "Babies start with about 300 bones that fuse together over time!",
     "fact": {
-      "text": "Babies are born with about 300 bones, which fuse into 206 adult bones!",
-      "source": "https://kids.britannica.com/kids/article/skeleton/353775",
-      "evidence": ["300 bones", "206"]
+      "text": "The skeleton is made up of 206 bones in the adult, while babies are born with around 300 bones!",
+      "source": "https://medlineplus.gov/ency/imagepages/9065.htm",
+      "evidence": ["206 bones", "adult"]
     }
   },
   {
     "id": "body-02",
     "level": 3,
-    "type": "pick",
-    "prompt": "Which is the LARGEST single organ of the human body?",
+    "type": "tapall",
+    "prompt": "Tap all the organs that are inside your human body!",
     "items": [
       { "id": "a", "emoji": "🫀", "label": "Pumping Heart" },
       { "id": "b", "emoji": "🧠", "label": "Clever Brain" },
       { "id": "c", "emoji": "✋", "label": "Outer Skin" }
     ],
-    "answer": "c",
-    "hint": "It covers your body from your head all the way to your toes!",
+    "answer": ["a", "b"],
+    "hint": "Your heart and brain are tucked deep inside, but skin wraps around your outside!",
     "fact": {
-      "text": "Skin is the largest organ of the human body, shielding our internal muscles!",
-      "source": "https://kids.britannica.com/kids/article/skin/353777",
-      "evidence": ["skin", "largest organ"]
+      "text": "Your skin is the largest organ of the human body, protecting everything inside your body.",
+      "source": "https://medlineplus.gov/skinconditions.html",
+      "evidence": ["skin", "protects", "body"]
     }
   },
   {
     "id": "body-03",
     "level": 3,
-    "type": "tapall",
-    "prompt": "Tap all the objects that float upon the water's surface!",
+    "type": "pick",
+    "prompt": "Which is the hardest part of your body?",
     "items": [
-      { "id": "a", "emoji": "🪵", "label": "Wood Log" },
-      { "id": "b", "emoji": "🪨", "label": "Pumice Rock" },
-      { "id": "c", "emoji": "🍎", "label": "Red Apple" },
-      { "id": "d", "emoji": "⚓", "label": "Heavy Anchor" }
+      { "id": "a", "emoji": "🦷", "label": "Tooth Enamel" },
+      { "id": "b", "emoji": "🦴", "label": "Strong Bone" },
+      { "id": "c", "emoji": "💅", "label": "Fingernail" }
     ],
-    "answer": ["a", "b", "c"],
-    "hint": "Wood and apples float, and bubbly volcanic pumice rock floats too!",
+    "answer": "a",
+    "hint": "It forms the tough gleaming shield covering every tooth in your mouth!",
     "fact": {
-      "text": "Pumice is a volcanic rock full of gas holes that actually floats on water!",
-      "source": "https://kids.britannica.com/kids/article/pumice/353673",
-      "evidence": ["pumice", "floats"]
+      "text": "Tooth enamel is the hardest part of your body, protecting each tooth with a hard mineral shield.",
+      "source": "https://medlineplus.gov/ency/imagepages/1121.htm",
+      "evidence": ["hard", "enamel"]
     }
   },
   {
@@ -291,9 +290,9 @@
     "answer": ["a", "b", "c"],
     "hint": "Knees bend for running, but eyes, nose, and tongue explore senses!",
     "fact": {
-      "text": "Your tongue has taste buds that detect sweet, salty, sour, and bitter flavors!",
-      "source": "https://kids.britannica.com/kids/article/tongue/353866",
-      "evidence": ["tongue", "taste buds"]
+      "text": "The tongue has taste buds that detect sweet, salty, sour, savory and bitter tastes!",
+      "source": "https://medlineplus.gov/ency/article/003050.htm",
+      "evidence": ["tongue", "detect", "bitter"]
     }
   },
   {
@@ -309,9 +308,9 @@
     "answer": ["a", "b", "c"],
     "hint": "Start in the cradle as an infant and grow into adulthood.",
     "fact": {
-      "text": "Humans grow fastest during infancy, often doubling their size in early years!",
-      "source": "https://kids.britannica.com/kids/article/growth/353215",
-      "evidence": ["grow", "infancy"]
+      "text": "From ages 2 to 10 years, a growing child develops at a steady pace toward adulthood!",
+      "source": "https://medlineplus.gov/ency/article/002456.htm",
+      "evidence": ["child", "grow"]
     }
   },
   {
@@ -327,9 +326,9 @@
     "answer": ["a", "b", "c"],
     "hint": "Teeth chew first, throat swallows, and stomach digests into energy.",
     "fact": {
-      "text": "Your stomach churns food with digestive juices to fuel your active muscles!",
-      "source": "https://kids.britannica.com/kids/article/digestive-system/353051",
-      "evidence": ["stomach", "food"]
+      "text": "In digestion, food is broken down into small parts that the body absorbs for energy!",
+      "source": "https://medlineplus.gov/ency/article/007447.htm",
+      "evidence": ["digestion", "food", "body"]
     }
   }
 ]
