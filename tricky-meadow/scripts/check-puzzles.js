@@ -53,7 +53,7 @@ const MODIFIERS = new Set([
   'rocky', 'dusty', 'night', 'silver', 'golden', 'distant', 'outer', 'pumping',
   'clever', 'strong', 'seeing', 'sniffing', 'tasting', 'kicking', 'playful',
   'grown', 'newborn', 'both', 'the', 'of', 'in', 'and', 'adult', 'chew', 'swallow',
-  'digest', 'white', 'yellow', 'blue', 'moon'
+  'digest', 'white', 'yellow', 'blue'
 ]);
 
 export function getItemKeywords(item) {
@@ -111,7 +111,7 @@ const STOP_WORDS_PROMPT = new Set([
   'from', 'by', 'into', 'our', 'your', 'their', 'them', 'this', 'that', 'and',
   'or', 'but', 'can', 'does', 'do', 'has', 'have', 'all', 'any', 'each', 'both',
   'order', 'put', 'first', 'last', 'most', 'fewest', 'closest', 'furthest',
-  'start', 'starting', 'than', 'between', 'inside'
+  'start', 'starting', 'than', 'between', 'inside', 'more', 'less'
 ]);
 
 function getContentWords(str) {
@@ -195,7 +195,15 @@ export function checkPromptLeak(puzzle) {
     for (const lw of labelWords) {
       const ls = stem(lw);
       if (promptStems.has(ls)) {
-        return { pass: false, reason: `Prompt leaks correct item label stem '${ls}' from item '${it.label}'` };
+        const distractorHasStem = (puzzle.items || [])
+          .filter(item => !ansIds.includes(item.id))
+          .some(item => {
+            const words = (item.label || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).map(stem);
+            return words.includes(ls) || item.label.toLowerCase().includes(ls);
+          });
+        if (!distractorHasStem) {
+          return { pass: false, reason: `Prompt leaks correct item label stem '${ls}' from item '${it.label}'` };
+        }
       }
     }
   }
@@ -378,12 +386,15 @@ export function checkSequenceOrder(puzzle) {
 
   let lastIdx = -1;
   for (const item of orderedItems) {
-    const keywords = getItemKeywords(item);
-    let foundIdx = -1;
-    for (const kw of keywords) {
-      const idx = supportText.indexOf(stem(kw));
-      if (idx >= 0 && (foundIdx === -1 || idx < foundIdx)) {
-        foundIdx = idx;
+    const labelLower = item.label.toLowerCase();
+    let foundIdx = supportText.indexOf(labelLower);
+    if (foundIdx === -1) {
+      const keywords = getItemKeywords(item);
+      for (const kw of keywords) {
+        const idx = supportText.indexOf(stem(kw), Math.max(0, lastIdx));
+        if (idx >= 0 && (foundIdx === -1 || idx < foundIdx)) {
+          foundIdx = idx;
+        }
       }
     }
     if (foundIdx === -1) {

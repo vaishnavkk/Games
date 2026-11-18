@@ -402,13 +402,11 @@
     "hint": "The Moon does not make light: it reflects light from the Sun!",
     "fact": {
       "text": "The Moon does not make light; it simply reflects light from the Sun!",
-      "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
+      "source": "https://spaceplace.nasa.gov/moon-phases/",
       "evidence": [
-        "reflects",
-        "light",
-        "sun"
+        "moon does not produce its own light"
       ],
-      "support": "The Moon produces no light itself; moonlight is sunlight reflecting off its dusty surface."
+      "support": "The Moon does not produce its own light; moonlight is actually just sunlight reflecting off of the Moon’s surface."
     },
     "misconception": "Thinking the Moon makes its own light like a glowing lightbulb in the night sky.",
     "topic": "moonlight"
@@ -863,12 +861,12 @@
     "hint": "Beavers gnaw trees with orange teeth to build sturdy lodges and dams.",
     "misconception": "Thinking beavers build dams just to store food rather than create deep protective ponds.",
     "fact": {
-      "text": "Beavers build stick dams that slow down meadow water. These quiet ponds make safe homes for wildlife!",
-      "support": "By building dams that form slow-moving ponds, beavers provide wetlands and resources for dozens of wildlife species.",
+      "text": "Beaver dams form slow-moving ponds. These wetlands give new homes to dozens of other species!",
+      "support": "By building dams, which form slow-moving ponds and reduce erosion, they provide habitat and resources for dozens of other species.",
       "source": "https://nationalzoo.si.edu/animals/beaver",
       "evidence": [
-        "dams that form slow-moving ponds",
-        "wildlife species"
+        "form slow-moving ponds",
+        "dozens of other species"
       ]
     },
     "topic": "beavers"
@@ -903,14 +901,14 @@
       "b"
     ],
     "hint": "Alligators thrive in freshwater swamps, marshes, and riverbanks.",
-    "misconception": "Thinking alligators live in open ocean waves with salty water like dolphins.",
+    "misconception": null,
     "fact": {
       "text": "Alligators are large reptiles that live in freshwater swamps. They can also swim in rivers and lakes!",
-      "support": "American alligators primarily inhabit freshwater swamps and marshes, though they also swim in rivers and lakes.",
+      "support": "Alligators primarily inhabit freshwater swamps and marshes and can also be found in rivers, lakes, and smaller bodies of water.",
       "source": "https://www.nps.gov/ever/learn/nature/alligator.htm",
       "evidence": [
         "freshwater swamps and marshes",
-        "rivers and lakes"
+        "rivers, lakes"
       ]
     },
     "topic": "alligators"
@@ -983,11 +981,11 @@
     "hint": "An elephant breathes and smells through its trunk because it is an elongated nose.",
     "misconception": "Thinking an elephant's trunk is an extra giant arm or special single muscle.",
     "fact": {
-      "text": "An elephant trunk is a wonderful mix. It joins the nose and upper lip together!",
-      "support": "An elephant's flexible trunk is actually a wonderful fusion of its nose and upper lip.",
+      "text": "An elephant has a long trunk. It is a special fusion of the nose and upper lip!",
+      "support": "The trunk is a fusion of the nose and upper lip.",
       "source": "https://nationalzoo.si.edu/animals/asian-elephant",
       "evidence": [
-        "elephant's flexible trunk",
+        "trunk is a fusion",
         "nose and upper lip"
       ]
     },
@@ -1061,12 +1059,12 @@
     "hint": "Blue light waves scatter in all directions through the gases in our atmosphere.",
     "misconception": "Thinking the clear blue sky is just reflecting blue water from the world's oceans.",
     "fact": {
-      "text": "Sunlight holds every rainbow color. Blue light waves scatter across the sky more than other light waves!",
-      "support": "Sunlight contains all colors, but blue light is scattered more across our atmosphere than other colors.",
+      "text": "The sky looks blue because of sunlight waves. Blue light is scattered more because it travels in shorter, smaller waves!",
+      "support": "Blue light is scattered more than the other colors because it travels as shorter, smaller waves.",
       "source": "https://spaceplace.nasa.gov/blue-sky/en/",
       "evidence": [
-        "Sunlight contains all colors",
-        "blue light is scattered more"
+        "blue light is scattered more",
+        "shorter, smaller waves"
       ]
     },
     "topic": "sky-color"
@@ -1109,12 +1107,12 @@
     "hint": "Jupiter and Saturn have thick clouds with no solid ground underneath.",
     "misconception": "Thinking every planet in our solar system has hard ground where you could stand.",
     "fact": {
-      "text": "Jupiter and Saturn are massive gas giants. They have thick cloudy skies without any solid ground to walk on!",
-      "support": "Jupiter and Saturn are massive gas giants that have thick atmospheres without a solid rocky ground.",
+      "text": "Jupiter is a massive gas giant. It swirls in space without a solid surface!",
+      "support": "Jupiter is a gas giant and doesn't have a solid surface.",
       "source": "https://spaceplace.nasa.gov/all-about-jupiter/en/",
       "evidence": [
-        "Jupiter and Saturn are massive gas giants",
-        "without a solid rocky ground"
+        "gas giant",
+        "doesn't have a solid surface"
       ]
     },
     "topic": "gas-giants"
@@ -1148,12 +1146,11 @@
     "hint": "Mars is much further from the Sun than Earth, making it very chilly.",
     "misconception": "Thinking Mars is scorching hot because its rusty red rocks look like glowing flames.",
     "fact": {
-      "text": "Mars is a cold desert world. It sits much farther away from the warm Sun than Earth!",
-      "support": "Mars is a cold desert world located much farther from the warmth of the Sun.",
+      "text": "Mars is a cold desert world with a very thin atmosphere.",
+      "support": "Mars is a cold desert world.",
       "source": "https://spaceplace.nasa.gov/all-about-mars/en/",
       "evidence": [
-        "cold desert world",
-        "warmth of the Sun"
+        "mars is a cold desert world"
       ]
     },
     "topic": "mars-climate"
@@ -1187,12 +1184,12 @@
     "hint": "Your heart beats continuously day and night to power circulation throughout your body.",
     "misconception": "Thinking lungs pump the blood through your veins instead of breathing in oxygen.",
     "fact": {
-      "text": "Your heart is a tireless muscle pump. It beats day and night to send oxygen through your body!",
-      "support": "The heart is a muscular pump that delivers oxygen throughout the human body.",
+      "text": "Your heart is a strong muscle pump. It works all day to keep your body running!",
+      "support": "The heart is a powerful automatic pump.",
       "source": "https://medlineplus.gov/ency/anatomyvideos/000023.htm",
       "evidence": [
         "heart is a",
-        "pump that delivers oxygen"
+        "pump"
       ]
     },
     "topic": "heart-pump"
@@ -1201,47 +1198,53 @@
     "id": "body-08",
     "level": 3,
     "type": "tapall",
-    "prompt": "Tap the vital signs doctors check to see how you are doing!",
+    "prompt": "Which of these are vital signs a doctor measures?",
     "items": [
       {
         "id": "a",
+        "label": "Heartbeat rate",
         "emoji": "🫀",
-        "label": "Heartbeat Rate",
-        "group": "body measurements"
+        "group": "things a doctor measures"
       },
       {
         "id": "b",
+        "label": "Breathing rate",
         "emoji": "🫁",
-        "label": "Breathing Rate",
-        "group": "body measurements"
+        "group": "things a doctor measures"
       },
       {
         "id": "c",
-        "emoji": "💇",
-        "label": "Hair Length",
-        "group": "body measurements"
+        "label": "Body temperature",
+        "emoji": "🌡️",
+        "group": "things a doctor measures"
       },
       {
         "id": "d",
-        "emoji": "👟",
-        "label": "Shoe Size",
-        "group": "body measurements"
+        "label": "Height",
+        "emoji": "📏",
+        "group": "things a doctor measures"
+      },
+      {
+        "id": "e",
+        "label": "Weight",
+        "emoji": "⚖️",
+        "group": "things a doctor measures"
       }
     ],
     "answer": [
       "a",
-      "b"
+      "b",
+      "c"
     ],
-    "hint": "Doctors check how your heart beats and how lungs take in breaths.",
-    "misconception": "Thinking shoe size or how tall you are counted as medical vital signs.",
+    "hint": "Look for signs of how your heart, lungs, and inner body heat work.",
+    "misconception": "Thinking height and weight are vital signs just because doctors measure them.",
     "fact": {
-      "text": "Doctors check vital signs to see how you feel. Your heartbeat and breathing rate show healthy body work!",
-      "support": "Vital signs reflect essential body functions, including your heartbeat rate and your regular breathing rate.",
+      "text": "Doctors check vital signs like heartbeat and breathing rate. Doctors measure height and weight too, but they are not vital signs!",
+      "support": "Vital signs reflect essential body functions, including your heartbeat rate, breathing rate, temperature, and blood pressure.",
       "source": "https://medlineplus.gov/ency/article/002341.htm",
       "evidence": [
-        "vital signs",
-        "heartbeat",
-        "breathing"
+        "vital signs reflect essential body functions",
+        "heartbeat rate, breathing rate, temperature"
       ]
     },
     "topic": "vital-signs"
@@ -1250,40 +1253,39 @@
     "id": "body-09",
     "level": 3,
     "type": "pick",
-    "prompt": "Which body part helps you keep your balance?",
+    "prompt": "Which part of your ear helps you keep your balance?",
     "items": [
       {
         "id": "a",
-        "emoji": "👂",
         "label": "Inner Ear",
-        "group": "body parts"
+        "emoji": "👂",
+        "group": "ear parts"
       },
       {
         "id": "b",
-        "emoji": "👁️",
-        "label": "Seeing Eyes",
-        "group": "body parts"
+        "label": "Eardrum",
+        "emoji": "🥁",
+        "group": "ear parts"
       },
       {
         "id": "c",
-        "emoji": "🦶",
-        "label": "Standing Feet",
-        "group": "body parts"
+        "label": "Earlobe",
+        "emoji": "👂",
+        "group": "ear parts"
       }
     ],
     "answer": "a",
-    "hint": "Deep inside your ear canal is a tiny fluid-filled balance maze.",
-    "misconception": "Thinking your feet or eyes are the primary organs that detect body balance.",
+    "hint": "The balance canals are tucked deep inside the inner section of your ear.",
+    "misconception": "Thinking balance comes only from your feet or eyes rather than canals in your inner ear.",
     "fact": {
-      "text": "Tiny fluid canals inside your inner ear sense head motion. They send balance signals to your brain!",
+      "text": "Fluid canals deep in your inner ear tell your brain which way you lean to keep you steady!",
       "support": "Some balance problems are due to problems in the inner ear.",
       "source": "https://medlineplus.gov/balanceproblems.html",
       "evidence": [
-        "balance problems",
-        "inner ear"
+        "some balance problems are due to problems in the inner ear"
       ]
     },
-    "topic": "hearing-balance"
+    "topic": "ear-balance"
   },
   {
     "id": "body-10",
@@ -1366,7 +1368,7 @@
         "Eagles construct their nests near water in tall trees or on cliffs using large sticks"
       ]
     },
-    "misconception": "Children sometimes think birds find ready-made nests, but parents carefully build a nest before laying eggs.",
+    "misconception": null,
     "topic": "eagles"
   },
   {
@@ -1379,19 +1381,19 @@
         "id": "a",
         "label": "Komodo Dragon",
         "emoji": "🦎",
-        "group": "small animals"
+        "group": "reptiles"
       },
       {
         "id": "b",
-        "label": "Earthworm",
-        "emoji": "🪱",
-        "group": "small animals"
+        "label": "Garter Snake",
+        "emoji": "🐍",
+        "group": "reptiles"
       },
       {
         "id": "c",
-        "label": "Dragonfly",
-        "emoji": "🦗",
-        "group": "small animals"
+        "label": "Box Turtle",
+        "emoji": "🐢",
+        "group": "reptiles"
       }
     ],
     "answer": "a",
@@ -1405,8 +1407,7 @@
       ]
     },
     "misconception": "Children often confuse dragons with make-believe fantasy beasts, but Komodo dragons are real giant lizards.",
-    "topic": "lizards",
-    "oddOneOut": true
+    "topic": "lizards"
   },
   {
     "id": "garden-13",
@@ -1439,12 +1440,12 @@
     ],
     "hint": "Two of these animals cooperate in packs or prides to find food.",
     "fact": {
-      "text": "Gray wolves hunt together in packs. African lions also team up in prides to catch food!",
-      "support": "Gray wolves hunt in packs, and African lions team up in prides to catch prey together.",
+      "text": "Gray wolves hunt together in packs. Teaming up helps them take down big prey!",
+      "support": "Gray wolves hunt cooperatively in packs and are able to take down prey larger than they are including caribou, moose, deer and bison.",
       "source": "https://nationalzoo.si.edu/animals/gray-wolf",
       "evidence": [
-        "hunt in packs",
-        "team up in prides"
+        "hunt",
+        "packs and are able to take down prey"
       ]
     },
     "misconception": "Children often believe big predators always hunt as solitary loners, but wolves and lions hunt in coordinated teams.",
@@ -1478,15 +1479,15 @@
     "answer": "a",
     "hint": "Think about which spotted sprinter needs non-slip traction to run fast.",
     "fact": {
-      "text": "Cheetahs sprint across open ground with great speed. Special paw claws dig into soil like running cleats!",
-      "support": "Special paw pads and semi-retractable claws provide cheetahs great traction while running.",
+      "text": "Cheetah claws grip the dirt. Their special claws provide great traction when they sprint fast!",
+      "support": "Special paw pads and semi-retractable claws provide great traction.",
       "source": "https://nationalzoo.si.edu/animals/cheetah",
       "evidence": [
-        "claws provide cheetahs great traction",
-        "running"
+        "claws",
+        "provide great traction"
       ]
     },
-    "misconception": "Children often think all cats retract their claws fully into paws, but cheetah claws stay out for running grip.",
+    "misconception": null,
     "topic": "cheetah-speed"
   },
   {
@@ -1521,12 +1522,12 @@
     ],
     "hint": "A new moon is dark before a sliver crescent grows into a full glowing circle.",
     "fact": {
-      "text": "As the Moon orbits Earth, we see more sunlit shapes. It grows from a new moon to a full moon!",
-      "support": "Starting at the new moon, a waxing crescent appears, and grows into a bright full moon.",
+      "text": "We see more of the Moon's sunlit side each night, from a new moon to a full moon.",
+      "support": "Our view of the illuminated part of the Moon changes each night, depending on where the Moon is in its orbit.",
       "source": "https://spaceplace.nasa.gov/moon-phases/",
       "evidence": [
-        "illuminated part",
-        "orbit"
+        "view",
+        "each night"
       ]
     },
     "misconception": "Children sometimes think the Moon physically changes shape or grows, but we just see different lighted angles.",
@@ -1563,7 +1564,7 @@
     ],
     "hint": "The two coldest outer gas planets contain deep icy slush layers.",
     "fact": {
-      "text": "Uranus and Neptune are ice giants. They hold water, ammonia and methane. Scientists call these fluids ices!",
+      "text": "Uranus and Neptune are ice giants made of water and gas slush. Scientists call these materials 'ices'.",
       "support": "Uranus is made of water, methane, and ammonia fluids above a small rocky center.",
       "source": "https://spaceplace.nasa.gov/all-about-uranus/",
       "evidence": [
@@ -1602,15 +1603,14 @@
     "answer": "a",
     "hint": "This deep blue planet has supersonic icy storms and faint rings.",
     "fact": {
-      "text": "Neptune is a dark and windy world. It circles far away from the warm light of our Sun!",
-      "support": "Neptune is a very cold, windy world encircled by thin rings far away from the Sun.",
+      "text": "Neptune is a very cold, windy world. It orbits far away in our dark solar system!",
+      "support": "Neptune is a very cold, windy world.",
       "source": "https://spaceplace.nasa.gov/all-about-neptune/en/",
       "evidence": [
-        "Neptune is a very cold, windy world",
-        "far away from the Sun"
+        "neptune is a very cold, windy world"
       ]
     },
-    "misconception": "Children might think wind only blows on Earth with trees, but supersonic icy winds howl on Neptune.",
+    "misconception": null,
     "topic": "neptune"
   },
   {
@@ -1644,15 +1644,15 @@
     ],
     "hint": "Select the two rocky worlds with solid ground underfoot.",
     "fact": {
-      "text": "Mercury and Earth are rocky worlds. Both planets have solid surfaces of metal and stone!",
-      "support": "Mercury and Earth are terrestrial planets with compact rocky crusts.",
+      "text": "Mercury is a rocky planet. It has a solid surface that is covered with craters!",
+      "support": "It has a solid surface that is covered with craters.",
       "source": "https://spaceplace.nasa.gov/all-about-mercury/en/",
       "evidence": [
-        "Mercury and Earth are",
-        "rocky crusts"
+        "solid surface",
+        "covered with craters"
       ]
     },
-    "misconception": "Children sometimes think all planets are made of gas like Jupiter, but inner planets are solid rock.",
+    "misconception": null,
     "topic": "terrestrial-planets"
   },
   {
@@ -1705,20 +1705,20 @@
     "items": [
       {
         "id": "a",
-        "emoji": "👁️",
         "label": "Flexible lens",
+        "emoji": "👁️",
         "group": "eye parts"
       },
       {
         "id": "b",
-        "emoji": "👁️",
         "label": "Pupil",
+        "emoji": "👁️",
         "group": "eye parts"
       },
       {
         "id": "c",
+        "label": "Retina",
         "emoji": "👁️",
-        "label": "Eyelid",
         "group": "eye parts"
       }
     ],
@@ -1768,15 +1768,16 @@
     ],
     "hint": "Follow breath from the windpipe down into branching tubes and air sacs.",
     "fact": {
-      "text": "Fresh air travels down your windpipe into branch tubes. It enters tiny air sacs called alveoli.",
-      "support": "The major respiratory structures include the windpipe, which branches into bronchial tubes and tiny alveoli air sacs.",
+      "text": "Air goes down your windpipe. It branches into tubes that lead to tiny air sacs called alveoli!",
+      "support": "The major passages and structures of the lower respiratory tract include the windpipe (trachea) and within the lungs, the bronchi, bronchioles, and alveoli.",
       "source": "https://medlineplus.gov/ency/imagepages/19379.htm",
       "evidence": [
         "windpipe",
-        "bronchial tubes and tiny alveoli air sacs"
+        "bronchi",
+        "alveoli"
       ]
     },
-    "misconception": "Children often imagine air sits in one big hollow bag, but airway passages branch into millions of microscopic sacs.",
+    "misconception": null,
     "topic": "airway-branches"
   },
   {
@@ -1810,15 +1811,16 @@
     ],
     "hint": "Your sturdy rib bones wrap around two vital chest organs.",
     "fact": {
-      "text": "Your curved rib cage acts like a bone shield. It shelters both your spongy lungs and your beating heart!",
-      "support": "Your curved rib cage acts like a protective shield around your chest to shelter both your lungs and heart.",
+      "text": "Your rib cage acts like a shield around your chest. It curves around to protect your lungs and heart!",
+      "support": "Your rib cage, for example, acts like a shield around your chest to protect important organs inside such as your lungs and heart.",
       "source": "https://askabiologist.asu.edu/bone-anatomy",
       "evidence": [
-        "curved rib cage",
-        "shelter both your lungs and heart"
+        "rib cage",
+        "protect",
+        "lungs and heart"
       ]
     },
-    "misconception": "Children sometimes think ribs are just rigid sticks, but together they form an elastic protective cage shielding internal chest organs.",
+    "misconception": null,
     "topic": "rib-cage"
   },
   {
@@ -1892,15 +1894,15 @@
     ],
     "hint": "Look for two meadow mammals built with specialized swimming features.",
     "fact": {
-      "text": "River otters have clear eye shields for swimming. Beavers use large webbed feet to paddle through water!",
-      "support": "River otters have clear protective eye membranes, and beavers possess large webbed hind feet for swimming.",
+      "text": "A clear third eyelid protects the eye. It helps the otter see when swimming under waves!",
+      "support": "A third eyelid, or nictitating membrane, protects the eye and allows the otter to see when swimming underwater.",
       "source": "https://nationalzoo.si.edu/animals/north-american-river-otter",
       "evidence": [
-        "eye membranes",
-        "webbed hind feet for swimming"
+        "protects the eye",
+        "see when swimming underwater"
       ]
     },
-    "misconception": "Children sometimes think all mammals swim poorly like cats, but otters and beavers are expert aquatic swimmers.",
+    "misconception": null,
     "topic": "swimming-mammals"
   },
   {
@@ -1939,7 +1941,7 @@
         "dust or insects"
       ]
     },
-    "misconception": "Children often believe all bears eat honey or salmon, but sloth bears specialize in vacuuming up termites.",
+    "misconception": null,
     "topic": "sloth-bears"
   },
   {
@@ -1974,7 +1976,7 @@
     ],
     "hint": "Follow the frog transformation from egg to swimmer to adult.",
     "fact": {
-      "text": "Amphibian eggs hatch in fresh water. Little tadpoles swim and grow legs until they become adult frogs!",
+      "text": "Frog eggs hatch in fresh water. Little tadpoles swim and grow legs until they become adult frogs!",
       "support": "Eggs laid in water hatch quickly, swim as tadpoles, and transform into grown adult frogs.",
       "source": "https://nationalzoo.si.edu/animals/african-clawed-frog",
       "evidence": [
@@ -1983,7 +1985,7 @@
       ]
     },
     "misconception": "Children sometimes think baby frogs hatch looking like miniature frogs with four legs, but they start as legless swimming tadpoles.",
-    "topic": "amphibians"
+    "topic": "frog-life"
   },
   {
     "id": "sky-15",
@@ -2017,12 +2019,12 @@
     ],
     "hint": "Line them up from the star, to the shadow-maker, to the planet.",
     "fact": {
-      "text": "During an eclipse, the Sun shines. The Moon moves between. Earth receives the dark shadow!",
-      "support": "Sunlight begins at the Sun, passes the Moon, and falls upon Earth.",
+      "text": "In a solar eclipse the Moon moves between the Sun and Earth. The Moon's shadow falls on part of Earth.",
+      "support": "From space, sunlight leaves the Sun, reaches the Moon, and falls upon Earth.",
       "source": "https://spaceplace.nasa.gov/eclipse-snap/",
       "evidence": [
         "solar eclipse happens",
-        "between the sun and earth"
+        "moon passes between the sun and earth"
       ]
     },
     "misconception": "Children often think the Sun turns off, but the Moon simply passes directly between Earth and Sun.",
@@ -2099,54 +2101,54 @@
     "hint": "Remember the rocky asteroid ring sits between the red planet and the largest gas giant.",
     "fact": {
       "text": "The asteroid belt is a rocky zone in space. It orbits between the paths of Mars and giant Jupiter!",
-      "support": "Swallowed food moves from the throat passage to the stomach and intestines.",
+      "support": "Most asteroids in our solar system can be found in the asteroid belt, between Mars and Jupiter.",
       "source": "https://spaceplace.nasa.gov/asteroid/en/",
       "evidence": [
         "asteroid belt",
         "between mars and jupiter"
       ]
     },
-    "misconception": "Children sometimes think asteroids are scattered randomly everywhere, but most orbit in a belt between Mars and Jupiter.",
+    "misconception": null,
     "topic": "asteroid-belt"
   },
   {
     "id": "sky-18",
     "level": 2,
     "type": "pick",
-    "prompt": "What happens to your body on a world with smaller mass than Earth?",
+    "prompt": "Would you weigh more or less on the Moon than on Earth?",
     "items": [
       {
         "id": "a",
+        "label": "Less",
         "emoji": "🪶",
-        "label": "Weigh Less",
-        "group": "gravity effects"
+        "group": "relative weights"
       },
       {
         "id": "b",
+        "label": "More",
         "emoji": "🏋️",
-        "label": "Weigh More",
-        "group": "gravity effects"
+        "group": "relative weights"
       },
       {
         "id": "c",
+        "label": "The same",
         "emoji": "⚖️",
-        "label": "Stay Equal",
-        "group": "gravity effects"
+        "group": "relative weights"
       }
     ],
     "answer": "a",
-    "hint": "Less gravity pulls down on you when a world has less mass.",
+    "hint": "The Moon has much less mass than Earth, so its gravity pulls with less force.",
     "fact": {
-      "text": "Worlds with smaller mass have weaker gravity. A world with less mass pulls you with less force, so you weigh less!",
-      "support": "If you were on a planet with less mass than Earth, you would weigh less than you do here.",
-      "source": "https://spaceplace.nasa.gov/what-is-gravity/en/",
+      "text": "You would weigh less on the Moon! The Moon has about one-sixth of Earth's gravity pulling on you.",
+      "support": "We know that the Moon has almost no atmosphere and only about one-sixth of Earth's gravity.",
+      "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
       "evidence": [
-        "planet with less mass",
-        "weigh less than you do here"
+        "one-sixth",
+      "gravity"
       ]
     },
-    "misconception": "Children often think you weigh the same everywhere in space, but weaker gravity makes you weigh less.",
-    "topic": "gravity"
+    "misconception": "Thinking you weigh the exact same amount on the Moon as on Earth.",
+    "topic": "moon-gravity"
   },
   {
     "id": "body-15",
@@ -2187,7 +2189,7 @@
         "inside some of your bones"
       ]
     },
-    "misconception": "Children often imagine bone marrow is just one plain grey substance, but it comes in distinct red and yellow forms.",
+    "misconception": null,
     "topic": "bone-marrow"
   },
   {
@@ -2261,15 +2263,16 @@
     ],
     "hint": "Work inward from the tough exterior shell down to the central cavity.",
     "fact": {
-      "text": "A bone has dense compact bone on the outside. It has porous spongy bone inside and soft marrow at the center.",
-      "support": "From the outside in, a skeleton bone has hard compact outer bone, airy spongy mesh, and soft marrow.",
+      "text": "Each bone has three main parts. You have hard compact bone, airy spongy bone, and soft bone marrow inside!",
+      "support": "Each bone in your body is made up of three main types of bone material: compact bone, spongy bone, and bone marrow.",
       "source": "https://askabiologist.asu.edu/bone-anatomy",
       "evidence": [
-        "hard compact outer bone",
-        "airy spongy mesh, and soft marrow"
+        "compact bone",
+        "spongy bone",
+        "bone marrow"
       ]
     },
-    "misconception": "Children sometimes think bones are solid white rock all the way through, but they contain porous spongy tissue and soft marrow inside.",
+    "misconception": null,
     "topic": "bone-layers"
   },
   {

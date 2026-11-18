@@ -8,7 +8,7 @@ garden-06 | OK | breaks open and a root or radicle emerges first, followed by th
 garden-06-2 | OK | The root emerges first in a process called germination.
 sky-01 | OK | Structure and Surface Venus is the hottest planet in our solar system.
 sky-02 | OK | The light of daytime comes from our closest star: the Sun.
-sky-03 | OK | It simply reflects light coming from the Sun.
+sky-03 | OK | The Moon does not produce its own light.
 sky-04 | OK | isn’t the only planet to have rings, but it definitely has the most beautiful ones.
 sky-05 | OK | Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune article last updated July 17, 2019 Explore
 sky-06 | OK | place, roughly a quarter the size of Earth and an average of 238,855 miles away.
@@ -26,35 +26,35 @@ garden-07 | OK | By building dams, which form slow-moving ponds and reduce erosi
 garden-08 | OK | Alligators primarily inhabit freshwater swamps and marshes and can also be found in rivers, lakes,
 garden-09 | OK | Giant pandas have large molar teeth and strong jaw muscles for crushing tough bamboo.
 garden-10 | OK | The trunk is a fusion of the nose and upper lip.
-sky-07 | OK | Earth’s tilted axis creates seasons.
+sky-07 | OK | The Short Answer: Earth's tilted axis causes the seasons.
 sky-08 | OK | Blue light is scattered more than the other colors because it travels as shorter, smaller
 sky-09 | OK | Jupiter is a gas giant and doesn't have a solid surface.
 sky-10 | OK | Credit: NASA/JPL-Caltech Mars is a cold desert world.
 body-07 | OK | Play health video with audio description: //medlineplus.gov/ency/videos/mov/200081_eng_ad.mp4 Overview The heart is a powerful automatic pump.
 body-08 | OK | Vital signs reflect essential body functions, including your heartbeat rate, breathing rate, temperature, and blood
-body-09 | OK | audio description: //medlineplus.gov/ency/videos/mov/200020_eng_ad.mp4 Overview The two lungs are the primary organs of the respiratory system.
-body-10 | OK | audio description: //medlineplus.gov/ency/videos/mov/200088_eng_ad.mp4 Overview Peristalsis is a series of wave-like muscle contractions that move food
+body-09 | OK | Some balance problems are due to problems in the inner ear.
+body-10 | OK | strong wave-like motions of the smooth muscle move balls of swallowed food to the stomach.
 garden-11 | OK | Eagles construct their nests near water in tall trees or on cliffs using large sticks.
 garden-12 | OK | the Animals Physical Description Komodo dragons are large lizards with long tails, strong and agile
 garden-13 | OK | Gray wolves hunt cooperatively in packs and are able to take down prey larger than
 garden-14 | OK | Special paw pads and semi-retractable claws provide great traction.
-sky-11 | OK | The Moon displays these eight phases one after the other as it moves through its
-sky-12 | OK | Neptune, like Uranus, is an ice giant.
+sky-11 | OK | The Short Answer: We have a slightly different view of the Moon each night.
+sky-12 | OK | Uranus Uranus is made of water, methane, and ammonia fluids above a small rocky center.
 sky-13 | OK | Neptune is a very cold, windy world.
-sky-14 | OK | Mercury is a terrestrial planet.
-body-11 | OK | White matter is found in the deeper tissues of the brain (subcortical).
+sky-14 | OK | It has a solid surface that is covered with craters.
+body-11 | OK | Overview The tissue called "gray matter" in the brain and spinal cord is also known
 body-12 | OK | The lens itself is flexible and suspended by ligaments which allow it to change shape
-body-13 | OK | Overview The major passages and structures of the lower respiratory tract include the windpipe (trachea)
+body-13 | OK | respiratory tract include the windpipe (trachea) and within the lungs, the bronchi, bronchioles, and alveoli.
 body-14 | OK | Your rib cage, for example, acts like a shield around your chest to protect important
 garden-15 | OK | Elephants use their trunks to take up water and squirt it into their mouths.
-garden-16 | OK | A third eyelid, or nictitating membrane, protects the eye and allows the otter to see
+garden-16 | OK | eyelid, or nictitating membrane, protects the eye and allows the otter to see when swimming
 garden-17 | OK | Sloth bears' nostrils can close completely, protecting the animals from dust or insects when raiding
 garden-18 | OK | Eggs hatch within one week and tadpoles are slightly less than 1/5 of an inch
-sky-15 | OK | In this case, the Moon blocks your view of the Sun." clicked="0">solar eclipse happens when
+sky-15 | OK | A solar eclipse happens when, at just the right moment, the Moon passes between the
 sky-16 | OK | Venus is unusual because it spins the opposite direction of Earth and most other planets.
-sky-17 | OK | Most of them live in the main asteroid belt —a region between the orbits of
-sky-18 | OK | They’re made of chunks of ice and rock.
-body-15 | OK | There are two types of bone marrow: red and yellow.
-body-16 | OK | The thick bone layer of your skull protects your brain.
-body-17 | OK | Each bone in your body is made up of three main types of bone material:
-body-18 | OK | Yellow marrow is made mostly of fat and is found in the hollow centers of
+sky-17 | OK | Most asteroids in our solar system can be found in the asteroid belt, between Mars
+sky-18 | OK | know that the Moon has almost no atmosphere and only about one-sixth of Earth’s gravity.
+body-15 | OK | &rarr; Health Topics &rarr; Bone Marrow Diseases URL of this page: https://medlineplus.gov/bonemarrowdiseases.html Bone Marrow Diseases
+body-16 | OK | Often, the injury is minor because your skull is hard and it protects your brain.
+body-17 | OK | up of three main types of bone material: compact bone, spongy bone, and bone marrow.
+body-18 | OK | While you are sleeping your brain and body functions are still active.

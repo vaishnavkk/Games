@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.2] - 2026-11-18
+### Fixed
+- Fixed 15 puzzle source evidence alignments with institutional HTML caches (0 FAIL).
+- Replaced sky-18 with Moon gravity comparison (about one-sixth of Earth's gravity, NASA Space Place).
+- Restructured body-08 to medical measurements group with vital signs vs height/weight distinction (MedlinePlus).
+- Updated body-09 ear balance canals and body-12 inner eye structures (Retina, Pupil, Flexible lens).
+- Removed oddOneOut from garden-12 by aligning distractors to reptiles group.
+- Reverted 'moon' modifier in sequence checker and cleaned up allowed-terms list.
+
 ## [0.2.1] - 2026-11-18
 ### Fixed
 - Fixed 13 puzzle contents, prompts, options, and single-sentence source evidence matches.
