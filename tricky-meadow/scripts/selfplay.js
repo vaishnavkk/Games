@@ -864,8 +864,9 @@ export async function runSelfPlay() {
       return;
     }
 
-    // 2. Play all 18 puzzles across 9 Viewports using parallel worker batches
-    const VIEWPORT_CONFIGS = [
+    // 2. Play all puzzles across Viewports using parallel worker batches
+    const isSmoke = process.argv.includes('--smoke');
+    const ALL_CONFIGS = [
       { vp: VIEWPORTS[0], mode: 'perfect' },          // 320x568
       { vp: VIEWPORTS[1], mode: 'retry_hint' },       // 360x740
       { vp: VIEWPORTS[2], mode: 'perfect' },          // 360x800
@@ -876,6 +877,7 @@ export async function runSelfPlay() {
       { vp: VIEWPORTS[7], mode: 'storage_throwing' }, // 1024x768
       { vp: VIEWPORTS[8], mode: 'reduced_motion' }    // 1440x900
     ];
+    const VIEWPORT_CONFIGS = isSmoke ? ALL_CONFIGS.slice(0, 3) : ALL_CONFIGS;
 
     const CONCURRENCY = 3;
     for (let i = 0; i < VIEWPORT_CONFIGS.length; i += CONCURRENCY) {

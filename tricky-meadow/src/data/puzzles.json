@@ -1198,5 +1198,440 @@
         "digestive tract"
       ]
     }
+  },
+  {
+    "id": "garden-11",
+    "level": 1,
+    "type": "order",
+    "prompt": "Order how parent eagles raise a new family from start to finish!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Sturdy Nest",
+        "emoji": "🪹"
+      },
+      {
+        "id": "b",
+        "label": "Speckled Egg",
+        "emoji": "🥚"
+      },
+      {
+        "id": "c",
+        "label": "Little Chick",
+        "emoji": "🐣"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Think about what parent eagles build before laying their eggs.",
+    "fact": {
+      "text": "Parent eagles construct large stick nests, incubate their laid eggs, and raise hatched chicks together!",
+      "support": "Parent eagles construct a nest, lay eggs, and protect the hatched chick.",
+      "source": "https://nationalzoo.si.edu/animals/bald-eagle",
+      "evidence": [
+        "Eagles construct their nests near water in tall trees or on cliffs using large sticks"
+      ]
+    },
+    "misconception": "Children sometimes think birds find ready-made nests, but parents carefully build a nest before laying eggs."
+  },
+  {
+    "id": "garden-12",
+    "level": 1,
+    "type": "pick",
+    "prompt": "Which of these real creatures is actually a giant living lizard?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Komodo Dragon",
+        "emoji": "🦎"
+      },
+      {
+        "id": "b",
+        "label": "Earthworm",
+        "emoji": "🪱"
+      },
+      {
+        "id": "c",
+        "label": "Dragonfly",
+        "emoji": "🦗"
+      }
+    ],
+    "answer": "a",
+    "hint": "One of these scaly creatures is the world's largest living lizard.",
+    "fact": {
+      "text": "Komodo dragons are large lizards with long tails, strong agile necks, and sturdy limbs.",
+      "support": "Komodo dragons are large lizards with long tails and sturdy limbs.",
+      "source": "https://nationalzoo.si.edu/animals/komodo-dragon",
+      "evidence": [
+        "Komodo dragons are large lizards with long tails, strong and agile necks, and sturdy limbs"
+      ]
+    },
+    "misconception": "Children often confuse dragons with make-believe fantasy beasts, but Komodo dragons are real giant lizards."
+  },
+  {
+    "id": "garden-13",
+    "level": 1,
+    "type": "tapall",
+    "prompt": "Tap all the wild animals that hunt together in coordinated teams!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Gray Wolf",
+        "emoji": "🐺"
+      },
+      {
+        "id": "b",
+        "label": "African Lion",
+        "emoji": "🦁"
+      },
+      {
+        "id": "c",
+        "label": "Giant Panda",
+        "emoji": "🐼"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Two of these animals cooperate in packs or prides to find food.",
+    "fact": {
+      "text": "Gray wolves hunt cooperatively in packs, and African lions team up in prides to catch prey together!",
+      "support": "Gray wolves hunt cooperatively in packs while African lions team up in prides.",
+      "source": "https://nationalzoo.si.edu/animals/gray-wolf",
+      "evidence": [
+        "Gray wolves hunt cooperatively in packs and are able to take down prey larger than they are including caribou, moose, deer and bison"
+      ]
+    },
+    "misconception": "Children often believe big predators always hunt as solitary loners, but wolves and lions hunt in coordinated teams."
+  },
+  {
+    "id": "garden-14",
+    "level": 1,
+    "type": "pick",
+    "prompt": "Which speedy sprinter has semi-retractable claws that act like running cleats?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Cheetah",
+        "emoji": "🐆"
+      },
+      {
+        "id": "b",
+        "label": "Rabbit",
+        "emoji": "🐇"
+      },
+      {
+        "id": "c",
+        "label": "Snail",
+        "emoji": "🐌"
+      }
+    ],
+    "answer": "a",
+    "hint": "Think about which spotted sprinter needs non-slip traction to run fast.",
+    "fact": {
+      "text": "Special paw pads and semi-retractable claws provide cheetahs great traction while running!",
+      "support": "Cheetahs use special paw pads and semi-retractable claws for great traction.",
+      "source": "https://nationalzoo.si.edu/animals/cheetah",
+      "evidence": [
+        "Special paw pads and semi-retractable claws provide great traction"
+      ]
+    },
+    "misconception": "Children often think all cats retract their claws fully into paws, but cheetah claws stay out for running grip."
+  },
+  {
+    "id": "sky-11",
+    "level": 2,
+    "type": "order",
+    "prompt": "Order how the illuminated lunar shapes grow across the monthly night cycle!",
+    "items": [
+      {
+        "id": "a",
+        "label": "New Phase",
+        "emoji": "🌑"
+      },
+      {
+        "id": "b",
+        "label": "Waxing Crescent",
+        "emoji": "🌒"
+      },
+      {
+        "id": "c",
+        "label": "Full Orb",
+        "emoji": "🌕"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Start with the dark phase before the silver crescent appears.",
+    "fact": {
+      "text": "As the Moon orbits Earth each month, it shifts from new phase, to waxing crescent, to full orb!",
+      "support": "The cycle progresses from a new phase, to a waxing crescent, to a bright full orb.",
+      "source": "https://spaceplace.nasa.gov/moon-phases/en/",
+      "evidence": [
+        "The Moon displays these eight phases one after the other as it moves through its cycle each month"
+      ]
+    },
+    "misconception": "Children sometimes think the Moon physically changes shape or grows, but we just see different lighted angles."
+  },
+  {
+    "id": "sky-12",
+    "level": 2,
+    "type": "tapall",
+    "prompt": "Tap all the frozen planets known by astronomers as ice giants!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Uranus",
+        "emoji": "🧊"
+      },
+      {
+        "id": "b",
+        "label": "Neptune",
+        "emoji": "🪐"
+      },
+      {
+        "id": "c",
+        "label": "Mercury",
+        "emoji": "🪨"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "The two coldest outer gas planets contain deep icy slush layers.",
+    "fact": {
+      "text": "Neptune and Uranus are classified as ice giants because they contain thick slushy layers of icy materials!",
+      "support": "Neptune, like Uranus, is classified by astronomers as an ice giant.",
+      "source": "https://spaceplace.nasa.gov/all-about-neptune/en/",
+      "evidence": [
+        "Neptune, like Uranus, is an ice giant"
+      ]
+    },
+    "misconception": "Children often classify all four outer planets simply as gas giants, but Uranus and Neptune are ice giants."
+  },
+  {
+    "id": "sky-13",
+    "level": 2,
+    "type": "pick",
+    "prompt": "Which distant planet is famous for being dark, cold, and very windy?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Neptune",
+        "emoji": "🪐"
+      },
+      {
+        "id": "b",
+        "label": "Mars",
+        "emoji": "🔴"
+      },
+      {
+        "id": "c",
+        "label": "Earth",
+        "emoji": "🌍"
+      }
+    ],
+    "answer": "a",
+    "hint": "This deep blue planet has supersonic icy storms and faint rings.",
+    "fact": {
+      "text": "Neptune is a very cold, windy world encircled by thin rings far away from the Sun!",
+      "support": "Neptune is a very cold and windy world orbiting far out in our solar system.",
+      "source": "https://spaceplace.nasa.gov/all-about-neptune/en/",
+      "evidence": [
+        "Neptune is a very cold, windy world"
+      ]
+    },
+    "misconception": "Children might think wind only blows on Earth with trees, but supersonic icy winds howl on Neptune."
+  },
+  {
+    "id": "sky-14",
+    "level": 2,
+    "type": "tapall",
+    "prompt": "Tap all the inner worlds classified by scientists as terrestrial planets!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Mercury",
+        "emoji": "🪨"
+      },
+      {
+        "id": "b",
+        "label": "Earth",
+        "emoji": "🌍"
+      },
+      {
+        "id": "c",
+        "label": "Neptune",
+        "emoji": "🪐"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Select the two rocky worlds with solid ground underfoot.",
+    "fact": {
+      "text": "Mercury and Earth are terrestrial planets with compact rocky crusts beneath our boots!",
+      "support": "Mercury is a terrestrial planet with a solid rocky surface like Earth.",
+      "source": "https://spaceplace.nasa.gov/all-about-mercury/en/",
+      "evidence": [
+        "Mercury is a terrestrial planet"
+      ]
+    },
+    "misconception": "Children sometimes think all planets are made of gas like Jupiter, but inner planets are solid rock."
+  },
+  {
+    "id": "body-11",
+    "level": 3,
+    "type": "tapall",
+    "prompt": "Tap all the types of nerve tissues found inside the human brain!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Gray matter",
+        "emoji": "🧠"
+      },
+      {
+        "id": "b",
+        "label": "White matter",
+        "emoji": "💭"
+      },
+      {
+        "id": "c",
+        "label": "Enamel",
+        "emoji": "🦷"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Nerve tissues in the brain come in both gray and white varieties.",
+    "fact": {
+      "text": "The human brain contains deep white matter as well as surface gray matter to process signals!",
+      "support": "The human brain contains deep white matter as well as surface gray matter.",
+      "source": "https://medlineplus.gov/ency/article/002344.htm",
+      "evidence": [
+        "White matter is found in the deeper tissues of the brain (subcortical)"
+      ]
+    },
+    "misconception": "Children often imagine the brain is all one solid pink color, but it consists of distinct white and gray matter."
+  },
+  {
+    "id": "body-12",
+    "level": 3,
+    "type": "pick",
+    "prompt": "Which inner eye part changes shape to focus incoming light rays?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Flexible lens",
+        "emoji": "👁️"
+      },
+      {
+        "id": "b",
+        "label": "Earlobe",
+        "emoji": "👂"
+      },
+      {
+        "id": "c",
+        "label": "Fingernail",
+        "emoji": "💅"
+      }
+    ],
+    "answer": "a",
+    "hint": "This clear part behind the pupil flexes to focus your sight.",
+    "fact": {
+      "text": "The flexible lens inside your eye changes shape to focus light directly onto the retina!",
+      "support": "The flexible lens inside your eye changes shape to focus light on the retina.",
+      "source": "https://medlineplus.gov/ency/imagepages/1094.htm",
+      "evidence": [
+        "The lens itself is flexible and suspended by ligaments which allow it to change shape to focus light on the retina, which is composed of sensory neurons"
+      ]
+    },
+    "misconception": "Children often believe eyes just project sight like flashlights, but the flexible lens focuses light onto the sensitive retina inside."
+  },
+  {
+    "id": "body-13",
+    "level": 3,
+    "type": "order",
+    "prompt": "Order how fresh breaths travel deeper into your lower respiratory airway!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Windpipe",
+        "emoji": "🌬️"
+      },
+      {
+        "id": "b",
+        "label": "Bronchi",
+        "emoji": "🫁"
+      },
+      {
+        "id": "c",
+        "label": "Alveoli",
+        "emoji": "🫧"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Follow breath from the windpipe down into branching tubes and air sacs.",
+    "fact": {
+      "text": "The major respiratory structures include the windpipe, which branches into bronchial tubes and tiny alveoli air sacs!",
+      "support": "Inhaled air travels down the windpipe, splits into branching bronchi, and reaches tiny alveoli.",
+      "source": "https://medlineplus.gov/ency/imagepages/19379.htm",
+      "evidence": [
+        "The major passages and structures of the lower respiratory tract include the windpipe (trachea) and within the lungs, the bronchi, bronchioles, and alveoli"
+      ]
+    },
+    "misconception": "Children often imagine air sits in one big hollow bag, but airway passages branch into millions of microscopic sacs."
+  },
+  {
+    "id": "body-14",
+    "level": 3,
+    "type": "tapall",
+    "prompt": "Tap all the vital chest organs sheltered inside your curved rib cage!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Spongy lungs",
+        "emoji": "🫁"
+      },
+      {
+        "id": "b",
+        "label": "Beating heart",
+        "emoji": "🫀"
+      },
+      {
+        "id": "c",
+        "label": "Outer leg",
+        "emoji": "🦵"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Your sturdy rib bones wrap around two vital chest organs.",
+    "fact": {
+      "text": "Your curved rib cage acts like a protective shield around your chest to shelter both your lungs and heart!",
+      "support": "Your rib cage forms a protective shield around your chest to protect your lungs and heart.",
+      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "evidence": [
+        "Your rib cage, for example, acts like a shield around your chest to protect important organs inside such as your lungs and heart"
+      ]
+    },
+    "misconception": "Children sometimes think ribs are just rigid sticks, but together they form an elastic protective cage shielding internal chest organs."
   }
 ]
