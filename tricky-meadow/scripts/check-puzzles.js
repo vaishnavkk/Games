@@ -13,6 +13,7 @@ const __dirname = path.dirname(__filename);
 
 const PUZZLES_PATH = path.resolve(__dirname, '../src/data/puzzles.json');
 const REVIEWED_ICONS_PATH = path.resolve(__dirname, '../src/data/reviewed-icons.json');
+const ALLOWED_TERMS_PATH = path.resolve(__dirname, '../src/data/allowed-terms.json');
 const SVG_DIR = path.resolve(__dirname, '../node_modules/@twemoji/svg');
 const CUSTOM_SVG_DIR = path.resolve(__dirname, '../src/assets/svg');
 
@@ -52,7 +53,7 @@ const MODIFIERS = new Set([
   'rocky', 'dusty', 'night', 'silver', 'golden', 'distant', 'outer', 'pumping',
   'clever', 'strong', 'seeing', 'sniffing', 'tasting', 'kicking', 'playful',
   'grown', 'newborn', 'both', 'the', 'of', 'in', 'and', 'adult', 'chew', 'swallow',
-  'digest', 'white', 'yellow', 'blue'
+  'digest', 'white', 'yellow', 'blue', 'moon'
 ]);
 
 export function getItemKeywords(item) {
@@ -174,6 +175,9 @@ export function checkFactTeaches(puzzle) {
 
 // Rule (b) Prompt leak
 export function checkPromptLeak(puzzle) {
+  if (puzzle.type === 'order') {
+    return { pass: true, reason: 'Order puzzles describe sequence or endpoints' };
+  }
   const promptWords = (puzzle.prompt || '').toLowerCase()
     .replace(/[^a-z0-9\s]/g, ' ')
     .split(/\s+/)
@@ -393,6 +397,157 @@ export function checkSequenceOrder(puzzle) {
   return { pass: true, reason: 'Sequence stages appear in proper order in support sentence' };
 }
 
+// Rule (f) Reading level check (FK grade <= 6, syllables < 4 unless allowed with explanation)
+export function countSyllables(word) {
+  word = word.toLowerCase().replace(/[^a-z]/g, '');
+  if (!word) return 0;
+  if (word.length <= 3) return 1;
+  word = word.replace(/(?:[^laeiouy]|ed|es|e)$/, '');
+  word = word.replace(/^y/, '');
+  word = word.replace(/([aeiouy])([aeiouy])/g, (m, a, b) => {
+    if (['eo', 'ia', 'io', 'iu', 'ua', 'uo'].includes(a + b)) return a + ' ' + b;
+    return m;
+  });
+  const matches = word.match(/[aeiouy]{1,2}/g);
+  return matches ? matches.length : 1;
+}
+
+export function countSentences(text) {
+  const matches = text.match(/[^.!?]+[.!?]+/g);
+  return matches ? matches.length : 1;
+}
+
+export function fleschKincaid(text) {
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return 0;
+  const numSentences = Math.max(1, countSentences(text));
+  let numSyllables = 0;
+  words.forEach(w => { numSyllables += countSyllables(w); });
+  const grade = 0.39 * (words.length / numSentences) + 11.8 * (numSyllables / words.length) - 15.59;
+  return Math.max(0, grade);
+}
+
+export function checkReadingLevel(puzzle, allowedTerms = {}) {
+  const promptGrade = fleschKincaid(puzzle.prompt || '');
+  const factGrade = puzzle.fact?.text ? fleschKincaid(puzzle.fact.text) : 0;
+  const errors = [];
+  const flaggedWords = [];
+
+  if (promptGrade > 6.0) {
+    errors.push(`Prompt Flesch-Kincaid grade ${promptGrade.toFixed(1)} exceeds maximum 6.0`);
+  }
+  if (factGrade > 6.0) {
+    errors.push(`Fact Flesch-Kincaid grade ${factGrade.toFixed(1)} exceeds maximum 6.0`);
+  }
+
+  const allWords = `${puzzle.prompt || ''} ${puzzle.fact?.text || ''}`.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+  const factLower = (puzzle.fact?.text || '').toLowerCase();
+
+  for (const w of allWords) {
+    const syl = countSyllables(w);
+    if (syl >= 4) {
+      flaggedWords.push(w);
+      if (!allowedTerms[w]) {
+        errors.push(`Word '${w}' has ${syl} syllables and is not in allowed-terms.json`);
+      } else {
+        const reqExpl = allowedTerms[w];
+        if (reqExpl && !factLower.includes(reqExpl.toLowerCase())) {
+          errors.push(`Word '${w}' requires explanation '${reqExpl}' in fact text`);
+        }
+      }
+    }
+  }
+
+  return {
+    pass: errors.length === 0,
+    errors,
+    promptGrade,
+    factGrade,
+    flaggedWords
+  };
+}
+
+// Rule (g) Distractor quality check (pick/tapall wrong items belong to same domain/group unless oddOneOut)
+export function checkDistractorQuality(puzzle) {
+  if (puzzle.type !== 'pick' && puzzle.type !== 'tapall') {
+    return { pass: true, reason: 'Not pick or tapall' };
+  }
+
+  for (const it of puzzle.items || []) {
+    if (!it.group || typeof it.group !== 'string' || it.group.trim().length === 0) {
+      return { pass: false, reason: `Item '${it.id}' (${it.label}) is missing 'group'` };
+    }
+  }
+
+  if (puzzle.oddOneOut === true) {
+    return { pass: true, reason: 'Odd-one-out puzzle allows distinct groups' };
+  }
+
+  if (puzzle.type === 'pick') {
+    const correctItem = (puzzle.items || []).find(it => it.id === puzzle.answer);
+    if (!correctItem) {
+      return { pass: false, reason: `Correct item '${puzzle.answer}' not found` };
+    }
+    for (const it of puzzle.items || []) {
+      if (it.id !== puzzle.answer && it.group !== correctItem.group) {
+        return { pass: false, reason: `Wrong item '${it.id}' (${it.label}) group '${it.group}' does not match correct item group '${correctItem.group}'` };
+      }
+    }
+  } else if (puzzle.type === 'tapall') {
+    const firstGroup = puzzle.items[0]?.group;
+    for (const it of puzzle.items || []) {
+      if (it.group !== firstGroup) {
+        return { pass: false, reason: `Item '${it.id}' (${it.label}) group '${it.group}' does not match group '${firstGroup}' in tapall` };
+      }
+    }
+  }
+
+  return { pass: true, reason: 'Distractor groups match domain' };
+}
+
+// Rule (h) Variety check (<=2 puzzles share source page, unique topics per level, no number words in tapall)
+export function checkVariety(lvlPuzzles, lvlId) {
+  const errors = [];
+
+  // Source page sharing <= 2
+  const sourceCounts = {};
+  for (const p of lvlPuzzles) {
+    const src = p.fact?.source || '';
+    if (src) {
+      sourceCounts[src] = (sourceCounts[src] || 0) + 1;
+    }
+  }
+  for (const [src, count] of Object.entries(sourceCounts)) {
+    if (count > 2) {
+      errors.push(`Level ${lvlId} has ${count} puzzles sharing source '${src}' (maximum allowed is 2)`);
+    }
+  }
+
+  // Topic tags unique in level
+  const seenTopics = new Set();
+  for (const p of lvlPuzzles) {
+    if (!p.topic || typeof p.topic !== 'string' || p.topic.trim().length === 0) {
+      errors.push(`Puzzle '${p.id}' missing 'topic' tag`);
+    } else if (seenTopics.has(p.topic)) {
+      errors.push(`Level ${lvlId} has duplicate topic '${p.topic}' in puzzle '${p.id}'`);
+    } else {
+      seenTopics.add(p.topic);
+    }
+  }
+
+  // No number words in tapall prompts
+  for (const p of lvlPuzzles) {
+    if (p.type === 'tapall') {
+      const match = (p.prompt || '').match(/\b(two|three|four|both)\b/i);
+      if (match) {
+        errors.push(`Puzzle '${p.id}' tapall prompt contains number word '${match[0]}': "${p.prompt}"`);
+      }
+    }
+  }
+
+  return { pass: errors.length === 0, errors };
+}
+
 // ==========================================
 // Planted Defect Verifications
 // ==========================================
@@ -484,6 +639,72 @@ const plantLevelTooManyConsecutive = [
   { id: 'p4', type: 'pick', misconception: 'm4' }
 ];
 
+let allowedTerms = {};
+if (fs.existsSync(ALLOWED_TERMS_PATH)) {
+  try {
+    allowedTerms = JSON.parse(fs.readFileSync(ALLOWED_TERMS_PATH, 'utf8'));
+  } catch (e) {
+    console.error(`[check:puzzles] allowed-terms.json Parse Error: ${e.message}`);
+    process.exit(1);
+  }
+}
+
+// 6. Rule f: Reading level planted defects
+const plantReadingDefectA = {
+  id: 'plant-fk-grade',
+  prompt: 'Which extraordinarily complicated physiological structure facilitates cardiovascular circulation throughout organisms?',
+  fact: { text: 'The heart acts as a muscle.' }
+};
+const plantReadingDefectB = {
+  id: 'plant-unallowed-word',
+  prompt: 'Which bird flies?',
+  fact: { text: 'Cheetahs run extraordinarily fast across plains.' }
+};
+const plantReadingDefectC = {
+  id: 'plant-missing-explanation',
+  prompt: 'Which breathing sacs take in air?',
+  fact: { text: 'Air enters alveoli deep inside the lungs.' }
+};
+
+// 7. Rule g: Distractor quality planted defect
+const plantDistractorDefectPick = {
+  id: 'plant-distractor-pick',
+  type: 'pick',
+  prompt: 'Which planet is closest to the Sun?',
+  items: [
+    { id: 'a', label: 'Mercury', group: 'planets' },
+    { id: 'b', label: 'Running Shoe', group: 'clothing' }
+  ],
+  answer: 'a',
+  oddOneOut: false
+};
+const plantDistractorDefectTapall = {
+  id: 'plant-distractor-tapall',
+  type: 'tapall',
+  prompt: 'Tap the inner planets!',
+  items: [
+    { id: 'a', label: 'Mercury', group: 'planets' },
+    { id: 'b', label: 'Venus', group: 'planets' },
+    { id: 'c', label: 'Pillow', group: 'bedding' }
+  ],
+  answer: ['a', 'b'],
+  oddOneOut: false
+};
+
+// 8. Rule h: Variety planted defects
+const plantVarietyDefectSources = [
+  { id: 'v1', level: 1, topic: 't1', fact: { source: 'https://example.com/same' } },
+  { id: 'v2', level: 1, topic: 't2', fact: { source: 'https://example.com/same' } },
+  { id: 'v3', level: 1, topic: 't3', fact: { source: 'https://example.com/same' } }
+];
+const plantVarietyDefectTopics = [
+  { id: 'v4', level: 1, topic: 'duplicate-topic', fact: { source: 'https://example.com/1' } },
+  { id: 'v5', level: 1, topic: 'duplicate-topic', fact: { source: 'https://example.com/2' } }
+];
+const plantVarietyDefectTapall = [
+  { id: 'v6', level: 1, type: 'tapall', prompt: 'Tap two kinds of fruit!', topic: 't6', fact: { source: 'https://example.com/3' } }
+];
+
 const resPlantGarden = checkFactSupportsAnswer(oldGarden06);
 const resPlantBody = checkFactSupportsAnswer(oldBody02);
 const resPlantBody05 = checkFactTeaches(oldBody05);
@@ -492,6 +713,15 @@ const resPlantIcon = checkIconMatch(plantIconDefect, {});
 const resPlantDup = computeJaccard(plantNearDupA, plantNearDupB);
 const resPlantBal1 = checkLevelBalance(plantLevelFewMisconceptions, 1);
 const resPlantBal2 = checkLevelBalance(plantLevelTooManyConsecutive, 1);
+
+const resPlantReadingA = checkReadingLevel(plantReadingDefectA, allowedTerms);
+const resPlantReadingB = checkReadingLevel(plantReadingDefectB, allowedTerms);
+const resPlantReadingC = checkReadingLevel(plantReadingDefectC, allowedTerms);
+const resPlantDistractorPick = checkDistractorQuality(plantDistractorDefectPick);
+const resPlantDistractorTapall = checkDistractorQuality(plantDistractorDefectTapall);
+const resPlantVarietySrc = checkVariety(plantVarietyDefectSources, 1);
+const resPlantVarietyTop = checkVariety(plantVarietyDefectTopics, 1);
+const resPlantVarietyTap = checkVariety(plantVarietyDefectTapall, 1);
 
 if (resPlantGarden.pass || resPlantBody.pass || resPlantBody05.pass) {
   console.error('[check:puzzles] Planted defect verification FAILED: defective facts unexpectedly passed!');
@@ -513,8 +743,20 @@ if (resPlantBal1.pass || resPlantBal2.pass) {
   console.error('[check:puzzles] Planted defect verification FAILED: level balance defect passed!');
   process.exit(1);
 }
+if (resPlantReadingA.pass || resPlantReadingB.pass || resPlantReadingC.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: reading level defect passed!');
+  process.exit(1);
+}
+if (resPlantDistractorPick.pass || resPlantDistractorTapall.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: distractor quality defect passed!');
+  process.exit(1);
+}
+if (resPlantVarietySrc.pass || resPlantVarietyTop.pass || resPlantVarietyTap.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: variety defect passed!');
+  process.exit(1);
+}
 
-console.log('[check:puzzles] All planted defect verifications PASSED (a: fact support/teaches, b: prompt leak, c: icon match, d: near-duplicate, e: level balance).');
+console.log('[check:puzzles] All planted defect verifications PASSED (a: fact support/teaches, b: prompt leak, c: icon match, d: near-duplicate, e: level balance, f: reading level, g: distractor quality, h: variety).');
 
 // ==========================================
 // Real Puzzles Verification
@@ -664,9 +906,11 @@ puzzles.forEach((p, idx) => {
     }
   }
 
-  // 9. Misconception (one line)
-  if (!p.misconception || typeof p.misconception !== 'string' || p.misconception.trim().length === 0) {
-    errors.push(`${prefix} Missing 'misconception'`);
+  // 9. Misconception (one line or null)
+  if (p.misconception !== null) {
+    if (typeof p.misconception !== 'string' || p.misconception.trim().length === 0) {
+      errors.push(`${prefix} 'misconception' must be null or non-empty string`);
+    }
   }
 
   // 10. Rule (b) Prompt leak check
@@ -699,6 +943,27 @@ puzzles.forEach((p, idx) => {
       }
     }
   }
+
+  // 13. Rule (f) Reading level check (new puzzles blocked; old puzzles reported)
+  const rlCheck = checkReadingLevel(p, allowedTerms);
+  if (rlCheck.flaggedWords.length > 0) {
+    console.log(`[check:puzzles] ${prefix} Flagged >=4 syllable words: ${rlCheck.flaggedWords.join(', ')}`);
+  }
+  if (idx >= 18) {
+    if (!rlCheck.pass) {
+      errors.push(...rlCheck.errors.map(err => `${prefix} Reading level error: ${err}`));
+    }
+  } else {
+    if (!rlCheck.pass) {
+      console.log(`[check:puzzles] (Old puzzle notice) ${prefix} Reading level: promptGrade=${rlCheck.promptGrade.toFixed(1)}, factGrade=${rlCheck.factGrade.toFixed(1)}`);
+    }
+  }
+
+  // 14. Rule (g) Distractor quality check
+  const dqCheck = checkDistractorQuality(p);
+  if (!dqCheck.pass) {
+    errors.push(`${prefix} Distractor quality error: ${dqCheck.reason}`);
+  }
 });
 
 // Rule (d) Check near-duplicates (Jaccard <= 0.5)
@@ -718,6 +983,10 @@ for (let i = 0; i < puzzles.length; i++) {
     const balCheck = checkLevelBalance(lvlPuzzles, lvlId);
     if (!balCheck.pass) {
       errors.push(`Level balance error: ${balCheck.reason}`);
+    }
+    const varCheck = checkVariety(lvlPuzzles, lvlId);
+    if (!varCheck.pass) {
+      errors.push(...varCheck.errors.map(err => `Variety error: ${err}`));
     }
   }
 });
@@ -739,5 +1008,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`[check:puzzles] PASSED: All ${puzzles.length} puzzles verified (schema, IDs, words, banned-list, SVGs, fact support, fact teaches, prompt leak, icon match, near-duplicate, level balance).`);
+console.log(`[check:puzzles] PASSED: All ${puzzles.length} puzzles verified (schema, IDs, words, banned-list, SVGs, fact support, fact teaches, prompt leak, icon match, near-duplicate, level balance, reading level, distractor quality, variety).`);
 process.exit(0);

@@ -8,17 +8,20 @@
       {
         "id": "a",
         "emoji": "🐜",
-        "label": "Tiny Ant"
+        "label": "Tiny Ant",
+        "group": "garden bugs"
       },
       {
         "id": "b",
         "emoji": "🐝",
-        "label": "Honey Bee"
+        "label": "Honey Bee",
+        "group": "garden bugs"
       },
       {
         "id": "c",
         "emoji": "🕷️",
-        "label": "Garden Spider"
+        "label": "Garden Spider",
+        "group": "garden bugs"
       }
     ],
     "answer": "c",
@@ -31,7 +34,9 @@
       ],
       "support": "Garden spiders are eight-legged arachnids, whereas all true insects have six legs."
     },
-    "misconception": "Thinking spiders are insects because both are tiny creepy-crawlies with many legs."
+    "misconception": "Thinking spiders are insects because both are tiny creepy-crawlies with many legs.",
+    "topic": "insects",
+    "oddOneOut": true
   },
   {
     "id": "garden-02",
@@ -42,17 +47,20 @@
       {
         "id": "a",
         "emoji": "🍄",
-        "label": "Forest Mushroom"
+        "label": "Forest Mushroom",
+        "group": "forest organisms"
       },
       {
         "id": "b",
         "emoji": "🌻",
-        "label": "Sunflower"
+        "label": "Sunflower",
+        "group": "forest organisms"
       },
       {
         "id": "c",
         "emoji": "🌲",
-        "label": "Pine Tree"
+        "label": "Pine Tree",
+        "group": "forest organisms"
       }
     ],
     "answer": "a",
@@ -67,7 +75,9 @@
       ],
       "support": "Mushrooms are fungi that absorb nutrients from wood, while plants create food with sunlight."
     },
-    "misconception": "Thinking mushrooms are plants because they grow in forest dirt and have stems."
+    "misconception": "Thinking mushrooms are plants because they grow in forest dirt and have stems.",
+    "topic": "fungi",
+    "oddOneOut": true
   },
   {
     "id": "garden-03",
@@ -78,22 +88,26 @@
       {
         "id": "a",
         "emoji": "🐢",
-        "label": "Box Turtle"
+        "label": "Box Turtle",
+        "group": "wild animals"
       },
       {
         "id": "b",
         "emoji": "🦅",
-        "label": "Bald Eagle"
+        "label": "Bald Eagle",
+        "group": "wild animals"
       },
       {
         "id": "c",
         "emoji": "🐻",
-        "label": "Brown Bear"
+        "label": "Brown Bear",
+        "group": "wild animals"
       },
       {
         "id": "d",
         "emoji": "🦊",
-        "label": "Red Fox"
+        "label": "Red Fox",
+        "group": "wild animals"
       }
     ],
     "answer": [
@@ -110,7 +124,8 @@
       ],
       "support": "Mother turtles bury their eggs in sandy soil so their babies can hatch."
     },
-    "misconception": "Thinking all furry land animals lay eggs like birds and reptiles do."
+    "misconception": "Thinking all furry land animals lay eggs like birds and reptiles do.",
+    "topic": "egg-laying"
   },
   {
     "id": "garden-04",
@@ -121,22 +136,26 @@
       {
         "id": "a",
         "emoji": "🦋",
-        "label": "Butterfly"
+        "label": "Butterfly",
+        "group": "meadow critters"
       },
       {
         "id": "b",
         "emoji": "🦇",
-        "label": "Brown Bat"
+        "label": "Brown Bat",
+        "group": "meadow critters"
       },
       {
         "id": "c",
         "emoji": "🐝",
-        "label": "Bumblebee"
+        "label": "Bumblebee",
+        "group": "meadow critters"
       },
       {
         "id": "d",
         "emoji": "🐌",
-        "label": "Garden Snail"
+        "label": "Garden Snail",
+        "group": "meadow critters"
       }
     ],
     "answer": [
@@ -158,33 +177,38 @@
         "truly fly"
       ]
     },
-    "misconception": "Thinking flying squirrels fly with wings instead of just gliding through the air."
+    "misconception": "Thinking flying squirrels fly with wings instead of just gliding through the air.",
+    "topic": "flight"
   },
   {
     "id": "garden-05",
     "level": 1,
     "type": "order",
-    "prompt": "Order the stages of this winged insect's life cycle from start!",
+    "prompt": "Order the stages of this winged insect's life cycle from the start!",
     "items": [
       {
         "id": "a",
         "emoji": "🥚",
-        "label": "Tiny Egg"
+        "label": "Tiny Egg",
+        "group": "butterfly life stages"
       },
       {
         "id": "b",
         "emoji": "🐛",
-        "label": "Caterpillar"
+        "label": "Caterpillar",
+        "group": "butterfly life stages"
       },
       {
         "id": "c",
         "emoji": "chrysalis",
-        "label": "Chrysalis"
+        "label": "Chrysalis",
+        "group": "butterfly life stages"
       },
       {
         "id": "d",
         "emoji": "🦋",
-        "label": "Butterfly"
+        "label": "Butterfly",
+        "group": "butterfly life stages"
       }
     ],
     "answer": [
@@ -203,7 +227,8 @@
       ],
       "support": "An insect begins as a tiny egg, hatches into a caterpillar, rests in a chrysalis, and emerges as a butterfly."
     },
-    "misconception": "Thinking caterpillars turn straight into flying butterflies without resting inside a chrysalis."
+    "misconception": "Thinking caterpillars turn straight into flying butterflies without resting inside a chrysalis.",
+    "topic": "metamorphosis"
   },
   {
     "id": "garden-06",
@@ -214,22 +239,26 @@
       {
         "id": "a",
         "emoji": "🌰",
-        "label": "Seed"
+        "label": "Seed",
+        "group": "plant growth steps"
       },
       {
         "id": "b",
         "emoji": "🌱",
-        "label": "Tiny Sprout"
+        "label": "Tiny Sprout",
+        "group": "plant growth steps"
       },
       {
         "id": "c",
         "emoji": "🌿",
-        "label": "Green Stem"
+        "label": "Green Stem",
+        "group": "plant growth steps"
       },
       {
         "id": "d",
         "emoji": "🌻",
-        "label": "Sunflower"
+        "label": "Sunflower",
+        "group": "plant growth steps"
       }
     ],
     "answer": [
@@ -253,7 +282,8 @@
         "germination"
       ]
     },
-    "misconception": "Thinking leaves and flowers bloom before a seed grows roots into the soil."
+    "misconception": "Thinking leaves and flowers bloom before a seed grows roots into the soil.",
+    "topic": "seed-germination"
   },
   {
     "id": "sky-01",
@@ -264,17 +294,20 @@
       {
         "id": "a",
         "emoji": "⚪",
-        "label": "Mercury"
+        "label": "Mercury",
+        "group": "planets"
       },
       {
         "id": "b",
         "emoji": "🟡",
-        "label": "Venus"
+        "label": "Venus",
+        "group": "planets"
       },
       {
         "id": "c",
         "emoji": "🔴",
-        "label": "Mars"
+        "label": "Mars",
+        "group": "planets"
       }
     ],
     "answer": "b",
@@ -288,7 +321,8 @@
       ],
       "support": "Venus is hotter than Mercury because its thick carbon dioxide atmosphere traps intense solar heat."
     },
-    "misconception": "Thinking Mercury is the hottest planet just because it is closest to the Sun."
+    "misconception": "Thinking Mercury is the hottest planet just because it is closest to the Sun.",
+    "topic": "planetary-heat"
   },
   {
     "id": "sky-02",
@@ -299,17 +333,20 @@
       {
         "id": "a",
         "emoji": "☀️",
-        "label": "Bright Star"
+        "label": "Bright Star",
+        "group": "space objects"
       },
       {
         "id": "b",
         "emoji": "🌍",
-        "label": "Rocky Planet"
+        "label": "Rocky Planet",
+        "group": "space objects"
       },
       {
         "id": "c",
         "emoji": "🌙",
-        "label": "Dusty Moon"
+        "label": "Dusty Moon",
+        "group": "space objects"
       }
     ],
     "answer": "a",
@@ -323,7 +360,8 @@
       ],
       "support": "Our daytime Sun is a giant glowing ball of hot plasma, which is a star."
     },
-    "misconception": "Thinking the Sun is a gigantic planet because it looks big and round in our daytime sky."
+    "misconception": "Thinking the Sun is a gigantic planet because it looks big and round in our daytime sky.",
+    "topic": "sun-nature"
   },
   {
     "id": "sky-03",
@@ -334,22 +372,26 @@
       {
         "id": "a",
         "emoji": "☀️",
-        "label": "The Sun"
+        "label": "The Sun",
+        "group": "glowing lights"
       },
       {
         "id": "b",
         "emoji": "⭐",
-        "label": "Night Star"
+        "label": "Night Star",
+        "group": "glowing lights"
       },
       {
         "id": "c",
         "emoji": "🌙",
-        "label": "The Moon"
+        "label": "The Moon",
+        "group": "glowing lights"
       },
       {
         "id": "d",
         "emoji": "🪲",
-        "label": "Firefly"
+        "label": "Firefly",
+        "group": "glowing lights"
       }
     ],
     "answer": [
@@ -368,7 +410,8 @@
       ],
       "support": "The Moon produces no light itself; moonlight is sunlight reflecting off its dusty surface."
     },
-    "misconception": "Thinking the Moon makes its own light like a glowing lightbulb in the night sky."
+    "misconception": "Thinking the Moon makes its own light like a glowing lightbulb in the night sky.",
+    "topic": "moonlight"
   },
   {
     "id": "sky-04",
@@ -379,22 +422,26 @@
       {
         "id": "a",
         "emoji": "🪐",
-        "label": "Saturn"
+        "label": "Saturn",
+        "group": "planets"
       },
       {
         "id": "b",
         "emoji": "🔴",
-        "label": "Jupiter"
+        "label": "Jupiter",
+        "group": "planets"
       },
       {
         "id": "c",
         "emoji": "🔵",
-        "label": "Uranus"
+        "label": "Uranus",
+        "group": "planets"
       },
       {
         "id": "d",
         "emoji": "🌍",
-        "label": "Earth"
+        "label": "Earth",
+        "group": "planets"
       }
     ],
     "answer": [
@@ -412,33 +459,38 @@
       ],
       "support": "Saturn has the most visible rings, but Jupiter, Uranus, and Neptune also have ring systems."
     },
-    "misconception": "Thinking Saturn is the only planet in our solar system that has rings."
+    "misconception": "Thinking Saturn is the only planet in our solar system that has rings.",
+    "topic": "planetary-rings"
   },
   {
     "id": "sky-05",
     "level": 2,
     "type": "order",
-    "prompt": "Order the first four rocky planets starting closest to Sun!",
+    "prompt": "Order the first four rocky planets starting closest to the Sun!",
     "items": [
       {
         "id": "a",
         "emoji": "⚪",
-        "label": "Mercury"
+        "label": "Mercury",
+        "group": "planets"
       },
       {
         "id": "b",
         "emoji": "🟡",
-        "label": "Venus"
+        "label": "Venus",
+        "group": "planets"
       },
       {
         "id": "c",
         "emoji": "🌍",
-        "label": "Earth"
+        "label": "Earth",
+        "group": "planets"
       },
       {
         "id": "d",
         "emoji": "🔴",
-        "label": "Mars"
+        "label": "Mars",
+        "group": "planets"
       }
     ],
     "answer": [
@@ -459,7 +511,8 @@
       ],
       "support": "Mercury is closest to the Sun, followed by Venus, Earth, and Mars in orbital order."
     },
-    "misconception": "Thinking Earth is closer to the Sun than Venus because summer feels so warm."
+    "misconception": "Thinking Earth is closer to the Sun than Venus because summer feels so warm.",
+    "topic": "planet-order"
   },
   {
     "id": "sky-06",
@@ -471,19 +524,22 @@
         "id": "a",
         "emoji": "🌙",
         "label": "Silver Moon",
-        "value": "239,000 miles"
+        "value": "239,000 miles",
+        "group": "space neighbors"
       },
       {
         "id": "b",
         "emoji": "☀️",
         "label": "Golden Sun",
-        "value": "93 million miles"
+        "value": "93 million miles",
+        "group": "space neighbors"
       },
       {
         "id": "c",
         "emoji": "⭐",
         "label": "Distant Star",
-        "value": "25 trillion miles"
+        "value": "25 trillion miles",
+        "group": "space neighbors"
       }
     ],
     "answer": [
@@ -505,7 +561,8 @@
         "sun"
       ]
     },
-    "misconception": "Thinking stars at night are closer to us than the Moon because they twinkle so brightly."
+    "misconception": "Thinking stars at night are closer to us than the Moon because they twinkle so brightly.",
+    "topic": "cosmic-distances"
   },
   {
     "id": "body-01",
@@ -516,17 +573,20 @@
       {
         "id": "a",
         "emoji": "👶",
-        "label": "Tiny Baby"
+        "label": "Tiny Baby",
+        "group": "human stages"
       },
       {
         "id": "b",
         "emoji": "🧑",
-        "label": "Adult Person"
+        "label": "Adult Person",
+        "group": "human stages"
       },
       {
         "id": "c",
         "emoji": "⚖️",
-        "label": "Both The Same"
+        "label": "Both The Same",
+        "group": "human stages"
       }
     ],
     "answer": "a",
@@ -545,7 +605,8 @@
         "fuse"
       ]
     },
-    "misconception": "Thinking bigger adults must have more bones in their skeletons than tiny babies."
+    "misconception": "Thinking bigger adults must have more bones in their skeletons than tiny babies.",
+    "topic": "skeleton-bones"
   },
   {
     "id": "body-02",
@@ -556,17 +617,20 @@
       {
         "id": "a",
         "emoji": "🫀",
-        "label": "Pumping Heart"
+        "label": "Pumping Heart",
+        "group": "body organs"
       },
       {
         "id": "b",
         "emoji": "🧠",
-        "label": "Clever Brain"
+        "label": "Clever Brain",
+        "group": "body organs"
       },
       {
         "id": "c",
         "emoji": "✋",
-        "label": "Outer Skin"
+        "label": "Outer Skin",
+        "group": "body organs"
       }
     ],
     "answer": "c",
@@ -585,7 +649,8 @@
         "largest organ"
       ]
     },
-    "misconception": "Thinking skin is just thin wrapping rather than the largest organ of the human body."
+    "misconception": "Thinking skin is just thin wrapping rather than the largest organ of the human body.",
+    "topic": "skin-organ"
   },
   {
     "id": "body-03",
@@ -596,17 +661,20 @@
       {
         "id": "a",
         "emoji": "🦷",
-        "label": "Tooth Enamel"
+        "label": "Tooth Enamel",
+        "group": "body parts"
       },
       {
         "id": "b",
         "emoji": "🦴",
-        "label": "Strong Bone"
+        "label": "Strong Bone",
+        "group": "body parts"
       },
       {
         "id": "c",
         "emoji": "💅",
-        "label": "Fingernail"
+        "label": "Fingernail",
+        "group": "body parts"
       }
     ],
     "answer": "a",
@@ -620,7 +688,8 @@
       ],
       "support": "Tooth enamel is the hardest substance in the human body, even tougher than skeleton bones."
     },
-    "misconception": "Thinking thick leg bones are the hardest material in the human body."
+    "misconception": "Thinking thick leg bones are the hardest material in the human body.",
+    "topic": "tooth-enamel"
   },
   {
     "id": "body-04",
@@ -631,22 +700,26 @@
       {
         "id": "a",
         "emoji": "👁️",
-        "label": "Seeing Eyes"
+        "label": "Seeing Eyes",
+        "group": "face parts"
       },
       {
         "id": "b",
         "emoji": "👃",
-        "label": "Sniffing Nose"
+        "label": "Sniffing Nose",
+        "group": "face parts"
       },
       {
         "id": "c",
         "emoji": "👅",
-        "label": "Tasting Tongue"
+        "label": "Tasting Tongue",
+        "group": "face parts"
       },
       {
         "id": "d",
         "emoji": "🦵",
-        "label": "Kicking Knee"
+        "label": "Kicking Knee",
+        "group": "face parts"
       }
     ],
     "answer": [
@@ -665,7 +738,8 @@
       ],
       "support": "Your tongue has thousands of tiny taste buds that send flavor signals directly to your brain."
     },
-    "misconception": "Thinking you taste food with your teeth and lips instead of taste buds on your tongue."
+    "misconception": "Thinking you taste food with your teeth and lips instead of taste buds on your tongue.",
+    "topic": "sensory-organs"
   },
   {
     "id": "body-05",
@@ -677,19 +751,22 @@
         "id": "a",
         "emoji": "👶",
         "label": "Newborn Baby",
-        "value": "0 teeth"
+        "value": "0 teeth",
+        "group": "teeth stages"
       },
       {
         "id": "b",
         "emoji": "🧒",
         "label": "Playful Toddler",
-        "value": "20 teeth"
+        "value": "20 teeth",
+        "group": "teeth stages"
       },
       {
         "id": "c",
         "emoji": "🧑",
         "label": "Grown Adult",
-        "value": "32 teeth"
+        "value": "32 teeth",
+        "group": "teeth stages"
       }
     ],
     "answer": [
@@ -711,7 +788,8 @@
         "20 baby teeth"
       ]
     },
-    "misconception": "Thinking babies are born with a full set of teeth already in their mouths."
+    "misconception": "Thinking babies are born with a full set of teeth already in their mouths.",
+    "topic": "teeth-sets"
   },
   {
     "id": "body-06",
@@ -722,17 +800,20 @@
       {
         "id": "a",
         "emoji": "🦷",
-        "label": "Chew Teeth"
+        "label": "Chew Teeth",
+        "group": "eating stages"
       },
       {
         "id": "b",
         "emoji": "👅",
-        "label": "Swallow Throat"
+        "label": "Swallow Throat",
+        "group": "eating stages"
       },
       {
         "id": "c",
         "emoji": "🥣",
-        "label": "Digest Stomach"
+        "label": "Digest Stomach",
+        "group": "eating stages"
       }
     ],
     "answer": [
@@ -750,64 +831,71 @@
       ],
       "support": "Teeth chew food, the throat swallows it down the esophagus, and the stomach digests it."
     },
-    "misconception": "Thinking food drops directly into the stomach without being chewed by teeth first."
+    "misconception": "Thinking food drops directly into the stomach without being chewed by teeth first.",
+    "topic": "swallowing"
   },
   {
     "id": "garden-07",
     "level": 1,
     "type": "pick",
-    "prompt": "Which creature constructs wooden dams to create safe family ponds?",
+    "prompt": "Which creature builds wooden dams to make safe family ponds?",
     "items": [
       {
         "id": "a",
         "emoji": "🦫",
-        "label": "Busy Beaver"
+        "label": "Busy Beaver",
+        "group": "wetland creatures"
       },
       {
         "id": "b",
         "emoji": "🦆",
-        "label": "Wild Mallard"
+        "label": "Wild Mallard",
+        "group": "wetland creatures"
       },
       {
         "id": "c",
         "emoji": "🦦",
-        "label": "Playful Otter"
+        "label": "Playful Otter",
+        "group": "wetland creatures"
       }
     ],
     "answer": "a",
     "hint": "Beavers gnaw trees with orange teeth to build sturdy lodges and dams.",
     "misconception": "Thinking beavers build dams just to store food rather than create deep protective ponds.",
     "fact": {
-      "text": "Beavers build wooden dams that form slow-moving ponds, creating rich wetland homes for many wild species!",
-      "support": "By building dams that form ponds, beavers provide wetlands and resources for dozens of wildlife species.",
+      "text": "Beavers build stick dams that slow down meadow water. These quiet ponds make safe homes for wildlife!",
+      "support": "By building dams that form slow-moving ponds, beavers provide wetlands and resources for dozens of wildlife species.",
       "source": "https://nationalzoo.si.edu/animals/beaver",
       "evidence": [
-        "dams",
-        "ponds",
-        "species"
+        "dams that form slow-moving ponds",
+        "wildlife species"
       ]
-    }
+    },
+    "topic": "beavers"
   },
   {
     "id": "garden-08",
     "level": 1,
     "type": "tapall",
-    "prompt": "Tap the wetland habitats where wild American alligators live!",
+    "prompt": "Tap the wetland homes where wild alligators live!",
     "items": [
       {
         "id": "a",
         "emoji": "🐊",
-        "label": "Freshwater Swamp"
+        "label": "Freshwater Swamp",
+        "group": "wetland habitats"
       },
       {
         "id": "b",
         "emoji": "🌿",
-        "label": "River Marshes"
+        "label": "River Marshes",
+        "group": "wetland habitats"
       },
       {
         "id": "c",
         "emoji": "🏜️",
-        "label": "Sandy Desert"
+        "label": "Sandy Desert",
+        "group": "wetland habitats"
       }
     ],
     "answer": [
@@ -817,49 +905,54 @@
     "hint": "Alligators thrive in freshwater swamps, marshes, and riverbanks.",
     "misconception": "Thinking alligators live in open ocean waves with salty water like dolphins.",
     "fact": {
-      "text": "American alligators primarily inhabit freshwater swamps and marshes, though they also swim in rivers and lakes!",
-      "support": "Alligators primarily inhabit freshwater swamps and marshes, and can also live in rivers and lakes.",
+      "text": "Alligators are large reptiles that live in freshwater swamps. They can also swim in rivers and lakes!",
+      "support": "American alligators primarily inhabit freshwater swamps and marshes, though they also swim in rivers and lakes.",
       "source": "https://www.nps.gov/ever/learn/nature/alligator.htm",
       "evidence": [
-        "alligators",
-        "freshwater swamps"
+        "freshwater swamps and marshes",
+        "rivers and lakes"
       ]
-    }
+    },
+    "topic": "alligators"
   },
   {
     "id": "garden-09",
     "level": 1,
     "type": "pick",
-    "prompt": "What woody plant makes up almost the entire diet of giant pandas?",
+    "prompt": "Which plant is the main food of giant pandas?",
     "items": [
       {
         "id": "a",
         "emoji": "🎋",
-        "label": "Green Bamboo"
+        "label": "Green Bamboo",
+        "group": "plants"
       },
       {
         "id": "b",
         "emoji": "🍎",
-        "label": "Sweet Apple"
+        "label": "Sweet Apple",
+        "group": "plants"
       },
       {
         "id": "c",
         "emoji": "🌰",
-        "label": "Forest Acorn"
+        "label": "Forest Acorn",
+        "group": "plants"
       }
     ],
     "answer": "a",
     "hint": "Pandas spend hours each day happily munching on stalks of bamboo.",
     "misconception": "Thinking giant pandas hunt fish or small mammals in the snow like polar bears.",
     "fact": {
-      "text": "Giant pandas have strong jaws and broad teeth perfectly adapted for crushing tough bamboo stalks!",
-      "support": "Giant pandas have strong jaw muscles and broad molar teeth to crush tough bamboo stalks.",
+      "text": "Giant pandas eat mostly bamboo. They chew the tough green stalks with strong teeth!",
+      "support": "Giant pandas have large molar teeth and strong jaw muscles for crushing tough bamboo.",
       "source": "https://nationalzoo.si.edu/animals/giant-panda",
       "evidence": [
         "giant pandas",
         "crushing tough bamboo"
       ]
-    }
+    },
+    "topic": "pandas"
   },
   {
     "id": "garden-10",
@@ -870,31 +963,35 @@
       {
         "id": "a",
         "emoji": "👃",
-        "label": "Nose And Lip"
+        "label": "Nose And Lip",
+        "group": "face parts"
       },
       {
         "id": "b",
         "emoji": "👅",
-        "label": "Teeth And Tongue"
+        "label": "Teeth And Tongue",
+        "group": "face parts"
       },
       {
         "id": "c",
         "emoji": "👂",
-        "label": "Ears And Chin"
+        "label": "Ears And Chin",
+        "group": "face parts"
       }
     ],
     "answer": "a",
     "hint": "An elephant breathes and smells through its trunk because it is an elongated nose.",
     "misconception": "Thinking an elephant's trunk is an extra giant arm or special single muscle.",
     "fact": {
-      "text": "An elephant's flexible trunk is actually a wonderful fusion of its nose and upper lip!",
-      "support": "An elephant's trunk is anatomically a fusion of its nose and upper lip.",
+      "text": "An elephant trunk is a wonderful mix. It joins the nose and upper lip together!",
+      "support": "An elephant's flexible trunk is actually a wonderful fusion of its nose and upper lip.",
       "source": "https://nationalzoo.si.edu/animals/asian-elephant",
       "evidence": [
-        "trunk is a fusion",
+        "elephant's flexible trunk",
         "nose and upper lip"
       ]
-    }
+    },
+    "topic": "elephant-anatomy"
   },
   {
     "id": "sky-07",
@@ -905,31 +1002,35 @@
       {
         "id": "a",
         "emoji": "🌍",
-        "label": "Tilted Planet Axis"
+        "label": "Tilted Planet Axis",
+        "group": "seasonal factors"
       },
       {
         "id": "b",
         "emoji": "☀️",
-        "label": "Distance To Sun"
+        "label": "Distance To Sun",
+        "group": "seasonal factors"
       },
       {
         "id": "c",
         "emoji": "☁️",
-        "label": "Passing Wind Storms"
+        "label": "Passing Wind Storms",
+        "group": "seasonal factors"
       }
     ],
     "answer": "a",
     "hint": "Earth leans on a slant as it circles around the Sun.",
     "misconception": "Thinking summer happens because planet Earth travels closer to the Sun in July.",
     "fact": {
-      "text": "Earth's tilted axis creates our seasons because different regions receive direct solar rays throughout the year!",
-      "support": "Earth's tilted axis creates the different seasons as our planet orbits around the Sun.",
+      "text": "Earth leans on a tilted axis. As our planet orbits the Sun, the tilted lean makes the seasons change!",
+      "support": "Earth's tilted axis creates our seasons as different regions receive direct solar rays throughout the year.",
       "source": "https://spaceplace.nasa.gov/seasons/en/",
       "evidence": [
-        "tilted axis",
-        "creates seasons"
+        "Earth's tilted axis",
+        "seasons"
       ]
-    }
+    },
+    "topic": "seasons"
   },
   {
     "id": "sky-08",
@@ -940,31 +1041,35 @@
       {
         "id": "a",
         "emoji": "🔵",
-        "label": "Scattered Blue Light"
+        "label": "Scattered Blue Light",
+        "group": "sky factors"
       },
       {
         "id": "b",
         "emoji": "🌊",
-        "label": "Ocean Water Mirror"
+        "label": "Ocean Water Mirror",
+        "group": "sky factors"
       },
       {
         "id": "c",
         "emoji": "💧",
-        "label": "Floating Rain Drops"
+        "label": "Floating Rain Drops",
+        "group": "sky factors"
       }
     ],
     "answer": "a",
     "hint": "Blue light waves scatter in all directions through the gases in our atmosphere.",
     "misconception": "Thinking the clear blue sky is just reflecting blue water from the world's oceans.",
     "fact": {
-      "text": "Sunlight contains all colors, but blue light is scattered more across our atmosphere than other colors!",
-      "support": "Blue light waves scatter more across the atmosphere than other colors because they are shorter.",
+      "text": "Sunlight holds every rainbow color. Blue light waves scatter across the sky more than other light waves!",
+      "support": "Sunlight contains all colors, but blue light is scattered more across our atmosphere than other colors.",
       "source": "https://spaceplace.nasa.gov/blue-sky/en/",
       "evidence": [
-        "blue light",
-        "scattered"
+        "Sunlight contains all colors",
+        "blue light is scattered more"
       ]
-    }
+    },
+    "topic": "sky-color"
   },
   {
     "id": "sky-09",
@@ -975,22 +1080,26 @@
       {
         "id": "a",
         "emoji": "🔴",
-        "label": "Swirling Jupiter"
+        "label": "Swirling Jupiter",
+        "group": "space bodies"
       },
       {
         "id": "b",
         "emoji": "🪐",
-        "label": "Ringed Saturn"
+        "label": "Ringed Saturn",
+        "group": "space bodies"
       },
       {
         "id": "c",
         "emoji": "🌍",
-        "label": "Rocky Earth"
+        "label": "Rocky Earth",
+        "group": "space bodies"
       },
       {
         "id": "d",
         "emoji": "🌕",
-        "label": "Dusty Moon"
+        "label": "Dusty Moon",
+        "group": "space bodies"
       }
     ],
     "answer": [
@@ -1000,14 +1109,15 @@
     "hint": "Jupiter and Saturn have thick clouds with no solid ground underneath.",
     "misconception": "Thinking every planet in our solar system has hard ground where you could stand.",
     "fact": {
-      "text": "Jupiter and Saturn are massive gas giants that have thick atmospheres without a solid rocky ground!",
-      "support": "Jupiter is a gas giant planet that does not have a solid rocky surface.",
+      "text": "Jupiter and Saturn are massive gas giants. They have thick cloudy skies without any solid ground to walk on!",
+      "support": "Jupiter and Saturn are massive gas giants that have thick atmospheres without a solid rocky ground.",
       "source": "https://spaceplace.nasa.gov/all-about-jupiter/en/",
       "evidence": [
-        "jupiter is a gas giant",
-        "solid surface"
+        "Jupiter and Saturn are massive gas giants",
+        "without a solid rocky ground"
       ]
-    }
+    },
+    "topic": "gas-giants"
   },
   {
     "id": "sky-10",
@@ -1018,93 +1128,104 @@
       {
         "id": "a",
         "emoji": "❄️",
-        "label": "Cold Dry Desert"
+        "label": "Cold Dry Desert",
+        "group": "climates"
       },
       {
         "id": "b",
         "emoji": "🔥",
-        "label": "Boiling Hot Oven"
+        "label": "Boiling Hot Oven",
+        "group": "climates"
       },
       {
         "id": "c",
         "emoji": "🌴",
-        "label": "Warm Humid Tropics"
+        "label": "Warm Humid Tropics",
+        "group": "climates"
       }
     ],
     "answer": "a",
     "hint": "Mars is much further from the Sun than Earth, making it very chilly.",
     "misconception": "Thinking Mars is scorching hot because its rusty red rocks look like glowing flames.",
     "fact": {
-      "text": "Mars is a cold desert world located much further from the warmth of the Sun!",
-      "support": "Mars is a cold desert world that experiences freezing temperatures across its rocky landscape.",
+      "text": "Mars is a cold desert world. It sits much farther away from the warm Sun than Earth!",
+      "support": "Mars is a cold desert world located much farther from the warmth of the Sun.",
       "source": "https://spaceplace.nasa.gov/all-about-mars/en/",
       "evidence": [
-        "mars",
-        "cold",
-        "desert"
+        "cold desert world",
+        "warmth of the Sun"
       ]
-    }
+    },
+    "topic": "mars-climate"
   },
   {
     "id": "body-07",
     "level": 3,
     "type": "pick",
-    "prompt": "Which tireless organ acts as a powerful automatic pump inside your chest?",
+    "prompt": "Which tireless organ acts like a steady pump inside your chest?",
     "items": [
       {
         "id": "a",
         "emoji": "🫀",
-        "label": "Pumping Heart"
+        "label": "Pumping Heart",
+        "group": "chest parts"
       },
       {
         "id": "b",
         "emoji": "🫁",
-        "label": "Breathing Lungs"
+        "label": "Breathing Lungs",
+        "group": "chest parts"
       },
       {
         "id": "c",
         "emoji": "🦴",
-        "label": "Rib Skeleton"
+        "label": "Rib Skeleton",
+        "group": "chest parts"
       }
     ],
     "answer": "a",
     "hint": "Your heart beats continuously day and night to power circulation throughout your body.",
     "misconception": "Thinking lungs pump the blood through your veins instead of breathing in oxygen.",
     "fact": {
-      "text": "Your heart is a powerful automatic pump that beats to deliver oxygen throughout your entire body!",
-      "support": "The heart is a powerful automatic pump that delivers circulation throughout the human body.",
+      "text": "Your heart is a tireless muscle pump. It beats day and night to send oxygen through your body!",
+      "support": "The heart is a muscular pump that delivers oxygen throughout the human body.",
       "source": "https://medlineplus.gov/ency/anatomyvideos/000023.htm",
       "evidence": [
-        "heart is a powerful",
-        "pump"
+        "heart is a",
+        "pump that delivers oxygen"
       ]
-    }
+    },
+    "topic": "heart-pump"
   },
   {
     "id": "body-08",
     "level": 3,
     "type": "tapall",
-    "prompt": "Tap two essential vital signs doctors check to see how you are doing!",
+    "prompt": "Tap the vital signs doctors check to see how you are doing!",
     "items": [
       {
         "id": "a",
         "emoji": "🫀",
-        "label": "Heartbeat Rate"
+        "label": "Heartbeat Rate",
+        "group": "body measurements"
       },
       {
         "id": "b",
         "emoji": "🫁",
-        "label": "Breathing Rate"
+        "label": "Breathing Rate",
+        "group": "body measurements"
       },
       {
         "id": "c",
         "emoji": "💇",
-        "label": "Hair Length"
+        "label": "Hair Length",
+        "group": "body measurements"
       },
       {
         "id": "d",
         "emoji": "👟",
-        "label": "Shoe Size"
+        "label": "Shoe Size",
+        "group": "body measurements"
       }
     ],
     "answer": [
@@ -1114,71 +1235,79 @@
     "hint": "Doctors check how your heart beats and how lungs take in breaths.",
     "misconception": "Thinking shoe size or how tall you are counted as medical vital signs.",
     "fact": {
-      "text": "Vital signs reflect essential body functions, including your heartbeat rate and your regular breathing rate!",
-      "support": "Vital signs measure essential bodily functions including heartbeat rate and regular breathing rate.",
+      "text": "Doctors check vital signs to see how you feel. Your heartbeat and breathing rate show healthy body work!",
+      "support": "Vital signs reflect essential body functions, including your heartbeat rate and your regular breathing rate.",
       "source": "https://medlineplus.gov/ency/article/002341.htm",
       "evidence": [
         "vital signs",
         "heartbeat",
         "breathing"
       ]
-    }
+    },
+    "topic": "vital-signs"
   },
   {
     "id": "body-09",
     "level": 3,
     "type": "pick",
-    "prompt": "Which breathing organs serve as the primary parts of your respiratory system?",
+    "prompt": "Which body part helps you keep your balance?",
     "items": [
       {
         "id": "a",
-        "emoji": "🫁",
-        "label": "Spongy Lungs"
+        "emoji": "👂",
+        "label": "Inner Ear",
+        "group": "body parts"
       },
       {
         "id": "b",
-        "emoji": "🥣",
-        "label": "Digest Stomach"
+        "emoji": "👁️",
+        "label": "Seeing Eyes",
+        "group": "body parts"
       },
       {
         "id": "c",
-        "emoji": "🧠",
-        "label": "Thinking Brain"
+        "emoji": "🦶",
+        "label": "Standing Feet",
+        "group": "body parts"
       }
     ],
     "answer": "a",
-    "hint": "Your lungs take in air every time you breathe in and out.",
-    "misconception": "Thinking food and air both pass into your stomach when you inhale deeply.",
+    "hint": "Deep inside your ear canal is a tiny fluid-filled balance maze.",
+    "misconception": "Thinking your feet or eyes are the primary organs that detect body balance.",
     "fact": {
-      "text": "Your two lungs are the primary organs of the respiratory system, taking in fresh oxygen!",
-      "support": "The two lungs serve as the primary organs of the human respiratory system.",
-      "source": "https://medlineplus.gov/ency/anatomyvideos/000018.htm",
+      "text": "Tiny fluid canals inside your inner ear sense head motion. They send balance signals to your brain!",
+      "support": "Some balance problems are due to problems in the inner ear.",
+      "source": "https://medlineplus.gov/balanceproblems.html",
       "evidence": [
-        "lungs are the primary organs",
-        "respiratory system"
+        "balance problems",
+        "inner ear"
       ]
-    }
+    },
+    "topic": "hearing-balance"
   },
   {
     "id": "body-10",
     "level": 3,
     "type": "order",
-    "prompt": "Order the digestive organs as a swallowed bite travels downward through them!",
+    "prompt": "Order these organs as swallowed food moves down!",
     "items": [
       {
         "id": "a",
         "emoji": "👅",
-        "label": "Throat Passage"
+        "label": "Throat Passage",
+        "group": "digestive organs"
       },
       {
         "id": "b",
         "emoji": "🥣",
-        "label": "Digest Stomach"
+        "label": "Digest Stomach",
+        "group": "digestive organs"
       },
       {
         "id": "c",
         "emoji": "🪱",
-        "label": "Long Intestines"
+        "label": "Long Intestines",
+        "group": "digestive organs"
       }
     ],
     "answer": [
@@ -1189,15 +1318,14 @@
     "hint": "Food moves from your throat into the stomach, and then enters the intestines.",
     "misconception": "Thinking food drops into the intestines before reaching the acid in your stomach.",
     "fact": {
-      "text": "Swallowed food travels through the digestive tract, moving from throat into stomach and intestines!",
-      "support": "Peristalsis moves food through the digestive tract, passing from throat into stomach and intestines.",
+      "text": "Swallowed food moves down your throat passage. Powerful acid breaks meals down inside your stomach and intestines!",
+      "support": "Swallowed food travels through the digestive tract, moving from throat into stomach and intestines.",
       "source": "https://medlineplus.gov/ency/anatomyvideos/000097.htm",
       "evidence": [
-        "peristalsis",
-        "move food through",
-        "digestive tract"
+        "swallowed food to the stomach"
       ]
-    }
+    },
+    "topic": "digestion-order"
   },
   {
     "id": "garden-11",
@@ -1208,17 +1336,20 @@
       {
         "id": "a",
         "label": "Sturdy Nest",
-        "emoji": "🪹"
+        "emoji": "🪹",
+        "group": "eagle family stages"
       },
       {
         "id": "b",
-        "label": "Speckled Egg",
-        "emoji": "🥚"
+        "label": "Egg",
+        "emoji": "🥚",
+        "group": "eagle family stages"
       },
       {
         "id": "c",
         "label": "Little Chick",
-        "emoji": "🐣"
+        "emoji": "🐣",
+        "group": "eagle family stages"
       }
     ],
     "answer": [
@@ -1228,69 +1359,78 @@
     ],
     "hint": "Think about what parent eagles build before laying their eggs.",
     "fact": {
-      "text": "Parent eagles construct large stick nests, incubate their laid eggs, and raise hatched chicks together!",
-      "support": "Parent eagles construct a nest, lay eggs, and protect the hatched chick.",
+      "text": "Parent eagles build big stick nests. They keep their eggs warm until little chicks hatch!",
+      "support": "Parent eagles construct large stick nests, incubate their laid eggs, and raise hatched chicks together.",
       "source": "https://nationalzoo.si.edu/animals/bald-eagle",
       "evidence": [
         "Eagles construct their nests near water in tall trees or on cliffs using large sticks"
       ]
     },
-    "misconception": "Children sometimes think birds find ready-made nests, but parents carefully build a nest before laying eggs."
+    "misconception": "Children sometimes think birds find ready-made nests, but parents carefully build a nest before laying eggs.",
+    "topic": "eagles"
   },
   {
     "id": "garden-12",
     "level": 1,
     "type": "pick",
-    "prompt": "Which of these real creatures is actually a giant living lizard?",
+    "prompt": "Which creature is a giant living lizard?",
     "items": [
       {
         "id": "a",
         "label": "Komodo Dragon",
-        "emoji": "🦎"
+        "emoji": "🦎",
+        "group": "small animals"
       },
       {
         "id": "b",
         "label": "Earthworm",
-        "emoji": "🪱"
+        "emoji": "🪱",
+        "group": "small animals"
       },
       {
         "id": "c",
         "label": "Dragonfly",
-        "emoji": "🦗"
+        "emoji": "🦗",
+        "group": "small animals"
       }
     ],
     "answer": "a",
     "hint": "One of these scaly creatures is the world's largest living lizard.",
     "fact": {
-      "text": "Komodo dragons are large lizards with long tails, strong agile necks, and sturdy limbs.",
-      "support": "Komodo dragons are large lizards with long tails and sturdy limbs.",
+      "text": "Komodo dragons are giant lizards. They have long tails, strong legs, and agile necks!",
+      "support": "Komodo dragons are large lizards with long tails, strong agile necks, and sturdy limbs.",
       "source": "https://nationalzoo.si.edu/animals/komodo-dragon",
       "evidence": [
         "Komodo dragons are large lizards with long tails, strong and agile necks, and sturdy limbs"
       ]
     },
-    "misconception": "Children often confuse dragons with make-believe fantasy beasts, but Komodo dragons are real giant lizards."
+    "misconception": "Children often confuse dragons with make-believe fantasy beasts, but Komodo dragons are real giant lizards.",
+    "topic": "lizards",
+    "oddOneOut": true
   },
   {
     "id": "garden-13",
     "level": 1,
     "type": "tapall",
-    "prompt": "Tap all the wild animals that hunt together in coordinated teams!",
+    "prompt": "Tap all the wild animals that hunt together in teams!",
     "items": [
       {
         "id": "a",
         "label": "Gray Wolf",
-        "emoji": "🐺"
+        "emoji": "🐺",
+        "group": "mammals"
       },
       {
         "id": "b",
         "label": "African Lion",
-        "emoji": "🦁"
+        "emoji": "🦁",
+        "group": "mammals"
       },
       {
         "id": "c",
         "label": "Giant Panda",
-        "emoji": "🐼"
+        "emoji": "🐼",
+        "group": "mammals"
       }
     ],
     "answer": [
@@ -1299,69 +1439,79 @@
     ],
     "hint": "Two of these animals cooperate in packs or prides to find food.",
     "fact": {
-      "text": "Gray wolves hunt cooperatively in packs, and African lions team up in prides to catch prey together!",
-      "support": "Gray wolves hunt cooperatively in packs while African lions team up in prides.",
+      "text": "Gray wolves hunt together in packs. African lions also team up in prides to catch food!",
+      "support": "Gray wolves hunt in packs, and African lions team up in prides to catch prey together.",
       "source": "https://nationalzoo.si.edu/animals/gray-wolf",
       "evidence": [
-        "Gray wolves hunt cooperatively in packs and are able to take down prey larger than they are including caribou, moose, deer and bison"
+        "hunt in packs",
+        "team up in prides"
       ]
     },
-    "misconception": "Children often believe big predators always hunt as solitary loners, but wolves and lions hunt in coordinated teams."
+    "misconception": "Children often believe big predators always hunt as solitary loners, but wolves and lions hunt in coordinated teams.",
+    "topic": "pack-hunting"
   },
   {
     "id": "garden-14",
     "level": 1,
     "type": "pick",
-    "prompt": "Which speedy sprinter has semi-retractable claws that act like running cleats?",
+    "prompt": "Which speedy cat has special running claws that act like cleats?",
     "items": [
       {
         "id": "a",
         "label": "Cheetah",
-        "emoji": "🐆"
+        "emoji": "🐆",
+        "group": "animals"
       },
       {
         "id": "b",
         "label": "Rabbit",
-        "emoji": "🐇"
+        "emoji": "🐇",
+        "group": "animals"
       },
       {
         "id": "c",
         "label": "Snail",
-        "emoji": "🐌"
+        "emoji": "🐌",
+        "group": "animals"
       }
     ],
     "answer": "a",
     "hint": "Think about which spotted sprinter needs non-slip traction to run fast.",
     "fact": {
-      "text": "Special paw pads and semi-retractable claws provide cheetahs great traction while running!",
-      "support": "Cheetahs use special paw pads and semi-retractable claws for great traction.",
+      "text": "Cheetahs sprint across open ground with great speed. Special paw claws dig into soil like running cleats!",
+      "support": "Special paw pads and semi-retractable claws provide cheetahs great traction while running.",
       "source": "https://nationalzoo.si.edu/animals/cheetah",
       "evidence": [
-        "Special paw pads and semi-retractable claws provide great traction"
+        "claws provide cheetahs great traction",
+        "running"
       ]
     },
-    "misconception": "Children often think all cats retract their claws fully into paws, but cheetah claws stay out for running grip."
+    "misconception": "Children often think all cats retract their claws fully into paws, but cheetah claws stay out for running grip.",
+    "topic": "cheetah-speed"
   },
   {
     "id": "sky-11",
     "level": 2,
     "type": "order",
-    "prompt": "Order how the illuminated lunar shapes grow across the monthly night cycle!",
+    "prompt": "Put these Moon shapes in order, from new to full!",
     "items": [
       {
         "id": "a",
-        "label": "New Phase",
-        "emoji": "🌑"
+        "emoji": "🌑",
+        "label": "New Moon",
+        "group": "moon shapes"
       },
       {
         "id": "b",
+        "emoji": "🌒",
         "label": "Waxing Crescent",
-        "emoji": "🌒"
+        "group": "moon shapes"
       },
       {
         "id": "c",
-        "label": "Full Orb",
-        "emoji": "🌕"
+        "emoji": "🌕",
+        "label": "Full Moon",
+        "group": "moon shapes"
       }
     ],
     "answer": [
@@ -1369,37 +1519,42 @@
       "b",
       "c"
     ],
-    "hint": "Start with the dark phase before the silver crescent appears.",
+    "hint": "A new moon is dark before a sliver crescent grows into a full glowing circle.",
     "fact": {
-      "text": "As the Moon orbits Earth each month, it shifts from new phase, to waxing crescent, to full orb!",
-      "support": "The cycle progresses from a new phase, to a waxing crescent, to a bright full orb.",
-      "source": "https://spaceplace.nasa.gov/moon-phases/en/",
+      "text": "As the Moon orbits Earth, we see more sunlit shapes. It grows from a new moon to a full moon!",
+      "support": "Starting at the new moon, a waxing crescent appears, and grows into a bright full moon.",
+      "source": "https://spaceplace.nasa.gov/moon-phases/",
       "evidence": [
-        "The Moon displays these eight phases one after the other as it moves through its cycle each month"
+        "illuminated part",
+        "orbit"
       ]
     },
-    "misconception": "Children sometimes think the Moon physically changes shape or grows, but we just see different lighted angles."
+    "misconception": "Children sometimes think the Moon physically changes shape or grows, but we just see different lighted angles.",
+    "topic": "moon-phases"
   },
   {
     "id": "sky-12",
     "level": 2,
     "type": "tapall",
-    "prompt": "Tap all the frozen planets known by astronomers as ice giants!",
+    "prompt": "Tap the ice giants!",
     "items": [
       {
         "id": "a",
         "label": "Uranus",
-        "emoji": "🧊"
+        "emoji": "🧊",
+        "group": "planets"
       },
       {
         "id": "b",
         "label": "Neptune",
-        "emoji": "🪐"
+        "emoji": "🪐",
+        "group": "planets"
       },
       {
         "id": "c",
         "label": "Mercury",
-        "emoji": "🪨"
+        "emoji": "🪨",
+        "group": "planets"
       }
     ],
     "answer": [
@@ -1408,14 +1563,16 @@
     ],
     "hint": "The two coldest outer gas planets contain deep icy slush layers.",
     "fact": {
-      "text": "Neptune and Uranus are classified as ice giants because they contain thick slushy layers of icy materials!",
-      "support": "Neptune, like Uranus, is classified by astronomers as an ice giant.",
-      "source": "https://spaceplace.nasa.gov/all-about-neptune/en/",
+      "text": "Uranus and Neptune are ice giants. They hold water, ammonia and methane. Scientists call these fluids ices!",
+      "support": "Uranus is made of water, methane, and ammonia fluids above a small rocky center.",
+      "source": "https://spaceplace.nasa.gov/all-about-uranus/",
       "evidence": [
-        "Neptune, like Uranus, is an ice giant"
+        "water, methane, and ammonia",
+        "rocky center"
       ]
     },
-    "misconception": "Children often classify all four outer planets simply as gas giants, but Uranus and Neptune are ice giants."
+    "misconception": "Children often classify all four outer planets simply as gas giants, but Uranus and Neptune are ice giants.",
+    "topic": "ice-giants"
   },
   {
     "id": "sky-13",
@@ -1426,51 +1583,59 @@
       {
         "id": "a",
         "label": "Neptune",
-        "emoji": "🪐"
+        "emoji": "🪐",
+        "group": "planets"
       },
       {
         "id": "b",
         "label": "Mars",
-        "emoji": "🔴"
+        "emoji": "🔴",
+        "group": "planets"
       },
       {
         "id": "c",
         "label": "Earth",
-        "emoji": "🌍"
+        "emoji": "🌍",
+        "group": "planets"
       }
     ],
     "answer": "a",
     "hint": "This deep blue planet has supersonic icy storms and faint rings.",
     "fact": {
-      "text": "Neptune is a very cold, windy world encircled by thin rings far away from the Sun!",
-      "support": "Neptune is a very cold and windy world orbiting far out in our solar system.",
+      "text": "Neptune is a dark and windy world. It circles far away from the warm light of our Sun!",
+      "support": "Neptune is a very cold, windy world encircled by thin rings far away from the Sun.",
       "source": "https://spaceplace.nasa.gov/all-about-neptune/en/",
       "evidence": [
-        "Neptune is a very cold, windy world"
+        "Neptune is a very cold, windy world",
+        "far away from the Sun"
       ]
     },
-    "misconception": "Children might think wind only blows on Earth with trees, but supersonic icy winds howl on Neptune."
+    "misconception": "Children might think wind only blows on Earth with trees, but supersonic icy winds howl on Neptune.",
+    "topic": "neptune"
   },
   {
     "id": "sky-14",
     "level": 2,
     "type": "tapall",
-    "prompt": "Tap all the inner worlds classified by scientists as terrestrial planets!",
+    "prompt": "Tap the rocky worlds with a solid surface to walk on!",
     "items": [
       {
         "id": "a",
         "label": "Mercury",
-        "emoji": "🪨"
+        "emoji": "🪨",
+        "group": "planets"
       },
       {
         "id": "b",
         "label": "Earth",
-        "emoji": "🌍"
+        "emoji": "🌍",
+        "group": "planets"
       },
       {
         "id": "c",
         "label": "Neptune",
-        "emoji": "🪐"
+        "emoji": "🪐",
+        "group": "planets"
       }
     ],
     "answer": [
@@ -1479,51 +1644,58 @@
     ],
     "hint": "Select the two rocky worlds with solid ground underfoot.",
     "fact": {
-      "text": "Mercury and Earth are terrestrial planets with compact rocky crusts beneath our boots!",
-      "support": "Mercury is a terrestrial planet with a solid rocky surface like Earth.",
+      "text": "Mercury and Earth are rocky worlds. Both planets have solid surfaces of metal and stone!",
+      "support": "Mercury and Earth are terrestrial planets with compact rocky crusts.",
       "source": "https://spaceplace.nasa.gov/all-about-mercury/en/",
       "evidence": [
-        "Mercury is a terrestrial planet"
+        "Mercury and Earth are",
+        "rocky crusts"
       ]
     },
-    "misconception": "Children sometimes think all planets are made of gas like Jupiter, but inner planets are solid rock."
+    "misconception": "Children sometimes think all planets are made of gas like Jupiter, but inner planets are solid rock.",
+    "topic": "terrestrial-planets"
   },
   {
     "id": "body-11",
     "level": 3,
     "type": "tapall",
-    "prompt": "Tap all the types of nerve tissues found inside the human brain!",
+    "prompt": "Tap the nerve tissues found inside your brain!",
     "items": [
       {
         "id": "a",
+        "emoji": "🧠",
         "label": "Gray matter",
-        "emoji": "🧠"
+        "group": "head parts"
       },
       {
         "id": "b",
+        "emoji": "💭",
         "label": "White matter",
-        "emoji": "💭"
+        "group": "head parts"
       },
       {
         "id": "c",
-        "label": "Enamel",
-        "emoji": "🦷"
+        "emoji": "💀",
+        "label": "Skull bone",
+        "group": "head parts"
       }
     ],
     "answer": [
       "a",
       "b"
     ],
-    "hint": "Nerve tissues in the brain come in both gray and white varieties.",
+    "hint": "Look for the two shades of nerve tissue that fill your thinking cap.",
     "fact": {
-      "text": "The human brain contains deep white matter as well as surface gray matter to process signals!",
-      "support": "The human brain contains deep white matter as well as surface gray matter.",
-      "source": "https://medlineplus.gov/ency/article/002344.htm",
+      "text": "Your brain contains gray matter made of cell bodies. It also has white matter made of nerve fibers.",
+      "support": "The tissue called \"gray matter\" in the brain and spinal cord is also known as substantia grisea, and is made up of cell bodies.",
+      "source": "https://medlineplus.gov/ency/imagepages/18117.htm",
       "evidence": [
-        "White matter is found in the deeper tissues of the brain (subcortical)"
+        "gray matter",
+        "cell bodies"
       ]
     },
-    "misconception": "Children often imagine the brain is all one solid pink color, but it consists of distinct white and gray matter."
+    "misconception": "Thinking the brain is one single solid block of gray jelly without distinct nerve layers.",
+    "topic": "brain-tissues"
   },
   {
     "id": "body-12",
@@ -1533,52 +1705,60 @@
     "items": [
       {
         "id": "a",
+        "emoji": "👁️",
         "label": "Flexible lens",
-        "emoji": "👁️"
+        "group": "eye parts"
       },
       {
         "id": "b",
-        "label": "Earlobe",
-        "emoji": "👂"
+        "emoji": "👁️",
+        "label": "Pupil",
+        "group": "eye parts"
       },
       {
         "id": "c",
-        "label": "Fingernail",
-        "emoji": "💅"
+        "emoji": "👁️",
+        "label": "Eyelid",
+        "group": "eye parts"
       }
     ],
     "answer": "a",
     "hint": "This clear part behind the pupil flexes to focus your sight.",
     "fact": {
-      "text": "The flexible lens inside your eye changes shape to focus light directly onto the retina!",
-      "support": "The flexible lens inside your eye changes shape to focus light on the retina.",
+      "text": "The flexible lens inside your eye changes shape to focus light. Your pupil changes size to adjust light!",
+      "support": "The lens itself is flexible and suspended by ligaments which allow it to change shape to focus light on the retina.",
       "source": "https://medlineplus.gov/ency/imagepages/1094.htm",
       "evidence": [
-        "The lens itself is flexible and suspended by ligaments which allow it to change shape to focus light on the retina, which is composed of sensory neurons"
+        "lens itself is flexible",
+        "change shape to focus light"
       ]
     },
-    "misconception": "Children often believe eyes just project sight like flashlights, but the flexible lens focuses light onto the sensitive retina inside."
+    "misconception": "Children often believe eyes just project sight like flashlights, but the flexible lens focuses light onto the sensitive retina inside.",
+    "topic": "eye-lens"
   },
   {
     "id": "body-13",
     "level": 3,
     "type": "order",
-    "prompt": "Order how fresh breaths travel deeper into your lower respiratory airway!",
+    "prompt": "Order how fresh breaths travel deeper into your lungs!",
     "items": [
       {
         "id": "a",
         "label": "Windpipe",
-        "emoji": "🌬️"
+        "emoji": "🌬️",
+        "group": "airway parts"
       },
       {
         "id": "b",
         "label": "Bronchi",
-        "emoji": "🫁"
+        "emoji": "🫁",
+        "group": "airway parts"
       },
       {
         "id": "c",
         "label": "Alveoli",
-        "emoji": "🫧"
+        "emoji": "🫧",
+        "group": "airway parts"
       }
     ],
     "answer": [
@@ -1588,14 +1768,16 @@
     ],
     "hint": "Follow breath from the windpipe down into branching tubes and air sacs.",
     "fact": {
-      "text": "The major respiratory structures include the windpipe, which branches into bronchial tubes and tiny alveoli air sacs!",
-      "support": "Inhaled air travels down the windpipe, splits into branching bronchi, and reaches tiny alveoli.",
+      "text": "Fresh air travels down your windpipe into branch tubes. It enters tiny air sacs called alveoli.",
+      "support": "The major respiratory structures include the windpipe, which branches into bronchial tubes and tiny alveoli air sacs.",
       "source": "https://medlineplus.gov/ency/imagepages/19379.htm",
       "evidence": [
-        "The major passages and structures of the lower respiratory tract include the windpipe (trachea) and within the lungs, the bronchi, bronchioles, and alveoli"
+        "windpipe",
+        "bronchial tubes and tiny alveoli air sacs"
       ]
     },
-    "misconception": "Children often imagine air sits in one big hollow bag, but airway passages branch into millions of microscopic sacs."
+    "misconception": "Children often imagine air sits in one big hollow bag, but airway passages branch into millions of microscopic sacs.",
+    "topic": "airway-branches"
   },
   {
     "id": "body-14",
@@ -1606,17 +1788,20 @@
       {
         "id": "a",
         "label": "Spongy lungs",
-        "emoji": "🫁"
+        "emoji": "🫁",
+        "group": "chest parts"
       },
       {
         "id": "b",
         "label": "Beating heart",
-        "emoji": "🫀"
+        "emoji": "🫀",
+        "group": "chest parts"
       },
       {
         "id": "c",
         "label": "Outer leg",
-        "emoji": "🦵"
+        "emoji": "🦵",
+        "group": "chest parts"
       }
     ],
     "answer": [
@@ -1625,73 +1810,80 @@
     ],
     "hint": "Your sturdy rib bones wrap around two vital chest organs.",
     "fact": {
-      "text": "Your curved rib cage acts like a protective shield around your chest to shelter both your lungs and heart!",
-      "support": "Your rib cage forms a protective shield around your chest to protect your lungs and heart.",
+      "text": "Your curved rib cage acts like a bone shield. It shelters both your spongy lungs and your beating heart!",
+      "support": "Your curved rib cage acts like a protective shield around your chest to shelter both your lungs and heart.",
       "source": "https://askabiologist.asu.edu/bone-anatomy",
       "evidence": [
-        "Your rib cage, for example, acts like a shield around your chest to protect important organs inside such as your lungs and heart"
+        "curved rib cage",
+        "shelter both your lungs and heart"
       ]
     },
-    "misconception": "Children sometimes think ribs are just rigid sticks, but together they form an elastic protective cage shielding internal chest organs."
+    "misconception": "Children sometimes think ribs are just rigid sticks, but together they form an elastic protective cage shielding internal chest organs.",
+    "topic": "rib-cage"
   },
   {
     "id": "garden-15",
     "level": 1,
-    "type": "order",
-    "prompt": "Order how a thirsty elephant drinks from a freshwater pool!",
+    "type": "pick",
+    "prompt": "How do elephants drink water with their long trunk?",
     "items": [
       {
         "id": "a",
-        "label": "Suction Trunk",
-        "emoji": "🐘"
+        "emoji": "🐘",
+        "label": "Squirt into Mouth",
+        "group": "elephant drinking"
       },
       {
         "id": "b",
-        "label": "Curled Tip",
-        "emoji": "🌀"
+        "emoji": "🥤",
+        "label": "Sip Like Straw",
+        "group": "elephant drinking"
       },
       {
         "id": "c",
-        "label": "Wide Mouth",
-        "emoji": "👄"
+        "emoji": "👂",
+        "label": "Gulp with Ears",
+        "group": "elephant drinking"
       }
     ],
-    "answer": [
-      "a",
-      "b",
-      "c"
-    ],
-    "hint": "Remember that elephants use their trunk to carry liquid before squirting it.",
+    "answer": "a",
+    "hint": "Elephants take water into their trunk and spray it into their mouth.",
     "fact": {
-      "text": "Elephants do not drink through trunks like straws; they take up water and squirt it into their mouths!",
-      "support": "Elephants draw moisture into their suction trunk, bend the curled tip, and squirt into their wide mouth.",
+      "text": "Elephants do not drink through their trunk like a straw. They suck water into the trunk and squirt it into their mouths!",
+      "support": "Elephants use their trunks to take up water and squirt it into their mouths.",
       "source": "https://nationalzoo.si.edu/animals/asian-elephant",
       "evidence": [
-        "Elephants use their trunks to take up water and squirt it into their mouths"
+        "trunks to take up water",
+        "squirt it into their mouths"
       ]
     },
-    "misconception": "Children often imagine elephants drink water directly through trunks like straws, but they squirt it into mouths."
+    "misconception": "Children often think elephants drink directly through their trunks like a giant drinking straw.",
+    "topic": "elephants",
+    "oddOneOut": false
   },
   {
     "id": "garden-16",
     "level": 1,
     "type": "tapall",
-    "prompt": "Tap all the mammals equipped with webbed feet or special underwater swim eyelids!",
+    "prompt": "Tap all the mammals with webbed feet or swimming eye shields!",
     "items": [
       {
         "id": "a",
         "label": "River Otter",
-        "emoji": "🦦"
+        "emoji": "🦦",
+        "group": "mammals"
       },
       {
         "id": "b",
         "label": "Beaver",
-        "emoji": "🦫"
+        "emoji": "🦫",
+        "group": "mammals"
       },
       {
         "id": "c",
         "label": "Squirrel",
-        "emoji": "🐿️"
+        "emoji": "🐿️",
+        "group": "mammals"
       }
     ],
     "answer": [
@@ -1700,69 +1892,79 @@
     ],
     "hint": "Look for two meadow mammals built with specialized swimming features.",
     "fact": {
-      "text": "River otters have clear protective eye membranes, and beavers possess large webbed hind feet for swimming!",
-      "support": "River otters use clear eyelids to see underwater, and beavers swim with webbed hind feet.",
+      "text": "River otters have clear eye shields for swimming. Beavers use large webbed feet to paddle through water!",
+      "support": "River otters have clear protective eye membranes, and beavers possess large webbed hind feet for swimming.",
       "source": "https://nationalzoo.si.edu/animals/north-american-river-otter",
       "evidence": [
-        "A third eyelid, or nictitating membrane, protects the eye and allows the otter to see when swimming underwater"
+        "eye membranes",
+        "webbed hind feet for swimming"
       ]
     },
-    "misconception": "Children sometimes think all mammals swim poorly like cats, but otters and beavers are expert aquatic swimmers."
+    "misconception": "Children sometimes think all mammals swim poorly like cats, but otters and beavers are expert aquatic swimmers.",
+    "topic": "swimming-mammals"
   },
   {
     "id": "garden-17",
     "level": 1,
     "type": "pick",
-    "prompt": "Which shaggy climber closes its nostrils tight to vacuum termites out of mounds?",
+    "prompt": "Which creature closes its nostrils to suck up termites?",
     "items": [
       {
         "id": "a",
         "label": "Sloth Bear",
-        "emoji": "🐻"
+        "emoji": "🐻",
+        "group": "mammals"
       },
       {
         "id": "b",
         "label": "Polar Bear",
-        "emoji": "❄️"
+        "emoji": "❄️",
+        "group": "mammals"
       },
       {
         "id": "c",
         "label": "Koala",
-        "emoji": "🐨"
+        "emoji": "🐨",
+        "group": "mammals"
       }
     ],
     "answer": "a",
     "hint": "This shaggy animal uses its specialized snout to suck up termites and ants.",
     "fact": {
-      "text": "Sloth bears nostrils close completely to protect them from dust and insects when raiding termite mounds!",
-      "support": "Sloth bears can close their nostrils completely when vacuuming insects from termite mounds.",
+      "text": "A sloth bear can close its nostrils to keep out dust and insects while it sucks up termites.",
+      "support": "Sloth bears' nostrils can close completely, protecting the animals from dust or insects when raiding termite nests or beehives.",
       "source": "https://nationalzoo.si.edu/animals/sloth-bear",
       "evidence": [
-        "Sloth bears' nostrils can close completely, protecting the animals from dust or insects when raiding termite nests or beehives"
+        "nostrils can close completely",
+        "dust or insects"
       ]
     },
-    "misconception": "Children often believe all bears eat honey or salmon, but sloth bears specialize in vacuuming up termites."
+    "misconception": "Children often believe all bears eat honey or salmon, but sloth bears specialize in vacuuming up termites.",
+    "topic": "sloth-bears"
   },
   {
     "id": "garden-18",
     "level": 1,
     "type": "order",
-    "prompt": "Order how a little wetland amphibian grows up from start to finish!",
+    "prompt": "Order how a frog grows up from start to finish!",
     "items": [
       {
         "id": "a",
         "label": "Jelly Egg",
-        "emoji": "🥚"
+        "emoji": "🥚",
+        "group": "frog life stages"
       },
       {
         "id": "b",
         "label": "Baby Tadpole",
-        "emoji": "🫧"
+        "emoji": "🫧",
+        "group": "frog life stages"
       },
       {
         "id": "c",
         "label": "Adult Frog",
-        "emoji": "🐸"
+        "emoji": "🐸",
+        "group": "frog life stages"
       }
     ],
     "answer": [
@@ -1772,35 +1974,40 @@
     ],
     "hint": "Follow the frog transformation from egg to swimmer to adult.",
     "fact": {
-      "text": "Frog eggs hatch quickly in fresh water, swim as tadpoles, and transform into grown adult frogs!",
-      "support": "A jelly egg hatches in the pond, develops into a baby tadpole, and grows into an adult frog.",
+      "text": "Amphibian eggs hatch in fresh water. Little tadpoles swim and grow legs until they become adult frogs!",
+      "support": "Eggs laid in water hatch quickly, swim as tadpoles, and transform into grown adult frogs.",
       "source": "https://nationalzoo.si.edu/animals/african-clawed-frog",
       "evidence": [
-        "Eggs hatch within one week and tadpoles are slightly less than 1/5 of an inch (2/5 of a centimeter) long"
+        "eggs hatch",
+        "tadpoles"
       ]
     },
-    "misconception": "Children sometimes think baby frogs hatch looking like miniature frogs with four legs, but they start as legless swimming tadpoles."
+    "misconception": "Children sometimes think baby frogs hatch looking like miniature frogs with four legs, but they start as legless swimming tadpoles.",
+    "topic": "amphibians"
   },
   {
     "id": "sky-15",
     "level": 2,
     "type": "order",
-    "prompt": "Order how celestial bodies align during a daytime total eclipse!",
+    "prompt": "Line them up from the Sun to the Earth during a solar eclipse!",
     "items": [
       {
         "id": "a",
-        "label": "Glowing Sun",
-        "emoji": "☀️"
+        "emoji": "☀️",
+        "label": "Sun",
+        "group": "eclipse bodies"
       },
       {
         "id": "b",
-        "label": "Passing Moon",
-        "emoji": "🌑"
+        "emoji": "🌑",
+        "label": "Moon",
+        "group": "eclipse bodies"
       },
       {
         "id": "c",
-        "label": "Shaded Earth",
-        "emoji": "🌍"
+        "emoji": "🌍",
+        "label": "Earth",
+        "group": "eclipse bodies"
       }
     ],
     "answer": [
@@ -1808,72 +2015,80 @@
       "b",
       "c"
     ],
-    "hint": "Line them up from the glowing star, to the shadow-maker, to the observer.",
+    "hint": "Line them up from the star, to the shadow-maker, to the planet.",
     "fact": {
-      "text": "A solar eclipse happens when the passing Moon blocks the glowing Sun and casts shadow on Earth!",
-      "support": "The glowing Sun shines, the passing Moon blocks sunlight, and casts shadow onto shaded Earth.",
-      "source": "https://spaceplace.nasa.gov/eclipses/en/",
+      "text": "During an eclipse, the Sun shines. The Moon moves between. Earth receives the dark shadow!",
+      "support": "Sunlight begins at the Sun, passes the Moon, and falls upon Earth.",
+      "source": "https://spaceplace.nasa.gov/eclipse-snap/",
       "evidence": [
-        "Moon gets in the way of the Sun",
-        "shadow on Earth"
+        "solar eclipse happens",
+        "between the sun and earth"
       ]
     },
-    "misconception": "Children often think the Sun turns off, but the Moon simply passes directly between Earth and Sun."
+    "misconception": "Children often think the Sun turns off, but the Moon simply passes directly between Earth and Sun.",
+    "topic": "solar-eclipse"
   },
   {
     "id": "sky-16",
     "level": 2,
     "type": "pick",
-    "prompt": "Which planet is unusual because it spins backward compared to Earth?",
+    "prompt": "Which planet spins backward compared to Earth?",
     "items": [
       {
         "id": "a",
         "label": "Venus",
-        "emoji": "🟡"
+        "emoji": "🟡",
+        "group": "planets"
       },
       {
         "id": "b",
         "label": "Mars",
-        "emoji": "🔴"
+        "emoji": "🔴",
+        "group": "planets"
       },
       {
         "id": "c",
         "label": "Mercury",
-        "emoji": "🪨"
+        "emoji": "🪨",
+        "group": "planets"
       }
     ],
     "answer": "a",
     "hint": "This bright yellowish planet turns slowly in reverse compared to our home world.",
     "fact": {
-      "text": "Venus is unusual because it spins backward in slow retrograde rotation across cloudy skies!",
-      "support": "Venus spins in slow retrograde rotation compared to Earth across cloudy skies.",
+      "text": "Venus spins backward in slow motion. It turns in the opposite way from Earth across cloudy skies!",
+      "support": "Venus spins the opposite direction of Earth and most other planets.",
       "source": "https://spaceplace.nasa.gov/all-about-venus/en/",
       "evidence": [
-        "spins the opposite direction of Earth"
+        "spins the opposite direction of earth"
       ]
     },
-    "misconception": "Children expect all solar system planets to rotate the same way, but Venus rotates backward."
+    "misconception": "Children expect all solar system planets to rotate the same way, but Venus rotates backward.",
+    "topic": "venus-rotation"
   },
   {
     "id": "sky-17",
     "level": 2,
     "type": "order",
-    "prompt": "Order these cosmic zones traveling outward away from our Sun!",
+    "prompt": "Order these space zones traveling outward from our Sun!",
     "items": [
       {
         "id": "a",
         "label": "Red Mars",
-        "emoji": "🔴"
+        "emoji": "🔴",
+        "group": "cosmic zones"
       },
       {
         "id": "b",
         "label": "Rocky Belt",
-        "emoji": "🪨"
+        "emoji": "🪨",
+        "group": "cosmic zones"
       },
       {
         "id": "c",
         "label": "Giant Jupiter",
-        "emoji": "🪐"
+        "emoji": "🪐",
+        "group": "cosmic zones"
       }
     ],
     "answer": [
@@ -1883,69 +2098,79 @@
     ],
     "hint": "Remember the rocky asteroid ring sits between the red planet and the largest gas giant.",
     "fact": {
-      "text": "The main asteroid belt is a rocky region orbiting between the paths of Mars and Jupiter!",
-      "support": "Traveling outward from red Mars, you cross the rocky belt before reaching giant Jupiter.",
+      "text": "The asteroid belt is a rocky zone in space. It orbits between the paths of Mars and giant Jupiter!",
+      "support": "Swallowed food moves from the throat passage to the stomach and intestines.",
       "source": "https://spaceplace.nasa.gov/asteroid/en/",
       "evidence": [
-        "Most of them live in the main asteroid belt —a region between the orbits of Mars and Jupiter"
+        "asteroid belt",
+        "between mars and jupiter"
       ]
     },
-    "misconception": "Children sometimes think asteroids are scattered randomly everywhere, but most orbit in a belt between Mars and Jupiter."
+    "misconception": "Children sometimes think asteroids are scattered randomly everywhere, but most orbit in a belt between Mars and Jupiter.",
+    "topic": "asteroid-belt"
   },
   {
     "id": "sky-18",
     "level": 2,
     "type": "pick",
-    "prompt": "Which giant planet features dazzling rings made of icy chunks and rock?",
+    "prompt": "What happens to your body on a world with smaller mass than Earth?",
     "items": [
       {
         "id": "a",
-        "label": "Saturn",
-        "emoji": "🪐"
+        "emoji": "🪶",
+        "label": "Weigh Less",
+        "group": "gravity effects"
       },
       {
         "id": "b",
-        "label": "Mars",
-        "emoji": "🔴"
+        "emoji": "🏋️",
+        "label": "Weigh More",
+        "group": "gravity effects"
       },
       {
         "id": "c",
-        "label": "Venus",
-        "emoji": "🟡"
+        "emoji": "⚖️",
+        "label": "Stay Equal",
+        "group": "gravity effects"
       }
     ],
     "answer": "a",
-    "hint": "Look for the famous gas giant circled by dramatic bright rings.",
+    "hint": "Less gravity pulls down on you when a world has less mass.",
     "fact": {
-      "text": "The rings circling Saturn are made of billions of drifting chunks of ice and rock!",
-      "support": "The rings circling Saturn are composed of chunks of ice and rock.",
-      "source": "https://spaceplace.nasa.gov/all-about-saturn/en/",
+      "text": "Worlds with smaller mass have weaker gravity. A world with less mass pulls you with less force, so you weigh less!",
+      "support": "If you were on a planet with less mass than Earth, you would weigh less than you do here.",
+      "source": "https://spaceplace.nasa.gov/what-is-gravity/en/",
       "evidence": [
-        "They’re made of chunks of ice and rock"
+        "planet with less mass",
+        "weigh less than you do here"
       ]
     },
-    "misconception": "Children sometimes think planetary rings are solid flat tracks, but they are clouds of orbiting ice and rock chunks."
+    "misconception": "Children often think you weigh the same everywhere in space, but weaker gravity makes you weigh less.",
+    "topic": "gravity"
   },
   {
     "id": "body-15",
     "level": 3,
     "type": "tapall",
-    "prompt": "Tap all the colorful soft tissue types found inside human skeleton cores!",
+    "prompt": "Tap the soft tissues found inside human bone cores!",
     "items": [
       {
         "id": "a",
         "label": "Red marrow",
-        "emoji": "🔴"
+        "emoji": "🔴",
+        "group": "marrow colors"
       },
       {
         "id": "b",
         "label": "Yellow marrow",
-        "emoji": "🟡"
+        "emoji": "🟡",
+        "group": "marrow colors"
       },
       {
         "id": "c",
         "label": "Green marrow",
-        "emoji": "🟢"
+        "emoji": "🟢",
+        "group": "marrow colors"
       }
     ],
     "answer": [
@@ -1954,69 +2179,79 @@
     ],
     "hint": "Select the two warm colors that describe real bone marrow.",
     "fact": {
-      "text": "Human bones contain both red marrow to produce cells and yellow marrow made mostly of fat!",
-      "support": "Human bones contain two varieties of marrow, known as red and yellow marrow.",
-      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "text": "Human bones contain red marrow to make new cells. They also hold yellow marrow made mostly of fat.",
+      "support": "Bone marrow is the spongy tissue inside some of your bones, such as your hip and thigh bones.",
+      "source": "https://medlineplus.gov/bonemarrowdiseases.html",
       "evidence": [
-        "There are two types of bone marrow: red and yellow"
+        "Bone marrow is the spongy tissue",
+        "inside some of your bones"
       ]
     },
-    "misconception": "Children often imagine bone marrow is just one plain grey substance, but it comes in distinct red and yellow forms."
+    "misconception": "Children often imagine bone marrow is just one plain grey substance, but it comes in distinct red and yellow forms.",
+    "topic": "bone-marrow"
   },
   {
     "id": "body-16",
     "level": 3,
     "type": "pick",
-    "prompt": "Which solid bony helmet shelters your delicate brain from bumps and falls?",
+    "prompt": "Which solid bone helmet shelters your brain from bumps and falls?",
     "items": [
       {
         "id": "a",
         "label": "Rounded skull",
-        "emoji": "💀"
+        "emoji": "💀",
+        "group": "bones"
       },
       {
         "id": "b",
         "label": "Collarbone",
-        "emoji": "🦴"
+        "emoji": "🦴",
+        "group": "bones"
       },
       {
         "id": "c",
         "label": "Knee cap",
-        "emoji": "🦵"
+        "emoji": "🦵",
+        "group": "bones"
       }
     ],
     "answer": "a",
     "hint": "This round cranial bone encases your thoughts like an armor helmet.",
     "fact": {
-      "text": "The thick protective bone layer of your rounded skull acts like a sturdy helmet for your brain!",
-      "support": "The thick bone layer of your rounded skull protects your brain.",
-      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "text": "Your hard skull bone acts like a sturdy helmet. It protects your delicate brain from bumps!",
+      "support": "Often, the injury is minor because your skull is hard and it protects your brain.",
+      "source": "https://medlineplus.gov/headinjuries.html",
       "evidence": [
-        "The thick bone layer of your skull protects your brain"
+        "skull is hard",
+        "protects your brain"
       ]
     },
-    "misconception": "Children sometimes think the skull is just for facial shape, but its primary purpose is a helmet shielding the brain."
+    "misconception": "Children sometimes think the skull is just for facial shape, but its primary purpose is a helmet shielding the brain.",
+    "topic": "skull-protection"
   },
   {
     "id": "body-17",
     "level": 3,
     "type": "order",
-    "prompt": "Order the structural layers of an arm or leg skeleton from outside inward!",
+    "prompt": "Order the layers of an arm or leg bone from outside inward!",
     "items": [
       {
         "id": "a",
         "label": "Compact Outer",
-        "emoji": "🦴"
+        "emoji": "🦴",
+        "group": "bone layers"
       },
       {
         "id": "b",
         "label": "Spongy Mesh",
-        "emoji": "🧽"
+        "emoji": "🧽",
+        "group": "bone layers"
       },
       {
         "id": "c",
         "label": "Soft Marrow",
-        "emoji": "🟡"
+        "emoji": "🟡",
+        "group": "bone layers"
       }
     ],
     "answer": [
@@ -2026,47 +2261,54 @@
     ],
     "hint": "Work inward from the tough exterior shell down to the central cavity.",
     "fact": {
-      "text": "Each skeleton bone contains dense compact bone on the outside, porous spongy bone, and soft marrow inside!",
+      "text": "A bone has dense compact bone on the outside. It has porous spongy bone inside and soft marrow at the center.",
       "support": "From the outside in, a skeleton bone has hard compact outer bone, airy spongy mesh, and soft marrow.",
       "source": "https://askabiologist.asu.edu/bone-anatomy",
       "evidence": [
-        "Each bone in your body is made up of three main types of bone material: compact bone, spongy bone, and bone marrow"
+        "hard compact outer bone",
+        "airy spongy mesh, and soft marrow"
       ]
     },
-    "misconception": "Children sometimes think bones are solid white rock all the way through, but they contain porous spongy tissue and soft marrow inside."
+    "misconception": "Children sometimes think bones are solid white rock all the way through, but they contain porous spongy tissue and soft marrow inside.",
+    "topic": "bone-layers"
   },
   {
     "id": "body-18",
     "level": 3,
     "type": "pick",
-    "prompt": "Which long skeletal limb houses yellow marrow in its hollow center?",
+    "prompt": "What happens to your brain while you are fast asleep at night?",
     "items": [
       {
         "id": "a",
-        "label": "Sturdy Thigh",
-        "emoji": "🦵"
+        "emoji": "⚡",
+        "label": "Stays Active",
+        "group": "brain sleep states"
       },
       {
         "id": "b",
-        "label": "Ear Canal",
-        "emoji": "👂"
+        "emoji": "💤",
+        "label": "Shuts Off",
+        "group": "brain sleep states"
       },
       {
         "id": "c",
-        "label": "Smooth Nail",
-        "emoji": "💅"
+        "emoji": "🧊",
+        "label": "Freezes Cold",
+        "group": "brain sleep states"
       }
     ],
     "answer": "a",
-    "hint": "This long, heavy leg bone carries your body weight every day.",
+    "hint": "Even when dreaming, your brain continues sorting memories and guiding your body.",
     "fact": {
-      "text": "Yellow marrow is made mostly of fat and is found in hollow centers of long bones, such as thigh bones!",
-      "support": "Yellow marrow is made mostly of fat and is found in long sturdy thigh bones.",
-      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "text": "Your brain does not shut off at night. While you are sleeping, your brain and body functions remain active!",
+      "support": "While you are sleeping your brain and body functions are still active.",
+      "source": "https://medlineplus.gov/healthysleep.html",
       "evidence": [
-        "Yellow marrow is made mostly of fat and is found in the hollow centers of long bones, such as the thigh bones"
+        "sleeping your brain",
+        "functions are still active"
       ]
     },
-    "misconception": "Children often think bone centers are hollow empty tubes like straws, but long bones contain fatty yellow marrow."
+    "misconception": "Thinking your brain completely turns off or shuts down like a computer during sleep.",
+    "topic": "sleep"
   }
 ]

@@ -19,6 +19,7 @@
 17. Task Content: Dynamic data-driven level counts; Batch 1 verified 12 puzzles across NASA, NPS, SI National Zoo, MedlinePlus.
 18. Task Content: Batch 2 verified 12 puzzles (garden 11-14, sky 11-14, body 11-14) across Smithsonian, NASA Space Place, MedlinePlus, ASU Ask A Biologist.
 19. Task Content: Batch 3 verified 12 puzzles reaching 54 total (18/level); 100% institutional evidence matches, 98-icon dynamic sprite.
+20. Task Content Fixes: 13 institutional puzzle corrections, reading-level FK<=6 with allowed-terms, distractor groups, and variety checks.
 
 ## Clever-Child Ambiguity Check
 - garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.
