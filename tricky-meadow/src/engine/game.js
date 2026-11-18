@@ -3,6 +3,51 @@ import puzzlesData from '../data/puzzles.json' with { type: 'json' };
 import { calculateStars, isLevelUnlocked, checkAnswer } from './scoring.js';
 import { loadProgress, saveProgress, resetProgress as storageReset } from './storage.js';
 
+export function createRng(seed) {
+  let s = (seed !== undefined && seed !== null
+    ? seed
+    : (typeof globalThis !== 'undefined' && globalThis.crypto?.getRandomValues
+        ? globalThis.crypto.getRandomValues(new Uint32Array(1))[0]
+        : (Math.random() * 0xFFFFFFFF >>> 0))) >>> 0;
+  return function next() {
+    s |= 0;
+    s = s + 0x6D2B79F5 | 0;
+    let t = Math.imul(s ^ s >>> 15, 1 | s);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+export function shuffleArray(arr, rng) {
+  const result = [...arr];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+export function shufflePuzzleItems(items, puzzleType, answer, seed = null) {
+  if (!items || items.length <= 1) return items ? [...items] : [];
+  const rng = createRng(seed);
+
+  if (puzzleType === 'order') {
+    const answerOrder = Array.isArray(answer) ? answer : [];
+    let shuffled;
+    let attempts = 0;
+    do {
+      shuffled = shuffleArray(items, rng);
+      attempts++;
+    } while (
+      attempts < 100 &&
+      shuffled.every((item, idx) => item.id === answerOrder[idx])
+    );
+    return shuffled;
+  }
+
+  return shuffleArray(items, rng);
+}
+
 export const LEVELS = [
   { id: 1, name: 'Garden & Animals', emoji: '🌱' },
   { id: 2, name: 'Sky & Space', emoji: '🪐' },
@@ -28,6 +73,8 @@ export class GameManager {
     this.tapAllSelection = new Set();
     this.feedback = null;
     this.isShaking = false;
+    this.displayedItems = [];
+    this.disableShuffle = options.disableShuffle || false;
     this.listeners = new Set();
 
     this.bindDebugHook();
@@ -41,6 +88,9 @@ export class GameManager {
         startLevel: (lvl) => this.startLevel(lvl),
         startPuzzle: (id) => this.startPuzzle(id),
         isUnlocked: (lvl) => this.isUnlocked(lvl),
+        getDisplayedItems: () => this.getCurrentDisplayedItems(),
+        setDisableShuffle: (val) => { this.disableShuffle = val; },
+        puzzles: this.puzzles,
         useHint: () => this.useHint(),
         solveCurrentPuzzle: () => this.solveCurrentPuzzle(),
         resetProgress: () => this.resetAllProgress()
@@ -72,6 +122,14 @@ export class GameManager {
 
   getCurrentPuzzle() {
     return this.puzzles.find(p => p.id === this.puzzleId) || null;
+  }
+
+  getCurrentDisplayedItems() {
+    if (this.displayedItems && this.displayedItems.length > 0) {
+      return this.displayedItems;
+    }
+    const current = this.getCurrentPuzzle();
+    return current ? current.items : [];
   }
 
   getLevelPuzzles(level = this.level) {
@@ -132,6 +190,9 @@ export class GameManager {
     this.tapAllSelection = new Set();
     this.feedback = null;
     this.isShaking = false;
+    this.displayedItems = this.disableShuffle
+      ? [...puzzle.items]
+      : shufflePuzzleItems(puzzle.items, puzzle.type, puzzle.answer);
     this.screen = 'puzzle';
     this.notify();
   }

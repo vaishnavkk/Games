@@ -514,15 +514,81 @@ async function assertScreenInvariants(page, { requireMascot = false } = {}) {
 }
 
 /**
- * Self-test routine: plants 5 defects and verifies harness catches all 5:
+ * Naive player simulation:
+ * Always picks the first card (or taps the first k, or taps in displayed order).
+ * Across all 54 puzzles x startsPerPuzzle:
+ * - pick win rate < 50%
+ * - tapall win rate < 50%
+ * - order win rate === 0%
+ */
+export async function runNaivePlayerSimulation(page, puzzles, disableShuffle = false) {
+  return await page.evaluate(({ puzzles, disableShuffle }) => {
+    if (!window.__meadow) throw new Error('window.__meadow is not available');
+    window.__meadow.setDisableShuffle(disableShuffle);
+    let pickTotal = 0, pickWins = 0;
+    let tapallTotal = 0, tapallWins = 0;
+    let orderTotal = 0, orderWins = 0;
+    const startsPerPuzzle = 50;
+
+    for (const p of puzzles) {
+      for (let s = 0; s < startsPerPuzzle; s++) {
+        window.__meadow.startPuzzle(p.id);
+        const displayed = window.__meadow.getDisplayedItems();
+        if (p.type === 'pick') {
+          pickTotal++;
+          if (displayed[0] && displayed[0].id === p.answer) {
+            pickWins++;
+          }
+        } else if (p.type === 'tapall') {
+          tapallTotal++;
+          const k = p.answer.length;
+          const firstK = displayed.slice(0, k).map(i => i.id);
+          const ansSet = new Set(p.answer);
+          if (firstK.length === k && firstK.every(id => ansSet.has(id))) {
+            tapallWins++;
+          }
+        } else if (p.type === 'order') {
+          orderTotal++;
+          const isIdentical = displayed.length === p.answer.length &&
+            displayed.every((item, idx) => item.id === p.answer[idx]);
+          if (isIdentical) {
+            orderWins++;
+          }
+        }
+      }
+    }
+    // Restore default
+    window.__meadow.setDisableShuffle(false);
+
+    const pickRate = pickTotal > 0 ? pickWins / pickTotal : 0;
+    const tapallRate = tapallTotal > 0 ? tapallWins / tapallTotal : 0;
+    const orderRate = orderTotal > 0 ? orderWins / orderTotal : 0;
+
+    const passed = pickRate < 0.5 && tapallRate < 0.5 && orderRate === 0;
+    return {
+      passed,
+      pickRate,
+      tapallRate,
+      orderRate,
+      pickWins, pickTotal,
+      tapallWins, tapallTotal,
+      orderWins, orderTotal
+    };
+  }, { puzzles, disableShuffle });
+}
+
+/**
+ * Self-test routine: plants 7 defects and verifies harness catches all 7:
  * 1. "undefined" text in a fact
  * 2. Invisible overlay over Next
  * 3. Icon button whose <use> points to a missing symbol
  * 4. Header title shifted 12 px
  * 5. Stars absolutely positioned over title at 360px
+ * 6. Light-grey text on cream (contrast defect)
+ * 7. Un-shuffled state (naive player check fails if shuffle is disabled)
  */
-async function runSelfTest(serverUrl) {
-  console.log('[selfplay] Running --selftest (verifying harness catches 6 injected defects)...');
+async function runSelfTest(serverUrl, puzzles) {
+  console.log('[selfplay] Running --selftest (verifying harness catches 7 injected defects)...');
   const browser = await puppeteer.launch(launchOptions());
   const page = await browser.newPage();
   await page.setViewport(VIEWPORTS[0]);
@@ -648,13 +714,21 @@ async function runSelfTest(serverUrl) {
   }
   await page.evaluate(() => document.getElementById('defect-low-contrast-text')?.remove());
 
+  // Defect 7: un-shuffled state (naive player check fails if shuffle is disabled via debug hook)
+  let defect7Caught = false;
+  const unShuffledResult = await runNaivePlayerSimulation(page, puzzles, true);
+  if (!unShuffledResult.passed) {
+    defect7Caught = true;
+    console.log(`[selfplay] Defect 7 caught successfully: un-shuffled state failed naive player check (pick=${(unShuffledResult.pickRate * 100).toFixed(1)}%, tapall=${(unShuffledResult.tapallRate * 100).toFixed(1)}%, order=${(unShuffledResult.orderRate * 100).toFixed(1)}%)`);
+  }
+
   await browser.close();
 
-  if (defect1Caught && defect2Caught && defect3Caught && defect4Caught && defect5Caught && defect6Caught) {
-    console.log('[selfplay] Selftest PASSED: 6/6 defects caught by harness.\n');
+  if (defect1Caught && defect2Caught && defect3Caught && defect4Caught && defect5Caught && defect6Caught && defect7Caught) {
+    console.log('[selfplay] Selftest PASSED: 7/7 defects caught by harness.\n');
     return true;
   } else {
-    console.error(`[selfplay] Selftest FAILED: defect1=${defect1Caught}, defect2=${defect2Caught}, defect3=${defect3Caught}, defect4=${defect4Caught}, defect5=${defect5Caught}, defect6=${defect6Caught}`);
+    console.error(`[selfplay] Selftest FAILED: defect1=${defect1Caught}, defect2=${defect2Caught}, defect3=${defect3Caught}, defect4=${defect4Caught}, defect5=${defect5Caught}, defect6=${defect6Caught}, defect7=${defect7Caught}`);
     process.exit(1);
   }
 }
@@ -857,14 +931,26 @@ export async function runSelfPlay() {
   let totalPuzzlesPlayed = 0;
 
   try {
-    // 1. Run Self-Test (5/5 defects)
-    await runSelfTest(serverUrl);
+    // 1. Run Self-Test (7/7 defects)
+    await runSelfTest(serverUrl, puzzles);
     if (isSelfTestOnly) {
       server.close();
       return;
     }
 
-    // 2. Play all puzzles across Viewports using parallel worker batches
+    // 2. Naive Player Test on shuffled game (54 puzzles x 50 starts)
+    console.log('[selfplay] Running naive player simulation on shuffled game (54 puzzles x 50 starts)...');
+    const naiveBrowser = await puppeteer.launch(launchOptions());
+    const naivePage = await naiveBrowser.newPage();
+    await naivePage.goto(serverUrl, { waitUntil: 'networkidle0' });
+    const normalResult = await runNaivePlayerSimulation(naivePage, puzzles, false);
+    await naiveBrowser.close();
+    console.log(`[selfplay] Naive player win rates: pick=${(normalResult.pickRate * 100).toFixed(1)}% (<50%), tapall=${(normalResult.tapallRate * 100).toFixed(1)}% (<50%), order=${(normalResult.orderRate * 100).toFixed(1)}% (=0%)`);
+    if (!normalResult.passed) {
+      throw new Error(`Naive player test failed: pick=${normalResult.pickRate}, tapall=${normalResult.tapallRate}, order=${normalResult.orderRate}`);
+    }
+
+    // 3. Play all puzzles across Viewports using parallel worker batches
     const isSmoke = process.argv.includes('--smoke');
     const ALL_CONFIGS = [
       { vp: VIEWPORTS[0], mode: 'perfect' },          // 320x568
@@ -891,7 +977,7 @@ export async function runSelfPlay() {
     const durationSec = ((Date.now() - startTime) / 1000).toFixed(1);
     console.log(`\n======================================================`);
     console.log(`[selfplay] PASSED: ${totalPuzzlesPlayed} puzzle sessions across 9 viewports in ${durationSec}s`);
-    console.log(`[selfplay] Selftest: 6/6 defects caught | Console errors: 0 | Violations: 0`);
+    console.log(`[selfplay] Selftest: 7/7 defects caught | Console errors: 0 | Violations: 0`);
     console.log(`======================================================\n`);
   } finally {
     server.close();

@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.3] - 2026-11-18
+### Added
+- Render-time crypto-seeded item shuffle: pick and tapall randomized on puzzle start; order puzzles shuffled with never-identity guarantee.
+- Unit tests (`test/shuffle.test.js`) verifying uniformity (3000 trials), order never-identity (1000 trials), attempt stability on wrong answers, and multi-start permutation variety.
+- Naive player simulation in selfplay harness verifying <50% win rate on pick/tapall and 0% on order across 54 puzzles x 50 starts.
+- Planted defect #7 in selfplay selftest catching un-shuffled state (7/7 defects caught).
+
+### Fixed
+- Fixed `body-10` swallowing and peristalsis digestion path (throat -> stomach -> intestines) backed by MedlinePlus anatomy video.
+- Cleaned wording: `body-06` renamed item to "Stomach"; `body-15` prompt updated to "Tap the soft tissues inside your bones!"; `sky-16` fact trimmed to focus on Venus retrograde slow rotation.
+
 ## [0.2.2] - 2026-11-18
 ### Fixed
 - Fixed 15 puzzle source evidence alignments with institutional HTML caches (0 FAIL).

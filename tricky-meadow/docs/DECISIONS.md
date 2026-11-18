@@ -21,6 +21,7 @@
 19. Task Content: Batch 3 verified 12 puzzles reaching 54 total (18/level); 100% institutional evidence matches, 98-icon dynamic sprite.
 20. Task Content Fixes: 13 institutional puzzle corrections, reading-level FK<=6 with allowed-terms, distractor groups, and variety checks.
 21. Task Content & Checks: 0 FAIL sources across 54 puzzles; reverted 'moon' from MODIFIERS; removed oddOneOut from garden-12; updated sky-18 Moon gravity, body-08 vital signs, and body-09 balance.
+22. Task Shuffle & Wording: Render-time crypto-seeded Fisher-Yates shuffle with order never-identity; naive-player harness test & selftest 7/7; body-10 stomach/intestine MedlinePlus alignment.
 
 ## Clever-Child Ambiguity Check
 - garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.

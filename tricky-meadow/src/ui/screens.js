@@ -121,7 +121,8 @@ export function renderPuzzleScreen(game) {
   const totalPuzzlesInLevel = levelPuzzles.length || 6;
   const currentPotentialStars = game.hintUsed ? 2 : (game.tries === 0 ? 3 : (game.tries === 1 ? 2 : 1));
 
-  const itemsHtml = puzzle.items.map(item => {
+  const displayedItems = game.getCurrentDisplayedItems ? game.getCurrentDisplayedItems() : (game.displayedItems || puzzle.items);
+  const itemsHtml = displayedItems.map(item => {
     let extraClass = '';
     let badgeHtml = '';
 

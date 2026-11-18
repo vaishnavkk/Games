@@ -810,7 +810,7 @@
       {
         "id": "c",
         "emoji": "🥣",
-        "label": "Digest Stomach",
+        "label": "Stomach",
         "group": "eating stages"
       }
     ],
@@ -1296,19 +1296,19 @@
       {
         "id": "a",
         "emoji": "👅",
-        "label": "Throat Passage",
+        "label": "Throat",
         "group": "digestive organs"
       },
       {
         "id": "b",
         "emoji": "🥣",
-        "label": "Digest Stomach",
+        "label": "Stomach",
         "group": "digestive organs"
       },
       {
         "id": "c",
         "emoji": "🪱",
-        "label": "Long Intestines",
+        "label": "Intestines",
         "group": "digestive organs"
       }
     ],
@@ -1320,8 +1320,8 @@
     "hint": "Food moves from your throat into the stomach, and then enters the intestines.",
     "misconception": "Thinking food drops into the intestines before reaching the acid in your stomach.",
     "fact": {
-      "text": "Swallowed food moves down your throat passage. Powerful acid breaks meals down inside your stomach and intestines!",
-      "support": "Swallowed food travels through the digestive tract, moving from throat into stomach and intestines.",
+      "text": "Swallowed food goes down your throat into your stomach, where acid and muscles break it up. Then it moves on to the intestines.",
+      "support": "Swallowed food moves from the throat down into the stomach, then on to the intestines.",
       "source": "https://medlineplus.gov/ency/anatomyvideos/000097.htm",
       "evidence": [
         "swallowed food to the stomach"
@@ -2058,7 +2058,7 @@
     "answer": "a",
     "hint": "This bright yellowish planet turns slowly in reverse compared to our home world.",
     "fact": {
-      "text": "Venus spins backward in slow motion. It turns in the opposite way from Earth across cloudy skies!",
+      "text": "Venus spins backward in slow motion. It turns in the opposite way from Earth!",
       "support": "Venus spins the opposite direction of Earth and most other planets.",
       "source": "https://spaceplace.nasa.gov/all-about-venus/en/",
       "evidence": [
@@ -2144,7 +2144,7 @@
       "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
       "evidence": [
         "one-sixth",
-      "gravity"
+        "gravity"
       ]
     },
     "misconception": "Thinking you weigh the exact same amount on the Moon as on Earth.",
@@ -2154,7 +2154,7 @@
     "id": "body-15",
     "level": 3,
     "type": "tapall",
-    "prompt": "Tap the soft tissues found inside human bone cores!",
+    "prompt": "Tap the soft tissues inside your bones!",
     "items": [
       {
         "id": "a",
