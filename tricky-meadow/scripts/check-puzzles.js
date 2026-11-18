@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { emojiToCodePoints } from './build-sprite.js';
+import { LEVELS } from '../src/engine/game.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -340,6 +341,17 @@ puzzles.forEach((p, idx) => {
     errors.push(`${prefix} Prompt contains banned word: "${p.prompt}"`);
   }
 });
+
+// Check Level icons exist in Twemoji or custom SVG
+for (const lvl of LEVELS) {
+  const code = emojiToCodePoints(lvl.emoji);
+  const svgExists = fs.existsSync(path.join(CUSTOM_SVG_DIR, `${code}.svg`)) ||
+                    fs.existsSync(path.join(SVG_DIR, `${code}.svg`)) ||
+                    fs.existsSync(path.join(SVG_DIR, `${code}-fe0f.svg`));
+  if (!svgExists) {
+    errors.push(`Level ${lvl.id} icon '${lvl.emoji}' (${code}) has no Twemoji or custom SVG`);
+  }
+}
 
 if (errors.length > 0) {
   console.error(`[check:puzzles] FAILED with ${errors.length} error(s):`);

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { UI_ICONS } from '../src/data/ui-icons.js';
+import { LEVELS } from '../src/engine/game.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,6 +62,18 @@ for (const [key, emoji] of Object.entries(UI_ICONS)) {
   emojiMap.get(code).add(key);
   emojiMap.get(code).add(code);
   emojiMap.get(code).add(emoji);
+}
+
+// Add Level icons
+for (const lvl of LEVELS) {
+  if (lvl.emoji) {
+    const code = emojiToCodePoints(lvl.emoji);
+    if (!code) continue;
+    if (!emojiMap.has(code)) emojiMap.set(code, new Set());
+    emojiMap.get(code).add(code);
+    emojiMap.get(code).add(lvl.emoji);
+    emojiMap.get(code).add(`level-${lvl.id}`);
+  }
 }
 
 // Add puzzle item emojis
@@ -125,6 +138,16 @@ for (const iconKey of REQUIRED_UI_ICONS) {
   const symId = `emoji-${iconKey}`;
   if (!symbols.some(s => s.includes(`id="${symId}"`))) {
     console.error(`[build-sprite] BUILD FAILED: Required UI symbol '${symId}' is missing from sprite!`);
+    process.exit(1);
+  }
+}
+
+// Assert every Level icon is present as a symbol in the generated list
+for (const lvl of LEVELS) {
+  const code = emojiToCodePoints(lvl.emoji);
+  const symId = `emoji-${code}`;
+  if (!symbols.some(s => s.includes(`id="${symId}"`))) {
+    console.error(`[build-sprite] BUILD FAILED: Level ${lvl.id} icon '${lvl.emoji}' (${symId}) is missing from sprite!`);
     process.exit(1);
   }
 }

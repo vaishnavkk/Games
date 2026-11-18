@@ -5,7 +5,7 @@ import { loadProgress, saveProgress, resetProgress as storageReset } from './sto
 
 export const LEVELS = [
   { id: 1, name: 'Garden & Animals', emoji: '🌱', totalPuzzles: 6 },
-  { id: 2, name: 'Sky & Space', emoji: '⭐', totalPuzzles: 6 },
+  { id: 2, name: 'Sky & Space', emoji: '🪐', totalPuzzles: 6 },
   { id: 3, name: 'Me & My Body', emoji: '🧠', totalPuzzles: 6 }
 ];
 

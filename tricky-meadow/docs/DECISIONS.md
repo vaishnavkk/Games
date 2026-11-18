@@ -14,6 +14,8 @@
 12. Task 3 Fact Consistency: Dropped 2/2/2 rule for Me & My Body (now 3 pick, 1 tapall, 2 order); restored body-02 to pick largest organ (Outer Skin).
 13. Task 1 Phone Layout: Single-row topbar 48px 1fr 48px, progress-row under header, 56px action bar fixed at bottom, icons <= 40px filter:none.
 14. Task 3 Content: Custom painted SVG chrysalis in sprite, true-at-scale sky-06 distances with max 2 sources, teeth count order body-05.
+15. Task 1 Level Icons: Level 2 emoji switched to planet (🪐) preserving stars for ratings; build fails if any level icon is missing from sprite.
+16. Task 2 Contrast Invariant: Computed fg/bg with alpha compositing across all visible text; amber darkened to #8a4e00 (>=6.7:1), unlock hint darkened to #7c2d12 (8.9:1), locked button darkened to #544c42 (6.8:1); selftest 6/6 catches defect 6.
 
 ## Clever-Child Ambiguity Check
 - garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.

@@ -332,6 +332,120 @@ window.__selfplayChecks = {
     }
 
     return null;
+  },
+  checkContrast() {
+    function parseRgba(str) {
+      if (!str || str === 'transparent') return { r: 0, g: 0, b: 0, a: 0 };
+      const o = str.indexOf('(');
+      const c = str.indexOf(')');
+      if (o === -1 || c === -1) return null;
+      const parts = str.slice(o + 1, c).split(/[, /]+/).map(p => parseFloat(p.trim())).filter(n => !isNaN(n));
+      if (parts.length < 3) return null;
+      return {
+        r: Math.round(parts[0]),
+        g: Math.round(parts[1]),
+        b: Math.round(parts[2]),
+        a: parts.length >= 4 ? parts[3] : 1
+      };
+    }
+
+    function composite(fg, bg) {
+      const a = fg.a + bg.a * (1 - fg.a);
+      if (a === 0) return { r: 0, g: 0, b: 0, a: 0 };
+      const r = Math.round((fg.r * fg.a + bg.r * bg.a * (1 - fg.a)) / a);
+      const g = Math.round((fg.g * fg.a + bg.g * bg.a * (1 - fg.a)) / a);
+      const b = Math.round((fg.b * fg.a + bg.b * bg.a * (1 - fg.a)) / a);
+      return { r, g, b, a };
+    }
+
+    function getLuminance(rgb) {
+      const [rs, gs, bs] = [rgb.r, rgb.g, rgb.b].map(c => {
+        c = c / 255;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+    }
+
+    function getContrastRatio(c1, c2) {
+      const l1 = getLuminance(c1);
+      const l2 = getLuminance(c2);
+      const lighter = Math.max(l1, l2);
+      const darker = Math.min(l1, l2);
+      return (lighter + 0.05) / (darker + 0.05);
+    }
+
+    function getEffectiveBackground(el) {
+      let curr = el;
+      const layers = [];
+      while (curr && curr !== document) {
+        const s = window.getComputedStyle(curr);
+        const bg = parseRgba(s.backgroundColor);
+        const op = parseFloat(s.opacity) || 1;
+        if (bg && bg.a > 0) {
+          layers.push({ bg, op });
+        }
+        curr = curr.parentElement;
+      }
+      let res = { r: 253, g: 251, b: 247, a: 1 };
+      for (let i = layers.length - 1; i >= 0; i--) {
+        const l = layers[i];
+        const effectiveBg = { ...l.bg, a: l.bg.a * l.op };
+        res = composite(effectiveBg, res);
+      }
+      return res;
+    }
+
+    function getEffectiveForeground(el, bg) {
+      const s = window.getComputedStyle(el);
+      const fg = parseRgba(s.color) || { r: 45, g: 32, b: 19, a: 1 };
+      let totalOpacity = 1;
+      let curr = el;
+      while (curr && curr !== document) {
+        const st = window.getComputedStyle(curr);
+        totalOpacity *= (parseFloat(st.opacity) || 1);
+        curr = curr.parentElement;
+      }
+      const finalFg = { ...fg, a: fg.a * totalOpacity };
+      return composite(finalFg, bg);
+    }
+
+    const elements = Array.from(document.querySelectorAll('*')).filter(el => {
+      const s = window.getComputedStyle(el);
+      const r = el.getBoundingClientRect();
+      if (s.display === 'none' || s.visibility === 'hidden' || r.width <= 0 || r.height <= 0) return false;
+      let hasDirectText = false;
+      for (const n of el.childNodes) {
+        if (n.nodeType === Node.TEXT_NODE && n.nodeValue.trim().length > 0) {
+          hasDirectText = true;
+          break;
+        }
+      }
+      return hasDirectText;
+    });
+
+    for (const el of elements) {
+      const s = window.getComputedStyle(el);
+      const fontSize = parseFloat(s.fontSize) || 16;
+      const fontWeight = parseInt(s.fontWeight, 10) || (s.fontWeight === 'bold' ? 700 : 400);
+      const isLarge = fontSize >= 24 || (fontSize >= 18.66 && fontWeight >= 700);
+
+      const isButtonOrInput = el.tagName === 'BUTTON' || el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.classList.contains('btn');
+      const isDisabled = isButtonOrInput && (el.disabled || el.getAttribute('aria-disabled') === 'true' || el.classList.contains('btn-locked'));
+
+      const requiredRatio = isDisabled ? 3.0 : (isLarge ? 3.0 : 4.5);
+
+      const bg = getEffectiveBackground(el);
+      const fg = getEffectiveForeground(el, bg);
+      const ratio = getContrastRatio(fg, bg);
+
+      if (ratio < requiredRatio - 0.05) {
+        const selector = (el.className ? '.' + String(el.className).trim().replace(/\\s+/g, '.') : '') + (el.id ? '#' + el.id : '');
+        const text = el.innerText ? el.innerText.slice(0, 40).replace(/\\n/g, ' ') : '';
+        return 'Contrast failure: ' + el.tagName.toLowerCase() + selector + ' "' + text + '" has contrast ratio ' + ratio.toFixed(2) + ':1 < required ' + requiredRatio + ':1 (fg=rgb(' + fg.r + ',' + fg.g + ',' + fg.b + '), bg=rgb(' + bg.r + ',' + bg.g + ',' + bg.b + '))';
+      }
+    }
+
+    return null;
   }
 };
 `;
@@ -388,6 +502,8 @@ async function assertScreenInvariants(page, { requireMascot = false } = {}) {
   if (err) throw new Error(err);
   err = await page.evaluate(() => window.__selfplayChecks.checkInvariants());
   if (err) throw new Error(err);
+  err = await page.evaluate(() => window.__selfplayChecks.checkContrast());
+  if (err) throw new Error(err);
 
   if (requireMascot) {
     err = await page.evaluate(() => window.__selfplayChecks.checkMascot());
@@ -406,7 +522,7 @@ async function assertScreenInvariants(page, { requireMascot = false } = {}) {
  * 5. Stars absolutely positioned over title at 360px
  */
 async function runSelfTest(serverUrl) {
-  console.log('[selfplay] Running --selftest (verifying harness catches 5 injected defects)...');
+  console.log('[selfplay] Running --selftest (verifying harness catches 6 injected defects)...');
   const browser = await puppeteer.launch(launchOptions());
   const page = await browser.newPage();
   await page.setViewport(VIEWPORTS[0]);
@@ -514,13 +630,31 @@ async function runSelfTest(serverUrl) {
   }
   await page.evaluate(() => document.getElementById('defect-stars-overlay')?.remove());
 
+  // Defect 6: Light-grey text on cream (contrast defect)
+  let defect6Caught = false;
+  await page.evaluate(() => {
+    const el = document.createElement('p');
+    el.id = 'defect-low-contrast-text';
+    el.style.color = '#cccccc'; // light grey on cream (#fdfbf7), ratio ~1.5:1
+    el.style.backgroundColor = '#fdfbf7';
+    el.style.fontSize = '16px';
+    el.innerText = 'Defect 6 low contrast text';
+    document.body.appendChild(el);
+  });
+  const defect6Err = await page.evaluate(() => window.__selfplayChecks.checkContrast());
+  if (defect6Err && (defect6Err.includes('Contrast') || defect6Err.includes('contrast') || defect6Err.includes('ratio'))) {
+    defect6Caught = true;
+    console.log('[selfplay] Defect 6 caught successfully: ' + defect6Err);
+  }
+  await page.evaluate(() => document.getElementById('defect-low-contrast-text')?.remove());
+
   await browser.close();
 
-  if (defect1Caught && defect2Caught && defect3Caught && defect4Caught && defect5Caught) {
-    console.log('[selfplay] Selftest PASSED: 5/5 defects caught by harness.\n');
+  if (defect1Caught && defect2Caught && defect3Caught && defect4Caught && defect5Caught && defect6Caught) {
+    console.log('[selfplay] Selftest PASSED: 6/6 defects caught by harness.\n');
     return true;
   } else {
-    console.error(`[selfplay] Selftest FAILED: defect1=${defect1Caught}, defect2=${defect2Caught}, defect3=${defect3Caught}, defect4=${defect4Caught}, defect5=${defect5Caught}`);
+    console.error(`[selfplay] Selftest FAILED: defect1=${defect1Caught}, defect2=${defect2Caught}, defect3=${defect3Caught}, defect4=${defect4Caught}, defect5=${defect5Caught}, defect6=${defect6Caught}`);
     process.exit(1);
   }
 }
@@ -747,7 +881,7 @@ export async function runSelfPlay() {
     const durationSec = ((Date.now() - startTime) / 1000).toFixed(1);
     console.log(`\n======================================================`);
     console.log(`[selfplay] PASSED: ${totalPuzzlesPlayed} puzzle sessions across 9 viewports in ${durationSec}s`);
-    console.log(`[selfplay] Selftest: 5/5 defects caught | Console errors: 0 | Violations: 0`);
+    console.log(`[selfplay] Selftest: 6/6 defects caught | Console errors: 0 | Violations: 0`);
     console.log(`======================================================\n`);
   } finally {
     server.close();

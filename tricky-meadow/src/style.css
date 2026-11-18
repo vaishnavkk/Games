@@ -27,7 +27,7 @@
   --color-peach-dark: #8c3816;
   --color-peach-soft: #fdf0ea;
 
-  --color-amber: #b36b00;           /* Stars & accents */
+  --color-amber: #8a4e00;           /* Stars & accents (>= 6.7:1 on cream/white) */
   --color-amber-soft: #fff8ea;
 
   /* Geometry & Shadows */
@@ -578,9 +578,13 @@ h1, h2, h3, .level-name, .game-title, .fact-title, .done-title {
 }
 
 .level-card.locked {
-  opacity: 0.72;
   background: #fbf9f5;
   border-color: #e5e0d8;
+}
+
+.level-card.locked .level-head .level-icon {
+  opacity: 0.55;
+  filter: grayscale(0.3);
 }
 
 .level-head {
@@ -633,7 +637,8 @@ h1, h2, h3, .level-name, .game-title, .fact-title, .done-title {
 .unlock-rule {
   font-family: var(--font-headings);
   font-size: 1.25rem;
-  color: var(--color-peach);
+  color: #7c2d12;
+  font-weight: 600;
 }
 
 .btn-select-level {
@@ -650,7 +655,7 @@ h1, h2, h3, .level-name, .game-title, .fact-title, .done-title {
 
 .btn-locked {
   background: #ede9e3;
-  color: #948b80;
+  color: #544c42;
   cursor: not-allowed;
   min-height: var(--min-tap);
 }
