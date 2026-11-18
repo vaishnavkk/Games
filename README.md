@@ -1,168 +1,52 @@
 # Web Games
 
-A collection of playable web games built with standard web technologies, featuring an interactive 3D globe geography trivia game and a 2D falling blocks arcade game.
+A collection of free, lightweight web games you can play instantly in your browser on desktop, tablet, or phone. No installations, no ads, and no sign-ups required.
 
+[![Play Online](https://img.shields.io/badge/Play_Online-GitHub_Pages-06b6d4)](https://vaishnavkk.github.io/Games/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Live Site](https://img.shields.io/badge/Play-GitHub_Pages-06b6d4)](https://vaishnavkk.github.io/Games/)
 
-No CDN or third-party requests at runtime; GeoTrivia bundles Three.js, and Matrixfall uses vanilla 2D Canvas and Web Audio.
+👉 **[Click here to open the Arcade Hub](https://vaishnavkk.github.io/Games/)**
 
 ---
 
-## Games
+## The Games
 
-| Name | What it is (one line) | Tech | Play | Source folder |
-| :--- | :--- | :--- | :--- | :--- |
-| **GeoTrivia: Earth Explorer**<br><br>[![GeoTrivia](docs/img/geotrivia.webp)](https://vaishnavkk.github.io/Games/earth-trivia/) | Interactive 3D globe trivia identifying 195 sovereign nations directly on a Three.js Earth sphere | Three.js, TopoJSON, Web Audio | [Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/) | [earth-trivia/](earth-trivia/) |
-| **Matrixfall**<br><br>[![Matrixfall](docs/img/matrixfall.webp)](https://vaishnavkk.github.io/Games/matrix-fall/) | Falling blocks puzzle game with Matrix Surge bullet time, quantum phase blocks, and dynamic speed | HTML5 2D Canvas, Web Audio | [Play Matrixfall](https://vaishnavkk.github.io/Games/matrix-fall/) | [matrix-fall/](matrix-fall/) |
-| **Tricky Meadow**<br><br>[![Tricky Meadow](docs/img/trickymeadow.webp)](https://vaishnavkk.github.io/Games/tricky-meadow/) | Kids' trick-puzzle game in a watercolor meadow with 18 verified science tricks and leaf-sprite companion | Vite, Twemoji SVG, Web Speech | [Play Tricky Meadow](https://vaishnavkk.github.io/Games/tricky-meadow/) | [tricky-meadow/](tricky-meadow/) |
+| Game | Description | Play Link | Source |
+| :--- | :--- | :--- | :--- |
+| **GeoTrivia: Earth Explorer**<br><br>[![GeoTrivia](docs/img/geotrivia.webp)](https://vaishnavkk.github.io/Games/earth-trivia/) | Spin an interactive 3D globe and test your knowledge of 195 countries using clues, flags, and capitals. | [Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/) | [`earth-trivia/`](earth-trivia/) |
+| **Matrixfall**<br><br>[![Matrixfall](docs/img/matrixfall.webp)](https://vaishnavkk.github.io/Games/matrix-fall/) | A classic falling-blocks puzzle game with retro green neon visuals, speed bursts, and arcade sound effects. | [Play Matrixfall](https://vaishnavkk.github.io/Games/matrix-fall/) | [`matrix-fall/`](matrix-fall/) |
+| **Tricky Meadow**<br><br>[![Tricky Meadow](docs/img/trickymeadow.webp)](https://vaishnavkk.github.io/Games/tricky-meadow/) | A cozy nature puzzle game for curious minds. Think carefully, spot the clever tricks, and learn fun facts! | [Play Tricky Meadow](https://vaishnavkk.github.io/Games/tricky-meadow/) | [`tricky-meadow/`](tricky-meadow/) |
 
 ---
 
 ## Run Locally
 
-### Prerequisites
-Node.js version 20 is specified in [`.nvmrc`](.nvmrc).
-
-### GeoTrivia
-GeoTrivia uses esbuild to compile its modular client bundle:
+You can run these games on your own computer with one simple command:
 
 ```bash
-# Navigate to GeoTrivia folder
-cd earth-trivia
+# 1. Clone this repository
+git clone https://github.com/vaishnavkk/Games.git
+cd Games
 
-# Install dependencies and build bundle
-npm ci
-npm run build
-
-# Start local development server (http://localhost:8080)
-npm start
-```
-
-### Matrixfall
-Matrixfall is standalone with zero dependencies or build steps:
-
-```bash
-# Navigate to Matrixfall folder
-cd matrix-fall
-
-# Open index.html directly in a browser
-# Windows:
-start index.html
-# macOS:
-open index.html
-
-# Or serve via any HTTP server:
+# 2. Start a local server (choose either option below)
 python -m http.server 8080
+# or if you have Node.js:
+npx serve .
 ```
 
-### Tricky Meadow
-Tricky Meadow is built with Vite, vanilla JavaScript, and dynamic Twemoji SVG sprites:
-
-```bash
-# Navigate to Tricky Meadow folder
-cd tricky-meadow
-
-# Install dependencies and build
-npm ci
-npm run build
-
-# Start local development server
-npm run dev
-```
-
-### Root Portal
-To serve the complete arcade portal locally from the repository root:
-
-```bash
-# Build GeoTrivia first
-npm --prefix earth-trivia ci
-npm --prefix earth-trivia run build
-
-# Start static server from root
-python -m http.server 8080
-# Visit http://localhost:8080 to access the arcade selector
-```
+Then open `http://localhost:8080` in your web browser.
 
 ---
 
 ## Project Structure
 
-```
-Games/
-├── .github/                     # GitHub Actions CI workflows, issue templates, PR template
-│   ├── ISSUE_TEMPLATE/          # Structured issue report templates
-│   ├── pull_request_template.md # PR verification checklist
-│   └── workflows/               # CI and scheduled source verification workflows
-├── docs/                        # Project documentation and visual media assets
-│   ├── img/                     # Game thumbnails captured from live game runs
-│   └── social-preview.png       # 1280x640 OpenGraph repository preview card
-├── earth-trivia/                # 3D interactive globe trivia game
-│   ├── data/                    # Offline 195-nation dataset, TopoJSON, boundary vectors
-│   ├── dist/                    # Bundled client distribution (esbuild)
-│   ├── docs/                    # Architecture, data sources, and contributing guides
-│   ├── scripts/                 # Build, validation, and automated self-play QA scripts
-│   ├── src/                     # Game logic, Three.js scene, coordinate projection, audio
-│   ├── test/                    # Unit, regression, and headless modal test suites
-│   ├── vendor/                  # Self-hosted offline variable fonts and flag icons
-│   ├── index.html               # Main entry HTML and HUD markup
-│   ├── package.json             # Build commands, scripts, dependencies, engines
-│   └── README.md                # GeoTrivia game architecture and mechanics guide
-├── geotrivia/                   # Backward-compatibility HTTP redirect to earth-trivia/
-│   └── index.html               # Client-side redirect stub
-├── matrix-fall/                 # 2D canvas falling blocks arcade game
-│   ├── index.html               # Self-contained game (Canvas, audio synth, responsive styles)
-│   └── README.md                # Matrixfall mechanics, controls, and scoring guide
-├── matrixfall/                  # Backward-compatibility HTTP redirect to matrix-fall/
-│   └── index.html               # Client-side redirect stub
-├── tricky-meadow/               # Kids' trick-puzzle educational game (ages 6–10)
-│   ├── dist/                    # Bundled client distribution (Vite)
-│   ├── docs/                    # Architecture decisions and 640px WebP screenshots
-│   ├── public/                  # Dynamic Twemoji SVG sprite asset
-│   ├── scripts/                 # Build-sprite, source verifier, and Puppeteer self-play QA
-│   ├── src/                     # Game engine, 18 verified puzzles, screens, and styles
-│   ├── test/                    # Node test runner unit tests (stars, unlocks, storage)
-│   ├── index.html               # Vite entry and Pages redirect
-│   ├── package.json             # Build commands, scripts, dependencies
-│   └── README.md                # Tricky Meadow documentation and guide
-├── scripts/                     # Root test orchestration and self-play runners
-│   ├── selfplay.js              # Multi-tier self-play delegation script
-│   └── testTiers.js             # Question bag tier verification runner
-├── .gitignore                   # Ignored files (node_modules, caches, reports, OS files)
-├── .nvmrc                       # Node.js LTS version specification (v20)
-├── index.html                   # Arcade portal homepage and game launcher
-├── LICENSE                      # MIT Open Source License
-├── package.json                 # Root script proxies for build, lint, and test suites
-└── README.md                    # Repository index and overview documentation
-```
+- `earth-trivia/` — 3D Earth globe geography trivia game
+- `matrix-fall/` — 2D falling-blocks arcade game
+- `tricky-meadow/` — Science trick-puzzle game
+- `docs/` — Game screenshots and preview images
 
 ---
 
-## Quality
+## License
 
-- **Continuous Integration**: GitHub Actions workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) validates every push and pull request on Node 20. It builds `earth-trivia`, runs ESLint, executes offline data validators (`check:clues`, `check:palette`, `check:library`, `check:contrast`), runs unit tests, and launches Puppeteer smoke tests.
-- **Automated Test Suite**: Unit and integration tests verify deterministic random selection, question bag exhaustion without replacement, camera framing math, coordinate raycasting, scoring calculations, and accessible modal navigation across multiple viewports. Run via `npm test` or `npm --prefix earth-trivia test`.
-- **Autonomous Self-Play Harness**: An automated QA bot ([`earth-trivia/scripts/qa/selfplay.js`](earth-trivia/scripts/qa/selfplay.js)) uses Puppeteer to simulate real player sessions across desktop, tablet, and mobile viewports, evaluating full game cycles, edge-case clicks, and HUD updates. Run smoke tests locally with `npm run selfplay -- --smoke`.
-
----
-
-## Contributing
-
-Contributions are welcome. Please read the [Contributing Guide](earth-trivia/docs/CONTRIBUTING.md) for details on code style, clue factual requirements, and pre-commit validation gates.
-
-Pull requests must pass all linters, data validators, unit tests, and self-play smoke tests before merging.
-
----
-
-## License and Attributions
-
-This repository is open-source software licensed under the [MIT License](LICENSE).
-
-### Data Sources and Third-Party Assets
-- **GeoTrivia**:
-  - Cartography and Sovereign Boundaries: Natural Earth 1:50m vectors and Survey of India boundary alignments. Details and sources documented in [GeoTrivia Data Sources](earth-trivia/docs/DATA_SOURCES.md).
-  - Upstream software and font notices are detailed in [GeoTrivia Third-Party Notices](earth-trivia/THIRD_PARTY_NOTICES.md).
-- **Matrixfall**:
-  - Standalone game with zero third-party assets; audio generated dynamically via Web Audio API. See the [Matrixfall Guide](matrix-fall/README.md).
-- **Tricky Meadow**:
-  - Twemoji graphics licensed under CC-BY 4.0; Fredoka and Patrick Hand fonts licensed under SIL OFL 1.1; canvas-confetti licensed under ISC. Full details documented in [Tricky Meadow Notices](tricky-meadow/THIRD_PARTY_NOTICES.md).
+This project is open-source under the [MIT License](LICENSE). Feel free to play, share, or learn from the code!
