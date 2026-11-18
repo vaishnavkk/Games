@@ -272,7 +272,7 @@ export function renderLevelDoneScreen(game) {
 
         <div class="done-stars-summary">
           ${renderEmoji('star', 32)}
-          <span class="done-score">${totalLvlStars} / 18 Stars</span>
+          <span class="done-score">${totalLvlStars} / ${(levelInfo?.totalPuzzles || 6) * 3} Stars</span>
         </div>
 
         <div class="done-actions">

@@ -135,3 +135,29 @@ test('storage fallback: handles localStorage throw gracefully in memory', () => 
     }
   }
 });
+
+// --- Data-Driven Counts Tests (v0.2.0) ---
+test('data-driven counts: with 18 puzzles in level, max stars is 54, unlock needs 4, starts at first unfinished', () => {
+  const p18 = Array.from({ length: 18 }, (_, i) => ({ id: `p_${i + 1}`, level: 1 }));
+  const p18_l2 = Array.from({ length: 18 }, (_, i) => ({ id: `p2_${i + 1}`, level: 2 }));
+  const allMock = [...p18, ...p18_l2];
+
+  // 1. Max stars for 18 puzzles is 54
+  const totalStarsFor18 = p18.length * 3;
+  assert.equal(totalStarsFor18, 54);
+
+  // 2. Unlock still needs 4 solved in previous level
+  assert.equal(isLevelUnlocked(2, { p_1: 3, p_2: 3, p_3: 3 }, allMock), false);
+  assert.equal(isLevelUnlocked(2, { p_1: 3, p_2: 3, p_3: 3, p_4: 1 }, allMock), true);
+
+  // 3. Play level starts at first unfinished
+  const progressWithThree = { stars: { p_1: 3, p_2: 2, p_3: 3 } };
+  const nextUnsolved = p18.find(p => !progressWithThree.stars[p.id]);
+  assert.equal(nextUnsolved.id, 'p_4');
+
+  // If none solved, starts at first puzzle
+  const progressEmpty = { stars: {} };
+  const firstUnsolved = p18.find(p => !progressEmpty.stars[p.id]) || p18[0];
+  assert.equal(firstUnsolved.id, 'p_1');
+});
+

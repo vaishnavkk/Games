@@ -2,18 +2,35 @@ garden-01 | OK | Tarantulas have four pairs of legs, or eight legs total.
 garden-02 | OK | Rossman Mushrooms aren't really plants, they are types of fungi that have a "plantlike" form
 garden-03 | OK | fact, a female could lay fertile eggs up to four years after a successful mating!
 garden-04 | OK | Bats are the only true flying mammals.
+garden-04-2 | OK | 6 inches to almost 6 feet and are the only mammals that can truly fly.
 garden-05 | OK | four stages of their life cycle: egg (ovum), caterpillar (larva), pupa (chrysalis), and adult (imago).
 garden-06 | OK | breaks open and a root or radicle emerges first, followed by the shoot or plumule
+garden-06-2 | OK | The root emerges first in a process called germination.
 sky-01 | OK | Structure and Surface Venus is the hottest planet in our solar system.
 sky-02 | OK | The light of daytime comes from our closest star: the Sun.
 sky-03 | OK | It simply reflects light coming from the Sun.
 sky-04 | OK | isn’t the only planet to have rings, but it definitely has the most beautiful ones.
 sky-05 | OK | Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune article last updated July 17, 2019 Explore
-sky-06-1 | OK | place, roughly a quarter the size of Earth and an average of 238,855 miles away.
-sky-06-2 | OK | It’s approximately 93 million miles away from Earth.
+sky-06 | OK | place, roughly a quarter the size of Earth and an average of 238,855 miles away.
+sky-06-2 | OK | distances of the moon (238,855 miles) and sun (92,900,000 miles) from the earth, the tide
 body-01 | OK | is made up of 206 bones in the adult and contributes to the form and
+body-01-2 | OK | are born with around 300 bones, but many fuse (grow together) as they get older.
 body-02 | OK | There are many ways that your skin protects your body and helps keep you healthy.
+body-02-2 | OK | Skin Health & Wound Care: What You Should Know by Japa Volchok, DO Skin Health
 body-03 | OK | Above the gum line, the tooth is protected by the hard enamel covering.
 body-04 | OK | Considerations The tongue can detect sweet, salty, sour, savory and bitter tastes.
 body-05 | OK | birth people usually have 20 baby (primary) teeth, which start to come in (erupt) at
+body-05-2 | OK | All 20 baby teeth should be in place by the time a child is 30
 body-06 | OK | the back of the throat and down into the esophagus, which leads to the stomach.
+garden-07 | OK | By building dams, which form slow-moving ponds and reduce erosion, they provide habitat and resources
+garden-08 | OK | Alligators primarily inhabit freshwater swamps and marshes and can also be found in rivers, lakes,
+garden-09 | OK | Giant pandas have large molar teeth and strong jaw muscles for crushing tough bamboo.
+garden-10 | OK | The trunk is a fusion of the nose and upper lip.
+sky-07 | OK | Earth’s tilted axis creates seasons.
+sky-08 | OK | Blue light is scattered more than the other colors because it travels as shorter, smaller
+sky-09 | OK | Jupiter is a gas giant and doesn't have a solid surface.
+sky-10 | OK | Credit: NASA/JPL-Caltech Mars is a cold desert world.
+body-07 | OK | Play health video with audio description: //medlineplus.gov/ency/videos/mov/200081_eng_ad.mp4 Overview The heart is a powerful automatic pump.
+body-08 | OK | Vital signs reflect essential body functions, including your heartbeat rate, breathing rate, temperature, and blood
+body-09 | OK | audio description: //medlineplus.gov/ency/videos/mov/200020_eng_ad.mp4 Overview The two lungs are the primary organs of the respiratory system.
+body-10 | OK | audio description: //medlineplus.gov/ency/videos/mov/200088_eng_ad.mp4 Overview Peristalsis is a series of wave-like muscle contractions that move food

@@ -4,10 +4,15 @@ import { calculateStars, isLevelUnlocked, checkAnswer } from './scoring.js';
 import { loadProgress, saveProgress, resetProgress as storageReset } from './storage.js';
 
 export const LEVELS = [
-  { id: 1, name: 'Garden & Animals', emoji: '🌱', totalPuzzles: 6 },
-  { id: 2, name: 'Sky & Space', emoji: '🪐', totalPuzzles: 6 },
-  { id: 3, name: 'Me & My Body', emoji: '🧠', totalPuzzles: 6 }
-];
+  { id: 1, name: 'Garden & Animals', emoji: '🌱' },
+  { id: 2, name: 'Sky & Space', emoji: '🪐' },
+  { id: 3, name: 'Me & My Body', emoji: '🧠' }
+].map(lvl => ({
+  ...lvl,
+  get totalPuzzles() {
+    return puzzlesData.filter(p => p.level === lvl.id).length || 6;
+  }
+}));
 
 export class GameManager {
   constructor(options = {}) {

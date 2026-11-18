@@ -28,14 +28,16 @@
       "source": "https://nationalzoo.si.edu/animals/chilean-rose-tarantula",
       "evidence": [
         "eight legs"
-      ]
-    }
+      ],
+      "support": "Garden spiders are eight-legged arachnids, whereas all true insects have six legs."
+    },
+    "misconception": "Thinking spiders are insects because both are tiny creepy-crawlies with many legs."
   },
   {
     "id": "garden-02",
     "level": 1,
     "type": "pick",
-    "prompt": "Which of these forest wonders is NOT a plant?",
+    "prompt": "Which of these wild meadow wonders is NOT a plant?",
     "items": [
       {
         "id": "a",
@@ -62,8 +64,10 @@
         "mushrooms",
         "plants",
         "fungi"
-      ]
-    }
+      ],
+      "support": "Mushrooms are fungi that absorb nutrients from wood, while plants create food with sunlight."
+    },
+    "misconception": "Thinking mushrooms are plants because they grow in forest dirt and have stems."
   },
   {
     "id": "garden-03",
@@ -103,8 +107,10 @@
       "evidence": [
         "lay",
         "eggs"
-      ]
-    }
+      ],
+      "support": "Mother turtles bury their eggs in sandy soil so their babies can hatch."
+    },
+    "misconception": "Thinking all furry land animals lay eggs like birds and reptiles do."
   },
   {
     "id": "garden-04",
@@ -144,14 +150,21 @@
       "source": "https://www.nps.gov/cave/learn/nature/bats.htm",
       "evidence": [
         "flying mammals"
+      ],
+      "support": "Bats have winged hands that flap, making them the only mammals capable of true flight.",
+      "source2": "https://extension.uga.edu/county-offices/forsyth/forsyth-county-master-naturalists/Bats.html",
+      "evidence2": [
+        "only mammals",
+        "truly fly"
       ]
-    }
+    },
+    "misconception": "Thinking flying squirrels fly with wings instead of just gliding through the air."
   },
   {
     "id": "garden-05",
     "level": 1,
     "type": "order",
-    "prompt": "Order the stages of a butterfly's life cycle from start!",
+    "prompt": "Order the stages of this winged insect's life cycle from start!",
     "items": [
       {
         "id": "a",
@@ -187,14 +200,16 @@
       "evidence": [
         "caterpillar",
         "chrysalis"
-      ]
-    }
+      ],
+      "support": "An insect begins as a tiny egg, hatches into a caterpillar, rests in a chrysalis, and emerges as a butterfly."
+    },
+    "misconception": "Thinking caterpillars turn straight into flying butterflies without resting inside a chrysalis."
   },
   {
     "id": "garden-06",
     "level": 1,
     "type": "order",
-    "prompt": "Order how a plant grows from a seed into flower!",
+    "prompt": "Order how a little plant grows up into a lovely bloom!",
     "items": [
       {
         "id": "a",
@@ -230,8 +245,15 @@
       "evidence": [
         "root",
         "shoot"
+      ],
+      "support": "A planted seed germinates in soil, pushes out a tiny sprout, grows a green stem, and opens into a sunflower.",
+      "source2": "https://extension.psu.edu/growing-gardeners-mighty-seed-activity",
+      "evidence2": [
+        "root emerges first",
+        "germination"
       ]
-    }
+    },
+    "misconception": "Thinking leaves and flowers bloom before a seed grows roots into the soil."
   },
   {
     "id": "sky-01",
@@ -263,14 +285,16 @@
       "evidence": [
         "venus",
         "hottest planet"
-      ]
-    }
+      ],
+      "support": "Venus is hotter than Mercury because its thick carbon dioxide atmosphere traps intense solar heat."
+    },
+    "misconception": "Thinking Mercury is the hottest planet just because it is closest to the Sun."
   },
   {
     "id": "sky-02",
     "level": 2,
     "type": "pick",
-    "prompt": "What kind of space object is our bright daytime Sun?",
+    "prompt": "What kind of space object is our warm daytime Sun?",
     "items": [
       {
         "id": "a",
@@ -296,8 +320,10 @@
       "evidence": [
         "closest star",
         "sun"
-      ]
-    }
+      ],
+      "support": "Our daytime Sun is a giant glowing ball of hot plasma, which is a star."
+    },
+    "misconception": "Thinking the Sun is a gigantic planet because it looks big and round in our daytime sky."
   },
   {
     "id": "sky-03",
@@ -339,8 +365,10 @@
         "reflects",
         "light",
         "sun"
-      ]
-    }
+      ],
+      "support": "The Moon produces no light itself; moonlight is sunlight reflecting off its dusty surface."
+    },
+    "misconception": "Thinking the Moon makes its own light like a glowing lightbulb in the night sky."
   },
   {
     "id": "sky-04",
@@ -381,8 +409,10 @@
       "evidence": [
         "rings",
         "saturn"
-      ]
-    }
+      ],
+      "support": "Saturn has the most visible rings, but Jupiter, Uranus, and Neptune also have ring systems."
+    },
+    "misconception": "Thinking Saturn is the only planet in our solar system that has rings."
   },
   {
     "id": "sky-05",
@@ -426,8 +456,10 @@
         "venus",
         "earth",
         "mars"
-      ]
-    }
+      ],
+      "support": "Mercury is closest to the Sun, followed by Venus, Earth, and Mars in orbital order."
+    },
+    "misconception": "Thinking Earth is closer to the Sun than Venus because summer feels so warm."
   },
   {
     "id": "sky-06",
@@ -438,17 +470,20 @@
       {
         "id": "a",
         "emoji": "🌙",
-        "label": "Silver Moon"
+        "label": "Silver Moon",
+        "value": "239,000 miles"
       },
       {
         "id": "b",
         "emoji": "☀️",
-        "label": "Golden Sun"
+        "label": "Golden Sun",
+        "value": "93 million miles"
       },
       {
         "id": "c",
         "emoji": "⭐",
-        "label": "Distant Star"
+        "label": "Distant Star",
+        "value": "25 trillion miles"
       }
     ],
     "answer": [
@@ -463,27 +498,20 @@
       "evidence": [
         "238,855 miles"
       ],
-      "sources": [
-        {
-          "url": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
-          "evidence": [
-            "238,855 miles"
-          ]
-        },
-        {
-          "url": "https://spaceplace.nasa.gov/all-about-the-sun/",
-          "evidence": [
-            "93 million miles"
-          ]
-        }
+      "support": "The Moon orbits Earth at 238,855 miles away, the Sun is 93 million miles away, and distant stars are 25 trillion miles.",
+      "source2": "https://tidesandcurrents.noaa.gov/restles3.html",
+      "evidence2": [
+        "238,855 miles",
+        "sun"
       ]
-    }
+    },
+    "misconception": "Thinking stars at night are closer to us than the Moon because they twinkle so brightly."
   },
   {
     "id": "body-01",
     "level": 3,
     "type": "pick",
-    "prompt": "Who has more bones: a baby or a grown-up?",
+    "prompt": "Who has more bones inside their skeleton?",
     "items": [
       {
         "id": "a",
@@ -509,8 +537,15 @@
       "evidence": [
         "206 bones",
         "adult"
+      ],
+      "support": "Human babies are born with around 300 bones, which gradually fuse into 206 adult bones.",
+      "source2": "https://askabiologist.asu.edu/games-sims/skeleton-viewer-game/introduction.html",
+      "evidence2": [
+        "300 bones",
+        "fuse"
       ]
-    }
+    },
+    "misconception": "Thinking bigger adults must have more bones in their skeletons than tiny babies."
   },
   {
     "id": "body-02",
@@ -542,8 +577,15 @@
       "evidence": [
         "skin",
         "protects"
+      ],
+      "support": "Skin is the human body's largest organ, forming an outer shield that protects internal parts.",
+      "source2": "https://extension.unr.edu/publication.aspx?PubID=8503",
+      "evidence2": [
+        "skin",
+        "largest organ"
       ]
-    }
+    },
+    "misconception": "Thinking skin is just thin wrapping rather than the largest organ of the human body."
   },
   {
     "id": "body-03",
@@ -575,8 +617,10 @@
       "evidence": [
         "hard",
         "enamel"
-      ]
-    }
+      ],
+      "support": "Tooth enamel is the hardest substance in the human body, even tougher than skeleton bones."
+    },
+    "misconception": "Thinking thick leg bones are the hardest material in the human body."
   },
   {
     "id": "body-04",
@@ -618,8 +662,10 @@
         "tongue",
         "detect",
         "bitter"
-      ]
-    }
+      ],
+      "support": "Your tongue has thousands of tiny taste buds that send flavor signals directly to your brain."
+    },
+    "misconception": "Thinking you taste food with your teeth and lips instead of taste buds on your tongue."
   },
   {
     "id": "body-05",
@@ -630,17 +676,20 @@
       {
         "id": "a",
         "emoji": "👶",
-        "label": "Newborn Baby"
+        "label": "Newborn Baby",
+        "value": "0 teeth"
       },
       {
         "id": "b",
         "emoji": "🧒",
-        "label": "Playful Toddler"
+        "label": "Playful Toddler",
+        "value": "20 teeth"
       },
       {
         "id": "c",
         "emoji": "🧑",
-        "label": "Grown Adult"
+        "label": "Grown Adult",
+        "value": "32 teeth"
       }
     ],
     "answer": [
@@ -655,8 +704,14 @@
       "evidence": [
         "20 baby",
         "teeth"
+      ],
+      "support": "Infants start with zero teeth, toddlers grow 20 baby teeth, and adults can have 32 permanent teeth.",
+      "source2": "https://medlineplus.gov/ency/article/002045.htm",
+      "evidence2": [
+        "20 baby teeth"
       ]
-    }
+    },
+    "misconception": "Thinking babies are born with a full set of teeth already in their mouths."
   },
   {
     "id": "body-06",
@@ -692,6 +747,455 @@
       "evidence": [
         "throat",
         "stomach"
+      ],
+      "support": "Teeth chew food, the throat swallows it down the esophagus, and the stomach digests it."
+    },
+    "misconception": "Thinking food drops directly into the stomach without being chewed by teeth first."
+  },
+  {
+    "id": "garden-07",
+    "level": 1,
+    "type": "pick",
+    "prompt": "Which creature constructs wooden dams to create safe family ponds?",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🦫",
+        "label": "Busy Beaver"
+      },
+      {
+        "id": "b",
+        "emoji": "🦆",
+        "label": "Wild Mallard"
+      },
+      {
+        "id": "c",
+        "emoji": "🦦",
+        "label": "Playful Otter"
+      }
+    ],
+    "answer": "a",
+    "hint": "Beavers gnaw trees with orange teeth to build sturdy lodges and dams.",
+    "misconception": "Thinking beavers build dams just to store food rather than create deep protective ponds.",
+    "fact": {
+      "text": "Beavers build wooden dams that form slow-moving ponds, creating rich wetland homes for many wild species!",
+      "support": "By building dams that form ponds, beavers provide wetlands and resources for dozens of wildlife species.",
+      "source": "https://nationalzoo.si.edu/animals/beaver",
+      "evidence": [
+        "dams",
+        "ponds",
+        "species"
+      ]
+    }
+  },
+  {
+    "id": "garden-08",
+    "level": 1,
+    "type": "tapall",
+    "prompt": "Tap the wetland habitats where wild American alligators live!",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🐊",
+        "label": "Freshwater Swamp"
+      },
+      {
+        "id": "b",
+        "emoji": "🌿",
+        "label": "River Marshes"
+      },
+      {
+        "id": "c",
+        "emoji": "🏜️",
+        "label": "Sandy Desert"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Alligators thrive in freshwater swamps, marshes, and riverbanks.",
+    "misconception": "Thinking alligators live in open ocean waves with salty water like dolphins.",
+    "fact": {
+      "text": "American alligators primarily inhabit freshwater swamps and marshes, though they also swim in rivers and lakes!",
+      "support": "Alligators primarily inhabit freshwater swamps and marshes, and can also live in rivers and lakes.",
+      "source": "https://www.nps.gov/ever/learn/nature/alligator.htm",
+      "evidence": [
+        "alligators",
+        "freshwater swamps"
+      ]
+    }
+  },
+  {
+    "id": "garden-09",
+    "level": 1,
+    "type": "pick",
+    "prompt": "What woody plant makes up almost the entire diet of giant pandas?",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🎋",
+        "label": "Green Bamboo"
+      },
+      {
+        "id": "b",
+        "emoji": "🍎",
+        "label": "Sweet Apple"
+      },
+      {
+        "id": "c",
+        "emoji": "🌰",
+        "label": "Forest Acorn"
+      }
+    ],
+    "answer": "a",
+    "hint": "Pandas spend hours each day happily munching on stalks of bamboo.",
+    "misconception": "Thinking giant pandas hunt fish or small mammals in the snow like polar bears.",
+    "fact": {
+      "text": "Giant pandas have strong jaws and broad teeth perfectly adapted for crushing tough bamboo stalks!",
+      "support": "Giant pandas have strong jaw muscles and broad molar teeth to crush tough bamboo stalks.",
+      "source": "https://nationalzoo.si.edu/animals/giant-panda",
+      "evidence": [
+        "giant pandas",
+        "crushing tough bamboo"
+      ]
+    }
+  },
+  {
+    "id": "garden-10",
+    "level": 1,
+    "type": "pick",
+    "prompt": "Which body parts join together to form an elephant's long trunk?",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "👃",
+        "label": "Nose And Lip"
+      },
+      {
+        "id": "b",
+        "emoji": "👅",
+        "label": "Teeth And Tongue"
+      },
+      {
+        "id": "c",
+        "emoji": "👂",
+        "label": "Ears And Chin"
+      }
+    ],
+    "answer": "a",
+    "hint": "An elephant breathes and smells through its trunk because it is an elongated nose.",
+    "misconception": "Thinking an elephant's trunk is an extra giant arm or special single muscle.",
+    "fact": {
+      "text": "An elephant's flexible trunk is actually a wonderful fusion of its nose and upper lip!",
+      "support": "An elephant's trunk is anatomically a fusion of its nose and upper lip.",
+      "source": "https://nationalzoo.si.edu/animals/asian-elephant",
+      "evidence": [
+        "trunk is a fusion",
+        "nose and upper lip"
+      ]
+    }
+  },
+  {
+    "id": "sky-07",
+    "level": 2,
+    "type": "pick",
+    "prompt": "What causes different seasons to cycle throughout the year across our globe?",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🌍",
+        "label": "Tilted Planet Axis"
+      },
+      {
+        "id": "b",
+        "emoji": "☀️",
+        "label": "Distance To Sun"
+      },
+      {
+        "id": "c",
+        "emoji": "☁️",
+        "label": "Passing Wind Storms"
+      }
+    ],
+    "answer": "a",
+    "hint": "Earth leans on a slant as it circles around the Sun.",
+    "misconception": "Thinking summer happens because planet Earth travels closer to the Sun in July.",
+    "fact": {
+      "text": "Earth's tilted axis creates our seasons because different regions receive direct solar rays throughout the year!",
+      "support": "Earth's tilted axis creates the different seasons as our planet orbits around the Sun.",
+      "source": "https://spaceplace.nasa.gov/seasons/en/",
+      "evidence": [
+        "tilted axis",
+        "creates seasons"
+      ]
+    }
+  },
+  {
+    "id": "sky-08",
+    "level": 2,
+    "type": "pick",
+    "prompt": "Why does our daytime meadow sky appear brightly colored in blue?",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🔵",
+        "label": "Scattered Blue Light"
+      },
+      {
+        "id": "b",
+        "emoji": "🌊",
+        "label": "Ocean Water Mirror"
+      },
+      {
+        "id": "c",
+        "emoji": "💧",
+        "label": "Floating Rain Drops"
+      }
+    ],
+    "answer": "a",
+    "hint": "Blue light waves scatter in all directions through the gases in our atmosphere.",
+    "misconception": "Thinking the clear blue sky is just reflecting blue water from the world's oceans.",
+    "fact": {
+      "text": "Sunlight contains all colors, but blue light is scattered more across our atmosphere than other colors!",
+      "support": "Blue light waves scatter more across the atmosphere than other colors because they are shorter.",
+      "source": "https://spaceplace.nasa.gov/blue-sky/en/",
+      "evidence": [
+        "blue light",
+        "scattered"
+      ]
+    }
+  },
+  {
+    "id": "sky-09",
+    "level": 2,
+    "type": "tapall",
+    "prompt": "Tap the planets that are gas giants without a solid surface!",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🔴",
+        "label": "Swirling Jupiter"
+      },
+      {
+        "id": "b",
+        "emoji": "🪐",
+        "label": "Ringed Saturn"
+      },
+      {
+        "id": "c",
+        "emoji": "🌍",
+        "label": "Rocky Earth"
+      },
+      {
+        "id": "d",
+        "emoji": "🌕",
+        "label": "Dusty Moon"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Jupiter and Saturn have thick clouds with no solid ground underneath.",
+    "misconception": "Thinking every planet in our solar system has hard ground where you could stand.",
+    "fact": {
+      "text": "Jupiter and Saturn are massive gas giants that have thick atmospheres without a solid rocky ground!",
+      "support": "Jupiter is a gas giant planet that does not have a solid rocky surface.",
+      "source": "https://spaceplace.nasa.gov/all-about-jupiter/en/",
+      "evidence": [
+        "jupiter is a gas giant",
+        "solid surface"
+      ]
+    }
+  },
+  {
+    "id": "sky-10",
+    "level": 2,
+    "type": "pick",
+    "prompt": "What is the typical climate on the red surface of Mars?",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "❄️",
+        "label": "Cold Dry Desert"
+      },
+      {
+        "id": "b",
+        "emoji": "🔥",
+        "label": "Boiling Hot Oven"
+      },
+      {
+        "id": "c",
+        "emoji": "🌴",
+        "label": "Warm Humid Tropics"
+      }
+    ],
+    "answer": "a",
+    "hint": "Mars is much further from the Sun than Earth, making it very chilly.",
+    "misconception": "Thinking Mars is scorching hot because its rusty red rocks look like glowing flames.",
+    "fact": {
+      "text": "Mars is a cold desert world located much further from the warmth of the Sun!",
+      "support": "Mars is a cold desert world that experiences freezing temperatures across its rocky landscape.",
+      "source": "https://spaceplace.nasa.gov/all-about-mars/en/",
+      "evidence": [
+        "mars",
+        "cold",
+        "desert"
+      ]
+    }
+  },
+  {
+    "id": "body-07",
+    "level": 3,
+    "type": "pick",
+    "prompt": "Which tireless organ acts as a powerful automatic pump inside your chest?",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🫀",
+        "label": "Pumping Heart"
+      },
+      {
+        "id": "b",
+        "emoji": "🫁",
+        "label": "Breathing Lungs"
+      },
+      {
+        "id": "c",
+        "emoji": "🦴",
+        "label": "Rib Skeleton"
+      }
+    ],
+    "answer": "a",
+    "hint": "Your heart beats continuously day and night to power circulation throughout your body.",
+    "misconception": "Thinking lungs pump the blood through your veins instead of breathing in oxygen.",
+    "fact": {
+      "text": "Your heart is a powerful automatic pump that beats to deliver oxygen throughout your entire body!",
+      "support": "The heart is a powerful automatic pump that delivers circulation throughout the human body.",
+      "source": "https://medlineplus.gov/ency/anatomyvideos/000023.htm",
+      "evidence": [
+        "heart is a powerful",
+        "pump"
+      ]
+    }
+  },
+  {
+    "id": "body-08",
+    "level": 3,
+    "type": "tapall",
+    "prompt": "Tap two essential vital signs doctors check to see how you are doing!",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🫀",
+        "label": "Heartbeat Rate"
+      },
+      {
+        "id": "b",
+        "emoji": "🫁",
+        "label": "Breathing Rate"
+      },
+      {
+        "id": "c",
+        "emoji": "💇",
+        "label": "Hair Length"
+      },
+      {
+        "id": "d",
+        "emoji": "👟",
+        "label": "Shoe Size"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Doctors check how your heart beats and how lungs take in breaths.",
+    "misconception": "Thinking shoe size or how tall you are counted as medical vital signs.",
+    "fact": {
+      "text": "Vital signs reflect essential body functions, including your heartbeat rate and your regular breathing rate!",
+      "support": "Vital signs measure essential bodily functions including heartbeat rate and regular breathing rate.",
+      "source": "https://medlineplus.gov/ency/article/002341.htm",
+      "evidence": [
+        "vital signs",
+        "heartbeat",
+        "breathing"
+      ]
+    }
+  },
+  {
+    "id": "body-09",
+    "level": 3,
+    "type": "pick",
+    "prompt": "Which breathing organs serve as the primary parts of your respiratory system?",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "🫁",
+        "label": "Spongy Lungs"
+      },
+      {
+        "id": "b",
+        "emoji": "🥣",
+        "label": "Digest Stomach"
+      },
+      {
+        "id": "c",
+        "emoji": "🧠",
+        "label": "Thinking Brain"
+      }
+    ],
+    "answer": "a",
+    "hint": "Your lungs take in air every time you breathe in and out.",
+    "misconception": "Thinking food and air both pass into your stomach when you inhale deeply.",
+    "fact": {
+      "text": "Your two lungs are the primary organs of the respiratory system, taking in fresh oxygen!",
+      "support": "The two lungs serve as the primary organs of the human respiratory system.",
+      "source": "https://medlineplus.gov/ency/anatomyvideos/000018.htm",
+      "evidence": [
+        "lungs are the primary organs",
+        "respiratory system"
+      ]
+    }
+  },
+  {
+    "id": "body-10",
+    "level": 3,
+    "type": "order",
+    "prompt": "Order the digestive organs as a swallowed bite travels downward through them!",
+    "items": [
+      {
+        "id": "a",
+        "emoji": "👅",
+        "label": "Throat Passage"
+      },
+      {
+        "id": "b",
+        "emoji": "🥣",
+        "label": "Digest Stomach"
+      },
+      {
+        "id": "c",
+        "emoji": "🪱",
+        "label": "Long Intestines"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Food moves from your throat into the stomach, and then enters the intestines.",
+    "misconception": "Thinking food drops into the intestines before reaching the acid in your stomach.",
+    "fact": {
+      "text": "Swallowed food travels through the digestive tract, moving from throat into stomach and intestines!",
+      "support": "Peristalsis moves food through the digestive tract, passing from throat into stomach and intestines.",
+      "source": "https://medlineplus.gov/ency/anatomyvideos/000097.htm",
+      "evidence": [
+        "peristalsis",
+        "move food through",
+        "digestive tract"
       ]
     }
   }

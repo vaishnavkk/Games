@@ -17,13 +17,16 @@ if (!fs.existsSync(REPORT_DIR)) fs.mkdirSync(REPORT_DIR, { recursive: true });
 
 const puzzles = JSON.parse(fs.readFileSync(PUZZLES_PATH, 'utf8'));
 
+const DISALLOWED_DOMAINS = ['britannica.com'];
+const SECOND_SOURCE_REGEX = /\b(\d+|only|most|largest|first|fastest|never|always)\b/i;
+
 function sanitizeFilename(url) {
   return url.replace(/[^a-zA-Z0-9-_]/g, '_').substring(0, 100) + '.txt';
 }
 
 function fetchUrl(url) {
   return new Promise((resolve, reject) => {
-    const client = url.startsWith('https') ? https : http;
+    let client = url.startsWith('https') ? https : http;
     const req = client.get(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -56,13 +59,10 @@ function fetchUrl(url) {
 }
 
 function cleanHtmlToText(html) {
-  // Strip scripts, styles, svg
   let text = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, ' ');
   text = text.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, ' ');
   text = text.replace(/<svg\b[^<]*(?:(?!<\/svg>)<[^<]*)*<\/svg>/gi, ' ');
-  // Strip HTML tags
   text = text.replace(/<[^>]+>/g, ' ');
-  // Decode common HTML entities
   text = text.replace(/&nbsp;/g, ' ')
              .replace(/&amp;/g, '&')
              .replace(/&lt;/g, '<')
@@ -72,12 +72,10 @@ function cleanHtmlToText(html) {
              .replace(/&rsquo;/g, "'")
              .replace(/&ldquo;/g, '"')
              .replace(/&rdquo;/g, '"');
-  // Collapse whitespace
   return text.replace(/\s+/g, ' ').trim();
 }
 
 function splitIntoSentences(text) {
-  // Split on sentence terminators (. ! ?) followed by space or end
   return text
     .split(/(?<=[.!?])\s+/)
     .map(s => s.trim())
@@ -90,17 +88,51 @@ export async function checkSources() {
   let warnCount = 0;
   let failCount = 0;
   let okCount = 0;
+  let secondSourceCount = 0;
 
   for (const puzzle of puzzles) {
     const { id, fact } = puzzle;
-    const sourceList = Array.isArray(fact?.sources) && fact.sources.length > 0
-      ? fact.sources.slice(0, 2)
-      : (fact?.source && fact?.evidence ? [{ url: fact.source, evidence: fact.evidence }] : []);
+    const factText = fact?.text || '';
+    const needsSecondSource = SECOND_SOURCE_REGEX.test(factText);
+
+    // Build source list
+    const sourceList = [];
+    if (fact?.source && fact?.evidence) {
+      sourceList.push({ url: fact.source, evidence: fact.evidence, isPrimary: true });
+    }
+    if (fact?.source2 && fact?.evidence2) {
+      sourceList.push({ url: fact.source2, evidence: fact.evidence2, isSecondary: true });
+    } else if (Array.isArray(fact?.sources) && fact.sources.length > 1) {
+      sourceList.push({ url: fact.sources[1].url, evidence: fact.sources[1].evidence, isSecondary: true });
+    }
 
     if (sourceList.length === 0) {
-      console.error(`[check:sources] FAIL: Puzzle ${id} missing fact.source or fact.sources`);
+      console.error(`[check:sources] FAIL: Puzzle ${id} missing fact.source`);
       failCount++;
       continue;
+    }
+
+    if (needsSecondSource) {
+      if (sourceList.length < 2) {
+        console.error(`[check:sources] FAIL: Puzzle ${id} requires second source (contains number or only/most/largest/first/fastest/never/always)`);
+        failCount++;
+        continue;
+      }
+      secondSourceCount++;
+      // Verify different domains
+      try {
+        const host1 = new URL(sourceList[0].url).hostname.replace(/^www\./, '');
+        const host2 = new URL(sourceList[1].url).hostname.replace(/^www\./, '');
+        if (host1 === host2) {
+          console.error(`[check:sources] FAIL: Puzzle ${id} second source has same domain as primary (${host1})`);
+          failCount++;
+          continue;
+        }
+      } catch (e) {
+        console.error(`[check:sources] FAIL: Puzzle ${id} invalid source URL: ${e.message}`);
+        failCount++;
+        continue;
+      }
     }
 
     let allSourcesOk = true;
@@ -109,6 +141,16 @@ export async function checkSources() {
       const src = sourceList[sIdx];
       const sourceUrl = src.url;
       const evidenceTerms = (src.evidence || []).map(e => e.toLowerCase().trim());
+
+      // Check disallowed domains
+      for (const disallowed of DISALLOWED_DOMAINS) {
+        if (sourceUrl.toLowerCase().includes(disallowed)) {
+          console.error(`[check:sources] FAIL: Puzzle ${id} uses disallowed bot-shielded domain: ${sourceUrl}`);
+          failCount++;
+          allSourcesOk = false;
+          continue;
+        }
+      }
 
       const cacheFile = path.join(CACHE_DIR, sanitizeFilename(sourceUrl));
       let rawText = '';
@@ -124,7 +166,7 @@ export async function checkSources() {
           console.error(`[check:sources] FAIL: [${id}] Unreachable source ${sourceUrl} (${err.message})`);
           failCount++;
           allSourcesOk = false;
-          supportLines.push(`${id} | FAIL | Unreachable: ${err.message}`);
+          supportLines.push(`${id}${sIdx > 0 ? `-2` : ''} | FAIL | Unreachable: ${err.message}`);
           continue;
         }
       }
@@ -141,7 +183,7 @@ export async function checkSources() {
       }
 
       if (matchedSentence) {
-        console.log(`[check:sources] OK [${id}${sourceList.length > 1 ? ` #${sIdx + 1}` : ''}]: Evidence matched in 1 sentence.`);
+        console.log(`[check:sources] OK [${id}${sIdx > 0 ? ' #2' : ''}]: Evidence matched in 1 sentence.`);
         let supportingSentence = matchedSentence.trim();
         const words = supportingSentence.split(/\s+/);
         if (words.length > 15) {
@@ -156,12 +198,12 @@ export async function checkSources() {
           }
           supportingSentence = words.slice(start, end).join(' ');
         }
-        supportLines.push(`${id}${sourceList.length > 1 ? `-${sIdx + 1}` : ''} | OK | ${supportingSentence}`);
+        supportLines.push(`${id}${sIdx > 0 ? '-2' : ''} | OK | ${supportingSentence}`);
       } else {
-        console.error(`[check:sources] FAIL [${id}${sourceList.length > 1 ? ` #${sIdx + 1}` : ''}]: Missing evidence terms [${evidenceTerms.join(', ')}] in any single sentence.`);
+        console.error(`[check:sources] FAIL [${id}${sIdx > 0 ? ' #2' : ''}]: Missing evidence terms [${evidenceTerms.join(', ')}] in any single sentence.`);
         failCount++;
         allSourcesOk = false;
-        supportLines.push(`${id}${sourceList.length > 1 ? `-${sIdx + 1}` : ''} | FAIL | Terms missing: [${evidenceTerms.join(', ')}]`);
+        supportLines.push(`${id}${sIdx > 0 ? '-2' : ''} | FAIL | Terms missing: [${evidenceTerms.join(', ')}]`);
       }
     }
 
@@ -171,7 +213,7 @@ export async function checkSources() {
   }
 
   fs.writeFileSync(SUPPORT_FILE, supportLines.join('\n') + '\n', 'utf8');
-  console.log(`[check:sources] Summary: OK=${okCount}, WARN=${warnCount}, FAIL=${failCount}`);
+  console.log(`[check:sources] Summary: OK=${okCount}, WARN=${warnCount}, FAIL=${failCount}, secondSources=${secondSourceCount}`);
   console.log(`[check:sources] Support sentences written to ${SUPPORT_FILE}`);
 
   if (failCount > 0 || warnCount > 0) {

@@ -668,7 +668,14 @@ async function safeClick(page, selector) {
     if (el) el.scrollIntoView({ block: 'center', inline: 'center' });
   }, selector);
   const err = await page.evaluate((sel) => window.__selfplayChecks.checkClickable(sel), selector);
-  if (err) throw new Error(err);
+  if (err) {
+    const debug = await page.evaluate(() => ({
+      screen: window.__meadow?.getState()?.screen,
+      puzzleId: window.__meadow?.getState()?.puzzleId,
+      domItems: Array.from(document.querySelectorAll('.card-item')).map(c => c.getAttribute('data-item-id'))
+    }));
+    throw new Error(`${err} (state: ${JSON.stringify(debug)})`);
+  }
   await page.click(selector);
 }
 
@@ -739,6 +746,7 @@ async function runWorkerSession(serverUrl, viewport, puzzles, mode = 'perfect') 
 
     for (let pIdx = 0; pIdx < levelPuzzles.length; pIdx++) {
       const puzzle = levelPuzzles[pIdx];
+      console.log(`[selfplay] [${viewport.name}] [lvl ${lvl} #${pIdx + 1}] Playing ${puzzle.id} (${puzzle.type})`);
       const state = await page.evaluate(() => window.__meadow.getState());
       if (state.screen !== 'puzzle') {
         throw new Error(`Expected puzzle screen, got ${state.screen} at level ${lvl} puzzle ${puzzle.id}`);
