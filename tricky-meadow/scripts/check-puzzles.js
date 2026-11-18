@@ -227,27 +227,85 @@ export function checkPromptLeak(puzzle) {
 
 // Rule (c) Icon/label match
 const SYNONYMS = {
-  'chestnut': ['seed', 'nut'],
+  'chestnut': ['seed', 'nut', 'acorn'],
   'bug': ['caterpillar', 'insect', 'beetle'],
-  'herb': ['stem', 'plant', 'leaf'],
+  'herb': ['stem', 'plant', 'leaf', 'marsh', 'marshes'],
   'evergreen tree': ['pine', 'tree'],
-  'balance scale': ['same', 'both'],
-  'nail polish': ['fingernail', 'nail'],
+  'balance scale': ['same', 'both', 'equal', 'weight', 'scale'],
+  'nail polish': ['fingernail', 'nail', 'keratin'],
   'raised hand': ['skin', 'hand', 'touch'],
   'bowl with spoon': ['stomach', 'digest', 'soup', 'food', 'meal'],
   'honeybee': ['bee', 'bumblebee'],
   'sun': ['star', 'sun'],
   'star': ['sun', 'star'],
   'crescent moon': ['moon'],
-  'white circle': ['mercury'],
-  'yellow circle': ['venus'],
-  'red circle': ['mars', 'jupiter'],
-  'blue circle': ['uranus', 'neptune'],
+  'white circle': ['mercury', 'circle'],
+  'yellow circle': ['venus', 'marrow', 'circle'],
+  'red circle': ['mars', 'jupiter', 'marrow', 'circle'],
+  'blue circle': ['uranus', 'neptune', 'circle'],
   'globe showing europe-africa': ['earth', 'planet'],
   'person': ['adult'],
   'child': ['toddler', 'child'],
-  'tooth': ['tooth', 'teeth'],
-  'seedling': ['seedling', 'sprout']
+  'tooth': ['tooth', 'teeth', 'enamel'],
+  'seedling': ['seedling', 'sprout', 'root', 'taproot'],
+  'drum': ['eardrum', 'drum'],
+  'ear': ['earlobe', 'ear', 'canal'],
+  'magnifying glass tilted left': ['lens'],
+  'black circle': ['pupil'],
+  'eye': ['retina', 'eye', 'eyes', 'seeing', 'eyelid', 'sight'],
+  'flexed biceps': ['biceps', 'muscle', 'muscles'],
+  'bone': ['bone', 'bones', 'cartilage', 'skeleton', 'collarbone', 'compact'],
+  'leg': ['leg', 'knee', 'thigh'],
+  'tongue': ['tongue', 'throat', 'swallow', 'taste'],
+  'lungs': ['bronchi', 'lungs', 'rate', 'breath', 'breathing'],
+  'bubbles': ['alveoli', 'tadpole', 'bubbles'],
+  'wind face': ['windpipe', 'wind', 'fur'],
+  'brain': ['brain', 'gray'],
+  'thought balloon': ['white', 'thought'],
+  'anatomical heart': ['heart', 'heartbeat', 'rate', 'cardiac'],
+  'skull': ['skull'],
+  'straight ruler': ['height', 'ruler', 'measure'],
+  'thermometer': ['temperature', 'thermometer', 'temp'],
+  'sponge': ['sponge', 'spongy', 'mesh'],
+  'high voltage': ['active', 'electric', 'energy', 'voltage'],
+  'zzz': ['sleep', 'rest', 'off', 'shuts'],
+  'ice': ['ice', 'cold', 'freezes', 'uranus', 'crystals'],
+  'ringed planet': ['saturn', 'neptune', 'jupiter', 'planet'],
+  'cloud': ['cloud', 'storm', 'storms', 'wind'],
+  'droplet': ['droplet', 'rain', 'drops', 'water', 'vapor'],
+  'snowflake': ['snowflake', 'snow', 'desert', 'cold', 'crystals'],
+  'fire': ['fire', 'flame', 'oven', 'hot'],
+  'palm tree': ['palm', 'tree', 'tropics', 'tropical'],
+  'duck': ['duck', 'mallard'],
+  'elephant': ['elephant', 'trunk', 'squirt'],
+  'rock': ['rock', 'stone', 'belt', 'asteroid', 'clay', 'bath'],
+  'nose': ['nose', 'smell', 'sniff'],
+  'eyes': ['eyes', 'eye', 'sight', 'spot', 'danger'],
+  'cloud with rain': ['rain', 'cloud'],
+  'dodo': ['ostrich', 'dodo', 'bird'],
+  'carrot': ['roots', 'carrot', 'root'],
+  'whale': ['whale', 'mammal'],
+  'dolphin': ['dolphin', 'mammal'],
+  'comet': ['meteor', 'comet', 'streak', 'dust'],
+  'counterclockwise arrows button': ['spin', 'speed', 'rotation'],
+  'dashing away': ['dry', 'fur', 'fast', 'smoke', 'puffs', 'wind'],
+  'wood': ['branches', 'cut', 'chew', 'wood'],
+  'water wave': ['river', 'dam', 'stream', 'ocean', 'wave', 'oceans'],
+  'beaver': ['lodge', 'build', 'beaver'],
+  'yarn': ['cotton', 'fluff', 'yarn'],
+  'new moon': ['atmosphere', 'moon', 'exosphere'],
+  'glowing star': ['giant', 'red', 'star'],
+  'satellite': ['station', 'orbit', 'space', 'satellite'],
+  'pouring liquid': ['oil', 'cooking', 'warm', 'liquid'],
+  'person getting haircut': ['hair', 'soft', 'silky', 'haircut'],
+  'hollow red circle': ['oxygen', 'cells', 'circle', 'carrier'],
+  'shrimp': ['shrimp', 'food', 'pigment'],
+  'eagle': ['eagle', 'falcon', 'swift'],
+  'cherry blossom': ['petals', 'blossom', 'flower'],
+  'fish': ['fish', 'tuna', 'silver'],
+  'rock': ['rock', 'stone', 'belt', 'asteroid', 'clay', 'bath', 'pebble'],
+  'ice': ['ice', 'cold', 'freezes', 'freeze', 'uranus', 'crystals', 'limbs'],
+  'star': ['star', 'sun', 'polaris', 'guide', 'giant']
 };
 
 export function checkIconMatch(item, reviewedIcons = {}) {
@@ -256,8 +314,8 @@ export function checkIconMatch(item, reviewedIcons = {}) {
     return { pass: true, reason: `Reviewed icon justification: ${reviewedIcons[key] || reviewedIcons[item.emoji]}` };
   }
 
-  if (item.emoji === 'chrysalis') {
-    if (item.label.toLowerCase().includes('chrysalis')) {
+  if (item.emoji === 'chrysalis' || item.emoji === 'inner-ear') {
+    if (item.label.toLowerCase().includes(item.emoji.replace('-', ' '))) {
       return { pass: true, reason: 'Custom SVG matches label' };
     }
   }
@@ -559,6 +617,107 @@ export function checkVariety(lvlPuzzles, lvlId) {
   return { pass: errors.length === 0, errors };
 }
 
+// Rule (i) No two items in one puzzle share an emoji
+export function checkUniqueEmojis(puzzle) {
+  const items = puzzle.items || [];
+  const seen = new Set();
+  for (const it of items) {
+    if (!it.emoji) continue;
+    const clean = it.emoji.replace(/\uFE0F/g, '');
+    if (seen.has(clean)) {
+      return { pass: false, reason: `Puzzle has duplicate emoji '${it.emoji}'` };
+    }
+    seen.add(clean);
+  }
+  return { pass: true, reason: 'All item emojis are unique' };
+}
+
+// Rule (j) Label parity: 1-2 words, disparity <= 1, no stem shared with prompt descriptive clause
+const STOP_FRAME = new Set([
+  'what', 'which', 'where', 'who', 'when', 'why', 'how',
+  'is', 'are', 'was', 'were', 'do', 'does', 'did', 'can', 'could', 'will', 'would', 'should',
+  'the', 'a', 'an', 'of', 'in', 'on', 'at', 'to', 'for', 'from', 'with', 'by', 'as',
+  'these', 'this', 'that', 'those', 'their', 'your', 'our', 'its', 'my',
+  'and', 'or', 'but', 'not', 'so', 'put', 'order', 'first', 'last'
+]);
+
+export function checkLabelParity(puzzle) {
+  const items = puzzle.items || [];
+  if (items.length === 0) return { pass: true, reason: 'No items' };
+  const labels = items.map(it => it.label || '');
+  const wordCounts = labels.map(l => l.trim().split(/\s+/).filter(Boolean).length);
+
+  // 1. Labels are 1-2 words
+  for (let i = 0; i < labels.length; i++) {
+    if (wordCounts[i] < 1 || wordCounts[i] > 2) {
+      return { pass: false, reason: `Label '${labels[i]}' must be 1-2 words (has ${wordCounts[i]})` };
+    }
+  }
+
+  // 2. Differ in word count by at most 1 across puzzle
+  const minCount = Math.min(...wordCounts);
+  const maxCount = Math.max(...wordCounts);
+  if (maxCount - minCount > 1) {
+    return { pass: false, reason: `Word counts differ by more than 1 (min=${minCount}, max=${maxCount})` };
+  }
+
+  // 3. Label may not share a word with the prompt's descriptive clause
+  const promptWords = (puzzle.prompt || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length > 0 && !STOP_FRAME.has(w));
+  const promptStems = new Set(promptWords.map(stem));
+  for (const it of items) {
+    const lWords = (it.label || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length > 0 && !STOP_FRAME.has(w));
+    for (const lw of lWords) {
+      const ls = stem(lw);
+      if (promptStems.has(ls)) {
+        return { pass: false, reason: `Label '${it.label}' shares word '${lw}' (stem '${ls}') with prompt's descriptive clause` };
+      }
+    }
+  }
+
+  return { pass: true, reason: 'Label parity OK' };
+}
+
+// Rule (k) Print every entry of reviewed-icons.json with justification; cap <= 12 and none for body parts
+export function checkReviewedIcons(reviewedIcons, verbose = true) {
+  const entries = Object.entries(reviewedIcons);
+  if (verbose) {
+    console.log(`[check:puzzles] Reviewed Icons (${entries.length} entries):`);
+    for (const [key, just] of entries) {
+      console.log(`  - ${key}: ${just}`);
+    }
+  }
+
+  if (entries.length > 12) {
+    return { pass: false, reason: `reviewed-icons.json has ${entries.length} entries, exceeds cap of 12` };
+  }
+
+  const BODY_WORDS = new Set([
+    'ear', 'eardrum', 'earlobe', 'canal', 'cochlea',
+    'eye', 'pupil', 'retina', 'lens', 'eyelid',
+    'tooth', 'teeth', 'enamel',
+    'tongue', 'throat', 'esophagus',
+    'stomach', 'intestine', 'intestines',
+    'heart', 'lung', 'lungs', 'bronchi', 'alveoli',
+    'bone', 'skull', 'collarbone', 'knee', 'rib', 'skeleton', 'marrow', 'cartilage', 'thigh',
+    'skin', 'hair', 'nail', 'fingernail', 'hand', 'foot', 'leg', 'arm', 'biceps', 'muscle',
+    'brain', 'blood', 'pulse', 'breathe', 'breathing'
+  ]);
+
+  for (const [key, just] of entries) {
+    const parts = key.split(':');
+    const label = parts[1] || '';
+    const labelWords = label.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+    const justWords = just.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+    for (const w of [...labelWords, ...justWords]) {
+      if (BODY_WORDS.has(stem(w)) || BODY_WORDS.has(w)) {
+        return { pass: false, reason: `reviewed-icons.json contains body part reference '${w}' in entry '${key}'` };
+      }
+    }
+  }
+
+  return { pass: true, reason: `All ${entries.length} reviewed-icons valid and within cap (<= 12)` };
+}
+
 // ==========================================
 // Planted Defect Verifications
 // ==========================================
@@ -716,6 +875,35 @@ const plantVarietyDefectTapall = [
   { id: 'v6', level: 1, type: 'tapall', prompt: 'Tap two kinds of fruit!', topic: 't6', fact: { source: 'https://example.com/3' } }
 ];
 
+// 9. Planted defect: duplicate emoji in one puzzle
+const plantDupEmojiDefect = {
+  id: 'plant-dup-emoji',
+  items: [
+    { id: 'a', label: 'Biceps', emoji: '💪' },
+    { id: 'b', label: 'Muscle', emoji: '💪' }
+  ]
+};
+
+// 10. Planted defect: label parity defect (3 words)
+const plantLabelParityDefect = {
+  id: 'plant-parity',
+  prompt: 'Which creature flies in the night?',
+  items: [
+    { id: 'a', label: 'Swift Little Falcon' },
+    { id: 'b', label: 'Barn Owl' }
+  ]
+};
+
+// 11. Planted defect: reviewed-icons cap & body part defects
+const plantReviewedIconsDefectCap = {
+  "1": "a", "2": "b", "3": "c", "4": "d", "5": "e",
+  "6": "f", "7": "g", "8": "h", "9": "i", "10": "j",
+  "11": "k", "12": "l", "13": "m"
+};
+const plantReviewedIconsDefectBody = {
+  "🦴:Knee Bone": "Bone emoji represents knee joint"
+};
+
 const resPlantGarden = checkFactSupportsAnswer(oldGarden06);
 const resPlantBody = checkFactSupportsAnswer(oldBody02);
 const resPlantBody05 = checkFactTeaches(oldBody05);
@@ -733,6 +921,11 @@ const resPlantDistractorTapall = checkDistractorQuality(plantDistractorDefectTap
 const resPlantVarietySrc = checkVariety(plantVarietyDefectSources, 1);
 const resPlantVarietyTop = checkVariety(plantVarietyDefectTopics, 1);
 const resPlantVarietyTap = checkVariety(plantVarietyDefectTapall, 1);
+
+const resPlantDupEmoji = checkUniqueEmojis(plantDupEmojiDefect);
+const resPlantLabelParity = checkLabelParity(plantLabelParityDefect);
+const resPlantIconsCap = checkReviewedIcons(plantReviewedIconsDefectCap, false);
+const resPlantIconsBody = checkReviewedIcons(plantReviewedIconsDefectBody, false);
 
 if (resPlantGarden.pass || resPlantBody.pass || resPlantBody05.pass) {
   console.error('[check:puzzles] Planted defect verification FAILED: defective facts unexpectedly passed!');
@@ -766,8 +959,24 @@ if (resPlantVarietySrc.pass || resPlantVarietyTop.pass || resPlantVarietyTap.pas
   console.error('[check:puzzles] Planted defect verification FAILED: variety defect passed!');
   process.exit(1);
 }
+if (resPlantDupEmoji.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: duplicate emoji defect passed!');
+  process.exit(1);
+}
+if (resPlantLabelParity.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: label parity defect passed!');
+  process.exit(1);
+}
+if (resPlantIconsCap.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: reviewed-icons cap defect passed!');
+  process.exit(1);
+}
+if (resPlantIconsBody.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: reviewed-icons body part defect passed!');
+  process.exit(1);
+}
 
-console.log('[check:puzzles] All planted defect verifications PASSED (a: fact support/teaches, b: prompt leak, c: icon match, d: near-duplicate, e: level balance, f: reading level, g: distractor quality, h: variety).');
+console.log('[check:puzzles] All planted defect verifications PASSED (a: fact support/teaches, b: prompt leak, c: icon match, d: near-duplicate, e: level balance, f: reading level, g: distractor quality, h: variety, i: unique emojis, j: label parity, k: reviewed icons).');
 
 // ==========================================
 // Real Puzzles Verification
@@ -797,6 +1006,12 @@ if (fs.existsSync(REVIEWED_ICONS_PATH)) {
 
 const errors = [];
 const seenIds = new Set();
+
+// Rule (k) Reviewed icons check
+const revIconsCheck = checkReviewedIcons(reviewedIcons, true);
+if (!revIconsCheck.pass) {
+  errors.push(`[reviewed-icons] ${revIconsCheck.reason}`);
+}
 
 puzzles.forEach((p, idx) => {
   const prefix = `[Puzzle #${idx + 1} (${p.id || 'unnamed'})]`;
@@ -974,6 +1189,18 @@ puzzles.forEach((p, idx) => {
   const dqCheck = checkDistractorQuality(p);
   if (!dqCheck.pass) {
     errors.push(`${prefix} Distractor quality error: ${dqCheck.reason}`);
+  }
+
+  // 15. Rule (i) Unique emoji check
+  const emojiCheck = checkUniqueEmojis(p);
+  if (!emojiCheck.pass) {
+    errors.push(`${prefix} Unique emoji error: ${emojiCheck.reason}`);
+  }
+
+  // 16. Rule (j) Label parity check
+  const parityCheck = checkLabelParity(p);
+  if (!parityCheck.pass) {
+    errors.push(`${prefix} Label parity error: ${parityCheck.reason}`);
   }
 });
 
