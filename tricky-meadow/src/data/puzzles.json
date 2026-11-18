@@ -570,21 +570,21 @@
     "items": [
       {
         "id": "a",
+        "label": "Baby Infant",
         "emoji": "👶",
-        "label": "Tiny Baby",
-        "group": "human stages"
+        "group": "humans"
       },
       {
         "id": "b",
+        "label": "Grown Adult",
         "emoji": "🧑",
-        "label": "Adult Person",
-        "group": "human stages"
+        "group": "humans"
       },
       {
         "id": "c",
-        "emoji": "⚖️",
-        "label": "Both The Same",
-        "group": "human stages"
+        "label": "Playful Toddler",
+        "emoji": "🧒",
+        "group": "humans"
       }
     ],
     "answer": "a",
@@ -960,21 +960,21 @@
     "items": [
       {
         "id": "a",
+        "label": "Nose Lip",
         "emoji": "👃",
-        "label": "Nose And Lip",
-        "group": "face parts"
+        "group": "organs"
       },
       {
         "id": "b",
-        "emoji": "👅",
-        "label": "Teeth And Tongue",
-        "group": "face parts"
+        "label": "Ear Cheek",
+        "emoji": "👂",
+        "group": "organs"
       },
       {
         "id": "c",
-        "emoji": "👂",
-        "label": "Ears And Chin",
-        "group": "face parts"
+        "label": "Tongue Jaw",
+        "emoji": "👅",
+        "group": "organs"
       }
     ],
     "answer": "a",
@@ -999,21 +999,21 @@
     "items": [
       {
         "id": "a",
+        "label": "Planet Axis",
         "emoji": "🌍",
-        "label": "Tilted Planet Axis",
-        "group": "seasonal factors"
+        "group": "earth-traits"
       },
       {
         "id": "b",
+        "label": "Sun Distance",
         "emoji": "☀️",
-        "label": "Distance To Sun",
-        "group": "seasonal factors"
+        "group": "earth-traits"
       },
       {
         "id": "c",
-        "emoji": "☁️",
-        "label": "Passing Wind Storms",
-        "group": "seasonal factors"
+        "label": "Spin Speed",
+        "emoji": "🔄",
+        "group": "earth-traits"
       }
     ],
     "answer": "a",
@@ -1034,25 +1034,25 @@
     "id": "sky-08",
     "level": 2,
     "type": "pick",
-    "prompt": "Why does our daytime meadow sky appear brightly colored in blue?",
+    "prompt": "Why does our daytime meadow sky appear bright azure?",
     "items": [
       {
         "id": "a",
-        "emoji": "🔵",
-        "label": "Scattered Blue Light",
-        "group": "sky factors"
+        "label": "Blue Light",
+        "emoji": "🔹",
+        "group": "optics"
       },
       {
         "id": "b",
+        "label": "Ocean Waves",
         "emoji": "🌊",
-        "label": "Ocean Water Mirror",
-        "group": "sky factors"
+        "group": "optics"
       },
       {
         "id": "c",
-        "emoji": "💧",
-        "label": "Floating Rain Drops",
-        "group": "sky factors"
+        "label": "Sparkle Dust",
+        "emoji": "✨",
+        "group": "optics"
       }
     ],
     "answer": "a",
@@ -1125,20 +1125,20 @@
     "items": [
       {
         "id": "a",
+        "label": "Cold Desert",
         "emoji": "❄️",
-        "label": "Cold Dry Desert",
         "group": "climates"
       },
       {
         "id": "b",
+        "label": "Hot Oven",
         "emoji": "🔥",
-        "label": "Boiling Hot Oven",
         "group": "climates"
       },
       {
         "id": "c",
+        "label": "Warm Tropics",
         "emoji": "🌴",
-        "label": "Warm Humid Tropics",
         "group": "climates"
       }
     ],
@@ -1163,21 +1163,21 @@
     "items": [
       {
         "id": "a",
+        "label": "Cardiac Heart",
         "emoji": "🫀",
-        "label": "Pumping Heart",
-        "group": "chest parts"
+        "group": "organs"
       },
       {
         "id": "b",
-        "emoji": "🫁",
         "label": "Breathing Lungs",
-        "group": "chest parts"
+        "emoji": "🫁",
+        "group": "organs"
       },
       {
         "id": "c",
-        "emoji": "🦴",
-        "label": "Rib Skeleton",
-        "group": "chest parts"
+        "label": "Digest Stomach",
+        "emoji": "🥣",
+        "group": "organs"
       }
     ],
     "answer": "a",
@@ -1253,81 +1253,85 @@
     "id": "body-09",
     "level": 3,
     "type": "pick",
-    "prompt": "Which part of your ear helps you keep your balance?",
+    "prompt": "What helps your head keep its balance?",
     "items": [
       {
         "id": "a",
-        "label": "Inner Ear",
-        "emoji": "👂",
-        "group": "ear parts"
+        "label": "Inner ear",
+        "emoji": "inner-ear",
+        "group": "ear-parts"
       },
       {
         "id": "b",
         "label": "Eardrum",
         "emoji": "🥁",
-        "group": "ear parts"
+        "group": "ear-parts"
       },
       {
         "id": "c",
         "label": "Earlobe",
         "emoji": "👂",
-        "group": "ear parts"
+        "group": "ear-parts"
       }
     ],
     "answer": "a",
-    "hint": "The balance canals are tucked deep inside the inner section of your ear.",
-    "misconception": "Thinking balance comes only from your feet or eyes rather than canals in your inner ear.",
+    "hint": "Think about which deep part of your ear detects movement!",
+    "misconception": "Many people think ears are only for hearing, but deep inside they sense balance too!",
     "fact": {
-      "text": "Fluid canals deep in your inner ear tell your brain which way you lean to keep you steady!",
+      "text": "Canals in your inner ear detect head motion. They send signals to keep you balanced.",
       "support": "Some balance problems are due to problems in the inner ear.",
-      "source": "https://medlineplus.gov/balanceproblems.html",
       "evidence": [
-        "some balance problems are due to problems in the inner ear"
-      ]
+        "balance",
+        "problems",
+        "due",
+        "inner",
+        "ear"
+      ],
+      "source": "https://medlineplus.gov/balanceproblems.html"
     },
-    "topic": "ear-balance"
+    "topic": "inner-ear-balance"
   },
   {
     "id": "body-10",
     "level": 3,
-    "type": "order",
-    "prompt": "Order these organs as swallowed food moves down!",
+    "type": "pick",
+    "prompt": "Which of these tissues pull on your skeleton to move your body?",
     "items": [
       {
         "id": "a",
-        "emoji": "👅",
-        "label": "Throat",
-        "group": "digestive organs"
+        "label": "Biceps",
+        "emoji": "💪",
+        "group": "anatomy"
       },
       {
         "id": "b",
-        "emoji": "🥣",
-        "label": "Stomach",
-        "group": "digestive organs"
+        "label": "Bone",
+        "emoji": "🦴",
+        "group": "anatomy"
       },
       {
         "id": "c",
-        "emoji": "🪱",
-        "label": "Intestines",
-        "group": "digestive organs"
+        "label": "Tooth",
+        "emoji": "🦷",
+        "group": "anatomy"
       }
     ],
-    "answer": [
-      "a",
-      "b",
-      "c"
-    ],
-    "hint": "Food moves from your throat into the stomach, and then enters the intestines.",
-    "misconception": "Thinking food drops into the intestines before reaching the acid in your stomach.",
+    "answer": "a",
+    "hint": "Think about what tightens and pulls when you lift your arm!",
+    "misconception": "Bones provide structure, but muscles are needed to pull and create motion!",
     "fact": {
-      "text": "Swallowed food goes down your throat into your stomach, where acid and muscles break it up. Then it moves on to the intestines.",
-      "support": "Swallowed food moves from the throat down into the stomach, then on to the intestines.",
-      "source": "https://medlineplus.gov/ency/anatomyvideos/000097.htm",
+      "text": "Biceps and other muscles pull firmly on your bones. They work in pairs to create bodily motion.",
+      "support": "You depend on them to give your body structure and support and to let you use your muscles to move.",
       "evidence": [
-        "swallowed food to the stomach"
-      ]
+        "depend",
+        "body",
+        "support",
+        "muscles",
+        "move"
+      ],
+      "source": "https://askabiologist.asu.edu/games-sims/skeleton-viewer-game/introduction.html"
     },
-    "topic": "digestion-order"
+    "topic": "muscles-movement"
   },
   {
     "id": "garden-11",
@@ -1494,25 +1498,22 @@
     "id": "sky-11",
     "level": 2,
     "type": "order",
-    "prompt": "Put these Moon shapes in order, from new to full!",
+    "prompt": "Which lunar stage shows no lit surface to our night sky?",
     "items": [
       {
         "id": "a",
-        "emoji": "🌑",
         "label": "New Moon",
-        "group": "moon shapes"
+        "emoji": "🌑"
       },
       {
         "id": "b",
-        "emoji": "🌒",
-        "label": "Waxing Crescent",
-        "group": "moon shapes"
+        "label": "Crescent Moon",
+        "emoji": "🌒"
       },
       {
         "id": "c",
-        "emoji": "🌕",
         "label": "Full Moon",
-        "group": "moon shapes"
+        "emoji": "🌕"
       }
     ],
     "answer": [
@@ -1536,44 +1537,52 @@
   {
     "id": "sky-12",
     "level": 2,
-    "type": "tapall",
-    "prompt": "Tap the ice giants!",
+    "type": "pick",
+    "prompt": "What causes daylight and darkness on our planet?",
     "items": [
       {
         "id": "a",
-        "label": "Uranus",
-        "emoji": "🧊",
-        "group": "planets"
+        "label": "Earth spins",
+        "emoji": "🌍",
+        "group": "space"
       },
       {
         "id": "b",
-        "label": "Neptune",
-        "emoji": "🪐",
-        "group": "planets"
+        "label": "Sun circles",
+        "emoji": "☀️",
+        "group": "space"
       },
       {
         "id": "c",
-        "label": "Mercury",
-        "emoji": "🪨",
-        "group": "planets"
+        "label": "Moon covers",
+        "emoji": "🌑",
+        "group": "space"
       }
     ],
-    "answer": [
-      "a",
-      "b"
-    ],
-    "hint": "The two coldest outer gas planets contain deep icy slush layers.",
+    "answer": "a",
+    "hint": "Think about which body spins in place every day!",
     "fact": {
-      "text": "Uranus and Neptune are ice giants made of water and gas slush. Scientists call these materials 'ices'.",
-      "support": "Uranus is made of water, methane, and ammonia fluids above a small rocky center.",
-      "source": "https://spaceplace.nasa.gov/all-about-uranus/",
+      "text": "Earth rotates around its axis once every 24 hours. This spin creates our day and night.",
+      "support": "Earth takes 24 hours to complete one spin, and Mars takes 25 hours.",
       "evidence": [
-        "water, methane, and ammonia",
-        "rocky center"
+        "Earth",
+        "takes",
+        "24",
+        "hours",
+        "spin"
+      ],
+      "source": "https://spaceplace.nasa.gov/days/en/",
+      "source2": "https://tidesandcurrents.noaa.gov/restles3.html",
+      "evidence2": [
+        "earth",
+        "rotates",
+        "once",
+        "24",
+        "hours"
       ]
     },
-    "misconception": "Children often classify all four outer planets simply as gas giants, but Uranus and Neptune are ice giants.",
-    "topic": "ice-giants"
+    "misconception": "It looks like the Sun moves across the sky, but Earth is actually spinning!",
+    "topic": "day-night"
   },
   {
     "id": "sky-13",
@@ -1701,40 +1710,44 @@
     "id": "body-12",
     "level": 3,
     "type": "pick",
-    "prompt": "Which inner eye part changes shape to focus incoming light rays?",
+    "prompt": "Which clear part inside your eye changes shape to focus incoming light?",
     "items": [
       {
         "id": "a",
-        "label": "Flexible lens",
-        "emoji": "👁️",
-        "group": "eye parts"
+        "label": "Lens",
+        "emoji": "🔍",
+        "group": "eye-parts"
       },
       {
         "id": "b",
         "label": "Pupil",
-        "emoji": "👁️",
-        "group": "eye parts"
+        "emoji": "⚫",
+        "group": "eye-parts"
       },
       {
         "id": "c",
         "label": "Retina",
         "emoji": "👁️",
-        "group": "eye parts"
+        "group": "eye-parts"
       }
     ],
     "answer": "a",
-    "hint": "This clear part behind the pupil flexes to focus your sight.",
+    "hint": "Think about which clear structure adjusts its thickness to focus clearly!",
     "fact": {
-      "text": "The flexible lens inside your eye changes shape to focus light. Your pupil changes size to adjust light!",
+      "text": "The flexible lens inside your eye changes shape. It directs incoming rays sharply onto the retina.",
       "support": "The lens itself is flexible and suspended by ligaments which allow it to change shape to focus light on the retina.",
-      "source": "https://medlineplus.gov/ency/imagepages/1094.htm",
       "evidence": [
-        "lens itself is flexible",
-        "change shape to focus light"
-      ]
+        "lens",
+        "flexible",
+        "change",
+        "shape",
+        "focus",
+        "retina"
+      ],
+      "source": "https://medlineplus.gov/ency/imagepages/1094.htm"
     },
-    "misconception": "Children often believe eyes just project sight like flashlights, but the flexible lens focuses light onto the sensitive retina inside.",
-    "topic": "eye-lens"
+    "misconception": "The pupil is just an opening; the lens behind it is what flexes to focus!",
+    "topic": "eye-focus"
   },
   {
     "id": "body-13",
@@ -1812,13 +1825,13 @@
     "hint": "Your sturdy rib bones wrap around two vital chest organs.",
     "fact": {
       "text": "Your rib cage acts like a shield around your chest. It curves around to protect your lungs and heart!",
-      "support": "Your rib cage, for example, acts like a shield around your chest to protect important organs inside such as your lungs and heart.",
-      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "support": "They sit to the left and right of the heart, within a space called the thoracic cavity. The cavity is protected by the rib cage.",
       "evidence": [
-        "rib cage",
-        "protect",
-        "lungs and heart"
-      ]
+        "protected",
+        "rib",
+        "cage"
+      ],
+      "source": "https://medlineplus.gov/ency/anatomyvideos/000018.htm"
     },
     "misconception": null,
     "topic": "rib-cage"
@@ -1827,25 +1840,25 @@
     "id": "garden-15",
     "level": 1,
     "type": "pick",
-    "prompt": "How do elephants drink water with their long trunk?",
+    "prompt": "How do giant elephants drink fresh water?",
     "items": [
       {
         "id": "a",
+        "label": "Squirt Trunk",
         "emoji": "🐘",
-        "label": "Squirt into Mouth",
-        "group": "elephant drinking"
+        "group": "drinking"
       },
       {
         "id": "b",
+        "label": "Straw Sip",
         "emoji": "🥤",
-        "label": "Sip Like Straw",
-        "group": "elephant drinking"
+        "group": "drinking"
       },
       {
         "id": "c",
+        "label": "Gulp Ears",
         "emoji": "👂",
-        "label": "Gulp with Ears",
-        "group": "elephant drinking"
+        "group": "drinking"
       }
     ],
     "answer": "a",
@@ -1948,25 +1961,22 @@
     "id": "garden-18",
     "level": 1,
     "type": "order",
-    "prompt": "Order how a frog grows up from start to finish!",
+    "prompt": "Put the growth stages of this leaping pond animal in order:",
     "items": [
       {
         "id": "a",
         "label": "Jelly Egg",
-        "emoji": "🥚",
-        "group": "frog life stages"
+        "emoji": "🥚"
       },
       {
         "id": "b",
         "label": "Baby Tadpole",
-        "emoji": "🫧",
-        "group": "frog life stages"
+        "emoji": "🫧"
       },
       {
         "id": "c",
         "label": "Adult Frog",
-        "emoji": "🐸",
-        "group": "frog life stages"
+        "emoji": "🐸"
       }
     ],
     "answer": [
@@ -1991,25 +2001,22 @@
     "id": "sky-15",
     "level": 2,
     "type": "order",
-    "prompt": "Line them up from the Sun to the Earth during a solar eclipse!",
+    "prompt": "During a daytime eclipse, what aligns in the middle?",
     "items": [
       {
         "id": "a",
-        "emoji": "☀️",
-        "label": "Sun",
-        "group": "eclipse bodies"
+        "label": "Passing Moon",
+        "emoji": "🌑"
       },
       {
         "id": "b",
-        "emoji": "🌑",
-        "label": "Moon",
-        "group": "eclipse bodies"
+        "label": "Glowing Sun",
+        "emoji": "☀️"
       },
       {
         "id": "c",
-        "emoji": "🌍",
-        "label": "Earth",
-        "group": "eclipse bodies"
+        "label": "Home Earth",
+        "emoji": "🌍"
       }
     ],
     "answer": [
@@ -2051,7 +2058,7 @@
       {
         "id": "c",
         "label": "Mercury",
-        "emoji": "🪨",
+        "emoji": "⚪",
         "group": "planets"
       }
     ],
@@ -2115,25 +2122,25 @@
     "id": "sky-18",
     "level": 2,
     "type": "pick",
-    "prompt": "Would you weigh more or less on the Moon than on Earth?",
+    "prompt": "On the lighter lunar surface, how would a scale read?",
     "items": [
       {
         "id": "a",
         "label": "Less",
         "emoji": "🪶",
-        "group": "relative weights"
+        "group": "weights"
       },
       {
         "id": "b",
         "label": "More",
         "emoji": "🏋️",
-        "group": "relative weights"
+        "group": "weights"
       },
       {
         "id": "c",
-        "label": "The same",
+        "label": "Equal",
         "emoji": "⚖️",
-        "group": "relative weights"
+        "group": "weights"
       }
     ],
     "answer": "a",
@@ -2153,43 +2160,43 @@
   {
     "id": "body-15",
     "level": 3,
-    "type": "tapall",
-    "prompt": "Tap the soft tissues inside your bones!",
+    "type": "pick",
+    "prompt": "Which soft core inside bones makes new oxygen cells?",
     "items": [
       {
         "id": "a",
         "label": "Red marrow",
         "emoji": "🔴",
-        "group": "marrow colors"
+        "group": "bone-tissues"
       },
       {
         "id": "b",
         "label": "Yellow marrow",
         "emoji": "🟡",
-        "group": "marrow colors"
+        "group": "bone-tissues"
       },
       {
         "id": "c",
-        "label": "Green marrow",
-        "emoji": "🟢",
-        "group": "marrow colors"
+        "label": "Hard cartilage",
+        "emoji": "🦴",
+        "group": "bone-tissues"
       }
     ],
-    "answer": [
-      "a",
-      "b"
-    ],
-    "hint": "Select the two warm colors that describe real bone marrow.",
+    "answer": "a",
+    "hint": "Think of the colorful core inside bones that forms living cells!",
     "fact": {
-      "text": "Human bones contain red marrow to make new cells. They also hold yellow marrow made mostly of fat.",
-      "support": "Bone marrow is the spongy tissue inside some of your bones, such as your hip and thigh bones.",
-      "source": "https://medlineplus.gov/bonemarrowdiseases.html",
+      "text": "Red marrow lives inside hollow bones. It creates brand new red cells for you.",
+      "support": "Red bone marrow is where all new red blood cells, white blood cells, and platelets are made.",
       "evidence": [
-        "Bone marrow is the spongy tissue",
-        "inside some of your bones"
-      ]
+        "red",
+        "bone",
+        "marrow",
+        "cells",
+        "made"
+      ],
+      "source": "https://askabiologist.asu.edu/bone-anatomy"
     },
-    "misconception": null,
+    "misconception": "Bones are hard on the outside, but their soft red core creates new living cells!",
     "topic": "bone-marrow"
   },
   {
@@ -2313,5 +2320,833 @@
     },
     "misconception": "Thinking your brain completely turns off or shuts down like a computer during sleep.",
     "topic": "sleep"
+  },
+  {
+    "id": "garden-19",
+    "level": 1,
+    "type": "pick",
+    "prompt": "What gives wild flamingo feathers their bright pink tint?",
+    "topic": "flamingo-color",
+    "items": [
+      {
+        "id": "a",
+        "label": "Shrimp food",
+        "emoji": "🦐",
+        "group": "bird-traits"
+      },
+      {
+        "id": "b",
+        "label": "Warm sun",
+        "emoji": "☀️",
+        "group": "bird-traits"
+      },
+      {
+        "id": "c",
+        "label": "Mud bath",
+        "emoji": "🪨",
+        "group": "bird-traits"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "Flamingos eat shrimp in wetlands. Food pigments turn their feathers pink.",
+      "support": "A pigment in their food gives their feathers their flamboyant pink color.",
+      "evidence": [
+        "pigment",
+        "food",
+        "feathers",
+        "pink",
+        "color"
+      ],
+      "source": "https://nationalzoo.si.edu/animals/american-flamingo"
+    },
+    "hint": "Think about what flamingos eat in shallow wetlands!",
+    "misconception": "Flamingos are not born pink; their colorful feathers come from what they eat!"
+  },
+  {
+    "id": "garden-20",
+    "level": 1,
+    "type": "pick",
+    "prompt": "Which giant running bird has long legs but cannot fly?",
+    "topic": "flightless-birds",
+    "items": [
+      {
+        "id": "a",
+        "label": "Wild Ostrich",
+        "emoji": "🦤",
+        "group": "birds"
+      },
+      {
+        "id": "b",
+        "label": "Swift Eagle",
+        "emoji": "🦅",
+        "group": "birds"
+      },
+      {
+        "id": "c",
+        "label": "Barn Owl",
+        "emoji": "🦉",
+        "group": "birds"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "Ostriches are swift runners with strong legs. They are birds that do not fly.",
+      "support": "These birds are completely flightless but are incredibly swift runners due to their long, strong legs—in fact, they are the fastest two-legged animals.",
+      "evidence": [
+        "birds",
+        "flightless",
+        "swift",
+        "runners"
+      ],
+      "source": "https://nationalzoo.si.edu/animals/ostrich"
+    },
+    "hint": "Look for the world's largest running bird!",
+    "misconception": "All birds have feathers and wings, but ostriches are too heavy for powered flight!"
+  },
+  {
+    "id": "garden-21",
+    "level": 1,
+    "type": "tapall",
+    "prompt": "Tap the underground plant parts that anchor deep and drink water!",
+    "topic": "plant-roots",
+    "items": [
+      {
+        "id": "a",
+        "label": "Sprout Root",
+        "emoji": "🌱",
+        "group": "plant-parts"
+      },
+      {
+        "id": "b",
+        "label": "Branching Carrot",
+        "emoji": "🥕",
+        "group": "plant-parts"
+      },
+      {
+        "id": "c",
+        "label": "Green Leaves",
+        "emoji": "🍃",
+        "group": "plant-parts"
+      },
+      {
+        "id": "d",
+        "label": "Blossom Petals",
+        "emoji": "🌸",
+        "group": "plant-parts"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "fact": {
+      "text": "Roots grow downward to anchor the sprout. They take in moisture from soil.",
+      "support": "As the root emerges, it anchors the seed to the ground and begins to take in more water.",
+      "evidence": [
+        "root",
+        "anchors",
+        "ground",
+        "water"
+      ],
+      "source": "https://extension.psu.edu/growing-gardeners-mighty-seed-activity"
+    },
+    "hint": "Think about which plant parts grow deep below the soil surface!",
+    "misconception": "Leaves absorb sunlight and air, while roots absorb moisture from the earth!"
+  },
+  {
+    "id": "garden-22",
+    "level": 1,
+    "type": "tapall",
+    "prompt": "Tap the swimming sea creatures that are mammals rather than cold swimmers!",
+    "topic": "marine-mammals",
+    "items": [
+      {
+        "id": "a",
+        "label": "Blue Whale",
+        "emoji": "🐋",
+        "group": "marine-life"
+      },
+      {
+        "id": "b",
+        "label": "Playful Dolphin",
+        "emoji": "🐬",
+        "group": "marine-life"
+      },
+      {
+        "id": "c",
+        "label": "Great Shark",
+        "emoji": "🦈",
+        "group": "marine-life"
+      },
+      {
+        "id": "d",
+        "label": "Silver Tuna",
+        "emoji": "🐟",
+        "group": "marine-life"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "fact": {
+      "text": "Blue whales and dolphins are warm-blooded mammals. They breathe fresh air above water.",
+      "support": "Today, blue whales are listed as endangered under the Endangered Species Act and protected under the Marine Mammal Protection Act.",
+      "evidence": [
+        "blue",
+        "whales",
+        "protected",
+        "Marine",
+        "Mammal"
+      ],
+      "source": "https://www.fisheries.noaa.gov/species/blue-whale"
+    },
+    "hint": "Think about which sea creatures breathe air through blowholes!",
+    "misconception": "Whales swim like fish, but they give birth to live calves and nurse their young!"
+  },
+  {
+    "id": "garden-23",
+    "level": 1,
+    "type": "pick",
+    "prompt": "Why does an alert meerkat stand upright on its hind legs?",
+    "topic": "meerkat-sentry",
+    "items": [
+      {
+        "id": "a",
+        "label": "Spot danger",
+        "emoji": "👀",
+        "group": "meerkat-actions"
+      },
+      {
+        "id": "b",
+        "label": "Catch rain",
+        "emoji": "🌧️",
+        "group": "meerkat-actions"
+      },
+      {
+        "id": "c",
+        "label": "Dry fur",
+        "emoji": "💨",
+        "group": "meerkat-actions"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "A sentry stands upright on high watch. It scans across fields to spot predators.",
+      "support": "The sentry will stand on its hind legs, often using its tail as support, or perch in a bush or tree, scanning for danger.",
+      "evidence": [
+        "sentry",
+        "stand",
+        "legs",
+        "scanning",
+        "danger"
+      ],
+      "source": "https://nationalzoo.si.edu/animals/meerkat"
+    },
+    "hint": "Think about how guards protect their family from hunting predators!",
+    "misconception": "Meerkats stand tall to watch out for eagles and jackals, keeping their group safe!"
+  },
+  {
+    "id": "garden-24",
+    "level": 1,
+    "type": "order",
+    "prompt": "Put the steps of building a beaver family pond home in order:",
+    "topic": "beaver-lodge-steps",
+    "items": [
+      {
+        "id": "a",
+        "label": "Cut branches",
+        "emoji": "🪵"
+      },
+      {
+        "id": "b",
+        "label": "Dam stream",
+        "emoji": "🌊"
+      },
+      {
+        "id": "c",
+        "label": "Build lodge",
+        "emoji": "🦫"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fact": {
+      "text": "Beavers cut sticks to make watertight dams. They create safe ponds and build lodges.",
+      "support": "Beavers build watertight dams of sticks woven with reeds, branches and saplings, which are caulked with mud.",
+      "evidence": [
+        "build",
+        "watertight",
+        "dams",
+        "sticks",
+        "branches"
+      ],
+      "source": "https://nationalzoo.si.edu/animals/beaver"
+    },
+    "hint": "Think about what beavers cut first before creating their deep calm pond!",
+    "misconception": "Beavers build dams first to raise water levels, protecting their new island lodge!"
+  },
+  {
+    "id": "sky-19",
+    "level": 2,
+    "type": "tapall",
+    "prompt": "Tap the sky elements that gather high up to build clouds!",
+    "topic": "cloud-materials",
+    "items": [
+      {
+        "id": "a",
+        "label": "Water vapor",
+        "emoji": "💧",
+        "group": "cloud-elements"
+      },
+      {
+        "id": "b",
+        "label": "Ice crystals",
+        "emoji": "❄️",
+        "group": "cloud-elements"
+      },
+      {
+        "id": "c",
+        "label": "Cotton yarn",
+        "emoji": "🧶",
+        "group": "cloud-elements"
+      },
+      {
+        "id": "d",
+        "label": "Smoke puffs",
+        "emoji": "💨",
+        "group": "cloud-elements"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "fact": {
+      "text": "Water rises into our sky as vapor. Chilled moisture condenses into floating clouds.",
+      "support": "A very small amount is in our atmosphere, where it exists as water vapor.",
+      "evidence": [
+        "atmosphere",
+        "water",
+        "vapor"
+      ],
+      "source": "https://spaceplace.nasa.gov/water/en/"
+    },
+    "hint": "Think about what happens when warm moisture rises and chills high above!",
+    "misconception": "Clouds may look like fluffy cotton, but they are made entirely of tiny water droplets and ice!"
+  },
+  {
+    "id": "sky-20",
+    "level": 2,
+    "type": "pick",
+    "prompt": "Why does our cratered Moon lack breezes and rushing wind?",
+    "topic": "lunar-atmosphere",
+    "items": [
+      {
+        "id": "a",
+        "label": "Thin exosphere",
+        "emoji": "🌑",
+        "group": "planetary-features"
+      },
+      {
+        "id": "b",
+        "label": "Deep oceans",
+        "emoji": "🌊",
+        "group": "planetary-features"
+      },
+      {
+        "id": "c",
+        "label": "Thick clouds",
+        "emoji": "☁️",
+        "group": "planetary-features"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "The Moon has no air mantle. Its tenuous exosphere has no winds.",
+      "support": "The Moon has a very thin and tenuous atmosphere called an exosphere.",
+      "evidence": [
+        "Moon",
+        "thin",
+        "atmosphere",
+        "exosphere"
+      ],
+      "source": "https://solarsystem.nasa.gov/moons/earths-moon/in-depth/"
+    },
+    "hint": "Think about what gas layer blankets our Earth to create breezy weather!",
+    "misconception": "Without an atmosphere to carry air, the Moon has complete silence and no wind!"
+  },
+  {
+    "id": "sky-21",
+    "level": 2,
+    "type": "pick",
+    "prompt": "Which warm glowing beacon sits closest to our home world?",
+    "topic": "closest-star",
+    "items": [
+      {
+        "id": "a",
+        "label": "Daytime Sun",
+        "emoji": "☀️",
+        "group": "stars"
+      },
+      {
+        "id": "b",
+        "label": "Polaris Guide",
+        "emoji": "⭐",
+        "group": "stars"
+      },
+      {
+        "id": "c",
+        "label": "Red Giant",
+        "emoji": "🌟",
+        "group": "stars"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "Daytime light shines from our closest star, the Sun. It warms our entire planet.",
+      "support": "The light of daytime comes from our closest star: the Sun.",
+      "evidence": [
+        "light",
+        "daytime",
+        "closest",
+        "star",
+        "Sun"
+      ],
+      "source": "https://spaceplace.nasa.gov/all-about-the-sun/en/",
+      "source2": "https://tidesandcurrents.noaa.gov/restles3.html",
+      "evidence2": [
+        "sun",
+        "earth"
+      ]
+    },
+    "hint": "Think about which star warms our meadow every single morning!",
+    "misconception": "The Sun looks bigger than night stars because it is millions of times closer to Earth!"
+  },
+  {
+    "id": "sky-22",
+    "level": 2,
+    "type": "tapall",
+    "prompt": "Tap the fast debris that burn to create shooting stars in the dark sky!",
+    "topic": "shooting-stars",
+    "items": [
+      {
+        "id": "a",
+        "label": "Comet dust",
+        "emoji": "☄️",
+        "group": "space-items"
+      },
+      {
+        "id": "b",
+        "label": "Rocky pebble",
+        "emoji": "🪨",
+        "group": "space-items"
+      },
+      {
+        "id": "c",
+        "label": "Orbit station",
+        "emoji": "🛰️",
+        "group": "space-items"
+      },
+      {
+        "id": "d",
+        "label": "Distant sun",
+        "emoji": "⭐",
+        "group": "space-items"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "fact": {
+      "text": "Comet dust and rocky pebbles burn bright entering air. Hot gas creates a streak.",
+      "support": "What we see is a \"shooting star.\" That bright streak is the glowing hot air as the hot rock zips through the atmosphere.",
+      "evidence": [
+        "shooting",
+        "star",
+        "bright",
+        "streak",
+        "glowing",
+        "rock",
+        "atmosphere"
+      ],
+      "source": "https://spaceplace.nasa.gov/meteor-shower/en/"
+    },
+    "hint": "Think of small rocky pieces from space burning up in our atmosphere!",
+    "misconception": "Shooting stars are not actual stars falling; they are tiny space rocks burning up!"
+  },
+  {
+    "id": "sky-23",
+    "level": 2,
+    "type": "pick",
+    "prompt": "Which stormy world is the largest planet in our solar system?",
+    "topic": "jupiter-size",
+    "items": [
+      {
+        "id": "a",
+        "label": "Huge Jupiter",
+        "emoji": "🪐",
+        "group": "planets"
+      },
+      {
+        "id": "b",
+        "label": "Red Mars",
+        "emoji": "🔴",
+        "group": "planets"
+      },
+      {
+        "id": "c",
+        "label": "Pale Venus",
+        "emoji": "🟡",
+        "group": "planets"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "Jupiter is the biggest planet in our solar system. This stormy gas world spins swiftly.",
+      "support": "Jupiter is the biggest planet in our solar system.",
+      "evidence": [
+        "Jupiter",
+        "biggest",
+        "planet",
+        "solar",
+        "system"
+      ],
+      "source": "https://spaceplace.nasa.gov/all-about-jupiter/en/",
+      "source2": "https://tidesandcurrents.noaa.gov/restles3.html",
+      "evidence2": [
+        "earth",
+        "system"
+      ]
+    },
+    "hint": "Look for the massive planet with the Great Red Spot!",
+    "misconception": "All four gas giants are large, but Jupiter is more massive than all other planets combined!"
+  },
+  {
+    "id": "sky-24",
+    "level": 2,
+    "type": "order",
+    "prompt": "Put these natural stages in order as water cycles through the sky:",
+    "topic": "water-cycle-order",
+    "items": [
+      {
+        "id": "a",
+        "label": "Rising vapor",
+        "emoji": "💧"
+      },
+      {
+        "id": "b",
+        "label": "Cool clouds",
+        "emoji": "☁️"
+      },
+      {
+        "id": "c",
+        "label": "Falling rain",
+        "emoji": "🌧️"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fact": {
+      "text": "Moisture warms and rises into vapor. It chills into clouds and drops rain.",
+      "support": "Water evaporates from earth, rises into the atmosphere, cools and condenses into clouds, and falls as precipitation.",
+      "evidence": [
+        "water",
+        "evaporates",
+        "atmosphere",
+        "condenses",
+        "clouds",
+        "falls",
+        "precipitation"
+      ],
+      "source": "https://gpm.nasa.gov/education/water-cycle"
+    },
+    "hint": "Think about where water starts warming up before it climbs high into the sky!",
+    "misconception": "Rain cannot fall until liquid water first evaporates and condenses high in cool air!"
+  },
+  {
+    "id": "body-19",
+    "level": 3,
+    "type": "tapall",
+    "prompt": "Tap the tiny round discs that deliver fresh air to body tissues!",
+    "topic": "red-blood-cells",
+    "items": [
+      {
+        "id": "a",
+        "label": "Red cells",
+        "emoji": "🔴",
+        "group": "body-cells"
+      },
+      {
+        "id": "b",
+        "label": "Oxygen carriers",
+        "emoji": "⭕",
+        "group": "body-cells"
+      },
+      {
+        "id": "c",
+        "label": "Bone frame",
+        "emoji": "🦴",
+        "group": "body-cells"
+      },
+      {
+        "id": "d",
+        "label": "Outer skin",
+        "emoji": "✋",
+        "group": "body-cells"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "fact": {
+      "text": "Red cells transport fresh oxygen to tissues. They carry waste back to the lungs.",
+      "support": "Their job is to transport oxygen to the body's tissues in exchange for carbon dioxide, which they carry to the lungs to be expelled.",
+      "evidence": [
+        "job",
+        "transport",
+        "oxygen",
+        "body",
+        "tissues"
+      ],
+      "source": "https://medlineplus.gov/ency/anatomyvideos/000104.htm"
+    },
+    "hint": "Think of the circular red cells that flow through your veins!",
+    "misconception": "White cells fight off infection, while red cells are dedicated oxygen carriers!"
+  },
+  {
+    "id": "body-20",
+    "level": 3,
+    "type": "pick",
+    "prompt": "What clear fluid makes up over half of your body weight?",
+    "topic": "body-water-weight",
+    "items": [
+      {
+        "id": "a",
+        "label": "Pure water",
+        "emoji": "💧",
+        "group": "body-fluids"
+      },
+      {
+        "id": "b",
+        "label": "Cooking oil",
+        "emoji": "🫗",
+        "group": "body-fluids"
+      },
+      {
+        "id": "c",
+        "label": "Sweet milk",
+        "emoji": "🥛",
+        "group": "body-fluids"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "Water makes up more than two-thirds of body weight. It fills and hydrates living cells.",
+      "support": "Water makes up more than two-thirds of the weight of the human body.",
+      "evidence": [
+        "Water",
+        "makes",
+        "more",
+        "weight",
+        "human",
+        "body"
+      ],
+      "source": "https://medlineplus.gov/ency/article/002471.htm",
+      "source2": "https://spaceplace.nasa.gov/water/en/",
+      "evidence2": [
+        "body",
+        "made",
+        "mostly",
+        "water"
+      ]
+    },
+    "hint": "Think of the vital fluid you drink every day to stay hydrated!",
+    "misconception": "Even solid bones and muscles contain large amounts of water to stay healthy!"
+  },
+  {
+    "id": "body-21",
+    "level": 3,
+    "type": "pick",
+    "prompt": "Which outer layer protects your body from harm?",
+    "topic": "skin-protection",
+    "items": [
+      {
+        "id": "a",
+        "label": "Tough skin",
+        "emoji": "✋",
+        "group": "outer-body"
+      },
+      {
+        "id": "b",
+        "label": "Soft hair",
+        "emoji": "💇",
+        "group": "outer-body"
+      },
+      {
+        "id": "c",
+        "label": "Hard nails",
+        "emoji": "💅",
+        "group": "outer-body"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "Your outer skin protects your entire body. It guards you against germs and dirt.",
+      "support": "There are many ways that your skin protects your body and helps keep you healthy.",
+      "evidence": [
+        "skin",
+        "protects",
+        "body",
+        "healthy"
+      ],
+      "source": "https://medlineplus.gov/skinconditions.html"
+    },
+    "hint": "Look for the flexible waterproof blanket covering your head and limbs!",
+    "misconception": "Skin is more than a covering; it is an active protective shield against germs and drying!"
+  },
+  {
+    "id": "body-22",
+    "level": 3,
+    "type": "tapall",
+    "prompt": "Tap the senses that work when you enjoy a meal!",
+    "topic": "taste-smell-senses",
+    "items": [
+      {
+        "id": "a",
+        "label": "Tasting tongue",
+        "emoji": "👅",
+        "group": "senses"
+      },
+      {
+        "id": "b",
+        "label": "Sniffing nose",
+        "emoji": "👃",
+        "group": "senses"
+      },
+      {
+        "id": "c",
+        "label": "Hearing ear",
+        "emoji": "👂",
+        "group": "senses"
+      },
+      {
+        "id": "d",
+        "label": "Seeing eyes",
+        "emoji": "👁️",
+        "group": "senses"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "fact": {
+      "text": "Your tongue tastes food and drinks. Your nose smells rich flavors.",
+      "support": "Our senses of taste and smell give us great pleasure.",
+      "evidence": [
+        "senses",
+        "taste",
+        "smell"
+      ],
+      "source": "https://medlineplus.gov/tasteandsmelldisorders.html"
+    },
+    "hint": "Think about why dinner seems less flavorful when your nose is stuffed up!",
+    "misconception": "Your tongue only senses sweet, sour, salty, bitter, and savory; smell provides rich food aromas!"
+  },
+  {
+    "id": "body-23",
+    "level": 3,
+    "type": "pick",
+    "prompt": "How does restful nightly sleep help your growing brain and body?",
+    "topic": "healthy-sleep",
+    "items": [
+      {
+        "id": "a",
+        "label": "Rest energy",
+        "emoji": "💤",
+        "group": "sleep-effects"
+      },
+      {
+        "id": "b",
+        "label": "Freeze limbs",
+        "emoji": "🧊",
+        "group": "sleep-effects"
+      },
+      {
+        "id": "c",
+        "label": "Stop breathing",
+        "emoji": "🫁",
+        "group": "sleep-effects"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "Sleep helps your body regain energy. It keeps your brain healthy.",
+      "support": "Sleep is a natural process that helps your body restore energy, supports learning and memory, and keeps you healthy.",
+      "evidence": [
+        "Sleep",
+        "helps",
+        "body",
+        "restore",
+        "energy",
+        "learning",
+        "memory"
+      ],
+      "source": "https://medlineplus.gov/healthysleep.html"
+    },
+    "hint": "Think about how you feel refreshed after a full night in bed!",
+    "misconception": "Your brain stays active during sleep, organizing memories and repairing body tissues!"
+  },
+  {
+    "id": "body-24",
+    "level": 3,
+    "type": "order",
+    "prompt": "Put these parts in order as sound travels inward to be heard:",
+    "topic": "hearing-sound-order",
+    "items": [
+      {
+        "id": "a",
+        "label": "Outer ear",
+        "emoji": "👂"
+      },
+      {
+        "id": "b",
+        "label": "Thin drum",
+        "emoji": "🥁"
+      },
+      {
+        "id": "c",
+        "label": "Inner ear",
+        "emoji": "inner-ear"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "fact": {
+      "text": "Sound enters the outer ear canal. It vibrates the eardrum and reaches the inner ear.",
+      "support": "Sound waves entering the ear travel through the external auditory canal before striking the eardrum.",
+      "evidence": [
+        "waves",
+        "ear",
+        "travel",
+        "eardrum"
+      ],
+      "source": "https://medlineplus.gov/ency/anatomyvideos/000063.htm"
+    },
+    "hint": "Think about sound starting outside your head before reaching your deep hearing organ!",
+    "misconception": "Hearing begins at the outer ear flap, but tiny hair cells inside the deep cochlea translate vibrations!"
   }
 ]

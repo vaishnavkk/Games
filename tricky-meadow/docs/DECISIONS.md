@@ -23,8 +23,9 @@
 21. Task Content & Checks: 0 FAIL sources across 54 puzzles; reverted 'moon' from MODIFIERS; removed oddOneOut from garden-12; updated sky-18 Moon gravity, body-08 vital signs, and body-09 balance.
 22. Task Shuffle & Wording: Render-time crypto-seeded Fisher-Yates shuffle with order never-identity; naive-player harness test & selftest 7/7; body-10 stomach/intestine MedlinePlus alignment.
 
-## Clever-Child Ambiguity Check
-- garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.
+23. Task v0.3.0: 18 verified puzzles added reaching 72 total (24/level); 3 new checks (unique emojis, label parity, reviewed icons <= 12 with 0 body parts); fixed sky-12, body-09 (inner-ear SVG), body-10 (muscles), body-12 (bare nouns), body-15 (marrow); 100% institutional evidence matches.
+
+## Clever-Child Ambiguity Check- garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.
 - garden-02: Child argues mushrooms grow in soil like plants, but fungi cannot photosynthesize or produce food from sunlight.
 - garden-03: Child argues bears lay eggs like platypuses, but bears and foxes are placental mammals that give live birth, so only turtles and eagles lay eggs.
 - garden-04: Child argues flying squirrels fly, but they only glide through the air while bats flap wings and power true flight.
@@ -42,3 +43,26 @@
 - body-04: Child argues knees feel touch, but the face houses the primary sensory organs for sight, smell, and taste.
 - body-05: Child argues babies have teeth, but human infants are born toothless before developing 20 baby teeth then up to 32 adult teeth.
 - body-06: Child argues stomach acid chews food, but mechanical chewing with teeth precedes swallowing down the throat into stomach.
+- garden-19: Child argues flamingos are born bright pink, but young flamingos are grey-white and derive their pink pigmentation solely from carotenoid-rich shrimp food.
+- garden-20: Child argues ostriches are birds so they must fly, but ostriches possess heavy bodies and flat breastbones lacking the keel needed to anchor flight muscles.
+- garden-21: Child argues green leaves drink falling rain, but subterranean roots anchor the plant and draw water and soil nutrients upwards.
+- garden-22: Child argues whales and dolphins are big fish, but they breathe air with lungs and nurse young with milk, defining them anatomically as marine mammals.
+- garden-23: Child argues meerkats stand upright just to stretch, but standing tall on hind legs allows sentries to spot approaching aerial and ground danger from far away.
+- garden-24: Child argues beavers build the roof first, but beaver pond lodges strictly require cutting wood, piling branches into deep water, and hollowing the nest.
+- sky-12: Child argues the Sun circles around Earth every day, but Earth's axial rotation once every 24 hours creates the cycle of day and night.
+- sky-19: Child argues clouds are fluffy balls of cotton or smoke, but clouds form entirely from condensed water vapor droplets and chilled ice crystals floating aloft.
+- sky-20: Child argues the Moon has clouds and wind, but lunar gravity is too weak to retain a substantial atmosphere, leaving only a tenuous exosphere with no wind.
+- sky-21: Child argues distant night stars might be closer than daytime, but the Sun is our local host star located 93 million miles away, thousands of times closer than Alpha Centauri.
+- sky-22: Child argues shooting stars are actual falling stars, but they are tiny space debris and meteor dust particles compressing and glowing in Earth's upper atmosphere.
+- sky-23: Child argues Saturn is largest because of its huge rings, but Jupiter contains more mass and physical planetary volume than all other planets combined.
+- sky-24: Child argues rain falls before water evaporates, but atmospheric heating drives liquid evaporation before condensation creates clouds and rainfall.
+- body-09: Child argues ears only hear sounds, but fluid and sensory hair cells in the semicircular canals of the inner ear regulate balance.
+- body-10: Child argues bones move on their own, but skeletal muscles contract in pairs to pull bones and produce bodily motion.
+- body-12: Child argues the pupil changes focus, but the flexible crystalline lens suspended behind the pupil alters shape to focus light on the retina.
+- body-15: Child argues all bone parts are hard calcium, but internal red marrow produces blood cells while yellow marrow stores energy fat.
+- body-19: Child argues white cells or lungs deliver oxygen directly, but red blood cells contain hemoglobin that binds and transports oxygen molecules across all body tissues.
+- body-20: Child argues heavy solid bones make up most of body weight, but clear water constitutes more than 50% of total human body weight.
+- body-21: Child argues hair or clothing is the primary protective shield, but the waterproof cutaneous skin barrier defends inner organs against microbes and harm.
+- body-22: Child argues taste is solely tongue work, but olfactory receptors in the nose detect airborne food aromas that work together with tastebuds to create meal flavor.
+- body-23: Child argues sleep shuts the brain off completely, but restful sleep restores energy while the active brain organizes memories and repairs tissues.
+- body-24: Child argues sound hits the cochlea first, but acoustical waves travel into the ear canal, vibrate the eardrum, and finally enter the inner ear.

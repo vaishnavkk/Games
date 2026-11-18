@@ -33,19 +33,20 @@ sky-10 | OK | Credit: NASA/JPL-Caltech Mars is a cold desert world.
 body-07 | OK | Play health video with audio description: //medlineplus.gov/ency/videos/mov/200081_eng_ad.mp4 Overview The heart is a powerful automatic pump.
 body-08 | OK | Vital signs reflect essential body functions, including your heartbeat rate, breathing rate, temperature, and blood
 body-09 | OK | Some balance problems are due to problems in the inner ear.
-body-10 | OK | strong wave-like motions of the smooth muscle move balls of swallowed food to the stomach.
+body-10 | OK | You depend on them to give your body structure and support and to let you
 garden-11 | OK | Eagles construct their nests near water in tall trees or on cliffs using large sticks.
 garden-12 | OK | the Animals Physical Description Komodo dragons are large lizards with long tails, strong and agile
 garden-13 | OK | Gray wolves hunt cooperatively in packs and are able to take down prey larger than
 garden-14 | OK | Special paw pads and semi-retractable claws provide great traction.
 sky-11 | OK | The Short Answer: We have a slightly different view of the Moon each night.
-sky-12 | OK | Uranus Uranus is made of water, methane, and ammonia fluids above a small rocky center.
+sky-12 | OK | Earth takes 24 hours to complete one spin, and Mars takes 25 hours.
+sky-12-2 | OK | As the earth rotates once in each 24 hours, one would ideally expect to find
 sky-13 | OK | Neptune is a very cold, windy world.
 sky-14 | OK | It has a solid surface that is covered with craters.
 body-11 | OK | Overview The tissue called "gray matter" in the brain and spinal cord is also known
 body-12 | OK | The lens itself is flexible and suspended by ligaments which allow it to change shape
 body-13 | OK | respiratory tract include the windpipe (trachea) and within the lungs, the bronchi, bronchioles, and alveoli.
-body-14 | OK | Your rib cage, for example, acts like a shield around your chest to protect important
+body-14 | OK | The cavity is protected by the rib cage.
 garden-15 | OK | Elephants use their trunks to take up water and squirt it into their mouths.
 garden-16 | OK | eyelid, or nictitating membrane, protects the eye and allows the otter to see when swimming
 garden-17 | OK | Sloth bears' nostrils can close completely, protecting the animals from dust or insects when raiding
@@ -54,7 +55,28 @@ sky-15 | OK | A solar eclipse happens when, at just the right moment, the Moon p
 sky-16 | OK | Venus is unusual because it spins the opposite direction of Earth and most other planets.
 sky-17 | OK | Most asteroids in our solar system can be found in the asteroid belt, between Mars
 sky-18 | OK | know that the Moon has almost no atmosphere and only about one-sixth of Earth’s gravity.
-body-15 | OK | &rarr; Health Topics &rarr; Bone Marrow Diseases URL of this page: https://medlineplus.gov/bonemarrowdiseases.html Bone Marrow Diseases
+body-15 | OK | Red bone marrow is where all new red blood cells, white blood cells, and platelets
 body-16 | OK | Often, the injury is minor because your skull is hard and it protects your brain.
 body-17 | OK | up of three main types of bone material: compact bone, spongy bone, and bone marrow.
 body-18 | OK | While you are sleeping your brain and body functions are still active.
+garden-19 | OK | A pigment in their food gives their feathers their flamboyant pink color.
+garden-20 | OK | These birds are completely flightless but are incredibly swift runners due to their long, strong
+garden-21 | OK | As the root emerges, it anchors the seed to the ground and begins to take
+garden-22 | OK | Today, blue whales are listed as endangered under the Endangered Species Act and protected under
+garden-23 | OK | The sentry will stand on its hind legs, often using its tail as support, or
+garden-24 | OK | modify their habitat; they build watertight dams of sticks woven with reeds, branches and saplings,
+sky-19 | OK | A very small amount is in our atmosphere, where it exists as water vapor.
+sky-20 | OK | The Moon has a very thin and tenuous atmosphere called an exosphere.
+sky-21 | OK | The light of daytime comes from our closest star: the Sun.
+sky-21-2 | OK | by the moon (and sun) upon the earth; and (2) centrifugal forces produced by the
+sky-22 | OK | we see is a "shooting star." That bright streak is not actually the rock, but
+sky-23 | OK | Credit: NASA/JPL-Caltech Jupiter is the biggest planet in our solar system.
+sky-23-2 | OK | forces acting in the earth-moon system will here be discussed, with the recognition that a
+sky-24 | OK | The water cycle describes how water evaporates from the surface of the earth, rises into
+body-19 | OK | Their job is to transport oxygen to the body's tissues in exchange for carbon dioxide,
+body-20 | OK | Function Water makes up more than two-thirds of the weight of the human body.
+body-20-2 | OK | Your body is made up mostly of water.
+body-21 | OK | There are many ways that your skin protects your body and helps keep you healthy.
+body-22 | OK | syndicate"> <h2>Summary</h2> </div> <div id="topic-summary" class="syndicate"><p>Our senses of taste and smell give us great pleasure.
+body-23 | OK | Sleep is a natural process that helps your body restore energy, supports learning and memory,
+body-24 | OK | description: //medlineplus.gov/ency/videos/mov/200057_eng_ad.mp4 Overview Sound waves entering the ear travel through the external auditory canal before

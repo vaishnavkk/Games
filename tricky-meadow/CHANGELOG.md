@@ -1,4 +1,17 @@
-# Changelog
+## [0.3.0] - 2026-11-18
+### Added
+- 18 new verified institutional science puzzles (garden 19-24, sky 19-24, body 19-24), expanding content from 54 to 72 puzzles (24 per level).
+- Custom vector artwork: handcrafted inner-ear.svg depicting the cochlea and semicircular canals for body-09.
+- 3 automated puzzle validation checks in scripts/check-puzzles.js with planted defect coverage:
+  - Unique emojis per puzzle (checkUniqueEmojis)
+  - Label parity & prompt leak prevention (checkLabelParity)
+  - Reviewed icons cap and body-part prohibition (checkReviewedIcons)
+
+### Changed
+- Replaced and refined 5 puzzles: sky-12 (day and night rotation), body-09 (inner ear balance), body-10 (muscles moving skeleton), body-12 (bare noun labels Lens/Pupil/Retina), and body-15 (red marrow making blood cells, yellow marrow storing fat).
+- Updated sky-16 Mercury icon to match sky-05.
+- Capped reviewed-icons.json to exactly 12 justified non-body entries.
+- Automated self-play harness verified 648 sessions across 9 viewports with 7/7 selftest defects caught and 0 violations.
 
 ## [0.2.3] - 2026-11-18
 ### Added

@@ -14,7 +14,7 @@ A gentle, clever trick-puzzle game designed for curious kids (ages 6–10). Expl
 
 ## What It Is
 
-Tricky Meadow features 54 carefully verified educational trick-puzzles across three levels (18 per level):
+Tricky Meadow features 72 carefully verified educational trick-puzzles across three levels (24 per level):
 1. **Garden & Animals** (insects vs. arachnids, egg-laying mammals, fungi, life cycles)
 2. **Sky & Space** (the hottest planet, light reflection, planetary rings, inner solar system)
 3. **Me & My Body** (baby vs. adult bones, human skin as largest organ, tooth enamel hardness, sensory organs)
@@ -96,7 +96,7 @@ tricky-meadow/
 │   └── selfplay.js         # Multi-viewport autonomous Puppeteer QA harness
 ├── src/
 │   ├── data/
-│   │   ├── puzzles.json    # 54 verified trick-puzzles across 3 levels (18 per level)
+│   │   ├── puzzles.json    # 72 verified trick-puzzles across 3 levels (24 per level)
 │   │   └── ui-icons.js     # UI icon emoji registry
 │   ├── engine/
 │   │   ├── game.js         # GameManager state machine & confetti celebration

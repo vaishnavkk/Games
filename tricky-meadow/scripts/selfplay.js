@@ -938,7 +938,7 @@ export async function runSelfPlay() {
       return;
     }
 
-    // 2. Naive Player Test on shuffled game (54 puzzles x 50 starts)
+    // 2. Naive Player Test on shuffled game ( puzzles x 50 starts)
     console.log('[selfplay] Running naive player simulation on shuffled game (54 puzzles x 50 starts)...');
     const naiveBrowser = await puppeteer.launch(launchOptions());
     const naivePage = await naiveBrowser.newPage();
