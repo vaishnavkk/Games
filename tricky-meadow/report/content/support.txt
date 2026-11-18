@@ -46,3 +46,15 @@ body-11 | OK | White matter is found in the deeper tissues of the brain (subcort
 body-12 | OK | The lens itself is flexible and suspended by ligaments which allow it to change shape
 body-13 | OK | Overview The major passages and structures of the lower respiratory tract include the windpipe (trachea)
 body-14 | OK | Your rib cage, for example, acts like a shield around your chest to protect important
+garden-15 | OK | Elephants use their trunks to take up water and squirt it into their mouths.
+garden-16 | OK | A third eyelid, or nictitating membrane, protects the eye and allows the otter to see
+garden-17 | OK | Sloth bears' nostrils can close completely, protecting the animals from dust or insects when raiding
+garden-18 | OK | Eggs hatch within one week and tadpoles are slightly less than 1/5 of an inch
+sky-15 | OK | In this case, the Moon blocks your view of the Sun." clicked="0">solar eclipse happens when
+sky-16 | OK | Venus is unusual because it spins the opposite direction of Earth and most other planets.
+sky-17 | OK | Most of them live in the main asteroid belt —a region between the orbits of
+sky-18 | OK | They’re made of chunks of ice and rock.
+body-15 | OK | There are two types of bone marrow: red and yellow.
+body-16 | OK | The thick bone layer of your skull protects your brain.
+body-17 | OK | Each bone in your body is made up of three main types of bone material:
+body-18 | OK | Yellow marrow is made mostly of fat and is found in the hollow centers of

@@ -18,6 +18,7 @@
 16. Task 2 Contrast Invariant: Computed fg/bg with alpha compositing across all visible text; amber darkened to #8a4e00 (>=6.7:1), unlock hint darkened to #7c2d12 (8.9:1), locked button darkened to #544c42 (6.8:1); selftest 6/6 catches defect 6.
 17. Task Content: Dynamic data-driven level counts; Batch 1 verified 12 puzzles across NASA, NPS, SI National Zoo, MedlinePlus.
 18. Task Content: Batch 2 verified 12 puzzles (garden 11-14, sky 11-14, body 11-14) across Smithsonian, NASA Space Place, MedlinePlus, ASU Ask A Biologist.
+19. Task Content: Batch 3 verified 12 puzzles reaching 54 total (18/level); 100% institutional evidence matches, 98-icon dynamic sprite.
 
 ## Clever-Child Ambiguity Check
 - garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.

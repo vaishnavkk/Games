@@ -1633,5 +1633,440 @@
       ]
     },
     "misconception": "Children sometimes think ribs are just rigid sticks, but together they form an elastic protective cage shielding internal chest organs."
+  },
+  {
+    "id": "garden-15",
+    "level": 1,
+    "type": "order",
+    "prompt": "Order how a thirsty elephant drinks from a freshwater pool!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Suction Trunk",
+        "emoji": "🐘"
+      },
+      {
+        "id": "b",
+        "label": "Curled Tip",
+        "emoji": "🌀"
+      },
+      {
+        "id": "c",
+        "label": "Wide Mouth",
+        "emoji": "👄"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Remember that elephants use their trunk to carry liquid before squirting it.",
+    "fact": {
+      "text": "Elephants do not drink through trunks like straws; they take up water and squirt it into their mouths!",
+      "support": "Elephants draw moisture into their suction trunk, bend the curled tip, and squirt into their wide mouth.",
+      "source": "https://nationalzoo.si.edu/animals/asian-elephant",
+      "evidence": [
+        "Elephants use their trunks to take up water and squirt it into their mouths"
+      ]
+    },
+    "misconception": "Children often imagine elephants drink water directly through trunks like straws, but they squirt it into mouths."
+  },
+  {
+    "id": "garden-16",
+    "level": 1,
+    "type": "tapall",
+    "prompt": "Tap all the mammals equipped with webbed feet or special underwater swim eyelids!",
+    "items": [
+      {
+        "id": "a",
+        "label": "River Otter",
+        "emoji": "🦦"
+      },
+      {
+        "id": "b",
+        "label": "Beaver",
+        "emoji": "🦫"
+      },
+      {
+        "id": "c",
+        "label": "Squirrel",
+        "emoji": "🐿️"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Look for two meadow mammals built with specialized swimming features.",
+    "fact": {
+      "text": "River otters have clear protective eye membranes, and beavers possess large webbed hind feet for swimming!",
+      "support": "River otters use clear eyelids to see underwater, and beavers swim with webbed hind feet.",
+      "source": "https://nationalzoo.si.edu/animals/north-american-river-otter",
+      "evidence": [
+        "A third eyelid, or nictitating membrane, protects the eye and allows the otter to see when swimming underwater"
+      ]
+    },
+    "misconception": "Children sometimes think all mammals swim poorly like cats, but otters and beavers are expert aquatic swimmers."
+  },
+  {
+    "id": "garden-17",
+    "level": 1,
+    "type": "pick",
+    "prompt": "Which shaggy climber closes its nostrils tight to vacuum termites out of mounds?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Sloth Bear",
+        "emoji": "🐻"
+      },
+      {
+        "id": "b",
+        "label": "Polar Bear",
+        "emoji": "❄️"
+      },
+      {
+        "id": "c",
+        "label": "Koala",
+        "emoji": "🐨"
+      }
+    ],
+    "answer": "a",
+    "hint": "This shaggy animal uses its specialized snout to suck up termites and ants.",
+    "fact": {
+      "text": "Sloth bears nostrils close completely to protect them from dust and insects when raiding termite mounds!",
+      "support": "Sloth bears can close their nostrils completely when vacuuming insects from termite mounds.",
+      "source": "https://nationalzoo.si.edu/animals/sloth-bear",
+      "evidence": [
+        "Sloth bears' nostrils can close completely, protecting the animals from dust or insects when raiding termite nests or beehives"
+      ]
+    },
+    "misconception": "Children often believe all bears eat honey or salmon, but sloth bears specialize in vacuuming up termites."
+  },
+  {
+    "id": "garden-18",
+    "level": 1,
+    "type": "order",
+    "prompt": "Order how a little wetland amphibian grows up from start to finish!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Jelly Egg",
+        "emoji": "🥚"
+      },
+      {
+        "id": "b",
+        "label": "Baby Tadpole",
+        "emoji": "🫧"
+      },
+      {
+        "id": "c",
+        "label": "Adult Frog",
+        "emoji": "🐸"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Follow the frog transformation from egg to swimmer to adult.",
+    "fact": {
+      "text": "Frog eggs hatch quickly in fresh water, swim as tadpoles, and transform into grown adult frogs!",
+      "support": "A jelly egg hatches in the pond, develops into a baby tadpole, and grows into an adult frog.",
+      "source": "https://nationalzoo.si.edu/animals/african-clawed-frog",
+      "evidence": [
+        "Eggs hatch within one week and tadpoles are slightly less than 1/5 of an inch (2/5 of a centimeter) long"
+      ]
+    },
+    "misconception": "Children sometimes think baby frogs hatch looking like miniature frogs with four legs, but they start as legless swimming tadpoles."
+  },
+  {
+    "id": "sky-15",
+    "level": 2,
+    "type": "order",
+    "prompt": "Order how celestial bodies align during a daytime total eclipse!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Glowing Sun",
+        "emoji": "☀️"
+      },
+      {
+        "id": "b",
+        "label": "Passing Moon",
+        "emoji": "🌑"
+      },
+      {
+        "id": "c",
+        "label": "Shaded Earth",
+        "emoji": "🌍"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Line them up from the glowing star, to the shadow-maker, to the observer.",
+    "fact": {
+      "text": "A solar eclipse happens when the passing Moon blocks the glowing Sun and casts shadow on Earth!",
+      "support": "The glowing Sun shines, the passing Moon blocks sunlight, and casts shadow onto shaded Earth.",
+      "source": "https://spaceplace.nasa.gov/eclipses/en/",
+      "evidence": [
+        "Moon gets in the way of the Sun",
+        "shadow on Earth"
+      ]
+    },
+    "misconception": "Children often think the Sun turns off, but the Moon simply passes directly between Earth and Sun."
+  },
+  {
+    "id": "sky-16",
+    "level": 2,
+    "type": "pick",
+    "prompt": "Which planet is unusual because it spins backward compared to Earth?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Venus",
+        "emoji": "🟡"
+      },
+      {
+        "id": "b",
+        "label": "Mars",
+        "emoji": "🔴"
+      },
+      {
+        "id": "c",
+        "label": "Mercury",
+        "emoji": "🪨"
+      }
+    ],
+    "answer": "a",
+    "hint": "This bright yellowish planet turns slowly in reverse compared to our home world.",
+    "fact": {
+      "text": "Venus is unusual because it spins backward in slow retrograde rotation across cloudy skies!",
+      "support": "Venus spins in slow retrograde rotation compared to Earth across cloudy skies.",
+      "source": "https://spaceplace.nasa.gov/all-about-venus/en/",
+      "evidence": [
+        "spins the opposite direction of Earth"
+      ]
+    },
+    "misconception": "Children expect all solar system planets to rotate the same way, but Venus rotates backward."
+  },
+  {
+    "id": "sky-17",
+    "level": 2,
+    "type": "order",
+    "prompt": "Order these cosmic zones traveling outward away from our Sun!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Red Mars",
+        "emoji": "🔴"
+      },
+      {
+        "id": "b",
+        "label": "Rocky Belt",
+        "emoji": "🪨"
+      },
+      {
+        "id": "c",
+        "label": "Giant Jupiter",
+        "emoji": "🪐"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Remember the rocky asteroid ring sits between the red planet and the largest gas giant.",
+    "fact": {
+      "text": "The main asteroid belt is a rocky region orbiting between the paths of Mars and Jupiter!",
+      "support": "Traveling outward from red Mars, you cross the rocky belt before reaching giant Jupiter.",
+      "source": "https://spaceplace.nasa.gov/asteroid/en/",
+      "evidence": [
+        "Most of them live in the main asteroid belt —a region between the orbits of Mars and Jupiter"
+      ]
+    },
+    "misconception": "Children sometimes think asteroids are scattered randomly everywhere, but most orbit in a belt between Mars and Jupiter."
+  },
+  {
+    "id": "sky-18",
+    "level": 2,
+    "type": "pick",
+    "prompt": "Which giant planet features dazzling rings made of icy chunks and rock?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Saturn",
+        "emoji": "🪐"
+      },
+      {
+        "id": "b",
+        "label": "Mars",
+        "emoji": "🔴"
+      },
+      {
+        "id": "c",
+        "label": "Venus",
+        "emoji": "🟡"
+      }
+    ],
+    "answer": "a",
+    "hint": "Look for the famous gas giant circled by dramatic bright rings.",
+    "fact": {
+      "text": "The rings circling Saturn are made of billions of drifting chunks of ice and rock!",
+      "support": "The rings circling Saturn are composed of chunks of ice and rock.",
+      "source": "https://spaceplace.nasa.gov/all-about-saturn/en/",
+      "evidence": [
+        "They’re made of chunks of ice and rock"
+      ]
+    },
+    "misconception": "Children sometimes think planetary rings are solid flat tracks, but they are clouds of orbiting ice and rock chunks."
+  },
+  {
+    "id": "body-15",
+    "level": 3,
+    "type": "tapall",
+    "prompt": "Tap all the colorful soft tissue types found inside human skeleton cores!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Red marrow",
+        "emoji": "🔴"
+      },
+      {
+        "id": "b",
+        "label": "Yellow marrow",
+        "emoji": "🟡"
+      },
+      {
+        "id": "c",
+        "label": "Green marrow",
+        "emoji": "🟢"
+      }
+    ],
+    "answer": [
+      "a",
+      "b"
+    ],
+    "hint": "Select the two warm colors that describe real bone marrow.",
+    "fact": {
+      "text": "Human bones contain both red marrow to produce cells and yellow marrow made mostly of fat!",
+      "support": "Human bones contain two varieties of marrow, known as red and yellow marrow.",
+      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "evidence": [
+        "There are two types of bone marrow: red and yellow"
+      ]
+    },
+    "misconception": "Children often imagine bone marrow is just one plain grey substance, but it comes in distinct red and yellow forms."
+  },
+  {
+    "id": "body-16",
+    "level": 3,
+    "type": "pick",
+    "prompt": "Which solid bony helmet shelters your delicate brain from bumps and falls?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Rounded skull",
+        "emoji": "💀"
+      },
+      {
+        "id": "b",
+        "label": "Collarbone",
+        "emoji": "🦴"
+      },
+      {
+        "id": "c",
+        "label": "Knee cap",
+        "emoji": "🦵"
+      }
+    ],
+    "answer": "a",
+    "hint": "This round cranial bone encases your thoughts like an armor helmet.",
+    "fact": {
+      "text": "The thick protective bone layer of your rounded skull acts like a sturdy helmet for your brain!",
+      "support": "The thick bone layer of your rounded skull protects your brain.",
+      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "evidence": [
+        "The thick bone layer of your skull protects your brain"
+      ]
+    },
+    "misconception": "Children sometimes think the skull is just for facial shape, but its primary purpose is a helmet shielding the brain."
+  },
+  {
+    "id": "body-17",
+    "level": 3,
+    "type": "order",
+    "prompt": "Order the structural layers of an arm or leg skeleton from outside inward!",
+    "items": [
+      {
+        "id": "a",
+        "label": "Compact Outer",
+        "emoji": "🦴"
+      },
+      {
+        "id": "b",
+        "label": "Spongy Mesh",
+        "emoji": "🧽"
+      },
+      {
+        "id": "c",
+        "label": "Soft Marrow",
+        "emoji": "🟡"
+      }
+    ],
+    "answer": [
+      "a",
+      "b",
+      "c"
+    ],
+    "hint": "Work inward from the tough exterior shell down to the central cavity.",
+    "fact": {
+      "text": "Each skeleton bone contains dense compact bone on the outside, porous spongy bone, and soft marrow inside!",
+      "support": "From the outside in, a skeleton bone has hard compact outer bone, airy spongy mesh, and soft marrow.",
+      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "evidence": [
+        "Each bone in your body is made up of three main types of bone material: compact bone, spongy bone, and bone marrow"
+      ]
+    },
+    "misconception": "Children sometimes think bones are solid white rock all the way through, but they contain porous spongy tissue and soft marrow inside."
+  },
+  {
+    "id": "body-18",
+    "level": 3,
+    "type": "pick",
+    "prompt": "Which long skeletal limb houses yellow marrow in its hollow center?",
+    "items": [
+      {
+        "id": "a",
+        "label": "Sturdy Thigh",
+        "emoji": "🦵"
+      },
+      {
+        "id": "b",
+        "label": "Ear Canal",
+        "emoji": "👂"
+      },
+      {
+        "id": "c",
+        "label": "Smooth Nail",
+        "emoji": "💅"
+      }
+    ],
+    "answer": "a",
+    "hint": "This long, heavy leg bone carries your body weight every day.",
+    "fact": {
+      "text": "Yellow marrow is made mostly of fat and is found in hollow centers of long bones, such as thigh bones!",
+      "support": "Yellow marrow is made mostly of fat and is found in long sturdy thigh bones.",
+      "source": "https://askabiologist.asu.edu/bone-anatomy",
+      "evidence": [
+        "Yellow marrow is made mostly of fat and is found in the hollow centers of long bones, such as the thigh bones"
+      ]
+    },
+    "misconception": "Children often think bone centers are hollow empty tubes like straws, but long bones contain fatty yellow marrow."
   }
 ]
