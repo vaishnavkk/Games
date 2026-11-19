@@ -32,14 +32,14 @@ sky-09 | OK | Jupiter is a gas giant and doesn't have a solid surface.
 sky-10 | OK | Credit: NASA/JPL-Caltech Mars is a cold desert world.
 body-07 | OK | Play health video with audio description: //medlineplus.gov/ency/videos/mov/200081_eng_ad.mp4 Overview The heart is a powerful automatic pump.
 body-08 | OK | Vital signs reflect essential body functions, including your heartbeat rate, breathing rate, temperature, and blood
-body-09 | OK | Some balance problems are due to problems in the inner ear.
-body-10 | OK | You depend on them to give your body structure and support and to let you
+body-09 | OK | Structures of the balance system inside the inner ear Source: NIH/NIDCD Within the labyrinth are
+body-10 | OK | Muscles work together with bones to help you move.
 garden-11 | OK | Eagles construct their nests near water in tall trees or on cliffs using large sticks.
 garden-12 | OK | the Animals Physical Description Komodo dragons are large lizards with long tails, strong and agile
 garden-13 | OK | Gray wolves hunt cooperatively in packs and are able to take down prey larger than
 garden-14 | OK | Special paw pads and semi-retractable claws provide great traction.
 sky-11 | OK | The Short Answer: We have a slightly different view of the Moon each night.
-sky-12 | OK | Earth takes 24 hours to complete one spin, and Mars takes 25 hours.
+sky-12 | OK | For example, Earth rotates on its own axis, producing the 24-hour day.
 sky-12-2 | OK | As the earth rotates once in each 24 hours, one would ideally expect to find
 sky-13 | OK | Neptune is a very cold, windy world.
 sky-14 | OK | It has a solid surface that is covered with craters.
@@ -54,29 +54,33 @@ garden-18 | OK | Eggs hatch within one week and tadpoles are slightly less than 
 sky-15 | OK | A solar eclipse happens when, at just the right moment, the Moon passes between the
 sky-16 | OK | Venus is unusual because it spins the opposite direction of Earth and most other planets.
 sky-17 | OK | Most asteroids in our solar system can be found in the asteroid belt, between Mars
-sky-18 | OK | know that the Moon has almost no atmosphere and only about one-sixth of Earth’s gravity.
+sky-18 | OK | of the Moon is one-sixth of Earth's, which is why in footage of moonwalks, astronauts
+sky-18-2 | OK | a planet with less mass than Earth, you would weigh less than you do here.
 body-15 | OK | Red bone marrow is where all new red blood cells, white blood cells, and platelets
+body-15-2 | OK | marrow is the spongy tissue inside some of your bones, such as your hip and
 body-16 | OK | Often, the injury is minor because your skull is hard and it protects your brain.
 body-17 | OK | up of three main types of bone material: compact bone, spongy bone, and bone marrow.
 body-18 | OK | While you are sleeping your brain and body functions are still active.
-garden-19 | OK | A pigment in their food gives their feathers their flamboyant pink color.
-garden-20 | OK | These birds are completely flightless but are incredibly swift runners due to their long, strong
-garden-21 | OK | As the root emerges, it anchors the seed to the ground and begins to take
-garden-22 | OK | Today, blue whales are listed as endangered under the Endangered Species Act and protected under
+garden-19 | OK | Fun Facts The flamingo's pink or red color comes from its food, including algae and
+garden-20 | OK | However, the wing structures of penguins are evolved for swimming, rather than flying in the
+garden-21 | OK | Some commonly eaten taproots include carrots, beets, and turnips.
+garden-21-2 | OK | Potatoes and sweet potatoes are in the tuber category, and onions and garlic are part
+garden-22 | OK | all mammals — they breathe air through lungs, are warm-blooded, have hair (at some point
 garden-23 | OK | The sentry will stand on its hind legs, often using its tail as support, or
-garden-24 | OK | modify their habitat; they build watertight dams of sticks woven with reeds, branches and saplings,
-sky-19 | OK | A very small amount is in our atmosphere, where it exists as water vapor.
-sky-20 | OK | The Moon has a very thin and tenuous atmosphere called an exosphere.
-sky-21 | OK | The light of daytime comes from our closest star: the Sun.
-sky-21-2 | OK | by the moon (and sun) upon the earth; and (2) centrifugal forces produced by the
-sky-22 | OK | we see is a "shooting star." That bright streak is not actually the rock, but
+garden-24 | OK | Then the seed coat breaks open and a root or radicle emerges first, followed by
+garden-24-2 | OK | cells start to elongate and divide, bringing the root and radicle out of the seed.
+sky-19 | OK | A cloud is a mass of water drops or ice crystals suspended in the atmosphere.
+sky-20 | OK | There is no wind or air on the Moon to help “erase” craters, so the
+sky-21 | OK | That is because light travels much faster than sound waves.
+sky-22 | OK | Meteors A meteor is a space rock&#8212;or meteoroid&#8212;that enters Earth's atmosphere.
 sky-23 | OK | Credit: NASA/JPL-Caltech Jupiter is the biggest planet in our solar system.
-sky-23-2 | OK | forces acting in the earth-moon system will here be discussed, with the recognition that a
+sky-23-2 | OK | Jupiter is a stormy planet that is probably best known for its Great Red Spot.
 sky-24 | OK | The water cycle describes how water evaporates from the surface of the earth, rises into
-body-19 | OK | Their job is to transport oxygen to the body's tissues in exchange for carbon dioxide,
+body-19 | OK | Red blood cells carry oxygen from your lungs to the rest of your body.
 body-20 | OK | Function Water makes up more than two-thirds of the weight of the human body.
-body-20-2 | OK | Your body is made up mostly of water.
-body-21 | OK | There are many ways that your skin protects your body and helps keep you healthy.
-body-22 | OK | syndicate"> <h2>Summary</h2> </div> <div id="topic-summary" class="syndicate"><p>Our senses of taste and smell give us great pleasure.
-body-23 | OK | Sleep is a natural process that helps your body restore energy, supports learning and memory,
-body-24 | OK | description: //medlineplus.gov/ency/videos/mov/200057_eng_ad.mp4 Overview Sound waves entering the ear travel through the external auditory canal before
+body-21 | OK | Your eyelids protect your eyes and help keep them healthy.
+body-21-2 | OK | Causes Tears most often protect the eyes by washing away germs and irritants.
+body-22 | OK | Without smell, foods tend to taste bland and have little or no flavor.
+body-23 | OK | Arteries carry blood away from the heart while veins carry blood into the heart.
+body-24 | OK | Source: NIH/NIDCD Sound waves enter the outer ear and travel through a narrow passageway called
+body-24-2 | OK | The eardrum vibrates from the incoming sound waves and sends these vibrations to three tiny

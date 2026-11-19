@@ -36,7 +36,8 @@
     },
     "misconception": "Thinking spiders are insects because both are tiny creepy-crawlies with many legs.",
     "topic": "insects",
-    "oddOneOut": true
+    "oddOneOut": true,
+    "concept": "insect-six-legs"
   },
   {
     "id": "garden-02",
@@ -77,7 +78,8 @@
     },
     "misconception": "Thinking mushrooms are plants because they grow in forest dirt and have stems.",
     "topic": "fungi",
-    "oddOneOut": true
+    "oddOneOut": true,
+    "concept": "fungi-not-plant"
   },
   {
     "id": "garden-03",
@@ -125,7 +127,8 @@
       "support": "Mother turtles bury their eggs in sandy soil so their babies can hatch."
     },
     "misconception": "Thinking all furry land animals lay eggs like birds and reptiles do.",
-    "topic": "egg-laying"
+    "topic": "egg-laying",
+    "concept": "egg-laying-animals"
   },
   {
     "id": "garden-04",
@@ -178,7 +181,8 @@
       ]
     },
     "misconception": "Thinking flying squirrels fly with wings instead of just gliding through the air.",
-    "topic": "flight"
+    "topic": "flight",
+    "concept": "flying-mammals"
   },
   {
     "id": "garden-05",
@@ -228,7 +232,8 @@
       "support": "An insect begins as a tiny egg, hatches into a caterpillar, rests in a chrysalis, and emerges as a butterfly."
     },
     "misconception": "Thinking caterpillars turn straight into flying butterflies without resting inside a chrysalis.",
-    "topic": "metamorphosis"
+    "topic": "metamorphosis",
+    "concept": "butterfly-life-cycle"
   },
   {
     "id": "garden-06",
@@ -283,7 +288,8 @@
       ]
     },
     "misconception": "Thinking leaves and flowers bloom before a seed grows roots into the soil.",
-    "topic": "seed-germination"
+    "topic": "seed-germination",
+    "concept": "plant-growth-stages"
   },
   {
     "id": "sky-01",
@@ -322,7 +328,8 @@
       "support": "Venus is hotter than Mercury because its thick carbon dioxide atmosphere traps intense solar heat."
     },
     "misconception": "Thinking Mercury is the hottest planet just because it is closest to the Sun.",
-    "topic": "planetary-heat"
+    "topic": "planetary-heat",
+    "concept": "venus-hottest-planet"
   },
   {
     "id": "sky-02",
@@ -361,7 +368,8 @@
       "support": "Our daytime Sun is a giant glowing ball of hot plasma, which is a star."
     },
     "misconception": "Thinking the Sun is a gigantic planet because it looks big and round in our daytime sky.",
-    "topic": "sun-nature"
+    "topic": "sun-nature",
+    "concept": "sun-is-star"
   },
   {
     "id": "sky-03",
@@ -409,7 +417,8 @@
       "support": "The Moon does not produce its own light; moonlight is actually just sunlight reflecting off of the Moon’s surface."
     },
     "misconception": "Thinking the Moon makes its own light like a glowing lightbulb in the night sky.",
-    "topic": "moonlight"
+    "topic": "moonlight",
+    "concept": "moon-reflects-sunlight"
   },
   {
     "id": "sky-04",
@@ -458,7 +467,8 @@
       "support": "Saturn has the most visible rings, but Jupiter, Uranus, and Neptune also have ring systems."
     },
     "misconception": "Thinking Saturn is the only planet in our solar system that has rings.",
-    "topic": "planetary-rings"
+    "topic": "planetary-rings",
+    "concept": "ringed-gas-planets"
   },
   {
     "id": "sky-05",
@@ -510,7 +520,8 @@
       "support": "Mercury is closest to the Sun, followed by Venus, Earth, and Mars in orbital order."
     },
     "misconception": "Thinking Earth is closer to the Sun than Venus because summer feels so warm.",
-    "topic": "planet-order"
+    "topic": "planet-order",
+    "concept": "rocky-planets-order"
   },
   {
     "id": "sky-06",
@@ -560,7 +571,8 @@
       ]
     },
     "misconception": "Thinking stars at night are closer to us than the Moon because they twinkle so brightly.",
-    "topic": "cosmic-distances"
+    "topic": "cosmic-distances",
+    "concept": "earth-space-distances"
   },
   {
     "id": "body-01",
@@ -604,7 +616,8 @@
       ]
     },
     "misconception": "Thinking bigger adults must have more bones in their skeletons than tiny babies.",
-    "topic": "skeleton-bones"
+    "topic": "skeleton-bones",
+    "concept": "infant-bone-fusion"
   },
   {
     "id": "body-02",
@@ -648,7 +661,8 @@
       ]
     },
     "misconception": "Thinking skin is just thin wrapping rather than the largest organ of the human body.",
-    "topic": "skin-organ"
+    "topic": "skin-organ",
+    "concept": "skin-largest-organ"
   },
   {
     "id": "body-03",
@@ -687,7 +701,8 @@
       "support": "Tooth enamel is the hardest substance in the human body, even tougher than skeleton bones."
     },
     "misconception": "Thinking thick leg bones are the hardest material in the human body.",
-    "topic": "tooth-enamel"
+    "topic": "tooth-enamel",
+    "concept": "tooth-enamel-hardest"
   },
   {
     "id": "body-04",
@@ -737,7 +752,8 @@
       "support": "Your tongue has thousands of tiny taste buds that send flavor signals directly to your brain."
     },
     "misconception": "Thinking you taste food with your teeth and lips instead of taste buds on your tongue.",
-    "topic": "sensory-organs"
+    "topic": "sensory-organs",
+    "concept": "face-sensory-organs"
   },
   {
     "id": "body-05",
@@ -787,7 +803,8 @@
       ]
     },
     "misconception": "Thinking babies are born with a full set of teeth already in their mouths.",
-    "topic": "teeth-sets"
+    "topic": "teeth-sets",
+    "concept": "human-teeth-count"
   },
   {
     "id": "body-06",
@@ -830,7 +847,8 @@
       "support": "Teeth chew food, the throat swallows it down the esophagus, and the stomach digests it."
     },
     "misconception": "Thinking food drops directly into the stomach without being chewed by teeth first.",
-    "topic": "swallowing"
+    "topic": "swallowing",
+    "concept": "digestive-tract-journey"
   },
   {
     "id": "garden-07",
@@ -869,7 +887,8 @@
         "dozens of other species"
       ]
     },
-    "topic": "beavers"
+    "topic": "beavers",
+    "concept": "beaver-pond-habitat"
   },
   {
     "id": "garden-08",
@@ -911,7 +930,8 @@
         "rivers, lakes"
       ]
     },
-    "topic": "alligators"
+    "topic": "alligators",
+    "concept": "alligator-freshwater-swamp"
   },
   {
     "id": "garden-09",
@@ -950,7 +970,8 @@
         "crushing tough bamboo"
       ]
     },
-    "topic": "pandas"
+    "topic": "pandas",
+    "concept": "giant-panda-bamboo"
   },
   {
     "id": "garden-10",
@@ -989,7 +1010,8 @@
         "nose and upper lip"
       ]
     },
-    "topic": "elephant-anatomy"
+    "topic": "elephant-anatomy",
+    "concept": "elephant-trunk-fusion"
   },
   {
     "id": "sky-07",
@@ -999,19 +1021,19 @@
     "items": [
       {
         "id": "a",
-        "label": "Planet Axis",
+        "label": "Tilted planet",
         "emoji": "🌍",
         "group": "earth-traits"
       },
       {
         "id": "b",
-        "label": "Sun Distance",
+        "label": "Distant Sun",
         "emoji": "☀️",
         "group": "earth-traits"
       },
       {
         "id": "c",
-        "label": "Spin Speed",
+        "label": "Fast spin",
         "emoji": "🔄",
         "group": "earth-traits"
       }
@@ -1028,7 +1050,8 @@
         "seasons"
       ]
     },
-    "topic": "seasons"
+    "topic": "seasons",
+    "concept": "earth-tilt-seasons"
   },
   {
     "id": "sky-08",
@@ -1038,19 +1061,19 @@
     "items": [
       {
         "id": "a",
-        "label": "Blue Light",
-        "emoji": "🔹",
+        "label": "Blue light",
+        "emoji": "💡",
         "group": "optics"
       },
       {
         "id": "b",
-        "label": "Ocean Waves",
+        "label": "Ocean water",
         "emoji": "🌊",
         "group": "optics"
       },
       {
         "id": "c",
-        "label": "Sparkle Dust",
+        "label": "Tiny sparkles",
         "emoji": "✨",
         "group": "optics"
       }
@@ -1067,7 +1090,8 @@
         "shorter, smaller waves"
       ]
     },
-    "topic": "sky-color"
+    "topic": "sky-color",
+    "concept": "sky-rayleigh-scattering"
   },
   {
     "id": "sky-09",
@@ -1115,7 +1139,8 @@
         "doesn't have a solid surface"
       ]
     },
-    "topic": "gas-giants"
+    "topic": "gas-giants",
+    "concept": "sun-solar-mass"
   },
   {
     "id": "sky-10",
@@ -1125,19 +1150,19 @@
     "items": [
       {
         "id": "a",
-        "label": "Cold Desert",
+        "label": "Bitter cold",
         "emoji": "❄️",
         "group": "climates"
       },
       {
         "id": "b",
-        "label": "Hot Oven",
+        "label": "Blazing fire",
         "emoji": "🔥",
         "group": "climates"
       },
       {
         "id": "c",
-        "label": "Warm Tropics",
+        "label": "Warm palm",
         "emoji": "🌴",
         "group": "climates"
       }
@@ -1153,7 +1178,8 @@
         "mars is a cold desert world"
       ]
     },
-    "topic": "mars-climate"
+    "topic": "mars-climate",
+    "concept": "mercury-extreme-temperatures"
   },
   {
     "id": "body-07",
@@ -1192,7 +1218,8 @@
         "pump"
       ]
     },
-    "topic": "heart-pump"
+    "topic": "heart-pump",
+    "concept": "heart-blood-pumping"
   },
   {
     "id": "body-08",
@@ -1202,7 +1229,7 @@
     "items": [
       {
         "id": "a",
-        "label": "Heartbeat rate",
+        "label": "Heart pulse",
         "emoji": "🫀",
         "group": "things a doctor measures"
       },
@@ -1247,7 +1274,8 @@
         "heartbeat rate, breathing rate, temperature"
       ]
     },
-    "topic": "vital-signs"
+    "topic": "vital-signs",
+    "concept": "pulse-heartbeat-rate"
   },
   {
     "id": "body-09",
@@ -1278,41 +1306,38 @@
     "hint": "Think about which deep part of your ear detects movement!",
     "misconception": "Many people think ears are only for hearing, but deep inside they sense balance too!",
     "fact": {
-      "text": "Canals in your inner ear detect head motion. They send signals to keep you balanced.",
-      "support": "Some balance problems are due to problems in the inner ear.",
+      "text": "Your inner ear has a balance system. Inside the inner ear are structures that help.",
+      "source": "https://www.nidcd.nih.gov/health/balance-disorders",
+      "support": "Structures of the balance system inside the inner ear Source: NIH/NIDCD Within the labyrinth are structures known as semicircular canals.",
       "evidence": [
-        "balance",
-        "problems",
-        "due",
-        "inner",
-        "ear"
-      ],
-      "source": "https://medlineplus.gov/balanceproblems.html"
+        "balance system inside the inner ear"
+      ]
     },
-    "topic": "inner-ear-balance"
+    "topic": "inner-ear-balance",
+    "concept": "inner-ear-balance"
   },
   {
     "id": "body-10",
     "level": 3,
     "type": "pick",
-    "prompt": "Which of these tissues pull on your skeleton to move your body?",
+    "prompt": "Which body parts pull on your bones to make you move?",
     "items": [
       {
         "id": "a",
-        "label": "Biceps",
+        "label": "Muscles",
         "emoji": "💪",
         "group": "anatomy"
       },
       {
         "id": "b",
-        "label": "Bone",
-        "emoji": "🦴",
+        "label": "Hair",
+        "emoji": "💇",
         "group": "anatomy"
       },
       {
         "id": "c",
-        "label": "Tooth",
-        "emoji": "🦷",
+        "label": "Fingernails",
+        "emoji": "💅",
         "group": "anatomy"
       }
     ],
@@ -1320,18 +1345,15 @@
     "hint": "Think about what tightens and pulls when you lift your arm!",
     "misconception": "Bones provide structure, but muscles are needed to pull and create motion!",
     "fact": {
-      "text": "Biceps and other muscles pull firmly on your bones. They work in pairs to create bodily motion.",
-      "support": "You depend on them to give your body structure and support and to let you use your muscles to move.",
+      "text": "Muscles work together with bones. Muscles help you to move.",
+      "source": "https://www.niams.nih.gov/health-topics/educational-resources/health-lesson-learning-about-muscles",
+      "support": "Muscles work together with bones to help you move.",
       "evidence": [
-        "depend",
-        "body",
-        "support",
-        "muscles",
-        "move"
-      ],
-      "source": "https://askabiologist.asu.edu/games-sims/skeleton-viewer-game/introduction.html"
+        "Muscles work together with bones to help you move"
+      ]
     },
-    "topic": "muscles-movement"
+    "topic": "muscles-movement",
+    "concept": "muscles-pull-bones"
   },
   {
     "id": "garden-11",
@@ -1373,7 +1395,8 @@
       ]
     },
     "misconception": null,
-    "topic": "eagles"
+    "topic": "eagles",
+    "concept": "eagle-nesting-family"
   },
   {
     "id": "garden-12",
@@ -1411,7 +1434,8 @@
       ]
     },
     "misconception": "Children often confuse dragons with make-believe fantasy beasts, but Komodo dragons are real giant lizards.",
-    "topic": "lizards"
+    "topic": "lizards",
+    "concept": "komodo-dragon-lizard"
   },
   {
     "id": "garden-13",
@@ -1453,7 +1477,8 @@
       ]
     },
     "misconception": "Children often believe big predators always hunt as solitary loners, but wolves and lions hunt in coordinated teams.",
-    "topic": "pack-hunting"
+    "topic": "pack-hunting",
+    "concept": "wolf-pack-hunting"
   },
   {
     "id": "garden-14",
@@ -1492,7 +1517,8 @@
       ]
     },
     "misconception": null,
-    "topic": "cheetah-speed"
+    "topic": "cheetah-speed",
+    "concept": "cheetah-running-claws"
   },
   {
     "id": "sky-11",
@@ -1532,7 +1558,8 @@
       ]
     },
     "misconception": "Children sometimes think the Moon physically changes shape or grows, but we just see different lighted angles.",
-    "topic": "moon-phases"
+    "topic": "moon-phases",
+    "concept": "moon-gravity-weight"
   },
   {
     "id": "sky-12",
@@ -1542,19 +1569,19 @@
     "items": [
       {
         "id": "a",
-        "label": "Earth spins",
+        "label": "Spinning Earth",
         "emoji": "🌍",
         "group": "space"
       },
       {
         "id": "b",
-        "label": "Sun circles",
+        "label": "Circling Sun",
         "emoji": "☀️",
         "group": "space"
       },
       {
         "id": "c",
-        "label": "Moon covers",
+        "label": "Passing Moon",
         "emoji": "🌑",
         "group": "space"
       }
@@ -1562,27 +1589,22 @@
     "answer": "a",
     "hint": "Think about which body spins in place every day!",
     "fact": {
-      "text": "Earth rotates around its axis once every 24 hours. This spin creates our day and night.",
-      "support": "Earth takes 24 hours to complete one spin, and Mars takes 25 hours.",
+      "text": "Earth rotates on its own axis. Earth produces the 24-hour day.",
+      "source": "https://solarsystem.nasa.gov/basics/chapter2-1/",
+      "support": "For example, Earth rotates on its own axis, producing the 24-hour day.",
       "evidence": [
-        "Earth",
-        "takes",
-        "24",
-        "hours",
-        "spin"
+        "Earth rotates on its own axis",
+        "producing the 24-hour day"
       ],
-      "source": "https://spaceplace.nasa.gov/days/en/",
       "source2": "https://tidesandcurrents.noaa.gov/restles3.html",
+      "support2": "As the earth rotates once in each 24 hours, one would ideally expect to find a high tide followed by a low tide at the same place 6 hours later",
       "evidence2": [
-        "earth",
-        "rotates",
-        "once",
-        "24",
-        "hours"
+        "earth rotates once in each 24 hours"
       ]
     },
     "misconception": "It looks like the Sun moves across the sky, but Earth is actually spinning!",
-    "topic": "day-night"
+    "topic": "day-night",
+    "concept": "earth-rotation-day-night"
   },
   {
     "id": "sky-13",
@@ -1620,7 +1642,8 @@
       ]
     },
     "misconception": null,
-    "topic": "neptune"
+    "topic": "neptune",
+    "concept": "jupiter-gas-giant"
   },
   {
     "id": "sky-14",
@@ -1662,7 +1685,8 @@
       ]
     },
     "misconception": null,
-    "topic": "terrestrial-planets"
+    "topic": "terrestrial-planets",
+    "concept": "saturn-ring-composition"
   },
   {
     "id": "body-11",
@@ -1704,7 +1728,8 @@
       ]
     },
     "misconception": "Thinking the brain is one single solid block of gray jelly without distinct nerve layers.",
-    "topic": "brain-tissues"
+    "topic": "brain-tissues",
+    "concept": "lungs-oxygen-exchange"
   },
   {
     "id": "body-12",
@@ -1747,7 +1772,8 @@
       "source": "https://medlineplus.gov/ency/imagepages/1094.htm"
     },
     "misconception": "The pupil is just an opening; the lens behind it is what flexes to focus!",
-    "topic": "eye-focus"
+    "topic": "eye-focus",
+    "concept": "diaphragm-breathing-muscle"
   },
   {
     "id": "body-13",
@@ -1791,7 +1817,8 @@
       ]
     },
     "misconception": null,
-    "topic": "airway-branches"
+    "topic": "airway-branches",
+    "concept": "taste-buds-flavors"
   },
   {
     "id": "body-14",
@@ -1834,7 +1861,8 @@
       "source": "https://medlineplus.gov/ency/anatomyvideos/000018.htm"
     },
     "misconception": null,
-    "topic": "rib-cage"
+    "topic": "rib-cage",
+    "concept": "stomach-acid-digestion"
   },
   {
     "id": "garden-15",
@@ -1874,7 +1902,8 @@
     },
     "misconception": "Children often think elephants drink directly through their trunks like a giant drinking straw.",
     "topic": "elephants",
-    "oddOneOut": false
+    "oddOneOut": false,
+    "concept": "elephant-trunk-drinking"
   },
   {
     "id": "garden-16",
@@ -1916,7 +1945,8 @@
       ]
     },
     "misconception": null,
-    "topic": "swimming-mammals"
+    "topic": "swimming-mammals",
+    "concept": "swimming-mammal-shields"
   },
   {
     "id": "garden-17",
@@ -1955,7 +1985,8 @@
       ]
     },
     "misconception": null,
-    "topic": "sloth-bears"
+    "topic": "sloth-bears",
+    "concept": "anteater-nostril-seals"
   },
   {
     "id": "garden-18",
@@ -1995,7 +2026,8 @@
       ]
     },
     "misconception": "Children sometimes think baby frogs hatch looking like miniature frogs with four legs, but they start as legless swimming tadpoles.",
-    "topic": "frog-life"
+    "topic": "frog-life",
+    "concept": "frog-pond-development"
   },
   {
     "id": "sky-15",
@@ -2035,7 +2067,8 @@
       ]
     },
     "misconception": "Children often think the Sun turns off, but the Moon simply passes directly between Earth and Sun.",
-    "topic": "solar-eclipse"
+    "topic": "solar-eclipse",
+    "concept": "sun-light-travel-time"
   },
   {
     "id": "sky-16",
@@ -2073,7 +2106,8 @@
       ]
     },
     "misconception": "Children expect all solar system planets to rotate the same way, but Venus rotates backward.",
-    "topic": "venus-rotation"
+    "topic": "venus-rotation",
+    "concept": "venus-retrograde-rotation"
   },
   {
     "id": "sky-17",
@@ -2083,21 +2117,18 @@
     "items": [
       {
         "id": "a",
-        "label": "Red Mars",
-        "emoji": "🔴",
-        "group": "cosmic zones"
+        "label": "Earth",
+        "emoji": "🌍"
       },
       {
         "id": "b",
-        "label": "Rocky Belt",
-        "emoji": "🪨",
-        "group": "cosmic zones"
+        "label": "Mars",
+        "emoji": "🔴"
       },
       {
         "id": "c",
-        "label": "Giant Jupiter",
-        "emoji": "🪐",
-        "group": "cosmic zones"
+        "label": "Jupiter",
+        "emoji": "jupiter"
       }
     ],
     "answer": [
@@ -2116,7 +2147,8 @@
       ]
     },
     "misconception": null,
-    "topic": "asteroid-belt"
+    "topic": "asteroid-belt",
+    "concept": "inner-outer-planets-order"
   },
   {
     "id": "sky-18",
@@ -2148,56 +2180,65 @@
     "fact": {
       "text": "You would weigh less on the Moon! The Moon has about one-sixth of Earth's gravity pulling on you.",
       "support": "We know that the Moon has almost no atmosphere and only about one-sixth of Earth's gravity.",
-      "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
+      "source": "https://solarsystem.nasa.gov/moons/earths-moon/in-depth/",
       "evidence": [
         "one-sixth",
         "gravity"
+      ],
+      "source2": "https://spaceplace.nasa.gov/what-is-gravity/en/",
+      "support2": "And if you were on a planet with less mass than Earth, you would weigh less than you do here.",
+      "evidence2": [
+        "weigh less than you do here"
       ]
     },
     "misconception": "Thinking you weigh the exact same amount on the Moon as on Earth.",
-    "topic": "moon-gravity"
+    "topic": "moon-gravity",
+    "concept": "moon-surface-gravity"
   },
   {
     "id": "body-15",
     "level": 3,
     "type": "pick",
-    "prompt": "Which soft core inside bones makes new oxygen cells?",
+    "prompt": "Which inner part makes new blood cells for you?",
     "items": [
       {
         "id": "a",
         "label": "Red marrow",
         "emoji": "🔴",
-        "group": "bone-tissues"
+        "group": "bone-parts"
       },
       {
         "id": "b",
         "label": "Yellow marrow",
         "emoji": "🟡",
-        "group": "bone-tissues"
+        "group": "bone-parts"
       },
       {
         "id": "c",
-        "label": "Hard cartilage",
+        "label": "Hard bone",
         "emoji": "🦴",
-        "group": "bone-tissues"
+        "group": "bone-parts"
       }
     ],
     "answer": "a",
     "hint": "Think of the colorful core inside bones that forms living cells!",
     "fact": {
-      "text": "Red marrow lives inside hollow bones. It creates brand new red cells for you.",
+      "text": "Red bone marrow is where new blood cells are made. Bone marrow is tissue inside some of your bones.",
+      "source": "https://askabiologist.asu.edu/bone-anatomy",
       "support": "Red bone marrow is where all new red blood cells, white blood cells, and platelets are made.",
       "evidence": [
-        "red",
-        "bone",
-        "marrow",
-        "cells",
-        "made"
+        "Red bone marrow is where all new red blood cells",
+        "are made"
       ],
-      "source": "https://askabiologist.asu.edu/bone-anatomy"
+      "source2": "https://medlineplus.gov/bonemarrowdiseases.html",
+      "support2": "Bone marrow is the spongy tissue inside some of your bones, such as your hip and thigh bones.",
+      "evidence2": [
+        "tissue inside some of your bones"
+      ]
     },
     "misconception": "Bones are hard on the outside, but their soft red core creates new living cells!",
-    "topic": "bone-marrow"
+    "topic": "bone-marrow",
+    "concept": "red-marrow-blood"
   },
   {
     "id": "body-16",
@@ -2236,7 +2277,8 @@
       ]
     },
     "misconception": "Children sometimes think the skull is just for facial shape, but its primary purpose is a helmet shielding the brain.",
-    "topic": "skull-protection"
+    "topic": "skull-protection",
+    "concept": "skull-brain-protection"
   },
   {
     "id": "body-17",
@@ -2280,7 +2322,8 @@
       ]
     },
     "misconception": null,
-    "topic": "bone-layers"
+    "topic": "bone-layers",
+    "concept": "bone-structural-layers"
   },
   {
     "id": "body-18",
@@ -2290,21 +2333,21 @@
     "items": [
       {
         "id": "a",
-        "emoji": "⚡",
         "label": "Stays Active",
-        "group": "brain sleep states"
+        "emoji": "⚡",
+        "group": "brain-states"
       },
       {
         "id": "b",
+        "label": "Takes Rest",
         "emoji": "💤",
-        "label": "Shuts Off",
-        "group": "brain sleep states"
+        "group": "brain-states"
       },
       {
         "id": "c",
-        "emoji": "🧊",
-        "label": "Freezes Cold",
-        "group": "brain sleep states"
+        "label": "Full stop",
+        "emoji": "🛑",
+        "group": "brain-states"
       }
     ],
     "answer": "a",
@@ -2319,121 +2362,117 @@
       ]
     },
     "misconception": "Thinking your brain completely turns off or shuts down like a computer during sleep.",
-    "topic": "sleep"
+    "topic": "sleep",
+    "concept": "sleep-brain-memory"
   },
   {
     "id": "garden-19",
     "level": 1,
     "type": "pick",
-    "prompt": "What gives wild flamingo feathers their bright pink tint?",
+    "prompt": "Which food makes flamingos pink?",
     "topic": "flamingo-color",
     "items": [
       {
         "id": "a",
-        "label": "Shrimp food",
+        "label": "Tiny shrimp",
         "emoji": "🦐",
-        "group": "bird-traits"
+        "group": "nature"
       },
       {
         "id": "b",
         "label": "Warm sun",
         "emoji": "☀️",
-        "group": "bird-traits"
+        "group": "nature"
       },
       {
         "id": "c",
-        "label": "Mud bath",
-        "emoji": "🪨",
-        "group": "bird-traits"
+        "label": "Sweet blossom",
+        "emoji": "🌸",
+        "group": "nature"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "Flamingos eat shrimp in wetlands. Food pigments turn their feathers pink.",
-      "support": "A pigment in their food gives their feathers their flamboyant pink color.",
+      "text": "The pink color comes from its food. This food includes algae and shrimp.",
+      "source": "https://nationalzoo.si.edu/animals/american-flamingo",
+      "support": "The flamingo's pink or red color comes from its food, including algae and shrimp.",
       "evidence": [
-        "pigment",
-        "food",
-        "feathers",
-        "pink",
-        "color"
-      ],
-      "source": "https://nationalzoo.si.edu/animals/american-flamingo"
+        "pink or red color comes from its food, including algae and shrimp"
+      ]
     },
     "hint": "Think about what flamingos eat in shallow wetlands!",
-    "misconception": "Flamingos are not born pink; their colorful feathers come from what they eat!"
+    "misconception": "Flamingos are not born pink; their colorful feathers come from what they eat!",
+    "concept": "flamingo-diet-color"
   },
   {
     "id": "garden-20",
     "level": 1,
     "type": "pick",
-    "prompt": "Which giant running bird has long legs but cannot fly?",
+    "prompt": "Which of these birds cannot fly?",
     "topic": "flightless-birds",
     "items": [
       {
         "id": "a",
-        "label": "Wild Ostrich",
-        "emoji": "🦤",
+        "label": "Penguin",
+        "emoji": "🐧",
         "group": "birds"
       },
       {
         "id": "b",
-        "label": "Swift Eagle",
+        "label": "Eagle",
         "emoji": "🦅",
         "group": "birds"
       },
       {
         "id": "c",
-        "label": "Barn Owl",
+        "label": "Owl",
         "emoji": "🦉",
         "group": "birds"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "Ostriches are swift runners with strong legs. They are birds that do not fly.",
-      "support": "These birds are completely flightless but are incredibly swift runners due to their long, strong legs—in fact, they are the fastest two-legged animals.",
+      "text": "The wing structures of penguins are evolved for swimming. They are for swimming rather than flying.",
+      "source": "https://oceanservice.noaa.gov/facts/penguinsfly.html",
+      "support": "However, the wing structures of penguins are evolved for swimming, rather than flying in the traditional sense.",
       "evidence": [
-        "birds",
-        "flightless",
-        "swift",
-        "runners"
-      ],
-      "source": "https://nationalzoo.si.edu/animals/ostrich"
+        "wing structures of penguins are evolved for swimming, rather than flying"
+      ]
     },
     "hint": "Look for the world's largest running bird!",
-    "misconception": "All birds have feathers and wings, but ostriches are too heavy for powered flight!"
+    "misconception": "All birds have feathers and wings, but ostriches are too heavy for powered flight!",
+    "concept": "flightless-penguin"
   },
   {
     "id": "garden-21",
     "level": 1,
     "type": "tapall",
-    "prompt": "Tap the underground plant parts that anchor deep and drink water!",
+    "prompt": "Tap the foods that are roots!",
     "topic": "plant-roots",
     "items": [
       {
         "id": "a",
-        "label": "Sprout Root",
-        "emoji": "🌱",
-        "group": "plant-parts"
+        "label": "Carrot",
+        "emoji": "🥕",
+        "group": "plants"
       },
       {
         "id": "b",
-        "label": "Branching Carrot",
-        "emoji": "🥕",
-        "group": "plant-parts"
+        "label": "Sweet potato",
+        "emoji": "🍠",
+        "group": "plants"
       },
       {
         "id": "c",
-        "label": "Green Leaves",
-        "emoji": "🍃",
-        "group": "plant-parts"
+        "label": "Lettuce",
+        "emoji": "🥬",
+        "group": "plants"
       },
       {
         "id": "d",
-        "label": "Blossom Petals",
-        "emoji": "🌸",
-        "group": "plant-parts"
+        "label": "Broccoli",
+        "emoji": "🥦",
+        "group": "plants"
       }
     ],
     "answer": [
@@ -2441,49 +2480,53 @@
       "b"
     ],
     "fact": {
-      "text": "Roots grow downward to anchor the sprout. They take in moisture from soil.",
-      "support": "As the root emerges, it anchors the seed to the ground and begins to take in more water.",
+      "text": "Carrots grow in the dirt as taproots that we eat. Sweet potatoes are also part of root plants.",
+      "source": "https://extension.psu.edu/three-terrific-ways-to-use-root-vegetables",
+      "support": "Some commonly eaten taproots include carrots, which grow and store nutrients for plants.",
       "evidence": [
-        "root",
-        "anchors",
-        "ground",
-        "water"
+        "eaten taproots include carrots"
       ],
-      "source": "https://extension.psu.edu/growing-gardeners-mighty-seed-activity"
+      "source2": "https://extension.psu.edu/three-terrific-ways-to-use-root-vegetables",
+      "support2": "Potatoes and sweet potatoes are in the tuber category, and onions and garlic are part of the bulb category of root vegetables.",
+      "evidence2": [
+        "sweet potatoes",
+        "root vegetables"
+      ]
     },
     "hint": "Think about which plant parts grow deep below the soil surface!",
-    "misconception": "Leaves absorb sunlight and air, while roots absorb moisture from the earth!"
+    "misconception": "Leaves absorb sunlight and air, while roots absorb moisture from the earth!",
+    "concept": "root-vegetables"
   },
   {
     "id": "garden-22",
     "level": 1,
     "type": "tapall",
-    "prompt": "Tap the swimming sea creatures that are mammals rather than cold swimmers!",
+    "prompt": "Tap the sea animals that are mammals!",
     "topic": "marine-mammals",
     "items": [
       {
         "id": "a",
-        "label": "Blue Whale",
+        "label": "Blue whale",
         "emoji": "🐋",
-        "group": "marine-life"
+        "group": "sea-creatures"
       },
       {
         "id": "b",
-        "label": "Playful Dolphin",
+        "label": "Dolphin",
         "emoji": "🐬",
-        "group": "marine-life"
+        "group": "sea-creatures"
       },
       {
         "id": "c",
-        "label": "Great Shark",
+        "label": "Shark",
         "emoji": "🦈",
-        "group": "marine-life"
+        "group": "sea-creatures"
       },
       {
         "id": "d",
-        "label": "Silver Tuna",
+        "label": "Tuna",
         "emoji": "🐟",
-        "group": "marine-life"
+        "group": "sea-creatures"
       }
     ],
     "answer": [
@@ -2491,83 +2534,79 @@
       "b"
     ],
     "fact": {
-      "text": "Blue whales and dolphins are warm-blooded mammals. They breathe fresh air above water.",
-      "support": "Today, blue whales are listed as endangered under the Endangered Species Act and protected under the Marine Mammal Protection Act.",
+      "text": "Whales and dolphins breathe air through lungs. These sea mammals are warm-blooded and make milk.",
+      "source": "https://www.noaa.gov/education/resource-collections/marine-life/marine-mammals",
+      "support": "They must meet the characteristics of all mammals — they breathe air through lungs, are warm-blooded, have hair, and produce milk.",
       "evidence": [
-        "blue",
-        "whales",
-        "protected",
-        "Marine",
-        "Mammal"
-      ],
-      "source": "https://www.fisheries.noaa.gov/species/blue-whale"
+        "breathe air through lungs",
+        "warm-blooded"
+      ]
     },
     "hint": "Think about which sea creatures breathe air through blowholes!",
-    "misconception": "Whales swim like fish, but they give birth to live calves and nurse their young!"
+    "misconception": "Whales swim like fish, but they give birth to live calves and nurse their young!",
+    "concept": "marine-mammals"
   },
   {
     "id": "garden-23",
     "level": 1,
     "type": "pick",
-    "prompt": "Why does an alert meerkat stand upright on its hind legs?",
+    "prompt": "Why do meerkats stand upright on high mounds?",
     "topic": "meerkat-sentry",
     "items": [
       {
         "id": "a",
-        "label": "Spot danger",
+        "label": "Sharp eyes",
         "emoji": "👀",
         "group": "meerkat-actions"
       },
       {
         "id": "b",
-        "label": "Catch rain",
-        "emoji": "🌧️",
+        "label": "Warm sun",
+        "emoji": "☀️",
         "group": "meerkat-actions"
       },
       {
         "id": "c",
-        "label": "Dry fur",
+        "label": "Cool wind",
         "emoji": "💨",
         "group": "meerkat-actions"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "A sentry stands upright on high watch. It scans across fields to spot predators.",
+      "text": "Meerkats will stand on hind legs to look out. They perch in a bush or tree to scan with sharp eyes.",
+      "source": "https://nationalzoo.si.edu/animals/meerkat",
       "support": "The sentry will stand on its hind legs, often using its tail as support, or perch in a bush or tree, scanning for danger.",
       "evidence": [
-        "sentry",
-        "stand",
-        "legs",
-        "scanning",
-        "danger"
-      ],
-      "source": "https://nationalzoo.si.edu/animals/meerkat"
+        "stand on its hind legs",
+        "perch in a bush or tree"
+      ]
     },
     "hint": "Think about how guards protect their family from hunting predators!",
-    "misconception": "Meerkats stand tall to watch out for eagles and jackals, keeping their group safe!"
+    "misconception": "Meerkats stand tall to watch out for eagles and jackals, keeping their group safe!",
+    "concept": "meerkat-standing-sentry"
   },
   {
     "id": "garden-24",
     "level": 1,
     "type": "order",
-    "prompt": "Put the steps of building a beaver family pond home in order:",
+    "prompt": "Put these plant stages in order as growth begins:",
     "topic": "beaver-lodge-steps",
     "items": [
       {
         "id": "a",
-        "label": "Cut branches",
-        "emoji": "🪵"
+        "label": "First seed",
+        "emoji": "🌰"
       },
       {
         "id": "b",
-        "label": "Dam stream",
-        "emoji": "🌊"
+        "label": "Green sprout",
+        "emoji": "🌱"
       },
       {
         "id": "c",
-        "label": "Build lodge",
-        "emoji": "🦫"
+        "label": "Leafy stem",
+        "emoji": "🌿"
       }
     ],
     "answer": [
@@ -2576,50 +2615,54 @@
       "c"
     ],
     "fact": {
-      "text": "Beavers cut sticks to make watertight dams. They create safe ponds and build lodges.",
-      "support": "Beavers build watertight dams of sticks woven with reeds, branches and saplings, which are caulked with mud.",
+      "text": "A seed coat breaks open first. A root emerges followed by a stem.",
+      "source": "https://web.extension.illinois.edu/gpe/case3/c3facts3.html",
+      "support": "Then the seed coat breaks open and a root or radicle emerges first, followed by the shoot or plumule that contains the leaves and stem.",
       "evidence": [
-        "build",
-        "watertight",
-        "dams",
-        "sticks",
-        "branches"
+        "seed coat breaks open",
+        "emerges first",
+        "stem"
       ],
-      "source": "https://nationalzoo.si.edu/animals/beaver"
+      "source2": "https://extension.psu.edu/seed-and-seedling-biology",
+      "support2": "The cells start to elongate and divide, bringing the root and radicle out of the seed.",
+      "evidence2": [
+        "bringing the root and radicle out of the seed"
+      ]
     },
     "hint": "Think about what beavers cut first before creating their deep calm pond!",
-    "misconception": "Beavers build dams first to raise water levels, protecting their new island lodge!"
+    "misconception": "Beavers build dams first to raise water levels, protecting their new island lodge!",
+    "concept": "seed-germination-stages"
   },
   {
     "id": "sky-19",
     "level": 2,
     "type": "tapall",
-    "prompt": "Tap the sky elements that gather high up to build clouds!",
+    "prompt": "What are clouds made of?",
     "topic": "cloud-materials",
     "items": [
       {
         "id": "a",
-        "label": "Water vapor",
+        "label": "Water drops",
         "emoji": "💧",
-        "group": "cloud-elements"
+        "group": "elements"
       },
       {
         "id": "b",
         "label": "Ice crystals",
         "emoji": "❄️",
-        "group": "cloud-elements"
+        "group": "elements"
       },
       {
         "id": "c",
         "label": "Cotton yarn",
         "emoji": "🧶",
-        "group": "cloud-elements"
+        "group": "elements"
       },
       {
         "id": "d",
-        "label": "Smoke puffs",
+        "label": "Puff smoke",
         "emoji": "💨",
-        "group": "cloud-elements"
+        "group": "elements"
       }
     ],
     "answer": [
@@ -2627,135 +2670,124 @@
       "b"
     ],
     "fact": {
-      "text": "Water rises into our sky as vapor. Chilled moisture condenses into floating clouds.",
-      "support": "A very small amount is in our atmosphere, where it exists as water vapor.",
+      "text": "A cloud is a mass of water drops. Small ice crystals are also suspended up high.",
+      "source": "https://www.nasa.gov/learning-resources/for-kids-and-students/what-are-clouds-grades-5-8/",
+      "support": "A cloud is a mass of water drops or ice crystals suspended in the atmosphere.",
       "evidence": [
-        "atmosphere",
-        "water",
-        "vapor"
-      ],
-      "source": "https://spaceplace.nasa.gov/water/en/"
+        "cloud is a mass of water drops or ice crystals suspended in the atmosphere"
+      ]
     },
     "hint": "Think about what happens when warm moisture rises and chills high above!",
-    "misconception": "Clouds may look like fluffy cotton, but they are made entirely of tiny water droplets and ice!"
+    "misconception": "Clouds may look like fluffy cotton, but they are made entirely of tiny water droplets and ice!",
+    "concept": "clouds-water-ice"
   },
   {
     "id": "sky-20",
     "level": 2,
     "type": "pick",
-    "prompt": "Why does our cratered Moon lack breezes and rushing wind?",
+    "prompt": "Why do footprints stay on the Moon for years?",
     "topic": "lunar-atmosphere",
     "items": [
       {
         "id": "a",
-        "label": "Thin exosphere",
-        "emoji": "🌑",
-        "group": "planetary-features"
+        "label": "No wind",
+        "emoji": "💨",
+        "group": "moon-features"
       },
       {
         "id": "b",
         "label": "Deep oceans",
         "emoji": "🌊",
-        "group": "planetary-features"
+        "group": "moon-features"
       },
       {
         "id": "c",
         "label": "Thick clouds",
         "emoji": "☁️",
-        "group": "planetary-features"
+        "group": "moon-features"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "The Moon has no air mantle. Its tenuous exosphere has no winds.",
-      "support": "The Moon has a very thin and tenuous atmosphere called an exosphere.",
+      "text": "There is no wind or air on the Moon. Wind cannot blow on the Moon without air.",
+      "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
+      "support": "There is no wind or air on the Moon to help “erase” craters.",
       "evidence": [
-        "Moon",
-        "thin",
-        "atmosphere",
-        "exosphere"
-      ],
-      "source": "https://solarsystem.nasa.gov/moons/earths-moon/in-depth/"
+        "no wind or air on the Moon"
+      ]
     },
     "hint": "Think about what gas layer blankets our Earth to create breezy weather!",
-    "misconception": "Without an atmosphere to carry air, the Moon has complete silence and no wind!"
+    "misconception": "Without an atmosphere to carry air, the Moon has complete silence and no wind!",
+    "concept": "moon-no-air-wind"
   },
   {
     "id": "sky-21",
     "level": 2,
     "type": "pick",
-    "prompt": "Which warm glowing beacon sits closest to our home world?",
+    "prompt": "Why do you see lightning before you hear thunder?",
     "topic": "closest-star",
     "items": [
       {
         "id": "a",
-        "label": "Daytime Sun",
-        "emoji": "☀️",
-        "group": "stars"
+        "label": "Fast light",
+        "emoji": "⚡",
+        "group": "storm-speeds"
       },
       {
         "id": "b",
-        "label": "Polaris Guide",
-        "emoji": "⭐",
-        "group": "stars"
+        "label": "Loud sound",
+        "emoji": "🔊",
+        "group": "storm-speeds"
       },
       {
         "id": "c",
-        "label": "Red Giant",
-        "emoji": "🌟",
-        "group": "stars"
+        "label": "Cold wind",
+        "emoji": "💨",
+        "group": "storm-speeds"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "Daytime light shines from our closest star, the Sun. It warms our entire planet.",
-      "support": "The light of daytime comes from our closest star: the Sun.",
+      "text": "Light travels much faster than sound. Light waves travel faster than sound waves.",
+      "source": "https://www.nesdis.noaa.gov/about/k-12-education/severe-weather/what-causes-lightning-and-thunder",
+      "support": "That is because light travels much faster than sound waves.",
       "evidence": [
-        "light",
-        "daytime",
-        "closest",
-        "star",
-        "Sun"
-      ],
-      "source": "https://spaceplace.nasa.gov/all-about-the-sun/en/",
-      "source2": "https://tidesandcurrents.noaa.gov/restles3.html",
-      "evidence2": [
-        "sun",
-        "earth"
+        "light travels much faster than sound waves"
       ]
     },
     "hint": "Think about which star warms our meadow every single morning!",
-    "misconception": "The Sun looks bigger than night stars because it is millions of times closer to Earth!"
+    "misconception": "The Sun looks bigger than night stars because it is millions of times closer to Earth!",
+    "concept": "lightning-before-thunder"
   },
   {
     "id": "sky-22",
     "level": 2,
     "type": "tapall",
-    "prompt": "Tap the fast debris that burn to create shooting stars in the dark sky!",
+    "prompt": "Tap the bits that make shooting stars in the sky!",
     "topic": "shooting-stars",
     "items": [
       {
         "id": "a",
-        "label": "Comet dust",
+        "label": "Comet",
         "emoji": "☄️",
         "group": "space-items"
       },
       {
         "id": "b",
-        "label": "Rocky pebble",
+        "label": "Rock",
         "emoji": "🪨",
         "group": "space-items"
       },
       {
         "id": "c",
-        "label": "Orbit station",
+        "label": "Satellite",
         "emoji": "🛰️",
         "group": "space-items"
       },
       {
         "id": "d",
-        "label": "Distant sun",
-        "emoji": "⭐",
+        "label": "Airplane",
+        "emoji": "✈️",
         "group": "space-items"
       }
     ],
@@ -2764,79 +2796,72 @@
       "b"
     ],
     "fact": {
-      "text": "Comet dust and rocky pebbles burn bright entering air. Hot gas creates a streak.",
-      "support": "What we see is a \"shooting star.\" That bright streak is the glowing hot air as the hot rock zips through the atmosphere.",
+      "text": "A meteor is a space rock. It enters the air and burns bright.",
+      "source": "https://spaceplace.nasa.gov/meteor-shower/en/",
+      "support": "A meteor is a space rock that enters Earth's atmosphere and burns up in a bright streak of light.",
       "evidence": [
-        "shooting",
-        "star",
-        "bright",
-        "streak",
-        "glowing",
-        "rock",
-        "atmosphere"
-      ],
-      "source": "https://spaceplace.nasa.gov/meteor-shower/en/"
+        "meteor is a space rock",
+        "enters Earth's atmosphere"
+      ]
     },
     "hint": "Think of small rocky pieces from space burning up in our atmosphere!",
-    "misconception": "Shooting stars are not actual stars falling; they are tiny space rocks burning up!"
+    "misconception": "Shooting stars are not actual stars falling; they are tiny space rocks burning up!",
+    "concept": "meteors-shooting-stars"
   },
   {
     "id": "sky-23",
     "level": 2,
     "type": "pick",
-    "prompt": "Which stormy world is the largest planet in our solar system?",
+    "prompt": "Which planet is the biggest of all?",
     "topic": "jupiter-size",
     "items": [
       {
         "id": "a",
-        "label": "Huge Jupiter",
-        "emoji": "🪐",
+        "label": "Jupiter",
+        "emoji": "jupiter",
         "group": "planets"
       },
       {
         "id": "b",
-        "label": "Red Mars",
+        "label": "Mars",
         "emoji": "🔴",
         "group": "planets"
       },
       {
         "id": "c",
-        "label": "Pale Venus",
+        "label": "Venus",
         "emoji": "🟡",
         "group": "planets"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "Jupiter is the biggest planet in our solar system. This stormy gas world spins swiftly.",
-      "support": "Jupiter is the biggest planet in our solar system.",
-      "evidence": [
-        "Jupiter",
-        "biggest",
-        "planet",
-        "solar",
-        "system"
-      ],
+      "text": "Jupiter is the biggest planet of all. It has a big storm like the Great Red Spot.",
       "source": "https://spaceplace.nasa.gov/all-about-jupiter/en/",
-      "source2": "https://tidesandcurrents.noaa.gov/restles3.html",
+      "support": "Credit: NASA/JPL-Caltech Jupiter is the biggest planet in our solar system.",
+      "evidence": [
+        "biggest planet in our solar system"
+      ],
+      "source2": "https://spaceplace.nasa.gov/all-about-jupiter/en/",
+      "support2": "It has big storms like the Great Red Spot, which has been going for hundreds of years.",
       "evidence2": [
-        "earth",
-        "system"
+        "Great Red Spot"
       ]
     },
     "hint": "Look for the massive planet with the Great Red Spot!",
-    "misconception": "All four gas giants are large, but Jupiter is more massive than all other planets combined!"
+    "misconception": "All four gas giants are large, but Jupiter is more massive than all other planets combined!",
+    "concept": "jupiter-largest-planet"
   },
   {
     "id": "sky-24",
     "level": 2,
     "type": "order",
-    "prompt": "Put these natural stages in order as water cycles through the sky:",
+    "prompt": "Order the steps as liquid moves through the sky:",
     "topic": "water-cycle-order",
     "items": [
       {
         "id": "a",
-        "label": "Rising vapor",
+        "label": "Warm water",
         "emoji": "💧"
       },
       {
@@ -2856,194 +2881,127 @@
       "c"
     ],
     "fact": {
-      "text": "Moisture warms and rises into vapor. It chills into clouds and drops rain.",
+      "text": "Water evaporates from earth and rises up. It condenses into clouds and falls as rain.",
+      "source": "https://gpm.nasa.gov/education/water-cycle",
       "support": "Water evaporates from earth, rises into the atmosphere, cools and condenses into clouds, and falls as precipitation.",
       "evidence": [
-        "water",
-        "evaporates",
-        "atmosphere",
+        "water evaporates",
         "condenses",
-        "clouds",
-        "falls",
         "precipitation"
-      ],
-      "source": "https://gpm.nasa.gov/education/water-cycle"
+      ]
     },
     "hint": "Think about where water starts warming up before it climbs high into the sky!",
-    "misconception": "Rain cannot fall until liquid water first evaporates and condenses high in cool air!"
+    "misconception": "Rain cannot fall until liquid water first evaporates and condenses high in cool air!",
+    "concept": "water-cycle-stages"
   },
   {
     "id": "body-19",
     "level": 3,
-    "type": "tapall",
-    "prompt": "Tap the tiny round discs that deliver fresh air to body tissues!",
+    "type": "pick",
+    "prompt": "What moves oxygen through your body?",
     "topic": "red-blood-cells",
     "items": [
       {
         "id": "a",
         "label": "Red cells",
         "emoji": "🔴",
-        "group": "body-cells"
+        "group": "cell-types"
       },
       {
         "id": "b",
-        "label": "Oxygen carriers",
-        "emoji": "⭕",
-        "group": "body-cells"
+        "label": "White cells",
+        "emoji": "⚪",
+        "group": "cell-types"
       },
       {
         "id": "c",
-        "label": "Bone frame",
-        "emoji": "🦴",
-        "group": "body-cells"
-      },
-      {
-        "id": "d",
-        "label": "Outer skin",
-        "emoji": "✋",
-        "group": "body-cells"
+        "label": "Skin cells",
+        "emoji": "🩹",
+        "group": "cell-types"
       }
     ],
-    "answer": [
-      "a",
-      "b"
-    ],
+    "answer": "a",
     "fact": {
-      "text": "Red cells transport fresh oxygen to tissues. They carry waste back to the lungs.",
-      "support": "Their job is to transport oxygen to the body's tissues in exchange for carbon dioxide, which they carry to the lungs to be expelled.",
+      "text": "Red blood cells carry oxygen from your lungs. They carry fresh oxygen to the rest of the body.",
+      "source": "https://www.nhlbi.nih.gov/health/blood-tests",
+      "support": "Red blood cells carry oxygen from your lungs to the rest of your body.",
       "evidence": [
-        "job",
-        "transport",
-        "oxygen",
-        "body",
-        "tissues"
-      ],
-      "source": "https://medlineplus.gov/ency/anatomyvideos/000104.htm"
+        "Red blood cells carry oxygen from your lungs"
+      ]
     },
     "hint": "Think of the circular red cells that flow through your veins!",
-    "misconception": "White cells fight off infection, while red cells are dedicated oxygen carriers!"
+    "misconception": "White cells fight off infection, while red cells are dedicated oxygen carriers!",
+    "concept": "red-blood-cells-oxygen"
   },
   {
     "id": "body-20",
     "level": 3,
     "type": "pick",
-    "prompt": "What clear fluid makes up over half of your body weight?",
+    "prompt": "Which liquid makes up most of your body?",
     "topic": "body-water-weight",
     "items": [
       {
         "id": "a",
-        "label": "Pure water",
+        "label": "Water",
         "emoji": "💧",
-        "group": "body-fluids"
+        "group": "liquids"
       },
       {
         "id": "b",
-        "label": "Cooking oil",
-        "emoji": "🫗",
-        "group": "body-fluids"
+        "label": "Milk",
+        "emoji": "🥛",
+        "group": "liquids"
       },
       {
         "id": "c",
-        "label": "Sweet milk",
-        "emoji": "🥛",
-        "group": "body-fluids"
+        "label": "Juice",
+        "emoji": "🧃",
+        "group": "liquids"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "Water makes up more than two-thirds of body weight. It fills and hydrates living cells.",
+      "text": "Water makes up the weight of the human body. Water makes up more than two-thirds of this weight.",
+      "source": "https://medlineplus.gov/ency/article/002471.htm",
       "support": "Water makes up more than two-thirds of the weight of the human body.",
       "evidence": [
-        "Water",
-        "makes",
-        "more",
-        "weight",
-        "human",
-        "body"
-      ],
-      "source": "https://medlineplus.gov/ency/article/002471.htm",
-      "source2": "https://spaceplace.nasa.gov/water/en/",
-      "evidence2": [
-        "body",
-        "made",
-        "mostly",
-        "water"
+        "weight of the human body"
       ]
     },
     "hint": "Think of the vital fluid you drink every day to stay hydrated!",
-    "misconception": "Even solid bones and muscles contain large amounts of water to stay healthy!"
+    "misconception": "Even solid bones and muscles contain large amounts of water to stay healthy!",
+    "concept": "body-mostly-water"
   },
   {
     "id": "body-21",
     "level": 3,
-    "type": "pick",
-    "prompt": "Which outer layer protects your body from harm?",
+    "type": "tapall",
+    "prompt": "Tap the body parts that protect your eyes:",
     "topic": "skin-protection",
     "items": [
       {
         "id": "a",
-        "label": "Tough skin",
-        "emoji": "✋",
-        "group": "outer-body"
+        "label": "Eyelids",
+        "emoji": "👁️",
+        "group": "protective-parts"
       },
       {
         "id": "b",
-        "label": "Soft hair",
-        "emoji": "💇",
-        "group": "outer-body"
+        "label": "Tears",
+        "emoji": "💧",
+        "group": "protective-parts"
       },
       {
         "id": "c",
-        "label": "Hard nails",
-        "emoji": "💅",
-        "group": "outer-body"
-      }
-    ],
-    "answer": "a",
-    "fact": {
-      "text": "Your outer skin protects your entire body. It guards you against germs and dirt.",
-      "support": "There are many ways that your skin protects your body and helps keep you healthy.",
-      "evidence": [
-        "skin",
-        "protects",
-        "body",
-        "healthy"
-      ],
-      "source": "https://medlineplus.gov/skinconditions.html"
-    },
-    "hint": "Look for the flexible waterproof blanket covering your head and limbs!",
-    "misconception": "Skin is more than a covering; it is an active protective shield against germs and drying!"
-  },
-  {
-    "id": "body-22",
-    "level": 3,
-    "type": "tapall",
-    "prompt": "Tap the senses that work when you enjoy a meal!",
-    "topic": "taste-smell-senses",
-    "items": [
-      {
-        "id": "a",
-        "label": "Tasting tongue",
-        "emoji": "👅",
-        "group": "senses"
-      },
-      {
-        "id": "b",
-        "label": "Sniffing nose",
-        "emoji": "👃",
-        "group": "senses"
-      },
-      {
-        "id": "c",
-        "label": "Hearing ear",
+        "label": "Outer ear",
         "emoji": "👂",
-        "group": "senses"
+        "group": "protective-parts"
       },
       {
         "id": "d",
-        "label": "Seeing eyes",
-        "emoji": "👁️",
-        "group": "senses"
+        "label": "Fingernails",
+        "emoji": "💅",
+        "group": "protective-parts"
       }
     ],
     "answer": [
@@ -3051,83 +3009,123 @@
       "b"
     ],
     "fact": {
-      "text": "Your tongue tastes food and drinks. Your nose smells rich flavors.",
-      "support": "Our senses of taste and smell give us great pleasure.",
+      "text": "Your eyelids protect your eyes and keep them healthy. Tears protect the eyes by washing away dirt.",
+      "source": "https://medlineplus.gov/eyeliddisorders.html",
+      "support": "Your eyelids protect your eyes and help keep them healthy.",
       "evidence": [
-        "senses",
-        "taste",
-        "smell"
+        "eyelids protect your eyes"
       ],
-      "source": "https://medlineplus.gov/tasteandsmelldisorders.html"
+      "source2": "https://medlineplus.gov/ency/article/001010.htm",
+      "support2": "Tears most often protect the eyes by washing away dirt and dust.",
+      "evidence2": [
+        "Tears most often protect the eyes"
+      ]
+    },
+    "hint": "Look for the flexible waterproof blanket covering your head and limbs!",
+    "misconception": "Skin is more than a covering; it is an active protective shield against germs and drying!",
+    "concept": "eyes-blink-protection"
+  },
+  {
+    "id": "body-22",
+    "level": 3,
+    "type": "pick",
+    "prompt": "Which sense works with your tongue to make flavor?",
+    "topic": "taste-smell-senses",
+    "items": [
+      {
+        "id": "a",
+        "label": "Nose",
+        "emoji": "👃",
+        "group": "senses"
+      },
+      {
+        "id": "b",
+        "label": "Ear",
+        "emoji": "👂",
+        "group": "senses"
+      },
+      {
+        "id": "c",
+        "label": "Eye",
+        "emoji": "👁️",
+        "group": "senses"
+      }
+    ],
+    "answer": "a",
+    "fact": {
+      "text": "Without smell from your nose, foods tend to have little flavor. Without smell, foods tend to taste bland.",
+      "source": "https://www.nidcd.nih.gov/health/smell-disorders",
+      "support": "Without smell, foods tend to taste bland and have little or no flavor.",
+      "evidence": [
+        "Without smell, foods tend to taste bland",
+        "flavor"
+      ]
     },
     "hint": "Think about why dinner seems less flavorful when your nose is stuffed up!",
-    "misconception": "Your tongue only senses sweet, sour, salty, bitter, and savory; smell provides rich food aromas!"
+    "misconception": "Your tongue only senses sweet, sour, salty, bitter, and savory; smell provides rich food aromas!",
+    "concept": "smell-taste-flavor"
   },
   {
     "id": "body-23",
     "level": 3,
     "type": "pick",
-    "prompt": "How does restful nightly sleep help your growing brain and body?",
+    "prompt": "Which vessels move fresh blood through your body?",
     "topic": "healthy-sleep",
     "items": [
       {
         "id": "a",
-        "label": "Rest energy",
-        "emoji": "💤",
-        "group": "sleep-effects"
+        "label": "Arteries",
+        "emoji": "🔴",
+        "group": "vessels"
       },
       {
         "id": "b",
-        "label": "Freeze limbs",
-        "emoji": "🧊",
-        "group": "sleep-effects"
+        "label": "Veins",
+        "emoji": "🔵",
+        "group": "vessels"
       },
       {
         "id": "c",
-        "label": "Stop breathing",
-        "emoji": "🫁",
-        "group": "sleep-effects"
+        "label": "Nerves",
+        "emoji": "⚡",
+        "group": "vessels"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "Sleep helps your body regain energy. It keeps your brain healthy.",
-      "support": "Sleep is a natural process that helps your body restore energy, supports learning and memory, and keeps you healthy.",
+      "text": "Arteries carry red blood away from the heart. Veins carry blood into the heart.",
+      "source": "https://medlineplus.gov/ency/imagepages/1097.htm",
+      "support": "Arteries carry blood away from the heart while veins carry blood into the heart.",
       "evidence": [
-        "Sleep",
-        "helps",
-        "body",
-        "restore",
-        "energy",
-        "learning",
-        "memory"
-      ],
-      "source": "https://medlineplus.gov/healthysleep.html"
+        "Arteries carry blood away from the heart",
+        "veins carry blood into the heart"
+      ]
     },
     "hint": "Think about how you feel refreshed after a full night in bed!",
-    "misconception": "Your brain stays active during sleep, organizing memories and repairing body tissues!"
+    "misconception": "Your brain stays active during sleep, organizing memories and repairing body tissues!",
+    "concept": "blood-vessels-types"
   },
   {
     "id": "body-24",
     "level": 3,
     "type": "order",
-    "prompt": "Put these parts in order as sound travels inward to be heard:",
+    "prompt": "Put these parts in order from the outside in:",
     "topic": "hearing-sound-order",
     "items": [
       {
         "id": "a",
+        "label": "Sound waves",
+        "emoji": "🌊"
+      },
+      {
+        "id": "b",
         "label": "Outer ear",
         "emoji": "👂"
       },
       {
-        "id": "b",
-        "label": "Thin drum",
-        "emoji": "🥁"
-      },
-      {
         "id": "c",
-        "label": "Inner ear",
-        "emoji": "inner-ear"
+        "label": "Eardrum",
+        "emoji": "🥁"
       }
     ],
     "answer": [
@@ -3136,17 +3134,21 @@
       "c"
     ],
     "fact": {
-      "text": "Sound enters the outer ear canal. It vibrates the eardrum and reaches the inner ear.",
-      "support": "Sound waves entering the ear travel through the external auditory canal before striking the eardrum.",
+      "text": "Sound waves enter the outer ear. The incoming sound waves make the eardrum vibrate.",
+      "source": "https://www.nidcd.nih.gov/health/how-do-we-hear",
+      "support": "Sound waves enter the outer ear and travel through a narrow passageway called the ear canal, which leads to the eardrum.",
       "evidence": [
-        "waves",
-        "ear",
-        "travel",
-        "eardrum"
+        "Sound waves enter the outer ear",
+        "leads to the eardrum"
       ],
-      "source": "https://medlineplus.gov/ency/anatomyvideos/000063.htm"
+      "source2": "https://www.nidcd.nih.gov/health/how-do-we-hear",
+      "support2": "The eardrum vibrates from the incoming sound waves and sends these vibrations to three tiny bones in the middle ear.",
+      "evidence2": [
+        "eardrum vibrates from the incoming sound waves"
+      ]
     },
     "hint": "Think about sound starting outside your head before reaching your deep hearing organ!",
-    "misconception": "Hearing begins at the outer ear flap, but tiny hair cells inside the deep cochlea translate vibrations!"
+    "misconception": "Hearing begins at the outer ear flap, but tiny hair cells inside the deep cochlea translate vibrations!",
+    "concept": "hearing-sound-order"
   }
 ]

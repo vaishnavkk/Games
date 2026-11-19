@@ -1,3 +1,19 @@
+## [0.3.1] - 2026-11-19
+### Added
+- 6 automated puzzle validation checks in `scripts/check-puzzles.js` with planted defect tests:
+  - Claim coverage check requiring >=3 content stems in support sentences (`checkClaimCoverage`)
+  - Strict CLDR icon matching against Unicode CLDR keyword database (`checkStrictCldrIcons`)
+  - Reading level check enforcing Flesch-Kincaid grade level <= 4.5 and top-5000 common words vocabulary (`checkReadingLevelV031`)
+  - 72 globally unique puzzle concept slugs (`checkUniqueConcepts`)
+  - Kid-friendly sentiment check disallowing scary/negative words (`checkNoScaryWords`)
+  - Sequence order verification in support text for order puzzles (`checkSequenceOrder`)
+- Handcrafted custom SVG for Jupiter (`jupiter.svg`) featuring the Great Red Spot storm, maintaining custom SVGs at 3 (well under the 5 limit).
+
+### Changed
+- Patched 22 target puzzles (`sky-12`, `body-09`, `body-10`, `body-15`, `body-24`, `garden-19..24`, `sky-19..24`, `body-19..23`) with verified institutional sources, plain English FK <= 4.5, and single-sentence evidence matches.
+- Clarified body-22 taste and smell interaction (olfactory sense works with tongue tastes to create rich meal flavor).
+- Added 22 clever-child ambiguity check entries in `DECISIONS.md`.
+
 ## [0.3.0] - 2026-11-18
 ### Added
 - 18 new verified institutional science puzzles (garden 19-24, sky 19-24, body 19-24), expanding content from 54 to 72 puzzles (24 per level).

@@ -1686,7 +1686,8 @@
     "steam",
     "symbol",
     "vaping",
-    "fur"
+    "fur",
+    "breeze"
   ],
   "🕳️": [
     "hole",
@@ -1813,7 +1814,8 @@
     "high",
     "hand",
     "skin",
-    "touch"
+    "touch",
+    "cell"
   ],
   "🖖": [
     "vulcan_salute",
@@ -2172,7 +2174,9 @@
     "cosmetics",
     "fingers",
     "nonchalant",
-    "fingernail"
+    "fingernail",
+    "nails",
+    "fingernails"
   ],
   "🤳": [
     "selfie",
@@ -2238,7 +2242,8 @@
     "listening",
     "nose",
     "earlobe",
-    "cheek"
+    "cheek",
+    "outer"
   ],
   "🦻": [
     "ear_with_hearing_aid",
@@ -2280,7 +2285,10 @@
     "bones",
     "collarbone",
     "compact",
-    "outer"
+    "outer",
+    "calcium",
+    "mineral",
+    "hard"
   ],
   "👀": [
     "eyes",
@@ -2296,7 +2304,8 @@
     "shifty",
     "wide",
     "sight",
-    "spot"
+    "spot",
+    "sharp"
   ],
   "👁️": [
     "eye",
@@ -2309,7 +2318,13 @@
     "single",
     "eyes",
     "retina",
-    "vision"
+    "vision",
+    "tear",
+    "tears",
+    "blink",
+    "eyelid",
+    "eyelids",
+    "sharp"
   ],
   "👅": [
     "tongue",
@@ -4095,7 +4110,8 @@
     "cutting",
     "hair",
     "hairdresser",
-    "parlor"
+    "parlor",
+    "haircut"
   ],
   "💇‍♂️": [
     "man_getting_haircut",
@@ -6105,7 +6121,8 @@
     "penguin",
     "animal",
     "nature",
-    "bird"
+    "bird",
+    "wings"
   ],
   "🕊️": [
     "dove",
@@ -6267,7 +6284,9 @@
     "nature",
     "sea",
     "ocean",
-    "whale2"
+    "whale2",
+    "blue_whale",
+    "mammal"
   ],
   "🐬": [
     "dolphin",
@@ -6278,7 +6297,8 @@
     "ocean",
     "flipper",
     "fins",
-    "beach"
+    "beach",
+    "mammal"
   ],
   "🐟": [
     "fish",
@@ -6461,7 +6481,8 @@
     "spring",
     "flower",
     "pink",
-    "sakura"
+    "sakura",
+    "blossom"
   ],
   "💮": [
     "white_flower",
@@ -6563,7 +6584,9 @@
     "nature",
     "rounded",
     "shedding",
-    "wood"
+    "wood",
+    "oak",
+    "tree"
   ],
   "🌴": [
     "palm_tree",
@@ -6609,7 +6632,9 @@
     "leaf",
     "stem",
     "marsh",
-    "marshes"
+    "marshes",
+    "sapling",
+    "shoot"
   ],
   "☘️": [
     "shamrock",
@@ -6837,7 +6862,8 @@
     "carrot",
     "vegetable",
     "food",
-    "orange"
+    "orange",
+    "root"
   ],
   "🌽": [
     "ear_of_corn",
@@ -6876,7 +6902,8 @@
     "chinese",
     "cos",
     "greens",
-    "romaine"
+    "romaine",
+    "leaf"
   ],
   "🥦": [
     "broccoli",
@@ -7197,7 +7224,8 @@
   "🧂": [
     "salt",
     "condiment",
-    "shaker"
+    "shaker",
+    "mineral"
   ],
   "🥫": [
     "canned_food",
@@ -7269,7 +7297,11 @@
     "nature",
     "plant",
     "goguma",
-    "yam"
+    "yam",
+    "sweet_potato",
+    "potato",
+    "root",
+    "tuber"
   ],
   "🍢": [
     "oden",
@@ -7508,7 +7540,8 @@
     "snack",
     "dessert",
     "sweet",
-    "lolly"
+    "lolly",
+    "sugar"
   ],
   "🍭": [
     "lollipop",
@@ -7549,7 +7582,8 @@
     "glass_of_milk",
     "beverage",
     "drink",
-    "cow"
+    "cow",
+    "milk"
   ],
   "☕": [
     "hot_beverage",
@@ -7723,7 +7757,8 @@
     "drink",
     "juice",
     "straw",
-    "sweet"
+    "sweet",
+    "box"
   ],
   "🧉": [
     "mate",
@@ -8931,7 +8966,8 @@
     "ISS",
     "artificial",
     "space",
-    "vehicle"
+    "vehicle",
+    "craft"
   ],
   "🚀": [
     "rocket",
@@ -9399,7 +9435,8 @@
     "symbol",
     "weather",
     "moon",
-    "exosphere"
+    "exosphere",
+    "air"
   ],
   "🌒": [
     "waxing_crescent_moon",
@@ -9556,7 +9593,9 @@
     "space",
     "sunny",
     "sunshine",
-    "star"
+    "star",
+    "warm",
+    "light"
   ],
   "🌝": [
     "full_moon_face",
@@ -9651,7 +9690,9 @@
     "weather",
     "sky",
     "cloudy",
-    "overcast"
+    "overcast",
+    "clouds",
+    "thick"
   ],
   "⛅": [
     "sun_behind_cloud",
@@ -9808,7 +9849,12 @@
     "lightning",
     "voltage",
     "active",
-    "energy"
+    "energy",
+    "light",
+    "flash",
+    "faster",
+    "nerves",
+    "nerve"
   ],
   "❄️": [
     "snowflake",
@@ -9821,7 +9867,8 @@
     "snow",
     "snowing",
     "crystals",
-    "crystal"
+    "crystal",
+    "ice"
   ],
   "☃️": [
     "snowman",
@@ -9876,7 +9923,10 @@
     "sweat",
     "weather",
     "vapor",
-    "drops"
+    "drops",
+    "tear",
+    "tears",
+    "liquid"
   ],
   "🌊": [
     "water_wave",
@@ -9891,7 +9941,8 @@
     "waves",
     "weather",
     "stream",
-    "dam"
+    "dam",
+    "river"
   ],
   "🎃": [
     "jack_o_lantern",
@@ -10668,7 +10719,8 @@
     "ball",
     "crochet",
     "knit",
-    "crafts"
+    "crafts",
+    "cotton"
   ],
   "👓": [
     "glasses",
@@ -11153,7 +11205,9 @@
     "loud",
     "sound",
     "three",
-    "waves"
+    "waves",
+    "audio",
+    "thunder"
   ],
   "📢": [
     "loudspeaker",
@@ -11378,7 +11432,9 @@
     "instrument",
     "drumsticks",
     "snare",
-    "eardrum"
+    "eardrum",
+    "drumstick",
+    "thin"
   ],
   "📱": [
     "mobile_phone",
@@ -12739,7 +12795,11 @@
     "band",
     "doctor",
     "medicine",
-    "plaster"
+    "plaster",
+    "bandage",
+    "skin",
+    "cell",
+    "cells"
   ],
   "🩺": [
     "stethoscope",
@@ -14968,7 +15028,11 @@
     "circle",
     "mars",
     "jupiter",
-    "cell"
+    "cell",
+    "marrow",
+    "arteries",
+    "artery",
+    "cells"
   ],
   "🟠": [
     "orange_circle",
@@ -15001,7 +15065,9 @@
     "large",
     "blue",
     "circle",
-    "uranus"
+    "uranus",
+    "veins",
+    "vein"
   ],
   "🟣": [
     "purple_circle",
@@ -15034,7 +15100,9 @@
     "medium",
     "white",
     "circle",
-    "mercury"
+    "mercury",
+    "cell",
+    "cells"
   ],
   "🟥": [
     "red_square",

@@ -24,6 +24,7 @@
 22. Task Shuffle & Wording: Render-time crypto-seeded Fisher-Yates shuffle with order never-identity; naive-player harness test & selftest 7/7; body-10 stomach/intestine MedlinePlus alignment.
 
 23. Task v0.3.0: 18 verified puzzles added reaching 72 total (24/level); 3 new checks (unique emojis, label parity, reviewed icons <= 12 with 0 body parts); fixed sky-12, body-09 (inner-ear SVG), body-10 (muscles), body-12 (bare nouns), body-15 (marrow); 100% institutional evidence matches.
+24. Task v0.3.1: 6 new checks (claim coverage >=3 stems, strict CLDR icons, FK<=4.5 reading level with top-5000 common words, 72 unique concept slugs, no scary words, sequence order in support); 22 puzzles patched with 100% institutional evidence; custom jupiter SVG added (total 3 SVGs); body-22 clarifies that olfactory sense of smell works with tongue tastes to create rich meal flavor.
 
 ## Clever-Child Ambiguity Check- garden-01: Child argues ants/bees are "bugs", but all insects strictly have 6 legs whereas spiders have 8 legs, so only spider is not an insect.
 - garden-02: Child argues mushrooms grow in soil like plants, but fungi cannot photosynthesize or produce food from sunlight.
