@@ -39,3 +39,30 @@ Tricky Meadow incorporates components, typography, illustrations, and celebratio
 - **Copyright:** Copyright (c) 2020, Kiril Vatev
 - **Permission Notice:**
   > Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+---
+
+## 4. English Word Frequency Data
+
+### Top 5,000 Common English Words (`google-10000-english`)
+- **Author / Curator:** Josh Kaufman (`first20hours/google-10000-english`)
+- **Derived From:** Google Web Trillion Word Corpus (Thorsten Brants and Alex Franz) / Peter Norvig frequency subsets
+- **License:** MIT License / Public Domain
+- **Source Repository:** https://github.com/first20hours/google-10000-english
+- **Permission Notice:**
+  > Educational, personal, and research use permitted under the LDC license, Norvig's MIT license for his contributions, and US fair use doctrine.
+
+
+---
+
+## 5. Unicode Emoji CLDR Annotations & Keywords
+
+### emojilib (`emoji-en-US.json`)
+- **Author / Curator:** Mu-An Chiou (`muan/emojilib`)
+- **License:** MIT License
+- **Copyright:** Copyright (c) 2014 Mu-An Chiou
+- **Source Repository:** https://github.com/muan/emojilib
+- **Permission Notice:**
+  > Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
+
+

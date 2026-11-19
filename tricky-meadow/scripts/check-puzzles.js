@@ -14,11 +14,25 @@ const __dirname = path.dirname(__filename);
 const PUZZLES_PATH = path.resolve(__dirname, '../src/data/puzzles.json');
 const REVIEWED_ICONS_PATH = path.resolve(__dirname, '../src/data/reviewed-icons.json');
 const ALLOWED_TERMS_PATH = path.resolve(__dirname, '../src/data/allowed-terms.json');
+const COMMON_WORDS_PATH = path.resolve(__dirname, '../src/data/common-words-5000.json');
+const CLDR_PATH = path.resolve(__dirname, '../src/data/cldr-keywords.json');
 const SVG_DIR = path.resolve(__dirname, '../node_modules/@twemoji/svg');
 const CUSTOM_SVG_DIR = path.resolve(__dirname, '../src/assets/svg');
 
 const BANNED_WORDS = ['kill', 'die', 'dead', 'blood', 'gun', 'war', 'hate', 'stupid'];
 const BANNED_REGEX = new RegExp(`\\b(${BANNED_WORDS.join('|')})\\b`, 'i');
+
+// Phase A Rule 5: Scary / negative words
+export const SCARY_REGEX = /\b(stop\s+breathing|freeze|freezes|freezing|die|dies|dying|dead|kill|kills|killing|hurt|hurts|hurting|pain|painful|danger|dangerous|poison|poisonous|sick|sickness|disease|diseases)\b/i;
+
+export function checkScaryWords(puzzle) {
+  const text = `${puzzle.prompt || ''} ${(puzzle.items || []).map(i => i.label).join(' ')} ${puzzle.hint || ''} ${puzzle.fact?.text || ''}`;
+  const match = text.match(SCARY_REGEX);
+  if (match) {
+    return { pass: false, word: match[0], reason: `Contains scary/negative word '${match[0]}'` };
+  }
+  return { pass: true, reason: 'No scary words' };
+}
 
 function countWords(str) {
   if (!str || typeof str !== 'string') return 0;
@@ -39,11 +53,18 @@ export function stem(word) {
     butterfly: 'butterfly',
     sprouts: 'sprout',
     leaves: 'leaf',
-    fungi: 'fungus'
+    fungi: 'fungus',
+    flight: 'fly',
+    truly: 'true',
+    rotates: 'rotate',
+    rotation: 'rotate'
   };
   if (irregulars[word]) return irregulars[word];
   if (word.endsWith('ies') && word.length > 4) return word.slice(0, -3) + 'y';
   if (/(ches|shes|xes|zes|sses)$/.test(word)) return word.slice(0, -2);
+  if (word.endsWith('ing') && word.length > 5) return word.slice(0, -3);
+  if (word.endsWith('ed') && word.length > 4) return word.slice(0, -2);
+  if (word.endsWith('ly') && word.length > 4) return word.slice(0, -2);
   if (word.endsWith('s') && !word.endsWith('ss') && word.length > 2) return word.slice(0, -1);
   return word;
 }
@@ -53,7 +74,7 @@ const MODIFIERS = new Set([
   'rocky', 'dusty', 'night', 'silver', 'golden', 'distant', 'outer', 'pumping',
   'clever', 'strong', 'seeing', 'sniffing', 'tasting', 'kicking', 'playful',
   'grown', 'newborn', 'both', 'the', 'of', 'in', 'and', 'adult', 'chew', 'swallow',
-  'digest', 'white', 'yellow', 'blue'
+  'digest', 'white', 'yellow', 'blue', 'hard', 'soft', 'clear', 'sweet'
 ]);
 
 export function getItemKeywords(item) {
@@ -93,7 +114,7 @@ export function checkFactSupportsAnswer(puzzle) {
 
 const NUMBER_WORDS = new Set([
   'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
-  'ten', 'twenty', 'thirty', 'hundred', 'thousand', 'million', 'trillion'
+  'ten', 'twenty', 'thirty', 'hundred', 'thousand', 'million', 'billion', 'trillion'
 ]);
 
 const STOP_WORDS = new Set([
@@ -119,6 +140,43 @@ function getContentWords(str) {
     .replace(/[^a-z0-9\s]/g, ' ')
     .split(/\s+/)
     .filter(w => w.length >= 3 && !STOP_WORDS.has(w) && !/^\d+$/.test(w));
+}
+
+// Phase A Rule 1: Claim coverage
+export function checkClaimCoverage(puzzle) {
+  const fact = puzzle.fact || {};
+  const text = fact.text || '';
+  const support = `${fact.support || ''} ${fact.support2 || ''}`.toLowerCase();
+  const supportStems = new Set(getContentWords(support).map(stem));
+
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+  const fails = [];
+
+  for (const s of sentences) {
+    const sWords = getContentWords(s);
+    const sStems = new Set(sWords.map(stem));
+    const shared = [...sStems].filter(st => supportStems.has(st));
+    if (shared.length < 3) {
+      fails.push(`Sentence "${s.trim()}" shares only ${shared.length} content stem(s) with support (${shared.join(', ')})`);
+    }
+
+    // Number check: every number in fact.text must appear in support
+    const digits = s.match(/\b\d+[\d,]*\b/g) || [];
+    for (const d of digits) {
+      const clean = d.replace(/,/g, '');
+      if (!support.includes(clean)) {
+        fails.push(`Number '${d}' in fact not found in support`);
+      }
+    }
+    const fractions = s.match(/\b(two-thirds|half|quarter|three-quarters)\b/gi) || [];
+    for (const f of fractions) {
+      if (!support.includes(f.toLowerCase())) {
+        fails.push(`Fraction term '${f}' in fact not found in support`);
+      }
+    }
+  }
+
+  return { pass: fails.length === 0, fails };
 }
 
 export function checkFactTeaches(puzzle) {
@@ -225,88 +283,17 @@ export function checkPromptLeak(puzzle) {
   return { pass: true, reason: 'No prompt leak' };
 }
 
-// Rule (c) Icon/label match
-const SYNONYMS = {
-  'chestnut': ['seed', 'nut', 'acorn'],
-  'bug': ['caterpillar', 'insect', 'beetle'],
-  'herb': ['stem', 'plant', 'leaf', 'marsh', 'marshes'],
-  'evergreen tree': ['pine', 'tree'],
-  'balance scale': ['same', 'both', 'equal', 'weight', 'scale'],
-  'nail polish': ['fingernail', 'nail', 'keratin'],
-  'raised hand': ['skin', 'hand', 'touch'],
-  'bowl with spoon': ['stomach', 'digest', 'soup', 'food', 'meal'],
-  'honeybee': ['bee', 'bumblebee'],
-  'sun': ['star', 'sun'],
-  'star': ['sun', 'star'],
-  'crescent moon': ['moon'],
-  'white circle': ['mercury', 'circle'],
-  'yellow circle': ['venus', 'marrow', 'circle'],
-  'red circle': ['mars', 'jupiter', 'marrow', 'circle'],
-  'blue circle': ['uranus', 'neptune', 'circle'],
-  'globe showing europe-africa': ['earth', 'planet'],
-  'person': ['adult'],
-  'child': ['toddler', 'child'],
-  'tooth': ['tooth', 'teeth', 'enamel'],
-  'seedling': ['seedling', 'sprout', 'root', 'taproot'],
-  'drum': ['eardrum', 'drum'],
-  'ear': ['earlobe', 'ear', 'canal'],
-  'magnifying glass tilted left': ['lens'],
-  'black circle': ['pupil'],
-  'eye': ['retina', 'eye', 'eyes', 'seeing', 'eyelid', 'sight'],
-  'flexed biceps': ['biceps', 'muscle', 'muscles'],
-  'bone': ['bone', 'bones', 'cartilage', 'skeleton', 'collarbone', 'compact'],
-  'leg': ['leg', 'knee', 'thigh'],
-  'tongue': ['tongue', 'throat', 'swallow', 'taste'],
-  'lungs': ['bronchi', 'lungs', 'rate', 'breath', 'breathing'],
-  'bubbles': ['alveoli', 'tadpole', 'bubbles'],
-  'wind face': ['windpipe', 'wind', 'fur'],
-  'brain': ['brain', 'gray'],
-  'thought balloon': ['white', 'thought'],
-  'anatomical heart': ['heart', 'heartbeat', 'rate', 'cardiac'],
-  'skull': ['skull'],
-  'straight ruler': ['height', 'ruler', 'measure'],
-  'thermometer': ['temperature', 'thermometer', 'temp'],
-  'sponge': ['sponge', 'spongy', 'mesh'],
-  'high voltage': ['active', 'electric', 'energy', 'voltage'],
-  'zzz': ['sleep', 'rest', 'off', 'shuts'],
-  'ice': ['ice', 'cold', 'freezes', 'uranus', 'crystals'],
-  'ringed planet': ['saturn', 'neptune', 'jupiter', 'planet'],
-  'cloud': ['cloud', 'storm', 'storms', 'wind'],
-  'droplet': ['droplet', 'rain', 'drops', 'water', 'vapor'],
-  'snowflake': ['snowflake', 'snow', 'desert', 'cold', 'crystals'],
-  'fire': ['fire', 'flame', 'oven', 'hot'],
-  'palm tree': ['palm', 'tree', 'tropics', 'tropical'],
-  'duck': ['duck', 'mallard'],
-  'elephant': ['elephant', 'trunk', 'squirt'],
-  'rock': ['rock', 'stone', 'belt', 'asteroid', 'clay', 'bath'],
-  'nose': ['nose', 'smell', 'sniff'],
-  'eyes': ['eyes', 'eye', 'sight', 'spot', 'danger'],
-  'cloud with rain': ['rain', 'cloud'],
-  'dodo': ['ostrich', 'dodo', 'bird'],
-  'carrot': ['roots', 'carrot', 'root'],
-  'whale': ['whale', 'mammal'],
-  'dolphin': ['dolphin', 'mammal'],
-  'comet': ['meteor', 'comet', 'streak', 'dust'],
-  'counterclockwise arrows button': ['spin', 'speed', 'rotation'],
-  'dashing away': ['dry', 'fur', 'fast', 'smoke', 'puffs', 'wind'],
-  'wood': ['branches', 'cut', 'chew', 'wood'],
-  'water wave': ['river', 'dam', 'stream', 'ocean', 'wave', 'oceans'],
-  'beaver': ['lodge', 'build', 'beaver'],
-  'yarn': ['cotton', 'fluff', 'yarn'],
-  'new moon': ['atmosphere', 'moon', 'exosphere'],
-  'glowing star': ['giant', 'red', 'star'],
-  'satellite': ['station', 'orbit', 'space', 'satellite'],
-  'pouring liquid': ['oil', 'cooking', 'warm', 'liquid'],
-  'person getting haircut': ['hair', 'soft', 'silky', 'haircut'],
-  'hollow red circle': ['oxygen', 'cells', 'circle', 'carrier'],
-  'shrimp': ['shrimp', 'food', 'pigment'],
-  'eagle': ['eagle', 'falcon', 'swift'],
-  'cherry blossom': ['petals', 'blossom', 'flower'],
-  'fish': ['fish', 'tuna', 'silver'],
-  'rock': ['rock', 'stone', 'belt', 'asteroid', 'clay', 'bath', 'pebble'],
-  'ice': ['ice', 'cold', 'freezes', 'freeze', 'uranus', 'crystals', 'limbs'],
-  'star': ['star', 'sun', 'polaris', 'guide', 'giant']
-};
+// Phase A Rule 2: Strict Icon Match (No fuzzy synonyms; CLDR names and cldr-keywords.json; head noun matching)
+const CUSTOM_SVGS = new Set(['chrysalis', 'inner-ear', 'jupiter']);
+
+let cldrKeywords = {};
+if (fs.existsSync(CLDR_PATH)) {
+  try {
+    cldrKeywords = JSON.parse(fs.readFileSync(CLDR_PATH, 'utf8'));
+  } catch (e) {
+    // fallback
+  }
+}
 
 export function checkIconMatch(item, reviewedIcons = {}) {
   const key = `${item.emoji}:${item.label}`;
@@ -314,8 +301,9 @@ export function checkIconMatch(item, reviewedIcons = {}) {
     return { pass: true, reason: `Reviewed icon justification: ${reviewedIcons[key] || reviewedIcons[item.emoji]}` };
   }
 
-  if (item.emoji === 'chrysalis' || item.emoji === 'inner-ear') {
-    if (item.label.toLowerCase().includes(item.emoji.replace('-', ' '))) {
+  if (CUSTOM_SVGS.has(item.emoji)) {
+    const normalized = item.emoji.replace('-', ' ');
+    if (item.label.toLowerCase().includes(normalized)) {
       return { pass: true, reason: 'Custom SVG matches label' };
     }
   }
@@ -330,20 +318,24 @@ export function checkIconMatch(item, reviewedIcons = {}) {
   const cldrWords = cldrName.replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
   const cldrStems = new Set(cldrWords.map(stem));
 
+  const kws = cldrKeywords[item.emoji] || cldrKeywords[clean] || [];
+  for (const kw of kws) {
+    cldrStems.add(stem(kw));
+    kw.split(/[^a-z0-9]+/g).filter(Boolean).forEach(w => cldrStems.add(stem(w)));
+  }
+
   const labelWords = item.label.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
-  const labelStems = new Set(labelWords.map(stem));
+  if (labelWords.length === 0) {
+    return { pass: false, reason: 'Empty label' };
+  }
+  const headNoun = labelWords[labelWords.length - 1];
+  const headStem = stem(headNoun);
 
-  for (const ls of labelStems) {
-    if (cldrStems.has(ls)) return { pass: true, reason: `CLDR '${cldrName}' matches stem '${ls}'` };
+  if (cldrStems.has(headStem)) {
+    return { pass: true, reason: `Head noun '${headNoun}' matches CLDR '${cldrName}' or keywords` };
   }
 
-  if (SYNONYMS[cldrName]) {
-    for (const syn of SYNONYMS[cldrName]) {
-      if (labelStems.has(stem(syn))) return { pass: true, reason: `Synonym '${syn}' matches '${cldrName}'` };
-    }
-  }
-
-  return { pass: false, reason: `Emoji '${item.emoji}' (${cldrName}) does not match label '${item.label}' and is not in reviewed-icons.json` };
+  return { pass: false, reason: `Emoji '${item.emoji}' (${cldrName}) does not match head noun '${headNoun}' and is not in reviewed-icons.json` };
 }
 
 // Rule (d) No near-duplicate (Jaccard > 0.5)
@@ -437,7 +429,7 @@ export function checkNumericOrder(puzzle) {
   return { isNumeric: true, pass: true, reason: 'Numeric values sort matches answer and appears in fact' };
 }
 
-// Sequence order verification
+// Sequence order verification (Phase A Rule 6)
 export function checkSequenceOrder(puzzle) {
   const supportText = (puzzle.fact?.support || puzzle.fact?.text || '').toLowerCase();
   const orderedItems = puzzle.answer.map(id => puzzle.items.find(it => it.id === id)).filter(Boolean);
@@ -466,7 +458,16 @@ export function checkSequenceOrder(puzzle) {
   return { pass: true, reason: 'Sequence stages appear in proper order in support sentence' };
 }
 
-// Rule (f) Reading level check (FK grade <= 6, syllables < 4 unless allowed with explanation)
+// Phase A Rule 3: Reading level check (FK grade <= 4.5, common-words-5000 + allowed-terms)
+let commonWords = new Set();
+if (fs.existsSync(COMMON_WORDS_PATH)) {
+  try {
+    commonWords = new Set(JSON.parse(fs.readFileSync(COMMON_WORDS_PATH, 'utf8')));
+  } catch (e) {
+    // fallback
+  }
+}
+
 export function countSyllables(word) {
   word = word.toLowerCase().replace(/[^a-z]/g, '');
   if (!word) return 0;
@@ -502,29 +503,42 @@ export function checkReadingLevel(puzzle, allowedTerms = {}) {
   const errors = [];
   const flaggedWords = [];
 
-  if (promptGrade > 6.0) {
-    errors.push(`Prompt Flesch-Kincaid grade ${promptGrade.toFixed(1)} exceeds maximum 6.0`);
+  if (promptGrade > 4.5) {
+    errors.push(`Prompt FK grade ${promptGrade.toFixed(1)} exceeds maximum 4.5`);
   }
-  if (factGrade > 6.0) {
-    errors.push(`Fact Flesch-Kincaid grade ${factGrade.toFixed(1)} exceeds maximum 6.0`);
+  if (factGrade > 4.5) {
+    errors.push(`Fact FK grade ${factGrade.toFixed(1)} exceeds maximum 4.5`);
   }
 
-  const allWords = `${puzzle.prompt || ''} ${puzzle.fact?.text || ''}`.toLowerCase().split(/[^a-z]+/).filter(Boolean);
+  const allWords = `${puzzle.prompt || ''} ${(puzzle.items || []).map(i => i.label).join(' ')} ${puzzle.fact?.text || ''}`
+    .toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean);
+
   const factLower = (puzzle.fact?.text || '').toLowerCase();
+  const unallowed = new Set();
+  const allowedUsed = new Set();
 
   for (const w of allWords) {
-    const syl = countSyllables(w);
-    if (syl >= 4) {
-      flaggedWords.push(w);
-      if (!allowedTerms[w]) {
-        errors.push(`Word '${w}' has ${syl} syllables and is not in allowed-terms.json`);
-      } else {
-        const reqExpl = allowedTerms[w];
+    const s = stem(w);
+    if (!commonWords.has(w) && !commonWords.has(s)) {
+      if (allowedTerms[w] || allowedTerms[s]) {
+        const key = allowedTerms[w] ? w : s;
+        allowedUsed.add(key);
+        const reqExpl = allowedTerms[key];
         if (reqExpl && !factLower.includes(reqExpl.toLowerCase())) {
-          errors.push(`Word '${w}' requires explanation '${reqExpl}' in fact text`);
+          errors.push(`Allowed term '${key}' requires explanation '${reqExpl}' in fact text`);
         }
+      } else {
+        unallowed.add(w);
+        flaggedWords.push(w);
       }
     }
+  }
+
+  if (unallowed.size > 0) {
+    errors.push(`Words not in common-words-5000: ${Array.from(unallowed).join(', ')}`);
+  }
+  if (allowedUsed.size > 2) {
+    errors.push(`More than 2 allowed terms used (${allowedUsed.size}): ${Array.from(allowedUsed).join(', ')}`);
   }
 
   return {
@@ -532,8 +546,26 @@ export function checkReadingLevel(puzzle, allowedTerms = {}) {
     errors,
     promptGrade,
     factGrade,
-    flaggedWords
+    flaggedWords,
+    unallowed: Array.from(unallowed),
+    allowedUsed: Array.from(allowedUsed)
   };
+}
+
+// Phase A Rule 4: Concept Uniqueness
+export function checkConceptUniqueness(allPuzzles) {
+  const seen = new Map();
+  const errors = [];
+  for (const p of allPuzzles) {
+    if (!p.concept || typeof p.concept !== 'string' || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(p.concept)) {
+      errors.push(`Puzzle '${p.id}' missing or invalid concept slug: '${p.concept}'`);
+    } else if (seen.has(p.concept)) {
+      errors.push(`Duplicate concept '${p.concept}' in '${p.id}' and '${seen.get(p.concept)}'`);
+    } else {
+      seen.set(p.concept, p.id);
+    }
+  }
+  return { pass: errors.length === 0, errors };
 }
 
 // Rule (g) Distractor quality check (pick/tapall wrong items belong to same domain/group unless oddOneOut)
@@ -828,12 +860,17 @@ const plantReadingDefectA = {
 const plantReadingDefectB = {
   id: 'plant-unallowed-word',
   prompt: 'Which bird flies?',
-  fact: { text: 'Cheetahs run extraordinarily fast across plains.' }
+  fact: { text: 'Cheetahs run through dense debris in the field.' }
 };
 const plantReadingDefectC = {
   id: 'plant-missing-explanation',
   prompt: 'Which breathing sacs take in air?',
   fact: { text: 'Air enters alveoli deep inside the lungs.' }
+};
+const plantReadingDefectD = {
+  id: 'plant-too-many-allowed',
+  prompt: 'Which items are allowed?',
+  fact: { text: 'Reptiles like alligators live with air sacs in cold ices.' }
 };
 
 // 7. Rule g: Distractor quality planted defect
@@ -904,6 +941,73 @@ const plantReviewedIconsDefectBody = {
   "🦴:Knee Bone": "Bone emoji represents knee joint"
 };
 
+// Phase A Planted Defects:
+// 12. Phase A Rule 1: Claim coverage planted defects
+const plantClaimDefectOldBody10 = {
+  id: 'plant-old-body-10',
+  fact: {
+    text: 'Muscles pull on your bones to move body parts. They work in pairs.',
+    support: 'Muscles attach to bones to move body parts.'
+  }
+};
+const plantClaimDefectOldGarden22 = {
+  id: 'plant-old-garden-22',
+  fact: {
+    text: 'Blue whales and dolphins are warm-blooded. They breathe fresh air.',
+    support: 'Whales and dolphins nurse their calves with milk.'
+  }
+};
+const plantClaimDefectOldBody20 = {
+  id: 'plant-old-body-20',
+  fact: {
+    text: 'Water makes up about two-thirds of your body weight.',
+    support: 'Water makes up 60 percent of adult human weight.'
+  }
+};
+
+// 13. Phase A Rule 2: Strict icons planted defects (6 defects)
+const plantStrictIconDefects = [
+  { label: 'Ostrich', emoji: '🦤' },
+  { label: 'Mud bath', emoji: '🪨' },
+  { label: 'Hard cartilage', emoji: '🦴' },
+  { label: 'Sprout Root', emoji: '🌱' },
+  { label: 'Cooking oil', emoji: '🫗' },
+  { label: 'Jupiter', emoji: '🪐' }
+];
+
+// 14. Phase A Rule 4: Concept uniqueness planted defect
+const plantConceptDefects = [
+  { id: 'body-02', concept: 'skin-protects' },
+  { id: 'body-21', concept: 'skin-protects' }
+];
+
+// 15. Phase A Rule 5: Scary words planted defects
+const plantScaryDefect1 = {
+  prompt: 'Which thing is a danger to meerkats?',
+  items: [{ label: 'Hawk' }],
+  fact: { text: 'Hawks are birds.' }
+};
+const plantScaryDefect2 = {
+  prompt: 'What happens at night?',
+  items: [{ label: 'Rest' }],
+  fact: { text: 'The brain never freezes when you sleep.' }
+};
+
+// 16. Phase A Rule 6: Sequence order planted defect
+const plantSequenceDefect = {
+  id: 'plant-seq',
+  type: 'order',
+  items: [
+    { id: 'a', label: 'Seed' },
+    { id: 'b', label: 'Sprout' },
+    { id: 'c', label: 'Flower' }
+  ],
+  answer: ['a', 'b', 'c'],
+  fact: {
+    support: 'A flower blooms after growing from a sprout that started as a seed.'
+  }
+};
+
 const resPlantGarden = checkFactSupportsAnswer(oldGarden06);
 const resPlantBody = checkFactSupportsAnswer(oldBody02);
 const resPlantBody05 = checkFactTeaches(oldBody05);
@@ -926,6 +1030,17 @@ const resPlantDupEmoji = checkUniqueEmojis(plantDupEmojiDefect);
 const resPlantLabelParity = checkLabelParity(plantLabelParityDefect);
 const resPlantIconsCap = checkReviewedIcons(plantReviewedIconsDefectCap, false);
 const resPlantIconsBody = checkReviewedIcons(plantReviewedIconsDefectBody, false);
+
+// Phase A verification checks
+const resPlantClaim1 = checkClaimCoverage(plantClaimDefectOldBody10);
+const resPlantClaim2 = checkClaimCoverage(plantClaimDefectOldGarden22);
+const resPlantClaim3 = checkClaimCoverage(plantClaimDefectOldBody20);
+
+const resPlantStrictIcons = plantStrictIconDefects.map(d => checkIconMatch(d, {}));
+const resPlantConcept = checkConceptUniqueness(plantConceptDefects);
+const resPlantScary1 = checkScaryWords(plantScaryDefect1);
+const resPlantScary2 = checkScaryWords(plantScaryDefect2);
+const resPlantSequence = checkSequenceOrder(plantSequenceDefect);
 
 if (resPlantGarden.pass || resPlantBody.pass || resPlantBody05.pass) {
   console.error('[check:puzzles] Planted defect verification FAILED: defective facts unexpectedly passed!');
@@ -976,7 +1091,44 @@ if (resPlantIconsBody.pass) {
   process.exit(1);
 }
 
-console.log('[check:puzzles] All planted defect verifications PASSED (a: fact support/teaches, b: prompt leak, c: icon match, d: near-duplicate, e: level balance, f: reading level, g: distractor quality, h: variety, i: unique emojis, j: label parity, k: reviewed icons).');
+// Phase A verification assertions
+if (resPlantClaim1.pass || resPlantClaim2.pass || resPlantClaim3.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: claim coverage planted defects passed!');
+  process.exit(1);
+}
+if (resPlantStrictIcons.some(r => r.pass)) {
+  console.error('[check:puzzles] Planted defect verification FAILED: strict icon planted defects passed!');
+  process.exit(1);
+}
+if (resPlantConcept.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: concept uniqueness planted defect passed!');
+  process.exit(1);
+}
+if (resPlantScary1.pass || resPlantScary2.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: scary words planted defects passed!');
+  process.exit(1);
+}
+if (resPlantSequence.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: sequence order planted defect passed!');
+  process.exit(1);
+}
+
+console.log('[check:puzzles] All planted defect verifications PASSED:');
+console.log('  ✔ Rule a: Fact support & teaches');
+console.log('  ✔ Rule b: Prompt leak');
+console.log('  ✔ Rule c / Phase A 2: Strict icons (6/6 caught: Ostrich->dodo, Mud bath->rock, Hard cartilage->bone, Sprout Root->seedling, Cooking oil->pouring liquid, Jupiter->ringed planet)');
+console.log('  ✔ Rule d: Near duplicate');
+console.log('  ✔ Rule e: Level balance');
+console.log('  ✔ Rule f / Phase A 3: Reading level & common words');
+console.log('  ✔ Rule g: Distractor quality');
+console.log('  ✔ Rule h: Variety');
+console.log('  ✔ Rule i: Unique emojis');
+console.log('  ✔ Rule j: Label parity');
+console.log('  ✔ Rule k: Reviewed icons cap & body parts');
+console.log('  ✔ Phase A 1: Claim coverage (3/3 caught: oldBody10, oldGarden22, oldBody20)');
+console.log('  ✔ Phase A 4: Concept uniqueness (duplicate slug caught)');
+console.log('  ✔ Phase A 5: Scary / negative words caught');
+console.log('  ✔ Phase A 6: Sequence order caught');
 
 // ==========================================
 // Real Puzzles Verification
@@ -1013,6 +1165,12 @@ if (!revIconsCheck.pass) {
   errors.push(`[reviewed-icons] ${revIconsCheck.reason}`);
 }
 
+// Phase A Rule 4: Concept Uniqueness across all puzzles
+const conceptCheck = checkConceptUniqueness(puzzles);
+if (!conceptCheck.pass) {
+  errors.push(...conceptCheck.errors.map(err => `[concept] ${err}`));
+}
+
 puzzles.forEach((p, idx) => {
   const prefix = `[Puzzle #${idx + 1} (${p.id || 'unnamed'})]`;
 
@@ -1045,6 +1203,10 @@ puzzles.forEach((p, idx) => {
   if (BANNED_REGEX.test(p.prompt || '')) {
     errors.push(`${prefix} Prompt contains banned word: "${p.prompt}"`);
   }
+  const scaryCheckPrompt = checkScaryWords({ prompt: p.prompt });
+  if (!scaryCheckPrompt.pass) {
+    errors.push(`${prefix} Prompt scary words: ${scaryCheckPrompt.reason}`);
+  }
 
   // 5. Items
   if (!Array.isArray(p.items) || p.items.length < 2) {
@@ -1073,15 +1235,19 @@ puzzles.forEach((p, idx) => {
         errors.push(`${prefix} Item '${item.id}' emoji '${item.emoji}' (${code}) has no Twemoji or custom SVG`);
       }
 
-      // Icon match check (Rule c)
+      // Icon match check (Phase A Rule 2)
       const iconCheck = checkIconMatch(item, reviewedIcons);
       if (!iconCheck.pass) {
         errors.push(`${prefix} Item '${item.id}' icon mismatch: ${iconCheck.reason}`);
       }
 
-      // Banned words in label
+      // Banned & scary words in label
       if (BANNED_REGEX.test(item.label || '')) {
         errors.push(`${prefix} Item '${item.id}' label contains banned word: "${item.label}"`);
+      }
+      const scaryCheckLabel = checkScaryWords({ prompt: item.label });
+      if (!scaryCheckLabel.pass) {
+        errors.push(`${prefix} Item '${item.id}' label contains scary word: ${scaryCheckLabel.reason}`);
       }
     });
 
@@ -1119,6 +1285,10 @@ puzzles.forEach((p, idx) => {
     if (BANNED_REGEX.test(p.fact.text)) {
       errors.push(`${prefix} Fact text contains banned word: "${p.fact.text}"`);
     }
+    const scaryCheckFact = checkScaryWords({ prompt: p.fact.text });
+    if (!scaryCheckFact.pass) {
+      errors.push(`${prefix} Fact text contains scary word: ${scaryCheckFact.reason}`);
+    }
     if (!p.fact.source && !p.fact.sources) {
       errors.push(`${prefix} Missing 'fact.source' or 'fact.sources'`);
     }
@@ -1155,6 +1325,12 @@ puzzles.forEach((p, idx) => {
     errors.push(`${prefix} Fact does not teach: ${factTeaches.reason}`);
   }
 
+  // Phase A Rule 1: Claim coverage check
+  const claimCheck = checkClaimCoverage(p);
+  if (!claimCheck.pass) {
+    errors.push(...claimCheck.fails.map(f => `${prefix} Claim coverage error: ${f}`));
+  }
+
   // 12. Order checks (numeric vs sequence)
   if (p.type === 'order') {
     const numCheck = checkNumericOrder(p);
@@ -1170,10 +1346,10 @@ puzzles.forEach((p, idx) => {
     }
   }
 
-  // 13. Rule (f) Reading level check (new puzzles blocked; old puzzles reported)
+  // 13. Phase A Rule 3: Reading level check (puzzles 19-72 blocked; old 18 reported)
   const rlCheck = checkReadingLevel(p, allowedTerms);
   if (rlCheck.flaggedWords.length > 0) {
-    console.log(`[check:puzzles] ${prefix} Flagged >=4 syllable words: ${rlCheck.flaggedWords.join(', ')}`);
+    console.log(`[check:puzzles] ${prefix} Flagged non-top-5000 words: ${rlCheck.flaggedWords.join(', ')}`);
   }
   if (idx >= 18) {
     if (!rlCheck.pass) {
@@ -1246,5 +1422,5 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`[check:puzzles] PASSED: All ${puzzles.length} puzzles verified (schema, IDs, words, banned-list, SVGs, fact support, fact teaches, prompt leak, icon match, near-duplicate, level balance, reading level, distractor quality, variety).`);
+console.log(`[check:puzzles] PASSED: All ${puzzles.length} puzzles verified (schema, IDs, words, banned-list, SVGs, fact support, fact teaches, prompt leak, icon match, near-duplicate, level balance, reading level, distractor quality, variety, claim coverage, concepts, scary words).`);
 process.exit(0);

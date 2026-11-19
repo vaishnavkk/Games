@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+  <defs>
+    <!-- Circular clip path for planetary sphere -->
+    <clipPath id="jupiter-sphere">
+      <circle cx="18" cy="18" r="16"/>
+    </clipPath>
+    <!-- Subtle radial shading for 3D sphere look -->
+    <radialGradient id="jupiter-shading" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#FFF3E0" stop-opacity="0.3"/>
+      <stop offset="60%" stop-color="#E65100" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#3E2723" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Jupiter Planet Body -->
+  <g clip-path="url(#jupiter-sphere)">
+    <!-- Base disk -->
+    <circle cx="18" cy="18" r="16" fill="#D98236"/>
+
+    <!-- Atmospheric cloudy stripes / bands -->
+    <path d="M 0 5 Q 18 4 36 6 L 36 9 Q 18 7 0 8 Z" fill="#F5E1C8"/>
+    <path d="M 0 9 Q 18 10 36 8 L 36 12 Q 18 14 0 11 Z" fill="#B25329"/>
+    <path d="M 0 12 Q 18 14 36 12 L 36 16 Q 18 15 0 16 Z" fill="#FBE9E7"/>
+    <path d="M 0 16 Q 18 17 36 15 L 36 21 Q 18 20 0 21 Z" fill="#A04018"/>
+    <path d="M 0 21 Q 18 20 36 22 L 36 25 Q 18 26 0 24 Z" fill="#F5E1C8"/>
+    <path d="M 0 25 Q 18 27 36 25 L 36 29 Q 18 28 0 29 Z" fill="#C06528"/>
+    <path d="M 0 29 Q 18 28 36 30 L 36 36 Q 18 36 0 36 Z" fill="#8D3412"/>
+
+    <!-- Swirling waves and details -->
+    <path d="M 4 10.5 Q 12 11.5 18 10 Q 26 8.5 32 10.5" stroke="#FFE0B2" stroke-width="0.8" fill="none"/>
+    <path d="M 2 18 Q 10 16.5 17 18 Q 24 19.5 34 18" stroke="#FFCCBC" stroke-width="0.9" fill="none"/>
+    <path d="M 3 23 Q 11 24.5 19 23 Q 27 21.5 33 23.5" stroke="#D7CCC8" stroke-width="0.7" fill="none"/>
+
+    <!-- Great Red Spot storm -->
+    <ellipse cx="24" cy="22.5" rx="3.5" ry="2.2" fill="#B71C1C"/>
+    <ellipse cx="24" cy="22.5" rx="2.5" ry="1.4" fill="#D32F2F"/>
+    <ellipse cx="24" cy="22.5" rx="1.2" ry="0.7" fill="#FF8A80"/>
+
+    <!-- Spherical 3D shading overlay -->
+    <circle cx="18" cy="18" r="16" fill="url(#jupiter-shading)"/>
+  </g>
+</svg>
