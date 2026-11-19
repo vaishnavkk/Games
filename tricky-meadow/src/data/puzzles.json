@@ -2604,8 +2604,8 @@
       },
       {
         "id": "c",
-        "label": "Little seed",
-        "emoji": "🌱"
+        "label": "Red apple",
+        "emoji": "🍎"
       }
     ],
     "answer": [
@@ -2614,21 +2614,22 @@
       "c"
     ],
     "fact": {
-      "text": "Bees visit flowers to find food. Flowers start the process of making seeds.",
+      "text": "Pretty pink flowers attract a busy bee. Bees help plants make fruit with seeds like an apple.",
       "source": "https://www.nps.gov/subjects/pollinators/what-is-a-pollinator.htm",
-      "support": "Pollinators visit flowers to find food, shelter, and nest-building materials.",
+      "support": "This movement fertilizes a plant, helping make seeds, fruits, and new plants.",
       "evidence": [
-        "visit flowers to find food"
+        "seeds, fruits"
       ],
-      "source2": "https://askabiologist.asu.edu/explore/honey-bees",
-      "support2": "This fertilizes the female flowers and starts the process of making seeds for the next generation of plants.",
+      "source2": "https://askabiologist.asu.edu/explore/desert-fruits-rock",
+      "support2": "Pincushion cacti have pretty pink flowers that, when successfully pollinated by bees and beetles, turn into brilliantly bright red little fruits.",
       "evidence2": [
-        "starts the process of making seeds"
+        "pollinated by bees",
+        "little fruits"
       ]
     },
-    "hint": "Think about flowers feeding bees before making seeds!",
-    "misconception": "Pollination helps flowers produce seeds to grow into new plants!",
-    "concept": "flower-pollination-steps"
+    "hint": "Follow steps from flower to visiting bee to fruit!",
+    "misconception": "Pollination helps flowers produce fruit and seeds to grow into new plants!",
+    "concept": "flower-bee-fruit-steps"
   },
   {
     "id": "sky-19",
@@ -2682,40 +2683,40 @@
     "id": "sky-20",
     "level": 2,
     "type": "pick",
-    "prompt": "Why is there no wind on the Moon?",
+    "prompt": "Which one is missing on the Moon?",
     "topic": "lunar-atmosphere",
     "items": [
       {
         "id": "a",
-        "label": "Calm air",
+        "label": "Air",
         "emoji": "💨",
-        "group": "moon-features"
+        "group": "space"
       },
       {
         "id": "b",
-        "label": "Deep oceans",
-        "emoji": "🌊",
-        "group": "moon-features"
+        "label": "Rocks",
+        "emoji": "🪨",
+        "group": "space"
       },
       {
         "id": "c",
-        "label": "Thick clouds",
-        "emoji": "☁️",
-        "group": "moon-features"
+        "label": "Dust",
+        "emoji": "🌫️",
+        "group": "space"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "There is no wind or air on the Moon. Craters cover the old surface.",
+      "text": "The Moon has no air, so there is truly no wind.",
       "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
       "support": "There is no wind or air on the Moon to help erase craters, so the surface is covered with old impacts.",
       "evidence": [
         "no wind or air on the moon"
       ]
     },
-    "hint": "Think about what gas layer blankets our Earth to create breezy weather!",
-    "misconception": "Without an atmosphere to carry air, the Moon has complete silence and no wind!",
-    "concept": "moon-no-air-wind"
+    "hint": "Think about what breezy gas blankets Earth but is completely absent on the Moon!",
+    "misconception": "Thinking wind can blow on the Moon even though there is no air atmosphere to carry it!",
+    "concept": "moon-missing-air"
   },
   {
     "id": "sky-21",
@@ -2958,16 +2959,16 @@
     ],
     "answer": "a",
     "fact": {
-      "text": "Water makes up more than half of the human body. Your body is made up mostly of water.",
+      "text": "Water makes up more than half of the human body. Adults have bodies made mostly of water.",
       "source": "https://medlineplus.gov/ency/article/002471.htm",
       "support": "Water makes up more than half of the weight of the human body.",
       "evidence": [
         "weight of the human body"
       ],
-      "source2": "https://spaceplace.nasa.gov/water/en/",
-      "support2": "Your body is made up mostly of water.",
+      "source2": "https://www.usgs.gov/special-topics/water-science-school/science/water-you-water-and-human-body",
+      "support2": "Up to 60% of the human adult body is water.",
       "evidence2": [
-        "body is made up mostly of water"
+        "human adult body is water"
       ]
     },
     "hint": "Think of the vital fluid you drink every day to stay hydrated!",
@@ -3071,41 +3072,46 @@
     "id": "body-23",
     "level": 3,
     "type": "pick",
-    "prompt": "Which vessels carry blood away from your heart?",
-    "topic": "blood-vessels",
+    "prompt": "Which body part senses sweet flavors in food?",
+    "topic": "taste-senses",
     "items": [
       {
         "id": "a",
-        "label": "Arteries",
-        "emoji": "🔴",
-        "group": "vessels"
+        "label": "Tongue",
+        "emoji": "👅",
+        "group": "body parts"
       },
       {
         "id": "b",
-        "label": "Veins",
-        "emoji": "🔵",
-        "group": "vessels"
+        "label": "Nose",
+        "emoji": "👃",
+        "group": "body parts"
+      },
+      {
+        "id": "c",
+        "label": "Ear",
+        "emoji": "👂",
+        "group": "body parts"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "Arteries carry red blood away from the heart. Veins transport blue blood into the heart.",
-      "source": "https://medlineplus.gov/ency/imagepages/1097.htm",
-      "support": "The vessels colored red indicate the transport of blood. Arteries carry blood away from the heart while veins carry blood into the heart.",
+      "text": "Many small bumps on your tongue help you taste.",
+      "source": "https://www.nidcd.nih.gov/health/taste-disorders",
+      "support": "Many of the small bumps on the tip of your tongue contain taste buds.",
       "evidence": [
-        "Arteries carry blood away from the heart",
-        "veins carry blood into the heart"
+        "bumps on the tip of your tongue contain taste buds"
       ]
     },
-    "hint": "Think about the strong red vessels leaving your beating heart!",
-    "misconception": "Arteries carry blood away from the heart, while veins carry blood back into the heart!",
-    "concept": "arteries-carry-blood-away"
+    "hint": "Think about the pink muscle inside your mouth that tastes food!",
+    "misconception": "Thinking taste is sensed only by smooth skin rather than tiny sensory bumps on your tongue!",
+    "concept": "tongue-taste-senses"
   },
   {
     "id": "body-24",
     "level": 3,
     "type": "order",
-    "prompt": "Put these parts in order from the outside in:",
+    "prompt": "Follow sound as it travels into your ear!",
     "topic": "hearing-sound-order",
     "items": [
       {

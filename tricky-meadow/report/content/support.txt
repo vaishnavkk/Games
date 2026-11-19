@@ -67,8 +67,8 @@ garden-21 | OK | Some commonly eaten taproots include carrots, beets, and turnip
 garden-21-2 | OK | Potatoes and sweet potatoes are in the tuber category, and onions and garlic are part
 garden-22 | OK | all mammals — they breathe air through lungs, are warm-blooded, have hair (at some point
 garden-23 | OK | The sentry will stand on its hind legs, often using its tail as support, or
-garden-24 | OK | Pollinators visit flowers to find food, shelter, and nest-building materials.
-garden-24-2 | OK | the female flowers and starts the process of making seeds for the next generation of
+garden-24 | OK | This movement fertilizes a plant, helping make seeds, fruits, and new plants.
+garden-24-2 | OK | (top) that, when successfully pollinated by bees and beetles, turn into brilliantly bright red little
 sky-19 | OK | A cloud is a mass of water drops or ice crystals suspended in the atmosphere.
 sky-20 | OK | There is no wind or air on the Moon to help “erase” craters, so the
 sky-21 | OK | That is because light travels much faster than sound waves.
@@ -78,9 +78,9 @@ sky-23-2 | OK | Jupiter is a stormy planet that is probably best known for its G
 sky-24 | OK | The water cycle describes how water evaporates from the surface of the earth, rises into
 body-19 | OK | Red blood cells carry oxygen from your lungs to the rest of your body.
 body-20 | OK | Function Water makes up more than two-thirds of the weight of the human body.
-body-20-2 | OK | Your body is made up mostly of water.
+body-20-2 | OK | Up to 60% of the human adult body is water.
 body-21 | OK | Your eyelids protect your eyes and help keep them healthy.
 body-21-2 | OK | Causes Tears most often protect the eyes by washing away germs and irritants.
 body-22 | OK | Without smell, foods tend to taste bland and have little or no flavor.
-body-23 | OK | Arteries carry blood away from the heart while veins carry blood into the heart.
+body-23 | OK | Many of the small bumps on the tip of your tongue contain taste buds.
 body-24 | OK | Source: NIH/NIDCD Sound waves enter the outer ear and travel through a narrow passageway called

@@ -1,3 +1,19 @@
+## [0.3.3] - 2026-11-19
+### Added
+- 4 automated puzzle checks in `scripts/check-puzzles.js` with planted defect verifications:
+  - Myth list check (`checkMyths`) with extendable list in `src/data/myths.json`
+  - Pick min items check (`checkPickMinItems`) enforcing >= 3 items for pick puzzles
+  - Answer-label truth check (`checkAnswerLabelTruth`) prohibiting calm/still/negations on correct answers unless missing prompt
+  - Icon-vs-label check (`checkIconVsLabel`) ensuring seedling/sprout/herb/plant emojis are not labeled as 'seed' alone
+
+### Changed
+- Patched 5 target puzzles (`body-20`, `body-23`, `sky-20`, `garden-24`, `body-24`):
+  - `body-20`: Dual verified institutional sources (MedlinePlus & USGS Water Science School) confirming human adult body is more than half water (up to 60%).
+  - `body-23`: Replaced blood vessels with sweet flavor sensory bumps on tongue (NIDCD) with strict CLDR match 👅.
+  - `sky-20`: Shifted to "Which one is missing on the Moon?" with Air (💨), Rocks (🪨), Dust (🌫️ in reviewed-icons) and concise fact supported by NASA Space Place.
+  - `garden-24`: Corrected flower pollination steps with Sweet flower (🌸), Busy bee (🐝), Red apple (🍎) supported by NPS and ASU Ask A Biologist.
+  - `body-24`: Updated prompt to "Follow sound as it travels into your ear!" retaining Sound, Outer ear, and Eardrum.
+
 ## [0.3.2] - 2026-11-19
 ### Changed
 - Refined 6 target institutional science puzzles (`body-20`, `body-23`, `sky-20`, `body-24`, `garden-24`, `sky-12`):

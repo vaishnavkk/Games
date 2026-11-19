@@ -16,6 +16,7 @@ const REVIEWED_ICONS_PATH = path.resolve(__dirname, '../src/data/reviewed-icons.
 const ALLOWED_TERMS_PATH = path.resolve(__dirname, '../src/data/allowed-terms.json');
 const COMMON_WORDS_PATH = path.resolve(__dirname, '../src/data/common-words-5000.json');
 const CLDR_PATH = path.resolve(__dirname, '../src/data/cldr-keywords.json');
+const MYTHS_PATH = path.resolve(__dirname, '../src/data/myths.json');
 const SVG_DIR = path.resolve(__dirname, '../node_modules/@twemoji/svg');
 const CUSTOM_SVG_DIR = path.resolve(__dirname, '../src/assets/svg');
 
@@ -32,6 +33,80 @@ export function checkScaryWords(puzzle) {
     return { pass: false, word: match[0], reason: `Contains scary/negative word '${match[0]}'` };
   }
   return { pass: true, reason: 'No scary words' };
+}
+
+// Check 1: Myth list
+let mythsList = [
+  'blue blood',
+  'blue veins',
+  'red blood vessels',
+  'tomato is a vegetable',
+  'lightning never strikes twice'
+];
+if (fs.existsSync(MYTHS_PATH)) {
+  try {
+    mythsList = JSON.parse(fs.readFileSync(MYTHS_PATH, 'utf8'));
+  } catch (e) {}
+}
+
+export function checkMyths(puzzle, myths = mythsList) {
+  const text = `${puzzle.prompt || ''} ${(puzzle.items || []).map(i => i.label).join(' ')} ${puzzle.fact?.text || ''}`.toLowerCase();
+  for (const myth of myths) {
+    if (text.includes(myth.toLowerCase())) {
+      return { pass: false, myth, reason: `Contains scientific myth '${myth}'` };
+    }
+  }
+  return { pass: true, reason: 'No myths found' };
+}
+
+// Check 2: Pick puzzles need >= 3 items
+export function checkPickMinItems(puzzle) {
+  if (puzzle.type === 'pick') {
+    const count = (puzzle.items || []).length;
+    if (count < 3) {
+      return { pass: false, count, reason: `Pick puzzle has only ${count} items (minimum 3 required)` };
+    }
+  }
+  return { pass: true, reason: 'Pick has >= 3 items or not pick' };
+}
+
+// Check 3: Answer-label truth
+const NEGATION_LABEL_REGEX = /^\s*(calm|still|no|not|none|never|without|neither|nor)\b/i;
+export function checkAnswerLabelTruth(puzzle) {
+  const promptLower = (puzzle.prompt || '').trim().toLowerCase();
+  const isMissingPrompt = promptLower.startsWith('which one is missing');
+  if (isMissingPrompt) {
+    return { pass: true, reason: 'Missing-prompt allows negative/calm answers' };
+  }
+  const ansIds = Array.isArray(puzzle.answer) ? puzzle.answer : [puzzle.answer];
+  const items = puzzle.items || [];
+  for (const ansId of ansIds) {
+    const it = items.find(i => i.id === ansId);
+    if (it && NEGATION_LABEL_REGEX.test(it.label || '')) {
+      return { pass: false, label: it.label, reason: `Correct item label '${it.label}' begins with calm/still/negation without 'Which one is missing?' prompt` };
+    }
+  }
+  return { pass: true, reason: 'Answer label truth OK' };
+}
+
+// Check 4: Icon-vs-label (seed alone for seedling/sprout/herb/plant)
+export function checkIconVsLabel(puzzle) {
+  const items = puzzle.items || [];
+  for (const it of items) {
+    if (!it.emoji) continue;
+    const clean = it.emoji.replace(/\uFE0F/g, '');
+    const cldrObj = emojiData[it.emoji] || emojiData[clean] || emojiData[it.emoji + '\uFE0F'];
+    const cldrName = (cldrObj?.name || '').toLowerCase();
+    if (/seedling|sprout|herb|plant/.test(cldrName)) {
+      const words = (it.label || '').toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean);
+      const hasSeed = words.some(w => stem(w) === 'seed');
+      const hasPlantWord = words.some(w => ['seedling', 'sprout', 'herb', 'plant'].includes(stem(w)));
+      if (hasSeed && !hasPlantWord) {
+        return { pass: false, item: it.label, emoji: it.emoji, cldrName, reason: `Item '${it.label}' uses ${it.emoji} (${cldrName}) with label containing 'seed' alone` };
+      }
+    }
+  }
+  return { pass: true, reason: 'Icon-vs-label OK' };
 }
 
 function countWords(str) {
@@ -735,15 +810,17 @@ export function checkLabelParity(puzzle) {
     return { pass: false, reason: `Word counts differ by more than 1 (min=${minCount}, max=${maxCount})` };
   }
 
-  // 3. Label may not share a word with the prompt's descriptive clause
-  const promptWords = (puzzle.prompt || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length > 0 && !STOP_FRAME.has(w));
-  const promptStems = new Set(promptWords.map(stem));
-  for (const it of items) {
-    const lWords = (it.label || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length > 0 && !STOP_FRAME.has(w));
-    for (const lw of lWords) {
-      const ls = stem(lw);
-      if (promptStems.has(ls)) {
-        return { pass: false, reason: `Label '${it.label}' shares word '${lw}' (stem '${ls}') with prompt's descriptive clause` };
+  // 3. Label may not share a word with the prompt's descriptive clause (order puzzles describe sequence/endpoints)
+  if (puzzle.type !== 'order') {
+    const promptWords = (puzzle.prompt || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length > 0 && !STOP_FRAME.has(w));
+    const promptStems = new Set(promptWords.map(stem));
+    for (const it of items) {
+      const lWords = (it.label || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(w => w.length > 0 && !STOP_FRAME.has(w));
+      for (const lw of lWords) {
+        const ls = stem(lw);
+        if (promptStems.has(ls)) {
+          return { pass: false, reason: `Label '${it.label}' shares word '${lw}' (stem '${ls}') with prompt's descriptive clause` };
+        }
       }
     }
   }
@@ -1084,6 +1161,37 @@ const resPlantScary1 = checkScaryWords(plantScaryDefect1);
 const resPlantScary2 = checkScaryWords(plantScaryDefect2);
 const resPlantSequence = checkSequenceOrder(plantSequenceDefect);
 
+// v0.3.3 Planted Defects:
+// 17. Check 1: Myth list planted defect (body-23 has "blue blood")
+const plantDefectMyth = {
+  id: 'plant-myth',
+  fact: { text: 'Arteries carry red blood away from the heart. Veins transport blue blood into the heart.' }
+};
+// 18. Check 2: Pick puzzles need >= 3 items (body-23 has 2 items)
+const plantDefectPickMin = {
+  id: 'plant-pick-min',
+  type: 'pick',
+  items: [{ id: 'a', label: 'Arteries' }, { id: 'b', label: 'Veins' }],
+  answer: 'a'
+};
+// 19. Check 3: Answer-label truth (sky-20 has "Calm air")
+const plantDefectLabelTruth = {
+  id: 'plant-label-truth',
+  prompt: 'Why is there no wind on the Moon?',
+  items: [{ id: 'a', label: 'Calm air' }, { id: 'b', label: 'Deep oceans' }, { id: 'c', label: 'Thick clouds' }],
+  answer: 'a'
+};
+// 20. Check 4: Icon vs label (garden-24 has "Little seed" with 🌱 seedling)
+const plantDefectIconVsLabel = {
+  id: 'plant-icon-label',
+  items: [{ id: 'c', label: 'Little seed', emoji: '🌱' }]
+};
+
+const resPlantMyth = checkMyths(plantDefectMyth);
+const resPlantPickMin = checkPickMinItems(plantDefectPickMin);
+const resPlantLabelTruth = checkAnswerLabelTruth(plantDefectLabelTruth);
+const resPlantIconVsLabel = checkIconVsLabel(plantDefectIconVsLabel);
+
 if (resPlantGarden.pass || resPlantBody.pass || resPlantBody05.pass) {
   console.error('[check:puzzles] Planted defect verification FAILED: defective facts unexpectedly passed!');
   process.exit(1);
@@ -1154,6 +1262,22 @@ if (resPlantSequence.pass) {
   console.error('[check:puzzles] Planted defect verification FAILED: sequence order planted defect passed!');
   process.exit(1);
 }
+if (resPlantMyth.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: myth planted defect passed!');
+  process.exit(1);
+}
+if (resPlantPickMin.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: pick min items planted defect passed!');
+  process.exit(1);
+}
+if (resPlantLabelTruth.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: answer label truth planted defect passed!');
+  process.exit(1);
+}
+if (resPlantIconVsLabel.pass) {
+  console.error('[check:puzzles] Planted defect verification FAILED: icon vs label planted defect passed!');
+  process.exit(1);
+}
 
 console.log('[check:puzzles] All planted defect verifications PASSED:');
 console.log('  ✔ Rule a: Fact support & teaches');
@@ -1171,6 +1295,10 @@ console.log('  ✔ Phase A 1: Claim coverage (3/3 caught: oldBody10, oldGarden22
 console.log('  ✔ Phase A 4: Concept uniqueness (duplicate slug caught)');
 console.log('  ✔ Phase A 5: Scary / negative words caught');
 console.log('  ✔ Phase A 6: Sequence order caught');
+console.log('  ✔ Check 1: Myth list (caught "blue blood")');
+console.log('  ✔ Check 2: Pick puzzles need >= 3 items (caught 2 items)');
+console.log('  ✔ Check 3: Answer-label truth (caught "Calm air")');
+console.log('  ✔ Check 4: Icon vs label (caught "Little seed" with 🌱 seedling)');
 
 // ==========================================
 // Real Puzzles Verification
@@ -1437,6 +1565,30 @@ puzzles.forEach((p, idx) => {
   const parityCheck = checkLabelParity(p);
   if (!parityCheck.pass) {
     errors.push(`${prefix} Label parity error: ${parityCheck.reason}`);
+  }
+
+  // 17. Check 1: Myth list
+  const mythCheck = checkMyths(p);
+  if (!mythCheck.pass) {
+    errors.push(`${prefix} Myth check error: ${mythCheck.reason}`);
+  }
+
+  // 18. Check 2: Pick puzzles need >= 3 items
+  const pickMinCheck = checkPickMinItems(p);
+  if (!pickMinCheck.pass) {
+    errors.push(`${prefix} Pick items error: ${pickMinCheck.reason}`);
+  }
+
+  // 19. Check 3: Answer-label truth
+  const labelTruthCheck = checkAnswerLabelTruth(p);
+  if (!labelTruthCheck.pass) {
+    errors.push(`${prefix} Answer-label truth error: ${labelTruthCheck.reason}`);
+  }
+
+  // 20. Check 4: Icon vs label (seed alone for seedling)
+  const iconLabelCheck = checkIconVsLabel(p);
+  if (!iconLabelCheck.pass) {
+    errors.push(`${prefix} Icon-vs-label error: ${iconLabelCheck.reason}`);
   }
 });
 
