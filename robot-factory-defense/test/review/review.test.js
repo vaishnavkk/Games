@@ -30,7 +30,7 @@ describe('Data Specifications & Balance Invariants', () => {
       assert.ok(towers[id].levels[0].range > 0);
     });
 
-    assert.equal(towers.fabricator.levels[0].circuitInterval, 8.0);
+    assert.equal(towers.fabricator.levels[0].circuitInterval, 10.0);
   });
 
   it('enemies.json defines Glitchbot, Rust Walker, Spark Drone, Crusher Tank, mini-boss, boss', () => {

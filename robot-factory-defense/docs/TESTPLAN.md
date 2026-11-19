@@ -49,3 +49,17 @@ The test runner must detect and fail on 6 planted artificial defects:
 4. Non-deterministic random call bypassing `mulberry32`.
 5. Sub-48px touch target violation in HUD.
 6. Contrast ratio $< 4.5:1$ on text element.
+
+
+## 7. Phase 0.5 Stricter Gates & Balance Invariants (Enforced in Phase 1 & 2)
+- **Real Sim Execution**: Determinism and invariant tests must run a REAL simulation for $\ge 5,000$ ticks with $\ge 20$ discrete actions (place, upgrade, sell, startWave, buyUpgrade); an empty scaffold does not count.
+- **Tower Viability (No Dead Towers)**: Removing any one tower type from the competent bot's build reduces its win rate by $\ge 5$ percentage points over 100 seeds.
+- **Armour Relevance**: Pulse Turret Level 1 nominal damage is 12; against Crusher Tank (armour 6), effective damage dealt is $\le 6$ ($50\%$ or less of nominal damage: $12 - 6 = 6 \le 6$).
+- **Circuit Economy Verification**:
+  - A competent bot operating 2 Fabricators can afford $\le 80\%$ of total Workshop costs by Wave 15.
+  - A competent bot operating 4 Fabricators can afford $\ge 100\%$ of total Workshop costs (220 Circuits) by Wave 15.
+  - A bot with 1 Fabricator placed on Wave 1 can afford to unlock Arc Coil (20 Circuits) on or before Wave 6.
+- **Loss & HP Envelopes**:
+  - Idle bot (0 actions) must lose on or before Wave 3 (`lossWave <= 3`).
+  - Competent bot's final Core HP when winning must have a median between 3 and 14 across 100 seeds ($3 \le \text{medianCoreHp} \le 14$).
+  - Target wave duration: 40-75s of simulation time at 1x for the competent bot (~12-20 min full game duration).

@@ -11,6 +11,7 @@
   "startScrap": 150,
   "startCircuits": 0,
   "maxFabricators": 4,
+  "pathLengthCells": 39,
   "waypoints": [
     { "col": 0, "row": 2 },
     { "col": 12, "row": 2 },

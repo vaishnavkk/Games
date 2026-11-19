@@ -1,5 +1,11 @@
 {
   "totalWaves": 15,
+  "waveSpawnGapSeconds": 5.0,
+  "targetWaveDuration": {
+    "minSeconds": 40,
+    "maxSeconds": 75,
+    "targetGameDurationMinutes": { "min": 12, "max": 20 }
+  },
   "waves": [
     {
       "wave": 1,

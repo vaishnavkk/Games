@@ -139,12 +139,12 @@ describe('Simulation Determinism & Contract', () => {
     const state = createGame({}, 123);
     state.circuits = 50;
 
-    // Unlock Arc Coil (10 circuits)
+    // Unlock Arc Coil (20 circuits)
     assert.equal(state.unlockedTowers.includes('arc'), false);
     const unlocked = buyUpgrade(state, 'unlock_arc');
     assert.equal(unlocked, true);
     assert.equal(state.unlockedTowers.includes('arc'), true);
-    assert.equal(state.circuits, 40);
+    assert.equal(state.circuits, 30);
 
     // Buy Repair Bay (+5 max core hp)
     const bought = buyUpgrade(state, 'repair_bay');
