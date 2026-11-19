@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import { createServer } from 'vite';
 import puppeteer from 'puppeteer-core';
 import { launchOptions } from './chrome.js';
-import { assertNoHUDNaN, assertNoButtonObscured, assertNoTextOverflow } from './selfplay.js';
+import { assertNoButtonObscured } from './selfplay.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -111,21 +111,21 @@ async function testReviewerPlantedDefects() {
       // Test the invariant harness storage crash detector
       try {
         const faultyStorage = () => {
-          throw new DOMException('SecurityError: access denied', 'SecurityError');
+          throw new window.DOMException('SecurityError: access denied', 'SecurityError');
         };
 
         // If an unhandled raw localStorage call happens without try/catch:
         let crashed = false;
         try {
           faultyStorage();
-        } catch (e) {
+        } catch (_e) {
           crashed = true;
         }
 
         // Check if invariant storage test detects failure when handler fails
         return { caught: crashed, type: 'SecurityError' };
-      } catch (e) {
-        return { caught: false, error: e.message };
+      } catch (err) {
+        return { caught: false, error: err.message };
       }
     });
 
