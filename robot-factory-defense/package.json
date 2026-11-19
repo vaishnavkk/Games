@@ -15,7 +15,10 @@
     "test": "node --test test/**/*.test.js",
     "test:sim": "node --test test/sim/*.test.js",
     "test:ui": "node --test test/ui/*.test.js",
-    "test:review": "node --test test/review/*.test.js"
+    "test:review": "node --test test/review/*.test.js",
+    "selfplay": "node scripts/selfplay.js",
+    "invariants": "node scripts/invariants.js",
+    "stress": "node scripts/stress.js"
   },
   "dependencies": {
     "@fontsource/chakra-petch": "^5.2.5",
