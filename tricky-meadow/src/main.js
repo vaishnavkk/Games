@@ -74,8 +74,9 @@ function setupResetButton(container) {
       bar.style.width = '100%';
       if (textEl) textEl.textContent = 'Resetting...';
       game.resetAllProgress();
+      previousScreen = 'map';
       setTimeout(() => {
-        game.goToHome();
+        game.goToMap();
       }, 400);
     }, 2000);
   };

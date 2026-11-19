@@ -1,3 +1,12 @@
+## [0.3.5] - 2026-11-19
+### Changed
+- sky-20: Replaced "Dust" distractor with "Mountains ⛰️" supported by NASA Space Place sentence confirming Moon has mountains and craters.
+- body-23: Updated prompt to "Which body part has taste buds?" (Tongue / Nose / Ear) supported by NIDCD page on taste buds and sensory bumps.
+- garden-24: Replaced sequence with box turtle life steps (Sandy nest, Warm eggs, Baby turtle) supported by Smithsonian National Zoo.
+- storage: Namespaced localStorage keys under prefix "tricky-meadow:" and scoped resetAllProgress to only clear game keys.
+- settings: Ensured hold-reset always transitions to Map screen from puzzle, fact, level_done, or map.
+- tests: Consolidated unit regression tests in test/unit/regression.test.js and enabled recursive runner matching.
+
 ## [0.3.3] - 2026-11-19
 ### Added
 - 4 automated puzzle checks in `scripts/check-puzzles.js` with planted defect verifications:

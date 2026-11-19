@@ -69,3 +69,9 @@
 - body-22: Child argues taste is solely tongue work, but olfactory receptors in the nose detect airborne food aromas that work together with tastebuds to create meal flavor.
 - body-23: Child argues sleep shuts the brain off completely, but restful sleep restores energy while the active brain organizes memories and repairs tissues.
 - body-24: Child argues sound hits the cochlea first, but acoustical waves travel into the ear canal, vibrate the eardrum, and finally enter the inner ear.
+- sky-20: Child argues the Moon has wind or weather, but with no atmosphere or wind, impacts leave mountains and craters undisturbed.
+- body-23: Child argues we taste food with our teeth or nose, but sensory taste buds on tongue bumps detect flavors.
+- garden-24: Child argues turtles hatch in water or without a nest, but female box turtles dig a sandy nest where eggs hatch into baby turtles.
+- storage: Scope localStorage access with tricky-meadow: prefix so resetAllProgress leaves foreign keys untouched.
+- settings: Ensure hold-reset in Settings modal redirects to Map screen when triggered from any game screen.
+- test: Consolidate duplicate regression tests and run node test runner recursively over all test directories.

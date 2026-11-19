@@ -137,7 +137,7 @@ test('regression (d): resetAllProgress() full state cleanup resets selections, f
   assert.equal(game.stars, 0, 'stars must be reset to 0');
   assert.equal(game.level, 1, 'level must be reset to 1');
   assert.equal(game.puzzleId, null, 'puzzleId must be reset to null');
-  assert.equal(game.screen, 'home', 'screen must be reset to home');
+  assert.equal(game.screen, 'map', 'screen must be reset to map');
   assert.deepEqual(game.progress.stars, {}, 'saved progress stars must be empty');
 });
 
@@ -190,4 +190,94 @@ test('regression (f): nextAfterFact() unknown puzzle ID guard falls back to map 
   // Must safely fall back to 'map' instead of falling through to 'level_done'
   assert.equal(game.screen, 'map',
     "Unknown puzzle ID must fall back to 'map' screen, never 'level_done'");
+});
+
+// --- (g) Storage keys: tricky-meadow: prefix & foreign key protection ---
+test('regression (g): storage requires tricky-meadow: prefix and leaves foreign keys untouched', () => {
+  const originalLocalStorage = globalThis.localStorage;
+  const store = new Map();
+  store.set('geotrivia_seen_v1', JSON.stringify({ seen: ['france', 'japan'] }));
+  store.set('earth_trivia_score', '999');
+  store.set('tricky-meadow:save_v1', 'corrupted_json{{{');
+
+  globalThis.localStorage = {
+    get length() {
+      return store.size;
+    },
+    key(i) {
+      return Array.from(store.keys())[i];
+    },
+    getItem(k) {
+      return store.has(k) ? store.get(k) : null;
+    },
+    setItem(k, v) {
+      store.set(k, String(v));
+    },
+    removeItem(k) {
+      store.delete(k);
+    },
+    clear() {
+      store.clear();
+    }
+  };
+
+  try {
+    // 1. Loading corrupted data must not touch foreign keys
+    resetProgress();
+    const progress = loadProgress();
+    assert.deepEqual(progress.stars, {}, 'corrupted tricky-meadow data defaults to empty stars');
+    assert.equal(store.get('geotrivia_seen_v1'), JSON.stringify({ seen: ['france', 'japan'] }));
+    assert.equal(store.get('earth_trivia_score'), '999');
+
+    // 2. Saving progress uses tricky-meadow: prefix only
+    const game = new GameManager();
+    game.recordStars('garden-01', 3);
+    assert.ok(store.has('tricky-meadow:save_v1'), 'progress must be saved under tricky-meadow:save_v1');
+    assert.equal(store.get('geotrivia_seen_v1'), JSON.stringify({ seen: ['france', 'japan'] }));
+
+    // 3. Resetting progress removes ONLY tricky-meadow: keys without touching foreign keys
+    game.resetAllProgress();
+    assert.equal(store.has('tricky-meadow:save_v1'), false, 'tricky-meadow: key must be removed');
+    assert.equal(store.get('geotrivia_seen_v1'), JSON.stringify({ seen: ['france', 'japan'] }),
+      'geotrivia_seen_v1 must remain intact after resetAllProgress');
+    assert.equal(store.get('earth_trivia_score'), '999',
+      'earth_trivia_score must remain intact after resetAllProgress');
+  } finally {
+    if (originalLocalStorage) {
+      globalThis.localStorage = originalLocalStorage;
+    } else {
+      delete globalThis.localStorage;
+    }
+  }
+});
+
+// --- (h) Settings edge: open from puzzle, fact, level_done, map; hold-reset; lands on Map ---
+test('regression (h): settings reset from puzzle, fact, level_done and map always lands on Map screen', () => {
+  const originScreens = ['puzzle', 'fact', 'level_done', 'map'];
+
+  for (const origin of originScreens) {
+    const game = new GameManager();
+    game.startLevel(1);
+
+    if (origin === 'puzzle') {
+      game.screen = 'puzzle';
+    } else if (origin === 'fact') {
+      game.screen = 'fact';
+    } else if (origin === 'level_done') {
+      game.screen = 'level_done';
+    } else if (origin === 'map') {
+      game.goToMap();
+    }
+
+    // Open settings
+    game.openSettings();
+    assert.equal(game.screen, 'settings', `Must open settings from ${origin}`);
+
+    // Perform hold-to-reset
+    game.resetAllProgress();
+
+    // Verify app landed on Map
+    assert.equal(game.screen, 'map', `After reset from ${origin}, app must land on Map`);
+    assert.equal(game.puzzleId, null, `puzzleId must be null after reset from ${origin}`);
+  }
 });

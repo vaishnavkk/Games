@@ -1,6 +1,6 @@
 {
   "name": "tricky-meadow",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -12,7 +12,7 @@
     "build": "node scripts/build-sprite.js && vite build",
     "preview": "vite preview",
     "lint": "eslint src/",
-    "test": "node --test test/*.test.js",
+    "test": "node --test test/**/*.test.js",
     "check:puzzles": "node scripts/check-puzzles.js",
     "check:sources": "node scripts/check-sources.js",
     "selfplay": "node scripts/selfplay.js"

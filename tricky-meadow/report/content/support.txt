@@ -67,8 +67,7 @@ garden-21 | OK | Some commonly eaten taproots include carrots, beets, and turnip
 garden-21-2 | OK | Potatoes and sweet potatoes are in the tuber category, and onions and garlic are part
 garden-22 | OK | all mammals — they breathe air through lungs, are warm-blooded, have hair (at some point
 garden-23 | OK | The sentry will stand on its hind legs, often using its tail as support, or
-garden-24 | OK | This movement fertilizes a plant, helping make seeds, fruits, and new plants.
-garden-24-2 | OK | (top) that, when successfully pollinated by bees and beetles, turn into brilliantly bright red little
+garden-24 | OK | The female uses her hind legs to dig a nest in sandy soil.
 sky-19 | OK | A cloud is a mass of water drops or ice crystals suspended in the atmosphere.
 sky-20 | OK | There is no wind or air on the Moon to help “erase” craters, so the
 sky-21 | OK | That is because light travels much faster than sound waves.

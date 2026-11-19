@@ -1,6 +1,7 @@
 // Tricky Meadow — Safe LocalStorage Handler with In-Memory Fallback
 
-const STORAGE_KEY = 'tricky_meadow_save_v1';
+export const STORAGE_KEY = 'tricky-meadow:save_v1';
+export const STORAGE_PREFIX = 'tricky-meadow:';
 
 let memoryFallback = {
   stars: {}
@@ -47,10 +48,23 @@ export function resetProgress() {
   memoryFallback = { stars: {} };
   try {
     if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEY);
+      const keysToRemove = [];
+      if (typeof localStorage.length === 'number') {
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k && k.startsWith(STORAGE_PREFIX)) {
+            keysToRemove.push(k);
+          }
+        }
+      } else {
+        keysToRemove.push(STORAGE_KEY);
+      }
+      for (const k of keysToRemove) {
+        localStorage.removeItem(k);
+      }
     }
   } catch (e) {
-    console.warn('[storage] localStorage clear failed:', e.message);
+    console.warn('[storage] localStorage reset failed:', e.message);
   }
   return { stars: {} };
 }

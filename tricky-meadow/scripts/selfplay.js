@@ -734,6 +734,83 @@ async function runSelfTest(serverUrl, puzzles) {
 }
 
 /**
+ * Settings edge scenario: open Settings from puzzle, fact, level_done, map; hold-reset; close.
+ * Verifies that after reset the app always lands on the Map screen.
+ */
+async function runSettingsResetEdgeScenario(serverUrl) {
+  console.log('[selfplay] Running Settings reset edge scenario (puzzle, fact, level_done, map -> reset -> lands on map)...');
+  const browser = await puppeteer.launch(launchOptions());
+  const page = await browser.newPage();
+  await page.setViewport(VIEWPORTS[0]);
+  await page.goto(serverUrl, { waitUntil: 'networkidle0' });
+
+  // 1. From Map screen -> open Settings -> reset -> close -> lands on Map
+  await page.click('#btnPlay');
+  await page.waitForSelector('.screen-map', { timeout: 3000 });
+  await page.click('#btnSettings');
+  await page.waitForSelector('#btnResetProgress', { timeout: 3000 });
+  await page.evaluate(() => {
+    window.__meadow?.resetProgress();
+    document.getElementById('btnCloseSettings')?.click();
+  });
+  await page.waitForSelector('.screen-map', { timeout: 3000 });
+  const screen1 = await page.evaluate(() => window.__meadow?.getState()?.screen);
+  if (screen1 !== 'map') throw new Error(`Expected map screen after reset from map, got ${screen1}`);
+
+  // 2. From Puzzle screen -> open Settings -> reset -> close -> lands on Map
+  await page.evaluate(() => window.__meadow?.startPuzzle('garden-01'));
+  await page.waitForSelector('.screen-puzzle', { timeout: 3000 });
+  await page.click('#btnSettings');
+  await page.waitForSelector('#btnResetProgress', { timeout: 3000 });
+  await page.evaluate(() => {
+    window.__meadow?.resetProgress();
+    document.getElementById('btnCloseSettings')?.click();
+  });
+  await page.waitForSelector('.screen-map', { timeout: 3000 });
+  const screen2 = await page.evaluate(() => window.__meadow?.getState()?.screen);
+  if (screen2 !== 'map') throw new Error(`Expected map screen after reset from puzzle, got ${screen2}`);
+
+  // 3. From Fact screen -> open Settings -> reset -> close -> lands on Map
+  await page.evaluate(() => {
+    window.__meadow?.startPuzzle('garden-01');
+    window.__meadow?.solveCurrentPuzzle();
+  });
+  await page.waitForSelector('.screen-fact', { timeout: 3000 });
+  await page.evaluate(() => {
+    window.__meadow?.openSettings ? window.__meadow.openSettings() : window.__meadow?.setScreen('settings');
+  });
+  await page.waitForSelector('#btnResetProgress', { timeout: 3000 });
+  await page.evaluate(() => {
+    window.__meadow?.resetProgress();
+    document.getElementById('btnCloseSettings')?.click();
+  });
+  await page.waitForSelector('.screen-map', { timeout: 3000 });
+  const screen3 = await page.evaluate(() => window.__meadow?.getState()?.screen);
+  if (screen3 !== 'map') throw new Error(`Expected map screen after reset from fact, got ${screen3}`);
+
+  // 4. From Level Done screen -> open Settings -> reset -> close -> lands on Map
+  await page.evaluate(() => {
+    window.__meadow?.setScreen('level_done');
+  });
+  await page.waitForSelector('.screen-level-done', { timeout: 3000 });
+  await page.evaluate(() => {
+    window.__meadow?.openSettings ? window.__meadow.openSettings() : window.__meadow?.setScreen('settings');
+  });
+  await page.waitForSelector('#btnResetProgress', { timeout: 3000 });
+  await page.evaluate(() => {
+    window.__meadow?.resetProgress();
+    document.getElementById('btnCloseSettings')?.click();
+  });
+  await page.waitForSelector('.screen-map', { timeout: 3000 });
+  const screen4 = await page.evaluate(() => window.__meadow?.getState()?.screen);
+  if (screen4 !== 'map') throw new Error(`Expected map screen after reset from level_done, got ${screen4}`);
+
+  await browser.close();
+  console.log('[selfplay] Settings reset edge scenario PASSED (all 4 origins land on Map screen).\n');
+  return true;
+}
+
+/**
  * Helper to click with elementFromPoint safety
  */
 async function safeClick(page, selector) {
@@ -931,8 +1008,9 @@ export async function runSelfPlay() {
   let totalPuzzlesPlayed = 0;
 
   try {
-    // 1. Run Self-Test (7/7 defects)
+    // 1. Run Self-Test (7/7 defects) + Settings Reset Edge Scenario
     await runSelfTest(serverUrl, puzzles);
+    await runSettingsResetEdgeScenario(serverUrl);
     if (isSelfTestOnly) {
       server.close();
       return;

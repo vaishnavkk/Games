@@ -2589,23 +2589,26 @@
     "id": "garden-24",
     "level": 1,
     "type": "order",
-    "prompt": "Put these steps in order as meadow plants grow:",
-    "topic": "flower-pollination",
+    "prompt": "Put the life steps of box turtles in order:",
+    "topic": "turtle-life-cycle",
     "items": [
       {
-        "id": "a",
-        "label": "Sweet flower",
-        "emoji": "🌸"
+        "id": "b",
+        "label": "Warm eggs",
+        "emoji": "🥚",
+        "group": "turtle life steps"
       },
       {
-        "id": "b",
-        "label": "Busy bee",
-        "emoji": "🐝"
+        "id": "a",
+        "label": "Sandy nest",
+        "emoji": "🪹",
+        "group": "turtle life steps"
       },
       {
         "id": "c",
-        "label": "Red apple",
-        "emoji": "🍎"
+        "label": "Baby turtle",
+        "emoji": "🐢",
+        "group": "turtle life steps"
       }
     ],
     "answer": [
@@ -2614,22 +2617,16 @@
       "c"
     ],
     "fact": {
-      "text": "Pretty pink flowers attract a busy bee. Bees help plants make fruit with seeds like an apple.",
-      "source": "https://www.nps.gov/subjects/pollinators/what-is-a-pollinator.htm",
-      "support": "This movement fertilizes a plant, helping make seeds, fruits, and new plants.",
+      "text": "Female turtles dig a sandy nest where eggs hatch.",
+      "source": "https://nationalzoo.si.edu/animals/eastern-box-turtle",
+      "support": "The female uses her hind legs to dig a nest in sandy soil. She then covers the eggs, which incubate and hatch on their own.",
       "evidence": [
-        "seeds, fruits"
-      ],
-      "source2": "https://askabiologist.asu.edu/explore/desert-fruits-rock",
-      "support2": "Pincushion cacti have pretty pink flowers that, when successfully pollinated by bees and beetles, turn into brilliantly bright red little fruits.",
-      "evidence2": [
-        "pollinated by bees",
-        "little fruits"
+        "dig a nest in sandy soil"
       ]
     },
-    "hint": "Follow steps from flower to visiting bee to fruit!",
-    "misconception": "Pollination helps flowers produce fruit and seeds to grow into new plants!",
-    "concept": "flower-bee-fruit-steps"
+    "hint": "Think about what is dug first before eggs hatch into little turtles!",
+    "misconception": "Thinking baby turtles hatch before their eggs are laid in a nest!",
+    "concept": "box-turtle-incubation-stages"
   },
   {
     "id": "sky-19",
@@ -2700,8 +2697,8 @@
       },
       {
         "id": "c",
-        "label": "Dust",
-        "emoji": "🌫️",
+        "label": "Mountains",
+        "emoji": "⛰️",
         "group": "space"
       }
     ],
@@ -3072,7 +3069,7 @@
     "id": "body-23",
     "level": 3,
     "type": "pick",
-    "prompt": "Which body part senses sweet flavors in food?",
+    "prompt": "Which body part has taste buds?",
     "topic": "taste-senses",
     "items": [
       {
@@ -3096,7 +3093,7 @@
     ],
     "answer": "a",
     "fact": {
-      "text": "Many small bumps on your tongue help you taste.",
+      "text": "Your tongue has taste buds on small bumps at the tip.",
       "source": "https://www.nidcd.nih.gov/health/taste-disorders",
       "support": "Many of the small bumps on the tip of your tongue contain taste buds.",
       "evidence": [
@@ -3104,8 +3101,8 @@
       ]
     },
     "hint": "Think about the pink muscle inside your mouth that tastes food!",
-    "misconception": "Thinking taste is sensed only by smooth skin rather than tiny sensory bumps on your tongue!",
-    "concept": "tongue-taste-senses"
+    "misconception": "Thinking taste buds are inside your nose or ears instead of your tongue!",
+    "concept": "tongue-taste-buds"
   },
   {
     "id": "body-24",

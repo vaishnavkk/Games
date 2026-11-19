@@ -94,6 +94,7 @@ export class GameManager {
         puzzles: this.puzzles,
         useHint: () => this.useHint(),
         solveCurrentPuzzle: () => this.solveCurrentPuzzle(),
+        openSettings: () => this.openSettings(),
         resetProgress: () => this.resetAllProgress()
       };
     }
@@ -409,7 +410,7 @@ export class GameManager {
     this.tapAllSelection = new Set();
     this.feedback = null;
     this.isShaking = false;
-    this.screen = 'home';
+    this.screen = 'map';
     this.notify();
   }
 }
