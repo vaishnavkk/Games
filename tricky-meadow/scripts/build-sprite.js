@@ -11,7 +11,6 @@ const SVG_DIR = path.resolve(__dirname, '../node_modules/@twemoji/svg');
 const CUSTOM_SVG_DIR = path.resolve(__dirname, '../src/assets/svg');
 const PUZZLES_PATH = path.resolve(__dirname, '../src/data/puzzles.json');
 const OUT_JS = path.resolve(__dirname, '../src/sprite.js');
-const OUT_SVG = path.resolve(__dirname, '../public/sprite.svg');
 
 export function emojiToCodePoints(str) {
   if (!str) return '';
@@ -157,15 +156,10 @@ const spriteBytes = Buffer.byteLength(spriteXml, 'utf8');
 const iconCount = emojiMap.size;
 
 fs.mkdirSync(path.dirname(OUT_JS), { recursive: true });
-fs.mkdirSync(path.dirname(OUT_SVG), { recursive: true });
-
-fs.writeFileSync(OUT_SVG, spriteXml, 'utf8');
 
 const jsContent = `// Auto-generated SVG Sprite from puzzles.json & ui-icons.js
 // Total icons: ${iconCount} | Total size: ${spriteBytes} bytes
 export const SPRITE_SVG = ${JSON.stringify(spriteXml)};
-export const ICON_COUNT = ${iconCount};
-export const SPRITE_SIZE_BYTES = ${spriteBytes};
 
 export function emojiToSymbolId(str) {
   if (!str) return 'sparkles';

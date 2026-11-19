@@ -14,6 +14,36 @@ const game = new GameManager();
 let resetHoldTimer = null;
 let resetHoldStart = 0;
 let holdAnimFrame = null;
+let previousScreen = 'home';
+
+function cancelSpeech() {
+  if (typeof window !== 'undefined' && window.speechSynthesis?.cancel) {
+    try {
+      window.speechSynthesis.cancel();
+    } catch {
+      // ignore
+    }
+  }
+}
+
+function cancelHold() {
+  if (resetHoldTimer) {
+    clearTimeout(resetHoldTimer);
+    resetHoldTimer = null;
+  }
+  if (holdAnimFrame) {
+    cancelAnimationFrame(holdAnimFrame);
+    holdAnimFrame = null;
+  }
+  const bar = document.getElementById('holdProgress');
+  if (bar) {
+    bar.style.width = '0%';
+  }
+  const textEl = document.querySelector('#btnResetProgress .btn-text');
+  if (textEl && textEl.textContent === 'Resetting...') {
+    textEl.textContent = 'Hold to Reset (2s)';
+  }
+}
 
 function setupResetButton(container) {
   const btnReset = container.querySelector('#btnResetProgress');
@@ -23,6 +53,7 @@ function setupResetButton(container) {
 
   const startHold = (e) => {
     e.preventDefault();
+    cancelHold();
     resetHoldStart = performance.now();
     bar.style.width = '0%';
 
@@ -38,6 +69,8 @@ function setupResetButton(container) {
 
     resetHoldTimer = setTimeout(() => {
       cancelAnimationFrame(holdAnimFrame);
+      holdAnimFrame = null;
+      resetHoldTimer = null;
       bar.style.width = '100%';
       if (textEl) textEl.textContent = 'Resetting...';
       game.resetAllProgress();
@@ -45,18 +78,6 @@ function setupResetButton(container) {
         game.goToHome();
       }, 400);
     }, 2000);
-  };
-
-  const cancelHold = () => {
-    if (resetHoldTimer) {
-      clearTimeout(resetHoldTimer);
-      resetHoldTimer = null;
-    }
-    if (holdAnimFrame) {
-      cancelAnimationFrame(holdAnimFrame);
-      holdAnimFrame = null;
-    }
-    bar.style.width = '0%';
   };
 
   btnReset.addEventListener('pointerdown', startHold);
@@ -72,30 +93,60 @@ function attachEvents(container) {
 
     // Navigation buttons
     if (target.id === 'btnPlay') {
+      cancelSpeech();
       game.goToMap();
       return;
     }
     if (target.id === 'btnSettings') {
-      game.openSettings();
+      cancelSpeech();
+      previousScreen = game.screen || 'home';
+      if (typeof game.openSettings === 'function') {
+        game.openSettings();
+      } else if (typeof game.goToSettings === 'function') {
+        game.goToSettings();
+      } else {
+        game.screen = 'settings';
+        game.notify();
+      }
       return;
     }
     if (target.id === 'btnBackHome') {
+      cancelSpeech();
       game.goToHome();
       return;
     }
     if (target.id === 'btnBackMap' || target.id === 'btnDoneBackMap') {
+      cancelSpeech();
       game.goToMap();
       return;
     }
     if (target.id === 'btnCloseSettings' || target.id === 'btnDismissSettings') {
-      game.goToMap();
+      cancelHold();
+      cancelSpeech();
+      if (previousScreen === 'home') {
+        game.goToHome();
+      } else if (previousScreen === 'puzzle' && game.puzzleId) {
+        game.screen = 'puzzle';
+        game.notify();
+      } else if (previousScreen === 'fact' && game.puzzleId) {
+        game.screen = 'fact';
+        game.notify();
+      } else if (previousScreen === 'level_done') {
+        game.screen = 'level_done';
+        game.notify();
+      } else {
+        game.goToMap();
+      }
       return;
     }
 
     // Map level selection
     if (target.classList.contains('btn-select-level') || target.classList.contains('level-card')) {
       const lvl = target.dataset.level || target.closest('[data-level]')?.dataset.level;
-      if (lvl) game.startLevel(Number(lvl));
+      if (lvl) {
+        cancelSpeech();
+        game.startLevel(Number(lvl));
+      }
       return;
     }
 
@@ -103,7 +154,7 @@ function attachEvents(container) {
     if (target.id === 'btnReadAloud' || target.closest('#btnReadAloud')) {
       const current = game.getCurrentPuzzle();
       if (current && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
+        cancelSpeech();
         const text = `${current.prompt}. ${current.items.map(i => i.label).join(', ')}`;
         const utterance = new window.SpeechSynthesisUtterance(text);
         utterance.rate = 0.9;
@@ -126,6 +177,7 @@ function attachEvents(container) {
 
     // Next after fact card
     if (target.id === 'btnNextFact') {
+      cancelSpeech();
       game.nextAfterFact();
       return;
     }
@@ -146,11 +198,35 @@ function attachEvents(container) {
     }
   });
 
+  // Global listeners to cancel hold when unmounting or clicking outside
+  document.addEventListener('pointerdown', (e) => {
+    if (!e.target.closest('#btnResetProgress')) {
+      cancelHold();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#btnResetProgress')) {
+      cancelHold();
+    }
+  });
+  window.addEventListener('pointerup', cancelHold);
+  window.addEventListener('pointercancel', cancelHold);
+  window.addEventListener('blur', cancelHold);
+  window.addEventListener('pagehide', () => {
+    cancelHold();
+    cancelSpeech();
+  });
+  window.addEventListener('beforeunload', () => {
+    cancelHold();
+    cancelSpeech();
+  });
+
   setupResetButton(container);
 }
 
 function mount() {
   if (!app) return;
+  cancelHold();
   app.innerHTML = renderApp(game);
   setupResetButton(app);
 }
@@ -158,7 +234,13 @@ function mount() {
 if (app) {
   attachEvents(app);
   mount();
+  let lastScreen = game.screen;
   game.subscribe(() => {
+    if (game.screen !== lastScreen) {
+      cancelSpeech();
+      cancelHold();
+      lastScreen = game.screen;
+    }
     mount();
   });
 }

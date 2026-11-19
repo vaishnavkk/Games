@@ -13,8 +13,11 @@ export function loadProgress() {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object') {
+          if (!parsed.stars || typeof parsed.stars !== 'object' || Array.isArray(parsed.stars)) {
+            parsed.stars = {};
+          }
           return {
-            stars: parsed.stars || {}
+            stars: parsed.stars
           };
         }
       }

@@ -73,6 +73,7 @@ export class GameManager {
     this.tapAllSelection = new Set();
     this.feedback = null;
     this.isShaking = false;
+    this.shakeTimeout = null;
     this.displayedItems = [];
     this.disableShuffle = options.disableShuffle || false;
     this.listeners = new Set();
@@ -126,10 +127,10 @@ export class GameManager {
 
   getCurrentDisplayedItems() {
     if (this.displayedItems && this.displayedItems.length > 0) {
-      return this.displayedItems;
+      return [...this.displayedItems];
     }
     const current = this.getCurrentPuzzle();
-    return current ? current.items : [];
+    return current ? [...current.items] : [];
   }
 
   getLevelPuzzles(level = this.level) {
@@ -181,6 +182,10 @@ export class GameManager {
   startPuzzle(pId) {
     const puzzle = this.puzzles.find(p => p.id === pId);
     if (!puzzle) return;
+    if (this.shakeTimeout) {
+      clearTimeout(this.shakeTimeout);
+      this.shakeTimeout = null;
+    }
     this.level = puzzle.level;
     this.puzzleId = puzzle.id;
     this.tries = 0;
@@ -209,21 +214,33 @@ export class GameManager {
     this.feedback = 'Try again!';
     this.notify();
 
-    setTimeout(() => {
-      this.isShaking = false;
-      this.notify();
-    }, 600);
+    if (this.shakeTimeout) {
+      clearTimeout(this.shakeTimeout);
+      this.shakeTimeout = null;
+    }
 
     // After 2 wrong tries, show answer and fact card
     if (this.tries >= 2) {
+      this.isShaking = false;
       this.stars = 1;
       this.recordStars(this.puzzleId, this.stars);
       this.screen = 'fact';
       this.notify();
+    } else {
+      this.shakeTimeout = setTimeout(() => {
+        this.isShaking = false;
+        this.shakeTimeout = null;
+        this.notify();
+      }, 600);
     }
   }
 
   handleCorrectAnswer() {
+    if (this.shakeTimeout) {
+      clearTimeout(this.shakeTimeout);
+      this.shakeTimeout = null;
+    }
+    this.isShaking = false;
     this.stars = calculateStars({ tries: this.tries, hintUsed: this.hintUsed });
     this.recordStars(this.puzzleId, this.stars);
     this.feedback = null;
@@ -244,6 +261,7 @@ export class GameManager {
   }
 
   submitPick(itemId) {
+    if (this.screen !== 'puzzle') return;
     const puzzle = this.getCurrentPuzzle();
     if (!puzzle || puzzle.type !== 'pick') return;
     if (checkAnswer(puzzle, itemId)) {
@@ -254,6 +272,7 @@ export class GameManager {
   }
 
   toggleTapAll(itemId) {
+    if (this.screen !== 'puzzle') return;
     const puzzle = this.getCurrentPuzzle();
     if (!puzzle || puzzle.type !== 'tapall') return;
     if (this.tapAllSelection.has(itemId)) {
@@ -265,6 +284,7 @@ export class GameManager {
   }
 
   submitTapAll() {
+    if (this.screen !== 'puzzle') return;
     const puzzle = this.getCurrentPuzzle();
     if (!puzzle || puzzle.type !== 'tapall') return;
     const choice = Array.from(this.tapAllSelection);
@@ -276,6 +296,7 @@ export class GameManager {
   }
 
   tapOrderItem(itemId) {
+    if (this.screen !== 'puzzle') return;
     const puzzle = this.getCurrentPuzzle();
     if (!puzzle || puzzle.type !== 'order') return;
 
@@ -305,11 +326,50 @@ export class GameManager {
     }
   }
 
+  submitAnswer(answer) {
+    if (this.isShaking) return;
+    if (this.screen !== 'puzzle') return;
+    const puzzle = this.getCurrentPuzzle();
+    if (!puzzle) return;
+    if (puzzle.type === 'pick') {
+      if (checkAnswer(puzzle, answer)) {
+        this.handleCorrectAnswer();
+      } else {
+        this.handleWrongAnswer();
+      }
+    } else if (puzzle.type === 'tapall') {
+      const choice = answer !== undefined ? (Array.isArray(answer) ? answer : [answer]) : Array.from(this.tapAllSelection);
+      if (checkAnswer(puzzle, choice)) {
+        this.handleCorrectAnswer();
+      } else {
+        this.handleWrongAnswer();
+      }
+    } else if (puzzle.type === 'order') {
+      const choice = Array.isArray(answer) ? answer : this.orderSelection;
+      if (this.orderSelection.length === puzzle.items.length || Array.isArray(answer)) {
+        if (checkAnswer(puzzle, choice)) {
+          this.handleCorrectAnswer();
+        } else {
+          this.handleWrongAnswer();
+          setTimeout(() => {
+            this.orderSelection = [];
+            this.notify();
+          }, 600);
+        }
+      }
+    }
+  }
+
   nextAfterFact() {
     const levelPuzzles = this.getLevelPuzzles(this.level);
     const currentIndex = levelPuzzles.findIndex(p => p.id === this.puzzleId);
 
-    if (currentIndex >= 0 && currentIndex < levelPuzzles.length - 1) {
+    if (currentIndex === -1) {
+      this.goToMap();
+      return;
+    }
+
+    if (currentIndex < levelPuzzles.length - 1) {
       // Next puzzle in level
       this.startPuzzle(levelPuzzles[currentIndex + 1].id);
     } else {
@@ -322,23 +382,33 @@ export class GameManager {
 
   triggerConfetti() {
     try {
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.6 }
-      });
+      Promise.resolve(
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.6 }
+        })
+      ).catch(() => {});
     } catch {
       // safe fallback if canvas is unavailable in headless
     }
   }
 
   resetAllProgress() {
+    if (this.shakeTimeout) {
+      clearTimeout(this.shakeTimeout);
+      this.shakeTimeout = null;
+    }
     this.progress = storageReset();
     this.level = 1;
     this.puzzleId = null;
     this.tries = 0;
     this.hintUsed = false;
     this.stars = 0;
+    this.orderSelection = [];
+    this.tapAllSelection = new Set();
+    this.feedback = null;
+    this.isShaking = false;
     this.screen = 'home';
     this.notify();
   }

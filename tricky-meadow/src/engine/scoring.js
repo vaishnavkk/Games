@@ -57,7 +57,10 @@ export function checkAnswer(puzzle, userChoice) {
     if (!Array.isArray(userChoice) || !Array.isArray(puzzle.answer)) return false;
     if (userChoice.length !== puzzle.answer.length) return false;
     const ansSet = new Set(puzzle.answer.map(String));
-    return userChoice.every(c => ansSet.has(String(c)));
+    return (
+      new Set(userChoice).size === puzzle.answer.length &&
+      userChoice.every(id => ansSet.has(String(id)))
+    );
   }
 
   if (puzzle.type === 'order') {
