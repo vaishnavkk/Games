@@ -1589,17 +1589,16 @@
     "answer": "a",
     "hint": "Think about which body spins in place every day!",
     "fact": {
-      "text": "Earth rotates on its own axis. Earth produces the 24-hour day.",
+      "text": "Earth rotates on its own axis. Earth spins around to produce each day.",
       "source": "https://solarsystem.nasa.gov/basics/chapter2-1/",
       "support": "For example, Earth rotates on its own axis, producing the 24-hour day.",
       "evidence": [
-        "Earth rotates on its own axis",
-        "producing the 24-hour day"
+        "earth rotates on its own axis"
       ],
-      "source2": "https://tidesandcurrents.noaa.gov/restles3.html",
-      "support2": "As the earth rotates once in each 24 hours, one would ideally expect to find a high tide followed by a low tide at the same place 6 hours later",
+      "source2": "https://spaceplace.nasa.gov/days/en/",
+      "support2": "Another way to measure a day is to count the amount of time it takes for a planet to completely spin around and make one full rotation.",
       "evidence2": [
-        "earth rotates once in each 24 hours"
+        "planet to completely spin around"
       ]
     },
     "misconception": "It looks like the Sun moves across the sky, but Earth is actually spinning!",
@@ -2590,23 +2589,23 @@
     "id": "garden-24",
     "level": 1,
     "type": "order",
-    "prompt": "Put these plant stages in order as growth begins:",
-    "topic": "beaver-lodge-steps",
+    "prompt": "Put these steps in order as meadow plants grow:",
+    "topic": "flower-pollination",
     "items": [
       {
         "id": "a",
-        "label": "First seed",
-        "emoji": "🌰"
+        "label": "Sweet flower",
+        "emoji": "🌸"
       },
       {
         "id": "b",
-        "label": "Green sprout",
-        "emoji": "🌱"
+        "label": "Busy bee",
+        "emoji": "🐝"
       },
       {
         "id": "c",
-        "label": "Leafy stem",
-        "emoji": "🌿"
+        "label": "Little seed",
+        "emoji": "🌱"
       }
     ],
     "answer": [
@@ -2615,23 +2614,21 @@
       "c"
     ],
     "fact": {
-      "text": "A seed coat breaks open first. A root emerges followed by a stem.",
-      "source": "https://web.extension.illinois.edu/gpe/case3/c3facts3.html",
-      "support": "Then the seed coat breaks open and a root or radicle emerges first, followed by the shoot or plumule that contains the leaves and stem.",
+      "text": "Bees visit flowers to find food. Flowers start the process of making seeds.",
+      "source": "https://www.nps.gov/subjects/pollinators/what-is-a-pollinator.htm",
+      "support": "Pollinators visit flowers to find food, shelter, and nest-building materials.",
       "evidence": [
-        "seed coat breaks open",
-        "emerges first",
-        "stem"
+        "visit flowers to find food"
       ],
-      "source2": "https://extension.psu.edu/seed-and-seedling-biology",
-      "support2": "The cells start to elongate and divide, bringing the root and radicle out of the seed.",
+      "source2": "https://askabiologist.asu.edu/explore/honey-bees",
+      "support2": "This fertilizes the female flowers and starts the process of making seeds for the next generation of plants.",
       "evidence2": [
-        "bringing the root and radicle out of the seed"
+        "starts the process of making seeds"
       ]
     },
-    "hint": "Think about what beavers cut first before creating their deep calm pond!",
-    "misconception": "Beavers build dams first to raise water levels, protecting their new island lodge!",
-    "concept": "seed-germination-stages"
+    "hint": "Think about flowers feeding bees before making seeds!",
+    "misconception": "Pollination helps flowers produce seeds to grow into new plants!",
+    "concept": "flower-pollination-steps"
   },
   {
     "id": "sky-19",
@@ -2685,12 +2682,12 @@
     "id": "sky-20",
     "level": 2,
     "type": "pick",
-    "prompt": "Why do footprints stay on the Moon for years?",
+    "prompt": "Why is there no wind on the Moon?",
     "topic": "lunar-atmosphere",
     "items": [
       {
         "id": "a",
-        "label": "No wind",
+        "label": "Calm air",
         "emoji": "💨",
         "group": "moon-features"
       },
@@ -2709,11 +2706,11 @@
     ],
     "answer": "a",
     "fact": {
-      "text": "There is no wind or air on the Moon. Wind cannot blow on the Moon without air.",
+      "text": "There is no wind or air on the Moon. Craters cover the old surface.",
       "source": "https://spaceplace.nasa.gov/all-about-the-moon/en/",
-      "support": "There is no wind or air on the Moon to help “erase” craters.",
+      "support": "There is no wind or air on the Moon to help erase craters, so the surface is covered with old impacts.",
       "evidence": [
-        "no wind or air on the Moon"
+        "no wind or air on the moon"
       ]
     },
     "hint": "Think about what gas layer blankets our Earth to create breezy weather!",
@@ -2961,11 +2958,16 @@
     ],
     "answer": "a",
     "fact": {
-      "text": "Water makes up the weight of the human body. Water makes up more than two-thirds of this weight.",
+      "text": "Water makes up more than half of the human body. Your body is made up mostly of water.",
       "source": "https://medlineplus.gov/ency/article/002471.htm",
-      "support": "Water makes up more than two-thirds of the weight of the human body.",
+      "support": "Water makes up more than half of the weight of the human body.",
       "evidence": [
         "weight of the human body"
+      ],
+      "source2": "https://spaceplace.nasa.gov/water/en/",
+      "support2": "Your body is made up mostly of water.",
+      "evidence2": [
+        "body is made up mostly of water"
       ]
     },
     "hint": "Think of the vital fluid you drink every day to stay hydrated!",
@@ -3069,8 +3071,8 @@
     "id": "body-23",
     "level": 3,
     "type": "pick",
-    "prompt": "Which vessels move fresh blood through your body?",
-    "topic": "healthy-sleep",
+    "prompt": "Which vessels carry blood away from your heart?",
+    "topic": "blood-vessels",
     "items": [
       {
         "id": "a",
@@ -3083,27 +3085,21 @@
         "label": "Veins",
         "emoji": "🔵",
         "group": "vessels"
-      },
-      {
-        "id": "c",
-        "label": "Nerves",
-        "emoji": "⚡",
-        "group": "vessels"
       }
     ],
     "answer": "a",
     "fact": {
-      "text": "Arteries carry red blood away from the heart. Veins carry blood into the heart.",
+      "text": "Arteries carry red blood away from the heart. Veins transport blue blood into the heart.",
       "source": "https://medlineplus.gov/ency/imagepages/1097.htm",
-      "support": "Arteries carry blood away from the heart while veins carry blood into the heart.",
+      "support": "The vessels colored red indicate the transport of blood. Arteries carry blood away from the heart while veins carry blood into the heart.",
       "evidence": [
         "Arteries carry blood away from the heart",
         "veins carry blood into the heart"
       ]
     },
-    "hint": "Think about how you feel refreshed after a full night in bed!",
-    "misconception": "Your brain stays active during sleep, organizing memories and repairing body tissues!",
-    "concept": "blood-vessels-types"
+    "hint": "Think about the strong red vessels leaving your beating heart!",
+    "misconception": "Arteries carry blood away from the heart, while veins carry blood back into the heart!",
+    "concept": "arteries-carry-blood-away"
   },
   {
     "id": "body-24",
@@ -3114,8 +3110,8 @@
     "items": [
       {
         "id": "a",
-        "label": "Sound waves",
-        "emoji": "🌊"
+        "label": "Sound",
+        "emoji": "🔊"
       },
       {
         "id": "b",
@@ -3134,17 +3130,12 @@
       "c"
     ],
     "fact": {
-      "text": "Sound waves enter the outer ear. The incoming sound waves make the eardrum vibrate.",
+      "text": "Sound enters the outer ear canal. Waves travel to the eardrum.",
       "source": "https://www.nidcd.nih.gov/health/how-do-we-hear",
       "support": "Sound waves enter the outer ear and travel through a narrow passageway called the ear canal, which leads to the eardrum.",
       "evidence": [
-        "Sound waves enter the outer ear",
+        "sound waves enter the outer ear",
         "leads to the eardrum"
-      ],
-      "source2": "https://www.nidcd.nih.gov/health/how-do-we-hear",
-      "support2": "The eardrum vibrates from the incoming sound waves and sends these vibrations to three tiny bones in the middle ear.",
-      "evidence2": [
-        "eardrum vibrates from the incoming sound waves"
       ]
     },
     "hint": "Think about sound starting outside your head before reaching your deep hearing organ!",

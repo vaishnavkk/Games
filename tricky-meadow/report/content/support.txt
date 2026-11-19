@@ -40,7 +40,7 @@ garden-13 | OK | Gray wolves hunt cooperatively in packs and are able to take do
 garden-14 | OK | Special paw pads and semi-retractable claws provide great traction.
 sky-11 | OK | The Short Answer: We have a slightly different view of the Moon each night.
 sky-12 | OK | For example, Earth rotates on its own axis, producing the 24-hour day.
-sky-12-2 | OK | As the earth rotates once in each 24 hours, one would ideally expect to find
+sky-12-2 | OK | time it takes for a planet to completely spin around and make one full rotation.
 sky-13 | OK | Neptune is a very cold, windy world.
 sky-14 | OK | It has a solid surface that is covered with craters.
 body-11 | OK | Overview The tissue called "gray matter" in the brain and spinal cord is also known
@@ -67,8 +67,8 @@ garden-21 | OK | Some commonly eaten taproots include carrots, beets, and turnip
 garden-21-2 | OK | Potatoes and sweet potatoes are in the tuber category, and onions and garlic are part
 garden-22 | OK | all mammals — they breathe air through lungs, are warm-blooded, have hair (at some point
 garden-23 | OK | The sentry will stand on its hind legs, often using its tail as support, or
-garden-24 | OK | Then the seed coat breaks open and a root or radicle emerges first, followed by
-garden-24-2 | OK | cells start to elongate and divide, bringing the root and radicle out of the seed.
+garden-24 | OK | Pollinators visit flowers to find food, shelter, and nest-building materials.
+garden-24-2 | OK | the female flowers and starts the process of making seeds for the next generation of
 sky-19 | OK | A cloud is a mass of water drops or ice crystals suspended in the atmosphere.
 sky-20 | OK | There is no wind or air on the Moon to help “erase” craters, so the
 sky-21 | OK | That is because light travels much faster than sound waves.
@@ -78,9 +78,9 @@ sky-23-2 | OK | Jupiter is a stormy planet that is probably best known for its G
 sky-24 | OK | The water cycle describes how water evaporates from the surface of the earth, rises into
 body-19 | OK | Red blood cells carry oxygen from your lungs to the rest of your body.
 body-20 | OK | Function Water makes up more than two-thirds of the weight of the human body.
+body-20-2 | OK | Your body is made up mostly of water.
 body-21 | OK | Your eyelids protect your eyes and help keep them healthy.
 body-21-2 | OK | Causes Tears most often protect the eyes by washing away germs and irritants.
 body-22 | OK | Without smell, foods tend to taste bland and have little or no flavor.
 body-23 | OK | Arteries carry blood away from the heart while veins carry blood into the heart.
 body-24 | OK | Source: NIH/NIDCD Sound waves enter the outer ear and travel through a narrow passageway called
-body-24-2 | OK | The eardrum vibrates from the incoming sound waves and sends these vibrations to three tiny

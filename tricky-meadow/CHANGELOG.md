@@ -1,3 +1,13 @@
+## [0.3.2] - 2026-11-19
+### Changed
+- Refined 6 target institutional science puzzles (`body-20`, `body-23`, `sky-20`, `body-24`, `garden-24`, `sky-12`):
+  - `body-20`: Dual institutional sources (MedlinePlus & NASA Space Place) confirming water content as more than half of the human body.
+  - `body-23`: Clarified blood vessel functions with MedlinePlus diagram ("Arteries carry red blood away from the heart. Veins transport blue blood into the heart.").
+  - `sky-20`: Clarified lunar lack of wind and air causing preserved impact craters (NASA Space Place).
+  - `body-24`: Corrected sound hearing steps with outer ear and eardrum, sound speaker emoji (NIDCD).
+  - `garden-24`: Established flower pollination steps in meadows with flower, bee, seed (NPS & ASU Ask A Biologist).
+  - `sky-12`: Earth rotation daylight cause backed by NASA Solar System Exploration & NASA Space Place.
+
 ## [0.3.1] - 2026-11-19
 ### Added
 - 6 automated puzzle validation checks in `scripts/check-puzzles.js` with planted defect tests:
