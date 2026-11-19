@@ -1,0 +1,131 @@
+{
+  "totalWaves": 15,
+  "waves": [
+    {
+      "wave": 1,
+      "rewardScrap": 25,
+      "spawns": [
+        { "type": "glitchbot", "count": 10, "interval": 1.2, "delay": 0 }
+      ]
+    },
+    {
+      "wave": 2,
+      "rewardScrap": 30,
+      "spawns": [
+        { "type": "rust_walker", "count": 12, "interval": 1.3, "delay": 0 }
+      ]
+    },
+    {
+      "wave": 3,
+      "rewardScrap": 35,
+      "spawns": [
+        { "type": "glitchbot", "count": 8, "interval": 1.0, "delay": 0 },
+        { "type": "rust_walker", "count": 6, "interval": 1.2, "delay": 2.0 }
+      ]
+    },
+    {
+      "wave": 4,
+      "rewardScrap": 40,
+      "spawns": [
+        { "type": "rust_walker", "count": 10, "interval": 1.2, "delay": 0 },
+        { "type": "spark_drone", "count": 6, "interval": 1.1, "delay": 3.0 }
+      ]
+    },
+    {
+      "wave": 5,
+      "rewardScrap": 45,
+      "spawns": [
+        { "type": "spark_drone", "count": 14, "interval": 0.9, "delay": 0 },
+        { "type": "glitchbot", "count": 6, "interval": 0.8, "delay": 4.0 }
+      ]
+    },
+    {
+      "wave": 6,
+      "rewardScrap": 50,
+      "spawns": [
+        { "type": "crusher_tank", "count": 4, "interval": 2.2, "delay": 0 },
+        { "type": "rust_walker", "count": 10, "interval": 1.1, "delay": 2.0 }
+      ]
+    },
+    {
+      "wave": 7,
+      "rewardScrap": 55,
+      "spawns": [
+        { "type": "spark_drone", "count": 12, "interval": 0.9, "delay": 0 },
+        { "type": "crusher_tank", "count": 6, "interval": 2.0, "delay": 3.0 }
+      ]
+    },
+    {
+      "wave": 8,
+      "rewardScrap": 60,
+      "spawns": [
+        { "type": "glitchbot", "count": 16, "interval": 0.7, "delay": 0 },
+        { "type": "rust_walker", "count": 10, "interval": 1.0, "delay": 2.0 },
+        { "type": "crusher_tank", "count": 4, "interval": 2.0, "delay": 4.0 }
+      ]
+    },
+    {
+      "wave": 9,
+      "rewardScrap": 65,
+      "spawns": [
+        { "type": "rust_walker", "count": 12, "interval": 1.0, "delay": 0 },
+        { "type": "spark_drone", "count": 12, "interval": 0.8, "delay": 2.0 },
+        { "type": "crusher_tank", "count": 6, "interval": 1.8, "delay": 4.0 }
+      ]
+    },
+    {
+      "wave": 10,
+      "rewardScrap": 100,
+      "spawns": [
+        { "type": "iron_sentry", "count": 1, "interval": 1.0, "delay": 0 },
+        { "type": "glitchbot", "count": 8, "interval": 0.8, "delay": 2.0 },
+        { "type": "rust_walker", "count": 6, "interval": 1.0, "delay": 3.0 },
+        { "type": "crusher_tank", "count": 2, "interval": 2.0, "delay": 5.0 }
+      ]
+    },
+    {
+      "wave": 11,
+      "rewardScrap": 75,
+      "spawns": [
+        { "type": "crusher_tank", "count": 8, "interval": 1.7, "delay": 0 },
+        { "type": "spark_drone", "count": 14, "interval": 0.7, "delay": 2.0 }
+      ]
+    },
+    {
+      "wave": 12,
+      "rewardScrap": 80,
+      "spawns": [
+        { "type": "glitchbot", "count": 18, "interval": 0.6, "delay": 0 },
+        { "type": "rust_walker", "count": 12, "interval": 0.9, "delay": 2.0 },
+        { "type": "crusher_tank", "count": 6, "interval": 1.6, "delay": 4.0 }
+      ]
+    },
+    {
+      "wave": 13,
+      "rewardScrap": 85,
+      "spawns": [
+        { "type": "crusher_tank", "count": 10, "interval": 1.5, "delay": 0 },
+        { "type": "spark_drone", "count": 16, "interval": 0.7, "delay": 2.0 }
+      ]
+    },
+    {
+      "wave": 14,
+      "rewardScrap": 90,
+      "spawns": [
+        { "type": "rust_walker", "count": 14, "interval": 0.8, "delay": 0 },
+        { "type": "crusher_tank", "count": 10, "interval": 1.4, "delay": 2.0 },
+        { "type": "spark_drone", "count": 14, "interval": 0.7, "delay": 3.0 }
+      ]
+    },
+    {
+      "wave": 15,
+      "rewardScrap": 200,
+      "spawns": [
+        { "type": "mega_mixer", "count": 1, "interval": 1.0, "delay": 0 },
+        { "type": "crusher_tank", "count": 12, "interval": 1.3, "delay": 3.0 },
+        { "type": "spark_drone", "count": 16, "interval": 0.6, "delay": 5.0 },
+        { "type": "glitchbot", "count": 16, "interval": 0.5, "delay": 7.0 }
+      ]
+    }
+  ]
+}
