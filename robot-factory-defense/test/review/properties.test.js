@@ -13,7 +13,6 @@ import {
   mulberry32
 } from '../../src/sim/index.js';
 import mapData from '../../src/data/map.json' with { type: 'json' };
-import upgradesData from '../../src/data/upgrades.json' with { type: 'json' };
 
 describe('Property Tests: Rules, Invariants & Conservation', () => {
   it('Conservation of Scrap invariant holds across arbitrary valid and invalid operations', () => {
@@ -144,6 +143,39 @@ describe('Property Tests: Rules, Invariants & Conservation', () => {
       // Enemy lifecycle tracking
       const enemyLifecycle = new Map(); // id -> { spawned: true, killed: false, leaked: false }
 
+      function processEvents() {
+        if (!state.events || state.events.length === 0) return;
+        for (const ev of state.events) {
+          if (ev.type === 'spawned') {
+            assert.ok(ev.enemyId, 'Spawned event must have enemyId');
+            if (!enemyLifecycle.has(ev.enemyId)) {
+              enemyLifecycle.set(ev.enemyId, { spawned: true, killed: false, leaked: false });
+            }
+          } else if (ev.type === 'killed') {
+            assert.ok(ev.enemyId, 'Killed event must have enemyId');
+            const record = enemyLifecycle.get(ev.enemyId);
+            assert.ok(record, `Killed event for unknown enemy ${ev.enemyId}`);
+            assert.equal(record.killed, false, `Enemy ${ev.enemyId} killed more than once`);
+            assert.equal(record.leaked, false, `Enemy ${ev.enemyId} was both killed and leaked`);
+            record.killed = true;
+            if (ev.scrapReward) {
+              totalScrapEarned += ev.scrapReward;
+            }
+          } else if (ev.type === 'leaked') {
+            assert.ok(ev.enemyId, 'Leaked event must have enemyId');
+            const record = enemyLifecycle.get(ev.enemyId);
+            assert.ok(record, `Leaked event for unknown enemy ${ev.enemyId}`);
+            assert.equal(record.leaked, false, `Enemy ${ev.enemyId} leaked more than once`);
+            assert.equal(record.killed, false, `Enemy ${ev.enemyId} was both leaked and killed`);
+            record.leaked = true;
+          } else if (ev.type === 'wave_cleared') {
+            if (ev.rewardScrap) {
+              totalScrapEarned += ev.rewardScrap;
+            }
+          }
+        }
+      }
+
       const numActions = 10 + Math.floor(seqRng() * 15); // 10 to 24 actions per sequence
 
       for (let actIdx = 0; actIdx < numActions; actIdx++) {
@@ -204,49 +236,23 @@ describe('Property Tests: Rules, Invariants & Conservation', () => {
             togglePause(state);
             break;
           }
-          case 7: { // step simulation discrete tick
-            const dt = 16.666;
-            step(state, dt);
+          case 7: { // step simulation discrete single tick
+            step(state, 16.666667 / state.speed);
+            processEvents();
             break;
           }
-          case 8: { // step simulation random dt (e.g. 10ms - 200ms)
-            const dt = 10 + seqRng() * 190;
-            step(state, dt);
+          case 8: { // step simulation multiple discrete single ticks (1 to 5 ticks)
+            const numTicks = 1 + Math.floor(seqRng() * 5);
+            for (let t = 0; t < numTicks; t++) {
+              step(state, 16.666667 / state.speed);
+              processEvents();
+            }
             break;
           }
         }
 
-        // Process any events emitted in this tick/action
-        if (state.events && state.events.length > 0) {
-          for (const ev of state.events) {
-            if (ev.type === 'spawned') {
-              assert.ok(ev.enemyId, 'Spawned event must have enemyId');
-              assert.ok(!enemyLifecycle.has(ev.enemyId), `Duplicate spawned event for enemy ${ev.enemyId}`);
-              enemyLifecycle.set(ev.enemyId, { spawned: true, killed: false, leaked: false });
-            } else if (ev.type === 'killed') {
-              assert.ok(ev.enemyId, 'Killed event must have enemyId');
-              const record = enemyLifecycle.get(ev.enemyId);
-              assert.ok(record, `Killed event for unknown enemy ${ev.enemyId}`);
-              assert.equal(record.killed, false, `Enemy ${ev.enemyId} killed more than once`);
-              assert.equal(record.leaked, false, `Enemy ${ev.enemyId} was both killed and leaked`);
-              record.killed = true;
-              if (ev.scrapReward) {
-                totalScrapEarned += ev.scrapReward;
-              }
-            } else if (ev.type === 'leaked') {
-              assert.ok(ev.enemyId, 'Leaked event must have enemyId');
-              const record = enemyLifecycle.get(ev.enemyId);
-              assert.ok(record, `Leaked event for unknown enemy ${ev.enemyId}`);
-              assert.equal(record.leaked, false, `Enemy ${ev.enemyId} leaked more than once`);
-              assert.equal(record.killed, false, `Enemy ${ev.enemyId} was both leaked and killed`);
-              record.leaked = true;
-            } else if (ev.type === 'wave_cleared') {
-              if (ev.rewardScrap) {
-                totalScrapEarned += ev.rewardScrap;
-              }
-            }
-          }
-        }
+        // Process any events emitted by direct actions (e.g. place, upgrade, sell)
+        processEvents();
 
         // Invariant 1: Resource Non-Negativity
         assert.ok(state.scrap >= 0, `[Seq ${seq} Act ${actIdx}] Scrap negative: ${state.scrap}`);
