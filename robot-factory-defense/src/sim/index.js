@@ -8,8 +8,8 @@ import { mulberry32 } from './rng.js';
 export { mulberry32 };
 
 export const TICK_RATE = 60;
-export const TICK_DT = 1 / TICK_RATE; // ~0.016666s
-export const TICK_MS = 1000 / TICK_RATE; // ~16.666ms
+export const TICK_DT = 1 / TICK_RATE; // ~0.016666666666666666s
+export const TICK_MS = 1000 / TICK_RATE; // ~16.666666666666668ms
 
 /**
  * 32-bit FNV-1a hash of a UTF-8 string
@@ -20,7 +20,62 @@ export function fnv1a32(str) {
     hash ^= str.charCodeAt(i);
     hash = Math.imul(hash, 16777619) >>> 0;
   }
-  return hash;
+  return hash >>> 0;
+}
+
+/**
+ * Compute waypoint path segments and total distance in cells.
+ */
+export function computeWaypoints(waypoints) {
+  const segments = [];
+  let totalDistance = 0;
+  for (let i = 0; i < waypoints.length - 1; i++) {
+    const p1 = waypoints[i];
+    const p2 = waypoints[i + 1];
+    const x1 = p1.col + 0.5;
+    const y1 = p1.row + 0.5;
+    const x2 = p2.col + 0.5;
+    const y2 = p2.row + 0.5;
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const len = Math.hypot(dx, dy);
+    segments.push({
+      x1,
+      y1,
+      x2,
+      y2,
+      dx,
+      dy,
+      len,
+      startDist: totalDistance,
+      endDist: totalDistance + len
+    });
+    totalDistance += len;
+  }
+  return { segments, totalDistance };
+}
+
+/**
+ * Get grid coordinates (x, y) along path segments for a given distance.
+ */
+export function getPositionAlongPath(distance, segments, totalDistance) {
+  if (!segments || segments.length === 0) return { x: 0, y: 0 };
+  if (distance <= 0) return { x: segments[0].x1, y: segments[0].y1 };
+  if (distance >= totalDistance) {
+    const last = segments[segments.length - 1];
+    return { x: last.x2, y: last.y2 };
+  }
+  for (const seg of segments) {
+    if (distance <= seg.endDist) {
+      const segT = (distance - seg.startDist) / seg.len;
+      return {
+        x: seg.x1 + seg.dx * segT,
+        y: seg.y1 + seg.dy * segT
+      };
+    }
+  }
+  const last = segments[segments.length - 1];
+  return { x: last.x2, y: last.y2 };
 }
 
 /**
@@ -34,6 +89,7 @@ export function createGame(config = {}, seed = 12345) {
   const upgradesConfig = config.upgrades || upgradesData;
 
   const rng = mulberry32(seed);
+  const { segments, totalDistance } = computeWaypoints(map.waypoints);
 
   const unlockedTowers = [];
   for (const [id, t] of Object.entries(towersConfig.towers)) {
@@ -63,7 +119,13 @@ export function createGame(config = {}, seed = 12345) {
     unlockedTowers,
     purchasedUpgrades: [],
     fabricatorCount: 0,
+    nextTowerId: 0,
+    nextEnemyId: 0,
+    nextProjectileId: 0,
+    spawner: [],
     events: [],
+    pathSegments: segments,
+    totalPathDistance: totalDistance,
     stats: {
       enemiesKilled: 0,
       enemiesLeaked: 0,
@@ -82,6 +144,60 @@ export function createGame(config = {}, seed = 12345) {
 }
 
 /**
+ * Process enemy death and award scrap reward.
+ */
+function handleEnemyKill(state, enemy) {
+  if (enemy.isDead) return;
+  enemy.isDead = true;
+  enemy.hp = 0;
+
+  let scrapReward = enemy.scrap;
+  if (state.purchasedUpgrades.includes('scrap_magnet')) {
+    scrapReward = Math.round(scrapReward * 1.20);
+  }
+
+  state.scrap += scrapReward;
+  state.stats.scrapEarned += scrapReward;
+  state.stats.enemiesKilled += 1;
+  state.events.push({ type: 'killed', enemyId: enemy.id, scrapReward });
+}
+
+/**
+ * Spawn an enemy into the simulation.
+ */
+function spawnEnemy(state, enemyType) {
+  const def = state.config.enemies.enemies[enemyType];
+  if (!def) return;
+
+  const enemyId = `enemy_${++state.nextEnemyId}_${enemyType}`;
+  const startPos = getPositionAlongPath(0, state.pathSegments, state.totalPathDistance);
+
+  const enemy = {
+    id: enemyId,
+    type: enemyType,
+    name: def.name,
+    hp: def.hp,
+    maxHp: def.hp,
+    speed: def.speed,
+    armour: def.armour,
+    scrap: def.scrap,
+    leakDamage: def.leakDamage,
+    isBoss: !!def.isBoss,
+    distance: 0,
+    x: startPos.x,
+    y: startPos.y,
+    slowTimer: 0,
+    slowRatio: 0,
+    isDead: false,
+    shape: def.shape,
+    color: def.color
+  };
+
+  state.enemies.push(enemy);
+  state.events.push({ type: 'spawned', enemyId: enemy.id, enemyType, wave: state.wave });
+}
+
+/**
  * Executes a single discrete 1/60s simulation tick.
  */
 function tickSimulation(state) {
@@ -93,20 +209,256 @@ function tickSimulation(state) {
   for (const tower of state.towers) {
     if (tower.type === 'fabricator') {
       tower.circuitTicks = (tower.circuitTicks || 0) + 1;
-      const intervalTicks = Math.round(8.0 * TICK_RATE); // 480 ticks = 8.0s
+      const def = state.config.towers.towers.fabricator;
+      const intervalSec = def?.levels[0]?.circuitInterval || 10.0;
+      const intervalTicks = Math.round(intervalSec * TICK_RATE);
       if (tower.circuitTicks >= intervalTicks) {
         tower.circuitTicks -= intervalTicks;
         state.circuits += 1;
         state.stats.circuitsEarned += 1;
       }
+      tower.circuitTimer = (tower.circuitTicks / TICK_RATE);
     }
   }
 
-  // 2. Check wave completion or win/loss
+  // 2. Wave Spawner logic
+  if (state.waveState === 'spawning') {
+    let allFinished = true;
+    for (const group of state.spawner) {
+      if (group.spawned < group.count) {
+        group.timer -= TICK_DT;
+        while (group.timer <= 0 && group.spawned < group.count) {
+          spawnEnemy(state, group.type);
+          group.spawned++;
+          group.timer += group.interval;
+        }
+      }
+      if (group.spawned < group.count) {
+        allFinished = false;
+      }
+    }
+    if (allFinished) {
+      state.waveState = 'active';
+    }
+  }
+
+  // 3. Enemy Movement & Slow & Leaks
+  const activeEnemies = [];
+  for (const enemy of state.enemies) {
+    if (enemy.isDead || enemy.hp <= 0) continue;
+
+    if (enemy.slowTimer > 0) {
+      enemy.slowTimer = Math.max(0, enemy.slowTimer - TICK_DT);
+    }
+
+    const effectiveSpeed = enemy.slowTimer > 0
+      ? enemy.speed * (1 - (enemy.slowRatio || 0.5))
+      : enemy.speed;
+
+    enemy.distance += effectiveSpeed * TICK_DT;
+    const pos = getPositionAlongPath(enemy.distance, state.pathSegments, state.totalPathDistance);
+    enemy.x = pos.x;
+    enemy.y = pos.y;
+
+    if (enemy.distance >= state.totalPathDistance) {
+      // Enemy reached Core Base (leaked)
+      state.coreHp = Math.max(0, state.coreHp - enemy.leakDamage);
+      state.stats.enemiesLeaked += 1;
+      state.events.push({ type: 'leaked', enemyId: enemy.id, coreDamage: enemy.leakDamage });
+    } else {
+      activeEnemies.push(enemy);
+    }
+  }
+  state.enemies = activeEnemies;
+
+  // Check Core defeat
   if (state.coreHp <= 0 && state.waveState !== 'lost') {
     state.coreHp = 0;
     state.waveState = 'lost';
     state.events.push({ type: 'lost', wave: state.wave, coreHp: 0 });
+    return;
+  }
+
+  // 4. Combat Towers Firing
+  for (const tower of state.towers) {
+    if (tower.type === 'fabricator') continue;
+
+    tower.cooldown = Math.max(0, (tower.cooldown || 0) - TICK_DT);
+    if (tower.cooldown > 0) continue;
+
+    const def = state.config.towers.towers[tower.type];
+    if (!def) continue;
+
+    const lvlConfig = def.levels[tower.level - 1];
+    if (!lvlConfig) continue;
+
+    let baseFireRate = lvlConfig.fireRate;
+    if (state.purchasedUpgrades.includes('overclock')) {
+      baseFireRate *= 1.15;
+    }
+
+    let baseDamage = lvlConfig.damage;
+    if (state.purchasedUpgrades.includes('hardened_rounds')) {
+      baseDamage = Math.round(baseDamage * 1.15);
+    }
+
+    let baseRange = lvlConfig.range;
+    if (state.purchasedUpgrades.includes('long_barrels')) {
+      baseRange = Math.round(baseRange * 1.10 * 100) / 100;
+    }
+
+    const towerX = tower.col + 0.5;
+    const towerY = tower.row + 0.5;
+
+    // Find enemies in range
+    const inRange = [];
+    for (const enemy of state.enemies) {
+      if (enemy.hp <= 0 || enemy.isDead) continue;
+      const d = Math.hypot(enemy.x - towerX, enemy.y - towerY);
+      if (d <= baseRange) {
+        inRange.push({ enemy, dist: d });
+      }
+    }
+
+    if (inRange.length === 0) continue;
+
+    // Sort by targetMode: 'first' (highest distance along path) vs 'nearest' (closest to tower)
+    const mode = tower.targetMode || 'first';
+    if (mode === 'nearest') {
+      inRange.sort((a, b) => a.dist - b.dist || b.enemy.distance - a.enemy.distance);
+    } else {
+      inRange.sort((a, b) => b.enemy.distance - a.enemy.distance || a.dist - b.dist);
+    }
+
+    const primaryTarget = inRange[0].enemy;
+
+    if (tower.type === 'pulse') {
+      const damageDealt = Math.max(1, baseDamage - primaryTarget.armour);
+      primaryTarget.hp -= damageDealt;
+      state.events.push({ type: 'hit', enemyId: primaryTarget.id, damage: damageDealt, towerId: tower.id });
+      if (primaryTarget.hp <= 0) {
+        handleEnemyKill(state, primaryTarget);
+      }
+      tower.cooldown = 1 / baseFireRate;
+    } else if (tower.type === 'coolant') {
+      const damageDealt = Math.max(1, baseDamage - primaryTarget.armour);
+      primaryTarget.hp -= damageDealt;
+      primaryTarget.slowTimer = lvlConfig.slowDuration || 2.0;
+      primaryTarget.slowRatio = lvlConfig.slowRatio || 0.5;
+      state.events.push({ type: 'hit', enemyId: primaryTarget.id, damage: damageDealt, towerId: tower.id });
+      if (primaryTarget.hp <= 0) {
+        handleEnemyKill(state, primaryTarget);
+      }
+      tower.cooldown = 1 / baseFireRate;
+    } else if (tower.type === 'arc') {
+      // Arc Coil ignores armour completely and chains up to 3 targets within 1.5 cells
+      const chainTargets = lvlConfig.chainTargets || 3;
+      const chainRange = lvlConfig.chainRange || 1.5;
+      const hitIds = new Set([primaryTarget.id]);
+
+      primaryTarget.hp -= baseDamage;
+      state.events.push({ type: 'hit', enemyId: primaryTarget.id, damage: baseDamage, towerId: tower.id });
+      if (primaryTarget.hp <= 0) {
+        handleEnemyKill(state, primaryTarget);
+      }
+
+      let currentOrigin = { x: primaryTarget.x, y: primaryTarget.y };
+      for (let c = 1; c < chainTargets; c++) {
+        const candidates = [];
+        for (const enemy of state.enemies) {
+          if (enemy.hp <= 0 || enemy.isDead || hitIds.has(enemy.id)) continue;
+          const d = Math.hypot(enemy.x - currentOrigin.x, enemy.y - currentOrigin.y);
+          if (d <= chainRange) {
+            candidates.push({ enemy, dist: d });
+          }
+        }
+        if (candidates.length === 0) break;
+        candidates.sort((a, b) => b.enemy.distance - a.enemy.distance);
+        const nextTarget = candidates[0].enemy;
+        hitIds.add(nextTarget.id);
+        currentOrigin = { x: nextTarget.x, y: nextTarget.y };
+
+        nextTarget.hp -= baseDamage;
+        state.events.push({ type: 'hit', enemyId: nextTarget.id, damage: baseDamage, towerId: tower.id });
+        if (nextTarget.hp <= 0) {
+          handleEnemyKill(state, nextTarget);
+        }
+      }
+
+      tower.cooldown = 1 / baseFireRate;
+    } else if (tower.type === 'rocket') {
+      // Launch rocket projectile
+      const projId = `proj_${++state.nextProjectileId}`;
+      state.projectiles.push({
+        id: projId,
+        towerId: tower.id,
+        type: 'rocket',
+        x: towerX,
+        y: towerY,
+        targetX: primaryTarget.x,
+        targetY: primaryTarget.y,
+        targetId: primaryTarget.id,
+        damage: baseDamage,
+        splashRadius: lvlConfig.splashRadius || 1.2,
+        speed: 8.0 // cells per second
+      });
+      tower.cooldown = 1 / baseFireRate;
+    }
+  }
+
+  // 5. Update Projectiles
+  const remainingProjectiles = [];
+  for (const proj of state.projectiles) {
+    const targetEnemy = state.enemies.find(e => e.id === proj.targetId && !e.isDead && e.hp > 0);
+    if (targetEnemy) {
+      proj.targetX = targetEnemy.x;
+      proj.targetY = targetEnemy.y;
+    }
+
+    const dx = proj.targetX - proj.x;
+    const dy = proj.targetY - proj.y;
+    const dist = Math.hypot(dx, dy);
+    const stepDist = proj.speed * TICK_DT;
+
+    if (dist <= stepDist) {
+      // Detonate and deal splash damage
+      for (const enemy of state.enemies) {
+        if (enemy.isDead || enemy.hp <= 0) continue;
+        const d = Math.hypot(enemy.x - proj.targetX, enemy.y - proj.targetY);
+        if (d <= proj.splashRadius) {
+          const dmg = Math.max(1, proj.damage - enemy.armour);
+          enemy.hp -= dmg;
+          state.events.push({ type: 'hit', enemyId: enemy.id, damage: dmg, towerId: proj.towerId });
+          if (enemy.hp <= 0) {
+            handleEnemyKill(state, enemy);
+          }
+        }
+      }
+    } else {
+      proj.x += (dx / dist) * stepDist;
+      proj.y += (dy / dist) * stepDist;
+      remainingProjectiles.push(proj);
+    }
+  }
+  state.projectiles = remainingProjectiles;
+
+  // Filter dead enemies
+  state.enemies = state.enemies.filter(e => !e.isDead && e.hp > 0);
+
+  // 6. Check Wave Cleared / Victory
+  if (state.waveState === 'active' && state.enemies.length === 0) {
+    state.waveState = 'cleared';
+    const waveDef = state.config.waves.waves.find(w => w.wave === state.wave);
+    const rewardScrap = waveDef?.rewardScrap || 0;
+    state.scrap += rewardScrap;
+    state.stats.scrapEarned += rewardScrap;
+    state.events.push({ type: 'wave_cleared', wave: state.wave, rewardScrap });
+
+    if (state.wave >= state.config.waves.totalWaves) {
+      state.waveState = 'won';
+      const score = (state.scrap || 0) + (state.circuits || 0) * 10 + (state.coreHp || 0) * 50 + (state.stats.enemiesKilled || 0) * 10;
+      state.events.push({ type: 'won', score, remainingHp: state.coreHp });
+    }
   }
 }
 
@@ -119,7 +471,7 @@ export function step(state, dtMs) {
   }
 
   state.accumulatorMs += dtMs * state.speed;
-  const maxSubSteps = 10;
+  const maxSubSteps = 20;
   let subSteps = 0;
 
   while (state.accumulatorMs >= TICK_MS && subSteps < maxSubSteps) {
@@ -163,7 +515,7 @@ export function place(state, cell, towerType) {
   state.scrap -= cost;
   state.stats.towersBuilt++;
 
-  const towerId = `tower_${state.towers.length + 1}_${cell.col}_${cell.row}`;
+  const towerId = `tower_${++state.nextTowerId}_${cell.col}_${cell.row}`;
   const tower = {
     id: towerId,
     type: towerType,
@@ -172,12 +524,25 @@ export function place(state, cell, towerType) {
     level: 1,
     investedScrap: cost,
     cooldown: 0,
-    circuitTimer: 0
+    circuitTicks: 0,
+    circuitTimer: 0,
+    targetMode: 'first'
   };
 
   state.towers.push(tower);
-  state.events.push({ type: 'built', towerId, cell, towerType });
+  state.events.push({ type: 'built', towerId, cell: { col: cell.col, row: cell.row }, towerType });
   return tower;
+}
+
+/**
+ * Set targeting mode for a tower ('first' | 'nearest').
+ */
+export function setTowerTargetMode(state, towerId, mode) {
+  if (mode !== 'first' && mode !== 'nearest') return false;
+  const tower = state.towers.find(t => t.id === towerId);
+  if (!tower) return false;
+  tower.targetMode = mode;
+  return true;
 }
 
 /**
@@ -211,7 +576,7 @@ export function upgrade(state, towerId) {
 }
 
 /**
- * Sell a tower and refund 70% of invested Scrap.
+ * Sell a tower and refund floor(70% * totalScrapActuallyPaid).
  */
 export function sell(state, towerId) {
   if (state.waveState === 'won' || state.waveState === 'lost') return false;
@@ -238,11 +603,23 @@ export function sell(state, towerId) {
  * Trigger start of the next wave.
  */
 export function startWave(state) {
+  if (state.waveState === 'won' || state.waveState === 'lost') return false;
   if (state.waveState === 'spawning' || state.waveState === 'active') return false;
   if (state.wave >= state.config.waves.totalWaves) return false;
 
-  state.wave += 1;
-  state.waveState = 'active';
+  const nextWave = state.wave + 1;
+  const waveDef = state.config.waves.waves.find(w => w.wave === nextWave);
+  if (!waveDef) return false;
+
+  state.wave = nextWave;
+  state.spawner = waveDef.spawns.map(s => ({
+    type: s.type,
+    count: s.count,
+    spawned: 0,
+    interval: s.interval,
+    timer: s.delay
+  }));
+  state.waveState = 'spawning';
   return true;
 }
 
@@ -287,7 +664,7 @@ export function buyUpgrade(state, id) {
     state.purchasedUpgrades.push(id);
 
     if (id === 'repair_bay') {
-      const bonus = globalUpgrade.effect.coreHpBonus || 5;
+      const bonus = globalUpgrade.effect?.coreHpBonus || 5;
       state.maxCoreHp += bonus;
       state.coreHp = Math.min(state.coreHp + bonus, state.maxCoreHp);
     }
@@ -315,9 +692,11 @@ export function snapshot(state) {
     paused: state.paused,
     towers: state.towers.map(t => ({ ...t })),
     enemies: state.enemies.map(e => ({ ...e })),
+    projectiles: state.projectiles.map(p => ({ ...p })),
     unlockedTowers: [...state.unlockedTowers],
     purchasedUpgrades: [...state.purchasedUpgrades],
     fabricatorCount: state.fabricatorCount,
+    events: [...state.events],
     stats: { ...state.stats }
   };
 }
@@ -329,14 +708,32 @@ export function serialize(state) {
   return JSON.stringify({
     tick: state.tick,
     seed: state.seed,
+    rngState: state.rng?.getState ? state.rng.getState() : (state.rngSeedState || 0),
     scrap: state.scrap,
     circuits: state.circuits,
     coreHp: state.coreHp,
     maxCoreHp: state.maxCoreHp,
     wave: state.wave,
     waveState: state.waveState,
-    towers: state.towers.map(t => ({ id: t.id, type: t.type, col: t.col, row: t.row, level: t.level })),
-    enemies: state.enemies.map(e => ({ id: e.id, type: e.type, hp: e.hp, distance: e.distance })),
+    towers: state.towers.map(t => ({
+      id: t.id,
+      type: t.type,
+      col: t.col,
+      row: t.row,
+      level: t.level
+    })),
+    enemies: state.enemies.map(e => ({
+      id: e.id,
+      type: e.type,
+      hp: Math.round(e.hp * 10) / 10,
+      distance: Math.round(e.distance * 100) / 100
+    })),
+    projectiles: state.projectiles.map(p => ({
+      id: p.id,
+      type: p.type,
+      x: Math.round(p.x * 100) / 100,
+      y: Math.round(p.y * 100) / 100
+    })),
     unlockedTowers: [...state.unlockedTowers].sort(),
     purchasedUpgrades: [...state.purchasedUpgrades].sort()
   });
