@@ -16,6 +16,7 @@ A collection of free, lightweight web games you can play instantly in your brows
 | **GeoTrivia: Earth Explorer**<br><br>[![GeoTrivia](docs/img/geotrivia.webp)](https://vaishnavkk.github.io/Games/earth-trivia/) | Spin an interactive 3D globe and test your knowledge of 195 countries using clues, flags, and capitals. | [Play GeoTrivia](https://vaishnavkk.github.io/Games/earth-trivia/) | [`earth-trivia/`](earth-trivia/) |
 | **Matrixfall**<br><br>[![Matrixfall](docs/img/matrixfall.webp)](https://vaishnavkk.github.io/Games/matrix-fall/) | A classic falling-blocks puzzle game with retro green neon visuals, speed bursts, and arcade sound effects. | [Play Matrixfall](https://vaishnavkk.github.io/Games/matrix-fall/) | [`matrix-fall/`](matrix-fall/) |
 | **Tricky Meadow**<br><br>[![Tricky Meadow](docs/img/trickymeadow.webp)](https://vaishnavkk.github.io/Games/tricky-meadow/) | A cozy nature puzzle game for curious minds. Think carefully, spot the clever tricks, and learn fun facts! | [Play Tricky Meadow](https://vaishnavkk.github.io/Games/tricky-meadow/) | [`tricky-meadow/`](tricky-meadow/) |
+| **Robot Factory Defense** | A tactical sci-fi tower defense game set in an automated assembly plant. Deploy specialized turrets, generate Scrap and Circuits, research Workshop upgrades, and defend the core against 15 waves of rogue automata. | [Play Robot Factory Defense](https://vaishnavkk.github.io/Games/robot-factory-defense/dist/) | [`robot-factory-defense/`](robot-factory-defense/) |
 
 ---
 
@@ -43,6 +44,7 @@ Then open `http://localhost:8080` in your web browser.
 - `earth-trivia/` — 3D Earth globe geography trivia game
 - `matrix-fall/` — 2D falling-blocks arcade game
 - `tricky-meadow/` — Science trick-puzzle game
+- `robot-factory-defense/` — Tactical sci-fi tower defense game
 - `docs/` — Game screenshots and preview images
 
 ---
