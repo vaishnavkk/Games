@@ -1,0 +1,60 @@
+{
+  "sellRefundRatio": 0.7,
+  "towers": {
+    "pulse": {
+      "id": "pulse",
+      "name": "Pulse Turret",
+      "description": "Rapid-fire kinetic turret targeting single ground units.",
+      "unlockedByDefault": true,
+      "levels": [
+        { "level": 1, "cost": 60, "damage": 12, "fireRate": 1.5, "range": 2.5, "upgradeCost": 50 },
+        { "level": 2, "cost": 50, "damage": 20, "fireRate": 1.8, "range": 2.8, "upgradeCost": 80 },
+        { "level": 3, "cost": 80, "damage": 32, "fireRate": 2.2, "range": 3.2, "upgradeCost": 0 }
+      ]
+    },
+    "coolant": {
+      "id": "coolant",
+      "name": "Coolant Sprayer",
+      "description": "Sprays cryogenic foam, slowing enemy speed by 50% for 2s (non-stacking).",
+      "unlockedByDefault": true,
+      "levels": [
+        { "level": 1, "cost": 80, "damage": 4, "fireRate": 1.0, "range": 2.2, "slowRatio": 0.5, "slowDuration": 2.0, "upgradeCost": 60 },
+        { "level": 2, "cost": 60, "damage": 7, "fireRate": 1.2, "range": 2.5, "slowRatio": 0.5, "slowDuration": 2.2, "upgradeCost": 90 },
+        { "level": 3, "cost": 90, "damage": 12, "fireRate": 1.5, "range": 2.8, "slowRatio": 0.5, "slowDuration": 2.5, "upgradeCost": 0 }
+      ]
+    },
+    "arc": {
+      "id": "arc",
+      "name": "Arc Coil",
+      "description": "High-voltage lightning discharges into chains of 3 enemies, completely bypassing armour.",
+      "unlockedByDefault": false,
+      "unlockCircuitCost": 20,
+      "levels": [
+        { "level": 1, "cost": 100, "damage": 8, "fireRate": 1.0, "range": 2.4, "chainTargets": 3, "chainRange": 1.5, "ignoresArmour": true, "upgradeCost": 80 },
+        { "level": 2, "cost": 80, "damage": 14, "fireRate": 1.2, "range": 2.7, "chainTargets": 3, "chainRange": 1.5, "ignoresArmour": true, "upgradeCost": 120 },
+        { "level": 3, "cost": 120, "damage": 22, "fireRate": 1.5, "range": 3.0, "chainTargets": 3, "chainRange": 1.5, "ignoresArmour": true, "upgradeCost": 0 }
+      ]
+    },
+    "rocket": {
+      "id": "rocket",
+      "name": "Rocket Rack",
+      "description": "Launches heavy cluster rockets with devastating area splash damage and long range.",
+      "unlockedByDefault": false,
+      "unlockCircuitCost": 40,
+      "levels": [
+        { "level": 1, "cost": 120, "damage": 35, "fireRate": 0.4, "range": 3.5, "splashRadius": 1.2, "upgradeCost": 95 },
+        { "level": 2, "cost": 95, "damage": 55, "fireRate": 0.45, "range": 3.8, "splashRadius": 1.4, "upgradeCost": 140 },
+        { "level": 3, "cost": 140, "damage": 85, "fireRate": 0.5, "range": 4.2, "splashRadius": 1.6, "upgradeCost": 0 }
+      ]
+    },
+    "fabricator": {
+      "id": "fabricator",
+      "name": "Fabricator",
+      "description": "Automated sub-assembly station generating 1 Circuit every 10s. Max 4 per factory.",
+      "unlockedByDefault": true,
+      "levels": [
+        { "level": 1, "cost": 75, "damage": 0, "fireRate": 0, "range": 0, "circuitInterval": 10.0, "upgradeCost": 0 }
+      ]
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "enemies": {
+    "glitchbot": {
+      "id": "glitchbot",
+      "name": "Glitchbot",
+      "description": "Erratic, fast runner with fragile plating.",
+      "hp": 30,
+      "speed": 2.2,
+      "armour": 0,
+      "scrap": 6,
+      "leakDamage": 1,
+      "shape": "diamond",
+      "color": "#e056fd",
+      "isBoss": false
+    },
+    "rust_walker": {
+      "id": "rust_walker",
+      "name": "Rust Walker",
+      "description": "Rugged industrial biped, balanced pace and light armour.",
+      "hp": 60,
+      "speed": 1.4,
+      "armour": 2,
+      "scrap": 8,
+      "leakDamage": 1,
+      "shape": "square",
+      "color": "#f0932b",
+      "isBoss": false
+    },
+    "spark_drone": {
+      "id": "spark_drone",
+      "name": "Spark Drone",
+      "description": "Fast hovering drone immune to path hazards.",
+      "hp": 50,
+      "speed": 2.0,
+      "armour": 0,
+      "scrap": 10,
+      "leakDamage": 1,
+      "shape": "cross",
+      "color": "#f9ca24",
+      "isBoss": false
+    },
+    "crusher_tank": {
+      "id": "crusher_tank",
+      "name": "Crusher Tank",
+      "description": "Heavily reinforced chassis with thick flat armour plates.",
+      "hp": 180,
+      "speed": 0.9,
+      "armour": 6,
+      "scrap": 20,
+      "leakDamage": 3,
+      "shape": "rectangle",
+      "color": "#eb4d4b",
+      "isBoss": false
+    },
+    "iron_sentry": {
+      "id": "iron_sentry",
+      "name": "Iron Sentry",
+      "description": "Wave 10 mini-boss walking siege engine with heavy bulkhead plating.",
+      "hp": 1200,
+      "speed": 0.7,
+      "armour": 8,
+      "scrap": 80,
+      "leakDamage": 5,
+      "shape": "octagon",
+      "color": "#6ab04c",
+      "isBoss": true
+    },
+    "mega_mixer": {
+      "id": "mega_mixer",
+      "name": "Mega Mixer",
+      "description": "Wave 15 colossal factory demolisher with fortress armour.",
+      "hp": 3500,
+      "speed": 0.5,
+      "armour": 10,
+      "scrap": 200,
+      "leakDamage": 10,
+      "shape": "skull_cog",
+      "color": "#c0392b",
+      "isBoss": true
+    }
+  }
+}
