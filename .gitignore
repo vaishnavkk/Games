@@ -4,6 +4,7 @@ dist/*
 **/dist/*
 !earth-trivia/dist/bundle.js
 !tricky-meadow/dist/**
+!robot-factory-defense/dist/**
 report/
 /report/
 .cache/

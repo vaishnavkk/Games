@@ -218,6 +218,11 @@
       border: 1px solid rgba(46, 204, 113, 0.3);
     }
 
+    .card-rfd .card-icon-wrap {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
     .card-badge {
       font-size: 11px;
       font-weight: 700;
@@ -243,6 +248,12 @@
       background: rgba(46, 204, 113, 0.14);
       color: #4ade80;
       border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+
+    .card-rfd .card-badge {
+      background: rgba(239, 68, 68, 0.14);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.3);
     }
 
     .card-title {
@@ -333,6 +344,17 @@
       background: #16a34a;
       transform: translateY(-1px);
       box-shadow: 0 6px 20px rgba(34, 197, 94, 0.50);
+    }
+
+    .card-rfd .btn-play {
+      background: #ef4444;
+      color: #1a0505;
+      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+    }
+    .card-rfd .btn-play:hover {
+      background: #dc2626;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.50);
     }
 
     .btn-docs {
@@ -530,6 +552,33 @@
             <span>🌱 Play Tricky Meadow</span>
           </a>
           <a href="tricky-meadow/README.md" class="btn-docs" title="View Tricky Meadow Documentation">
+            <span>Docs</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 4: Robot Factory Defense -->
+      <article class="game-card card-rfd">
+        <div class="card-top">
+          <div class="card-icon-wrap">🤖</div>
+          <span class="card-badge">Strategy • Tower Defense</span>
+        </div>
+        <h2 class="card-title">Robot Factory Defense</h2>
+        <p class="card-desc">
+          Tactical sci-fi grid tower defense. Deploy kinetic, cryo, arc, and rocket turrets, balance dual Scrap &amp; Circuit economies, research permanent Workshop upgrades, and repel 15 waves of rogue automata.
+        </p>
+        <div class="feature-tags">
+          <span class="tag">🤖 15 Waves &amp; Bosses</span>
+          <span class="tag">⚡ Dual Resource Economy</span>
+          <span class="tag">🔬 6 Workshop Upgrades</span>
+          <span class="tag">🎯 First / Nearest Targeting</span>
+          <span class="tag">🕹️ Pure Canvas2D Engine</span>
+        </div>
+        <div class="card-actions">
+          <a href="robot-factory-defense/dist/" class="btn-play">
+            <span>🤖 Play Robot Factory</span>
+          </a>
+          <a href="robot-factory-defense/README.md" class="btn-docs" title="View Robot Factory Defense Documentation">
             <span>Docs</span>
           </a>
         </div>
