@@ -25,8 +25,10 @@ Actions are deterministic state mutations invoked synchronously:
 - `sell(state, towerId)`: Destroys tower, frees cell, refunds `floor(0.70 * totalScrapPaid)` (70% of Scrap actually paid for that tower including its upgrades).
 - `startWave(state)`: Spawns the next wave when state is ready (between waves, respecting wave spawn gap).
 - `setSpeed(state, n)`: Sets game speed multiplier (1 or 2).
+- `setTowerTargetMode(state, towerId, mode)`: Sets targeting priority for a tower ('first' for furthest along conveyor path, 'nearest' for closest distance). Defaults to 'first'.
 - `buyUpgrade(state, upgradeId)`: Purchases a Workshop upgrade or tower unlock using Circuits. Fast Assembly affects only future purchases.
 - `togglePause(state)`: Toggles the pause flag.
+- `drainEvents(state)`: Returns and drains all accumulated events from `state.events` buffer across discrete sub-ticks.
 
 ### Combat & Leak Rules
 - **Damage Formula**: `damageDealt = max(1, attackDamage - targetArmour)`. Arc Coil ignores target armour entirely.

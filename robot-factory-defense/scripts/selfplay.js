@@ -415,10 +415,11 @@ export async function runSelftest(options = {}) {
  */
 export async function runSelfplay(options = {}) {
   const smoke = options.smoke ?? false;
+  const full = options.full ?? false;
   const verbose = options.verbose ?? true;
 
   if (verbose) {
-    console.log(`Starting Robot Factory Defense selfplay (${smoke ? 'SMOKE MODE' : 'FULL GAME'})...`);
+    console.log(`Starting Robot Factory Defense selfplay (${smoke ? 'SMOKE MODE' : (full ? 'FULL MATRIX MODE' : 'FULL GAME')})...`);
   }
 
   // Start Vite server
@@ -434,6 +435,52 @@ export async function runSelfplay(options = {}) {
 
   try {
     const page = await browser.newPage();
+
+    if (full) {
+      const fullViewports = [
+        { name: 'Mobile Portrait (390x844)', width: 390, height: 844 },
+        { name: 'Tablet Portrait (768x1024)', width: 768, height: 1024 },
+        { name: 'Desktop Widescreen (1440x900)', width: 1440, height: 900 }
+      ];
+
+      for (const vp of fullViewports) {
+        if (verbose) console.log(`[selfplay:full] Testing viewport ${vp.name}...`);
+        await page.setViewport({ width: vp.width, height: vp.height });
+        await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+        await page.waitForFunction(() => typeof window.__rfd !== 'undefined', { timeout: 5000 });
+
+        // Dismiss title
+        await clickSelector(page, ['#btnPlay', '[data-testid="btn-play"]']);
+
+        // Start wave and toggle speed x2
+        await clickSelector(page, ['#btnStartWave', '[data-testid="btn-start-wave"]']);
+        await clickSelector(page, ['#btnSpeed', '[data-testid="btn-speed"]']);
+
+        // Step sim forward
+        await page.evaluate(() => {
+          if (window.__rfd && window.__rfd.step) {
+            for (let i = 0; i < 60; i++) window.__rfd.step(window.__rfd.state, 16.666);
+          }
+        });
+
+        // Mid-wave reload test
+        await page.reload({ waitUntil: 'domcontentloaded' });
+        await page.waitForFunction(() => typeof window.__rfd !== 'undefined', { timeout: 5000 });
+        await assertNoHUDNaN(page);
+
+        // Storage fallback test
+        const savedWave = await page.evaluate(() => {
+          try {
+            localStorage.setItem('rfd:best_wave', JSON.stringify(5));
+            return JSON.parse(localStorage.getItem('rfd:best_wave'));
+          } catch (_e) {
+            return 1;
+          }
+        });
+        if (verbose) console.log(`[selfplay:full] Viewport ${vp.name} verified (storage=${savedWave}).`);
+      }
+    }
+
     await page.setViewport({ width: 960, height: 540 });
 
     const pageErrors = [];
@@ -714,6 +761,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const args = process.argv.slice(2);
   const isSmoke = args.includes('--smoke');
   const isSelftest = args.includes('--selftest');
+  const isFull = args.includes('--full');
 
   if (isSelftest) {
     runSelftest()
@@ -725,7 +773,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
         process.exit(1);
       });
   } else {
-    runSelfplay({ smoke: isSmoke })
+    runSelfplay({ smoke: isSmoke, full: isFull })
       .then(res => {
         process.exit(res.success ? 0 : 1);
       })

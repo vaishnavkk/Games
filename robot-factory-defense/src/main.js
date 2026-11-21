@@ -9,7 +9,8 @@ import {
   startWave,
   setSpeed,
   buyUpgrade,
-  togglePause
+  togglePause,
+  drainEvents
 } from './sim/index.js';
 import { createRenderer } from './render/index.js';
 import { createUI } from './ui/index.js';
@@ -142,6 +143,7 @@ function init() {
         if (renderer) renderer.setSelectedTower(tower);
       }
     },
+    drainEvents: () => drainEvents(state),
     resetGame,
     ui,
     renderer

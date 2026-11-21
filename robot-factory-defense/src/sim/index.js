@@ -203,7 +203,6 @@ function spawnEnemy(state, enemyType) {
 function tickSimulation(state) {
   state.tick++;
   state.simTime += TICK_DT;
-  state.events = [];
 
   // 1. Process Fabricators
   for (const tower of state.towers) {
@@ -466,6 +465,9 @@ function tickSimulation(state) {
  * Advances simulation by real-world delta time `dtMs`.
  */
 export function step(state, dtMs) {
+  if (!dtMs || dtMs <= 0 || Number.isNaN(dtMs)) {
+    return;
+  }
   if (state.paused || state.waveState === 'won' || state.waveState === 'lost') {
     return;
   }
@@ -474,17 +476,40 @@ export function step(state, dtMs) {
   const maxSubSteps = 20;
   let subSteps = 0;
 
+  if (state.accumulatorMs >= TICK_MS) {
+    state.events = [];
+  }
+
   while (state.accumulatorMs >= TICK_MS && subSteps < maxSubSteps) {
     state.accumulatorMs -= TICK_MS;
     tickSimulation(state);
     subSteps++;
+    if (state.waveState === 'won' || state.waveState === 'lost') {
+      break;
+    }
   }
+}
+
+/**
+ * Drains all accumulated events from the simulation state.
+ * @param {object} state
+ * @returns {Array}
+ */
+export function drainEvents(state) {
+  if (!state.events) {
+    state.events = [];
+    return [];
+  }
+  const events = state.events;
+  state.events = [];
+  return events;
 }
 
 /**
  * Place a tower on a buildable cell.
  */
 export function place(state, cell, towerType) {
+  if (!cell || typeof cell.col !== 'number' || typeof cell.row !== 'number') return null;
   if (state.waveState === 'won' || state.waveState === 'lost') return null;
 
   const map = state.config.map;

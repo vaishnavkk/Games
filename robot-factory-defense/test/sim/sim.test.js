@@ -15,6 +15,7 @@ import {
   serialize,
   hashState,
   mulberry32,
+  drainEvents,
   TICK_RATE,
   TICK_MS
 } from '../../src/sim/index.js';
@@ -858,3 +859,103 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
     assert.notEqual(run1.hash, run3.hash, 'Different seeds must produce distinct state hash');
   });
 });
+
+describe('Phase 2.5 Event Fix: Speed-x2 Event Accumulation and Single Emission', () => {
+  it('same seed + same actions produce identical cumulative event counts at x1 and x2', () => {
+    function runGameEvents(seed, speed) {
+      const state = createGame({}, seed);
+      state.speed = speed;
+      place(state, { col: 3, row: 1 }, 'pulse');
+      place(state, { col: 3, row: 3 }, 'pulse');
+      startWave(state);
+
+      let totalEvents = 0;
+      const counts = {};
+
+      // Run until wave clears or 564 ticks
+      while (state.tick < 564) {
+        step(state, 16.666667);
+        const evs = drainEvents(state);
+        totalEvents += evs.length;
+        for (const ev of evs) {
+          counts[ev.type] = (counts[ev.type] || 0) + 1;
+        }
+      }
+      return { totalEvents, counts, waveState: state.waveState, tick: state.tick };
+    }
+
+    const res1 = runGameEvents(42, 1);
+    const res2 = runGameEvents(42, 2);
+
+    assert.equal(res1.totalEvents, res2.totalEvents, `Total events must match at x1 (${res1.totalEvents}) and x2 (${res2.totalEvents})`);
+    assert.deepEqual(res1.counts, res2.counts, 'Per-type event counts must be identical between x1 and x2');
+    assert.equal(res1.waveState, 'cleared');
+    assert.equal(res2.waveState, 'cleared');
+  });
+
+  it('won, lost, and wave_cleared fire exactly once at x2', () => {
+    // 1. Won fires exactly once at x2
+    const stateWon = createGame({}, 123);
+    stateWon.speed = 2;
+    stateWon.wave = 15;
+    stateWon.waveState = 'active';
+    stateWon.enemies = [];
+    step(stateWon, 16.666667);
+    const wonEvents = drainEvents(stateWon).filter(e => e.type === 'won');
+    assert.equal(wonEvents.length, 1, 'Won event must fire exactly once at x2');
+    assert.equal(stateWon.waveState, 'won');
+
+    // Subsequent steps while won must not emit won event again
+    step(stateWon, 16.666667);
+    const wonEvents2 = drainEvents(stateWon).filter(e => e.type === 'won');
+    assert.equal(wonEvents2.length, 0, 'Won event must not re-fire on subsequent steps');
+
+    // 2. Lost fires exactly once at x2
+    const stateLost = createGame({}, 123);
+    stateLost.speed = 2;
+    stateLost.waveState = 'active';
+    stateLost.coreHp = 1;
+    stateLost.enemies = [{
+      id: 'e1',
+      type: 'glitchbot',
+      hp: 10,
+      maxHp: 10,
+      speed: 1,
+      armour: 0,
+      scrapReward: 5,
+      leakDamage: 2,
+      distance: 1000,
+      x: 0,
+      y: 0,
+      slowTimer: 0,
+      slowRatio: 0,
+      isDead: false
+    }];
+    step(stateLost, 16.666667);
+    const lostEvents = drainEvents(stateLost).filter(e => e.type === 'lost');
+    assert.equal(lostEvents.length, 1, 'Lost event must fire exactly once at x2');
+    assert.equal(stateLost.waveState, 'lost');
+
+    // Subsequent steps while lost must not emit lost event again
+    step(stateLost, 16.666667);
+    const lostEvents2 = drainEvents(stateLost).filter(e => e.type === 'lost');
+    assert.equal(lostEvents2.length, 0, 'Lost event must not re-fire on subsequent steps');
+
+    // 3. Wave_cleared fires exactly once at x2
+    const stateClear = createGame({}, 123);
+    stateClear.speed = 2;
+    stateClear.wave = 1;
+    stateClear.waveState = 'active';
+    stateClear.enemies = [];
+    step(stateClear, 16.666667);
+    const clearEvents = drainEvents(stateClear).filter(e => e.type === 'wave_cleared');
+    assert.equal(clearEvents.length, 1, 'Wave_cleared event must fire exactly once at x2');
+    assert.equal(stateClear.waveState, 'cleared');
+
+    // Subsequent step in cleared state must not emit wave_cleared again
+    step(stateClear, 16.666667);
+    const clearEvents2 = drainEvents(stateClear).filter(e => e.type === 'wave_cleared');
+    assert.equal(clearEvents2.length, 0, 'Wave_cleared event must not re-fire while waiting for next wave');
+  });
+});
+

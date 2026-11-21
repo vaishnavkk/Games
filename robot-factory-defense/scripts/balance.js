@@ -663,7 +663,7 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
 }
 
 // Execute when invoked directly
-if (import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}`) {
+if (process.argv[1] && (import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}` || import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/')))) {
   const result = runBalanceVerificationSuite(SEED_COUNT);
   if (!result.allPassed) {
     process.exit(1);

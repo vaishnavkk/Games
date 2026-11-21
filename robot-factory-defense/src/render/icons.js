@@ -197,7 +197,7 @@ function getEnemySprite(type, size) {
 /**
  * Draw enemy icon using cached procedural offscreen canvas.
  */
-export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio, slowed = false) {
+export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio = 1, slowed = false, drawBars = false) {
   const type = enemy.type || 'glitchbot';
   const sprite = getEnemySprite(type, size);
 
@@ -214,20 +214,22 @@ export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio, slowed = false) {
     ctx.stroke();
   }
 
-  // Health Bar
-  const r = size * 0.38;
-  const barW = Math.max(r * 2.2, 28);
-  const barH = enemy.isBoss ? 5 : 3.5;
-  const barY = y - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
+  // Health Bar (only when standalone drawing is requested)
+  if (drawBars) {
+    const r = size * 0.38;
+    const barW = Math.max(r * 2.2, 28);
+    const barH = enemy.isBoss ? 5 : 3.5;
+    const barY = y - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
 
-  // Background
-  ctx.fillStyle = '#000000';
-  ctx.fillRect(x - barW / 2 - 1, barY - 1, barW + 2, barH + 2);
+    // Background
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(x - barW / 2 - 1, barY - 1, barW + 2, barH + 2);
 
-  // Fill
-  const fillW = Math.max(0, Math.min(1, hpRatio)) * barW;
-  ctx.fillStyle = hpRatio > 0.5 ? '#2ed573' : hpRatio > 0.25 ? '#feca57' : '#ff4757';
-  ctx.fillRect(x - barW / 2, barY, fillW, barH);
+    // Fill
+    const fillW = Math.max(0, Math.min(1, hpRatio)) * barW;
+    ctx.fillStyle = hpRatio > 0.5 ? '#2ed573' : hpRatio > 0.25 ? '#feca57' : '#ff4757';
+    ctx.fillRect(x - barW / 2, barY, fillW, barH);
+  }
 }
 
 /**

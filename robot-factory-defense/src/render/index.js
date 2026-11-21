@@ -19,6 +19,8 @@ export function createRenderer(canvas) {
   let previewTowerType = 'pulse';
   let lastTime = performance.now();
   let totalAnimTime = 0;
+  let enemyX = new Float32Array(256);
+  let enemyY = new Float32Array(256);
 
   // Waypoints for distance-to-position projection
   const waypoints = mapData.waypoints;
@@ -45,18 +47,17 @@ export function createRenderer(canvas) {
     totalPathCells += len;
   }
 
-  function getEnemyCoords(enemy, cellSize) {
+  function getEnemyCoordsInto(enemy, cellSize, idx) {
     if (typeof enemy.x === 'number' && typeof enemy.y === 'number') {
-      const ex = enemy.x <= 16 ? (enemy.x + 0.5) * cellSize : enemy.x;
-      const ey = enemy.y <= 9 ? (enemy.y + 0.5) * cellSize : enemy.y;
-      return { x: ex, y: ey };
+      enemyX[idx] = enemy.x <= 16 ? (enemy.x + 0.5) * cellSize : enemy.x;
+      enemyY[idx] = enemy.y <= 9 ? (enemy.y + 0.5) * cellSize : enemy.y;
+      return;
     }
 
     if (typeof enemy.col === 'number' && typeof enemy.row === 'number') {
-      return {
-        x: (enemy.col + 0.5) * cellSize,
-        y: (enemy.row + 0.5) * cellSize
-      };
+      enemyX[idx] = (enemy.col + 0.5) * cellSize;
+      enemyY[idx] = (enemy.row + 0.5) * cellSize;
+      return;
     }
 
     const dist = typeof enemy.distance === 'number' ? enemy.distance : 0;
@@ -66,17 +67,14 @@ export function createRenderer(canvas) {
         const t = seg.len > 0 ? (dist - seg.startDist) / seg.len : 0;
         const col = seg.x1 + seg.dx * t;
         const row = seg.y1 + seg.dy * t;
-        return {
-          x: (col + 0.5) * cellSize,
-          y: (row + 0.5) * cellSize
-        };
+        enemyX[idx] = (col + 0.5) * cellSize;
+        enemyY[idx] = (row + 0.5) * cellSize;
+        return;
       }
     }
 
-    return {
-      x: (waypoints[0].col + 0.5) * cellSize,
-      y: (waypoints[0].row + 0.5) * cellSize
-    };
+    enemyX[idx] = (waypoints[0].col + 0.5) * cellSize;
+    enemyY[idx] = (waypoints[0].row + 0.5) * cellSize;
   }
 
   function render(snap) {
@@ -124,11 +122,15 @@ export function createRenderer(canvas) {
       }
     }
 
-    // 3. Precompute Enemy Coordinates (ONCE per frame)
+    // 3. Precompute Enemy Coordinates (Zero-allocation flat buffers)
     const enemies = snap.enemies || [];
-    const enemyPositions = new Array(enemies.length);
-    for (let i = 0; i < enemies.length; i++) {
-      enemyPositions[i] = getEnemyCoords(enemies[i], cellSize);
+    const enemyCount = enemies.length;
+    if (enemyX.length < enemyCount) {
+      enemyX = new Float32Array(Math.max(enemyCount, 256));
+      enemyY = new Float32Array(Math.max(enemyCount, 256));
+    }
+    for (let i = 0; i < enemyCount; i++) {
+      getEnemyCoordsInto(enemies[i], cellSize, i);
     }
 
     // 4. Draw Placed Towers
@@ -139,51 +141,164 @@ export function createRenderer(canvas) {
       const ty = (tower.row + 0.5) * cellSize;
 
       let angle = 0;
-      if (tower.type !== 'fabricator' && enemyPositions.length > 0) {
+      if (tower.type !== 'fabricator' && enemyCount > 0) {
         let minDistSq = Infinity;
-        let targetPos = null;
-        for (let i = 0; i < enemyPositions.length; i++) {
-          const ep = enemyPositions[i];
-          const dsq = (ep.x - tx) * (ep.x - tx) + (ep.y - ty) * (ep.y - ty);
+        let bestX = 0;
+        let bestY = 0;
+        for (let i = 0; i < enemyCount; i++) {
+          const ex = enemyX[i];
+          const ey = enemyY[i];
+          const dsq = (ex - tx) * (ex - tx) + (ey - ty) * (ey - ty);
           if (dsq < minDistSq) {
             minDistSq = dsq;
-            targetPos = ep;
+            bestX = ex;
+            bestY = ey;
           }
         }
-        if (targetPos) {
-          angle = Math.atan2(targetPos.y - ty, targetPos.x - tx);
-        }
+        angle = Math.atan2(bestY - ty, bestX - tx);
       }
 
       drawTowerIcon(ctx, tower.type, tx, ty, cellSize, tower.level, angle, totalAnimTime);
     }
 
-    // 5. Draw Enemies along Path
-    for (let i = 0; i < enemies.length; i++) {
-      const enemy = enemies[i];
-      const pos = enemyPositions[i];
-      const enemyDef = enemiesData.enemies[enemy.type] || {};
-      const maxHp = enemy.maxHp || enemyDef.hp || 30;
-      const hpRatio = Math.max(0, enemy.hp / maxHp);
-      const slowed = Boolean(enemy.slowTimer > 0 || enemy.slowed);
+    // 5. Draw Enemies along Path (Sprites + Batched Overlays, Zero Garbage Allocation)
+    if (enemyCount > 0) {
+      // 5a. Draw procedural sprites
+      for (let i = 0; i < enemyCount; i++) {
+        drawEnemyIcon(ctx, enemies[i], enemyX[i], enemyY[i], cellSize, 1, false, false);
+      }
 
-      drawEnemyIcon(ctx, enemy, pos.x, pos.y, cellSize, hpRatio, slowed);
+      // 5b. Batched Slowed Frost Rings
+      ctx.strokeStyle = '#00d2d3';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      let hasSlowed = false;
+      const frostRadius = cellSize * 0.38 * 1.35;
+      for (let i = 0; i < enemyCount; i++) {
+        const enemy = enemies[i];
+        if (enemy.slowTimer > 0 || enemy.slowed) {
+          hasSlowed = true;
+          const ex = enemyX[i];
+          const ey = enemyY[i];
+          ctx.moveTo(ex + frostRadius, ey);
+          ctx.arc(ex, ey, frostRadius, 0, Math.PI * 2);
+        }
+      }
+      if (hasSlowed) ctx.stroke();
+
+      // 5c. Batched Health Bars (Backgrounds)
+      const r = cellSize * 0.38;
+      const barW = Math.max(r * 2.2, 28);
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      for (let i = 0; i < enemyCount; i++) {
+        const enemy = enemies[i];
+        const ex = enemyX[i];
+        const ey = enemyY[i];
+        const barH = enemy.isBoss ? 5 : 3.5;
+        const barY = ey - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
+        ctx.rect(ex - barW / 2 - 1, barY - 1, barW + 2, barH + 2);
+      }
+      ctx.fill();
+
+      // 5d. Health Bar Fills (Batched in-place by threshold without object allocations)
+      // Green (> 50%)
+      ctx.fillStyle = '#2ed573';
+      ctx.beginPath();
+      let hasGreen = false;
+      for (let i = 0; i < enemyCount; i++) {
+        const enemy = enemies[i];
+        const enemyDef = enemiesData.enemies[enemy.type] || {};
+        const maxHp = enemy.maxHp || enemyDef.hp || 30;
+        const hpRatio = Math.max(0, enemy.hp / maxHp);
+        if (hpRatio > 0.5) {
+          hasGreen = true;
+          const ex = enemyX[i];
+          const ey = enemyY[i];
+          const fillW = Math.min(1, hpRatio) * barW;
+          const barH = enemy.isBoss ? 5 : 3.5;
+          const barY = ey - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
+          ctx.rect(ex - barW / 2, barY, fillW, barH);
+        }
+      }
+      if (hasGreen) ctx.fill();
+
+      // Yellow (25% - 50%)
+      ctx.fillStyle = '#feca57';
+      ctx.beginPath();
+      let hasYellow = false;
+      for (let i = 0; i < enemyCount; i++) {
+        const enemy = enemies[i];
+        const enemyDef = enemiesData.enemies[enemy.type] || {};
+        const maxHp = enemy.maxHp || enemyDef.hp || 30;
+        const hpRatio = Math.max(0, enemy.hp / maxHp);
+        if (hpRatio <= 0.5 && hpRatio > 0.25) {
+          hasYellow = true;
+          const ex = enemyX[i];
+          const ey = enemyY[i];
+          const fillW = hpRatio * barW;
+          const barH = enemy.isBoss ? 5 : 3.5;
+          const barY = ey - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
+          ctx.rect(ex - barW / 2, barY, fillW, barH);
+        }
+      }
+      if (hasYellow) ctx.fill();
+
+      // Red (<= 25%)
+      ctx.fillStyle = '#ff4757';
+      ctx.beginPath();
+      let hasRed = false;
+      for (let i = 0; i < enemyCount; i++) {
+        const enemy = enemies[i];
+        const enemyDef = enemiesData.enemies[enemy.type] || {};
+        const maxHp = enemy.maxHp || enemyDef.hp || 30;
+        const hpRatio = Math.max(0, enemy.hp / maxHp);
+        if (hpRatio <= 0.25) {
+          hasRed = true;
+          const ex = enemyX[i];
+          const ey = enemyY[i];
+          const fillW = hpRatio * barW;
+          const barH = enemy.isBoss ? 5 : 3.5;
+          const barY = ey - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
+          ctx.rect(ex - barW / 2, barY, fillW, barH);
+        }
+      }
+      if (hasRed) ctx.fill();
     }
 
-    // 6. Draw Projectiles if present in snapshot
+    // 6. Draw Projectiles (Batched by munition type)
     if (snap.projectiles && snap.projectiles.length > 0) {
-      ctx.save();
-      for (let i = 0; i < snap.projectiles.length; i++) {
-        const proj = snap.projectiles[i];
-        const px = proj.x <= 16 ? (proj.x + 0.5) * cellSize : proj.x;
-        const py = proj.y <= 9 ? (proj.y + 0.5) * cellSize : proj.y;
+      const projs = snap.projectiles;
 
-        ctx.fillStyle = proj.type === 'rocket' ? '#ff793f' : '#00d2d3';
-        ctx.beginPath();
-        ctx.arc(px, py, proj.type === 'rocket' ? 4 : 2.5, 0, Math.PI * 2);
-        ctx.fill();
+      // 6a. Rockets
+      ctx.fillStyle = '#ff793f';
+      ctx.beginPath();
+      let hasRockets = false;
+      for (let i = 0; i < projs.length; i++) {
+        if (projs[i].type === 'rocket') {
+          hasRockets = true;
+          const px = projs[i].x <= 16 ? (projs[i].x + 0.5) * cellSize : projs[i].x;
+          const py = projs[i].y <= 9 ? (projs[i].y + 0.5) * cellSize : projs[i].y;
+          ctx.moveTo(px + 4, py);
+          ctx.arc(px, py, 4, 0, Math.PI * 2);
+        }
       }
-      ctx.restore();
+      if (hasRockets) ctx.fill();
+
+      // 6b. Pulse / Kinetic
+      ctx.fillStyle = '#00d2d3';
+      ctx.beginPath();
+      let hasKinetic = false;
+      for (let i = 0; i < projs.length; i++) {
+        if (projs[i].type !== 'rocket') {
+          hasKinetic = true;
+          const px = projs[i].x <= 16 ? (projs[i].x + 0.5) * cellSize : projs[i].x;
+          const py = projs[i].y <= 9 ? (projs[i].y + 0.5) * cellSize : projs[i].y;
+          ctx.moveTo(px + 2.5, py);
+          ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+        }
+      }
+      if (hasKinetic) ctx.fill();
     }
 
     // 7. Draw Visual Effects (Beams, Sparks, Explosions)

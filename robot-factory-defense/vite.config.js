@@ -8,9 +8,6 @@ export default defineConfig({
     sourcemap: false
   },
   server: {
-    port: 3000,
-    fs: {
-      strict: false
-    }
+    port: 3000
   }
 });

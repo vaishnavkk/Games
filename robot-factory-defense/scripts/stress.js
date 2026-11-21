@@ -10,7 +10,7 @@ const projectRoot = path.resolve(__dirname, '..');
 
 export async function runStressTest(options = {}) {
   const enemyCount = options.enemies || 150;
-  const projectileCount = options.projectiles || 50;
+  const projectileCount = options.projectiles || 100;
   const sampleFrames = options.frames || 200;
   const cpuThrottleRate = options.throttle || 4;
   const verbose = options.verbose ?? true;
@@ -125,19 +125,24 @@ export async function runStressTest(options = {}) {
 
           // Step simulation tick
           if (window.__rfd && window.__rfd.step && window.__rfd.state) {
-            window.__rfd.step(window.__rfd.state, 16.666);
-            // Snapshot
-            if (window.__rfd.snapshot) {
-              window.__rfd.snapshot();
+            window.__rfd.step(16.666);
+            const snap = window.__rfd.snapshot ? window.__rfd.snapshot() : null;
+            if (snap && window.__rfd.renderer) {
+              window.__rfd.renderer.render(snap);
+            }
+            if (snap && window.__rfd.ui) {
+              window.__rfd.ui.renderHUD(snap);
             }
           }
 
           const t1 = performance.now();
           const frameDuration = t1 - t0;
-          durations.push(frameDuration);
+          if (framesCollected >= 10) {
+            durations.push(frameDuration);
+          }
           framesCollected++;
 
-          if (framesCollected < framesToMeasure) {
+          if (framesCollected < framesToMeasure + 10) {
             requestAnimationFrame(measureFrame);
           } else {
             resolve(durations);
