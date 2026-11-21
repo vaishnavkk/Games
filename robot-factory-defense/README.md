@@ -14,11 +14,11 @@ A tactical sci-fi grid tower defense game set in an automated assembly plant. De
 - **Circuits**: High-tech components produced over time by Fabricators. Used to unlock advanced weaponry (Arc Coil, Rocket Pod) and research permanent Workshop upgrades.
 
 ### Defensive Turrets
-- **Bolt Turret** (100 Scrap): High-cadence kinetic defense targeting the front-runner enemy.
-- **Flame Vent** (130 Scrap): Continuous cone of fire dealing ground-only area-of-effect damage.
-- **Arc Coil** (175 Scrap, 20 Circuits to unlock): Armour-piercing electrical arc that chains across up to 3 nearby enemies.
-- **Rocket Pod** (220 Scrap, 40 Circuits to unlock): Long-range explosive artillery delivering heavy splash damage.
-- **Fabricator** (75 Scrap, max 4): Automated production unit generating 1 Circuit every 10 seconds.
+- **Pulse Turret** (60 Scrap): Rapid-fire kinetic turret targeting single ground units.
+- **Coolant Sprayer** (80 Scrap): Sprays cryogenic foam, reducing enemy movement speed by 50% for 2.0s (non-stacking).
+- **Arc Coil** (100 Scrap, 20 Circuits to unlock): High-voltage electrical arcs chaining across up to 3 nearby enemies, completely ignoring armor.
+- **Rocket Pod** (120 Scrap, 40 Circuits to unlock): Long-range explosive cluster rockets delivering heavy area splash damage.
+- **Fabricator** (75 Scrap, max 4): Dedicated automated assembly unit generating 1 Circuit every 10 seconds.
 
 ### Rogue Automata & Bosses
 - **Glitchbot**: Fast, fragile scout automaton deployed in swarm waves.
