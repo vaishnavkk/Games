@@ -11,7 +11,7 @@ const projectRoot = path.resolve(__dirname, '..');
 export async function runStressTest(options = {}) {
   const enemyCount = options.enemies || 150;
   const projectileCount = options.projectiles || 100;
-  const sampleFrames = options.frames || 200;
+  const sampleFrames = options.frames || 600;
   const cpuThrottleRate = options.throttle || 4;
   const verbose = options.verbose ?? true;
 
@@ -114,6 +114,9 @@ export async function runStressTest(options = {}) {
     if (verbose) console.log(`[stress] Active entities: ${setupResult.enemies} enemies, ${setupResult.projectiles} projectiles.`);
     if (verbose) console.log(`[stress] Measuring ${sampleFrames} frames under 4x CPU throttle...`);
 
+    const heapStartBytes = await page.evaluate(() => performance.memory ? performance.memory.usedJSHeapSize : 0);
+    const heapStartMB = (heapStartBytes / (1024 * 1024)).toFixed(1);
+
     // Measure frame durations
     const metrics = await page.evaluate(async (framesToMeasure) => {
       return new Promise((resolve) => {
@@ -153,6 +156,9 @@ export async function runStressTest(options = {}) {
       });
     }, sampleFrames);
 
+    const heapEndBytes = await page.evaluate(() => performance.memory ? performance.memory.usedJSHeapSize : 0);
+    const heapEndMB = (heapEndBytes / (1024 * 1024)).toFixed(1);
+
     // Calculate percentiles
     metrics.sort((a, b) => a - b);
     const sum = metrics.reduce((acc, v) => acc + v, 0);
@@ -177,6 +183,8 @@ export async function runStressTest(options = {}) {
       console.log(`- 95th Percentile (p95): ${p95.toFixed(2)} ms (Gate threshold <= 20.00 ms)`);
       console.log(`- 99th Percentile (p99): ${p99.toFixed(2)} ms`);
       console.log(`- Max Frame Time: ${max.toFixed(2)} ms`);
+      console.log(`- Memory Heap Start: ${heapStartMB} MB`);
+      console.log(`- Memory Heap End: ${heapEndMB} MB`);
       console.log(`- Est. Processing Throughput: ~${Math.round(fpsEquivalent)} ticks/sec under throttle`);
       console.log(`======================================================\n`);
     }
@@ -184,14 +192,14 @@ export async function runStressTest(options = {}) {
     const passed = p95 <= 20.0;
     if (!passed) {
       console.error(`[stress] GATE FAILED: p95 frame processing duration (${p95.toFixed(2)} ms) exceeds 20.00 ms budget!`);
-      return { success: false, p95, mean, max };
+      return { success: false, p50: median, p95, mean, max, heapStartMB, heapEndMB };
     }
 
     if (verbose) {
       console.log(`[stress] GATE PASSED: p95 (${p95.toFixed(2)} ms) <= 20.00 ms!`);
     }
 
-    return { success: true, p95, mean, max };
+    return { success: true, p50: median, p95, mean, max, heapStartMB, heapEndMB };
 
   } finally {
     await browser.close();

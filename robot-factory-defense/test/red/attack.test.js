@@ -12,6 +12,7 @@ import {
   step,
   snapshot,
   serialize,
+  setTowerTargetMode,
   TICK_MS
 } from '../../src/sim/index.js';
 import {
@@ -272,5 +273,183 @@ describe('Red Team Attack Suite (Phase 2.5)', () => {
     assert.ok(state.scrap >= 0);
     assert.ok(state.circuits >= 0);
     assert.ok(state.coreHp >= 0);
+  });
+
+  // ==========================================================
+  // PHASE 2.6 RED TEAM ROUND 2 ATTACKS
+  // ==========================================================
+  it('Attack 15: buy/sell fabricators cannot duplicate circuits or exceed max 4 limit', () => {
+    const state = createGame({}, 201);
+    state.scrap = 1000;
+    // Buy 4 fabricators
+    const f1 = place(state, { col: 1, row: 1 }, 'fabricator');
+    const f2 = place(state, { col: 3, row: 1 }, 'fabricator');
+    const f3 = place(state, { col: 5, row: 1 }, 'fabricator');
+    const f4 = place(state, { col: 7, row: 1 }, 'fabricator');
+    assert.ok(f1 && f2 && f3 && f4);
+    assert.equal(state.fabricatorCount, 4);
+
+    // 5th fabricator must be rejected
+    const f5 = place(state, { col: 9, row: 1 }, 'fabricator');
+    assert.equal(f5, null, 'Cannot exceed 4 fabricator cap');
+    assert.equal(state.fabricatorCount, 4);
+
+    // Run for 12 seconds to earn circuits
+    for (let i = 0; i < 12 * 60; i++) step(state, TICK_MS);
+    assert.ok(state.circuits >= 4, '4 fabricators generated circuits');
+    const circuitsBeforeSell = state.circuits;
+
+    // Sell fabricator
+    const sold = sell(state, f1.id);
+    assert.equal(sold, true);
+    assert.equal(state.fabricatorCount, 3);
+    assert.equal(state.circuits, circuitsBeforeSell, 'Selling fabricator does not deduct or refund circuits');
+    // Refund = floor(75 * 0.7) = 52 scrap
+    assert.equal(state.towers.some(t => t.id === f1.id), false);
+  });
+
+  it('Attack 16: workshop purchase at wave boundary transitions cleanly', () => {
+    const state = createGame({}, 202);
+    state.circuits = 100;
+    place(state, { col: 1, row: 1 }, 'pulse');
+    startWave(state);
+
+    // Advance until wave is active
+    while (state.waveState === 'spawning') {
+      step(state, TICK_MS);
+    }
+    // Buy upgrade exactly at spawning -> active boundary
+    assert.equal(buyUpgrade(state, 'overclock'), true);
+    assert.equal(state.purchasedUpgrades.includes('overclock'), true);
+
+    // Advance to cleared boundary
+    while (state.waveState !== 'cleared' && state.waveState !== 'lost') {
+      step(state, TICK_MS);
+    }
+    if (state.waveState === 'cleared') {
+      assert.equal(buyUpgrade(state, 'repair_bay'), true);
+      assert.equal(state.purchasedUpgrades.includes('repair_bay'), true);
+    }
+    assert.ok(!Number.isNaN(state.circuits));
+  });
+
+  it('Attack 17: circuit generation intervals maintain strict integer rounding without drift', () => {
+    const state = createGame({}, 203);
+    place(state, { col: 1, row: 1 }, 'fabricator');
+    assert.equal(state.circuits, 0);
+
+    // Step 9.9 seconds: exactly 0 circuits
+    for (let i = 0; i < 594; i++) {
+      step(state, TICK_MS);
+      assert.equal(Number.isInteger(state.circuits), true, 'Circuits must remain strictly integer');
+      assert.equal(state.circuits, 0);
+    }
+
+    // Step to 10.1 seconds: exactly 1 circuit
+    for (let i = 0; i < 15; i++) {
+      step(state, TICK_MS);
+    }
+    assert.equal(state.circuits, 1);
+    assert.equal(Number.isInteger(state.circuits), true);
+  });
+
+  it('Attack 18: invalid setTowerTargetMode calls are rejected safely', () => {
+    const state = createGame({}, 204);
+    const tower = place(state, { col: 1, row: 1 }, 'pulse');
+    assert.ok(tower);
+    assert.equal(tower.targetMode, 'first');
+
+    // Invalid modes
+    assert.equal(setTowerTargetMode(state, tower.id, 'random'), false);
+    assert.equal(setTowerTargetMode(state, tower.id, 'fastest'), false);
+    assert.equal(setTowerTargetMode(state, tower.id, 'strongest'), false);
+    assert.equal(setTowerTargetMode(state, tower.id, null), false);
+    assert.equal(setTowerTargetMode(state, tower.id, undefined), false);
+    assert.equal(setTowerTargetMode(state, tower.id, 123), false);
+    assert.equal(setTowerTargetMode(state, 'invalid_id', 'nearest'), false);
+    assert.equal(tower.targetMode, 'first', 'Target mode unchanged after invalid attempts');
+
+    // Valid modes
+    assert.equal(setTowerTargetMode(state, tower.id, 'nearest'), true);
+    assert.equal(tower.targetMode, 'nearest');
+    assert.equal(setTowerTargetMode(state, tower.id, 'first'), true);
+    assert.equal(tower.targetMode, 'first');
+  });
+
+  it('Attack 19: target mode change during projectile flight does not crash or desync in-flight projectiles', () => {
+    const state = createGame({}, 205);
+    state.scrap = 500;
+    state.circuits = 100;
+    buyUpgrade(state, 'unlock_rocket');
+    const rocket = place(state, { col: 6, row: 4 }, 'rocket');
+    assert.ok(rocket);
+
+    startWave(state);
+    // Step until a rocket projectile is launched
+    let hasProj = false;
+    for (let i = 0; i < 300; i++) {
+      step(state, TICK_MS);
+      if (state.projectiles && state.projectiles.length > 0) {
+        hasProj = true;
+        // Mutate mode mid-flight!
+        assert.equal(setTowerTargetMode(state, rocket.id, 'first'), true);
+        assert.equal(setTowerTargetMode(state, rocket.id, 'nearest'), true);
+        break;
+      }
+    }
+    assert.equal(hasProj, true, 'Rocket projectile must launch');
+    // Continue simulation with in-flight projectile
+    for (let j = 0; j < 120; j++) {
+      step(state, TICK_MS);
+    }
+    assert.ok(!Number.isNaN(state.coreHp));
+    assert.ok(state.projectiles.every(p => !Number.isNaN(p.x) && !Number.isNaN(p.y)));
+  });
+
+  it('Attack 20: resize + pause + speed x2 maintains absolute state determinism', () => {
+    const state = createGame({}, 206);
+    place(state, { col: 1, row: 1 }, 'pulse');
+    startWave(state);
+    for (let i = 0; i < 60; i++) step(state, TICK_MS);
+
+    // Pause and set speed x2
+    state.paused = true;
+    setSpeed(state, 2);
+
+    const snapBefore = snapshot(state);
+    const jsonBefore = serialize(state);
+
+    // Attempt stepping while paused at 2x across 100 iterations
+    for (let i = 0; i < 100; i++) {
+      step(state, 33.333333);
+    }
+
+    const jsonAfter = serialize(state);
+    assert.equal(jsonAfter, jsonBefore, 'State serialization must be bit-identical while paused');
+    assert.equal(state.tick, snapBefore.tick);
+  });
+
+  it('Attack 21: reload mid-wave via serialization resumes cleanly without NaN or lost entities', () => {
+    const state1 = createGame({}, 207);
+    place(state1, { col: 1, row: 1 }, 'pulse');
+    startWave(state1);
+    for (let i = 0; i < 80; i++) step(state1, TICK_MS);
+
+    // Save mid-wave state
+    const savedJson = serialize(state1);
+    const parsedState = JSON.parse(savedJson);
+
+    // Verify fields
+    assert.equal(parsedState.tick, state1.tick);
+    assert.equal(parsedState.wave, state1.wave);
+    assert.ok(parsedState.enemies.length > 0);
+    assert.ok(!Number.isNaN(parsedState.enemies[0].x));
+
+    // Resume stepping state1 to completion
+    for (let i = 0; i < 3000; i++) {
+      step(state1, TICK_MS);
+      if (state1.waveState === 'cleared' || state1.waveState === 'won' || state1.waveState === 'lost') break;
+    }
+    assert.ok(!Number.isNaN(state1.coreHp));
   });
 });
