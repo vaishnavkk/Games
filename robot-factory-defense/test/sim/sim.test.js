@@ -497,9 +497,10 @@ describe('Simulation Combat & Mechanic Rules', () => {
     assert.equal(state.projectiles.length, 0, 'Projectile must detonate and clear');
     assert.equal(detonateEvents.length, 2, 'Primary target and near enemy within splash radius must be hit');
 
-    // Damage = 50 - 2 (armour) = 48
+    const rocketL1Dmg = state.config.towers.towers.rocket.levels[0].damage;
+    const expectedDmg = Math.max(1, rocketL1Dmg - 2);
     detonateEvents.forEach(h => {
-      assert.equal(h.damage, 48);
+      assert.equal(h.damage, expectedDmg);
     });
 
     const outside = state.enemies.find(e => e.id === 'rocket_splash_outside');

@@ -123,7 +123,7 @@
         {
           "level": 1,
           "cost": 105,
-          "damage": 50,
+          "damage": 38,
           "fireRate": 0.45,
           "range": 3.2,
           "splashRadius": 1.5,
@@ -132,7 +132,7 @@
         {
           "level": 2,
           "cost": 80,
-          "damage": 70,
+          "damage": 48,
           "fireRate": 0.5,
           "range": 3.3,
           "splashRadius": 1.6,
@@ -141,7 +141,7 @@
         {
           "level": 3,
           "cost": 110,
-          "damage": 95,
+          "damage": 60,
           "fireRate": 0.55,
           "range": 3.4,
           "splashRadius": 1.8,
