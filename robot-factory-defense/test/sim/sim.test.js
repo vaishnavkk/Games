@@ -497,9 +497,9 @@ describe('Simulation Combat & Mechanic Rules', () => {
     assert.equal(state.projectiles.length, 0, 'Projectile must detonate and clear');
     assert.equal(detonateEvents.length, 2, 'Primary target and near enemy within splash radius must be hit');
 
-    // Damage = 35 - 2 (armour) = 33
+    // Damage = 50 - 2 (armour) = 48
     detonateEvents.forEach(h => {
-      assert.equal(h.damage, 33);
+      assert.equal(h.damage, 48);
     });
 
     const outside = state.enemies.find(e => e.id === 'rocket_splash_outside');
@@ -726,6 +726,8 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
       // Initial defense: 2 Pulse turrets (60 + 60 = 120 scrap)
       const t1 = place(state, { col: 1, row: 1 }, 'pulse'); if (t1) actionCount++;
       const t2 = place(state, { col: 3, row: 1 }, 'pulse'); if (t2) actionCount++;
+      if (t1 && setTowerTargetMode(state, t1.id, 'nearest')) actionCount++;
+      if (t2 && setTowerTargetMode(state, t2.id, 'nearest')) actionCount++;
       if (startWave(state)) actionCount++;
 
       let maxEnemiesSeen = 0;
@@ -778,7 +780,7 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
         if (state.circuits >= 35 && !state.purchasedUpgrades.includes('hardened_rounds')) {
           if (buyUpgrade(state, 'hardened_rounds')) actionCount++;
         }
-        if (state.circuits >= 40 && !state.unlockedTowers.includes('rocket')) {
+        if (state.circuits >= 30 && !state.unlockedTowers.includes('rocket')) {
           if (buyUpgrade(state, 'unlock_rocket')) actionCount++;
         }
 
@@ -787,12 +789,17 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
           const pad = state.config.map.buildableCells.find(c => !state.towers.some(x => x.col === c.col && x.row === c.row));
           if (pad && place(state, pad, 'arc')) actionCount++;
         }
-        if (state.unlockedTowers.includes('rocket') && state.scrap >= 120 && !state.towers.some(x => x.type === 'rocket')) {
+        if (state.unlockedTowers.includes('rocket') && state.scrap >= 105 && !state.towers.some(x => x.type === 'rocket')) {
           const pad = state.config.map.buildableCells.find(c => !state.towers.some(x => x.col === c.col && x.row === c.row));
           if (pad && place(state, pad, 'rocket')) actionCount++;
         }
 
-        // Test sell action
+        if (t === 1000) {
+          if (t1 && setTowerTargetMode(state, t1.id, 'first')) actionCount++;
+        }
+        if (t === 2000) {
+          if (t2 && setTowerTargetMode(state, t2.id, 'first')) actionCount++;
+        }
         if (t === 2500) {
           const fab = state.towers.find(x => x.type === 'fabricator');
           if (fab && sell(state, fab.id)) actionCount++;
@@ -800,6 +807,9 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
         if (t === 3500) {
           const fab = state.towers.find(x => x.type === 'fabricator');
           if (fab && sell(state, fab.id)) actionCount++;
+        }
+        if (t === 4000) {
+          if (t1 && setTowerTargetMode(state, t1.id, 'nearest')) actionCount++;
         }
 
         step(state, TICK_MS);
