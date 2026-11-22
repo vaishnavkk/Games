@@ -118,7 +118,7 @@
       "name": "Rocket Rack",
       "description": "Launches heavy cluster rockets with devastating area splash damage and long range.",
       "unlockedByDefault": false,
-      "unlockCircuitCost": 30,
+      "unlockCircuitCost": 20,
       "levels": [
         {
           "level": 1,

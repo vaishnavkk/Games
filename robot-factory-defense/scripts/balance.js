@@ -291,7 +291,8 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
         if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
       } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
         const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
-        if (nextWave >= 7 && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+        const minW = excludedTower === 'arc' ? 5 : 7;
+        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
       } else {
         if (state.circuits >= 30) buyUpgrade(state, 'fast_assembly');
         if (state.circuits >= 30) buyUpgrade(state, 'overclock');
@@ -305,14 +306,16 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
         if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
       } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
         const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
-        if (nextWave >= 7 && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+        const minW = excludedTower === 'arc' ? 5 : 7;
+        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
       }
     } else if (typeof workshopMode === 'string') {
       if (!canBuild('arc') && excludedTower !== 'arc') {
         if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
       } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
         const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
-        if (nextWave >= 7 && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+        const minW = excludedTower === 'arc' ? 5 : 7;
+        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
       } else {
         const u = state.config.upgrades.workshop.globalUpgrades.find(x => x.id === workshopMode);
         if (u && state.circuits >= u.cost) {

@@ -13,7 +13,7 @@
         "id": "unlock_rocket",
         "name": "Unlock Rocket Rack",
         "description": "Unlock long-range cluster rocket artillery with area splash.",
-        "cost": 40,
+        "cost": 20,
         "type": "tower_unlock",
         "target": "rocket"
       }
