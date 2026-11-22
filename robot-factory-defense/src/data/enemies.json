@@ -30,7 +30,7 @@
       "id": "spark_drone",
       "name": "Spark Drone",
       "description": "Fast hovering drone immune to path hazards.",
-      "hp": 50,
+      "hp": 70,
       "speed": 2.2,
       "armour": 0,
       "scrap": 7,
