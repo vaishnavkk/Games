@@ -16,6 +16,7 @@ import {
   hashState,
   mulberry32,
   drainEvents,
+  killEnemy,
   TICK_RATE,
   TICK_MS
 } from '../../src/sim/index.js';
@@ -956,6 +957,100 @@ describe('Phase 2.5 Event Fix: Speed-x2 Event Accumulation and Single Emission',
     step(stateClear, 16.666667);
     const clearEvents2 = drainEvents(stateClear).filter(e => e.type === 'wave_cleared');
     assert.equal(clearEvents2.length, 0, 'Wave_cleared event must not re-fire while waiting for next wave');
+  });
+});
+
+describe('Phase 3 Parameterized Simulation: scrapMultiplier, hpMultiplier, removedTower, workshopMode', () => {
+  it('scrapMultiplier scales starting scrap, enemy kill scrap, and wave_cleared reward scrap', () => {
+    // 1. Starting scrap scaling
+    const s08 = createGame({ scrapMultiplier: 0.8 }, 123);
+    assert.equal(s08.scrap, Math.round(150 * 0.8)); // 120
+    assert.equal(s08.scrapMultiplier, 0.8);
+
+    const s12 = createGame({ scrapMultiplier: 1.2 }, 123);
+    assert.equal(s12.scrap, Math.round(150 * 1.2)); // 180
+
+    // Also supports scrapScale alias
+    const sScale = createGame({ scrapScale: 0.8 }, 123);
+    assert.equal(sScale.scrap, 120);
+
+    // 2. Enemy kill scrap scaling
+    const state = createGame({ scrapMultiplier: 0.8 }, 123);
+    const initialScrap = state.scrap;
+    const dummyEnemy = {
+      id: 'e_test',
+      type: 'spark_drone',
+      scrap: 10,
+      hp: 10,
+      isDead: false
+    };
+    killEnemy(state, dummyEnemy);
+    // Math.round(10 * 0.8) = 8
+    assert.equal(state.scrap - initialScrap, 8);
+    const killEvent = state.events.find(e => e.type === 'killed');
+    assert.ok(killEvent);
+    assert.equal(killEvent.scrapReward, 8);
+
+    // 3. Wave clear reward scrap scaling
+    state.wave = 1;
+    state.waveState = 'active';
+    state.enemies = [];
+    const scrapBeforeClear = state.scrap;
+    step(state, 16.666667);
+    const clearEvent = state.events.find(e => e.type === 'wave_cleared');
+    assert.ok(clearEvent);
+    // Wave 1 reward is scaled by scrapMultiplier: Math.round(wave1Reward * 0.8)
+    const expectedWave1Reward = Math.round(state.config.waves.waves[0].rewardScrap * 0.8);
+    assert.equal(clearEvent.rewardScrap, expectedWave1Reward);
+    assert.equal(state.scrap - scrapBeforeClear, expectedWave1Reward);
+  });
+
+  it('hpMultiplier scales spawned enemy hp and maxHp', () => {
+    const sHighHp = createGame({ hpMultiplier: 1.1 }, 123);
+    startWave(sHighHp); // wave 1 spawns glitchbots (base hp 30)
+    // Step 1 tick to spawn glitchbot
+    step(sHighHp, 16.666667);
+    const e1 = sHighHp.enemies[0];
+    assert.ok(e1);
+    // Math.max(1, Math.round(30 * 1.1)) = 33
+    assert.equal(e1.hp, 33);
+    assert.equal(e1.maxHp, 33);
+
+    const sLowHp = createGame({ hpMultiplier: 0.9 }, 123);
+    startWave(sLowHp);
+    step(sLowHp, 16.666667);
+    const e2 = sLowHp.enemies[0];
+    assert.ok(e2);
+    // Math.max(1, Math.round(30 * 0.9)) = 27
+    assert.equal(e2.hp, 27);
+    assert.equal(e2.maxHp, 27);
+  });
+
+  it('removedTower blocks building and unlock of removed tower type', () => {
+    // 1. Removed Pulse
+    const sNoPulse = createGame({ removedTower: 'pulse' }, 123);
+    assert.equal(sNoPulse.unlockedTowers.includes('pulse'), false);
+    const p1 = place(sNoPulse, { col: 1, row: 1 }, 'pulse');
+    assert.equal(p1, null);
+
+    // 2. Removed Arc: buyUpgrade('unlock_arc') must be rejected
+    const sNoArc = createGame({ removedTower: 'arc' }, 123);
+    sNoArc.circuits = 100;
+    const boughtArc = buyUpgrade(sNoArc, 'unlock_arc');
+    assert.equal(boughtArc, false);
+    assert.equal(sNoArc.unlockedTowers.includes('arc'), false);
+
+    // 3. Other unlocked towers still buildable
+    const pCool = place(sNoPulse, { col: 1, row: 1 }, 'coolant');
+    assert.ok(pCool);
+  });
+
+  it('createGame preserves workshopMode on state', () => {
+    const sNone = createGame({ workshopMode: 'none' }, 123);
+    assert.equal(sNone.workshopMode, 'none');
+
+    const sOverclock = createGame({ workshopMode: 'overclock' }, 123);
+    assert.equal(sOverclock.workshopMode, 'overclock');
   });
 });
 

@@ -155,12 +155,13 @@ export function createGame(config = {}, seed = 12345) {
 /**
  * Process enemy death and award scrap reward.
  */
-function handleEnemyKill(state, enemy) {
+export function killEnemy(state, enemy) {
   if (enemy.isDead) return;
   enemy.isDead = true;
   enemy.hp = 0;
 
-  let scrapReward = enemy.scrap;
+  const mult = state.scrapMultiplier ?? 1.0;
+  let scrapReward = Math.round(enemy.scrap * mult);
   if (state.purchasedUpgrades.includes('scrap_magnet')) {
     scrapReward = Math.round(scrapReward * 1.20);
   }
@@ -170,6 +171,8 @@ function handleEnemyKill(state, enemy) {
   state.stats.enemiesKilled += 1;
   state.events.push({ type: 'killed', enemyId: enemy.id, scrapReward });
 }
+
+export const handleEnemyKill = killEnemy;
 
 /**
  * Spawn an enemy into the simulation.
@@ -460,7 +463,8 @@ function tickSimulation(state) {
   if (state.waveState === 'active' && state.enemies.length === 0) {
     state.waveState = 'cleared';
     const waveDef = state.config.waves.waves.find(w => w.wave === state.wave);
-    const rewardScrap = waveDef?.rewardScrap || 0;
+    const baseReward = waveDef?.rewardScrap || 0;
+    const rewardScrap = Math.round(baseReward * (state.scrapMultiplier ?? 1.0));
     state.scrap += rewardScrap;
     state.stats.scrapEarned += rewardScrap;
     state.events.push({ type: 'wave_cleared', wave: state.wave, rewardScrap });
