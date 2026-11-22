@@ -1,0 +1,181 @@
+{
+  "metadata": {
+    "seedStart": 1000,
+    "seedEnd": 1299,
+    "seedCount": 300,
+    "totalGamesRun": 1800,
+    "wallClockSeconds": 228.02,
+    "timestamp": "2026-11-22T07:09:07.762Z"
+  },
+  "baseline": {
+    "name": "Competent Bot (Full Roster)",
+    "runs": 300,
+    "wins": 300,
+    "winRate": 100,
+    "ci": 0,
+    "medianWave": 15
+  },
+  "ablations": {
+    "pulse": {
+      "tower": "pulse",
+      "excludedTower": "pulse",
+      "runs": 300,
+      "wins": 0,
+      "winRate": 0,
+      "ci": 0,
+      "drop": 100,
+      "medianWave": 3,
+      "target": "drop >= 5.0 pts",
+      "pass": true
+    },
+    "coolant": {
+      "tower": "coolant",
+      "excludedTower": "coolant",
+      "runs": 300,
+      "wins": 300,
+      "winRate": 100,
+      "ci": 0,
+      "drop": 0,
+      "medianWave": 15,
+      "target": "drop >= 5.0 pts",
+      "pass": false
+    },
+    "arc": {
+      "tower": "arc",
+      "excludedTower": "arc",
+      "runs": 300,
+      "wins": 300,
+      "winRate": 100,
+      "ci": 0,
+      "drop": 0,
+      "medianWave": 15,
+      "target": "drop >= 5.0 pts",
+      "pass": false
+    },
+    "rocket": {
+      "tower": "rocket",
+      "excludedTower": "rocket",
+      "runs": 300,
+      "wins": 300,
+      "winRate": 100,
+      "ci": 0,
+      "drop": 0,
+      "medianWave": 15,
+      "target": "drop >= 5.0 pts",
+      "pass": false
+    },
+    "fabricator": {
+      "tower": "fabricator",
+      "excludedTower": "fabricator",
+      "runs": 300,
+      "wins": 0,
+      "winRate": 0,
+      "ci": 0,
+      "drop": 100,
+      "medianWave": 12,
+      "target": "drop >= 5.0 pts",
+      "pass": true
+    }
+  },
+  "results": [
+    {
+      "tower": "pulse",
+      "excludedTower": "pulse",
+      "runs": 300,
+      "wins": 0,
+      "winRate": 0,
+      "ci": 0,
+      "drop": 100,
+      "medianWave": 3,
+      "target": "drop >= 5.0 pts",
+      "pass": true
+    },
+    {
+      "tower": "coolant",
+      "excludedTower": "coolant",
+      "runs": 300,
+      "wins": 300,
+      "winRate": 100,
+      "ci": 0,
+      "drop": 0,
+      "medianWave": 15,
+      "target": "drop >= 5.0 pts",
+      "pass": false
+    },
+    {
+      "tower": "arc",
+      "excludedTower": "arc",
+      "runs": 300,
+      "wins": 300,
+      "winRate": 100,
+      "ci": 0,
+      "drop": 0,
+      "medianWave": 15,
+      "target": "drop >= 5.0 pts",
+      "pass": false
+    },
+    {
+      "tower": "rocket",
+      "excludedTower": "rocket",
+      "runs": 300,
+      "wins": 300,
+      "winRate": 100,
+      "ci": 0,
+      "drop": 0,
+      "medianWave": 15,
+      "target": "drop >= 5.0 pts",
+      "pass": false
+    },
+    {
+      "tower": "fabricator",
+      "excludedTower": "fabricator",
+      "runs": 300,
+      "wins": 0,
+      "winRate": 0,
+      "ci": 0,
+      "drop": 100,
+      "medianWave": 12,
+      "target": "drop >= 5.0 pts",
+      "pass": true
+    }
+  ],
+  "subsets": {
+    "S1_no_rocket": {
+      "towers": [
+        "pulse",
+        "coolant",
+        "arc",
+        "fabricator"
+      ],
+      "excluded": "rocket",
+      "winRate": 100,
+      "ci": 0,
+      "pass": true
+    },
+    "S2_no_coolant": {
+      "towers": [
+        "pulse",
+        "arc",
+        "rocket",
+        "fabricator"
+      ],
+      "excluded": "coolant",
+      "winRate": 100,
+      "ci": 0,
+      "pass": true
+    },
+    "S3_no_arc": {
+      "towers": [
+        "pulse",
+        "coolant",
+        "rocket",
+        "fabricator"
+      ],
+      "excluded": "arc",
+      "winRate": 100,
+      "ci": 0,
+      "pass": true
+    }
+  },
+  "allPassed": false
+}

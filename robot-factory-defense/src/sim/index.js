@@ -88,12 +88,17 @@ export function createGame(config = {}, seed = 12345) {
   const wavesConfig = config.waves || wavesData;
   const upgradesConfig = config.upgrades || upgradesData;
 
+  const scrapMultiplier = config.scrapMultiplier ?? config.scrapScale ?? 1.0;
+  const hpMultiplier = config.hpMultiplier ?? config.hpScale ?? 1.0;
+  const removedTower = config.removedTower ?? config.excludedTower ?? null;
+  const workshopMode = config.workshopMode ?? 'all';
+
   const rng = mulberry32(seed);
   const { segments, totalDistance } = computeWaypoints(map.waypoints);
 
   const unlockedTowers = [];
   for (const [id, t] of Object.entries(towersConfig.towers)) {
-    if (t.unlockedByDefault) {
+    if (t.unlockedByDefault && (!removedTower || id !== removedTower)) {
       unlockedTowers.push(id);
     }
   }
@@ -104,7 +109,7 @@ export function createGame(config = {}, seed = 12345) {
     seed: seed >>> 0,
     rngSeedState: seed >>> 0,
     rng,
-    scrap: map.startScrap,
+    scrap: Math.round(map.startScrap * scrapMultiplier),
     circuits: map.startCircuits,
     coreHp: map.core.hp,
     maxCoreHp: map.core.hp,
@@ -126,6 +131,10 @@ export function createGame(config = {}, seed = 12345) {
     events: [],
     pathSegments: segments,
     totalPathDistance: totalDistance,
+    scrapMultiplier,
+    hpMultiplier,
+    removedTower,
+    workshopMode,
     stats: {
       enemiesKilled: 0,
       enemiesLeaked: 0,
@@ -172,12 +181,15 @@ function spawnEnemy(state, enemyType) {
   const enemyId = `enemy_${++state.nextEnemyId}_${enemyType}`;
   const startPos = getPositionAlongPath(0, state.pathSegments, state.totalPathDistance);
 
+  const hpScale = state.hpMultiplier ?? 1.0;
+  const scaledHp = Math.max(1, Math.round(def.hp * hpScale));
+
   const enemy = {
     id: enemyId,
     type: enemyType,
     name: def.name,
-    hp: def.hp,
-    maxHp: def.hp,
+    hp: scaledHp,
+    maxHp: scaledHp,
     speed: def.speed,
     armour: def.armour,
     scrap: def.scrap,
@@ -519,6 +531,7 @@ export function place(state, cell, towerType) {
   const isOccupied = state.towers.some(t => t.col === cell.col && t.row === cell.row);
   if (isOccupied) return null;
 
+  if (state.removedTower && state.removedTower === towerType) return null;
   if (!state.unlockedTowers.includes(towerType)) return null;
 
   const def = state.config.towers.towers[towerType];
@@ -671,6 +684,7 @@ export function buyUpgrade(state, id) {
   // Check tower unlocks
   const unlockItem = workshop.unlocks.find(u => u.id === id);
   if (unlockItem) {
+    if (state.removedTower && state.removedTower === unlockItem.target) return false;
     if (state.unlockedTowers.includes(unlockItem.target)) return false;
     if (state.circuits < unlockItem.cost) return false;
 

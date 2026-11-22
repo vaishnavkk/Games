@@ -257,17 +257,12 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
   const scrapScale = options.scrapScale ?? 1.0;
   const hpScale = options.hpScale ?? 1.0;
 
-  const enemies = JSON.parse(JSON.stringify(enemiesData));
-  if (hpScale !== 1.0) {
-    for (const k of Object.keys(enemies.enemies)) {
-      enemies.enemies[k].hp = Math.round(enemies.enemies[k].hp * hpScale);
-    }
-  }
-
-  const state = createGame({ map: mapData, towers: towersData, enemies, waves: wavesData, upgrades: upgradesData }, seed);
-  if (scrapScale !== 1.0) {
-    state.scrap = Math.round(state.scrap * scrapScale);
-  }
+  const state = createGame({
+    scrapMultiplier: scrapScale,
+    hpMultiplier: hpScale,
+    removedTower: excludedTower,
+    workshopMode
+  }, seed);
 
   const rng = botRng(seed);
   const waveDurations = [];
@@ -419,7 +414,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
             } else break;
           } else break;
         }
-        while (state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+        while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
@@ -447,7 +442,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
             } else break;
           } else break;
         }
-        while (state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+        while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
@@ -476,7 +471,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
             } else break;
           } else break;
         }
-        while (state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+        while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
