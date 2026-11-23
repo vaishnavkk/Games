@@ -1,75 +1,97 @@
-# Robot Factory Defense
+<div align="center">
 
-A tactical sci-fi grid tower defense game set in an automated assembly plant. Deploy specialized defense turrets, balance dual economies (Scrap & Circuits), research permanent Workshop upgrades, and defend the factory Core against 15 escalating waves of rogue automata.
+# 🤖 Robot Factory Defense
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Play Online](https://img.shields.io/badge/Play_Online-GitHub_Pages-06b6d4)](https://vaishnavkk.github.io/Games/robot-factory-defense/dist/)
+**A deterministic tactical sci-fi grid tower defense game built for the web.**  
+Deploy specialized turrets, manage a dual resource economy, unlock permanent Workshop upgrades, and defend the core through 15 waves of rogue automata.
 
----
+[![Play Online](https://img.shields.io/badge/Play_Now-GitHub_Pages-06b6d4?style=for-the-badge&logo=githubpages&logoColor=white)](https://vaishnavkk.github.io/Games/robot-factory-defense/dist/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-amber?style=for-the-badge)](../LICENSE)
+[![Tests Passing](https://img.shields.io/badge/Tests-79%2F79_Passing-success?style=for-the-badge&logo=node.js)](package.json)
+[![Zero Dependencies](https://img.shields.io/badge/Runtime-Zero_External_Engines-blueviolet?style=for-the-badge)](src/)
 
-## Gameplay & Features
+<br />
 
-### Dual Resource Economy
-- **Scrap**: Primary industrial currency dropped by defeated enemies and salvaged from refunded structures. Used to build base turrets, upgrade defenses, and deploy Fabricators.
-- **Circuits**: High-tech components produced over time by Fabricators. Used to unlock advanced weaponry (Arc Coil, Rocket Pod) and research permanent Workshop upgrades.
+<a href="https://vaishnavkk.github.io/Games/robot-factory-defense/dist/">
+  <img src="../docs/img/robot-factory-defense.webp" alt="Robot Factory Defense Preview" width="85%" style="border-radius: 8px;" />
+</a>
 
-### Defensive Turrets
-- **Pulse Turret** (60 Scrap): Rapid-fire kinetic turret targeting single ground units.
-- **Coolant Sprayer** (80 Scrap): Sprays cryogenic foam, reducing enemy movement speed by 50% for 2.0s (non-stacking).
-- **Arc Coil** (100 Scrap, 20 Circuits to unlock): High-voltage electrical arcs chaining across up to 3 nearby enemies, completely ignoring armor.
-- **Rocket Pod** (120 Scrap, 40 Circuits to unlock): Long-range explosive cluster rockets delivering heavy area splash damage.
-- **Fabricator** (75 Scrap, max 4): Dedicated automated assembly unit generating 1 Circuit every 10 seconds.
+<br /><br />
 
-### Rogue Automata & Bosses
-- **Glitchbot**: Fast, fragile scout automaton deployed in swarm waves.
-- **Rust Walker**: Armoured infantry unit resistant to light kinetic fire.
-- **Spark Drone**: High-speed aerial unit that flies over ground hazards.
-- **Crusher Tank**: Heavily armoured siege vehicle dealing 3 Core breach damage on leak.
-- **IronSentry (Wave 10 Boss)**: Armoured guardian equipped with an active EMP burst that temporarily disables adjacent turrets. Deals 5 Core breach damage.
-- **MegaMixer (Wave 15 Boss)**: Massive dual-phase industrial juggernaut with a reactive overdrive shield. Deals 10 Core breach damage.
+> ### ⚡ [**Play Robot Factory Defense in Your Browser**](https://vaishnavkk.github.io/Games/robot-factory-defense/dist/)
+> High-performance 60 FPS deterministic canvas simulation with full audio synthesizer effects.
 
-### The Workshop
-Invest collected Circuits into permanent factory upgrades:
-- **Overclock**: Increases firing rate across all operational turrets.
-- **Hardened Rounds**: Enhances base kinetic and explosive damage.
-- **Long Barrels**: Expands targeting range for all turrets.
-- **Scrap Magnet**: Amplifies Scrap salvage yields from eliminated enemies.
-- **Repair Bay**: Automatically restores Core integrity between waves.
-- **Fast Assembly**: Decreases build costs for all future turret placements.
+</div>
 
 ---
 
-## Technical Stack & Architecture
+## 🎯 Gameplay & Key Features
 
-- **Engine**: Pure Vanilla JavaScript with HTML5 Canvas2D procedural rendering (no external game engines, no image sprite sheets).
-- **Simulation**: Fixed-timestep deterministic state engine running at 60 sim ticks per second.
-- **Typography**: Self-hosted industrial typefaces (`@fontsource/chakra-petch` and `@fontsource/space-mono`).
-- **Zero Network Footprint**: Completely self-contained client-side bundle with zero analytics, tracking, or runtime network calls.
-- **Tooling**: Built with Vite, linted with ESLint, and verified via `node:test` and Puppeteer.
+### ⚙️ Dual-Resource Economy
+- 🔩 **Scrap**: The primary industrial currency dropped by eliminated enemies and recovered via demolition refunds. Spend Scrap on turret placements, level upgrades, and auxiliary Fabricators.
+- 💡 **Circuits**: Precision computational components generated passively by active Fabricators ($1\text{ Circuit} / 10\text{ seconds}$). Circuits unlock advanced tech trees (Arc Coil, Rocket Pod) and fund permanent global Workshop upgrades.
+
+### 🛡️ Defensive Arsenal
+
+| Turret | Scrap Cost | Circuit Tech | Function & Combat Specialty |
+| :--- | :---: | :---: | :--- |
+| **Pulse Turret** | `60 🔩` | Free | Rapid-fire kinetic cannon; ideal for early waves and picking off agile runners. |
+| **Coolant Sprayer** | `80 🔩` | Free | Cryogenic foam projector that reduces enemy speed by 50% for 2.0s (non-stacking). |
+| **Arc Coil** | `100 🔩` | `20 💡` | High-voltage electric beam chaining across up to 3 nearby units, **completely bypassing armor**. |
+| **Rocket Pod** | `105 🔩` | `20 💡` | Heavy ballistic artillery firing cluster missiles that deal massive area-of-effect splash damage. |
+| **Fabricator** | `75 🔩` | Free *(Max 4)* | Autonomous production unit generating 1 Circuit every 10 seconds to fuel tech progression. |
 
 ---
 
-## Local Development & Testing
+### 👾 Rogue Automata & Boss Encounters
+
+- **Glitchbot**: High-velocity scout deployed in rapid swarm clusters.
+- **Rust Walker**: Armored frontline soldier resistant to light kinetic projectiles.
+- **Spark Drone**: Fast hovering automaton flying over track hazards with elevated health.
+- **Crusher Tank**: Heavy siege vehicle with reinforced plating (deals 3 Core breach damage).
+- **Iron Sentry (Wave 10 Mini-Boss)**: Armed with an EMP pulse that temporarily shuts down nearby defenses (deals 5 Core damage).
+- **Mega Mixer (Wave 15 Final Boss)**: Multi-phase industrial terror protected by a reactive kinetic shield (deals 10 Core damage).
+
+---
+
+### 🔬 The Engineering Workshop
+Upgrade permanent factory capabilities mid-campaign using collected Circuits:
+
+- ⚡ **Overclock**: Boosts base firing cadence across all placed defensive structures.
+- 💥 **Hardened Rounds**: Amplifies projectile kinetic and explosive impact damage.
+- 🔭 **Long Barrels**: Extends operational sensor range for all weapon platforms.
+- 🧲 **Scrap Magnet**: Maximizes salvage yield from all destroyed enemy hulls.
+- 🔧 **Repair Bay**: Automatically reconstructs damaged Core structural integrity between waves.
+- ⏱️ **Fast Assembly**: Streamlines manufacturing pipelines, reducing build costs for future placements.
+
+---
+
+## 🏗️ Technical Architecture & Design
+
+- **Engine-Free Rendering**: 100% custom HTML5 Canvas2D renderer. Zero external game frameworks, physics libraries, or sprite assets.
+- **Deterministic State Loop**: Fixed 60-tick/sec deterministic simulation engine where identical seeds and inputs guarantee bit-identical outcomes.
+- **Web Audio Synthesis**: Fully procedural audio synthesis pipeline using Web Audio API oscillators and gain envelopes.
+- **Strict Verification Suite**: Tested with 79 comprehensive tests including Red Team exploits, property-based invariants, and Monte Carlo automated bot selfplay.
+
+---
+
+## 💻 Local Development & Testing
 
 ```bash
 # Navigate to the game directory
 cd robot-factory-defense
 
-# Install dependencies
+# Install development dependencies
 npm install
 
-# Start local development server with hot module reload
+# Start local dev server with hot module reload
 npm run dev
 
-# Run full automated test suite (50+ unit and property tests)
+# Run full test suite (79/79 unit and invariant tests)
 npm test
 
-# Run 100-seed Monte Carlo bot balance calibration
-node scripts/balance.js
-
-# Run headless Puppeteer selfplay validation and planted defect tests
-npm run selfplay -- --smoke
-node scripts/selfplay.js --selftest
+# Run ESLint validation
+npm run lint
 
 # Build production bundle
 npm run build
@@ -77,18 +99,17 @@ npm run build
 
 ---
 
-## Specifications & Documentation
+## 📚 Technical Documentation
 
-Comprehensive architectural and design documents are available in the [`docs/`](docs/) directory:
-- [Design Specification](docs/DESIGN.md) — Complete game mechanics, formula specifications, and wave curves.
-- [Interface Contract](docs/CONTRACT.md) — Simulation API, event signatures, and state contracts.
-- [Test Plan](docs/TESTPLAN.md) — Invariant definitions, bot test matrix, and verification gates.
-- [Balance Calibration](docs/BALANCE.md) — Monte Carlo win rate benchmarks and wave progression tables.
-- [Architecture & Stack](docs/STACK.md) — Dependency audit, licenses, and module organization.
-- [Decisions Log](docs/DECISIONS.md) — Architectural records and calibrated parameter sign-offs.
+Explore the comprehensive engineering documentation in [`docs/`](docs/):
+- 📐 [**Design Specification**](docs/DESIGN.md) — Mathematical formulas, damage formulas, and wave density curves.
+- 📜 [**Interface Contract**](docs/CONTRACT.md) — Deterministic simulation API, state snapshots, and event contracts.
+- 🧪 [**Test Plan**](docs/TESTPLAN.md) — Invariants, automated bot matrix, and verification gates.
+- 📊 [**Balance Calibration**](docs/BALANCE.md) — Monte Carlo win rate benchmarks across 300 calibrated seeds.
+- 🏛️ [**Stack & Architecture**](docs/STACK.md) — Zero-dependency architecture analysis and licensing audit.
 
 ---
 
-## License
+## 📄 License
 
 This project is licensed under the [MIT License](../LICENSE).
