@@ -250,6 +250,39 @@ const COMBAT_PADS = [
   { col: 5, row: 8 }, { col: 7, row: 8 }, { col: 9, row: 8 }, { col: 11, row: 8 }, { col: 13, row: 8 }
 ];
 
+export function canClearWaveHpWithConfidence(state, waveNum, confidence = 0.90) {
+  const w = state.config.waves.waves[waveNum - 1];
+  if (!w) return true;
+  const pathCells = state.config.map.pathLengthCells || 39;
+  let totalHp = 0;
+  let minTravelTime = Infinity;
+  let maxSpawnTime = 0;
+  for (const s of w.spawns) {
+    const e = state.config.enemies.enemies[s.type];
+    const hp = (e.hp || 0) * (state.config.sim?.hpMultiplier || 1.0);
+    totalHp += hp * s.count;
+    const travelTime = pathCells / (e.speed || 1);
+    if (travelTime < minTravelTime) minTravelTime = travelTime;
+    const endSpawn = s.delay + s.count * s.interval;
+    if (endSpawn > maxSpawnTime) maxSpawnTime = endSpawn;
+  }
+  const estWaveDuration = maxSpawnTime + minTravelTime;
+  const reqDPS = totalHp / estWaveDuration;
+
+  let totalDps = 0;
+  for (const t of state.towers) {
+    if (t.type === 'pulse' || t.type === 'arc' || t.type === 'rocket') {
+      const conf = state.config.towers.towers[t.type];
+      const l = conf.levels[t.level - 1];
+      let d = (l.damage || 0) * (l.fireRate || 0);
+      if (t.type === 'arc') d *= 1.8;
+      if (t.type === 'rocket') d *= 1.5;
+      totalDps += d;
+    }
+  }
+  return totalDps >= (reqDPS / confidence);
+}
+
 export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
   const variationLevel = options.variationLevel ?? 0.25;
   const targeting = options.targeting ?? 'first';
@@ -333,19 +366,43 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       }
     }
 
-    // 2. Fabricators (Economy): 1 on W2, 2 on W4, 3 on W6, 4 on W8
+    // Combat Priority Check:
+    // Bot may not spend Scrap on Coolant, Fabricator, or any non-damage-dealing purchase
+    // until its current damage towers (Pulse/Arc/Rocket, any level) can clear the CURRENT wave's
+    // total enemy HP within that wave's duration at >= 90% confidence.
+    let combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+    if (!combatSufficient) {
+      // Prioritize upgrading damage towers first
+      for (const t of state.towers) {
+        if ((t.type === 'pulse' || t.type === 'arc' || t.type === 'rocket') && t.level < 3) {
+          upgrade(state, t.id);
+        }
+      }
+      // If still not sufficient, place additional pulse defense
+      combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+      if (!combatSufficient && canBuild('pulse')) {
+        while (state.scrap >= 60 && !canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
+          const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
+          if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
+          else break;
+        }
+      }
+      combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+    }
+
+    // 2. Fabricators (Economy): 1 on W2, 2 on W4, 3 on W6, 4 on W8 (gated by combat confidence)
     const maxFabs = nextWave <= 1 ? 0 : (nextWave <= 3 ? 1 : (nextWave <= 5 ? 2 : (nextWave <= 7 ? 3 : 4)));
-    if (canBuild('fabricator') && state.fabricatorCount < maxFabs && state.scrap >= 75) {
-      while (state.fabricatorCount < maxFabs && state.scrap >= 75) {
+    if (combatSufficient && canBuild('fabricator') && state.fabricatorCount < maxFabs && state.scrap >= 75) {
+      while (state.fabricatorCount < maxFabs && state.scrap >= 75 && canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
         const p = pickPad(UTILITY_PADS) || pickPad(COMBAT_PADS);
         if (p && place(state, p, 'fabricator')) usedTowers.add('fabricator');
         else break;
       }
     }
 
-    // 3. Coolant slow: 1 on W3, 2nd by W7
+    // 3. Coolant slow: 1 on W3, 2nd by W7 (gated by combat confidence)
     const coolantTarget = nextWave >= 7 ? 2 : (nextWave >= 3 ? 1 : 0);
-    if (canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
+    if (combatSufficient && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
       const p = pickPad(COOLANT_PADS) || pickPad(COMBAT_PADS);
       if (p && place(state, p, 'coolant')) usedTowers.add('coolant');
     }
