@@ -1,0 +1,8376 @@
+{
+  "metadata": {
+    "description": "Per-wave leaks and max base HP for baseline (Arm A) winning runs across seeds 1000-1059 and 2000-2059",
+    "generatedAt": "2026-11-24T10:53:28.214Z"
+  },
+  "batches": {
+    "1000-1059": [
+      {
+        "seed": 1000,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1001,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1005,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1006,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1007,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1008,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1009,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1010,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1011,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1012,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1013,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1015,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 1017,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1018,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1019,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1020,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1021,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1022,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1023,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1024,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1025,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1027,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 1029,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1030,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1031,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1032,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1033,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1034,
+        "finalCoreHp": 15,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 6,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 4,
+            "coreHp": 10
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 15
+          }
+        ]
+      },
+      {
+        "seed": 1035,
+        "finalCoreHp": 15,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 6,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 4,
+            "coreHp": 10
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 15
+          }
+        ]
+      },
+      {
+        "seed": 1036,
+        "finalCoreHp": 15,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 6,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 4,
+            "coreHp": 10
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 15
+          }
+        ]
+      },
+      {
+        "seed": 1037,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1038,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 1041,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1042,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1043,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1044,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1045,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1046,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1047,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1048,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1049,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1050,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 1051,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 1052,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 1053,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1054,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1055,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1056,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1057,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1058,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 1059,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      }
+    ],
+    "2000-2059": [
+      {
+        "seed": 2000,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2001,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2002,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2003,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2005,
+        "finalCoreHp": 15,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 6,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 4,
+            "coreHp": 10
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 15
+          }
+        ]
+      },
+      {
+        "seed": 2006,
+        "finalCoreHp": 12,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 6,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 4,
+            "coreHp": 10
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 7,
+            "leaks": 1,
+            "coreHp": 7
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 12
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 12
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 12
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 12
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 12
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 12
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 12
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 12
+          }
+        ]
+      },
+      {
+        "seed": 2007,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2008,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2009,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2010,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2011,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2012,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2013,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2014,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2015,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2019,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2020,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2021,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2022,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2023,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2024,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2025,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2026,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2027,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2029,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 2030,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 2031,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2032,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2033,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2034,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2035,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2036,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2037,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      },
+      {
+        "seed": 2038,
+        "finalCoreHp": 15,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 6,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 4,
+            "coreHp": 10
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 10
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 15
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 15
+          }
+        ]
+      },
+      {
+        "seed": 2039,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2040,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 2042,
+        "finalCoreHp": 8,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 2,
+            "coreHp": 3
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 3
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 8
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 8
+          }
+        ]
+      },
+      {
+        "seed": 2043,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2044,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2045,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2046,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2047,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2048,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2049,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2050,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 2,
+            "coreHp": 18
+          },
+          {
+            "wave": 4,
+            "leaks": 4,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2051,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2055,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2056,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2057,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2058,
+        "finalCoreHp": 14,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 1,
+            "coreHp": 19
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 14
+          },
+          {
+            "wave": 5,
+            "leaks": 5,
+            "coreHp": 9
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 9
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 14
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 14
+          }
+        ]
+      },
+      {
+        "seed": 2059,
+        "finalCoreHp": 18,
+        "maxBaseHp": 20,
+        "perWaveLeaks": [
+          {
+            "wave": 1,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 2,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 3,
+            "leaks": 0,
+            "coreHp": 20
+          },
+          {
+            "wave": 4,
+            "leaks": 5,
+            "coreHp": 15
+          },
+          {
+            "wave": 5,
+            "leaks": 2,
+            "coreHp": 13
+          },
+          {
+            "wave": 6,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 7,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 8,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 9,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 10,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 11,
+            "leaks": 0,
+            "coreHp": 13
+          },
+          {
+            "wave": 12,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 13,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 14,
+            "leaks": 0,
+            "coreHp": 18
+          },
+          {
+            "wave": 15,
+            "leaks": 0,
+            "coreHp": 18
+          }
+        ]
+      }
+    ]
+  }
+}

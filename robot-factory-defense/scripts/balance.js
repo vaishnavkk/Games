@@ -400,9 +400,10 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       }
     }
 
-    // 3. Coolant slow: 1 on W3, 2nd by W7 (gated by combat confidence)
+    // 3. Coolant slow: defer until Arc L2 owned (Arm C ordering)
+    const hasArcL2 = state.towers.some(t => t.type === 'arc' && t.level >= 2);
     const coolantTarget = nextWave >= 7 ? 2 : (nextWave >= 3 ? 1 : 0);
-    if (combatSufficient && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
+    if (combatSufficient && hasArcL2 && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
       const p = pickPad(COOLANT_PADS) || pickPad(COMBAT_PADS);
       if (p && place(state, p, 'coolant')) usedTowers.add('coolant');
     }
