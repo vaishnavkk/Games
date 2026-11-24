@@ -1,0 +1,1276 @@
+{
+  "metadata": {
+    "description": "Purchase timelines (wave, item, scrap, circuits) for seeds 1002 and 1003 under Arms A (Baseline) and B (No-Coolant)",
+    "generatedAt": "2026-11-24T10:53:27.968Z"
+  },
+  "seeds": {
+    "1002": {
+      "arm_A": [
+        {
+          "wave": 1,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 90,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 1,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 30,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 2,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 53,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 3,
+          "item": "coolant_L1",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 100,
+          "remainingCircuits": 2
+        },
+        {
+          "wave": 4,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 150,
+          "remainingCircuits": 6
+        },
+        {
+          "wave": 5,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 254,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 5,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 204,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 6,
+          "item": "unlock_arc",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 379,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 6,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 304,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 6,
+          "item": "arc_L1",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 204,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 6,
+          "item": "arc_L1",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 104,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 6,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 24,
+          "remainingCircuits": 5
+        }
+      ],
+      "arm_B": [
+        {
+          "wave": 1,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 90,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 1,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 30,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 2,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 53,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 4,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 246,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 5,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 336,
+          "remainingCircuits": 14
+        },
+        {
+          "wave": 5,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 286,
+          "remainingCircuits": 14
+        },
+        {
+          "wave": 6,
+          "item": "unlock_arc",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 461,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 386,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "arc_L1",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 286,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "arc_L1",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 186,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 106,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 26,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 7,
+          "item": "arc_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 142,
+          "remainingCircuits": 19
+        },
+        {
+          "wave": 7,
+          "item": "arc_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 62,
+          "remainingCircuits": 19
+        },
+        {
+          "wave": 8,
+          "item": "unlock_rocket",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 306,
+          "remainingCircuits": 13
+        },
+        {
+          "wave": 8,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 231,
+          "remainingCircuits": 13
+        },
+        {
+          "wave": 8,
+          "item": "rocket_L1",
+          "scrap": 105,
+          "circuits": 0,
+          "remainingScrap": 126,
+          "remainingCircuits": 13
+        },
+        {
+          "wave": 8,
+          "item": "rocket_L1",
+          "scrap": 105,
+          "circuits": 0,
+          "remainingScrap": 21,
+          "remainingCircuits": 13
+        },
+        {
+          "wave": 9,
+          "item": "fast_assembly",
+          "scrap": 0,
+          "circuits": 30,
+          "remainingScrap": 298,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 9,
+          "item": "arc_L3",
+          "scrap": 120,
+          "circuits": 0,
+          "remainingScrap": 190,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 9,
+          "item": "arc_L3",
+          "scrap": 120,
+          "circuits": 0,
+          "remainingScrap": 82,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 9,
+          "item": "rocket_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 10,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 10,
+          "item": "rocket_L3",
+          "scrap": 110,
+          "circuits": 0,
+          "remainingScrap": 202,
+          "remainingCircuits": 16
+        },
+        {
+          "wave": 10,
+          "item": "rocket_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 130,
+          "remainingCircuits": 16
+        },
+        {
+          "wave": 10,
+          "item": "arc_L1_surplus",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 40,
+          "remainingCircuits": 16
+        },
+        {
+          "wave": 11,
+          "item": "overclock",
+          "scrap": 0,
+          "circuits": 30,
+          "remainingScrap": 396,
+          "remainingCircuits": 8
+        },
+        {
+          "wave": 11,
+          "item": "rocket_L3",
+          "scrap": 110,
+          "circuits": 0,
+          "remainingScrap": 297,
+          "remainingCircuits": 8
+        },
+        {
+          "wave": 11,
+          "item": "arc_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 225,
+          "remainingCircuits": 8
+        },
+        {
+          "wave": 11,
+          "item": "pulse_L1_surplus",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 171,
+          "remainingCircuits": 8
+        },
+        {
+          "wave": 12,
+          "item": "repair_bay",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 630,
+          "remainingCircuits": 2
+        },
+        {
+          "wave": 12,
+          "item": "arc_L3",
+          "scrap": 120,
+          "circuits": 0,
+          "remainingScrap": 522,
+          "remainingCircuits": 2
+        },
+        {
+          "wave": 12,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 477,
+          "remainingCircuits": 2
+        },
+        {
+          "wave": 13,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 912,
+          "remainingCircuits": 18
+        },
+        {
+          "wave": 14,
+          "item": "hardened_rounds",
+          "scrap": 0,
+          "circuits": 35,
+          "remainingScrap": 1656,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1602,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1548,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1494,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1440,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1386,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1332,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1278,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1224,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1170,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1116,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 1071,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 1026,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 981,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 936,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 891,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 846,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 801,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 756,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 711,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 666,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "scrap_magnet",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 1939,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1867,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1795,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1723,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1651,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1579,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1507,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1435,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1363,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1291,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1219,
+          "remainingCircuits": 3
+        }
+      ]
+    },
+    "1003": {
+      "arm_A": [
+        {
+          "wave": 1,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 90,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 1,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 30,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 2,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 53,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 3,
+          "item": "coolant_L1",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 100,
+          "remainingCircuits": 2
+        },
+        {
+          "wave": 4,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 150,
+          "remainingCircuits": 6
+        },
+        {
+          "wave": 5,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 254,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 5,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 204,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 6,
+          "item": "unlock_arc",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 379,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 6,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 304,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 6,
+          "item": "arc_L1",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 204,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 6,
+          "item": "arc_L1",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 104,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 6,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 24,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 7,
+          "item": "unlock_rocket",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 192,
+          "remainingCircuits": 6
+        },
+        {
+          "wave": 7,
+          "item": "coolant_L1",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 112,
+          "remainingCircuits": 6
+        },
+        {
+          "wave": 7,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 32,
+          "remainingCircuits": 6
+        }
+      ],
+      "arm_B": [
+        {
+          "wave": 1,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 90,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 1,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 30,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 2,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 53,
+          "remainingCircuits": 0
+        },
+        {
+          "wave": 4,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 246,
+          "remainingCircuits": 5
+        },
+        {
+          "wave": 5,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 336,
+          "remainingCircuits": 14
+        },
+        {
+          "wave": 5,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 286,
+          "remainingCircuits": 14
+        },
+        {
+          "wave": 6,
+          "item": "unlock_arc",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 461,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 386,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "arc_L1",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 286,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "arc_L1",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 186,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 106,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 6,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 26,
+          "remainingCircuits": 4
+        },
+        {
+          "wave": 7,
+          "item": "arc_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 142,
+          "remainingCircuits": 19
+        },
+        {
+          "wave": 7,
+          "item": "arc_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 62,
+          "remainingCircuits": 19
+        },
+        {
+          "wave": 8,
+          "item": "unlock_rocket",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 306,
+          "remainingCircuits": 11
+        },
+        {
+          "wave": 8,
+          "item": "fabricator",
+          "scrap": 75,
+          "circuits": 0,
+          "remainingScrap": 231,
+          "remainingCircuits": 11
+        },
+        {
+          "wave": 8,
+          "item": "rocket_L1",
+          "scrap": 105,
+          "circuits": 0,
+          "remainingScrap": 126,
+          "remainingCircuits": 11
+        },
+        {
+          "wave": 8,
+          "item": "rocket_L1",
+          "scrap": 105,
+          "circuits": 0,
+          "remainingScrap": 21,
+          "remainingCircuits": 11
+        },
+        {
+          "wave": 9,
+          "item": "repair_bay",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 298,
+          "remainingCircuits": 9
+        },
+        {
+          "wave": 9,
+          "item": "arc_L3",
+          "scrap": 120,
+          "circuits": 0,
+          "remainingScrap": 178,
+          "remainingCircuits": 9
+        },
+        {
+          "wave": 9,
+          "item": "arc_L3",
+          "scrap": 120,
+          "circuits": 0,
+          "remainingScrap": 58,
+          "remainingCircuits": 9
+        },
+        {
+          "wave": 10,
+          "item": "long_barrels",
+          "scrap": 0,
+          "circuits": 25,
+          "remainingScrap": 349,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 10,
+          "item": "rocket_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 269,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 10,
+          "item": "rocket_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 189,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 10,
+          "item": "arc_L1_surplus",
+          "scrap": 100,
+          "circuits": 0,
+          "remainingScrap": 89,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 10,
+          "item": "pulse_L1_surplus",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 29,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 11,
+          "item": "scrap_magnet",
+          "scrap": 0,
+          "circuits": 20,
+          "remainingScrap": 385,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 11,
+          "item": "rocket_L3",
+          "scrap": 110,
+          "circuits": 0,
+          "remainingScrap": 275,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 11,
+          "item": "rocket_L3",
+          "scrap": 110,
+          "circuits": 0,
+          "remainingScrap": 165,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 11,
+          "item": "arc_L2",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 85,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 11,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 35,
+          "remainingCircuits": 1
+        },
+        {
+          "wave": 12,
+          "item": "arc_L3",
+          "scrap": 120,
+          "circuits": 0,
+          "remainingScrap": 446,
+          "remainingCircuits": 17
+        },
+        {
+          "wave": 12,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 366,
+          "remainingCircuits": 17
+        },
+        {
+          "wave": 13,
+          "item": "fast_assembly",
+          "scrap": 0,
+          "circuits": 30,
+          "remainingScrap": 959,
+          "remainingCircuits": 3
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1787,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1733,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1679,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1625,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1571,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1517,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1463,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1409,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1355,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L1",
+          "scrap": 60,
+          "circuits": 0,
+          "remainingScrap": 1301,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 1256,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 1211,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 1166,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 1121,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 1076,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 1031,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 986,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 941,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 896,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 14,
+          "item": "pulse_L2",
+          "scrap": 50,
+          "circuits": 0,
+          "remainingScrap": 851,
+          "remainingCircuits": 23
+        },
+        {
+          "wave": 15,
+          "item": "overclock",
+          "scrap": 0,
+          "circuits": 30,
+          "remainingScrap": 2369,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 2297,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 2225,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 2153,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 2081,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 2009,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1937,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1865,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1793,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1721,
+          "remainingCircuits": 15
+        },
+        {
+          "wave": 15,
+          "item": "pulse_L3",
+          "scrap": 80,
+          "circuits": 0,
+          "remainingScrap": 1649,
+          "remainingCircuits": 15
+        }
+      ]
+    }
+  }
+}
