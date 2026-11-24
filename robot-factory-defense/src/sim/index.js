@@ -185,7 +185,9 @@ function spawnEnemy(state, enemyType) {
   const startPos = getPositionAlongPath(0, state.pathSegments, state.totalPathDistance);
 
   const hpScale = state.hpMultiplier ?? 1.0;
-  const scaledHp = Math.max(1, Math.round(def.hp * hpScale));
+  const currentWaveDef = state.config.waves.waves?.[state.wave - 1];
+  const waveHpMult = currentWaveDef?.hpMult ?? 1.0;
+  const scaledHp = Math.max(1, Math.round(def.hp * hpScale * waveHpMult));
 
   const enemy = {
     id: enemyId,

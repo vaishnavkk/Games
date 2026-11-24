@@ -1038,6 +1038,31 @@ describe('Phase 3 Parameterized Simulation: scrapMultiplier, hpMultiplier, remov
     assert.equal(e2.maxHp, expectedLowHp);
   });
 
+  it('optional per-wave hpMult scales HP when present and defaults to 1.0 when absent', () => {
+    // 1. Without hpMult field on wave 1, behaves exactly as before (1.0 default)
+    const sDefault = createGame({}, 123);
+    const baseGlitchHp = sDefault.config.enemies.enemies.glitchbot.hp;
+    startWave(sDefault);
+    step(sDefault, 16.666667);
+    const eDef = sDefault.enemies[0];
+    assert.ok(eDef);
+    assert.equal(eDef.hp, baseGlitchHp);
+    assert.equal(eDef.maxHp, baseGlitchHp);
+
+    // 2. With wave hpMult present, scales appropriately at spawn
+    const sCustomWave = createGame({}, 123);
+    sCustomWave.config.waves.waves[0].hpMult = 1.25;
+    startWave(sCustomWave);
+    step(sCustomWave, 16.666667);
+    const eCustom = sCustomWave.enemies[0];
+    assert.ok(eCustom);
+    const expectedCustomHp = Math.max(1, Math.round(baseGlitchHp * 1.25));
+    assert.equal(eCustom.hp, expectedCustomHp);
+    assert.equal(eCustom.maxHp, expectedCustomHp);
+    // Cleanup custom config in-place
+    delete sCustomWave.config.waves.waves[0].hpMult;
+  });
+
   it('removedTower blocks building and unlock of removed tower type', () => {
     // 1. Removed Pulse
     const sNoPulse = createGame({ removedTower: 'pulse' }, 123);
