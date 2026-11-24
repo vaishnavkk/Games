@@ -1018,23 +1018,24 @@ describe('Phase 3 Parameterized Simulation: scrapMultiplier, hpMultiplier, remov
 
   it('hpMultiplier scales spawned enemy hp and maxHp', () => {
     const sHighHp = createGame({ hpMultiplier: 1.1 }, 123);
-    startWave(sHighHp); // wave 1 spawns glitchbots (base hp 30)
+    const baseGlitchHp = sHighHp.config.enemies.enemies.glitchbot.hp;
+    const expectedHighHp = Math.max(1, Math.round(baseGlitchHp * 1.1));
+    startWave(sHighHp); // wave 1 spawns glitchbots
     // Step 1 tick to spawn glitchbot
     step(sHighHp, 16.666667);
     const e1 = sHighHp.enemies[0];
     assert.ok(e1);
-    // Math.max(1, Math.round(30 * 1.1)) = 33
-    assert.equal(e1.hp, 33);
-    assert.equal(e1.maxHp, 33);
+    assert.equal(e1.hp, expectedHighHp);
+    assert.equal(e1.maxHp, expectedHighHp);
 
     const sLowHp = createGame({ hpMultiplier: 0.9 }, 123);
+    const expectedLowHp = Math.max(1, Math.round(baseGlitchHp * 0.9));
     startWave(sLowHp);
     step(sLowHp, 16.666667);
     const e2 = sLowHp.enemies[0];
     assert.ok(e2);
-    // Math.max(1, Math.round(30 * 0.9)) = 27
-    assert.equal(e2.hp, 27);
-    assert.equal(e2.maxHp, 27);
+    assert.equal(e2.hp, expectedLowHp);
+    assert.equal(e2.maxHp, expectedLowHp);
   });
 
   it('removedTower blocks building and unlock of removed tower type', () => {
