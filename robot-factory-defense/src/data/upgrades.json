@@ -13,7 +13,7 @@
         "id": "unlock_rocket",
         "name": "Unlock Rocket Rack",
         "description": "Unlock long-range cluster rocket artillery with area splash.",
-        "cost": 40,
+        "cost": 20,
         "type": "tower_unlock",
         "target": "rocket"
       }
@@ -24,42 +24,54 @@
         "name": "Overclock",
         "description": "Optimized power conduits increase fire rate by 15% across all turrets.",
         "cost": 30,
-        "effect": { "fireRateMultiplier": 1.15 }
+        "effect": {
+          "fireRateMultiplier": 1.1
+        }
       },
       {
         "id": "hardened_rounds",
         "name": "Hardened Rounds",
         "description": "High-density munitions increase damage by 15% across all turrets.",
         "cost": 35,
-        "effect": { "damageMultiplier": 1.15 }
+        "effect": {
+          "damageMultiplier": 1.1
+        }
       },
       {
         "id": "long_barrels",
         "name": "Long Barrels",
         "description": "Precision barrel assemblies increase attack range by 10% across all turrets.",
         "cost": 25,
-        "effect": { "rangeMultiplier": 1.10 }
+        "effect": {
+          "rangeMultiplier": 1.1
+        }
       },
       {
         "id": "scrap_magnet",
         "name": "Scrap Magnet",
         "description": "Electromagnetic collection field increases scrap gained from kills by 20%.",
         "cost": 20,
-        "effect": { "scrapMultiplier": 1.20 }
+        "effect": {
+          "scrapMultiplier": 1.2
+        }
       },
       {
         "id": "repair_bay",
         "name": "Repair Bay",
         "description": "Reinforced structural matrix increases core HP by +5.",
         "cost": 20,
-        "effect": { "coreHpBonus": 5 }
+        "effect": {
+          "coreHpBonus": 5
+        }
       },
       {
         "id": "fast_assembly",
         "name": "Fast Assembly",
         "description": "Streamlined fabrication reduces turret build and upgrade Scrap costs by 10%.",
         "cost": 30,
-        "effect": { "costDiscountRatio": 0.10 }
+        "effect": {
+          "costDiscountRatio": 0.1
+        }
       }
     ]
   }

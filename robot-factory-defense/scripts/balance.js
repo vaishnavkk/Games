@@ -1,7 +1,7 @@
 /**
  * Robot Factory Defense — Headless Automated Simulation Bots & Balance Verification Suite
  *
- * Runs 100 seeds across multiple bot strategies:
+ * Runs 300 seeds across multiple bot strategies:
  *  - Idle Bot: Verifies loss on or before Wave 3 (lossWave <= 3)
  *  - Random Bot: Verifies median wave between 3 and 7 (3 <= medianWave <= 7)
  *  - Monoculture Bots (Pulse, Coolant, Arc, Rocket): Verifies win rate <= 50%
@@ -18,6 +18,7 @@ import {
   upgrade,
   startWave,
   buyUpgrade,
+  setTowerTargetMode,
   TICK_MS
 } from '../src/sim/index.js';
 
@@ -27,7 +28,7 @@ import enemiesData from '../src/data/enemies.json' with { type: 'json' };
 import wavesData from '../src/data/waves.json' with { type: 'json' };
 import upgradesData from '../src/data/upgrades.json' with { type: 'json' };
 
-export const SEED_COUNT = 100;
+export const SEED_COUNT = 300;
 const TICK_DELTA_MS = TICK_MS || (1000 / 60);
 
 // Helper for seeded pseudo-random within bot decisions
@@ -52,6 +53,13 @@ export function mean(values) {
   if (!values || values.length === 0) return 0;
   const sum = values.reduce((a, b) => a + b, 0);
   return sum / values.length;
+}
+
+// Compute 95% Confidence Interval half-width
+export function calcCI(p, n = SEED_COUNT) {
+  const z = 1.96;
+  const pNorm = p / 100;
+  return z * Math.sqrt((pNorm * (1 - pNorm)) / n) * 100;
 }
 
 /**
@@ -242,8 +250,53 @@ const COMBAT_PADS = [
   { col: 5, row: 8 }, { col: 7, row: 8 }, { col: 9, row: 8 }, { col: 11, row: 8 }, { col: 13, row: 8 }
 ];
 
-export function simulateCompetentBot(seed, excludedTower = null, variationLevel = 0.25) {
-  const state = createGame({ map: mapData, towers: towersData, enemies: enemiesData, waves: wavesData, upgrades: upgradesData }, seed);
+export function canClearWaveHpWithConfidence(state, waveNum, confidence = 0.90) {
+  const w = state.config.waves.waves[waveNum - 1];
+  if (!w) return true;
+  const pathCells = state.config.map.pathLengthCells || 39;
+  let totalHp = 0;
+  let minTravelTime = Infinity;
+  let maxSpawnTime = 0;
+  for (const s of w.spawns) {
+    const e = state.config.enemies.enemies[s.type];
+    const hp = (e.hp || 0) * (state.config.sim?.hpMultiplier || 1.0);
+    totalHp += hp * s.count;
+    const travelTime = pathCells / (e.speed || 1);
+    if (travelTime < minTravelTime) minTravelTime = travelTime;
+    const endSpawn = s.delay + s.count * s.interval;
+    if (endSpawn > maxSpawnTime) maxSpawnTime = endSpawn;
+  }
+  const estWaveDuration = maxSpawnTime + minTravelTime;
+  const reqDPS = totalHp / estWaveDuration;
+
+  let totalDps = 0;
+  for (const t of state.towers) {
+    if (t.type === 'pulse' || t.type === 'arc' || t.type === 'rocket') {
+      const conf = state.config.towers.towers[t.type];
+      const l = conf.levels[t.level - 1];
+      let d = (l.damage || 0) * (l.fireRate || 0);
+      if (t.type === 'arc') d *= 1.8;
+      if (t.type === 'rocket') d *= 1.5;
+      totalDps += d;
+    }
+  }
+  return totalDps >= (reqDPS / confidence);
+}
+
+export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
+  const variationLevel = options.variationLevel ?? 0.25;
+  const targeting = options.targeting ?? 'first';
+  const workshopMode = options.workshopMode ?? 'all';
+  const scrapScale = options.scrapScale ?? 1.0;
+  const hpScale = options.hpScale ?? 1.0;
+
+  const state = createGame({
+    scrapMultiplier: scrapScale,
+    hpMultiplier: hpScale,
+    removedTower: excludedTower,
+    workshopMode
+  }, seed);
+
   const rng = botRng(seed);
   const waveDurations = [];
   const usedTowers = new Set();
@@ -265,21 +318,43 @@ export function simulateCompetentBot(seed, excludedTower = null, variationLevel 
   while (state.waveState !== 'won' && state.waveState !== 'lost' && state.wave < state.config.waves.totalWaves) {
     const nextWave = state.wave + 1;
 
-    // Workshop priority: Arc at W5 (20 circuits), Rocket at W7 (40 circuits)
-    if (nextWave >= 5 && !canBuild('arc') && excludedTower !== 'arc' && state.circuits >= 20) {
-      buyUpgrade(state, 'unlock_arc');
-    }
-    if (nextWave >= 7 && !canBuild('rocket') && excludedTower !== 'rocket') {
-      if (state.circuits >= 40) {
-        buyUpgrade(state, 'unlock_rocket');
+    // Workshop purchases
+    if (workshopMode === 'all') {
+      if (!canBuild('arc') && excludedTower !== 'arc') {
+        if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
+      } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
+        const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
+        const minW = excludedTower === 'arc' ? 5 : 7;
+        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+      } else {
+        if (state.circuits >= 30) buyUpgrade(state, 'fast_assembly');
+        if (state.circuits >= 30) buyUpgrade(state, 'overclock');
+        if (state.circuits >= 35) buyUpgrade(state, 'hardened_rounds');
+        if (state.circuits >= 20) buyUpgrade(state, 'repair_bay');
+        if (state.circuits >= 25) buyUpgrade(state, 'long_barrels');
+        if (state.circuits >= 20) buyUpgrade(state, 'scrap_magnet');
       }
-    } else {
-      if (state.circuits >= 30) buyUpgrade(state, 'fast_assembly');
-      if (state.circuits >= 30) buyUpgrade(state, 'overclock');
-      if (state.circuits >= 35) buyUpgrade(state, 'hardened_rounds');
-      if (state.circuits >= 20) buyUpgrade(state, 'repair_bay');
-      if (state.circuits >= 25) buyUpgrade(state, 'long_barrels');
-      if (state.circuits >= 20) buyUpgrade(state, 'scrap_magnet');
+    } else if (workshopMode === 'none') {
+      if (!canBuild('arc') && excludedTower !== 'arc') {
+        if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
+      } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
+        const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
+        const minW = excludedTower === 'arc' ? 5 : 7;
+        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+      }
+    } else if (typeof workshopMode === 'string') {
+      if (!canBuild('arc') && excludedTower !== 'arc') {
+        if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
+      } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
+        const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
+        const minW = excludedTower === 'arc' ? 5 : 7;
+        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+      } else {
+        const u = state.config.upgrades.workshop.globalUpgrades.find(x => x.id === workshopMode);
+        if (u && state.circuits >= u.cost) {
+          buyUpgrade(state, workshopMode);
+        }
+      }
     }
 
     // 1. Initial Pulse Defense (W1): maintain 2
@@ -291,19 +366,43 @@ export function simulateCompetentBot(seed, excludedTower = null, variationLevel 
       }
     }
 
-    // 2. Fabricators (Economy): 1 on W2, 2 on W4, 3 on W6, 4 on W8
+    // Combat Priority Check:
+    // Bot may not spend Scrap on Coolant, Fabricator, or any non-damage-dealing purchase
+    // until its current damage towers (Pulse/Arc/Rocket, any level) can clear the CURRENT wave's
+    // total enemy HP within that wave's duration at >= 90% confidence.
+    let combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+    if (!combatSufficient) {
+      // Prioritize upgrading damage towers first
+      for (const t of state.towers) {
+        if ((t.type === 'pulse' || t.type === 'arc' || t.type === 'rocket') && t.level < 3) {
+          upgrade(state, t.id);
+        }
+      }
+      // If still not sufficient, place additional pulse defense
+      combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+      if (!combatSufficient && canBuild('pulse')) {
+        while (state.scrap >= 60 && !canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
+          const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
+          if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
+          else break;
+        }
+      }
+      combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+    }
+
+    // 2. Fabricators (Economy): 1 on W2, 2 on W4, 3 on W6, 4 on W8 (gated by combat confidence)
     const maxFabs = nextWave <= 1 ? 0 : (nextWave <= 3 ? 1 : (nextWave <= 5 ? 2 : (nextWave <= 7 ? 3 : 4)));
-    if (canBuild('fabricator') && state.fabricatorCount < maxFabs && state.scrap >= 75) {
-      while (state.fabricatorCount < maxFabs && state.scrap >= 75) {
+    if (combatSufficient && canBuild('fabricator') && state.fabricatorCount < maxFabs && state.scrap >= 75) {
+      while (state.fabricatorCount < maxFabs && state.scrap >= 75 && canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
         const p = pickPad(UTILITY_PADS) || pickPad(COMBAT_PADS);
         if (p && place(state, p, 'fabricator')) usedTowers.add('fabricator');
         else break;
       }
     }
 
-    // 3. Coolant slow: 1 on W3, 2nd by W7
+    // 3. Coolant slow: 1 on W3, 2nd by W7 (gated by combat confidence)
     const coolantTarget = nextWave >= 7 ? 2 : (nextWave >= 3 ? 1 : 0);
-    if (canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
+    if (combatSufficient && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
       const p = pickPad(COOLANT_PADS) || pickPad(COMBAT_PADS);
       if (p && place(state, p, 'coolant')) usedTowers.add('coolant');
     }
@@ -312,38 +411,135 @@ export function simulateCompetentBot(seed, excludedTower = null, variationLevel 
     if (nextWave >= 6 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 2 && state.scrap >= 100) {
       while (state.towers.filter(t => t.type === 'arc').length < 2 && state.scrap >= 100) {
         const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
-        if (p && place(state, p, 'arc')) usedTowers.add('arc');
-        else break;
+        if (p) {
+          const t = place(state, p, 'arc');
+          if (t) {
+            usedTowers.add('arc');
+            if (targeting === 'nearest') setTowerTargetMode(state, t.id, 'nearest');
+          } else break;
+        } else break;
       }
     }
 
     // 5. Rocket Rack: 2 starting W8
-    if (nextWave >= 8 && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= 120) {
-      while (state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= 120) {
+    const rocketCost = state.config.towers.towers.rocket.levels[0].cost || 110;
+    if (nextWave >= 8 && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= rocketCost) {
+      while (state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= rocketCost) {
         const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
-        if (p && place(state, p, 'rocket')) usedTowers.add('rocket');
-        else break;
+        if (p) {
+          const t = place(state, p, 'rocket');
+          if (t) {
+            usedTowers.add('rocket');
+            if (targeting === 'nearest') setTowerTargetMode(state, t.id, 'nearest');
+          } else break;
+        } else break;
       }
     }
 
-    // 6. Upgrades
-    for (const t of state.towers) {
-      if (t.type === 'arc' && t.level < 3) upgrade(state, t.id);
-      if (t.type === 'rocket' && t.level < 3) upgrade(state, t.id);
-      if (t.type === 'pulse' && t.level < 3) upgrade(state, t.id);
-      if (t.type === 'coolant' && t.level < 2) upgrade(state, t.id);
-    }
+    // 6. Upgrades & Surplus (defer to W6+ to preserve early economy)
+    if (nextWave >= 6) {
+      for (const t of state.towers) {
+        if (t.type === 'arc' && t.level < 3) upgrade(state, t.id);
+        if (t.type === 'rocket' && t.level < 3) upgrade(state, t.id);
+        if (t.type === 'pulse' && t.level < 3) upgrade(state, t.id);
+        if (t.type === 'coolant' && t.level < 2) upgrade(state, t.id);
+      }
 
-    // 7. Surplus scrap: 3rd Arc, 3rd Pulse
-    while (state.scrap >= 100 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 3) {
-      const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
-      if (p && place(state, p, 'arc')) usedTowers.add('arc');
-      else break;
-    }
-    while (state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
-      const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
-      if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
-      else break;
+      // 7. Honest Re-planning / Surplus
+      if (excludedTower === 'rocket') {
+        // S1: 4 Arcs, 4 Pulses (4th Pulse on W8+)
+        while (state.scrap >= 100 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 4) {
+          const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
+          if (p) {
+            const t = place(state, p, 'arc');
+            if (t) {
+              usedTowers.add('arc');
+              if (targeting === 'nearest') setTowerTargetMode(state, t.id, 'nearest');
+            } else break;
+          } else break;
+        }
+        const maxP = nextWave >= 8 ? 4 : 3;
+        while (state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < maxP) {
+          const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
+          if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
+          else break;
+        }
+      } else if (excludedTower === 'arc') {
+        // S3: 4 Rockets (4th Rocket on W14+), 3 Pulses
+        const maxR = nextWave >= 14 ? 4 : 3;
+        while (state.scrap >= rocketCost && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < maxR) {
+          const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
+          if (p) {
+            const t = place(state, p, 'rocket');
+            if (t) {
+              usedTowers.add('rocket');
+              if (targeting === 'nearest') setTowerTargetMode(state, t.id, 'nearest');
+            } else break;
+          } else break;
+        }
+        while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+          const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
+          if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
+          else break;
+        }
+      } else if (excludedTower === 'coolant') {
+        // S2: 3 Arcs, 2-3 Rockets, 3 Pulses
+        const maxR = nextWave >= 10 ? 3 : 2;
+        while (state.scrap >= rocketCost && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < maxR) {
+          const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
+          if (p) {
+            const t = place(state, p, 'rocket');
+            if (t) {
+              usedTowers.add('rocket');
+              if (targeting === 'nearest') setTowerTargetMode(state, t.id, 'nearest');
+            } else break;
+          } else break;
+        }
+        while (state.scrap >= 100 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 3) {
+          const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
+          if (p) {
+            const t = place(state, p, 'arc');
+            if (t) {
+              usedTowers.add('arc');
+              if (targeting === 'nearest') setTowerTargetMode(state, t.id, 'nearest');
+            } else break;
+          } else break;
+        }
+        while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+          const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
+          if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
+          else break;
+        }
+      } else if (excludedTower === 'pulse') {
+        while (state.scrap >= 80 && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < 2) {
+          const p = pickPad(COOLANT_PADS) || pickPad(COMBAT_PADS);
+          if (p && place(state, p, 'coolant')) usedTowers.add('coolant');
+          else break;
+        }
+      } else if (excludedTower === 'fabricator') {
+        while (state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 5) {
+          const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
+          if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
+          else break;
+        }
+      } else {
+        // Default surplus: 3rd Arc, 3rd Pulse
+        while (state.scrap >= 100 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 3) {
+          const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
+          if (p) {
+            const t = place(state, p, 'arc');
+            if (t) {
+              usedTowers.add('arc');
+              if (targeting === 'nearest') setTowerTargetMode(state, t.id, 'nearest');
+            } else break;
+          } else break;
+        }
+        while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+          const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
+          if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
+          else break;
+        }
+      }
     }
 
     state.towers.forEach(t => usedTowers.add(t.type));
@@ -362,6 +558,8 @@ export function simulateCompetentBot(seed, excludedTower = null, variationLevel 
     lossWave: state.waveState === 'lost' ? state.wave : null,
     finalCoreHp: state.coreHp,
     waveDurations,
+    towers: state.towers.map(t => ({ id: t.id, type: t.type, level: t.level, col: t.col, row: t.row })),
+    purchasedUpgrades: [...state.purchasedUpgrades],
     usedTowers: Array.from(usedTowers),
     stats: state.stats
   };
@@ -374,18 +572,18 @@ export function verifyCircuitEconomy(avgWaveDuration = 48) {
   const totalWorkshop = 220; // 160 upgrades + 60 unlocks
 
   // 1 Fabricator on Wave 1: can it unlock Arc Coil (20 circuits) on or before W6?
-  const timeByW6 = 6 * avgWaveDuration; // ~288s
-  const circuitsByW6_1Fab = Math.floor(timeByW6 / 10); // 28 circuits >= 20
+  const timeByW6 = 6 * avgWaveDuration;
+  const circuitsByW6_1Fab = Math.floor(timeByW6 / 10);
   const w6Check = circuitsByW6_1Fab >= 20;
 
   // 2 Fabricators by W15: affords <= 80% of total Workshop (176 circuits)
-  const totalGameTime = 15 * avgWaveDuration; // ~720s
-  const circuits_2Fabs = Math.floor((2 * totalGameTime) / 10); // 144 circuits
-  const twoFabsCheck = circuits_2Fabs <= 0.80 * totalWorkshop; // 144 <= 176
+  const totalGameTime = 15 * avgWaveDuration;
+  const circuits_2Fabs = Math.floor((2 * totalGameTime) / 10);
+  const twoFabsCheck = circuits_2Fabs <= 0.80 * totalWorkshop;
 
   // 4 Fabricators by W15: affords >= 100% of total Workshop (220 circuits)
-  const circuits_4Fabs = Math.floor((4 * totalGameTime) / 10); // 288 circuits
-  const fourFabsCheck = circuits_4Fabs >= totalWorkshop; // 288 >= 220
+  const circuits_4Fabs = Math.floor((4 * totalGameTime) / 10);
+  const fourFabsCheck = circuits_4Fabs >= totalWorkshop;
 
   return {
     w6Check,
@@ -425,21 +623,21 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
   const seeds = Array.from({ length: seedCount }, (_, i) => 1000 + i);
 
   // 1. Idle Bot
-  console.log(`[1/5] Simulating Idle Bot (${seedCount} seeds)...`);
+  console.log(`[1/8] Simulating Idle Bot (${seedCount} seeds)...`);
   const idleResults = seeds.map(s => simulateIdleBot(s));
   const idleLossWaves = idleResults.map(r => r.lossWave || 15);
   const maxIdleLossWave = Math.max(...idleLossWaves);
   const idleMedianLossWave = median(idleLossWaves);
 
   // 2. Random Bot
-  console.log(`[2/5] Simulating Random Bot (${seedCount} seeds)...`);
+  console.log(`[2/8] Simulating Random Bot (${seedCount} seeds)...`);
   const randomResults = seeds.map(s => simulateRandomBot(s));
   const randomFinalWaves = randomResults.map(r => r.finalWave);
   const randomMedianWave = median(randomFinalWaves);
   const randomWinRate = (randomResults.filter(r => r.won).length / seedCount) * 100;
 
   // 3. Monoculture Bots
-  console.log('[3/5] Simulating Monoculture Bots (Pulse, Coolant, Arc, Rocket)...');
+  console.log('[3/8] Simulating Monoculture Bots (Pulse, Coolant, Arc, Rocket)...');
   const monocultureTypes = ['pulse', 'coolant', 'arc', 'rocket'];
   const monoStats = {};
   for (const t of monocultureTypes) {
@@ -451,12 +649,20 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
     };
   }
 
-  // 4. Competent Bot
-  console.log(`[4/5] Simulating Competent Bot (${seedCount} seeds)...`);
-  const competentRuns = seeds.map(s => simulateCompetentBot(s));
+  // 4. Competent Bot (Bot v1 'first' default)
+  console.log(`[4/8] Simulating Competent Bot v1 (first targeting, ${seedCount} seeds)...`);
+  const competentRuns = seeds.map(s => simulateCompetentBot(s, null, { targeting: 'first' }));
   const compWins = competentRuns.filter(r => r.won);
   const compWinRate = (compWins.length / seedCount) * 100;
+  const compCI = calcCI(compWinRate, seedCount);
   const compMedianFinalHp = median(compWins.map(r => r.finalCoreHp));
+
+  // Bot v2 comparison ('nearest' targeting)
+  console.log(`[5/8] Simulating Competent Bot v2 (nearest targeting, ${seedCount} seeds)...`);
+  const v2Runs = seeds.map(s => simulateCompetentBot(s, null, { targeting: 'nearest' }));
+  const v2Wins = v2Runs.filter(r => r.won);
+  const v2WinRate = (v2Wins.length / seedCount) * 100;
+  const v2CI = calcCI(v2WinRate, seedCount);
 
   const allWaveDurations = compWins.flatMap(r => r.waveDurations);
   const meanWaveDur = mean(allWaveDurations);
@@ -468,19 +674,70 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
   compWins.forEach(r => r.usedTowers.forEach(t => usedTowersSet.add(t)));
   const allTowersUsed = ['pulse', 'coolant', 'arc', 'rocket', 'fabricator'].every(t => usedTowersSet.has(t));
 
-  // 5. Tower Viability Exclusions
-  console.log('[5/5] Simulating Competent Bot Tower Removal (Viability check)...');
-  const exclusions = ['pulse', 'coolant', 'arc', 'rocket'];
+  // 5. Honest Tower Viability & Re-planning Ablation
+  console.log('[6/8] Simulating Honest Tower Removal & Re-planning (Pulse, Coolant, Arc, Rocket, Fabricator)...');
+  const exclusions = ['pulse', 'coolant', 'arc', 'rocket', 'fabricator'];
   const exclusionStats = {};
   for (const exc of exclusions) {
-    const runs = seeds.map(s => simulateCompetentBot(s, exc));
+    const runs = seeds.map(s => simulateCompetentBot(s, exc, { targeting: 'first' }));
     const wins = runs.filter(r => r.won).length;
     const rate = (wins / seedCount) * 100;
+    const rateCI = calcCI(rate, seedCount);
     const drop = compWinRate - rate;
+    const medWave = median(runs.map(r => r.finalWave));
     exclusionStats[exc] = {
       winRate: rate,
-      drop
+      ci: rateCI,
+      drop,
+      medWave
     };
+  }
+
+  // Viable Subsets S1, S2, S3 assertions
+  const s1Rate = exclusionStats.rocket.winRate; // Pulse+Coolant+Arc+Fab
+  const s2Rate = exclusionStats.coolant.winRate; // Pulse+Arc+Rocket+Fab
+  const s3Rate = exclusionStats.arc.winRate; // Pulse+Coolant+Rocket+Fab
+
+  // 6. Sensitivity Matrix
+  console.log('[7/8] Simulating Sensitivity Matrix (Scrap 0.8-1.2, HP 0.9-1.2)...');
+  const scrapSteps = [0.8, 1.0, 1.2];
+  const scrapRates = {};
+  for (const ss of scrapSteps) {
+    const runs = seeds.map(s => simulateCompetentBot(s, null, { targeting: 'first', scrapScale: ss }));
+    scrapRates[ss] = (runs.filter(r => r.won).length / seedCount) * 100;
+  }
+  const scrapMaxDelta = Math.max(
+    Math.abs(scrapRates[1.0] - scrapRates[0.8]),
+    Math.abs(scrapRates[1.2] - scrapRates[1.0])
+  );
+
+  const hpSteps = [0.9, 1.0, 1.1, 1.2];
+  const hpRates = {};
+  for (const hs of hpSteps) {
+    const runs = seeds.map(s => simulateCompetentBot(s, null, { targeting: 'first', hpScale: hs }));
+    hpRates[hs] = (runs.filter(r => r.won).length / seedCount) * 100;
+  }
+  const hpMaxDelta = Math.max(
+    Math.abs(hpRates[1.0] - hpRates[0.9]),
+    Math.abs(hpRates[1.1] - hpRates[1.0]),
+    Math.abs(hpRates[1.2] - hpRates[1.1])
+  );
+
+  // 7. Workshop Upgrades Matrix
+  console.log('[8/8] Simulating Workshop Upgrades Matrix (None vs Single)...');
+  const noUpgradesRuns = seeds.map(s => simulateCompetentBot(s, null, { targeting: 'first', workshopMode: 'none' }));
+  const noUpgradesRate = (noUpgradesRuns.filter(r => r.won).length / seedCount) * 100;
+  const noUpgradesMedWave = median(noUpgradesRuns.map(r => r.finalWave));
+
+  const singleUpgrades = ['overclock', 'hardened_rounds', 'long_barrels', 'scrap_magnet', 'repair_bay', 'fast_assembly'];
+  const singleUpgradeStats = {};
+  let maxSingleGain = 0;
+  for (const u of singleUpgrades) {
+    const runs = seeds.map(s => simulateCompetentBot(s, null, { targeting: 'first', workshopMode: u }));
+    const rate = (runs.filter(r => r.won).length / seedCount) * 100;
+    const gain = rate - noUpgradesRate;
+    if (gain > maxSingleGain) maxSingleGain = gain;
+    singleUpgradeStats[u] = { rate, gain };
   }
 
   // Economy & Armour
@@ -528,8 +785,8 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
     {
       name: 'Competent Bot win rate 60-85%',
       target: '60% - 85%',
-      actual: `${compWinRate.toFixed(1)}%`,
-      pass: compWinRate >= 60 && compWinRate <= 85
+      actual: `${compWinRate.toFixed(1)}% ± ${compCI.toFixed(1)}%`,
+      pass: compWinRate >= 60 && compWinRate <= 85 && compCI <= 6.0
     },
     {
       name: 'Competent Bot median winning Core HP 3-14',
@@ -574,6 +831,36 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
       pass: exclusionStats.rocket.drop >= 5.0
     },
     {
+      name: 'Viability: Remove Fabricator drops win rate >= 5 pts',
+      target: 'drop >= 5.0 pts',
+      actual: `drop = ${exclusionStats.fabricator.drop.toFixed(1)} pts`,
+      pass: exclusionStats.fabricator.drop >= 5.0
+    },
+    {
+      name: 'Viable strategies S1-S3 win rate >= 30%',
+      target: 'S1, S2, S3 >= 30%',
+      actual: `S1=${s1Rate.toFixed(1)}%, S2=${s2Rate.toFixed(1)}%, S3=${s3Rate.toFixed(1)}%`,
+      pass: s1Rate >= 30 && s2Rate >= 30 && s3Rate >= 30
+    },
+    {
+      name: 'Sensitivity: max scrap delta <= 30 pts',
+      target: '<= 30.0 pts',
+      actual: `maxDelta = ${scrapMaxDelta.toFixed(1)} pts`,
+      pass: scrapMaxDelta <= 30.0
+    },
+    {
+      name: 'Sensitivity: max HP delta <= 30 pts',
+      target: '<= 30.0 pts',
+      actual: `maxDelta = ${hpMaxDelta.toFixed(1)} pts`,
+      pass: hpMaxDelta <= 30.0
+    },
+    {
+      name: 'Workshop: no single upgrade alone gains > 60 pts',
+      target: '<= 60.0 pts',
+      actual: `maxGain = ${maxSingleGain.toFixed(1)} pts`,
+      pass: maxSingleGain <= 60.0
+    },
+    {
       name: 'Armour: Pulse L1 dmg vs Crusher <= 50% nominal',
       target: '<= 50%',
       actual: `${(armour.damageRatio * 100).toFixed(1)}% (${armour.effectiveDamage}/${armour.pulseL1Damage})`,
@@ -610,13 +897,28 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
   console.log(`| Coolant-Only Bot    | ${(monoStats.coolant.winRate.toFixed(1) + '%').padStart(12)} | ${String(monoStats.coolant.medianWave).padStart(11)} | ${'N/A'.padStart(14)} | Win <= 50%  | ${monoStats.coolant.winRate <= 50 ? 'PASS' : 'FAIL'}   |`);
   console.log(`| Arc-Only Bot        | ${(monoStats.arc.winRate.toFixed(1) + '%').padStart(12)} | ${String(monoStats.arc.medianWave).padStart(11)} | ${'N/A'.padStart(14)} | Win <= 50%  | ${monoStats.arc.winRate <= 50 ? 'PASS' : 'FAIL'}   |`);
   console.log(`| Rocket-Only Bot     | ${(monoStats.rocket.winRate.toFixed(1) + '%').padStart(12)} | ${String(monoStats.rocket.medianWave).padStart(11)} | ${'N/A'.padStart(14)} | Win <= 50%  | ${monoStats.rocket.winRate <= 50 ? 'PASS' : 'FAIL'}   |`);
-  console.log(`| Competent Bot       | ${(compWinRate.toFixed(1) + '%').padStart(12)} | ${'15'.padStart(11)} | ${String(compMedianFinalHp).padStart(14)} | 60-85% win  | ${compWinRate >= 60 && compWinRate <= 85 ? 'PASS' : 'FAIL'}   |`);
+  console.log(`| Competent Bot v1    | ${(compWinRate.toFixed(1) + '%').padStart(12)} | ${'15'.padStart(11)} | ${String(compMedianFinalHp).padStart(14)} | 60-85% win  | ${compWinRate >= 60 && compWinRate <= 85 ? 'PASS' : 'FAIL'}   |`);
+  console.log(`| Competent Bot v2    | ${(v2WinRate.toFixed(1) + '%').padStart(12)} | ${'15'.padStart(11)} | ${'N/A'.padStart(14)} | Comparison  | INFO   |`);
 
-  console.log('\n--- Tower Viability (No Dead Towers) ---');
-  console.log(`Competent Full Win Rate:      ${compWinRate.toFixed(1)}%`);
+  console.log('\n--- Tower Viability & Honest Re-planning Ablation ---');
+  console.log(`Competent Full Win Rate:      ${compWinRate.toFixed(1)}% ± ${compCI.toFixed(1)}%`);
   for (const exc of exclusions) {
     const s = exclusionStats[exc];
-    console.log(`Excluding ${exc.padEnd(8)} Win Rate: ${s.winRate.toFixed(1).padStart(5)}% (Drop: -${s.drop.toFixed(1)} pts, Target >= 5 pts) -> ${s.drop >= 5.0 ? 'PASS' : 'FAIL'}`);
+    console.log(`Excluding ${exc.padEnd(10)} Win Rate: ${s.winRate.toFixed(1).padStart(5)}% (Drop: -${s.drop.toFixed(1)} pts, Med Wave: ${s.medWave}) -> ${s.drop >= 5.0 ? 'PASS' : 'FAIL'}`);
+  }
+  console.log(`Subset S1 (No Rocket):  ${s1Rate.toFixed(1)}% (Target >= 30%) -> ${s1Rate >= 30 ? 'PASS' : 'FAIL'}`);
+  console.log(`Subset S2 (No Coolant): ${s2Rate.toFixed(1)}% (Target >= 30%) -> ${s2Rate >= 30 ? 'PASS' : 'FAIL'}`);
+  console.log(`Subset S3 (No Arc):     ${s3Rate.toFixed(1)}% (Target >= 30%) -> ${s3Rate >= 30 ? 'PASS' : 'FAIL'}`);
+
+  console.log('\n--- Sensitivity Matrix ---');
+  console.log(`Start Scrap x0.8: ${scrapRates[0.8].toFixed(1)}% | x1.0: ${scrapRates[1.0].toFixed(1)}% | x1.2: ${scrapRates[1.2].toFixed(1)}% (Max Delta: ${scrapMaxDelta.toFixed(1)} pts <= 30) -> ${scrapMaxDelta <= 30 ? 'PASS' : 'FAIL'}`);
+  console.log(`Enemy HP x0.9: ${hpRates[0.9].toFixed(1)}% | x1.0: ${hpRates[1.0].toFixed(1)}% | x1.1: ${hpRates[1.1].toFixed(1)}% | x1.2: ${hpRates[1.2].toFixed(1)}% (Max Delta: ${hpMaxDelta.toFixed(1)} pts <= 30) -> ${hpMaxDelta <= 30 ? 'PASS' : 'FAIL'}`);
+
+  console.log('\n--- Workshop Upgrades Matrix ---');
+  console.log(`No Upgrades Bot: ${noUpgradesRate.toFixed(1)}% (Median Wave: ${noUpgradesMedWave})`);
+  for (const u of singleUpgrades) {
+    const s = singleUpgradeStats[u];
+    console.log(`Single ${u.padEnd(16)}: ${s.rate.toFixed(1)}% (Gain vs None: +${s.gain.toFixed(1)} pts)`);
   }
 
   console.log('\n--- Wave & Game Durations ---');
@@ -638,7 +940,7 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
   for (const g of gates) {
     const status = g.pass ? '[PASS]' : '[FAIL]';
     if (!g.pass) allPassed = false;
-    console.log(`${status.padEnd(7)} ${g.name.padEnd(48)} | Target: ${g.target.padEnd(22)} | Actual: ${g.actual}`);
+    console.log(`${status.padEnd(7)} ${g.name.padEnd(50)} | Target: ${g.target.padEnd(24)} | Actual: ${g.actual}`);
   }
 
   console.log('=======================================================');
@@ -649,6 +951,9 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
     allPassed,
     gates,
     compWinRate,
+    compCI,
+    v2WinRate,
+    v2CI,
     compMedianFinalHp,
     meanWaveDur,
     meanGameDurMin,
@@ -657,13 +962,17 @@ export function runBalanceVerificationSuite(seedCount = SEED_COUNT) {
     idleMedianLossWave,
     maxIdleLossWave,
     randomMedianWave,
+    scrapRates,
+    hpRates,
+    noUpgradesRate,
+    singleUpgradeStats,
     economy,
     armour
   };
 }
 
 // Execute when invoked directly
-if (import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}`) {
+if (process.argv[1] && (import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}` || import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/')))) {
   const result = runBalanceVerificationSuite(SEED_COUNT);
   if (!result.allPassed) {
     process.exit(1);

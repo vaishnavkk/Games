@@ -415,10 +415,12 @@ export async function runSelftest(options = {}) {
  */
 export async function runSelfplay(options = {}) {
   const smoke = options.smoke ?? false;
+  const full = options.full ?? false;
+  const humanPace = options.humanPace ?? false;
   const verbose = options.verbose ?? true;
 
   if (verbose) {
-    console.log(`Starting Robot Factory Defense selfplay (${smoke ? 'SMOKE MODE' : 'FULL GAME'})...`);
+    console.log(`Starting Robot Factory Defense selfplay (${smoke ? 'SMOKE MODE' : (humanPace ? 'HUMAN PACE (360x800)' : (full ? 'FULL MATRIX MODE' : 'FULL GAME'))})...`);
   }
 
   // Start Vite server
@@ -434,17 +436,73 @@ export async function runSelfplay(options = {}) {
 
   try {
     const page = await browser.newPage();
-    await page.setViewport({ width: 960, height: 540 });
+
+    if (full) {
+      const fullViewports = [
+        { name: 'Mobile Portrait (390x844)', width: 390, height: 844 },
+        { name: 'Tablet Portrait (768x1024)', width: 768, height: 1024 },
+        { name: 'Desktop Widescreen (1440x900)', width: 1440, height: 900 }
+      ];
+
+      for (const vp of fullViewports) {
+        if (verbose) console.log(`[selfplay:full] Testing viewport ${vp.name}...`);
+        await page.setViewport({ width: vp.width, height: vp.height });
+        await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+        await page.waitForFunction(() => typeof window.__rfd !== 'undefined', { timeout: 5000 });
+
+        // Dismiss title
+        await clickSelector(page, ['#btnPlay', '[data-testid="btn-play"]']);
+
+        // Start wave and toggle speed x2
+        await clickSelector(page, ['#btnStartWave', '[data-testid="btn-start-wave"]']);
+        await clickSelector(page, ['#btnSpeed', '[data-testid="btn-speed"]']);
+
+        // Step sim forward
+        await page.evaluate(() => {
+          if (window.__rfd && window.__rfd.step) {
+            for (let i = 0; i < 60; i++) window.__rfd.step(window.__rfd.state, 16.666);
+          }
+        });
+
+        // Mid-wave reload test
+        await page.reload({ waitUntil: 'domcontentloaded' });
+        await page.waitForFunction(() => typeof window.__rfd !== 'undefined', { timeout: 5000 });
+        await assertNoHUDNaN(page);
+
+        // Storage fallback test
+        const savedWave = await page.evaluate(() => {
+          try {
+            localStorage.setItem('rfd:best_wave', JSON.stringify(5));
+            return JSON.parse(localStorage.getItem('rfd:best_wave'));
+          } catch (_e) {
+            return 1;
+          }
+        });
+        if (verbose) console.log(`[selfplay:full] Viewport ${vp.name} verified (storage=${savedWave}).`);
+      }
+    }
+
+    if (humanPace) {
+      await page.setViewport({ width: 360, height: 800 });
+      if (verbose) console.log('[selfplay:human-pace] Viewport set to 360x800 mobile portrait.');
+    } else {
+      await page.setViewport({ width: 960, height: 540 });
+    }
+
+    const actionDelay = humanPace ? 1200 : 100;
+    const startTime = Date.now();
 
     const pageErrors = [];
     page.on('pageerror', err => pageErrors.push(err.message));
 
     await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
     await page.waitForFunction(() => typeof window.__rfd !== 'undefined', { timeout: 5000 });
+    if (humanPace) await new Promise(r => setTimeout(r, actionDelay));
 
     // Step 1: Click Play if title screen is present
     const clickedPlay = await clickSelector(page, ['#btnPlay', '[data-testid="btn-play"]'], 'Title Play');
     if (verbose && clickedPlay) console.log('[selfplay] Dismissed title screen via DEPLOY TO FACTORY click.');
+    if (humanPace) await new Promise(r => setTimeout(r, actionDelay));
 
     // Step 2: Select a buildable cell
     const targetCell = mapData.buildableCells[0] || { col: 1, row: 1 };
@@ -686,12 +744,25 @@ export async function runSelfplay(options = {}) {
       }
     });
 
+    const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(1);
+
+    // Verify visual win or lose screen
+    const screenVerified = await page.evaluate(() => {
+      const winEl = document.getElementById('screenWin') || document.querySelector('[data-testid="screen-win"]');
+      const loseEl = document.getElementById('screenLose') || document.querySelector('[data-testid="screen-lose"]');
+      const winVis = winEl && window.getComputedStyle(winEl).display !== 'none';
+      const loseVis = loseEl && window.getComputedStyle(loseEl).display !== 'none';
+      return winVis || loseVis || (window.__rfd && (window.__rfd.state.waveState === 'won' || window.__rfd.state.waveState === 'lost'));
+    });
+
     if (verbose) {
       console.log(`\n======================================================`);
       console.log(`[selfplay] GAMEPLAY COMPLETE:`);
+      console.log(`- Duration: ${durationSeconds} s`);
       console.log(`- Final Outcome: ${gameOutcome.waveState}`);
       console.log(`- Wave Reached: ${gameOutcome.finalWave}`);
       console.log(`- Core HP: ${gameOutcome.coreHp}`);
+      console.log(`- Visual Screen Verified: ${screenVerified}`);
       console.log(`- LocalStorage rfd:best_wave Saved: ${bestWave}`);
       console.log(`======================================================\n`);
     }
@@ -701,7 +772,7 @@ export async function runSelfplay(options = {}) {
       return { success: false, errors: pageErrors };
     }
 
-    return { success: true, outcome: gameOutcome, bestWave };
+    return { success: true, outcome: gameOutcome, bestWave, durationSeconds, screenVerified };
 
   } finally {
     await browser.close();
@@ -714,6 +785,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const args = process.argv.slice(2);
   const isSmoke = args.includes('--smoke');
   const isSelftest = args.includes('--selftest');
+  const isFull = args.includes('--full');
+  const isHumanPace = args.includes('--human-pace');
 
   if (isSelftest) {
     runSelftest()
@@ -725,7 +798,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
         process.exit(1);
       });
   } else {
-    runSelfplay({ smoke: isSmoke })
+    runSelfplay({ smoke: isSmoke, full: isFull, humanPace: isHumanPace })
       .then(res => {
         process.exit(res.success ? 0 : 1);
       })

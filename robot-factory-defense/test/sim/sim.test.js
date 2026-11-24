@@ -15,6 +15,8 @@ import {
   serialize,
   hashState,
   mulberry32,
+  drainEvents,
+  killEnemy,
   TICK_RATE,
   TICK_MS
 } from '../../src/sim/index.js';
@@ -495,9 +497,10 @@ describe('Simulation Combat & Mechanic Rules', () => {
     assert.equal(state.projectiles.length, 0, 'Projectile must detonate and clear');
     assert.equal(detonateEvents.length, 2, 'Primary target and near enemy within splash radius must be hit');
 
-    // Damage = 35 - 2 (armour) = 33
+    const rocketL1Dmg = state.config.towers.towers.rocket.levels[0].damage;
+    const expectedDmg = Math.max(1, rocketL1Dmg - 2);
     detonateEvents.forEach(h => {
-      assert.equal(h.damage, 33);
+      assert.equal(h.damage, expectedDmg);
     });
 
     const outside = state.enemies.find(e => e.id === 'rocket_splash_outside');
@@ -724,6 +727,8 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
       // Initial defense: 2 Pulse turrets (60 + 60 = 120 scrap)
       const t1 = place(state, { col: 1, row: 1 }, 'pulse'); if (t1) actionCount++;
       const t2 = place(state, { col: 3, row: 1 }, 'pulse'); if (t2) actionCount++;
+      if (t1 && setTowerTargetMode(state, t1.id, 'nearest')) actionCount++;
+      if (t2 && setTowerTargetMode(state, t2.id, 'nearest')) actionCount++;
       if (startWave(state)) actionCount++;
 
       let maxEnemiesSeen = 0;
@@ -776,7 +781,7 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
         if (state.circuits >= 35 && !state.purchasedUpgrades.includes('hardened_rounds')) {
           if (buyUpgrade(state, 'hardened_rounds')) actionCount++;
         }
-        if (state.circuits >= 40 && !state.unlockedTowers.includes('rocket')) {
+        if (state.circuits >= 30 && !state.unlockedTowers.includes('rocket')) {
           if (buyUpgrade(state, 'unlock_rocket')) actionCount++;
         }
 
@@ -785,12 +790,17 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
           const pad = state.config.map.buildableCells.find(c => !state.towers.some(x => x.col === c.col && x.row === c.row));
           if (pad && place(state, pad, 'arc')) actionCount++;
         }
-        if (state.unlockedTowers.includes('rocket') && state.scrap >= 120 && !state.towers.some(x => x.type === 'rocket')) {
+        if (state.unlockedTowers.includes('rocket') && state.scrap >= 105 && !state.towers.some(x => x.type === 'rocket')) {
           const pad = state.config.map.buildableCells.find(c => !state.towers.some(x => x.col === c.col && x.row === c.row));
           if (pad && place(state, pad, 'rocket')) actionCount++;
         }
 
-        // Test sell action
+        if (t === 1000) {
+          if (t1 && setTowerTargetMode(state, t1.id, 'first')) actionCount++;
+        }
+        if (t === 2000) {
+          if (t2 && setTowerTargetMode(state, t2.id, 'first')) actionCount++;
+        }
         if (t === 2500) {
           const fab = state.towers.find(x => x.type === 'fabricator');
           if (fab && sell(state, fab.id)) actionCount++;
@@ -798,6 +808,9 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
         if (t === 3500) {
           const fab = state.towers.find(x => x.type === 'fabricator');
           if (fab && sell(state, fab.id)) actionCount++;
+        }
+        if (t === 4000) {
+          if (t1 && setTowerTargetMode(state, t1.id, 'nearest')) actionCount++;
         }
 
         step(state, TICK_MS);
@@ -858,3 +871,198 @@ describe('Phase 0.5 Stricter Gates: Real Simulation (5,000 Ticks, >= 20 Actions)
     assert.notEqual(run1.hash, run3.hash, 'Different seeds must produce distinct state hash');
   });
 });
+
+describe('Phase 2.5 Event Fix: Speed-x2 Event Accumulation and Single Emission', () => {
+  it('same seed + same actions produce identical cumulative event counts at x1 and x2', () => {
+    function runGameEvents(seed, speed) {
+      const state = createGame({}, seed);
+      state.speed = speed;
+      place(state, { col: 3, row: 1 }, 'pulse');
+      place(state, { col: 3, row: 3 }, 'pulse');
+      startWave(state);
+
+      let totalEvents = 0;
+      const counts = {};
+
+      // Run until wave clears or 564 ticks
+      while (state.tick < 564) {
+        step(state, 16.666667);
+        const evs = drainEvents(state);
+        totalEvents += evs.length;
+        for (const ev of evs) {
+          counts[ev.type] = (counts[ev.type] || 0) + 1;
+        }
+      }
+      return { totalEvents, counts, waveState: state.waveState, tick: state.tick };
+    }
+
+    const res1 = runGameEvents(42, 1);
+    const res2 = runGameEvents(42, 2);
+
+    assert.equal(res1.totalEvents, res2.totalEvents, `Total events must match at x1 (${res1.totalEvents}) and x2 (${res2.totalEvents})`);
+    assert.deepEqual(res1.counts, res2.counts, 'Per-type event counts must be identical between x1 and x2');
+    assert.equal(res1.waveState, 'cleared');
+    assert.equal(res2.waveState, 'cleared');
+  });
+
+  it('won, lost, and wave_cleared fire exactly once at x2', () => {
+    // 1. Won fires exactly once at x2
+    const stateWon = createGame({}, 123);
+    stateWon.speed = 2;
+    stateWon.wave = 15;
+    stateWon.waveState = 'active';
+    stateWon.enemies = [];
+    step(stateWon, 16.666667);
+    const wonEvents = drainEvents(stateWon).filter(e => e.type === 'won');
+    assert.equal(wonEvents.length, 1, 'Won event must fire exactly once at x2');
+    assert.equal(stateWon.waveState, 'won');
+
+    // Subsequent steps while won must not emit won event again
+    step(stateWon, 16.666667);
+    const wonEvents2 = drainEvents(stateWon).filter(e => e.type === 'won');
+    assert.equal(wonEvents2.length, 0, 'Won event must not re-fire on subsequent steps');
+
+    // 2. Lost fires exactly once at x2
+    const stateLost = createGame({}, 123);
+    stateLost.speed = 2;
+    stateLost.waveState = 'active';
+    stateLost.coreHp = 1;
+    stateLost.enemies = [{
+      id: 'e1',
+      type: 'glitchbot',
+      hp: 10,
+      maxHp: 10,
+      speed: 1,
+      armour: 0,
+      scrapReward: 5,
+      leakDamage: 2,
+      distance: 1000,
+      x: 0,
+      y: 0,
+      slowTimer: 0,
+      slowRatio: 0,
+      isDead: false
+    }];
+    step(stateLost, 16.666667);
+    const lostEvents = drainEvents(stateLost).filter(e => e.type === 'lost');
+    assert.equal(lostEvents.length, 1, 'Lost event must fire exactly once at x2');
+    assert.equal(stateLost.waveState, 'lost');
+
+    // Subsequent steps while lost must not emit lost event again
+    step(stateLost, 16.666667);
+    const lostEvents2 = drainEvents(stateLost).filter(e => e.type === 'lost');
+    assert.equal(lostEvents2.length, 0, 'Lost event must not re-fire on subsequent steps');
+
+    // 3. Wave_cleared fires exactly once at x2
+    const stateClear = createGame({}, 123);
+    stateClear.speed = 2;
+    stateClear.wave = 1;
+    stateClear.waveState = 'active';
+    stateClear.enemies = [];
+    step(stateClear, 16.666667);
+    const clearEvents = drainEvents(stateClear).filter(e => e.type === 'wave_cleared');
+    assert.equal(clearEvents.length, 1, 'Wave_cleared event must fire exactly once at x2');
+    assert.equal(stateClear.waveState, 'cleared');
+
+    // Subsequent step in cleared state must not emit wave_cleared again
+    step(stateClear, 16.666667);
+    const clearEvents2 = drainEvents(stateClear).filter(e => e.type === 'wave_cleared');
+    assert.equal(clearEvents2.length, 0, 'Wave_cleared event must not re-fire while waiting for next wave');
+  });
+});
+
+describe('Phase 3 Parameterized Simulation: scrapMultiplier, hpMultiplier, removedTower, workshopMode', () => {
+  it('scrapMultiplier scales starting scrap, enemy kill scrap, and wave_cleared reward scrap', () => {
+    // 1. Starting scrap scaling
+    const s08 = createGame({ scrapMultiplier: 0.8 }, 123);
+    assert.equal(s08.scrap, Math.round(150 * 0.8)); // 120
+    assert.equal(s08.scrapMultiplier, 0.8);
+
+    const s12 = createGame({ scrapMultiplier: 1.2 }, 123);
+    assert.equal(s12.scrap, Math.round(150 * 1.2)); // 180
+
+    // Also supports scrapScale alias
+    const sScale = createGame({ scrapScale: 0.8 }, 123);
+    assert.equal(sScale.scrap, 120);
+
+    // 2. Enemy kill scrap scaling
+    const state = createGame({ scrapMultiplier: 0.8 }, 123);
+    const initialScrap = state.scrap;
+    const dummyEnemy = {
+      id: 'e_test',
+      type: 'spark_drone',
+      scrap: 10,
+      hp: 10,
+      isDead: false
+    };
+    killEnemy(state, dummyEnemy);
+    // Math.round(10 * 0.8) = 8
+    assert.equal(state.scrap - initialScrap, 8);
+    const killEvent = state.events.find(e => e.type === 'killed');
+    assert.ok(killEvent);
+    assert.equal(killEvent.scrapReward, 8);
+
+    // 3. Wave clear reward scrap scaling
+    state.wave = 1;
+    state.waveState = 'active';
+    state.enemies = [];
+    const scrapBeforeClear = state.scrap;
+    step(state, 16.666667);
+    const clearEvent = state.events.find(e => e.type === 'wave_cleared');
+    assert.ok(clearEvent);
+    // Wave 1 reward is scaled by scrapMultiplier: Math.round(wave1Reward * 0.8)
+    const expectedWave1Reward = Math.round(state.config.waves.waves[0].rewardScrap * 0.8);
+    assert.equal(clearEvent.rewardScrap, expectedWave1Reward);
+    assert.equal(state.scrap - scrapBeforeClear, expectedWave1Reward);
+  });
+
+  it('hpMultiplier scales spawned enemy hp and maxHp', () => {
+    const sHighHp = createGame({ hpMultiplier: 1.1 }, 123);
+    const baseGlitchHp = sHighHp.config.enemies.enemies.glitchbot.hp;
+    const expectedHighHp = Math.max(1, Math.round(baseGlitchHp * 1.1));
+    startWave(sHighHp); // wave 1 spawns glitchbots
+    // Step 1 tick to spawn glitchbot
+    step(sHighHp, 16.666667);
+    const e1 = sHighHp.enemies[0];
+    assert.ok(e1);
+    assert.equal(e1.hp, expectedHighHp);
+    assert.equal(e1.maxHp, expectedHighHp);
+
+    const sLowHp = createGame({ hpMultiplier: 0.9 }, 123);
+    const expectedLowHp = Math.max(1, Math.round(baseGlitchHp * 0.9));
+    startWave(sLowHp);
+    step(sLowHp, 16.666667);
+    const e2 = sLowHp.enemies[0];
+    assert.ok(e2);
+    assert.equal(e2.hp, expectedLowHp);
+    assert.equal(e2.maxHp, expectedLowHp);
+  });
+
+  it('removedTower blocks building and unlock of removed tower type', () => {
+    // 1. Removed Pulse
+    const sNoPulse = createGame({ removedTower: 'pulse' }, 123);
+    assert.equal(sNoPulse.unlockedTowers.includes('pulse'), false);
+    const p1 = place(sNoPulse, { col: 1, row: 1 }, 'pulse');
+    assert.equal(p1, null);
+
+    // 2. Removed Arc: buyUpgrade('unlock_arc') must be rejected
+    const sNoArc = createGame({ removedTower: 'arc' }, 123);
+    sNoArc.circuits = 100;
+    const boughtArc = buyUpgrade(sNoArc, 'unlock_arc');
+    assert.equal(boughtArc, false);
+    assert.equal(sNoArc.unlockedTowers.includes('arc'), false);
+
+    // 3. Other unlocked towers still buildable
+    const pCool = place(sNoPulse, { col: 1, row: 1 }, 'coolant');
+    assert.ok(pCool);
+  });
+
+  it('createGame preserves workshopMode on state', () => {
+    const sNone = createGame({ workshopMode: 'none' }, 123);
+    assert.equal(sNone.workshopMode, 'none');
+
+    const sOverclock = createGame({ workshopMode: 'overclock' }, 123);
+    assert.equal(sOverclock.workshopMode, 'overclock');
+  });
+});
+
