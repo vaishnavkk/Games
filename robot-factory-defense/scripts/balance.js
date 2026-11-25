@@ -289,6 +289,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
   const workshopMode = options.workshopMode ?? 'all';
   const scrapScale = options.scrapScale ?? 1.0;
   const hpScale = options.hpScale ?? 1.0;
+  const sloppyP = options.sloppyP ?? 0;
 
   const state = createGame({
     scrapMultiplier: scrapScale,
@@ -300,6 +301,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
   const rng = botRng(seed);
   const waveDurations = [];
   const usedTowers = new Set();
+  const shouldSkip = () => (sloppyP > 0 && rng() < sloppyP);
 
   function canBuild(type) {
     if (excludedTower && type === excludedTower) return false;
@@ -321,18 +323,18 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     // Workshop purchases
     if (workshopMode === 'all') {
       if (!canBuild('arc') && excludedTower !== 'arc') {
-        if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
+        if (nextWave >= 5 && state.circuits >= 20 && !shouldSkip()) buyUpgrade(state, 'unlock_arc');
       } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
         const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
         const minW = excludedTower === 'arc' ? 5 : 7;
-        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+        if (nextWave >= minW && state.circuits >= rCost && !shouldSkip()) buyUpgrade(state, 'unlock_rocket');
       } else {
-        if (state.circuits >= 30) buyUpgrade(state, 'fast_assembly');
-        if (state.circuits >= 30) buyUpgrade(state, 'overclock');
-        if (state.circuits >= 35) buyUpgrade(state, 'hardened_rounds');
-        if (state.circuits >= 20) buyUpgrade(state, 'repair_bay');
-        if (state.circuits >= 25) buyUpgrade(state, 'long_barrels');
-        if (state.circuits >= 20) buyUpgrade(state, 'scrap_magnet');
+        if (state.circuits >= 30 && !shouldSkip()) buyUpgrade(state, 'fast_assembly');
+        if (state.circuits >= 30 && !shouldSkip()) buyUpgrade(state, 'overclock');
+        if (state.circuits >= 35 && !shouldSkip()) buyUpgrade(state, 'hardened_rounds');
+        if (state.circuits >= 20 && !shouldSkip()) buyUpgrade(state, 'repair_bay');
+        if (state.circuits >= 25 && !shouldSkip()) buyUpgrade(state, 'long_barrels');
+        if (state.circuits >= 20 && !shouldSkip()) buyUpgrade(state, 'scrap_magnet');
       }
     } else if (workshopMode === 'none') {
       if (!canBuild('arc') && excludedTower !== 'arc') {
@@ -360,6 +362,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     // 1. Initial Pulse Defense (W1): maintain 2
     if (nextWave === 1 && canBuild('pulse')) {
       while (state.towers.filter(t => t.type === 'pulse').length < 2 && state.scrap >= 60) {
+        if (shouldSkip()) break;
         const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
         if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
         else break;
@@ -375,13 +378,14 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       // Prioritize upgrading damage towers first
       for (const t of state.towers) {
         if ((t.type === 'pulse' || t.type === 'arc' || t.type === 'rocket') && t.level < 3) {
-          upgrade(state, t.id);
+          if (!shouldSkip()) upgrade(state, t.id);
         }
       }
       // If still not sufficient, place additional pulse defense
       combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
       if (!combatSufficient && canBuild('pulse')) {
         while (state.scrap >= 60 && !canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
+          if (shouldSkip()) break;
           const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
@@ -394,6 +398,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     const maxFabs = nextWave <= 1 ? 0 : (nextWave <= 3 ? 1 : (nextWave <= 5 ? 2 : (nextWave <= 7 ? 3 : 4)));
     if (combatSufficient && canBuild('fabricator') && state.fabricatorCount < maxFabs && state.scrap >= 75) {
       while (state.fabricatorCount < maxFabs && state.scrap >= 75 && canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
+        if (shouldSkip()) break;
         const p = pickPad(UTILITY_PADS) || pickPad(COMBAT_PADS);
         if (p && place(state, p, 'fabricator')) usedTowers.add('fabricator');
         else break;
@@ -404,13 +409,16 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     const hasArcL2 = state.towers.some(t => t.type === 'arc' && t.level >= 2);
     const coolantTarget = nextWave >= 7 ? 2 : (nextWave >= 3 ? 1 : 0);
     if (combatSufficient && hasArcL2 && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
-      const p = pickPad(COOLANT_PADS) || pickPad(COMBAT_PADS);
+      if (!shouldSkip()) {
+        const p = pickPad(COOLANT_PADS) || pickPad(COMBAT_PADS);
       if (p && place(state, p, 'coolant')) usedTowers.add('coolant');
+      }
     }
 
     // 4. Arc Coil: 2 starting W6
     if (nextWave >= 6 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 2 && state.scrap >= 100) {
       while (state.towers.filter(t => t.type === 'arc').length < 2 && state.scrap >= 100) {
+        if (shouldSkip()) break;
         const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
         if (p) {
           const t = place(state, p, 'arc');
@@ -426,6 +434,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     const rocketCost = state.config.towers.towers.rocket.levels[0].cost || 110;
     if (nextWave >= 8 && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= rocketCost) {
       while (state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= rocketCost) {
+        if (shouldSkip()) break;
         const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
         if (p) {
           const t = place(state, p, 'rocket');
@@ -440,10 +449,10 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     // 6. Upgrades & Surplus (defer to W6+ to preserve early economy)
     if (nextWave >= 6) {
       for (const t of state.towers) {
-        if (t.type === 'arc' && t.level < 3) upgrade(state, t.id);
-        if (t.type === 'rocket' && t.level < 3) upgrade(state, t.id);
-        if (t.type === 'pulse' && t.level < 3) upgrade(state, t.id);
-        if (t.type === 'coolant' && t.level < 2) upgrade(state, t.id);
+        if (t.type === 'arc' && t.level < 3 && !shouldSkip()) upgrade(state, t.id);
+        if (t.type === 'rocket' && t.level < 3 && !shouldSkip()) upgrade(state, t.id);
+        if (t.type === 'pulse' && t.level < 3 && !shouldSkip()) upgrade(state, t.id);
+        if (t.type === 'coolant' && t.level < 2 && !shouldSkip()) upgrade(state, t.id);
       }
 
       // 7. Honest Re-planning / Surplus
@@ -566,6 +575,13 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
   };
 }
 
+
+// ==========================================
+// 4b. SLOPPY BOT (Arm C with purchase-delay probability p)
+// ==========================================
+export function simulateSloppyBot(seed, sloppyP = 0.1, options = {}) {
+  return simulateCompetentBot(seed, null, { ...options, sloppyP });
+}
 // ==========================================
 // 5. CIRCUIT ECONOMY & INVARIANTS CHECKS
 // ==========================================
