@@ -31,6 +31,10 @@ import upgradesData from '../src/data/upgrades.json' with { type: 'json' };
 export const SEED_COUNT = 300;
 const TICK_DELTA_MS = TICK_MS || (1000 / 60);
 
+export const MAX_SIM_TICKS_PER_WAVE = 180 * 60;
+export const MAX_WAVE_LOOP_ITERATIONS = 50;
+export const MAX_PURCHASE_ITERATIONS = 50;
+
 // Helper for seeded pseudo-random within bot decisions
 export function botRng(seed) {
   let s = (seed + 9999) >>> 0;
@@ -80,23 +84,37 @@ export function stepUntilWaveComplete(state, maxSimSeconds = 180) {
     ticks++;
   }
 
+  const timedOut = ticks >= maxTicks &&
+    state.waveState !== 'won' &&
+    state.waveState !== 'lost' &&
+    state.waveState !== 'cleared';
+
+  if (timedOut && state.waveState !== 'lost' && state.waveState !== 'won') {
+    state.waveState = 'lost';
+  }
+
   const waveDuration = (state.simTime || 0) - startSimTime;
-  return { ticks, waveDuration };
+  return { ticks, waveDuration, timedOut };
 }
 
 // ==========================================
 // 1. IDLE BOT
 // ==========================================
-export function simulateIdleBot(seed) {
+export function simulateIdleBot(seed, options = {}) {
   const state = createGame({ map: mapData, towers: towersData, enemies: enemiesData, waves: wavesData, upgrades: upgradesData }, seed);
   const waveDurations = [];
+  const maxWaveIterations = options?.maxWaveIterations ?? MAX_WAVE_LOOP_ITERATIONS;
 
+  let waveIterations = 0;
   while (state.waveState !== 'won' && state.waveState !== 'lost' && state.wave < state.config.waves.totalWaves) {
-    const started = startWave(state);
-    if (!started && (state.waveState === 'won' || state.waveState === 'lost')) break;
+    if (++waveIterations > maxWaveIterations) break;
 
-    const { waveDuration } = stepUntilWaveComplete(state);
+    const started = startWave(state);
+    if (!started) break;
+
+    const { waveDuration, timedOut } = stepUntilWaveComplete(state);
     waveDurations.push(waveDuration);
+    if (timedOut) break;
   }
 
   return {
@@ -113,12 +131,16 @@ export function simulateIdleBot(seed) {
 // ==========================================
 // 2. RANDOM BOT
 // ==========================================
-export function simulateRandomBot(seed) {
+export function simulateRandomBot(seed, options = {}) {
   const state = createGame({ map: mapData, towers: towersData, enemies: enemiesData, waves: wavesData, upgrades: upgradesData }, seed);
   const rng = botRng(seed);
   const waveDurations = [];
+  const maxWaveIterations = options?.maxWaveIterations ?? MAX_WAVE_LOOP_ITERATIONS;
 
+  let waveIterations = 0;
   while (state.waveState !== 'won' && state.waveState !== 'lost' && state.wave < state.config.waves.totalWaves) {
+    if (++waveIterations > maxWaveIterations) break;
+
     const map = state.config.map;
     const availableCells = map.buildableCells.filter(
       cell => !state.towers.some(t => t.col === cell.col && t.row === cell.row)
@@ -151,10 +173,11 @@ export function simulateRandomBot(seed) {
     }
 
     const started = startWave(state);
-    if (!started && (state.waveState === 'won' || state.waveState === 'lost')) break;
+    if (!started) break;
 
-    const { waveDuration } = stepUntilWaveComplete(state);
+    const { waveDuration, timedOut } = stepUntilWaveComplete(state);
     waveDurations.push(waveDuration);
+    if (timedOut) break;
   }
 
   return {
@@ -171,10 +194,12 @@ export function simulateRandomBot(seed) {
 // ==========================================
 // 3. MONOCULTURE (SINGLE-TOWER) BOTS
 // ==========================================
-export function simulateSingleTowerBot(seed, towerType) {
+export function simulateSingleTowerBot(seed, towerType, options = {}) {
   const state = createGame({ map: mapData, towers: towersData, enemies: enemiesData, waves: wavesData, upgrades: upgradesData }, seed);
   const rng = botRng(seed);
   const waveDurations = [];
+  const maxWaveIterations = options?.maxWaveIterations ?? MAX_WAVE_LOOP_ITERATIONS;
+  const maxPurchaseIterations = options?.maxPurchaseIterations ?? MAX_PURCHASE_ITERATIONS;
 
   // For arc or rocket, grant unlock if locked by default to evaluate single-tower viability
   if (!state.unlockedTowers.includes(towerType)) {
@@ -183,14 +208,19 @@ export function simulateSingleTowerBot(seed, towerType) {
 
   const map = state.config.map;
 
+  let waveIterations = 0;
   while (state.waveState !== 'won' && state.waveState !== 'lost' && state.wave < state.config.waves.totalWaves) {
+    if (++waveIterations > maxWaveIterations) break;
+
     const availableCells = map.buildableCells.filter(
       cell => !state.towers.some(t => t.col === cell.col && t.row === cell.row)
     );
 
     // Place as many of this towerType as affordable
     let built = true;
+    let placeIters = 0;
     while (built && availableCells.length > 0) {
+      if (++placeIters > maxPurchaseIterations) break;
       const cellIdx = Math.floor(rng() * availableCells.length);
       const cell = availableCells[cellIdx];
       const res = place(state, cell, towerType);
@@ -209,10 +239,11 @@ export function simulateSingleTowerBot(seed, towerType) {
     }
 
     const started = startWave(state);
-    if (!started && (state.waveState === 'won' || state.waveState === 'lost')) break;
+    if (!started) break;
 
-    const { waveDuration } = stepUntilWaveComplete(state);
+    const { waveDuration, timedOut } = stepUntilWaveComplete(state);
     waveDurations.push(waveDuration);
+    if (timedOut) break;
   }
 
   return {
@@ -290,6 +321,8 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
   const scrapScale = options.scrapScale ?? 1.0;
   const hpScale = options.hpScale ?? 1.0;
   const sloppyP = options.sloppyP ?? 0;
+  const maxWaveIterations = options.maxWaveIterations ?? MAX_WAVE_LOOP_ITERATIONS;
+  const maxPurchaseIterations = options.maxPurchaseIterations ?? MAX_PURCHASE_ITERATIONS;
 
   const state = createGame({
     scrapMultiplier: scrapScale,
@@ -317,7 +350,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     return avail[0];
   }
 
+  let waveIterations = 0;
   while (state.waveState !== 'won' && state.waveState !== 'lost' && state.wave < state.config.waves.totalWaves) {
+    if (++waveIterations > maxWaveIterations) break;
     const nextWave = state.wave + 1;
 
     // Workshop purchases
@@ -361,7 +396,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
 
     // 1. Initial Pulse Defense (W1): maintain 2
     if (nextWave === 1 && canBuild('pulse')) {
+      let iters = 0;
       while (state.towers.filter(t => t.type === 'pulse').length < 2 && state.scrap >= 60) {
+        if (++iters > maxPurchaseIterations) break;
         if (shouldSkip()) break;
         const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
         if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
@@ -384,7 +421,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       // If still not sufficient, place additional pulse defense
       combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
       if (!combatSufficient && canBuild('pulse')) {
+        let iters = 0;
         while (state.scrap >= 60 && !canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
+          if (++iters > maxPurchaseIterations) break;
           if (shouldSkip()) break;
           const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
@@ -397,7 +436,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     // 2. Fabricators (Economy): 1 on W2, 2 on W4, 3 on W6, 4 on W8 (gated by combat confidence)
     const maxFabs = nextWave <= 1 ? 0 : (nextWave <= 3 ? 1 : (nextWave <= 5 ? 2 : (nextWave <= 7 ? 3 : 4)));
     if (combatSufficient && canBuild('fabricator') && state.fabricatorCount < maxFabs && state.scrap >= 75) {
+      let iters = 0;
       while (state.fabricatorCount < maxFabs && state.scrap >= 75 && canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
+        if (++iters > maxPurchaseIterations) break;
         if (shouldSkip()) break;
         const p = pickPad(UTILITY_PADS) || pickPad(COMBAT_PADS);
         if (p && place(state, p, 'fabricator')) usedTowers.add('fabricator');
@@ -417,7 +458,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
 
     // 4. Arc Coil: 2 starting W6
     if (nextWave >= 6 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 2 && state.scrap >= 100) {
+      let iters = 0;
       while (state.towers.filter(t => t.type === 'arc').length < 2 && state.scrap >= 100) {
+        if (++iters > maxPurchaseIterations) break;
         if (shouldSkip()) break;
         const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
         if (p) {
@@ -433,7 +476,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     // 5. Rocket Rack: 2 starting W8
     const rocketCost = state.config.towers.towers.rocket.levels[0].cost || 110;
     if (nextWave >= 8 && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= rocketCost) {
+      let iters = 0;
       while (state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= rocketCost) {
+        if (++iters > maxPurchaseIterations) break;
         if (shouldSkip()) break;
         const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
         if (p) {
@@ -458,7 +503,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       // 7. Honest Re-planning / Surplus
       if (excludedTower === 'rocket') {
         // S1: 4 Arcs, 4 Pulses (4th Pulse on W8+)
+        let sIters1 = 0;
         while (state.scrap >= 100 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 4) {
+          if (++sIters1 > maxPurchaseIterations) break;
           const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
           if (p) {
             const t = place(state, p, 'arc');
@@ -469,7 +516,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
           } else break;
         }
         const maxP = nextWave >= 8 ? 4 : 3;
+        let sIters2 = 0;
         while (state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < maxP) {
+          if (++sIters2 > maxPurchaseIterations) break;
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
@@ -477,7 +526,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       } else if (excludedTower === 'arc') {
         // S3: 4 Rockets (4th Rocket on W14+), 3 Pulses
         const maxR = nextWave >= 14 ? 4 : 3;
+        let sIters3 = 0;
         while (state.scrap >= rocketCost && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < maxR) {
+          if (++sIters3 > maxPurchaseIterations) break;
           const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
           if (p) {
             const t = place(state, p, 'rocket');
@@ -487,7 +538,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
             } else break;
           } else break;
         }
+        let sIters4 = 0;
         while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+          if (++sIters4 > maxPurchaseIterations) break;
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
@@ -495,7 +548,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       } else if (excludedTower === 'coolant') {
         // S2: 3 Arcs, 2-3 Rockets, 3 Pulses
         const maxR = nextWave >= 10 ? 3 : 2;
+        let sIters5 = 0;
         while (state.scrap >= rocketCost && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < maxR) {
+          if (++sIters5 > maxPurchaseIterations) break;
           const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
           if (p) {
             const t = place(state, p, 'rocket');
@@ -505,7 +560,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
             } else break;
           } else break;
         }
+        let sIters6 = 0;
         while (state.scrap >= 100 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 3) {
+          if (++sIters6 > maxPurchaseIterations) break;
           const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
           if (p) {
             const t = place(state, p, 'arc');
@@ -515,26 +572,34 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
             } else break;
           } else break;
         }
+        let sIters7 = 0;
         while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+          if (++sIters7 > maxPurchaseIterations) break;
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
         }
       } else if (excludedTower === 'pulse') {
+        let sIters8 = 0;
         while (state.scrap >= 80 && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < 2) {
+          if (++sIters8 > maxPurchaseIterations) break;
           const p = pickPad(COOLANT_PADS) || pickPad(COMBAT_PADS);
           if (p && place(state, p, 'coolant')) usedTowers.add('coolant');
           else break;
         }
       } else if (excludedTower === 'fabricator') {
+        let sIters9 = 0;
         while (state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 5) {
+          if (++sIters9 > maxPurchaseIterations) break;
           const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
         }
       } else {
         // Default surplus: 3rd Arc, 3rd Pulse
+        let sIters10 = 0;
         while (state.scrap >= 100 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 3) {
+          if (++sIters10 > maxPurchaseIterations) break;
           const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
           if (p) {
             const t = place(state, p, 'arc');
@@ -544,7 +609,9 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
             } else break;
           } else break;
         }
+        let sIters11 = 0;
         while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+          if (++sIters11 > maxPurchaseIterations) break;
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
@@ -554,10 +621,11 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
 
     state.towers.forEach(t => usedTowers.add(t.type));
     const started = startWave(state);
-    if (!started && (state.waveState === 'won' || state.waveState === 'lost')) break;
+    if (!started) break;
 
-    const { waveDuration } = stepUntilWaveComplete(state);
+    const { waveDuration, timedOut } = stepUntilWaveComplete(state);
     waveDurations.push(waveDuration);
+    if (timedOut) break;
   }
 
   return {
