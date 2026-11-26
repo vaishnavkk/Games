@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { createServer } from 'vite';
@@ -192,10 +193,16 @@ export async function runSelftest(options = {}) {
   const verbose = options.verbose ?? true;
   if (verbose) console.log('Starting Robot Factory Defense 6-Defect Selftest Suite...');
 
+  const nmPath = path.join(projectRoot, 'node_modules');
+  const fsAllow = [projectRoot];
+  if (fs.existsSync(nmPath)) {
+    fsAllow.push(fs.realpathSync(nmPath));
+  }
+
   // Start Vite server
   const server = await createServer({
     root: projectRoot,
-    server: { port: 0 }
+    server: { port: 0, fs: { allow: fsAllow } }
   });
   await server.listen();
   const port = server.httpServer.address().port;
@@ -221,7 +228,8 @@ export async function runSelftest(options = {}) {
       if (el) {
         el.setAttribute('data-original', el.textContent);
         el.textContent = 'NaN';
-      } else if (window.__rfd && window.__rfd.state) {
+      }
+      if (window.__rfd && window.__rfd.state) {
         window.__rfd.state.scrap = NaN;
       }
     });
@@ -423,10 +431,16 @@ export async function runSelfplay(options = {}) {
     console.log(`Starting Robot Factory Defense selfplay (${smoke ? 'SMOKE MODE' : (humanPace ? 'HUMAN PACE (360x800)' : (full ? 'FULL MATRIX MODE' : 'FULL GAME'))})...`);
   }
 
+  const nmPath = path.join(projectRoot, 'node_modules');
+  const fsAllow = [projectRoot];
+  if (fs.existsSync(nmPath)) {
+    fsAllow.push(fs.realpathSync(nmPath));
+  }
+
   // Start Vite server
   const server = await createServer({
     root: projectRoot,
-    server: { port: 0 }
+    server: { port: 0, fs: { allow: fsAllow } }
   });
   await server.listen();
   const port = server.httpServer.address().port;
@@ -746,13 +760,21 @@ export async function runSelfplay(options = {}) {
 
     const durationSeconds = ((Date.now() - startTime) / 1000).toFixed(1);
 
-    // Verify visual win or lose screen
-    const screenVerified = await page.evaluate(() => {
+    // Verify visual end screen (#endScreen)
+    await page.waitForFunction(() => {
+      const endEl = document.getElementById('endScreen') || document.querySelector('[data-testid="end-screen"]');
       const winEl = document.getElementById('screenWin') || document.querySelector('[data-testid="screen-win"]');
       const loseEl = document.getElementById('screenLose') || document.querySelector('[data-testid="screen-lose"]');
-      const winVis = winEl && window.getComputedStyle(winEl).display !== 'none';
-      const loseVis = loseEl && window.getComputedStyle(loseEl).display !== 'none';
-      return winVis || loseVis || (window.__rfd && (window.__rfd.state.waveState === 'won' || window.__rfd.state.waveState === 'lost'));
+      const isVis = (el) => el && window.getComputedStyle(el).display !== 'none';
+      return isVis(endEl) || isVis(winEl) || isVis(loseEl);
+    }, { timeout: 3000 });
+
+    const screenVerified = await page.evaluate(() => {
+      const endEl = document.getElementById('endScreen') || document.querySelector('[data-testid="end-screen"]');
+      const winEl = document.getElementById('screenWin') || document.querySelector('[data-testid="screen-win"]');
+      const loseEl = document.getElementById('screenLose') || document.querySelector('[data-testid="screen-lose"]');
+      const isVis = (el) => el && window.getComputedStyle(el).display !== 'none';
+      return !!(isVis(endEl) || isVis(winEl) || isVis(loseEl));
     });
 
     if (verbose) {

@@ -1,4 +1,6 @@
 import towersData from '../data/towers.json' with { type: 'json' };
+import upgradesData from '../data/upgrades.json' with { type: 'json' };
+import { getUpgradeEffectValue } from './utils.js';
 
 /**
  * Build Bar Component for selecting and deploying towers.
@@ -33,6 +35,13 @@ export function createBuildBar(callbacks = {}) {
     btn.appendChild(nameEl);
     btn.appendChild(costEl);
 
+    btn.addEventListener('pointerenter', () => {
+      if (callbacks.onPreviewTower) callbacks.onPreviewTower(type);
+    });
+    btn.addEventListener('focus', () => {
+      if (callbacks.onPreviewTower) callbacks.onPreviewTower(type);
+    });
+
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       if (callbacks.onBuildTower) {
@@ -65,13 +74,15 @@ export function createBuildBar(callbacks = {}) {
 
     container.style.display = 'flex';
 
+    const upgradesConfig = snap.upgradesConfig || callbacks.getUpgradesConfig?.() || upgradesData;
+    const discountRatio = getUpgradeEffectValue(upgradesConfig, 'fast_assembly', 'costDiscountRatio', 0.1);
     const hasFastAssembly = snap.purchasedUpgrades.includes('fast_assembly');
 
     towerTypes.forEach(type => {
       const { btn, costEl, def } = buttons[type];
       let baseCost = def.levels[0].cost;
       if (hasFastAssembly) {
-        baseCost = Math.floor(baseCost * 0.90);
+        baseCost = Math.floor(baseCost * (1 - discountRatio));
       }
 
       costEl.textContent = `${baseCost} Scrap`;
@@ -98,7 +109,6 @@ export function createBuildBar(callbacks = {}) {
   return {
     element: container,
     update,
-    hide: () => { container.style.display = 'none'; },
-    show: () => { container.style.display = 'flex'; }
+    hide: () => { container.style.display = 'none'; }
   };
 }

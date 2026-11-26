@@ -235,7 +235,7 @@ export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio = 1, slowed = fals
 /**
  * Procedural Tower Drawing Functions
  */
-export function drawPulseTurret(ctx, x, y, size, level = 1, angle = 0) {
+function drawPulseTurret(ctx, x, y, size, level = 1, angle = 0) {
   const r = size * 0.42;
 
   ctx.save();
@@ -296,7 +296,7 @@ export function drawPulseTurret(ctx, x, y, size, level = 1, angle = 0) {
   ctx.restore();
 }
 
-export function drawCoolantSprayer(ctx, x, y, size, level = 1, angle = 0) {
+function drawCoolantSprayer(ctx, x, y, size, level = 1, angle = 0) {
   const r = size * 0.42;
 
   ctx.save();
@@ -355,7 +355,7 @@ export function drawCoolantSprayer(ctx, x, y, size, level = 1, angle = 0) {
   ctx.restore();
 }
 
-export function drawArcCoil(ctx, x, y, size, level = 1, _angle = 0) {
+function drawArcCoil(ctx, x, y, size, level = 1, _angle = 0) {
   const r = size * 0.42;
 
   ctx.save();
@@ -399,7 +399,7 @@ export function drawArcCoil(ctx, x, y, size, level = 1, _angle = 0) {
   ctx.restore();
 }
 
-export function drawRocketRack(ctx, x, y, size, level = 1, angle = 0) {
+function drawRocketRack(ctx, x, y, size, level = 1, angle = 0) {
   const r = size * 0.42;
 
   ctx.save();
@@ -464,7 +464,7 @@ export function drawRocketRack(ctx, x, y, size, level = 1, angle = 0) {
   ctx.restore();
 }
 
-export function drawFabricator(ctx, x, y, size, rotation = 0) {
+function drawFabricator(ctx, x, y, size, rotation = 0) {
   const r = size * 0.42;
 
   ctx.save();

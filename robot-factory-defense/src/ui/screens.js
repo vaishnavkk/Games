@@ -1,5 +1,6 @@
 import { getBestWave, getWins } from './storage.js';
 import { FIRST_RUN_TIPS } from './tips.js';
+import { escapeHtml } from './utils.js';
 
 /**
  * Screen Overlays: Title, Victory, Defeat screens.
@@ -10,39 +11,45 @@ export function createScreens(callbacks = {}) {
   titleScreen.className = 'screen-overlay';
   titleScreen.id = 'titleScreen';
   titleScreen.setAttribute('data-testid', 'title-screen');
+  titleScreen.setAttribute('role', 'dialog');
+  titleScreen.setAttribute('aria-modal', 'true');
+  titleScreen.setAttribute('aria-labelledby', 'titleScreenHeading');
 
   titleScreen.innerHTML = `
-    <h1 class="screen-title">ROBOT FACTORY DEFENSE</h1>
-    <p class="screen-subtitle">Assemble defensive turrets along the industrial conveyor, research advanced workshop blueprints, and protect the factory core against 15 waves of rogue automata.</p>
-    
-    <div class="screen-stats-box">
-      <div>
-        <div class="screen-stat-label">Best Wave</div>
-        <div class="screen-stat-val" id="titleBestWave" data-testid="title-best-wave">0 / 15</div>
+    <div class="screen-content">
+      <h1 class="screen-title" id="titleScreenHeading">ROBOT FACTORY DEFENSE</h1>
+      <p class="screen-subtitle">Assemble defensive turrets along the industrial conveyor, research advanced workshop blueprints, and protect the factory core against 15 waves of rogue automata.</p>
+      
+      <div class="screen-stats-box">
+        <div>
+          <div class="screen-stat-label">Best Wave</div>
+          <div class="screen-stat-val" id="titleBestWave" data-testid="title-best-wave">0 / 15</div>
+        </div>
+        <div>
+          <div class="screen-stat-label">Factory Victories</div>
+          <div class="screen-stat-val" id="titleWins" data-testid="title-wins">0</div>
+        </div>
       </div>
-      <div>
-        <div class="screen-stat-label">Factory Victories</div>
-        <div class="screen-stat-val" id="titleWins" data-testid="title-wins">0</div>
+
+      <div class="screen-tips-box">
+        <div class="screen-tips-header">Tactical Directives</div>
+        <ol class="screen-tips-list">
+          <li>${escapeHtml(FIRST_RUN_TIPS[0])}</li>
+          <li>${escapeHtml(FIRST_RUN_TIPS[1])}</li>
+          <li>${escapeHtml(FIRST_RUN_TIPS[2])}</li>
+        </ol>
       </div>
-    </div>
 
-    <div class="screen-tips-box">
-      <div class="screen-tips-header">Tactical Directives</div>
-      <ol class="screen-tips-list">
-        <li>${FIRST_RUN_TIPS[0]}</li>
-        <li>${FIRST_RUN_TIPS[1]}</li>
-        <li>${FIRST_RUN_TIPS[2]}</li>
-      </ol>
+      <button class="interactive btn btn-hazard" id="btnPlay" data-testid="btn-play" aria-label="Deploy into Factory" style="font-size: 16px; padding: 12px 32px;">
+        DEPLOY TO FACTORY
+      </button>
     </div>
-
-    <button class="interactive btn btn-hazard" id="btnPlay" data-testid="btn-play" aria-label="Deploy into Factory" style="font-size: 16px; padding: 12px 32px;">
-      DEPLOY TO FACTORY
-    </button>
   `;
 
   const btnPlay = titleScreen.querySelector('#btnPlay');
   btnPlay.addEventListener('click', () => {
     titleScreen.style.display = 'none';
+    if (callbacks.onScreenChange) callbacks.onScreenChange();
     if (callbacks.onStartGame) callbacks.onStartGame();
   });
 
@@ -51,39 +58,45 @@ export function createScreens(callbacks = {}) {
   endScreen.className = 'screen-overlay';
   endScreen.id = 'endScreen';
   endScreen.setAttribute('data-testid', 'end-screen');
+  endScreen.setAttribute('role', 'dialog');
+  endScreen.setAttribute('aria-modal', 'true');
+  endScreen.setAttribute('aria-labelledby', 'endTitle');
   endScreen.style.display = 'none';
 
   endScreen.innerHTML = `
-    <h1 class="screen-title" id="endTitle" data-testid="end-title">MISSION OVER</h1>
-    <p class="screen-subtitle" id="endSubtitle" data-testid="end-subtitle"></p>
+    <div class="screen-content">
+      <h1 class="screen-title" id="endTitle" data-testid="end-title">MISSION OVER</h1>
+      <p class="screen-subtitle" id="endSubtitle" data-testid="end-subtitle"></p>
 
-    <div class="screen-stats-box" id="endStatsBox">
-      <div>
-        <div class="screen-stat-label">Wave Reached</div>
-        <div class="screen-stat-val wave" id="endWaveVal" data-testid="end-wave-val">0</div>
+      <div class="screen-stats-box" id="endStatsBox">
+        <div>
+          <div class="screen-stat-label">Wave Reached</div>
+          <div class="screen-stat-val wave" id="endWaveVal" data-testid="end-wave-val">0</div>
+        </div>
+        <div>
+          <div class="screen-stat-label">Final Core HP</div>
+          <div class="screen-stat-val core-hp" id="endCoreVal" data-testid="end-core-val">0</div>
+        </div>
+        <div>
+          <div class="screen-stat-label">Automata Destroyed</div>
+          <div class="screen-stat-val" id="endKillsVal" data-testid="end-kills-val">0</div>
+        </div>
+        <div>
+          <div class="screen-stat-label">Scrap Collected</div>
+          <div class="screen-stat-val scrap" id="endScrapVal" data-testid="end-scrap-val">0</div>
+        </div>
       </div>
-      <div>
-        <div class="screen-stat-label">Final Core HP</div>
-        <div class="screen-stat-val core-hp" id="endCoreVal" data-testid="end-core-val">0</div>
-      </div>
-      <div>
-        <div class="screen-stat-label">Automata Destroyed</div>
-        <div class="screen-stat-val" id="endKillsVal" data-testid="end-kills-val">0</div>
-      </div>
-      <div>
-        <div class="screen-stat-label">Scrap Collected</div>
-        <div class="screen-stat-val scrap" id="endScrapVal" data-testid="end-scrap-val">0</div>
-      </div>
+
+      <button class="interactive btn btn-cyan" id="btnRetry" data-testid="btn-retry" aria-label="Retry Game" style="font-size: 16px; padding: 12px 32px;">
+        RETRY MISSION
+      </button>
     </div>
-
-    <button class="interactive btn btn-cyan" id="btnRetry" data-testid="btn-retry" aria-label="Retry Game" style="font-size: 16px; padding: 12px 32px;">
-      RETRY MISSION
-    </button>
   `;
 
   const btnRetry = endScreen.querySelector('#btnRetry');
   btnRetry.addEventListener('click', () => {
     endScreen.style.display = 'none';
+    if (callbacks.onScreenChange) callbacks.onScreenChange();
     if (callbacks.onRetry) callbacks.onRetry();
   });
 
@@ -104,6 +117,8 @@ export function createScreens(callbacks = {}) {
 
     populateEndStats(snap);
     endScreen.style.display = 'flex';
+    if (callbacks.onScreenChange) callbacks.onScreenChange();
+    btnRetry.focus();
   }
 
   function showDefeat(snap) {
@@ -115,6 +130,8 @@ export function createScreens(callbacks = {}) {
 
     populateEndStats(snap);
     endScreen.style.display = 'flex';
+    if (callbacks.onScreenChange) callbacks.onScreenChange();
+    btnRetry.focus();
   }
 
   function populateEndStats(snap) {
@@ -134,14 +151,6 @@ export function createScreens(callbacks = {}) {
     endScreen,
     refreshTitleStats,
     showVictory,
-    showDefeat,
-    hideEndScreen: () => { endScreen.style.display = 'none'; },
-    showTitleScreen: () => {
-      refreshTitleStats();
-      titleScreen.style.display = 'flex';
-    },
-    hideTitleScreen: () => { titleScreen.style.display = 'none'; },
-    isTitleVisible: () => titleScreen.style.display !== 'none',
-    isEndVisible: () => endScreen.style.display !== 'none'
+    showDefeat
   };
 }
