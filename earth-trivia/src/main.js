@@ -5,6 +5,7 @@ import { GameManager } from './game.js';
 import { questionBag } from './questionBag.js';
 import { sound } from './audio.js';
 import { ICONS } from './icons.js';
+import { parseBestScore } from './scoring.js';
 
 window.THREE = THREE;
 
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       distanceKm: game.lastDistanceKm !== undefined ? game.lastDistanceKm : 0,
       isAdjacent: game.lastIsAdjacent || false,
       partialPoints: game.lastRoundBreakdown?.points || 0,
-      targetFreeAreaPercent: globeApp.flight.targetFreeAreaPercent !== null && globeApp.flight.targetFreeAreaPercent !== undefined ? `${globeApp.flight.targetFreeAreaPercent}%` : null
+      targetFreeAreaPercent: globeApp.flight && globeApp.flight.targetFreeAreaPercent !== null && globeApp.flight.targetFreeAreaPercent !== undefined ? `${globeApp.flight.targetFreeAreaPercent}%` : null
     })
   };
 
@@ -96,8 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const bestEl = document.getElementById('startBestScore');
     if (bestEl) {
       try {
-        const val = localStorage.getItem(`geotrivia_best_${selectedMode}_${selectedTier}`) || '0';
-        bestEl.textContent = `${parseInt(val, 10).toLocaleString()} pts`;
+        const best = parseBestScore(localStorage.getItem(`geotrivia_best_${selectedMode}_${selectedTier}`));
+        bestEl.textContent = `${best.toLocaleString()} pts`;
       } catch (e) {
         bestEl.textContent = '0 pts';
       }

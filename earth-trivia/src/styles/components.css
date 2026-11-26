@@ -106,53 +106,6 @@
   padding: 4px 0;
 }
 
-/* Step 2 Clue Worth & Reveal Countdown */
-.clue-worth {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--color-text-secondary);
-}
-.clue-worth strong {
-  font-size: 22px;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-accent-text);
-}
-.cw-drop {
-  color: var(--color-error-text, #992e1e);
-  font-weight: 700;
-  animation: dropIn .25s ease-out;
-}
-@keyframes dropIn {
-  from { transform: translateY(-6px); opacity: 0; }
-  to { transform: none; opacity: 1; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .cw-drop { animation: none; }
-}
-#revealBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-ui);
-  font-size: 13px;
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-accent-text);
-  background: var(--color-surface-elevated);
-  border: 1px solid var(--color-border);
-  padding: 5px 12px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--duration-fast) ease;
-}
-#revealBtn:hover {
-  background: var(--color-surface-hover);
-  border-color: var(--color-accent-border);
-}
-#revealBtn:focus-visible {
-  outline: 2px solid var(--color-border-focus);
-}
 .clue-actions-bar {
   display: flex;
   align-items: center;
@@ -190,7 +143,7 @@
   background: var(--color-surface-card);
   border: 1px solid var(--color-border);
   color: var(--color-text-primary);
-  font-family: var(--font-body);
+  font-family: var(--font-ui);
   font-size: 11.5px;
   font-weight: var(--font-weight-semibold);
   cursor: pointer;

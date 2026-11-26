@@ -56,6 +56,7 @@ export function getFreeRect() {
 }
 
 export function isHiddenByUi(dirUnit, camera, renderer, freeRect, globeRadius = 1.7, margin = 48) {
+  if (!camera || !camera.position) return true;
   if (dirUnit.dot(camera.position.clone().normalize()) < 0.2) return true; // far side / edge
   const p = dirUnit.clone().multiplyScalar(globeRadius).project(camera);
   const w = renderer && renderer.domElement ? renderer.domElement.clientWidth : (typeof window !== 'undefined' ? window.innerWidth : 1440);
@@ -365,10 +366,12 @@ export class CameraFlightController {
     canvas.width = 32;
     canvas.height = 32;
     const ctx = canvas.getContext('2d');
-    ctx.beginPath();
-    ctx.arc(16, 16, 14, 0, Math.PI * 2);
-    ctx.fillStyle = '#ffffff';
-    ctx.fill();
+    if (ctx) {
+      ctx.beginPath();
+      ctx.arc(16, 16, 14, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+    }
     this._dotTexture = new THREE.CanvasTexture(canvas);
     return this._dotTexture;
   }
@@ -460,6 +463,7 @@ export class CameraFlightController {
     canvas.width = 512;
     canvas.height = 192;
     const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
 
     // High-DPI 2x scale
     ctx.scale(2, 2);

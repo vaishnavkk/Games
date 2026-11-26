@@ -9,7 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
-import { launchOptions, getChromeExecutablePath } from './chrome.js';
+import { launchOptions } from './chrome.js';
 import { pointsIfCorrect, calculatePartialCredit, SCORING } from '../../src/scoring.js';
 import { getLargestLandmassCenter } from '../../src/cameraFlight.js';
 import { CountryPicker } from '../../src/picker.js';
@@ -57,8 +57,6 @@ function getBestCountryCoords(countryOrId) {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '../..');
-
-const CHROME_PATH = getChromeExecutablePath();
 
 // CLI Options
 const isCI = process.argv.includes('--ci') || Boolean(process.env.CI);
@@ -118,6 +116,7 @@ function startServer(port = 8080) {
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
     '.jpeg': 'image/jpeg',
+    '.webp': 'image/webp',
     '.svg': 'image/svg+xml',
     '.woff2': 'font/woff2',
     '.woff': 'font/woff',
@@ -2177,13 +2176,11 @@ async function main() {
 
   const timestamp = new Date().toISOString().replace(/[-:]/g, '').replace('T', '_').split('.')[0];
   const localReportDir = path.resolve(rootDir, `report/selfplay/${timestamp}`);
-  const rootReportDir = path.resolve(__dirname, `../../../report/selfplay/${timestamp}`);
   const reportDir = outArg
     ? (path.isAbsolute(outArg) ? outArg : path.resolve(process.cwd(), outArg))
     : localReportDir;
   fs.mkdirSync(reportDir, { recursive: true });
   fs.mkdirSync(localReportDir, { recursive: true });
-  fs.mkdirSync(rootReportDir, { recursive: true });
 
   const eventsFile = path.resolve(reportDir, 'events.jsonl');
   const summaryFile = path.resolve(reportDir, 'summary.txt');
@@ -2497,7 +2494,6 @@ async function main() {
   fs.writeFileSync(summaryFile, finalSummaryText, 'utf8');
   try {
     fs.writeFileSync(path.resolve(localReportDir, 'summary.txt'), finalSummaryText, 'utf8');
-    fs.writeFileSync(path.resolve(rootReportDir, 'summary.txt'), finalSummaryText, 'utf8');
   } catch (e) {}
 
   console.log('\n================================================================================');
@@ -2505,7 +2501,7 @@ async function main() {
   console.log('================================================================================\n');
 
   if (isCoverage) {
-    const reportOut = path.resolve(rootDir, '../report/cleanup/coverage.txt');
+    const reportOut = path.resolve(rootDir, 'report/cleanup/coverage.txt');
     const covData = generateCoverageReport(globalCoverageAccumulator, reportOut);
     console.log(`[Coverage] Generated report at: ${reportOut}`);
     console.log(`[Coverage] Total functions: ${covData.totalFunctions}, executed: ${covData.executedFunctions}, zero-run: ${covData.zeroRunFunctions.length}`);

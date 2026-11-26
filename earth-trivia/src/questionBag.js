@@ -15,10 +15,10 @@ const load = () => {
   if (seen) return seen;
   try {
     const raw = typeof localStorage !== 'undefined' ? localStorage.getItem(KEY) : null;
-    seen = raw ? JSON.parse(raw) : memoryStore;
-    if (!seen || typeof seen !== 'object') seen = {};
+    const parsed = raw ? JSON.parse(raw) : memoryStore;
+    seen = (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : {};
   } catch {
-    seen = memoryStore;
+    seen = (memoryStore && typeof memoryStore === 'object' && !Array.isArray(memoryStore)) ? memoryStore : {};
   }
   return seen;
 };
@@ -98,7 +98,7 @@ function resolveCountry(item) {
 // Draw fresh item from bucket (for clues and generic items)
 function drawFresh(bucket, pool, avoid = () => false, customRng = rng) {
   const storeObj = load();
-  const s = new Set(storeObj[bucket] || []);
+  const s = new Set(Array.isArray(storeObj[bucket]) ? storeObj[bucket] : []);
   let fresh = pool.filter((x) => !s.has(x.id));
   if (!fresh.length) {
     s.clear();
@@ -201,7 +201,7 @@ export function pickCountries(tier, rawPool, n, customRng = rng) {
 
   const bucket = `c:${tier}`;
   const storeObj = load();
-  const seenIds = new Set(storeObj[bucket] || []);
+  const seenIds = new Set(Array.isArray(storeObj[bucket]) ? storeObj[bucket] : []);
 
   const fresh = pool.filter(c => !seenIds.has(c.id));
   let chosen = [];

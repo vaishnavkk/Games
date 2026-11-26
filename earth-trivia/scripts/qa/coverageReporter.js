@@ -139,16 +139,16 @@ export function generateCoverageReport(accumulator, outFile) {
     }
   }
 
-  // Check CSS rule usage
-  const htmlPath = path.resolve(rootDir, 'index.html');
-  const html = fs.existsSync(htmlPath) ? fs.readFileSync(htmlPath, 'utf8') : '';
-  const styleMatch = html.match(/<style>([\s\S]*?)<\/style>/i);
+  // Check CSS rule usage across src/styles/*.css
+  const stylesDir = path.resolve(rootDir, 'src/styles');
   let totalRules = 0;
-  let unusedRules = 0;
-  if (styleMatch) {
-    const cssText = styleMatch[1];
-    const rules = cssText.match(/[^{}]+(?=\{)/g) || [];
-    totalRules = rules.length;
+  if (fs.existsSync(stylesDir)) {
+    for (const file of fs.readdirSync(stylesDir).filter(f => f.endsWith('.css'))) {
+      const cssText = fs.readFileSync(path.join(stylesDir, file), 'utf8')
+        .replace(/\/\*[\s\S]*?\*\//g, '');
+      const rules = cssText.match(/[^{}]+(?=\{)/g) || [];
+      totalRules += rules.length;
+    }
   }
 
   // Format report

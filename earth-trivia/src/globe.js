@@ -16,12 +16,26 @@ export class GlobeApp {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, this.width / this.height, 0.1, 1000);
     this.camera.position.set(0, 0, 4.0);
+    this.webglUnavailable = false;
+    this.renderer = null;
+    this.controls = null;
+    this.mapRenderer = null;
+    this.picker = null;
+    this.flight = null;
 
-    this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance'
-    });
+    try {
+      this.renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+    } catch (err) {
+      console.error('WebGL initialization failed:', err);
+      this.webglUnavailable = true;
+      this.showWebGLFallback();
+      return;
+    }
+
     this.renderer.setSize(this.width, this.height);
     // Cap devicePixelRatio at 2.0 for optimal balance of razor sharpness and rendering performance
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.0));
@@ -51,13 +65,15 @@ export class GlobeApp {
     const texture = this.mapRenderer.initBaseTexture();
 
     // Set anisotropic filtering to GPU maximum to preserve sharpness at grazing angles
-    const maxAnisotropy = this.renderer.capabilities.getMaxAnisotropy();
-    texture.anisotropy = Math.max(4, maxAnisotropy);
+    if (texture) {
+      const maxAnisotropy = this.renderer.capabilities.getMaxAnisotropy();
+      texture.anisotropy = Math.max(4, maxAnisotropy);
+    }
 
     // Globe Mesh (128x128 segments = 16,384 vertices for a perfectly round silhouette)
     const sphereGeo = new THREE.SphereGeometry(1.7, 128, 128);
     const sphereMat = new THREE.MeshPhongMaterial({
-      map: texture,
+      map: texture || null,
       shininess: 8,
       specular: new THREE.Color(0x101a24)
     });
@@ -136,25 +152,27 @@ export class GlobeApp {
   }
 
 
-  setMicrostateTarget(target) {
-    if (!target) {
-      this.activeMicrostate = null;
-      const ring = document.getElementById('microstateRing');
-      if (ring) ring.style.display = 'none';
-      return;
-    }
-    const bbox = target.bbox;
-    const w = bbox ? Math.abs(bbox[2] - bbox[0]) : (target.angularSpan || 0);
-    if (w < 3.0 || (target.id && ['336', '492', '674', '438', '020', '470', '584', '798', '296'].includes(String(target.id).padStart(3, '0')))) {
-      const lat = target.lat !== undefined ? target.lat : (target.centroid ? target.centroid[1] : 0);
-      const lon = target.lon !== undefined ? target.lon : (target.centroid ? target.centroid[0] : 0);
-      this.activeMicrostate = { target, lat, lon };
-    } else {
-      this.activeMicrostate = null;
-      const ring = document.getElementById('microstateRing');
-      if (ring) ring.style.display = 'none';
-    }
+  showWebGLFallback() {
+    if (!this.container) return;
+    this.container.innerHTML = '';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'webgl-fallback';
+    wrapper.setAttribute('role', 'alert');
+    wrapper.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;background:#06161f;color:#f5f0e6;font-family:var(--font-ui, sans-serif);';
+
+    const title = document.createElement('h2');
+    title.textContent = '3D Globe Unavailable';
+    title.style.cssText = 'font-family:var(--font-display, serif);font-size:24px;margin-bottom:8px;color:#d97d10;';
+
+    const msg = document.createElement('p');
+    msg.textContent = 'WebGL is disabled or unsupported in this browser environment. Enable hardware acceleration or WebGL to explore the interactive 3D globe.';
+    msg.style.cssText = 'max-width:420px;font-size:14px;line-height:1.5;color:#ece5d6;';
+
+    wrapper.appendChild(title);
+    wrapper.appendChild(msg);
+    this.container.appendChild(wrapper);
   }
+
   createStars() {
     const starGeo = new THREE.BufferGeometry();
     const starCount = 1000;
@@ -190,6 +208,7 @@ export class GlobeApp {
   }
 
   onResize() {
+    if (!this.renderer || !this.container) return;
     this.width = this.container.clientWidth || window.innerWidth;
     this.height = this.container.clientHeight || window.innerHeight;
     this.camera.aspect = this.width / this.height;
@@ -200,7 +219,8 @@ export class GlobeApp {
     }
   }
 
-  animate(time) {
+  animate() {
+    if (!this.renderer) return;
     requestAnimationFrame(this.animate);
 
     // Auto-rotation only resumes when NOT viewing a result card or selecting a country
@@ -228,33 +248,6 @@ export class GlobeApp {
       const scaleFactor = Math.max(0.35, Math.min(2.0, camDist / 3.8));
       const base = (sprite.userData && sprite.userData.baseScale) || { x: 0.24, y: 0.09 };
       sprite.scale.set(base.x * scaleFactor, base.y * scaleFactor, 1);
-    }
-
-    // Microstate HTML/SVG overlay ring projection (Step 3d)
-    const ring = document.getElementById('microstateRing');
-    if (ring) {
-      if (this.activeMicrostate) {
-        const localPt = CountryPicker.latLonToVector3(this.activeMicrostate.lat, this.activeMicrostate.lon, 1.7);
-        const worldPt = localPt.clone().applyMatrix4(this.earthMesh.matrixWorld);
-        const toCam = this.camera.position.clone().sub(worldPt).normalize();
-        const norm = worldPt.clone().normalize();
-        const isFacing = norm.dot(toCam) > 0.05;
-
-        if (isFacing) {
-          const p = worldPt.clone().project(this.camera);
-          const w = this.renderer.domElement.clientWidth;
-          const h = this.renderer.domElement.clientHeight;
-          const x = (p.x * 0.5 + 0.5) * w;
-          const y = (-p.y * 0.5 + 0.5) * h;
-          ring.style.display = 'block';
-          ring.style.left = `${Math.round(x - 28)}px`;
-          ring.style.top = `${Math.round(y - 28)}px`;
-        } else {
-          ring.style.display = 'none';
-        }
-      } else {
-        ring.style.display = 'none';
-      }
     }
 
     this.renderer.render(this.scene, this.camera);
