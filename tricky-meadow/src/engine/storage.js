@@ -1,11 +1,24 @@
 // Tricky Meadow — Safe LocalStorage Handler with In-Memory Fallback
 
-export const STORAGE_KEY = 'tricky-meadow:save_v1';
-export const STORAGE_PREFIX = 'tricky-meadow:';
+const STORAGE_KEY = 'tricky-meadow:save_v1';
+const STORAGE_PREFIX = 'tricky-meadow:';
 
 let memoryFallback = {
   stars: {}
 };
+
+export function sanitizeStarsMap(rawStars) {
+  if (!rawStars || typeof rawStars !== 'object' || Array.isArray(rawStars)) {
+    return {};
+  }
+  const clean = {};
+  for (const [id, val] of Object.entries(rawStars)) {
+    if (typeof val === 'number' && Number.isInteger(val) && val >= 1 && val <= 3) {
+      clean[id] = val;
+    }
+  }
+  return clean;
+}
 
 export function loadProgress() {
   try {
@@ -14,11 +27,8 @@ export function loadProgress() {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object') {
-          if (!parsed.stars || typeof parsed.stars !== 'object' || Array.isArray(parsed.stars)) {
-            parsed.stars = {};
-          }
           return {
-            stars: parsed.stars
+            stars: sanitizeStarsMap(parsed.stars)
           };
         }
       }
@@ -26,12 +36,12 @@ export function loadProgress() {
   } catch (e) {
     console.warn('[storage] localStorage read blocked, using memory fallback:', e.message);
   }
-  return { stars: { ...memoryFallback.stars } };
+  return { stars: sanitizeStarsMap(memoryFallback.stars) };
 }
 
 export function saveProgress(progress) {
   const safeData = {
-    stars: progress?.stars || {}
+    stars: sanitizeStarsMap(progress?.stars)
   };
   memoryFallback = { stars: { ...safeData.stars } };
 

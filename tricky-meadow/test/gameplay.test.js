@@ -85,6 +85,9 @@ test('gameplay: 2 wrong tries triggers 1 star and fact transition across all puz
     assert.equal(game.screen, 'puzzle');
     assert.equal(game.feedback, 'Try again!');
 
+    // Wait for shake animation lock to clear before 2nd try
+    game.isShaking = false;
+
     // Wrong try 2
     if (p.type === 'pick') {
       const wrong = p.items.find(i => i.id !== p.answer).id;
@@ -101,22 +104,35 @@ test('gameplay: 2 wrong tries triggers 1 star and fact transition across all puz
     assert.equal(game.screen, 'fact');
     assert.equal(game.stars, 1);
   }
+  game.clearTimers();
 });
 
 // --- Controls, Rapid Tapping & Edge Cases ---
 
-test('controls: rapid tapping wrong answers caps at 2 tries without exception', () => {
+test('controls: rapid tapping during shake lock is ignored, then 2nd try transitions to fact', () => {
   resetProgress();
   const game = new GameManager({ puzzles: puzzlesData });
   game.startPuzzle('garden-01');
   const wrong = game.getCurrentPuzzle().items.find(i => i.id !== game.getCurrentPuzzle().answer).id;
 
+  // Rapid clicks while shake lock is active only count as 1 try
+  for (let i = 0; i < 15; i++) {
+    game.submitPick(wrong);
+  }
+  assert.equal(game.tries, 1);
+  assert.equal(game.isShaking, true);
+  assert.equal(game.screen, 'puzzle');
+
+  // After shake ends, 2nd try finishes puzzle with 1 star
+  game.isShaking = false;
   for (let i = 0; i < 15; i++) {
     game.submitPick(wrong);
   }
 
+  assert.equal(game.tries, 2);
   assert.equal(game.screen, 'fact');
   assert.equal(game.stars, 1);
+  game.clearTimers();
 });
 
 test('controls: tapall rapid toggle and empty submission edge cases', () => {
@@ -128,6 +144,7 @@ test('controls: tapall rapid toggle and empty submission edge cases', () => {
   // Empty submit fails
   game.submitTapAll();
   assert.equal(game.tries, 1);
+  game.isShaking = false;
 
   // Toggle same item twice
   const firstId = tapall.items[0].id;
@@ -141,6 +158,7 @@ test('controls: tapall rapid toggle and empty submission edge cases', () => {
   game.submitTapAll();
   assert.equal(game.screen, 'fact');
   assert.equal(game.stars, 2); // 1 wrong try earlier -> 2 stars
+  game.clearTimers();
 });
 
 test('controls: order puzzle undo and re-order mechanics', () => {

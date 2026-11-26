@@ -13,19 +13,13 @@
   
   --color-ink-brown: #2d2013;       /* Main text ink (15.3:1 contrast on cream paper) */
   --color-ink-muted: #5a4632;       /* Secondary text ink (8.6:1 contrast) */
-  --color-ink-light: #7e644b;       /* Footnotes/citations */
 
   --color-meadow-green: #2e7d47;    /* Primary meadow green */
   --color-meadow-dark: #205c33;     /* Dark moss green (7.95:1 on white) */
   --color-meadow-soft: #eaf5ed;
 
   --color-sky-blue: #2b759e;        /* Level 2 blue (5.07:1 on white) */
-  --color-sky-dark: #1e5573;
   --color-sky-soft: #e8f4fa;
-
-  --color-peach: #b64f26;           /* Level 3 peach (5.08:1 on white) */
-  --color-peach-dark: #8c3816;
-  --color-peach-soft: #fdf0ea;
 
   --color-amber: #8a4e00;           /* Stars & accents (>= 6.7:1 on cream/white) */
   --color-amber-soft: #fff8ea;
@@ -300,26 +294,6 @@ h1, h2, h3, .level-name, .game-title, .fact-title, .done-title {
   justify-self: center;
 }
 
-.hud-left {
-  justify-self: start;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-
-.hud-center {
-  justify-self: center;
-  text-align: center;
-  line-height: 1;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-}
-
 .hud-title,
 .topbar-title {
   font-family: var(--font-headings);
@@ -339,23 +313,6 @@ h1, h2, h3, .level-name, .game-title, .fact-title, .done-title {
 
 .hud-level-tag {
   color: var(--color-meadow-dark);
-}
-
-.hud-potential-stars {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  margin-top: 2px;
-  line-height: 1;
-}
-
-.hud-right {
-  justify-self: end;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
 }
 
 .hud-stars {
@@ -879,12 +836,6 @@ svg[width="40"],
   padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)) !important;
 }
 
-.puzzle-actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
-}
-
 .btn-submit {
   min-width: 140px;
   min-height: var(--min-tap);
@@ -1030,17 +981,6 @@ svg[width="40"],
   gap: 20px;
 }
 
-.settings-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.settings-head h2 {
-  font-size: 1.8rem;
-  font-weight: 800;
-}
-
 .settings-section {
   display: flex;
   flex-direction: column;
@@ -1140,7 +1080,6 @@ svg[width="40"],
   animation: gentle-shake 0.45s ease-in-out;
 }
 
-.screen-puzzle.shake .card,
 .screen-puzzle.shake .card-item {
   pointer-events: none;
 }
@@ -1148,10 +1087,6 @@ svg[width="40"],
 @keyframes hero-bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
-}
-
-.hero-bounce {
-  animation: hero-bounce 2.2s ease-in-out infinite;
 }
 
 /* SVG Sprite / Emoji Utility */

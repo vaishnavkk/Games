@@ -4,12 +4,8 @@ export const UI_ICONS = {
   hint: '💡',
   check: '✅',
   lock: '🔒',
-  unlock: '🔓',
   home: '🏠',
-  back: '🏠',
   speaker: '🔊',
-  speaker_mute: '🔇',
   sparkles: '✨',
-  trophy: '🏆',
   settings: '⚙️'
 };

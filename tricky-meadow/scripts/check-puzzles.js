@@ -46,7 +46,10 @@ let mythsList = [
 if (fs.existsSync(MYTHS_PATH)) {
   try {
     mythsList = JSON.parse(fs.readFileSync(MYTHS_PATH, 'utf8'));
-  } catch (e) {}
+  } catch (e) {
+    console.error(`[check:puzzles] myths.json Parse Error: ${e.message}`);
+    process.exit(1);
+  }
 }
 
 export function checkMyths(puzzle, myths = mythsList) {
@@ -367,7 +370,8 @@ if (fs.existsSync(CLDR_PATH)) {
   try {
     cldrKeywords = JSON.parse(fs.readFileSync(CLDR_PATH, 'utf8'));
   } catch (e) {
-    // fallback
+    console.error(`[check:puzzles] cldr-keywords.json Parse Error: ${e.message}`);
+    process.exit(1);
   }
 }
 
@@ -540,7 +544,8 @@ if (fs.existsSync(COMMON_WORDS_PATH)) {
   try {
     commonWords = new Set(JSON.parse(fs.readFileSync(COMMON_WORDS_PATH, 'utf8')));
   } catch (e) {
-    // fallback
+    console.error(`[check:puzzles] common-words-5000.json Parse Error: ${e.message}`);
+    process.exit(1);
   }
 }
 
@@ -985,11 +990,6 @@ const plantReadingDefectC = {
   id: 'plant-missing-explanation',
   prompt: 'Which breathing sacs take in air?',
   fact: { text: 'Air enters alveoli deep inside the lungs.' }
-};
-const plantReadingDefectD = {
-  id: 'plant-too-many-allowed',
-  prompt: 'Which items are allowed?',
-  fact: { text: 'Reptiles like alligators live with air sacs in cold ices.' }
 };
 
 // 7. Rule g: Distractor quality planted defect
