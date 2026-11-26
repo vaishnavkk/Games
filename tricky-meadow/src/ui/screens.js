@@ -1,8 +1,9 @@
 import { renderEmoji } from '../sprite.js';
 import { LEVELS } from '../engine/game.js';
 import { renderMascot } from './mascot.js';
+import { escapeHtml } from './escape.js';
 
-export function renderStarString(count) {
+function renderStarString(count) {
   let stars = '';
   for (let i = 0; i < count; i++) {
     stars += renderEmoji('star', 24);
@@ -10,7 +11,7 @@ export function renderStarString(count) {
   return stars;
 }
 
-export function renderHomeScreen(_game) {
+function renderHomeScreen(_game) {
   return `
     <div class="screen screen-home bg-home">
       <div class="ambient-layer" aria-hidden="true">
@@ -42,13 +43,19 @@ export function renderHomeScreen(_game) {
   `;
 }
 
-export function renderMapScreen(game) {
-  const totalStars = Object.values(game.progress.stars || {}).reduce((a, b) => a + b, 0);
+function renderMapScreen(game) {
+  const totalStars = Object.values(game.progress.stars || {}).reduce(
+    (sum, val) => sum + (typeof val === 'number' && Number.isInteger(val) && val >= 1 && val <= 3 ? val : 0),
+    0
+  );
 
   const levelCardsHtml = LEVELS.map(lvl => {
     const unlocked = game.isUnlocked(lvl.id);
     const lvlStars = game.getTotalStarsForLevel(lvl.id);
-    const maxStars = lvl.totalPuzzles * 3;
+    const totalInLevel = typeof game.getTotalPuzzlesForLevel === 'function'
+      ? game.getTotalPuzzlesForLevel(lvl.id)
+      : game.getLevelPuzzles(lvl.id).length;
+    const maxStars = totalInLevel * 3;
 
     return `
       <article class="level-card ${unlocked ? 'unlocked' : 'locked'}" data-level="${lvl.id}">
@@ -56,7 +63,7 @@ export function renderMapScreen(game) {
           <span class="level-icon">${renderEmoji(lvl.emoji, 44)}</span>
           <div class="level-meta">
             <span class="level-badge">Level ${lvl.id}</span>
-            <h2 class="level-name">${lvl.name}</h2>
+            <h2 class="level-name">${escapeHtml(lvl.name)}</h2>
           </div>
           <div class="level-status">
             ${unlocked
@@ -111,14 +118,14 @@ export function renderMapScreen(game) {
   `;
 }
 
-export function renderPuzzleScreen(game) {
+function renderPuzzleScreen(game) {
   const puzzle = game.getCurrentPuzzle();
   if (!puzzle) return `<div class="screen"><p>No puzzle selected.</p></div>`;
 
   const levelInfo = LEVELS.find(l => l.id === game.level);
   const levelPuzzles = game.getLevelPuzzles();
   const puzzleIdx = levelPuzzles.findIndex(p => p.id === game.puzzleId);
-  const totalPuzzlesInLevel = levelPuzzles.length || 6;
+  const totalPuzzlesInLevel = levelPuzzles.length;
   const currentPotentialStars = game.hintUsed ? 2 : (game.tries === 0 ? 3 : (game.tries === 1 ? 2 : 1));
 
   const displayedItems = game.getCurrentDisplayedItems ? game.getCurrentDisplayedItems() : (game.displayedItems || puzzle.items);
@@ -140,11 +147,12 @@ export function renderPuzzleScreen(game) {
       }
     }
 
+    const escapedLabel = escapeHtml(item.label);
     return `
-      <button type="button" class="card-item ${extraClass}" data-item-id="${item.id}" aria-label="${item.label}">
+      <button type="button" class="card-item ${extraClass}" data-item-id="${escapeHtml(item.id)}" aria-label="${escapedLabel}">
         ${badgeHtml}
         <span class="card-emoji">${renderEmoji(item.emoji, 56)}</span>
-        <span class="card-label">${item.label}</span>
+        <span class="card-label">${escapedLabel}</span>
       </button>
     `;
   }).join('');
@@ -155,7 +163,7 @@ export function renderPuzzleScreen(game) {
         <button type="button" class="icon-btn header-btn" id="btnBackMap" aria-label="Back to Map">
           ${renderEmoji('home', 28)}
         </button>
-        <h1 class="hud-title topbar-title hud-level-tag">${levelInfo?.name || `Level ${game.level}`}</h1>
+        <h1 class="hud-title topbar-title hud-level-tag">${escapeHtml(levelInfo?.name || `Level ${game.level}`)}</h1>
         <button type="button" class="icon-btn header-btn" id="btnSettings" aria-label="Settings">
           ${renderEmoji('settings', 28)}
         </button>
@@ -177,7 +185,7 @@ export function renderPuzzleScreen(game) {
       </section>
 
       <section class="prompt-box">
-        <h2 class="puzzle-prompt">${puzzle.prompt}</h2>
+        <h2 class="puzzle-prompt">${escapeHtml(puzzle.prompt)}</h2>
       </section>
 
       <div class="cards-area ${puzzle.type}-mode">
@@ -215,7 +223,7 @@ export function renderPuzzleScreen(game) {
   `;
 }
 
-export function renderFactScreen(game) {
+function renderFactScreen(game) {
   const puzzle = game.getCurrentPuzzle();
   if (!puzzle) return `<div class="screen"><p>No fact available.</p></div>`;
 
@@ -235,12 +243,12 @@ export function renderFactScreen(game) {
             ${renderMascot('cheer', null, 56)}
             <h2 class="fact-title">Did You Know?</h2>
           </div>
-          <p class="fact-text">${puzzle.fact.text}</p>
+          <p class="fact-text">${escapeHtml(puzzle.fact.text)}</p>
 
           ${puzzle.fact.evidence && puzzle.fact.evidence.length > 0
             ? `
               <div class="evidence-pills">
-                ${puzzle.fact.evidence.map(e => `<span class="pill">${e}</span>`).join('')}
+                ${puzzle.fact.evidence.map(e => `<span class="pill">${escapeHtml(e)}</span>`).join('')}
               </div>
             `
             : ''
@@ -258,9 +266,12 @@ export function renderFactScreen(game) {
   `;
 }
 
-export function renderLevelDoneScreen(game) {
+function renderLevelDoneScreen(game) {
   const levelInfo = LEVELS.find(l => l.id === game.level);
   const totalLvlStars = game.getTotalStarsForLevel(game.level);
+  const totalInLevel = typeof game.getTotalPuzzlesForLevel === 'function'
+    ? game.getTotalPuzzlesForLevel(game.level)
+    : game.getLevelPuzzles(game.level).length;
 
   return `
     <div class="screen screen-level-done bg-level-${game.level}">
@@ -268,12 +279,12 @@ export function renderLevelDoneScreen(game) {
         <div class="done-icon">
           ${renderMascot('cheer', 'Incredible work, explorer!', 96)}
         </div>
-        <h1 class="done-title">${levelInfo?.name || 'Level'} Complete!</h1>
+        <h1 class="done-title">${escapeHtml(levelInfo?.name || 'Level')} Complete!</h1>
         <p class="done-subtitle">Awesome job solving puzzles in the meadow!</p>
 
         <div class="done-stars-summary">
           ${renderEmoji('star', 32)}
-          <span class="done-score">${totalLvlStars} / ${(levelInfo?.totalPuzzles || 6) * 3} Stars</span>
+          <span class="done-score">${totalLvlStars} / ${totalInLevel * 3} Stars</span>
         </div>
 
         <div class="done-actions">
@@ -287,7 +298,7 @@ export function renderLevelDoneScreen(game) {
   `;
 }
 
-export function renderSettingsScreen(_game) {
+function renderSettingsScreen(_game) {
   return `
     <div class="screen screen-settings">
       <div class="settings-card">
@@ -296,25 +307,22 @@ export function renderSettingsScreen(_game) {
             ${renderEmoji('home', 28)}
           </button>
           <h1 class="hud-title topbar-title">Settings & Credits</h1>
-          <button type="button" class="icon-btn header-btn" id="btnDismissSettings" aria-label="Done">
+          <button type="button" class="icon-btn header-btn" id="btnDoneSettings" aria-label="Done">
             ${renderEmoji('check', 24)}
           </button>
         </header>
 
         <section class="settings-section">
           <h3>Credits & Attributions</h3>
-          <ul class="credits-list">
+          <ul class="credits-list plain-text-sources">
             <li>
-              <strong>Illustrations:</strong> Twemoji graphics by Twitter / X contributors, licensed under
-              <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC-BY 4.0</a>.
+              <strong>Illustrations:</strong> Twemoji graphics by Twitter / X contributors, licensed under CC-BY 4.0.
             </li>
             <li>
-              <strong>Typography:</strong> Fredoka (by Milena Brandao) & Patrick Hand (by Patrick Wagesreiter), licensed under the
-              <a href="https://openfontlicense.org" target="_blank" rel="noopener noreferrer">SIL Open Font License 1.1</a>.
+              <strong>Typography:</strong> Fredoka (by Milena Brandao) & Patrick Hand (by Patrick Wagesreiter), licensed under the SIL Open Font License 1.1.
             </li>
             <li>
-              <strong>Celebrations:</strong> canvas-confetti by Kiril Vatev, licensed under the
-              <a href="https://opensource.org/licenses/ISC" target="_blank" rel="noopener noreferrer">ISC License</a>.
+              <strong>Celebrations:</strong> canvas-confetti by Kiril Vatev, licensed under the ISC License.
             </li>
           </ul>
         </section>
@@ -323,10 +331,12 @@ export function renderSettingsScreen(_game) {
           <h3>Fact Sources (Parents & Educators)</h3>
           <p class="reset-desc">Institutional sources consulted for educational facts (plain text):</p>
           <ul class="credits-list plain-text-sources">
-            <li>NASA Space Place & Science Explorations</li>
-            <li>Britannica Kids & Encyclopaedia Britannica</li>
-            <li>Smithsonian National Museum of Natural History</li>
-            <li>National Geographic Kids & Educational Archives</li>
+            <li>NASA Space Place & Solar System Exploration</li>
+            <li>Smithsonian's National Zoo & Conservation Biology Institute</li>
+            <li>NOAA, Ocean Service & USGS Water Science School</li>
+            <li>National Park Service (NPS)</li>
+            <li>NIH MedlinePlus, NHLBI, NIAMS & NIDCD</li>
+            <li>ASU Ask A Biologist, University Extensions & ADA MouthHealthy</li>
           </ul>
         </section>
 

@@ -14,10 +14,21 @@ class SoundManager {
   init() {
     if (!this.ctx && typeof window !== 'undefined') {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) this.ctx = new AudioCtx();
+      if (AudioCtx) {
+        try {
+          this.ctx = new AudioCtx();
+        } catch (e) {
+          this.ctx = null;
+        }
+      }
     }
-    if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume();
+    if (this.ctx && this.ctx.state === 'suspended' && typeof this.ctx.resume === 'function') {
+      try {
+        const resumePromise = this.ctx.resume();
+        if (resumePromise && typeof resumePromise.catch === 'function') {
+          resumePromise.catch(() => {});
+        }
+      } catch (e) {}
     }
   }
 
@@ -38,6 +49,7 @@ class SoundManager {
   playClick() {
     if (this.muted) return;
     this.init();
+    if (!this.ctx) return;
     try {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
@@ -56,6 +68,7 @@ class SoundManager {
   playSwoosh() {
     if (this.muted) return;
     this.init();
+    if (!this.ctx) return;
     try {
       const now = this.ctx.currentTime;
       const osc = this.ctx.createOscillator();
@@ -79,21 +92,25 @@ class SoundManager {
   playCorrect() {
     if (this.muted) return;
     this.init();
+    if (!this.ctx) return;
     try {
       const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 arpeggio
       notes.forEach((freq, idx) => {
         setTimeout(() => {
-          if (this.muted) return;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-          gain.gain.setValueAtTime(0.14, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.35);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + 0.35);
+          if (this.muted || !this.ctx) return;
+          try {
+            const now = this.ctx.currentTime;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now);
+            gain.gain.setValueAtTime(0.14, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            osc.stop(now + 0.35);
+          } catch (e) {}
         }, idx * 70);
       });
     } catch (e) {}
@@ -102,6 +119,7 @@ class SoundManager {
   playWrong() {
     if (this.muted) return;
     this.init();
+    if (!this.ctx) return;
     try {
       const now = this.ctx.currentTime;
       const osc = this.ctx.createOscillator();

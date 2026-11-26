@@ -37,7 +37,7 @@ export function vector3ToLatLon(v) {
 }
 
 // Project point p onto great-circle segment a -> b on the sphere
-export function projectPointToSegment(p, a, b) {
+function projectPointToSegment(p, a, b) {
   const n = new THREE.Vector3().crossVectors(a, b);
   if (n.lengthSq() < 1e-12) {
     const latP = vector3ToLatLon(p);
@@ -67,7 +67,7 @@ export function projectPointToSegment(p, a, b) {
 }
 
 // Standard ray-casting point-in-polygon test
-export function isPointInPolygon(lat, lon, poly) {
+function isPointInPolygon(lat, lon, poly) {
   const ring = poly[0];
   if (!ring || ring.length < 3) return false;
   let inside = false;
@@ -81,7 +81,7 @@ export function isPointInPolygon(lat, lon, poly) {
   return inside;
 }
 
-export function isPointInGeometry(lat, lon, geometry) {
+function isPointInGeometry(lat, lon, geometry) {
   if (!geometry || !geometry.coordinates) return false;
   const polys = geometry.type === 'Polygon' ? [geometry.coordinates] : geometry.coordinates;
   for (const poly of polys) {
@@ -92,16 +92,31 @@ export function isPointInGeometry(lat, lon, geometry) {
 
 /**
  * Expose distance from CLICK POINT to nearest point of target country.
- * Returns { km, nearestLatLon } where km is integer km (0 if adjacent/inside).
+ * Falls back to Haversine distance to fallbackLatLon when targetGeometry has no coordinates.
+ * Returns { km, nearestLatLon, hasGeometry } where km is integer km (0 if adjacent/inside).
  */
-export function distanceToCountryWithNearest(latClick, lonClick, targetGeometry) {
+export function distanceToCountryWithNearest(latClick, lonClick, targetGeometry, fallbackLatLon = null) {
   if (!targetGeometry || !targetGeometry.coordinates) {
-    return { km: 0, nearestLatLon: { lat: latClick, lon: lonClick } };
+    if (
+      fallbackLatLon &&
+      typeof fallbackLatLon.lat === 'number' &&
+      typeof fallbackLatLon.lon === 'number' &&
+      Number.isFinite(fallbackLatLon.lat) &&
+      Number.isFinite(fallbackLatLon.lon)
+    ) {
+      const km = Math.max(0, Math.round(haversineDistanceKm(latClick, lonClick, fallbackLatLon.lat, fallbackLatLon.lon)));
+      return {
+        km,
+        nearestLatLon: { lat: fallbackLatLon.lat, lon: fallbackLatLon.lon },
+        hasGeometry: false
+      };
+    }
+    return { km: 0, nearestLatLon: { lat: latClick, lon: lonClick }, hasGeometry: false };
   }
 
   // Check if click point is inside country
   if (isPointInGeometry(latClick, lonClick, targetGeometry)) {
-    return { km: 0, nearestLatLon: { lat: latClick, lon: lonClick } };
+    return { km: 0, nearestLatLon: { lat: latClick, lon: lonClick }, hasGeometry: true };
   }
 
   const p = latLonToVector3(latClick, lonClick, 1.7);
@@ -127,7 +142,8 @@ export function distanceToCountryWithNearest(latClick, lonClick, targetGeometry)
   const nearestLatLon = vector3ToLatLon(bestQ);
   return {
     km: roundedKm <= 0 ? 0 : roundedKm,
-    nearestLatLon
+    nearestLatLon,
+    hasGeometry: true
   };
 }
 

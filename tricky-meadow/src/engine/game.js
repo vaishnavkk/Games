@@ -18,7 +18,7 @@ export function createRng(seed) {
   };
 }
 
-export function shuffleArray(arr, rng) {
+function shuffleArray(arr, rng) {
   const result = [...arr];
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(rng() * (i + 1));
@@ -55,7 +55,7 @@ export const LEVELS = [
 ].map(lvl => ({
   ...lvl,
   get totalPuzzles() {
-    return puzzlesData.filter(p => p.level === lvl.id).length || 6;
+    return puzzlesData.filter(p => p.level === lvl.id).length;
   }
 }));
 
@@ -73,12 +73,24 @@ export class GameManager {
     this.tapAllSelection = new Set();
     this.feedback = null;
     this.isShaking = false;
-    this.shakeTimeout = null;
+    this.shakeTimer = null;
+    this.orderResetTimer = null;
     this.displayedItems = [];
     this.disableShuffle = options.disableShuffle || false;
     this.listeners = new Set();
 
     this.bindDebugHook();
+  }
+
+  clearTimers() {
+    if (this.shakeTimer) {
+      clearTimeout(this.shakeTimer);
+      this.shakeTimer = null;
+    }
+    if (this.orderResetTimer) {
+      clearTimeout(this.orderResetTimer);
+      this.orderResetTimer = null;
+    }
   }
 
   bindDebugHook() {
@@ -138,25 +150,34 @@ export class GameManager {
     return this.puzzles.filter(p => p.level === level);
   }
 
+  getTotalPuzzlesForLevel(level = this.level) {
+    return this.getLevelPuzzles(level).length;
+  }
+
   isUnlocked(level) {
     return isLevelUnlocked(level, this.progress.stars, this.puzzles);
   }
 
   getStarsForPuzzle(id) {
-    return this.progress.stars[id] || 0;
+    const val = this.progress.stars[id];
+    return typeof val === 'number' && Number.isInteger(val) && val >= 1 && val <= 3 ? val : 0;
   }
 
   getTotalStarsForLevel(level) {
     const list = this.getLevelPuzzles(level);
-    return list.reduce((sum, p) => sum + (this.progress.stars[p.id] || 0), 0);
+    return list.reduce((sum, p) => sum + this.getStarsForPuzzle(p.id), 0);
   }
 
   goToHome() {
+    this.clearTimers();
+    this.isShaking = false;
     this.screen = 'home';
     this.notify();
   }
 
   goToMap() {
+    this.clearTimers();
+    this.isShaking = false;
     this.screen = 'map';
     this.feedback = null;
     this.notify();
@@ -173,7 +194,7 @@ export class GameManager {
     const levelPuzzles = this.getLevelPuzzles(lvl);
     if (levelPuzzles.length > 0) {
       // Find first unsolved or start with first
-      const nextUnsolved = levelPuzzles.find(p => !this.progress.stars[p.id]);
+      const nextUnsolved = levelPuzzles.find(p => !this.getStarsForPuzzle(p.id));
       this.startPuzzle((nextUnsolved || levelPuzzles[0]).id);
     } else {
       this.goToMap();
@@ -183,10 +204,7 @@ export class GameManager {
   startPuzzle(pId) {
     const puzzle = this.puzzles.find(p => p.id === pId);
     if (!puzzle) return;
-    if (this.shakeTimeout) {
-      clearTimeout(this.shakeTimeout);
-      this.shakeTimeout = null;
-    }
+    this.clearTimers();
     this.level = puzzle.level;
     this.puzzleId = puzzle.id;
     this.tries = 0;
@@ -215,32 +233,30 @@ export class GameManager {
     this.feedback = 'Try again!';
     this.notify();
 
-    if (this.shakeTimeout) {
-      clearTimeout(this.shakeTimeout);
-      this.shakeTimeout = null;
+    if (this.shakeTimer) {
+      clearTimeout(this.shakeTimer);
+      this.shakeTimer = null;
     }
 
     // After 2 wrong tries, show answer and fact card
     if (this.tries >= 2) {
+      this.clearTimers();
       this.isShaking = false;
       this.stars = 1;
       this.recordStars(this.puzzleId, this.stars);
       this.screen = 'fact';
       this.notify();
     } else {
-      this.shakeTimeout = setTimeout(() => {
+      this.shakeTimer = setTimeout(() => {
         this.isShaking = false;
-        this.shakeTimeout = null;
+        this.shakeTimer = null;
         this.notify();
       }, 600);
     }
   }
 
   handleCorrectAnswer() {
-    if (this.shakeTimeout) {
-      clearTimeout(this.shakeTimeout);
-      this.shakeTimeout = null;
-    }
+    this.clearTimers();
     this.isShaking = false;
     this.stars = calculateStars({ tries: this.tries, hintUsed: this.hintUsed });
     this.recordStars(this.puzzleId, this.stars);
@@ -254,7 +270,8 @@ export class GameManager {
   }
 
   recordStars(pId, starsCount) {
-    const existing = this.progress.stars[pId] || 0;
+    if (!Number.isInteger(starsCount) || starsCount < 1 || starsCount > 3) return;
+    const existing = this.getStarsForPuzzle(pId);
     if (starsCount > existing) {
       this.progress.stars[pId] = starsCount;
       saveProgress(this.progress);
@@ -262,6 +279,7 @@ export class GameManager {
   }
 
   submitPick(itemId) {
+    if (this.isShaking) return;
     if (this.screen !== 'puzzle') return;
     const puzzle = this.getCurrentPuzzle();
     if (!puzzle || puzzle.type !== 'pick') return;
@@ -273,6 +291,7 @@ export class GameManager {
   }
 
   toggleTapAll(itemId) {
+    if (this.isShaking) return;
     if (this.screen !== 'puzzle') return;
     const puzzle = this.getCurrentPuzzle();
     if (!puzzle || puzzle.type !== 'tapall') return;
@@ -285,6 +304,7 @@ export class GameManager {
   }
 
   submitTapAll() {
+    if (this.isShaking) return;
     if (this.screen !== 'puzzle') return;
     const puzzle = this.getCurrentPuzzle();
     if (!puzzle || puzzle.type !== 'tapall') return;
@@ -297,6 +317,7 @@ export class GameManager {
   }
 
   tapOrderItem(itemId) {
+    if (this.isShaking) return;
     if (this.screen !== 'puzzle') return;
     const puzzle = this.getCurrentPuzzle();
     if (!puzzle || puzzle.type !== 'order') return;
@@ -318,41 +339,14 @@ export class GameManager {
         this.handleCorrectAnswer();
       } else {
         this.handleWrongAnswer();
-        // Reset order for retry
-        setTimeout(() => {
-          this.orderSelection = [];
-          this.notify();
-        }, 600);
-      }
-    }
-  }
-
-  submitAnswer(answer) {
-    if (this.isShaking) return;
-    if (this.screen !== 'puzzle') return;
-    const puzzle = this.getCurrentPuzzle();
-    if (!puzzle) return;
-    if (puzzle.type === 'pick') {
-      if (checkAnswer(puzzle, answer)) {
-        this.handleCorrectAnswer();
-      } else {
-        this.handleWrongAnswer();
-      }
-    } else if (puzzle.type === 'tapall') {
-      const choice = answer !== undefined ? (Array.isArray(answer) ? answer : [answer]) : Array.from(this.tapAllSelection);
-      if (checkAnswer(puzzle, choice)) {
-        this.handleCorrectAnswer();
-      } else {
-        this.handleWrongAnswer();
-      }
-    } else if (puzzle.type === 'order') {
-      const choice = Array.isArray(answer) ? answer : this.orderSelection;
-      if (this.orderSelection.length === puzzle.items.length || Array.isArray(answer)) {
-        if (checkAnswer(puzzle, choice)) {
-          this.handleCorrectAnswer();
-        } else {
-          this.handleWrongAnswer();
-          setTimeout(() => {
+        // Reset order for retry if still on puzzle
+        if (this.screen === 'puzzle') {
+          if (this.orderResetTimer) {
+            clearTimeout(this.orderResetTimer);
+          }
+          this.orderResetTimer = setTimeout(() => {
+            this.orderResetTimer = null;
+            if (this.screen !== 'puzzle') return;
             this.orderSelection = [];
             this.notify();
           }, 600);
@@ -396,10 +390,7 @@ export class GameManager {
   }
 
   resetAllProgress() {
-    if (this.shakeTimeout) {
-      clearTimeout(this.shakeTimeout);
-      this.shakeTimeout = null;
-    }
+    this.clearTimers();
     this.progress = storageReset();
     this.level = 1;
     this.puzzleId = null;

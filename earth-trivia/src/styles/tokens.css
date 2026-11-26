@@ -12,16 +12,12 @@
 :root {
   /* ── 1. Color Palette: "Atlas" Direction ── */
   --color-canvas: #06161f;              /* Deepest ink-teal space */
-  --color-ocean: #081a24;               /* Primary oceanic ink-teal */
-  --color-ocean-subtle: #0d2330;
 
   /* UI Panels: Light Warm-Paper Surfaces */
   --color-surface-bg: #f5f0e6;          /* Alabaster paper panel surface */
   --color-surface-card: #ece5d6;        /* Warm parchment card surface */
   --color-surface-elevated: #faf7f0;    /* Highlighted vellum card surface */
   --color-surface-hover: #e4dcce;       /* Hover state for paper controls */
-  --color-surface-active: #dbd2c2;      /* Active state for paper controls */
-  --color-surface-disabled: #ded6c8;    /* Disabled control surface */
 
   /* Structural 1px Borders (Separation on canvas is 15.7:1; on paper is 2.5:1) */
   --color-border: #d4c7b2;              /* Muted sepia paper border */
@@ -33,8 +29,6 @@
   --color-text-primary: #12202f;        /* 14.2:1 on #f5f0e6 (Pass AAA) */
   --color-text-secondary: #3b4d5e;      /* 7.2:1 on #f5f0e6 (Pass AAA) */
   --color-text-muted: #4c5e6e;          /* 5.9:1 on #f5f0e6, 5.3:1 on #ece5d6 (Pass AA) */
-  --color-text-disabled: #8a96a3;
-  --color-text-inverse: #f5f0e6;        /* Light paper text for dark chips */
 
   /* Primary Accent: Saffron Yellow (Distinct from Tailwind Amber/Yellow) */
   --color-accent: #d97d10;              /* Saffron Ochre */
@@ -64,9 +58,6 @@
   --space-4: 16px;
   --space-5: 20px;
   --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
 
   /* ── 3. Unified Radii (Buttons, Cards, Dialogs share 8px) ── */
   --radius-component: 8px;
@@ -78,16 +69,11 @@
 
   /* Font sizes: strictly meeting minimum size constraints */
   --font-size-xs: 12px;         /* Badges, meta tags */
-  --font-size-sm: 13.5px;       /* Secondary notes */
   --font-size-base: 15px;       /* Mobile body & buttons (>= 15px) */
-  --font-size-md: 16px;         /* Desktop body text */
   --font-size-hud: 19px;        /* HUD numbers (>= 18px) */
-  --font-size-lg: 21px;         /* Card titles, section headers */
   --font-size-xl: 38px;         /* Mobile modal titles (>= 36px) */
   --font-size-hero: 52px;       /* Desktop modal titles (>= 48px) */
 
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
@@ -99,6 +85,7 @@
   /* ── 6. Transitions & Motion ── */
   --duration-fast: 150ms;
   --duration-normal: 220ms;
+  --duration-slow: 900ms;
   --duration-fill: 300ms;       /* Country fill tween: 300ms */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --transition-ui: 200ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -111,6 +98,7 @@
   :root {
     --duration-fast: 0ms;
     --duration-normal: 0ms;
+    --duration-slow: 0ms;
     --duration-fill: 0ms;
     --transition-ui: none;
   }

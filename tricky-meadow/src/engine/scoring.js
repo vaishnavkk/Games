@@ -26,7 +26,8 @@ export function countSolvedPuzzlesInLevel(level, progressStars, puzzles) {
   const levelPuzzles = puzzles.filter(p => p.level === level);
   let solved = 0;
   for (const p of levelPuzzles) {
-    if (progressStars && progressStars[p.id] && progressStars[p.id] > 0) {
+    const s = progressStars?.[p.id];
+    if (typeof s === 'number' && Number.isInteger(s) && s >= 1 && s <= 3) {
       solved++;
     }
   }

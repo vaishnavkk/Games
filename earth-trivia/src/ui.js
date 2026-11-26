@@ -1,9 +1,18 @@
 import { ICONS, getFlagSvg } from './icons.js';
-import { renderClueWorth } from './scoring.js';
+import { parseBestScore } from './scoring.js';
+
+export function escapeHtml(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 export class UIManager {
   constructor() {
-    this.renderClueWorth = renderClueWorth;
     this.startScreen = document.getElementById('startScreen');
     this.topHud = document.getElementById('topHud');
     this.clueCard = document.getElementById('clueCard');
@@ -237,7 +246,7 @@ export class UIManager {
 
     if (mode === 'name') {
       this.cluePrompt.textContent = 'Locate nation on globe:';
-      this.clueText.innerHTML = `<span class="target-name-spotlight">${getFlagSvg(country.flag)} ${country.name}</span>`;
+      this.clueText.innerHTML = `<span class="target-name-spotlight">${getFlagSvg(country.flag)} ${escapeHtml(country.name)}</span>`;
       if (this.clueProgression) this.clueProgression.style.display = 'none';
       if (this.nextClueBtn) this.nextClueBtn.style.display = 'none';
     } else if (mode === 'flag') {
@@ -267,7 +276,7 @@ export class UIManager {
     }
   }
 
-  showMemoryVault({ isCorrect, isTimeout, targetCountry, guessCountry, distanceKm, isAdjacent, hitCoords, targetCoords, breakdown, isPractice, onNext }) {
+  showMemoryVault({ isCorrect, isTimeout, targetCountry, guessCountry, distanceKm, isAdjacent, hasBorderPolygon = true, hitCoords, targetCoords, breakdown, isPractice, onNext }) {
     this.hideTouchConfirm();
     if (this.clueCard) this.clueCard.classList.add('hidden');
     if (this.memoryVault) this.memoryVault.classList.remove('hidden');
@@ -293,23 +302,25 @@ export class UIManager {
       this.vaultStatus.className = 'vault-status missed';
       if (this.vaultDistance) {
         this.vaultDistance.style.display = 'block';
-        const clickedName = guessCountry ? guessCountry.name : 'Open Ocean';
-        const miles = Math.round(distanceKm * 0.621371);
+        const clickedName = escapeHtml(guessCountry ? guessCountry.name : 'Open Ocean');
+        const targetName = escapeHtml(targetCountry ? targetCountry.name : '');
+        const safeDistKm = typeof distanceKm === 'number' && Number.isFinite(distanceKm) ? distanceKm : 0;
+        const miles = Math.round(safeDistKm * 0.621371);
         const originLat = hitCoords && hitCoords.lat !== undefined ? hitCoords.lat : (guessCountry && guessCountry.lat !== undefined ? guessCountry.lat : 0);
         const originLon = hitCoords && hitCoords.lon !== undefined ? hitCoords.lon : (guessCountry && guessCountry.lon !== undefined ? guessCountry.lon : 0);
         const destLat = targetCoords && targetCoords.lat !== undefined ? targetCoords.lat : (targetCountry ? targetCountry.lat : 0);
         const destLon = targetCoords && targetCoords.lon !== undefined ? targetCoords.lon : (targetCountry ? targetCountry.lon : 0);
-        const originCoordStr = Math.abs(originLat).toFixed(2) + '°' + (originLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(originLon).toFixed(2) + '°' + (originLon >= 0 ? 'E' : 'W');
-        const destCoordStr = Math.abs(destLat).toFixed(2) + '°' + (destLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(destLon).toFixed(2) + '°' + (destLon >= 0 ? 'E' : 'W');
-        if (isAdjacent || distanceKm === 0) {
+        const originCoordStr = escapeHtml(Math.abs(originLat).toFixed(2) + '°' + (originLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(originLon).toFixed(2) + '°' + (originLon >= 0 ? 'E' : 'W'));
+        const destCoordStr = escapeHtml(Math.abs(destLat).toFixed(2) + '°' + (destLat >= 0 ? 'N' : 'S') + ', ' + Math.abs(destLon).toFixed(2) + '°' + (destLon >= 0 ? 'E' : 'W'));
+        if (hasBorderPolygon && (isAdjacent || safeDistKm === 0)) {
           this.vaultDistance.innerHTML =
-            '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, borders <strong>' + targetCountry.name + '</strong></div>' +
+            '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, borders <strong>' + targetName + '</strong></div>' +
             '<div class="distance-coords">' +
               '<span>🤝 Neighboring Country • Shared Sovereign Border (0 km)</span>' +
             '</div>';
         } else {
           this.vaultDistance.innerHTML =
-            '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, <strong>' + distanceKm.toLocaleString() + ' km</strong> <span class="distance-mi">(' + miles.toLocaleString() + ' mi)</span> from <strong>' + targetCountry.name + '</strong></div>' +
+            '<div class="distance-main">You clicked <strong>' + clickedName + '</strong>, <strong>' + safeDistKm.toLocaleString() + ' km</strong> <span class="distance-mi">(' + miles.toLocaleString() + ' mi)</span> from <strong>' + targetName + '</strong></div>' +
             '<div class="distance-coords">' +
               '<span>📍 ' + originCoordStr + '</span>' +
               '<span class="coord-arrow">➔</span>' +
@@ -327,7 +338,9 @@ export class UIManager {
       this.vaultFlag.innerHTML = getFlagSvg(targetCountry.flag);
     }
     if (this.vaultName) this.vaultName.textContent = targetCountry.name;
-    if (this.vaultCapital) this.vaultCapital.textContent = `Capital: ${targetCountry.capital}`;
+    if (this.vaultCapital) {
+      this.vaultCapital.textContent = `Capital: ${targetCountry.capital || '—'}`;
+    }
 
     // Score Breakdown Badge
     if (this.vaultBreakdown) {
@@ -351,7 +364,7 @@ export class UIManager {
     if (this.vaultLandmark) this.vaultLandmark.textContent = targetCountry.landmark;
     if (this.vaultCulture) this.vaultCulture.textContent = targetCountry.cultureFood;
     if (this.vaultAnchor) {
-      this.vaultAnchor.textContent = (targetCountry.memoryAnchors && targetCountry.memoryAnchors[0]) || targetCountry.clues[0];
+      this.vaultAnchor.textContent = (targetCountry.memoryAnchors && targetCountry.memoryAnchors[0]) || (targetCountry.clues && targetCountry.clues[0]) || '';
     }
 
     // Populate Rich Country Dossier fields
@@ -420,7 +433,7 @@ export class UIManager {
     if (this.endBestScore) {
       try {
         const key = `geotrivia_best_${mode || 'clue'}_${tier || 'easy'}`;
-        const best = parseInt(localStorage.getItem(key) || '0', 10);
+        const best = parseBestScore(localStorage.getItem(key));
         this.endBestScore.textContent = `${best.toLocaleString()} pts`;
       } catch (e) {
         this.endBestScore.textContent = '—';
@@ -448,13 +461,15 @@ export class UIManager {
         uniqueMissed.forEach(c => {
           const item = document.createElement('div');
           item.className = 'missed-item';
+          const capitalLabel = c.capital ? `Capital: ${escapeHtml(c.capital)}` : 'Capital: —';
+          const anchorText = escapeHtml((c.memoryAnchors && c.memoryAnchors[0]) || (c.clues && c.clues[0]) || '');
           item.innerHTML = `
             <div class="missed-head">
               <span class="flag-icon">${getFlagSvg(c.flag)}</span>
-              <strong>${c.name}</strong>
-              <span class="capital">Capital: ${c.capital}</span>
+              <strong>${escapeHtml(c.name)}</strong>
+              <span class="capital">${capitalLabel}</span>
             </div>
-            <div class="missed-anchor">${(c.memoryAnchors && c.memoryAnchors[0]) || (c.clues && c.clues[0]) || ''}</div>
+            <div class="missed-anchor">${anchorText}</div>
           `;
           this.missedList.appendChild(item);
         });

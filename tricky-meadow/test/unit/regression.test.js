@@ -3,6 +3,10 @@ import assert from 'node:assert/strict';
 import { GameManager } from '../../src/engine/game.js';
 import { checkAnswer } from '../../src/engine/scoring.js';
 import { loadProgress, resetProgress } from '../../src/engine/storage.js';
+import { renderApp } from '../../src/ui/screens.js';
+import { renderMascot } from '../../src/ui/mascot.js';
+import { escapeHtml } from '../../src/ui/escape.js';
+import { readPuzzleAloud } from '../../src/ui/speech.js';
 
 // --- (a) Corrupted / Primitive localStorage stars recovery ---
 test('regression (a): corrupted / primitive localStorage stars recovery handles malformed data gracefully', () => {
@@ -80,33 +84,45 @@ test('regression (b): duplicate items in tapall answers fail validation', () => 
 });
 
 // --- (c) Rapid click / submission lock during isShaking ---
-test('regression (c): rapid click / submission lock during isShaking rejects input', () => {
+test('regression (c): UI input methods (submitPick, toggleTapAll, submitTapAll, tapOrderItem) reject input during isShaking', () => {
   resetProgress();
   const game = new GameManager();
-  game.startLevel(1);
-  const puzzle = game.getCurrentPuzzle();
-  assert.ok(puzzle, 'Current puzzle should be active');
 
-  // Put game into shaking state
-  game.isShaking = true;
-  const initialTries = game.tries;
-  const initialScreen = game.screen;
+  // 1. Pick puzzle
+  const pickPuzzle = game.puzzles.find(p => p.type === 'pick');
+  game.startPuzzle(pickPuzzle.id);
+  const wrongPick = pickPuzzle.items.find(i => i.id !== pickPuzzle.answer).id;
 
-  // Attempt wrong submission during isShaking
-  const wrongAnswer = puzzle.items.find(i => i.id !== puzzle.answer)?.id || 'wrong_choice';
-  game.submitAnswer(wrongAnswer);
-  assert.equal(game.tries, initialTries, 'submitAnswer must be rejected when isShaking is true');
-  assert.equal(game.screen, initialScreen, 'Screen must remain on puzzle during isShaking');
+  game.submitPick(wrongPick);
+  assert.equal(game.isShaking, true);
+  assert.equal(game.tries, 1);
 
-  // Attempt correct submission during isShaking
-  game.submitAnswer(puzzle.answer);
-  assert.equal(game.tries, initialTries, 'Correct submitAnswer must be rejected when isShaking is true');
-  assert.equal(game.screen, initialScreen, 'Screen must not transition during isShaking');
+  // Blocked while shaking
+  game.submitPick(wrongPick);
+  game.submitPick(pickPuzzle.answer);
+  assert.equal(game.tries, 1, 'submitPick must be rejected when isShaking is true');
+  assert.equal(game.screen, 'puzzle', 'Screen must remain on puzzle during isShaking');
 
-  // Once isShaking is false, submission proceeds normally
+  game.clearTimers();
   game.isShaking = false;
-  game.submitAnswer(puzzle.answer);
-  assert.equal(game.screen, 'fact', 'submitAnswer should succeed once isShaking is false');
+  game.submitPick(pickPuzzle.answer);
+  assert.equal(game.screen, 'fact', 'submitPick should succeed once isShaking is false');
+
+  // 2. TapAll puzzle
+  const tapAllPuzzle = game.puzzles.find(p => p.type === 'tapall');
+  game.startPuzzle(tapAllPuzzle.id);
+  game.isShaking = true;
+  game.toggleTapAll(tapAllPuzzle.items[0].id);
+  assert.equal(game.tapAllSelection.size, 0, 'toggleTapAll must be rejected when isShaking is true');
+  game.submitTapAll();
+  assert.equal(game.tries, 0, 'submitTapAll must be rejected when isShaking is true');
+
+  // 3. Order puzzle
+  const orderPuzzle = game.puzzles.find(p => p.type === 'order');
+  game.startPuzzle(orderPuzzle.id);
+  game.isShaking = true;
+  game.tapOrderItem(orderPuzzle.items[0].id);
+  assert.equal(game.orderSelection.length, 0, 'tapOrderItem must be rejected when isShaking is true');
 });
 
 // --- (d) resetAllProgress() full state cleanup ---
@@ -280,4 +296,293 @@ test('regression (h): settings reset from puzzle, fact, level_done and map alway
     assert.equal(game.screen, 'map', `After reset from ${origin}, app must land on Map`);
     assert.equal(game.puzzleId, null, `puzzleId must be null after reset from ${origin}`);
   }
+});
+
+
+// --- (i) orderResetTimer & shakeTimer cancellation on navigation/restart/solve/reset ---
+test('regression (i): shakeTimer and orderResetTimer are cleared on startPuzzle, goToMap, handleCorrectAnswer, resetAllProgress', (t) => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  resetProgress();
+  const game = new GameManager();
+  const orderPuzzles = game.puzzles.filter(p => p.type === 'order');
+  assert.ok(orderPuzzles.length >= 2);
+  const firstOrder = orderPuzzles[0];
+  const secondOrder = orderPuzzles[1];
+
+  const triggerWrongOrder = () => {
+    const wrongSeq = [...firstOrder.items].reverse().map(i => i.id);
+    if (wrongSeq.every((id, idx) => id === firstOrder.answer[idx])) {
+      [wrongSeq[0], wrongSeq[1]] = [wrongSeq[1], wrongSeq[0]];
+    }
+    for (const id of wrongSeq) game.tapOrderItem(id);
+    assert.equal(game.tries, 1);
+    assert.ok(game.shakeTimer !== null, 'shakeTimer must be tracked');
+    assert.ok(game.orderResetTimer !== null, 'orderResetTimer must be tracked');
+  };
+
+  // 1. startPuzzle cancels pending timers so new puzzle selection is not wiped
+  game.startPuzzle(firstOrder.id);
+  triggerWrongOrder();
+  game.startPuzzle(secondOrder.id);
+  assert.equal(game.shakeTimer, null);
+  assert.equal(game.orderResetTimer, null);
+  game.tapOrderItem(secondOrder.items[0].id);
+  t.mock.timers.tick(650);
+  assert.deepEqual(game.orderSelection, [secondOrder.items[0].id],
+    'Old orderResetTimer must not wipe new puzzle orderSelection');
+
+  // 2. goToMap cancels pending timers
+  game.startPuzzle(firstOrder.id);
+  triggerWrongOrder();
+  game.goToMap();
+  assert.equal(game.shakeTimer, null);
+  assert.equal(game.orderResetTimer, null);
+  assert.equal(game.isShaking, false);
+  let notifications = 0;
+  const unsub = game.subscribe(() => { notifications++; });
+  t.mock.timers.tick(650);
+  assert.equal(notifications, 0, 'Cleared timers must not fire after goToMap');
+  unsub();
+
+  // 3. handleCorrectAnswer cancels pending timers
+  game.startPuzzle(firstOrder.id);
+  triggerWrongOrder();
+  game.handleCorrectAnswer();
+  assert.equal(game.shakeTimer, null);
+  assert.equal(game.orderResetTimer, null);
+  assert.equal(game.screen, 'fact');
+  t.mock.timers.tick(650);
+  assert.equal(game.screen, 'fact');
+
+  // 4. resetAllProgress cancels pending timers
+  game.startPuzzle(firstOrder.id);
+  triggerWrongOrder();
+  game.resetAllProgress();
+  assert.equal(game.shakeTimer, null);
+  assert.equal(game.orderResetTimer, null);
+  assert.equal(game.screen, 'map');
+  t.mock.timers.tick(650);
+  assert.equal(game.screen, 'map');
+});
+
+// --- (j) Sanitize non-integer / out-of-range star values in storage & aggregation ---
+test('regression (j): loadProgress and star aggregation reject non-integer and out-of-range star values', () => {
+  const originalLocalStorage = globalThis.localStorage;
+  globalThis.localStorage = {
+    getItem() {
+      return JSON.stringify({
+        stars: {
+          'garden-01': 'bad',
+          'garden-02': 0,
+          'garden-03': 4,
+          'garden-04': 2.5,
+          'garden-05': -1,
+          'garden-06': true,
+          'garden-07': 3,
+          'sky-01': 2
+        }
+      });
+    },
+    setItem() {},
+    removeItem() {}
+  };
+
+  try {
+    const loaded = loadProgress();
+    assert.deepEqual(loaded.stars, { 'garden-07': 3, 'sky-01': 2 });
+
+    const game = new GameManager();
+    assert.equal(game.getTotalStarsForLevel(1), 3);
+    assert.equal(game.getTotalStarsForLevel(2), 2);
+
+    // Corrupted key 'garden-01' was sanitized out so recording valid stars succeeds
+    game.recordStars('garden-01', 2);
+    assert.equal(game.getStarsForPuzzle('garden-01'), 2);
+
+    // Invalid star values cannot be recorded
+    game.recordStars('garden-02', 0);
+    game.recordStars('garden-02', 4);
+    game.recordStars('garden-02', 1.5);
+    game.recordStars('garden-02', 'bad');
+    assert.equal(game.getStarsForPuzzle('garden-02'), 0);
+
+    // Even if progress.stars is polluted in memory, map rendering sums only 1..3 integers
+    game.progress.stars['garden-03'] = 'corrupt';
+    game.progress.stars['garden-04'] = 99;
+    game.screen = 'map';
+    const mapHtml = renderApp(game);
+    assert.ok(mapHtml.includes('7 Stars'), `Expected '7 Stars' in map HTML, got: ${mapHtml}`);
+    assert.ok(mapHtml.includes('5/72'), `Expected '5/72' for Level 1 in map HTML, got: ${mapHtml}`);
+  } finally {
+    if (originalLocalStorage) {
+      globalThis.localStorage = originalLocalStorage;
+    } else {
+      delete globalThis.localStorage;
+    }
+  }
+});
+
+// --- (k) escapeHtml in screens.js and mascot.js without breaking SVG markup ---
+test('regression (k): dynamic HTML interpolation is escaped in screens and mascot without breaking SVGs', () => {
+  assert.equal(escapeHtml('<script>"a" & \'b\'</script>'), '&lt;script&gt;&quot;a&quot; &amp; &#39;b&#39;&lt;/script&gt;');
+
+  const mascotHtml = renderMascot('neutral', '<img src=x onerror="alert(1)"> & friends', 64);
+  assert.ok(mascotHtml.includes('<svg class="moss-sprite moss-neutral"'), 'Mascot SVG markup must remain intact');
+  assert.ok(mascotHtml.includes('&lt;img src=x onerror=&quot;alert(1)&quot;&gt; &amp; friends'));
+  assert.equal(mascotHtml.includes('<img '), false);
+
+  const customPuzzles = [
+    {
+      id: 'xss-1',
+      level: 1,
+      type: 'pick',
+      prompt: 'Which <script>alert(1)</script> is safe?',
+      hint: 'Check <b>hint</b> & "more"',
+      items: [
+        { id: 'a"b', label: '<svg onload=1>', emoji: '🌱' },
+        { id: 'b', label: 'Safe & Sound', emoji: '🐝' },
+        { id: 'c', label: 'Rock', emoji: '🪨' }
+      ],
+      answer: 'b',
+      fact: {
+        text: 'Facts <escape> HTML & "quotes".',
+        evidence: ['<tag>', 'safe & clean']
+      }
+    }
+  ];
+
+  const game = new GameManager({ puzzles: customPuzzles, disableShuffle: true });
+  game.startPuzzle('xss-1');
+  game.useHint();
+  const puzzleHtml = renderApp(game);
+  assert.ok(puzzleHtml.includes('&lt;script&gt;alert(1)&lt;/script&gt;'));
+  assert.ok(puzzleHtml.includes('Hint: Check &lt;b&gt;hint&lt;/b&gt; &amp; &quot;more&quot;'));
+  assert.ok(puzzleHtml.includes('data-item-id="a&quot;b"'));
+  assert.ok(puzzleHtml.includes('&lt;svg onload=1&gt;'));
+  assert.ok(puzzleHtml.includes('<use href="#emoji-'));
+  assert.equal(puzzleHtml.includes('<script>'), false);
+
+  game.submitPick('b');
+  const factHtml = renderApp(game);
+  assert.ok(factHtml.includes('Facts &lt;escape&gt; HTML &amp; &quot;quotes&quot;.'));
+  assert.ok(factHtml.includes('<span class="pill">&lt;tag&gt;</span>'));
+  assert.ok(factHtml.includes('<span class="pill">safe &amp; clean</span>'));
+});
+
+// --- (l) SpeechSynthesisUtterance & speechSynthesis.speak guards ---
+test('regression (l): readPuzzleAloud guards missing SpeechSynthesisUtterance and throwing speak()', () => {
+  const samplePuzzle = { prompt: 'Test prompt', items: [{ label: 'One' }, { label: 'Two' }] };
+
+  // 1. Missing window or SpeechSynthesisUtterance
+  assert.equal(readPuzzleAloud(samplePuzzle, undefined), false);
+  assert.equal(readPuzzleAloud(samplePuzzle, { speechSynthesis: { speak() {} } }), false);
+  assert.equal(readPuzzleAloud(samplePuzzle, { SpeechSynthesisUtterance: function () {} }), false);
+
+  // 2. Constructor throws
+  assert.equal(
+    readPuzzleAloud(samplePuzzle, {
+      SpeechSynthesisUtterance: function () {
+        throw new Error('Unsupported');
+      },
+      speechSynthesis: { speak() {}, cancel() {} }
+    }),
+    false
+  );
+
+  // 3. speak() throws
+  assert.equal(
+    readPuzzleAloud(samplePuzzle, {
+      SpeechSynthesisUtterance: function (t) {
+        this.text = t;
+      },
+      speechSynthesis: {
+        cancel() {},
+        speak() {
+          throw new Error('Blocked');
+        }
+      }
+    }),
+    false
+  );
+
+  // 4. Valid invocation
+  let spoken = null;
+  let cancelled = false;
+  const ok = readPuzzleAloud(samplePuzzle, {
+    SpeechSynthesisUtterance: function (t) {
+      this.text = t;
+    },
+    speechSynthesis: {
+      cancel() {
+        cancelled = true;
+      },
+      speak(u) {
+        spoken = u;
+      }
+    }
+  });
+  assert.equal(ok, true);
+  assert.equal(cancelled, true);
+  assert.equal(spoken.text, 'Test prompt. One, Two');
+  assert.equal(spoken.rate, 0.9);
+});
+
+// --- (m) No duplicate DOM IDs across screens & custom puzzle counts ---
+test('regression (m): all screens have unique DOM IDs, settings has no external links, and counts reflect game.puzzles', () => {
+  resetProgress();
+  const customPuzzles = [
+    {
+      id: 'c1',
+      level: 1,
+      type: 'pick',
+      prompt: 'Pick one?',
+      hint: 'Hint',
+      items: [
+        { id: 'a', label: 'Ant', emoji: '🐜' },
+        { id: 'b', label: 'Bee', emoji: '🐝' },
+        { id: 'c', label: 'Spider', emoji: '🕷️' }
+      ],
+      answer: 'c',
+      fact: { text: 'Spiders have eight legs.', evidence: ['eight'] }
+    },
+    {
+      id: 'c2',
+      level: 1,
+      type: 'pick',
+      prompt: 'Pick two?',
+      hint: 'Hint',
+      items: [
+        { id: 'a', label: 'Ant', emoji: '🐜' },
+        { id: 'b', label: 'Bee', emoji: '🐝' },
+        { id: 'c', label: 'Spider', emoji: '🕷️' }
+      ],
+      answer: 'b',
+      fact: { text: 'Bees make honey.', evidence: ['honey'] }
+    }
+  ];
+
+  const game = new GameManager({ puzzles: customPuzzles });
+  const screens = ['home', 'map', 'puzzle', 'fact', 'level_done', 'settings'];
+  game.startPuzzle('c1');
+
+  for (const s of screens) {
+    game.screen = s;
+    const html = renderApp(game);
+    const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(m => m[1]);
+    const unique = new Set(ids);
+    assert.equal(ids.length, unique.size, `Duplicate DOM ID found on '${s}' screen: ${ids.join(', ')}`);
+  }
+
+  game.screen = 'map';
+  const mapHtml = renderApp(game);
+  assert.ok(mapHtml.includes('0/6'), `Map should show 0/6 max stars for 2-puzzle level, got: ${mapHtml}`);
+
+  game.screen = 'level_done';
+  const doneHtml = renderApp(game);
+  assert.ok(doneHtml.includes('0 / 6 Stars'), `Level done should show 0 / 6 Stars for 2-puzzle level, got: ${doneHtml}`);
+
+  game.screen = 'settings';
+  const settingsHtml = renderApp(game);
+  assert.equal(/<a\s+href=/i.test(settingsHtml), false, 'Settings & Credits must not contain external hyperlinks');
+  assert.ok(settingsHtml.includes('Twemoji') && settingsHtml.includes('CC-BY 4.0'));
 });

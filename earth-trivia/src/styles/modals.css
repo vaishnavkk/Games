@@ -368,11 +368,6 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.button-stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
 .btn-secondary-action {
   width: 100%;
   min-height: var(--touch-target-min);

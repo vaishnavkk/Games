@@ -213,9 +213,6 @@
     font-size: 13px;
     line-height: 1.15;
   }
-  .vault-country-sub {
-    display: none;
-  }
   .vault-content-grid {
     flex: 1 1 0%;
     min-height: 0;

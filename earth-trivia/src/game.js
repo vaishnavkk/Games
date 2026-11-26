@@ -7,7 +7,7 @@ import { distanceToCountryWithNearest, planCloseWrongFlight, latLonToVector3, ge
 import { WORLD_COUNTRIES } from '../data/world-50m.js';
 import { sound } from './audio.js';
 import confetti from 'canvas-confetti';
-import { calculateRoundScore, buildExpeditionSummary } from './scoring.js';
+import { calculateRoundScore, buildExpeditionSummary, parseBestScore } from './scoring.js';
 
 export class GameManager {
   constructor(globeApp, ui) {
@@ -29,6 +29,7 @@ export class GameManager {
     this.correctCount = 0;
     this.wrongCount = 0;
     this.phase = 'start';     // 'start' | 'question' | 'selected' | 'result' | 'end'
+    this.roundToken = 0;
 
     // Country Pools
     this.fullDatabase = COUNTRIES_DB;
@@ -47,7 +48,6 @@ export class GameManager {
     this.timerDuration = 25000;
     this.timerRemaining = 25000;
     this.timerInterval = null;
-    this.roundStartTime = 0;
 
     this.bindEvents();
   }
@@ -84,6 +84,7 @@ export class GameManager {
     this.missedCountries = [];
     this.playedCountryIds = new Set();
     this.phase = 'start';
+    this.roundToken++;
     this.lastRoundBreakdown = null;
 
     // Use custom pool if provided (e.g. replay missed session), otherwise draw from tier pool
@@ -126,12 +127,9 @@ export class GameManager {
     return Array.from(new Map(this.missedCountries.map(c => [c.id || c.name, c])).values());
   }
 
-  shuffle(arr) {
-    return shuffle(arr);
-  }
-
   nextRound() {
     this.stopTimer();
+    this.roundToken++;
 
     const isEndless = this.totalRounds === Infinity || this.totalRounds === 'endless';
 
@@ -190,30 +188,30 @@ export class GameManager {
     this.selectedHit = null;
     this.lastGuessCountry = null;
     this.ui.hideTouchConfirm();
-    this.roundStartTime = performance.now();
 
     cancelAnswerFlight();
-    this.globe.flight.cancelAnswerFlight();
-    // Reset visual map and camera (clears all markers, arcs, and highlights)
-    const onOverviewComplete = () => {
-      this.globe.isAutoRotating = true;
-      this.globe.lastInteractionTime = performance.now();
-    };
-    if (previousCountry) {
-      this.globe.flight.zoomOutToOverview({
-        targetCountry: previousCountry,
-        duration: 600,
-        onComplete: onOverviewComplete
-      });
-    } else {
-      this.globe.flight.resetToOverview({
-        duration: 800,
-        onComplete: onOverviewComplete
-      });
+    if (this.globe?.flight) {
+      this.globe.flight.cancelAnswerFlight();
+      // Reset visual map and camera (clears all markers, arcs, and highlights)
+      const onOverviewComplete = () => {
+        this.globe.isAutoRotating = true;
+        this.globe.lastInteractionTime = performance.now();
+      };
+      if (previousCountry) {
+        this.globe.flight.zoomOutToOverview({
+          targetCountry: previousCountry,
+          duration: 600,
+          onComplete: onOverviewComplete
+        });
+      } else {
+        this.globe.flight.resetToOverview({
+          duration: 800,
+          onComplete: onOverviewComplete
+        });
+      }
+      onOverviewComplete();
     }
-    onOverviewComplete();
-    this.globe.setMicrostateTarget(this.currentCountry);
-    this.globe.mapRenderer.resetHighlights();
+    this.globe?.mapRenderer?.resetHighlights();
 
     // Display clue/prompt based on mode
     this.ui.showQuestion({
@@ -278,7 +276,7 @@ export class GameManager {
 
   // Handle user click on globe
   handleGlobeClick(clientX, clientY, pointerType = 'mouse') {
-    if (!this.isAnswering || this.globe.flight.isFlying) return;
+    if (!this.isAnswering || !this.globe?.picker || this.globe.flight?.isFlying) return;
 
     const hitResult = this.globe.picker.pickCountry(
       clientX,
@@ -291,7 +289,7 @@ export class GameManager {
       this.selectedHit = null;
       this.phase = 'question';
       this.ui.hideTouchConfirm();
-      this.globe.mapRenderer.resetHighlights();
+      this.globe.mapRenderer?.resetHighlights();
       return;
     }
 
@@ -301,7 +299,7 @@ export class GameManager {
     this.selectedHit = hitResult;
     this.phase = 'selected';
     const countryId = String(hitResult.country.id).padStart(3, '0');
-    this.globe.mapRenderer.renderHighlights({ selectedCountryId: countryId });
+    this.globe.mapRenderer?.renderHighlights({ selectedCountryId: countryId });
 
     this.ui.showTouchConfirm(hitResult.country, () => {
       sound.playClick();
@@ -322,16 +320,17 @@ export class GameManager {
     }
     this.isAnswering = false;
     this.phase = 'result';
+    const roundToken = this.roundToken;
     this.lastGuessCountry = guessCountry;
     this.stopTimer();
     this.ui.hideTouchConfirm();
     this.selectedHit = null;
-    this.currentHoveredId = null;
-    this.globe.renderer.domElement.style.cursor = 'grab';
+    if (this.globe?.renderer?.domElement) {
+      this.globe.renderer.domElement.style.cursor = 'grab';
+    }
 
     // Clear previous visual markers and outlines
-    this.globe.flight.clearVisuals();
-    this.globe.setMicrostateTarget(null);
+    this.globe?.flight?.clearVisuals();
 
     const target = this.currentCountry;
     const isCorrect = guessCountry && (
@@ -343,6 +342,10 @@ export class GameManager {
     // Resolve GeoJSON features from WORLD_COUNTRIES
     const targetWc = WORLD_COUNTRIES.find(c => String(c.id).padStart(3, '0') === String(target.id).padStart(3, '0')) || target;
     const guessWc = guessCountry ? (WORLD_COUNTRIES.find(c => String(c.id).padStart(3, '0') === String(guessCountry.id).padStart(3, '0')) || guessCountry) : null;
+    const hasBorderPolygon = Boolean(targetWc?.geometry?.coordinates);
+    const targetFallback = (target && typeof target.lat === 'number' && typeof target.lon === 'number')
+      ? { lat: target.lat, lon: target.lon }
+      : null;
 
     let roundPoints = 0;
     let distanceKm = 0;
@@ -387,8 +390,8 @@ export class GameManager {
       }
 
       // Visual feedback: Translucent green texture fill + sharp 3D Line2 outline
-      this.globe.mapRenderer.renderHighlights({ correctCountryId: target.id });
-      this.globe.flight.drawCountryOutline(targetWc, true);
+      this.globe?.mapRenderer?.renderHighlights({ correctCountryId: target.id });
+      this.globe?.flight?.drawCountryOutline(targetWc, true);
 
     } else {
       // ── INCORRECT GUESS / TIMEOUT ─────────────────────────
@@ -401,20 +404,20 @@ export class GameManager {
 
       if (fromCoords && !isTimeout) {
         // Expose { km, nearestLatLon } = distance from the CLICK POINT to nearest point of target country
-        const distRes = distanceToCountryWithNearest(fromCoords.lat, fromCoords.lon, targetWc.geometry);
+        const distRes = distanceToCountryWithNearest(fromCoords.lat, fromCoords.lon, targetWc.geometry, targetFallback);
         distanceKm = distRes.km;
         nearestPoint = distRes.nearestLatLon;
         toCoords = nearestPoint;
-        isAdjacent = (distanceKm === 0);
+        isAdjacent = hasBorderPolygon && (distanceKm === 0);
       } else if (guessCountry) {
         const cLat = guessCountry.lat || (guessCountry.centroid ? guessCountry.centroid[1] : 0);
         const cLon = guessCountry.lon || (guessCountry.centroid ? guessCountry.centroid[0] : 0);
         fromCoords = { lat: cLat, lon: cLon };
-        const distRes = distanceToCountryWithNearest(cLat, cLon, targetWc.geometry);
+        const distRes = distanceToCountryWithNearest(cLat, cLon, targetWc.geometry, targetFallback);
         distanceKm = distRes.km;
         nearestPoint = distRes.nearestLatLon;
         toCoords = nearestPoint;
-        isAdjacent = (distanceKm === 0);
+        isAdjacent = hasBorderPolygon && (distanceKm === 0);
       } else {
         // Timeout with nothing selected: distance is 0 / not required
         distanceKm = 0;
@@ -428,7 +431,7 @@ export class GameManager {
 
       // Plan close wrong flight
       let plan = null;
-      if (fromCoords && !isTimeout) {
+      if (fromCoords && !isTimeout && this.globe?.camera && nearestPoint) {
         const freeRect = getFreeRect();
         const W = this.globe.renderer?.domElement?.clientWidth || window.innerWidth;
         const H = this.globe.renderer?.domElement?.clientHeight || window.innerHeight;
@@ -493,7 +496,7 @@ export class GameManager {
 
       // Visuals: Translucent red fill on guess (if any), green on target; sharp 3D Line2 outlines
       const guessId = guessCountry ? guessCountry.id : null;
-      this.globe.mapRenderer.renderHighlights({
+      this.globe?.mapRenderer?.renderHighlights({
         correctCountryId: target.id,
         guessCountryId: guessId
       });
@@ -502,40 +505,45 @@ export class GameManager {
       const targetBBoxSpan = plan?.bbox?.spanDeg;
 
       // Target outline (+ unfilled ring if target bbox < 3 deg)
-      this.globe.flight.drawCountryOutline(targetWc, true, { bboxSpanDeg: targetBBoxSpan });
+      this.globe?.flight?.drawCountryOutline(targetWc, true, { bboxSpanDeg: targetBBoxSpan });
       if (guessWc) {
-        this.globe.flight.drawCountryOutline(guessWc, false);
+        this.globe?.flight?.drawCountryOutline(guessWc, false);
       }
 
       // 6 px click dot in screen space
       if (fromCoords) {
-        this.globe.flight.drawClickDot(fromCoords.lat, fromCoords.lon);
+        this.globe?.flight?.drawClickDot(fromCoords.lat, fromCoords.lon);
       }
 
       // Arc and badge:
       // compact: no arc, no map badge
       // otherwise: 2 px arc + badge (max 96 px, offset from midpoint)
       if (fromCoords && !isCompact && toCoords) {
-        this.globe.flight.drawGreatCircleArc(fromCoords.lat, fromCoords.lon, toCoords.lat, toCoords.lon, distanceKm, false);
+        this.globe?.flight?.drawGreatCircleArc(fromCoords.lat, fromCoords.lon, toCoords.lat, toCoords.lon, distanceKm, false);
       }
     }
 
     // Freeze OrbitControls immediately and kill damping inertia to eliminate flight jitter
-    this.globe.controls.enabled = false;
-    if (this.globe.controls.sphericalDelta) this.globe.controls.sphericalDelta.set(0, 0, 0);
-    if (this.globe.controls.panOffset) this.globe.controls.panOffset.set(0, 0, 0);
-    this.globe.isAutoRotating = false;
+    if (this.globe?.controls) {
+      this.globe.controls.enabled = false;
+      if (this.globe.controls.sphericalDelta) this.globe.controls.sphericalDelta.set(0, 0, 0);
+      if (this.globe.controls.panOffset) this.globe.controls.panOffset.set(0, 0, 0);
+    }
+    if (this.globe) this.globe.isAutoRotating = false;
 
     const showCard = () => {
-      this.globe.flight.computeTargetFreeAreaPercent(targetWc);
+      if (this.phase !== 'result' || this.roundToken !== roundToken) return;
+      this.globe?.flight?.computeTargetFreeAreaPercent(targetWc);
       requestAnimationFrame(() => {
+        if (this.phase !== 'result' || this.roundToken !== roundToken) return;
         this.ui.showMemoryVault({
           isCorrect,
           isTimeout: Boolean(isTimeout && !guessCountry),
           targetCountry: target,
           guessCountry: isCorrect ? target : (guessCountry || (isTimeout ? null : { name: 'Open Ocean / Off-target' })),
           distanceKm: (isCorrect || (isTimeout && !guessCountry)) ? 0 : distanceKm,
-          isAdjacent: isCorrect ? false : (this.lastIsAdjacent || distanceKm === 0),
+          isAdjacent: isCorrect ? false : Boolean(this.lastIsAdjacent),
+          hasBorderPolygon,
           hitCoords: isCorrect ? { lat: hitLat, lon: hitLon } : fromCoords,
           targetCoords: isCorrect ? { lat: target.lat, lon: target.lon } : toCoords,
           breakdown: this.lastRoundBreakdown,
@@ -546,32 +554,39 @@ export class GameManager {
       });
     };
 
-    let flightOpts;
-    if (!isCorrect && this.lastPlan) {
-      flightOpts = {
-        wasCorrect: false,
-        ...this.lastPlan, // spreads targetDir, endDist, clickPoint, nearestPoint, compact, pixelGap, km
-        targetHiddenByUi: false
-      };
-    } else {
-      const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
-      const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
-      const fitDistance = this.globe.flight.computeTargetDistance(angularSpan, isMobile);
-      const targetDir = getTargetCameraDir(targetWc || target, this.globe.earthMesh);
-      const freeRect = getFreeRect();
-      const targetHiddenByUi = isHiddenByUi(targetDir, this.globe.camera, this.globe.renderer, freeRect, 1.7);
-      flightOpts = {
-        wasCorrect: isCorrect,
-        targetDir,
-        fitDistance,
-        targetHiddenByUi
-      };
-    }
+    if (this.globe?.flight) {
+      let flightOpts;
+      if (!isCorrect && this.lastPlan) {
+        flightOpts = {
+          wasCorrect: false,
+          ...this.lastPlan, // spreads targetDir, endDist, clickPoint, nearestPoint, compact, pixelGap, km
+          targetHiddenByUi: false
+        };
+      } else {
+        const angularSpan = getCountryAngularDiameter(targetWc) || target.angularSpan || 10;
+        const isMobile = window.innerWidth <= 640 || (window.innerWidth <= 900 && window.innerHeight > window.innerWidth);
+        const fitDistance = this.globe.flight.computeTargetDistance(angularSpan, isMobile);
+        const targetDir = getTargetCameraDir(targetWc || target, this.globe.earthMesh);
+        const freeRect = getFreeRect();
+        const targetHiddenByUi = isHiddenByUi(targetDir, this.globe.camera, this.globe.renderer, freeRect, 1.7);
+        flightOpts = {
+          wasCorrect: isCorrect,
+          targetDir,
+          fitDistance,
+          targetHiddenByUi
+        };
+      }
 
-    sound.playSwoosh();
-    this.isFlightComplete = false;
-    await this.globe.flight.animateAfterAnswer(flightOpts);
-    this.isFlightComplete = true;
+      sound.playSwoosh();
+      this.isFlightComplete = false;
+      const flightResult = await this.globe.flight.animateAfterAnswer(flightOpts);
+      if (flightResult === 'cancelled' || this.phase !== 'result' || this.roundToken !== roundToken) {
+        return;
+      }
+      this.isFlightComplete = true;
+    } else {
+      this.isFlightComplete = true;
+    }
 
     showCard();
 
@@ -602,6 +617,7 @@ export class GameManager {
     this.stopTimer();
     this.isAnswering = false;
     this.phase = 'start';
+    this.roundToken++;
     this.score = 0;
     this.streak = 0;
     this.bestStreak = 0;
@@ -611,16 +627,16 @@ export class GameManager {
     this.selectedHit = null;
     this.currentCountry = null;
     this.lastGuessCountry = null;
-    this.currentHoveredId = null;
 
     cancelAnswerFlight();
-    this.globe.flight.cancelAnswerFlight();
-    this.globe.flight.clearVisuals();
-    this.globe.flight.resetToOverview({ duration: 600 });
-    this.globe.setMicrostateTarget(null);
-    this.globe.mapRenderer.resetHighlights();
-    this.globe.controls.enabled = true;
-    this.globe.isAutoRotating = true;
+    if (this.globe?.flight) {
+      this.globe.flight.cancelAnswerFlight();
+      this.globe.flight.clearVisuals();
+      this.globe.flight.resetToOverview({ duration: 600 });
+    }
+    this.globe?.mapRenderer?.resetHighlights();
+    if (this.globe?.controls) this.globe.controls.enabled = true;
+    if (this.globe) this.globe.isAutoRotating = true;
 
     this._hideFinishElements();
 
@@ -635,12 +651,18 @@ export class GameManager {
     this.stopTimer();
     this.isAnswering = false;
     this.phase = 'end';
-    this.currentHoveredId = null;
-    this.globe.renderer.domElement.style.cursor = 'default';
+    this.roundToken++;
+    if (this.globe?.renderer?.domElement) {
+      this.globe.renderer.domElement.style.cursor = 'default';
+    }
 
-    // Reset visual map and clear arcs on end screen
-    this.globe.flight.clearVisuals();
-    this.globe.mapRenderer.resetHighlights();
+    // Cancel any in-flight camera animation and reset visual map / arcs on end screen
+    cancelAnswerFlight();
+    if (this.globe?.flight) {
+      this.globe.flight.cancelAnswerFlight();
+      this.globe.flight.clearVisuals();
+    }
+    this.globe?.mapRenderer?.resetHighlights();
 
     this._hideFinishElements();
 
@@ -654,12 +676,12 @@ export class GameManager {
     if (!this.isPractice) {
       try {
         const key = `geotrivia_best_${this.mode}_${this.tier}`;
-        const savedHigh = parseInt(localStorage.getItem(key) || '0', 10);
+        const savedHigh = parseBestScore(localStorage.getItem(key));
         if (this.score > savedHigh) {
           localStorage.setItem(key, String(this.score));
         }
         // Also keep legacy global highscore for backwards compatibility
-        const legacyHigh = parseInt(localStorage.getItem('geotrivia_highscore') || '0', 10);
+        const legacyHigh = parseBestScore(localStorage.getItem('geotrivia_highscore'));
         if (this.score > legacyHigh) {
           localStorage.setItem('geotrivia_highscore', String(this.score));
         }
@@ -706,73 +728,84 @@ export class GameManager {
   }
 
   bindEvents() {
-    if (!this.globe || !this.globe.renderer || !this.globe.renderer.domElement) return;
-    const canvas = this.globe.renderer.domElement;
-    this.currentHoveredId = null;
+    if (this.globe?.renderer?.domElement && typeof this.globe.renderer.domElement.addEventListener === 'function') {
+      const canvas = this.globe.renderer.domElement;
 
-    // Track mouse drag vs click: pointer-up is a click only if moved < 6px and < 350ms elapsed
-    let downX = 0, downY = 0, downTime = 0;
+      // Track mouse drag vs click: pointer-up is a click only if moved < 6px and < 350ms elapsed
+      let downX = 0, downY = 0, downTime = 0;
 
-    canvas.addEventListener('pointerdown', (e) => {
-      downX = e.clientX;
-      downY = e.clientY;
-      downTime = performance.now();
-    });
+      canvas.addEventListener('pointerdown', (e) => {
+        downX = e.clientX;
+        downY = e.clientY;
+        downTime = performance.now();
+      });
 
-    canvas.addEventListener('pointerup', (e) => {
-      const dist = Math.hypot(e.clientX - downX, e.clientY - downY);
-      const elapsed = performance.now() - downTime;
-      if (dist < 6 && elapsed < 350) {
-        this.handleGlobeClick(e.clientX, e.clientY, e.pointerType);
-      }
-    });
+      canvas.addEventListener('pointerup', (e) => {
+        const dist = Math.hypot(e.clientX - downX, e.clientY - downY);
+        const elapsed = performance.now() - downTime;
+        if (dist < 6 && elapsed < 350) {
+          this.handleGlobeClick(e.clientX, e.clientY, e.pointerType);
+        }
+      });
 
-    canvas.addEventListener('pointercancel', () => {
-      downTime = 0;
-    });
+      canvas.addEventListener('pointercancel', () => {
+        downTime = 0;
+      });
+    }
 
     // Keyboard accessibility: Enter submits selected country or advances result; Space reveals next clue or advances result
-    window.addEventListener('keydown', (e) => {
-      if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
-      if (e.key === 'Enter') {
-        const confirmBtn = document.getElementById('touchConfirmBtn');
-        if (confirmBtn && !confirmBtn.classList.contains('hidden') && this.selectedHit) {
-          e.preventDefault();
-          confirmBtn.click();
-        } else if (this.phase === 'result') {
-          const vaultNextBtn = document.getElementById('vaultNextBtn');
-          if (vaultNextBtn && this.ui.memoryVault && !this.ui.memoryVault.classList.contains('hidden')) {
+    if (typeof window !== 'undefined' && typeof window.addEventListener === 'function') {
+      window.addEventListener('keydown', (e) => {
+        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+        const isFinishModalOpen = Boolean(
+          this.ui.finishConfirmModal && !this.ui.finishConfirmModal.classList.contains('hidden')
+        );
+
+        if (e.key === 'Escape') {
+          if (isFinishModalOpen) {
             e.preventDefault();
-            vaultNextBtn.click();
+            this.ui.finishConfirmModal.classList.add('hidden');
+            return;
           }
-        }
-      } else if (e.key === 'Escape') {
-        if (this.ui.finishConfirmModal && !this.ui.finishConfirmModal.classList.contains('hidden')) {
-          e.preventDefault();
-          this.ui.finishConfirmModal.classList.add('hidden');
+          if (this.phase === 'question' || this.phase === 'selected' || this.phase === 'result') {
+            e.preventDefault();
+            this.returnToMainMenu();
+          }
           return;
         }
-        if (this.phase === 'question' || this.phase === 'selected' || this.phase === 'result') {
-          e.preventDefault();
-          this.returnToMainMenu();
-        }
-      } else if (e.key === ' ') {
-        if (this.isAnswering && this.mode === 'clue') {
-          // Space reveals next clue if clue button is active
-          const nextClueBtn = document.getElementById('nextClueBtn');
-          if (nextClueBtn && nextClueBtn.style.display !== 'none') {
+
+        if (isFinishModalOpen) return;
+
+        if (e.key === 'Enter') {
+          const confirmBtn = document.getElementById('touchConfirmBtn');
+          if (confirmBtn && !confirmBtn.classList.contains('hidden') && this.selectedHit) {
             e.preventDefault();
-            this.revealNextClue();
+            confirmBtn.click();
+          } else if (this.phase === 'result') {
+            const vaultNextBtn = document.getElementById('vaultNextBtn');
+            if (vaultNextBtn && this.ui.memoryVault && !this.ui.memoryVault.classList.contains('hidden')) {
+              e.preventDefault();
+              vaultNextBtn.click();
+            }
           }
-        } else if (this.phase === 'result') {
-          const vaultNextBtn = document.getElementById('vaultNextBtn');
-          if (vaultNextBtn && this.ui.memoryVault && !this.ui.memoryVault.classList.contains('hidden')) {
-            e.preventDefault();
-            vaultNextBtn.click();
+        } else if (e.key === ' ') {
+          if (this.isAnswering && this.mode === 'clue') {
+            // Space reveals next clue if clue button is active
+            const nextClueBtn = document.getElementById('nextClueBtn');
+            if (nextClueBtn && nextClueBtn.style.display !== 'none') {
+              e.preventDefault();
+              this.revealNextClue();
+            }
+          } else if (this.phase === 'result') {
+            const vaultNextBtn = document.getElementById('vaultNextBtn');
+            if (vaultNextBtn && this.ui.memoryVault && !this.ui.memoryVault.classList.contains('hidden')) {
+              e.preventDefault();
+              vaultNextBtn.click();
+            }
           }
         }
-      }
-    });
+      });
+    }
 
     // Next Clue Button click
     if (this.ui.nextClueBtn) {

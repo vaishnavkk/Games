@@ -4,6 +4,7 @@ import './style.css';
 import { initSprite } from './sprite.js';
 import { GameManager } from './engine/game.js';
 import { renderApp } from './ui/screens.js';
+import { cancelSpeech, readPuzzleAloud } from './ui/speech.js';
 
 // Initialize SVG sprite in DOM
 initSprite();
@@ -15,16 +16,6 @@ let resetHoldTimer = null;
 let resetHoldStart = 0;
 let holdAnimFrame = null;
 let previousScreen = 'home';
-
-function cancelSpeech() {
-  if (typeof window !== 'undefined' && window.speechSynthesis?.cancel) {
-    try {
-      window.speechSynthesis.cancel();
-    } catch {
-      // ignore
-    }
-  }
-}
 
 function cancelHold() {
   if (resetHoldTimer) {
@@ -39,16 +30,11 @@ function cancelHold() {
   if (bar) {
     bar.style.width = '0%';
   }
-  const textEl = document.querySelector('#btnResetProgress .btn-text');
-  if (textEl && textEl.textContent === 'Resetting...') {
-    textEl.textContent = 'Hold to Reset (2s)';
-  }
 }
 
 function setupResetButton(container) {
   const btnReset = container.querySelector('#btnResetProgress');
   const bar = container.querySelector('#holdProgress');
-  const textEl = container.querySelector('.btn-text');
   if (!btnReset || !bar) return;
 
   const startHold = (e) => {
@@ -72,12 +58,8 @@ function setupResetButton(container) {
       holdAnimFrame = null;
       resetHoldTimer = null;
       bar.style.width = '100%';
-      if (textEl) textEl.textContent = 'Resetting...';
-      game.resetAllProgress();
       previousScreen = 'map';
-      setTimeout(() => {
-        game.goToMap();
-      }, 400);
+      game.resetAllProgress();
     }, 2000);
   };
 
@@ -101,14 +83,7 @@ function attachEvents(container) {
     if (target.id === 'btnSettings') {
       cancelSpeech();
       previousScreen = game.screen || 'home';
-      if (typeof game.openSettings === 'function') {
-        game.openSettings();
-      } else if (typeof game.goToSettings === 'function') {
-        game.goToSettings();
-      } else {
-        game.screen = 'settings';
-        game.notify();
-      }
+      game.openSettings();
       return;
     }
     if (target.id === 'btnBackHome') {
@@ -121,7 +96,11 @@ function attachEvents(container) {
       game.goToMap();
       return;
     }
-    if (target.id === 'btnCloseSettings' || target.id === 'btnDismissSettings') {
+    if (
+      target.id === 'btnCloseSettings' ||
+      target.id === 'btnDoneSettings' ||
+      target.id === 'btnDismissSettings'
+    ) {
       cancelHold();
       cancelSpeech();
       if (previousScreen === 'home') {
@@ -152,15 +131,8 @@ function attachEvents(container) {
     }
 
     // Read aloud button
-    if (target.id === 'btnReadAloud' || target.closest('#btnReadAloud')) {
-      const current = game.getCurrentPuzzle();
-      if (current && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-        cancelSpeech();
-        const text = `${current.prompt}. ${current.items.map(i => i.label).join(', ')}`;
-        const utterance = new window.SpeechSynthesisUtterance(text);
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
-      }
+    if (target.id === 'btnReadAloud') {
+      readPuzzleAloud(game.getCurrentPuzzle());
       return;
     }
 
@@ -221,8 +193,6 @@ function attachEvents(container) {
     cancelHold();
     cancelSpeech();
   });
-
-  setupResetButton(container);
 }
 
 function mount() {

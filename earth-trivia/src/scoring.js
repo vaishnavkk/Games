@@ -21,12 +21,12 @@ const PARTIAL_MAX_POINTS = 300;
 export const streakMultiplierIfCorrect = (streakBefore) =>
   Math.min(STREAK_MAX, 1 + STREAK_STEP * (streakBefore || 0));
 
-export function pointsIfCorrect({ clueIndex = 0, streakBefore = 0, speedBonus = 0, mode = 'clue' } = {}) {
+export function pointsIfCorrect({ streakBefore = 0, speedBonus = 0 } = {}) {
   const mult = streakMultiplierIfCorrect(streakBefore);
   return Math.min(MAX_ROUND_POINTS, Math.round((BASE_POINTS + speedBonus) * mult));
 }
 
-export function breakdownText({ clueIndex = 0, speedBonus = 0, streakBefore = 0, mode = 'clue' } = {}) {
+export function breakdownText({ speedBonus = 0, streakBefore = 0 } = {}) {
   const mult = streakMultiplierIfCorrect(streakBefore);
   const raw = BASE_POINTS + speedBonus;
   const total = Math.min(MAX_ROUND_POINTS, Math.round(raw * mult));
@@ -37,6 +37,11 @@ export function breakdownText({ clueIndex = 0, speedBonus = 0, streakBefore = 0,
 export function calculatePartialCredit(d) {
   const dist = typeof d === 'number' && !isNaN(d) ? Math.max(0, d) : 0;
   return Math.round(PARTIAL_MAX_POINTS * Math.max(0, 1 - dist / PARTIAL_MAX_KM));
+}
+
+export function parseBestScore(raw) {
+  const parsed = parseInt(raw || '0', 10);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
 }
 
 export const SCORING = {
@@ -76,8 +81,6 @@ export const SCORING = {
 
 export function calculateRoundScore({
   isCorrect,
-  mode = 'clue',
-  clueIndex = 0,
   hasTimer = false,
   timerRemaining = 0,
   timerDuration = SCORING.TIMER_DURATION_SECONDS,
@@ -108,8 +111,8 @@ export function calculateRoundScore({
 
   if (isCorrect) {
     const mult = streakMultiplierIfCorrect(sBefore);
-    const points = pointsIfCorrect({ streakBefore: sBefore, speedBonus, mode });
-    const bText = breakdownText({ speedBonus, streakBefore: sBefore, mode });
+    const points = pointsIfCorrect({ streakBefore: sBefore, speedBonus });
+    const bText = breakdownText({ speedBonus, streakBefore: sBefore });
 
     return {
       isCorrect: true,
@@ -138,27 +141,6 @@ export function calculateRoundScore({
       breakdownText: bText
     };
   }
-}
-
-const fmt = (n) => (typeof n === 'number' ? n.toLocaleString('en-US') : n);
-
-// Call on round start (prev = null) and after every reveal (prev = value before reveal).
-export function renderClueWorth({ clueIndex = 0, streak = 0, speedBonus = 0, mode = 'clue', prev = null } = {}) {
-  const worth = pointsIfCorrect({ clueIndex, streakBefore: streak, speedBonus, mode });
-  const valueEl = document.getElementById('cwValue');
-  if (valueEl) {
-    valueEl.textContent = fmt(worth);
-  }
-  const btn = document.getElementById('revealBtn');
-  if (btn) {
-    btn.style.display = 'none';
-    btn.hidden = true;
-  }
-  const clueWorthEl = document.querySelector('.clue-worth');
-  if (clueWorthEl) {
-    clueWorthEl.style.display = 'none';
-  }
-  return worth;
 }
 
 export function calculateAccuracy(correct, roundsAnswered) {

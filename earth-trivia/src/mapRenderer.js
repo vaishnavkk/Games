@@ -65,6 +65,10 @@ export class MapRenderer {
     this.canvas.height = this.height;
     this.ctx = this.canvas.getContext('2d');
 
+    if (!this.baseCtx || !this.ctx) {
+      console.error('Canvas 2D context unavailable for MapRenderer');
+    }
+
     this.texture = null;
     this.isReady = false;
     this._tweenRaf = null;
@@ -136,6 +140,9 @@ export class MapRenderer {
   // Render Base Map Texture (executed once on initialization)
   initBaseTexture() {
     const ctx = this.baseCtx;
+    if (!ctx || !this.ctx) {
+      return null;
+    }
     const w = this.width;
     const h = this.height;
 
@@ -221,9 +228,9 @@ export class MapRenderer {
   _drawHighlightsAtProgress(progress, {
     correctCountryId = null,
     guessCountryId = null,
-    selectedCountryId = null,
-    hoveredCountryId = null
+    selectedCountryId = null
   }) {
+    if (!this.ctx || !this.baseCanvas) return;
     // Reset from pre-rendered base
     this.ctx.drawImage(this.baseCanvas, 0, 0);
 
@@ -252,24 +259,7 @@ export class MapRenderer {
     const ringRadius = this.width >= 8192 ? 20 : (this.width >= 4096 ? 12 : 7);
     const t = Math.max(0, Math.min(1, progress));
 
-    // 1. Hovered Country (soft golden ivory highlight)
-    if (
-      hoveredCountryId &&
-      hoveredCountryId !== correctCountryId &&
-      hoveredCountryId !== guessCountryId &&
-      hoveredCountryId !== selectedCountryId
-    ) {
-      const country = getCountry(hoveredCountryId);
-      if (country && country.geometry) {
-        this.ctx.fillStyle = `rgba(255, 252, 235, ${(0.40 * t).toFixed(3)})`;
-        this.ctx.strokeStyle = '#fff5d6';
-        this.ctx.lineWidth = this.width >= 8192 ? 5.0 : (this.width >= 4096 ? 3.0 : 1.8);
-        this.drawGeometry(this.ctx, country.geometry);
-      }
-      drawTinyRing(hoveredCountryId, '#fff5d6', ringRadius);
-    }
-
-    // 2. Selected Country (prior to confirmation: warm saffron focus)
+    // 1. Selected Country (prior to confirmation: warm saffron focus)
     if (
       selectedCountryId &&
       selectedCountryId !== correctCountryId &&
@@ -285,7 +275,7 @@ export class MapRenderer {
       drawTinyRing(selectedCountryId, '#d97d10', ringRadius + 4);
     }
 
-    // 3. Wrong Guess Country: Soft translucent brick red fill (#ba3c2a)
+    // 2. Wrong Guess Country: Soft translucent brick red fill (#ba3c2a)
     if (guessCountryId && guessCountryId !== correctCountryId) {
       const country = getCountry(guessCountryId);
       if (country && country.geometry) {
@@ -296,7 +286,7 @@ export class MapRenderer {
       }
     }
 
-    // 4. Correct Target Country: Soft botanical green fill (#1d733e)
+    // 3. Correct Target Country: Soft botanical green fill (#1d733e)
     if (correctCountryId) {
       const country = getCountry(correctCountryId);
       if (country && country.geometry) {
@@ -317,20 +307,18 @@ export class MapRenderer {
     correctCountryId = null,
     guessCountryId = null,
     selectedCountryId = null,
-    hoveredCountryId = null,
     animate = true
   } = {}) {
-    if (!this.isReady) return;
+    if (!this.isReady || !this.ctx || !this.baseCanvas) return;
 
     if (this._tweenRaf) {
       cancelAnimationFrame(this._tweenRaf);
       this._tweenRaf = null;
     }
 
-    const params = { correctCountryId, guessCountryId, selectedCountryId, hoveredCountryId };
+    const params = { correctCountryId, guessCountryId, selectedCountryId };
 
-    // If hover only or animate=false, draw immediately at 1.0
-    if (!animate || (hoveredCountryId && !correctCountryId && !guessCountryId && !selectedCountryId)) {
+    if (!animate) {
       this._drawHighlightsAtProgress(1.0, params);
       return;
     }

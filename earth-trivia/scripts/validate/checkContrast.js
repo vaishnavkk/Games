@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer-core';
+import { launchOptions } from '../qa/chrome.js';
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
@@ -8,8 +9,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const root = path.resolve(__dirname, '../..');
 
-const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-
 function startServer() {
   const MIME_TYPES = {
     '.html': 'text/html; charset=utf-8',
@@ -18,6 +17,7 @@ function startServer() {
     '.css': 'text/css; charset=utf-8',
     '.png': 'image/png',
     '.jpg': 'image/jpeg',
+    '.webp': 'image/webp',
     '.svg': 'image/svg+xml',
     '.woff2': 'font/woff2',
     '.woff': 'font/woff',
@@ -39,12 +39,9 @@ function startServer() {
     fs.createReadStream(filePath).pipe(res);
   });
 
-  return new Promise((resolve) => {
-    server.listen(8080, '127.0.0.1', () => resolve(server));
-    server.on('error', () => {
-      // Port already in use, reuse existing server
-      resolve(null);
-    });
+  return new Promise((resolve, reject) => {
+    server.listen(0, '127.0.0.1', () => resolve(server));
+    server.on('error', reject);
   });
 }
 
@@ -54,15 +51,21 @@ console.log('===================================================================
 
 async function runContrastAudit() {
   const server = await startServer();
-  const browser = await puppeteer.launch({
-    executablePath: CHROME_PATH,
-    headless: true,
+  const port = server.address().port;
+  const baseUrl = `http://127.0.0.1:${port}/index.html`;
+  const browser = await puppeteer.launch(launchOptions({
     args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  }));
 
-  const page = await browser.newPage();
   let totalViolations = 0;
   const auditResults = [];
+  const viewports = [
+    { w: 1440, h: 900, label: '1440x900 (Desktop)' },
+    { w: 390, h: 844, label: '390x844 (Mobile)' }
+  ];
+
+  try {
+    const page = await browser.newPage();
 
   async function checkState(stateName, resolution) {
     const issues = await page.evaluate(() => {
@@ -174,15 +177,10 @@ async function runContrastAudit() {
     }
   }
 
-  const viewports = [
-    { w: 1440, h: 900, label: '1440x900 (Desktop)' },
-    { w: 390, h: 844, label: '390x844 (Mobile)' }
-  ];
-
   for (const vp of viewports) {
     console.log(`\nTesting Viewport: ${vp.label}...`);
     await page.setViewport({ width: vp.w, height: vp.h });
-    await page.goto('http://localhost:8080', { waitUntil: 'networkidle0' });
+    await page.goto(baseUrl, { waitUntil: 'networkidle0' });
     await page.waitForSelector('#startScreen');
     await new Promise(r => setTimeout(r, 600));
 
@@ -228,9 +226,10 @@ async function runContrastAudit() {
     await new Promise(r => setTimeout(r, 500));
     await checkState('endscreen', vp.label);
   }
-
-  await browser.close();
-  if (server) server.close();
+  } finally {
+    await browser.close();
+    if (server) server.close();
+  }
 
   console.log('\n--------------------------------------------------------------------------------');
   console.log(`Contrast audit complete across ${viewports.length * 6} state/resolution configurations.`);

@@ -1,4 +1,5 @@
 // Tricky Meadow — Mascot "Moss" (Round Leaf-Sprite with 3 Expressions)
+import { escapeHtml } from './escape.js';
 
 /**
  * Renders Moss the leaf-sprite.
@@ -7,12 +8,14 @@
  * @param {number} size
  */
 export function renderMascot(expression = 'neutral', speechText = null, size = 80) {
+  const safeExpr = expression === 'cheer' || expression === 'think' ? expression : 'neutral';
+  const safeSize = Number.isFinite(Number(size)) ? Number(size) : 80;
   let eyes = '';
   let mouth = '';
   let sproutTransform = 'rotate(0, 50, 15)';
-  let blush = '<ellipse cx="32" cy="56" rx="5" ry="3" fill="#fca5a5" opacity="0.6"/><ellipse cx="68" cy="56" rx="5" ry="3" fill="#fca5a5" opacity="0.6"/>';
+  const blush = '<ellipse cx="32" cy="56" rx="5" ry="3" fill="#fca5a5" opacity="0.6"/><ellipse cx="68" cy="56" rx="5" ry="3" fill="#fca5a5" opacity="0.6"/>';
 
-  if (expression === 'cheer') {
+  if (safeExpr === 'cheer') {
     // Excited squinting arc eyes and big open mouth
     eyes = `
       <path d="M 30 48 Q 36 42 42 48" stroke="#1f2937" stroke-width="3.5" fill="none" stroke-linecap="round"/>
@@ -22,7 +25,7 @@ export function renderMascot(expression = 'neutral', speechText = null, size = 8
       <path d="M 42 56 Q 50 68 58 56 Z" fill="#b91c1c" stroke="#1f2937" stroke-width="2"/>
     `;
     sproutTransform = 'rotate(12, 50, 15)';
-  } else if (expression === 'think') {
+  } else if (safeExpr === 'think') {
     // Thoughtful glance upwards with a small wondering O-mouth
     eyes = `
       <circle cx="37" cy="46" r="4.5" fill="#1f2937"/>
@@ -50,7 +53,7 @@ export function renderMascot(expression = 'neutral', speechText = null, size = 8
   }
 
   const svg = `
-    <svg class="moss-sprite moss-${expression}" width="${size}" height="${size}" viewBox="0 0 100 100" role="img" aria-label="Moss the meadow leaf-sprite (${expression})">
+    <svg class="moss-sprite moss-${safeExpr}" width="${safeSize}" height="${safeSize}" viewBox="0 0 100 100" role="img" aria-label="Moss the meadow leaf-sprite (${safeExpr})">
       <defs>
         <radialGradient id="mossBodyGrad" cx="45%" cy="40%" r="55%">
           <stop offset="0%" stop-color="#84cc16"/>
@@ -92,7 +95,7 @@ export function renderMascot(expression = 'neutral', speechText = null, size = 8
     <div class="mascot-wrap has-speech">
       ${svg}
       <div class="moss-speech-bubble" role="status">
-        <p class="bubble-text">${speechText}</p>
+        <p class="bubble-text">${escapeHtml(speechText)}</p>
       </div>
     </div>
   `;
