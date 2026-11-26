@@ -32,7 +32,7 @@ Experience the full 3D interactive globe directly in your browser:
 
 - **Interactive 3D Earth Globe (`src/globe.js`, `src/mapRenderer.js`)**:
   - Offline vector rasterization of Natural Earth 50m TopoJSON onto high-resolution offscreen canvas textures (4096×2048 / 8192×4096).
-  - OrbitControls with momentum damping, zoom bounds, atmosphere glow shader, and idle auto-rotation.
+  - OrbitControls with momentum damping, zoom bounds, crisp 3D spherical vector borders, starry backdrop, and idle auto-rotation.
   - Dominates ≥75% of viewport across desktop, tablet, and mobile displays.
 - **Accurate Direct Country Picking (`src/picker.js`)**:
   - Raycasts mouse or touch directly onto the 3D sphere.
@@ -46,15 +46,15 @@ Experience the full 3D interactive globe directly in your browser:
   - Seamless border alignment with neighbouring countries (Pakistan, China) with zero overlapping disputed strokes.
 - **Cinematic Feedback & Geodesic Arcs (`src/cameraFlight.js`)**:
   - Smooth spherical linear interpolation (`slerp`) camera flight centering on target country.
-  - If correct: nation illuminates in emerald green.
-  - If incorrect: nation highlights in red, guess highlights in orange, and an elevated 3D **great-circle geodesic arc** connects the two points with a dynamic distance badge in kilometers and miles.
+  - Pre-confirm selection highlights the picked nation in saffron/orange (`#d97d10`).
+  - If correct: target nation highlights in emerald green (`#1d733e`).
+  - If incorrect: target nation highlights in emerald green (`#1d733e`), wrong guessed nation highlights in crimson red (`#ba3c2a`), and an elevated 3D **great-circle geodesic arc** connects the two points with a dynamic distance badge in kilometers and miles.
 - **Educational Memory Vault Dossier (`src/ui.js`)**:
   - Unlocked after identification to permanently cement knowledge:
-    - 🏛️ **Iconic Wonder**: UNESCO World Heritage landmarks.
-    - 🍲 **Taste & Tradition**: Signature culinary heritage.
-    - 🧠 **Memory Anchor**: Surprising historical milestones and cultural trivia.
-    - 📋 **Full Dossier**: Official title, capital, population, area, languages, and neighbours.
-  - One-click inspection links to **Google Maps** and **OpenStreetMap**.
+    - 🔖 **Memory Anchor**: Surprising historical milestones and cultural trivia.
+    - 🏛️ **Iconic Landmark**: UNESCO World Heritage sites and signature monuments.
+    - 🍲 **Culture & Tradition**: Signature culinary and cultural heritage.
+    - 📋 **Full Dossier**: Official title, capital, population, area, languages, currency, bordering/maritime status, and field notes.
 - **Free Clue System & Zero-Spoiler Policy**:
   - 3 progressive clues per nation (heritage/culture ➔ geography/fauna ➔ landmark/modern).
   - All 3 clues can be revealed with **0 point penalty** (clues are 100% free).
@@ -108,7 +108,7 @@ flowchart TD
     end
 
     subgraph Graphics ["3D Graphics Engine"]
-        GlobeMesh["globe.js (Sphere Mesh & Shaders)"]
+        GlobeMesh["globe.js (Three.js Sphere, Borders & Stars)"]
         FlightEngine["cameraFlight.js (Slerp Interpolation)"]
         TextureEngine["mapRenderer.js (Vector Canvas Texture)"]
     end
@@ -126,10 +126,15 @@ flowchart TD
 
 ```
 earth-trivia/
-├── index.html                   # Clean semantic markup and module linkages
-├── package.json                 # Build commands, scripts, dependencies & engines
+├── .nvmrc                       # Pinned Node.js runtime (v20)
+├── CHANGELOG.md                 # Release history & version notes
 ├── LICENSE                      # MIT Open Source License (vaishnavkk)
-├── THIRD_PARTY_NOTICES.md       # Full upstream dependency & font notices
+├── README.md                    # Project overview & developer guide
+├── RELEASING.md                 # Release process, bundle & Pages deployment guide
+├── THIRD_PARTY_NOTICES.md       # Upstream dependency, font & data notices
+├── eslint.config.js             # ESLint v10 configuration for src/
+├── index.html                   # Clean semantic markup and bundle entry
+├── package.json                 # Build commands, scripts, dependencies & engines
 ├── data/                        # Verified offline datasets
 │   ├── countries.json           # 195 sovereign nations metadata & anchors
 │   ├── clues.json               # 1089 verified factual clues (695 source URLs)
@@ -140,26 +145,66 @@ earth-trivia/
 │   └── bundle.js                # Optimized, minified ES module bundle (esbuild)
 ├── docs/                        # Architecture & contribution guides
 │   ├── ARCHITECTURE.md          # Modular architecture, slerp math & round lifecycle
-│   ├── DATA_SOURCES.md          # Dataset licenses, Survey of India notes & verification
 │   ├── CONTRIBUTING.md          # Development setup, test gates & clue contribution rules
+│   ├── DATA_SOURCES.md          # Dataset licenses, Survey of India notes & verification
 │   ├── social-preview.png       # 1280×640 social card
 │   └── img/                     # Real Puppeteer game screenshots (WebP <= 150 KB)
 │       ├── start-screen.webp
 │       ├── question.webp
 │       ├── close-miss.webp
 │       └── mobile.webp
+├── scripts/                     # Build, QA, and validation automation
+│   ├── build/
+│   │   ├── bundleMapData.js     # Compiles Natural Earth 50m + SOI boundaries into data/world-50m.js
+│   │   └── serve.js             # Local static dev server (port 8080)
+│   ├── qa/
+│   │   ├── chrome.js            # Shared Headless Chrome / Puppeteer launch helper
+│   │   ├── coverageReporter.js  # Runtime JS/CSS coverage report generator
+│   │   ├── runCheckContrast.js  # Wrapper launching WCAG AA contrast checks
+│   │   ├── selfplay.js          # Autonomous Puppeteer QA harness
+│   │   └── snapshotComputedStyles.js # Computed style snapshot utility
+│   └── validate/
+│       ├── checkClaims.js       # Sentence-level Wikipedia source verification
+│       ├── checkCluesStep0.js   # Clue word count, grammar & zero-spoiler linter
+│       ├── checkContrast.js     # WCAG AA contrast verifier across states & viewports
+│       ├── checkLibrary.js      # Tier quotas, coverage & overlap checks
+│       ├── checkPalette.js      # Hex color audit against Tailwind collisions
+│       ├── checkSources.js      # Source URL reachability & evidence caching
+│       └── validateData.js      # Country metadata integrity & banned-term checks
 ├── src/                         # Modular ES6 game source
-│   ├── main.js                  # Entry point & global event coordination
-│   ├── globe.js                 # Three.js 3D sphere, orbital controls & atmosphere
-│   ├── mapRenderer.js           # 2D canvas cartography rasterizer
-│   ├── picker.js                # Raycasting point-in-polygon & microstate hit detection
-│   ├── cameraFlight.js          # Slerp flight, mid-range framing & distance badges
-│   ├── game.js                  # Expedition loop, phase coordinator & mode switching
-│   ├── scoring.js               # Points, timer bonus, streak multiplier & partial credit
-│   ├── questionBag.js           # Uniform PRNG country sampling without replacement
 │   ├── audio.js                 # Procedural Web Audio API sound synthesis
-│   └── styles/                  # Modular stylesheets
-└── test/                        # Automated unit, integration & modal layout test suite
+│   ├── cameraFlight.js          # Slerp flight, geodesic arcs, outlines & distance badges
+│   ├── frame_union.js           # Spherical geometry, border distance & mid-range framing
+│   ├── game.js                  # Expedition loop, phase coordinator & mode switching
+│   ├── globe.js                 # Three.js 3D sphere, vector borders, stars & orbital controls
+│   ├── icons.js                 # Inline SVG UI icons & flag-icons renderer
+│   ├── main.js                  # Entry point, DOM bindings & window.__geotrivia hooks
+│   ├── mapRenderer.js           # 2D canvas cartography rasterizer & highlight tweens
+│   ├── picker.js                # Raycasting point-in-polygon & microstate hit detection
+│   ├── questionBag.js           # Uniform PRNG country sampling without replacement
+│   ├── rng.js                   # Seeded mulberry32 PRNG, crypto RNG & Fisher-Yates shuffle
+│   ├── scoring.js               # Points, timer bonus, streak multiplier & partial credit
+│   ├── three.js                 # Centralized tree-shakable Three.js re-exports
+│   ├── ui.js                    # HUD, Clue Card, Memory Vault & modal DOM manager
+│   └── styles/                  # Modular stylesheets (tokens, layout, components, modals, responsive)
+├── test/                        # Automated Node & browser verification suite
+│   ├── testDataSync.js          # Dataset sync & world-50m.js SHA-256 verification
+│   ├── testEndlessFinish.js     # Endless expedition finish & summary checks
+│   ├── testMidRangeFraming.js   # Union bounding-box framing & free-area checks
+│   ├── testModals.js            # Modal layout, focus trap & ESC checks across 6 viewports
+│   ├── testQuestionBag.js       # Non-repeating bag exhaustion & continent spacing checks
+│   ├── testRandom.js            # Seeded PRNG & Fisher-Yates uniformity checks
+│   ├── testRegressions.js       # Cleanup & bug-fix regression suite (XSS, storage, Tuvalu, races)
+│   ├── testScoring.js           # Scoring formula, multiplier & partial-credit unit tests
+│   ├── testStep1CameraFlight.js # Slerp camera flight & orientation unit tests
+│   ├── testStep2CluePoints.js   # Free-clue & scoring invariant checks
+│   ├── testStep3BugFixes.js     # Border distance, tiny-country & antimeridian regression tests
+│   ├── testSummaryBuilder.js    # Expedition summary & flawless state builder tests
+│   └── testTiers.js             # Strict tier subset invariants (42 ⊂ 100 ⊂ 195)
+└── vendor/                      # Self-hosted offline fonts & SVG flag assets
+    ├── @fontsource-variable/dm-sans/
+    ├── @fontsource-variable/fraunces/
+    └── flag-icons/
 ```
 
 ---
@@ -173,7 +218,13 @@ npm ci
 # Build production bundle (dist/bundle.js)
 npm run build
 
-# Start local development server (http://localhost:8080)
+# Build unminified debug bundle with sourcemaps (dist/debug/bundle.js)
+npm run build:debug
+
+# Rebuild cartographic map data (data/world-50m.js)
+npm run build:data
+
+# Start local development server (http://localhost:8080; aliases: npm run dev, npm run serve)
 npm start
 
 # Run ESLint across src/
@@ -182,7 +233,7 @@ npm run lint
 # Run all 8 data, clue, and UI contrast validators
 npm run validate
 
-# Run comprehensive test suite across 6 viewports
+# Run all 14 Node & browser modal/layout verification scripts (including 6-viewport checks in testModals.js)
 npm test
 
 # Run autonomous Puppeteer self-play QA agent (smoke test)
