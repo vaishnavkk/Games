@@ -75,10 +75,14 @@ export async function runStressTest(options = {}) {
           maxHp: 80,
           speed: 1.5,
           distance: dist,
+          x: 0,
+          y: 0,
           armour: type === 'crusher_tank' ? 6 : (type === 'rust_walker' ? 2 : 0),
-          scrapReward: 10,
+          scrap: 10,
+          leakDamage: 1,
           isBoss: i === targetEnemies - 1,
-          slowTimer: i % 3 === 0 ? 1.5 : 0
+          slowTimer: i % 3 === 0 ? 1.5 : 0,
+          slowRatio: 0.5
         });
       }
 

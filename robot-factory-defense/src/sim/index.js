@@ -11,6 +11,27 @@ export const TICK_RATE = 60;
 export const TICK_DT = 1 / TICK_RATE; // ~0.016666666666666666s
 export const TICK_MS = 1000 / TICK_RATE; // ~16.666666666666668ms
 
+const VALID_WAVE_STATES = new Set(['idle', 'spawning', 'active', 'cleared', 'won', 'lost']);
+
+/**
+ * Look up a global Workshop upgrade's effect object from state config.
+ */
+function getGlobalUpgradeEffect(state, id) {
+  const list = state.config?.upgrades?.workshop?.globalUpgrades;
+  if (!Array.isArray(list)) return null;
+  return list.find(g => g.id === id)?.effect || null;
+}
+
+/**
+ * Apply Fast Assembly cost discount if purchased.
+ */
+function applyCostDiscount(state, cost) {
+  if (!state.purchasedUpgrades.includes('fast_assembly')) return cost;
+  const ratio = getGlobalUpgradeEffect(state, 'fast_assembly')?.costDiscountRatio;
+  const discount = (Number.isFinite(ratio) && ratio >= 0 && ratio < 1) ? ratio : 0.1;
+  return Math.floor(cost * (1 - discount));
+}
+
 /**
  * 32-bit FNV-1a hash of a UTF-8 string
  */
@@ -27,11 +48,17 @@ export function fnv1a32(str) {
  * Compute waypoint path segments and total distance in cells.
  */
 export function computeWaypoints(waypoints) {
+  if (!Array.isArray(waypoints) || waypoints.length < 2) {
+    return { segments: [], totalDistance: 0 };
+  }
   const segments = [];
   let totalDistance = 0;
   for (let i = 0; i < waypoints.length - 1; i++) {
     const p1 = waypoints[i];
     const p2 = waypoints[i + 1];
+    if (!p1 || !p2 || !Number.isFinite(p1.col) || !Number.isFinite(p1.row) || !Number.isFinite(p2.col) || !Number.isFinite(p2.row)) {
+      continue;
+    }
     const x1 = p1.col + 0.5;
     const y1 = p1.row + 0.5;
     const x2 = p2.col + 0.5;
@@ -39,6 +66,7 @@ export function computeWaypoints(waypoints) {
     const dx = x2 - x1;
     const dy = y2 - y1;
     const len = Math.hypot(dx, dy);
+    if (len <= 0) continue;
     segments.push({
       x1,
       y1,
@@ -60,13 +88,21 @@ export function computeWaypoints(waypoints) {
  */
 export function getPositionAlongPath(distance, segments, totalDistance) {
   if (!segments || segments.length === 0) return { x: 0, y: 0 };
-  if (distance <= 0) return { x: segments[0].x1, y: segments[0].y1 };
+  if (!Number.isFinite(totalDistance) || totalDistance <= 0) {
+    return { x: segments[0].x1, y: segments[0].y1 };
+  }
+  if (!Number.isFinite(distance) || distance <= 0) {
+    return { x: segments[0].x1, y: segments[0].y1 };
+  }
   if (distance >= totalDistance) {
     const last = segments[segments.length - 1];
     return { x: last.x2, y: last.y2 };
   }
   for (const seg of segments) {
     if (distance <= seg.endDist) {
+      if (!Number.isFinite(seg.len) || seg.len <= 0) {
+        return { x: seg.x1, y: seg.y1 };
+      }
       const segT = (distance - seg.startDist) / seg.len;
       return {
         x: seg.x1 + seg.dx * segT,
@@ -160,10 +196,13 @@ export function killEnemy(state, enemy) {
   enemy.isDead = true;
   enemy.hp = 0;
 
-  const mult = state.scrapMultiplier ?? 1.0;
-  let scrapReward = Math.round(enemy.scrap * mult);
+  const baseScrap = Number.isFinite(enemy.scrap) ? enemy.scrap : 0;
+  const mult = Number.isFinite(state.scrapMultiplier) ? state.scrapMultiplier : 1.0;
+  let scrapReward = Math.max(0, Math.round(baseScrap * mult));
   if (state.purchasedUpgrades.includes('scrap_magnet')) {
-    scrapReward = Math.round(scrapReward * 1.20);
+    const magnetMult = getGlobalUpgradeEffect(state, 'scrap_magnet')?.scrapMultiplier;
+    const factor = (Number.isFinite(magnetMult) && magnetMult > 0) ? magnetMult : 1.2;
+    scrapReward = Math.max(0, Math.round(scrapReward * factor));
   }
 
   state.scrap += scrapReward;
@@ -171,8 +210,6 @@ export function killEnemy(state, enemy) {
   state.stats.enemiesKilled += 1;
   state.events.push({ type: 'killed', enemyId: enemy.id, scrapReward });
 }
-
-export const handleEnemyKill = killEnemy;
 
 /**
  * Spawn an enemy into the simulation.
@@ -184,9 +221,9 @@ function spawnEnemy(state, enemyType) {
   const enemyId = `enemy_${++state.nextEnemyId}_${enemyType}`;
   const startPos = getPositionAlongPath(0, state.pathSegments, state.totalPathDistance);
 
-  const hpScale = state.hpMultiplier ?? 1.0;
+  const hpScale = Number.isFinite(state.hpMultiplier) ? state.hpMultiplier : 1.0;
   const currentWaveDef = state.config.waves.waves?.[state.wave - 1];
-  const waveHpMult = currentWaveDef?.hpMult ?? 1.0;
+  const waveHpMult = Number.isFinite(currentWaveDef?.hpMult) ? currentWaveDef.hpMult : 1.0;
   const scaledHp = Math.max(1, Math.round(def.hp * hpScale * waveHpMult));
 
   const enemy = {
@@ -242,11 +279,15 @@ function tickSimulation(state) {
     let allFinished = true;
     for (const group of state.spawner) {
       if (group.spawned < group.count) {
+        if (!Number.isFinite(group.timer)) {
+          group.timer = 0;
+        }
         group.timer -= TICK_DT;
+        const interval = (Number.isFinite(group.interval) && group.interval > 0) ? group.interval : TICK_DT;
         while (group.timer <= 0 && group.spawned < group.count) {
           spawnEnemy(state, group.type);
           group.spawned++;
-          group.timer += group.interval;
+          group.timer += interval;
         }
       }
       if (group.spawned < group.count) {
@@ -267,20 +308,23 @@ function tickSimulation(state) {
       enemy.slowTimer = Math.max(0, enemy.slowTimer - TICK_DT);
     }
 
+    const enemySpeed = Number.isFinite(enemy.speed) ? enemy.speed : 0;
+    const slowRatio = Number.isFinite(enemy.slowRatio) ? enemy.slowRatio : 0.5;
     const effectiveSpeed = enemy.slowTimer > 0
-      ? enemy.speed * (1 - (enemy.slowRatio || 0.5))
-      : enemy.speed;
+      ? enemySpeed * (1 - slowRatio)
+      : enemySpeed;
 
-    enemy.distance += effectiveSpeed * TICK_DT;
+    enemy.distance = (Number.isFinite(enemy.distance) ? enemy.distance : 0) + effectiveSpeed * TICK_DT;
     const pos = getPositionAlongPath(enemy.distance, state.pathSegments, state.totalPathDistance);
     enemy.x = pos.x;
     enemy.y = pos.y;
 
     if (enemy.distance >= state.totalPathDistance) {
       // Enemy reached Core Base (leaked)
-      state.coreHp = Math.max(0, state.coreHp - enemy.leakDamage);
+      const leakDmg = (Number.isFinite(enemy.leakDamage) && enemy.leakDamage >= 0) ? enemy.leakDamage : 1;
+      state.coreHp = Math.max(0, state.coreHp - leakDmg);
       state.stats.enemiesLeaked += 1;
-      state.events.push({ type: 'leaked', enemyId: enemy.id, coreDamage: enemy.leakDamage });
+      state.events.push({ type: 'leaked', enemyId: enemy.id, coreDamage: leakDmg });
     } else {
       activeEnemies.push(enemy);
     }
@@ -299,7 +343,7 @@ function tickSimulation(state) {
   for (const tower of state.towers) {
     if (tower.type === 'fabricator') continue;
 
-    tower.cooldown = Math.max(0, (tower.cooldown || 0) - TICK_DT);
+    tower.cooldown = Math.max(0, (Number.isFinite(tower.cooldown) ? tower.cooldown : 0) - TICK_DT);
     if (tower.cooldown > 0) continue;
 
     const def = state.config.towers.towers[tower.type];
@@ -310,18 +354,24 @@ function tickSimulation(state) {
 
     let baseFireRate = lvlConfig.fireRate;
     if (state.purchasedUpgrades.includes('overclock')) {
-      baseFireRate *= 1.15;
+      const mult = getGlobalUpgradeEffect(state, 'overclock')?.fireRateMultiplier;
+      baseFireRate *= (Number.isFinite(mult) && mult > 0) ? mult : 1.1;
     }
+    if (!Number.isFinite(baseFireRate) || baseFireRate <= 0) continue;
 
     let baseDamage = lvlConfig.damage;
     if (state.purchasedUpgrades.includes('hardened_rounds')) {
-      baseDamage = Math.round(baseDamage * 1.15);
+      const mult = getGlobalUpgradeEffect(state, 'hardened_rounds')?.damageMultiplier;
+      baseDamage = Math.round(baseDamage * ((Number.isFinite(mult) && mult > 0) ? mult : 1.1));
     }
+    if (!Number.isFinite(baseDamage)) continue;
 
     let baseRange = lvlConfig.range;
     if (state.purchasedUpgrades.includes('long_barrels')) {
-      baseRange = Math.round(baseRange * 1.10 * 100) / 100;
+      const mult = getGlobalUpgradeEffect(state, 'long_barrels')?.rangeMultiplier;
+      baseRange = Math.round(baseRange * ((Number.isFinite(mult) && mult > 0) ? mult : 1.1) * 100) / 100;
     }
+    if (!Number.isFinite(baseRange) || baseRange <= 0) continue;
 
     const towerX = tower.col + 0.5;
     const towerY = tower.row + 0.5;
@@ -349,21 +399,23 @@ function tickSimulation(state) {
     const primaryTarget = inRange[0].enemy;
 
     if (tower.type === 'pulse') {
-      const damageDealt = Math.max(1, baseDamage - primaryTarget.armour);
+      const armour = Number.isFinite(primaryTarget.armour) ? primaryTarget.armour : 0;
+      const damageDealt = Math.max(1, baseDamage - armour);
       primaryTarget.hp -= damageDealt;
       state.events.push({ type: 'hit', enemyId: primaryTarget.id, damage: damageDealt, towerId: tower.id });
       if (primaryTarget.hp <= 0) {
-        handleEnemyKill(state, primaryTarget);
+        killEnemy(state, primaryTarget);
       }
       tower.cooldown = 1 / baseFireRate;
     } else if (tower.type === 'coolant') {
-      const damageDealt = Math.max(1, baseDamage - primaryTarget.armour);
+      const armour = Number.isFinite(primaryTarget.armour) ? primaryTarget.armour : 0;
+      const damageDealt = Math.max(1, baseDamage - armour);
       primaryTarget.hp -= damageDealt;
-      primaryTarget.slowTimer = lvlConfig.slowDuration || 2.0;
-      primaryTarget.slowRatio = lvlConfig.slowRatio || 0.5;
+      primaryTarget.slowTimer = Number.isFinite(lvlConfig.slowDuration) ? lvlConfig.slowDuration : 2.0;
+      primaryTarget.slowRatio = Number.isFinite(lvlConfig.slowRatio) ? lvlConfig.slowRatio : 0.5;
       state.events.push({ type: 'hit', enemyId: primaryTarget.id, damage: damageDealt, towerId: tower.id });
       if (primaryTarget.hp <= 0) {
-        handleEnemyKill(state, primaryTarget);
+        killEnemy(state, primaryTarget);
       }
       tower.cooldown = 1 / baseFireRate;
     } else if (tower.type === 'arc') {
@@ -375,7 +427,7 @@ function tickSimulation(state) {
       primaryTarget.hp -= baseDamage;
       state.events.push({ type: 'hit', enemyId: primaryTarget.id, damage: baseDamage, towerId: tower.id });
       if (primaryTarget.hp <= 0) {
-        handleEnemyKill(state, primaryTarget);
+        killEnemy(state, primaryTarget);
       }
 
       let currentOrigin = { x: primaryTarget.x, y: primaryTarget.y };
@@ -389,7 +441,11 @@ function tickSimulation(state) {
           }
         }
         if (candidates.length === 0) break;
-        candidates.sort((a, b) => b.enemy.distance - a.enemy.distance);
+        if (mode === 'nearest') {
+          candidates.sort((a, b) => a.dist - b.dist || b.enemy.distance - a.enemy.distance);
+        } else {
+          candidates.sort((a, b) => b.enemy.distance - a.enemy.distance || a.dist - b.dist);
+        }
         const nextTarget = candidates[0].enemy;
         hitIds.add(nextTarget.id);
         currentOrigin = { x: nextTarget.x, y: nextTarget.y };
@@ -397,7 +453,7 @@ function tickSimulation(state) {
         nextTarget.hp -= baseDamage;
         state.events.push({ type: 'hit', enemyId: nextTarget.id, damage: baseDamage, towerId: tower.id });
         if (nextTarget.hp <= 0) {
-          handleEnemyKill(state, nextTarget);
+          killEnemy(state, nextTarget);
         }
       }
 
@@ -425,28 +481,41 @@ function tickSimulation(state) {
   // 5. Update Projectiles
   const remainingProjectiles = [];
   for (const proj of state.projectiles) {
-    const targetEnemy = state.enemies.find(e => e.id === proj.targetId && !e.isDead && e.hp > 0);
+    const targetEnemy = proj.targetId
+      ? state.enemies.find(e => e.id === proj.targetId && !e.isDead && e.hp > 0)
+      : null;
     if (targetEnemy) {
       proj.targetX = targetEnemy.x;
       proj.targetY = targetEnemy.y;
+    } else if (proj.targetId) {
+      proj.targetId = null;
     }
+
+    if (!Number.isFinite(proj.x) || !Number.isFinite(proj.y) || !Number.isFinite(proj.targetX) || !Number.isFinite(proj.targetY)) {
+      continue;
+    }
+
+    const speed = (Number.isFinite(proj.speed) && proj.speed > 0) ? proj.speed : 8.0;
+    const splashRadius = (Number.isFinite(proj.splashRadius) && proj.splashRadius >= 0) ? proj.splashRadius : 1.2;
+    const projDamage = Number.isFinite(proj.damage) ? proj.damage : 0;
 
     const dx = proj.targetX - proj.x;
     const dy = proj.targetY - proj.y;
     const dist = Math.hypot(dx, dy);
-    const stepDist = proj.speed * TICK_DT;
+    const stepDist = speed * TICK_DT;
 
-    if (dist <= stepDist) {
+    if (dist <= stepDist || dist === 0) {
       // Detonate and deal splash damage
       for (const enemy of state.enemies) {
         if (enemy.isDead || enemy.hp <= 0) continue;
         const d = Math.hypot(enemy.x - proj.targetX, enemy.y - proj.targetY);
-        if (d <= proj.splashRadius) {
-          const dmg = Math.max(1, proj.damage - enemy.armour);
+        if (d <= splashRadius) {
+          const armour = Number.isFinite(enemy.armour) ? enemy.armour : 0;
+          const dmg = Math.max(1, projDamage - armour);
           enemy.hp -= dmg;
           state.events.push({ type: 'hit', enemyId: enemy.id, damage: dmg, towerId: proj.towerId });
           if (enemy.hp <= 0) {
-            handleEnemyKill(state, enemy);
+            killEnemy(state, enemy);
           }
         }
       }
@@ -465,8 +534,9 @@ function tickSimulation(state) {
   if (state.waveState === 'active' && state.enemies.length === 0) {
     state.waveState = 'cleared';
     const waveDef = state.config.waves.waves.find(w => w.wave === state.wave);
-    const baseReward = waveDef?.rewardScrap || 0;
-    const rewardScrap = Math.round(baseReward * (state.scrapMultiplier ?? 1.0));
+    const baseReward = Number.isFinite(waveDef?.rewardScrap) ? waveDef.rewardScrap : 0;
+    const mult = Number.isFinite(state.scrapMultiplier) ? state.scrapMultiplier : 1.0;
+    const rewardScrap = Math.max(0, Math.round(baseReward * mult));
     state.scrap += rewardScrap;
     state.stats.scrapEarned += rewardScrap;
     state.events.push({ type: 'wave_cleared', wave: state.wave, rewardScrap });
@@ -483,14 +553,19 @@ function tickSimulation(state) {
  * Advances simulation by real-world delta time `dtMs`.
  */
 export function step(state, dtMs) {
-  if (!dtMs || dtMs <= 0 || Number.isNaN(dtMs)) {
+  if (!Number.isFinite(dtMs) || dtMs <= 0) {
     return;
   }
   if (state.paused || state.waveState === 'won' || state.waveState === 'lost') {
     return;
   }
 
-  state.accumulatorMs += dtMs * state.speed;
+  const speed = (Number.isFinite(state.speed) && state.speed > 0) ? state.speed : 1;
+  if (!Number.isFinite(state.accumulatorMs)) {
+    state.accumulatorMs = 0;
+  }
+
+  state.accumulatorMs += dtMs * speed;
   const maxSubSteps = 20;
   let subSteps = 0;
 
@@ -541,13 +616,14 @@ export function place(state, cell, towerType) {
   if (!state.unlockedTowers.includes(towerType)) return null;
 
   const def = state.config.towers.towers[towerType];
-  if (!def) return null;
+  if (!def || !Array.isArray(def.levels) || !def.levels[0]) return null;
 
   const l1 = def.levels[0];
   let cost = l1.cost;
-  if (state.purchasedUpgrades.includes('fast_assembly')) {
-    cost = Math.floor(cost * 0.90);
-  }
+  if (!Number.isFinite(cost) || cost < 0) return null;
+
+  cost = applyCostDiscount(state, cost);
+  if (!Number.isFinite(cost) || cost < 0) return null;
 
   if (state.scrap < cost) return null;
 
@@ -599,20 +675,21 @@ export function upgrade(state, towerId) {
   if (!tower) return false;
 
   const def = state.config.towers.towers[tower.type];
-  if (!def || tower.level >= def.levels.length) return false;
+  if (!def || !Array.isArray(def.levels) || tower.level >= def.levels.length) return false;
 
   const currentLvlConfig = def.levels[tower.level - 1];
-  let upgradeCost = currentLvlConfig.upgradeCost;
-  if (upgradeCost <= 0) return false;
+  if (!currentLvlConfig) return false;
 
-  if (state.purchasedUpgrades.includes('fast_assembly')) {
-    upgradeCost = Math.floor(upgradeCost * 0.90);
-  }
+  let upgradeCost = currentLvlConfig.upgradeCost;
+  if (!Number.isFinite(upgradeCost) || upgradeCost <= 0) return false;
+
+  upgradeCost = applyCostDiscount(state, upgradeCost);
+  if (!Number.isFinite(upgradeCost) || upgradeCost < 0) return false;
 
   if (state.scrap < upgradeCost) return false;
 
   state.scrap -= upgradeCost;
-  tower.investedScrap += upgradeCost;
+  tower.investedScrap = (Number.isFinite(tower.investedScrap) ? tower.investedScrap : 0) + upgradeCost;
   tower.level += 1;
 
   state.events.push({ type: 'upgraded', towerId, newLevel: tower.level });
@@ -629,8 +706,10 @@ export function sell(state, towerId) {
   if (index === -1) return false;
 
   const tower = state.towers[index];
-  const refundRatio = state.config.towers.sellRefundRatio || 0.70;
-  const refund = Math.floor(tower.investedScrap * refundRatio);
+  const rawRatio = state.config.towers.sellRefundRatio;
+  const refundRatio = (Number.isFinite(rawRatio) && rawRatio >= 0) ? rawRatio : 0.70;
+  const invested = Number.isFinite(tower.investedScrap) ? tower.investedScrap : 0;
+  const refund = Math.max(0, Math.floor(invested * refundRatio));
 
   if (tower.type === 'fabricator') {
     state.fabricatorCount = Math.max(0, state.fabricatorCount - 1);
@@ -658,10 +737,10 @@ export function startWave(state) {
   state.wave = nextWave;
   state.spawner = waveDef.spawns.map(s => ({
     type: s.type,
-    count: s.count,
+    count: (Number.isFinite(s.count) && s.count > 0) ? s.count : 0,
     spawned: 0,
-    interval: s.interval,
-    timer: s.delay
+    interval: (Number.isFinite(s.interval) && s.interval > 0) ? s.interval : TICK_DT,
+    timer: Number.isFinite(s.delay) ? s.delay : 0
   }));
   state.waveState = 'spawning';
   return true;
@@ -685,13 +764,19 @@ export function togglePause(state) {
  * Purchase a Workshop upgrade or tower unlock.
  */
 export function buyUpgrade(state, id) {
-  const workshop = state.config.upgrades.workshop;
+  if (state.waveState === 'won' || state.waveState === 'lost') return false;
+
+  const workshop = state.config?.upgrades?.workshop;
+  if (!workshop) return false;
 
   // Check tower unlocks
-  const unlockItem = workshop.unlocks.find(u => u.id === id);
+  const unlockItem = Array.isArray(workshop.unlocks)
+    ? workshop.unlocks.find(u => u.id === id)
+    : null;
   if (unlockItem) {
     if (state.removedTower && state.removedTower === unlockItem.target) return false;
     if (state.unlockedTowers.includes(unlockItem.target)) return false;
+    if (!Number.isFinite(unlockItem.cost) || unlockItem.cost < 0) return false;
     if (state.circuits < unlockItem.cost) return false;
 
     state.circuits -= unlockItem.cost;
@@ -700,16 +785,20 @@ export function buyUpgrade(state, id) {
   }
 
   // Check global upgrades
-  const globalUpgrade = workshop.globalUpgrades.find(g => g.id === id);
+  const globalUpgrade = Array.isArray(workshop.globalUpgrades)
+    ? workshop.globalUpgrades.find(g => g.id === id)
+    : null;
   if (globalUpgrade) {
     if (state.purchasedUpgrades.includes(id)) return false;
+    if (!Number.isFinite(globalUpgrade.cost) || globalUpgrade.cost < 0) return false;
     if (state.circuits < globalUpgrade.cost) return false;
 
     state.circuits -= globalUpgrade.cost;
     state.purchasedUpgrades.push(id);
 
     if (id === 'repair_bay') {
-      const bonus = globalUpgrade.effect?.coreHpBonus || 5;
+      const rawBonus = globalUpgrade.effect?.coreHpBonus;
+      const bonus = (Number.isFinite(rawBonus) && rawBonus > 0) ? rawBonus : 5;
       state.maxCoreHp += bonus;
       state.coreHp = Math.min(state.coreHp + bonus, state.maxCoreHp);
     }
@@ -752,6 +841,7 @@ export function snapshot(state) {
 export function serialize(state) {
   return JSON.stringify({
     tick: state.tick,
+    simTime: state.simTime,
     seed: state.seed,
     rngState: state.rng?.getState ? state.rng.getState() : (state.rngSeedState || 0),
     scrap: state.scrap,
@@ -760,28 +850,228 @@ export function serialize(state) {
     maxCoreHp: state.maxCoreHp,
     wave: state.wave,
     waveState: state.waveState,
-    towers: state.towers.map(t => ({
+    speed: state.speed,
+    paused: !!state.paused,
+    accumulatorMs: state.accumulatorMs,
+    fabricatorCount: state.fabricatorCount,
+    nextTowerId: state.nextTowerId,
+    nextEnemyId: state.nextEnemyId,
+    nextProjectileId: state.nextProjectileId,
+    scrapMultiplier: state.scrapMultiplier,
+    hpMultiplier: state.hpMultiplier,
+    removedTower: state.removedTower ?? null,
+    workshopMode: state.workshopMode ?? 'all',
+    spawner: (state.spawner || []).map(g => ({
+      type: g.type,
+      count: g.count,
+      spawned: g.spawned,
+      interval: g.interval,
+      timer: g.timer
+    })),
+    stats: {
+      enemiesKilled: state.stats?.enemiesKilled || 0,
+      enemiesLeaked: state.stats?.enemiesLeaked || 0,
+      scrapEarned: state.stats?.scrapEarned || 0,
+      circuitsEarned: state.stats?.circuitsEarned || 0,
+      towersBuilt: state.stats?.towersBuilt || 0
+    },
+    towers: (state.towers || []).map(t => ({
       id: t.id,
       type: t.type,
       col: t.col,
       row: t.row,
-      level: t.level
+      level: t.level,
+      investedScrap: t.investedScrap,
+      cooldown: t.cooldown || 0,
+      circuitTicks: t.circuitTicks || 0,
+      circuitTimer: t.circuitTimer || 0,
+      targetMode: t.targetMode || 'first'
     })),
-    enemies: state.enemies.map(e => ({
+    enemies: (state.enemies || []).map(e => ({
       id: e.id,
       type: e.type,
-      hp: Math.round(e.hp * 10) / 10,
-      distance: Math.round(e.distance * 100) / 100
+      name: e.name,
+      hp: e.hp,
+      maxHp: e.maxHp,
+      speed: e.speed,
+      armour: e.armour,
+      scrap: e.scrap,
+      leakDamage: e.leakDamage,
+      isBoss: !!e.isBoss,
+      distance: e.distance,
+      x: e.x,
+      y: e.y,
+      slowTimer: e.slowTimer || 0,
+      slowRatio: e.slowRatio ?? 0,
+      isDead: !!e.isDead,
+      shape: e.shape,
+      color: e.color
     })),
-    projectiles: state.projectiles.map(p => ({
+    projectiles: (state.projectiles || []).map(p => ({
       id: p.id,
+      towerId: p.towerId,
       type: p.type,
-      x: Math.round(p.x * 100) / 100,
-      y: Math.round(p.y * 100) / 100
+      x: p.x,
+      y: p.y,
+      targetX: p.targetX,
+      targetY: p.targetY,
+      targetId: p.targetId ?? null,
+      damage: p.damage,
+      splashRadius: p.splashRadius,
+      speed: p.speed
     })),
-    unlockedTowers: [...state.unlockedTowers].sort(),
-    purchasedUpgrades: [...state.purchasedUpgrades].sort()
+    unlockedTowers: [...(state.unlockedTowers || [])].sort(),
+    purchasedUpgrades: [...(state.purchasedUpgrades || [])].sort()
   });
+}
+
+/**
+ * Restore a simulation state from a serialized JSON string (or object).
+ * Returns null if the payload is malformed or invalid.
+ */
+export function deserialize(json, config = {}) {
+  let parsed;
+  if (typeof json === 'string') {
+    try {
+      parsed = JSON.parse(json);
+    } catch (_e) {
+      return null;
+    }
+  } else {
+    parsed = json;
+  }
+
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    return null;
+  }
+  if (!Number.isFinite(parsed.tick) || parsed.tick < 0) {
+    return null;
+  }
+
+  const seed = Number.isFinite(parsed.seed) ? (parsed.seed >>> 0) : 12345;
+  const mergedConfig = {
+    ...config,
+    scrapMultiplier: Number.isFinite(parsed.scrapMultiplier) ? parsed.scrapMultiplier : config.scrapMultiplier,
+    hpMultiplier: Number.isFinite(parsed.hpMultiplier) ? parsed.hpMultiplier : config.hpMultiplier,
+    removedTower: parsed.removedTower !== undefined ? parsed.removedTower : config.removedTower,
+    workshopMode: parsed.workshopMode !== undefined ? parsed.workshopMode : config.workshopMode
+  };
+
+  const state = createGame(mergedConfig, seed);
+  const rngSeedState = Number.isFinite(parsed.rngState) ? (parsed.rngState >>> 0) : seed;
+  state.rngSeedState = rngSeedState;
+  state.rng = mulberry32(rngSeedState);
+
+  state.tick = Math.floor(parsed.tick);
+  state.simTime = Number.isFinite(parsed.simTime) ? parsed.simTime : state.tick * TICK_DT;
+  state.scrap = Number.isFinite(parsed.scrap) ? parsed.scrap : state.scrap;
+  state.circuits = Number.isFinite(parsed.circuits) ? parsed.circuits : state.circuits;
+  state.coreHp = Number.isFinite(parsed.coreHp) ? parsed.coreHp : state.coreHp;
+  state.maxCoreHp = Number.isFinite(parsed.maxCoreHp) ? parsed.maxCoreHp : state.maxCoreHp;
+  state.wave = Number.isFinite(parsed.wave) ? parsed.wave : 0;
+  state.waveState = VALID_WAVE_STATES.has(parsed.waveState) ? parsed.waveState : 'idle';
+  state.speed = parsed.speed === 2 ? 2 : 1;
+  state.paused = Boolean(parsed.paused);
+  state.accumulatorMs = Number.isFinite(parsed.accumulatorMs) ? parsed.accumulatorMs : 0;
+  state.nextTowerId = Number.isFinite(parsed.nextTowerId) ? parsed.nextTowerId : 0;
+  state.nextEnemyId = Number.isFinite(parsed.nextEnemyId) ? parsed.nextEnemyId : 0;
+  state.nextProjectileId = Number.isFinite(parsed.nextProjectileId) ? parsed.nextProjectileId : 0;
+
+  if (Array.isArray(parsed.unlockedTowers)) {
+    state.unlockedTowers = [...parsed.unlockedTowers];
+  }
+  if (Array.isArray(parsed.purchasedUpgrades)) {
+    state.purchasedUpgrades = [...parsed.purchasedUpgrades];
+  }
+
+  if (Array.isArray(parsed.spawner)) {
+    state.spawner = parsed.spawner.map(g => ({
+      type: g.type,
+      count: Number.isFinite(g.count) ? g.count : 0,
+      spawned: Number.isFinite(g.spawned) ? g.spawned : 0,
+      interval: (Number.isFinite(g.interval) && g.interval > 0) ? g.interval : TICK_DT,
+      timer: Number.isFinite(g.timer) ? g.timer : 0
+    }));
+  }
+
+  if (parsed.stats && typeof parsed.stats === 'object') {
+    state.stats = {
+      enemiesKilled: Number.isFinite(parsed.stats.enemiesKilled) ? parsed.stats.enemiesKilled : 0,
+      enemiesLeaked: Number.isFinite(parsed.stats.enemiesLeaked) ? parsed.stats.enemiesLeaked : 0,
+      scrapEarned: Number.isFinite(parsed.stats.scrapEarned) ? parsed.stats.scrapEarned : 0,
+      circuitsEarned: Number.isFinite(parsed.stats.circuitsEarned) ? parsed.stats.circuitsEarned : 0,
+      towersBuilt: Number.isFinite(parsed.stats.towersBuilt) ? parsed.stats.towersBuilt : 0
+    };
+  }
+
+  if (Array.isArray(parsed.towers)) {
+    state.towers = parsed.towers.map(t => {
+      const def = state.config.towers.towers[t.type];
+      const fallbackCost = def?.levels?.[0]?.cost ?? 0;
+      return {
+        id: t.id,
+        type: t.type,
+        col: t.col,
+        row: t.row,
+        level: Number.isFinite(t.level) ? t.level : 1,
+        investedScrap: Number.isFinite(t.investedScrap) ? t.investedScrap : fallbackCost,
+        cooldown: Number.isFinite(t.cooldown) ? t.cooldown : 0,
+        circuitTicks: Number.isFinite(t.circuitTicks) ? t.circuitTicks : 0,
+        circuitTimer: Number.isFinite(t.circuitTimer) ? t.circuitTimer : 0,
+        targetMode: t.targetMode === 'nearest' ? 'nearest' : 'first'
+      };
+    });
+  }
+
+  state.fabricatorCount = Number.isFinite(parsed.fabricatorCount)
+    ? parsed.fabricatorCount
+    : state.towers.filter(t => t.type === 'fabricator').length;
+
+  if (Array.isArray(parsed.enemies)) {
+    state.enemies = parsed.enemies.map(e => {
+      const def = state.config.enemies.enemies[e.type];
+      const distance = Number.isFinite(e.distance) ? e.distance : 0;
+      const pos = getPositionAlongPath(distance, state.pathSegments, state.totalPathDistance);
+      return {
+        id: e.id,
+        type: e.type,
+        name: e.name ?? def?.name,
+        hp: Number.isFinite(e.hp) ? e.hp : (def?.hp ?? 1),
+        maxHp: Number.isFinite(e.maxHp) ? e.maxHp : (def?.hp ?? 1),
+        speed: Number.isFinite(e.speed) ? e.speed : (def?.speed ?? 1),
+        armour: Number.isFinite(e.armour) ? e.armour : (def?.armour ?? 0),
+        scrap: Number.isFinite(e.scrap) ? e.scrap : (def?.scrap ?? 0),
+        leakDamage: Number.isFinite(e.leakDamage) ? e.leakDamage : (def?.leakDamage ?? 1),
+        isBoss: e.isBoss !== undefined ? !!e.isBoss : !!def?.isBoss,
+        distance,
+        x: Number.isFinite(e.x) ? e.x : pos.x,
+        y: Number.isFinite(e.y) ? e.y : pos.y,
+        slowTimer: Number.isFinite(e.slowTimer) ? e.slowTimer : 0,
+        slowRatio: Number.isFinite(e.slowRatio) ? e.slowRatio : 0,
+        isDead: !!e.isDead,
+        shape: e.shape ?? def?.shape,
+        color: e.color ?? def?.color
+      };
+    });
+  }
+
+  if (Array.isArray(parsed.projectiles)) {
+    state.projectiles = parsed.projectiles.map(p => ({
+      id: p.id,
+      towerId: p.towerId ?? null,
+      type: p.type ?? 'rocket',
+      x: Number.isFinite(p.x) ? p.x : 0,
+      y: Number.isFinite(p.y) ? p.y : 0,
+      targetX: Number.isFinite(p.targetX) ? p.targetX : 0,
+      targetY: Number.isFinite(p.targetY) ? p.targetY : 0,
+      targetId: p.targetId ?? null,
+      damage: Number.isFinite(p.damage) ? p.damage : 0,
+      splashRadius: Number.isFinite(p.splashRadius) ? p.splashRadius : 1.2,
+      speed: Number.isFinite(p.speed) ? p.speed : 8.0
+    }));
+  }
+
+  return state;
 }
 
 /**

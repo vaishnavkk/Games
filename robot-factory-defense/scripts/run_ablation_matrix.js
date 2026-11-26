@@ -212,17 +212,10 @@ if (!isMainThread) {
       allPassed
     };
 
-    // Paths to write
-    const mainRepoPath = 'C:/Users/vaish/Documents/antigravity/friendly-lovelace/robot-factory-defense/docs/balance-results/ablation.json';
-    const localRepoPath = path.resolve(__dirname, '../docs/balance-results/ablation.json');
-
-    fs.mkdirSync(path.dirname(mainRepoPath), { recursive: true });
-    fs.writeFileSync(mainRepoPath, JSON.stringify(outputData, null, 2), 'utf8');
-    console.log(`Successfully wrote to main repository: ${mainRepoPath}`);
-
-    fs.mkdirSync(path.dirname(localRepoPath), { recursive: true });
-    fs.writeFileSync(localRepoPath, JSON.stringify(outputData, null, 2), 'utf8');
-    console.log(`Successfully wrote to local repository: ${localRepoPath}`);
+    const outputPath = path.resolve(__dirname, '../docs/balance-results/ablation.json');
+    fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+    fs.writeFileSync(outputPath, JSON.stringify(outputData, null, 2), 'utf8');
+    console.log(`Successfully wrote ablation results to: ${outputPath}`);
 
     // Print summary table to console
     console.log('\n=======================================================');
