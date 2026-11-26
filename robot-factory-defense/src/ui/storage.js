@@ -1,7 +1,7 @@
 /**
  * LocalStorage handler with rfd: prefix and graceful error handling.
  */
-export const STORAGE_PREFIX = 'rfd:';
+const STORAGE_PREFIX = 'rfd:';
 
 export function getStoredData(key, fallback = null) {
   try {
@@ -22,23 +22,27 @@ export function setStoredData(key, value) {
   }
 }
 
+function clampNonNegativeInt(val) {
+  return typeof val === 'number' && Number.isFinite(val) ? Math.max(0, Math.floor(val)) : 0;
+}
+
 export function getBestWave() {
-  const val = getStoredData('best_wave', 0);
-  return typeof val === 'number' && !isNaN(val) ? val : 0;
+  return clampNonNegativeInt(getStoredData('best_wave', 0));
 }
 
 export function updateBestWave(wave) {
   const current = getBestWave();
-  if (wave > current) {
-    setStoredData('best_wave', wave);
-    return wave;
+  if (typeof wave !== 'number' || !Number.isFinite(wave)) return current;
+  const safeWave = Math.max(0, Math.floor(wave));
+  if (safeWave > current) {
+    setStoredData('best_wave', safeWave);
+    return safeWave;
   }
   return current;
 }
 
 export function getWins() {
-  const val = getStoredData('wins', 0);
-  return typeof val === 'number' && !isNaN(val) ? val : 0;
+  return clampNonNegativeInt(getStoredData('wins', 0));
 }
 
 export function incrementWins() {

@@ -1,4 +1,5 @@
 import upgradesData from '../data/upgrades.json' with { type: 'json' };
+import { escapeHtml } from './utils.js';
 
 /**
  * Workshop Modal Component for Research Upgrades & Tower Unlocks.
@@ -8,6 +9,9 @@ export function createWorkshopModal(callbacks = {}) {
   overlay.className = 'modal-overlay';
   overlay.id = 'workshopModal';
   overlay.setAttribute('data-testid', 'workshop-modal');
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-labelledby', 'workshopModalTitle');
   overlay.style.display = 'none';
 
   const content = document.createElement('div');
@@ -18,6 +22,7 @@ export function createWorkshopModal(callbacks = {}) {
   header.className = 'modal-header';
   const title = document.createElement('h2');
   title.className = 'modal-title';
+  title.id = 'workshopModalTitle';
   title.textContent = 'RESEARCH WORKSHOP';
 
   const btnClose = document.createElement('button');
@@ -57,8 +62,8 @@ export function createWorkshopModal(callbacks = {}) {
     const info = document.createElement('div');
     info.className = 'workshop-item-info';
     info.innerHTML = `
-      <span class="workshop-item-name">${u.name}</span>
-      <span class="workshop-item-desc">${u.description}</span>
+      <span class="workshop-item-name">${escapeHtml(u.name)}</span>
+      <span class="workshop-item-desc">${escapeHtml(u.description)}</span>
     `;
 
     const btn = document.createElement('button');
@@ -93,8 +98,8 @@ export function createWorkshopModal(callbacks = {}) {
     const info = document.createElement('div');
     info.className = 'workshop-item-info';
     info.innerHTML = `
-      <span class="workshop-item-name">${g.name}</span>
-      <span class="workshop-item-desc">${g.description}</span>
+      <span class="workshop-item-name">${escapeHtml(g.name)}</span>
+      <span class="workshop-item-desc">${escapeHtml(g.description)}</span>
     `;
 
     const btn = document.createElement('button');
@@ -121,14 +126,88 @@ export function createWorkshopModal(callbacks = {}) {
   content.appendChild(list);
   overlay.appendChild(content);
 
+  let previousFocus = null;
+
+  function isOpen() {
+    return overlay.style.display === 'flex';
+  }
+
+  function getFocusableElements() {
+    return Array.from(
+      overlay.querySelectorAll('button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])')
+    );
+  }
+
+  function closeModal() {
+    if (callbacks.onClose) {
+      callbacks.onClose();
+    } else {
+      hide();
+    }
+  }
+
+  function handleKeyDown(e) {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      e.stopPropagation();
+      closeModal();
+      return;
+    }
+    if (e.key === 'Tab') {
+      const focusable = getFocusableElements();
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey) {
+        if (active === first || !overlay.contains(active)) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (active === last || !overlay.contains(active)) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  }
+
+  function show() {
+    if (isOpen()) return;
+    if (typeof document !== 'undefined') {
+      previousFocus = document.activeElement;
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    overlay.style.display = 'flex';
+    if (callbacks.onVisibilityChange) callbacks.onVisibilityChange(true);
+    btnClose.focus();
+  }
+
+  function hide() {
+    const wasOpen = isOpen();
+    overlay.style.display = 'none';
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+    if (callbacks.onVisibilityChange) callbacks.onVisibilityChange(false);
+    if (wasOpen && previousFocus && typeof previousFocus.focus === 'function') {
+      if (typeof document === 'undefined' || document.contains(previousFocus)) {
+        previousFocus.focus();
+      }
+    }
+    previousFocus = null;
+  }
+
   btnClose.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (callbacks.onClose) callbacks.onClose();
+    closeModal();
   });
 
   overlay.addEventListener('click', (e) => {
-    if (e.target === overlay && callbacks.onClose) {
-      callbacks.onClose();
+    if (e.target === overlay) {
+      closeModal();
     }
   });
 
@@ -160,8 +239,8 @@ export function createWorkshopModal(callbacks = {}) {
   return {
     element: overlay,
     update,
-    show: () => { overlay.style.display = 'flex'; },
-    hide: () => { overlay.style.display = 'none'; },
-    isOpen: () => overlay.style.display === 'flex'
+    show,
+    hide,
+    isOpen
   };
 }

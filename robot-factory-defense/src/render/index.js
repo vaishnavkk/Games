@@ -3,7 +3,7 @@ import towersData from '../data/towers.json' with { type: 'json' };
 import enemiesData from '../data/enemies.json' with { type: 'json' };
 import { drawGridAndMap } from './grid.js';
 import { drawTowerIcon, drawEnemyIcon } from './icons.js';
-import { drawRangeCircle, createEffectsManager } from './effects.js';
+import { drawRangeCircle, createEffectsManager, isReducedMotion } from './effects.js';
 
 /**
  * Canvas2D Procedural Renderer for Robot Factory Defense.
@@ -83,7 +83,7 @@ export function createRenderer(canvas) {
     const now = performance.now();
     const dt = Math.min((now - lastTime) / 1000, 0.1);
     lastTime = now;
-    if (!snap.paused) {
+    if (!snap.paused && !isReducedMotion()) {
       totalAnimTime += dt * (snap.speed || 1);
     }
 
@@ -305,9 +305,12 @@ export function createRenderer(canvas) {
     effects.updateAndDraw(ctx, dt);
   }
 
-  function resize(width, height) {
-    canvas.width = width;
-    canvas.height = height;
+  function resize(cssWidth, cssHeight, dpr = (typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1)) {
+    const ratio = Math.max(1, Number.isFinite(dpr) ? dpr : 1);
+    const targetW = Math.max(16, Math.round(cssWidth * ratio));
+    const targetH = Math.max(9, Math.round(cssHeight * ratio));
+    if (canvas.width !== targetW) canvas.width = targetW;
+    if (canvas.height !== targetH) canvas.height = targetH;
   }
 
   function screenToCell(clientX, clientY) {
@@ -322,10 +325,11 @@ export function createRenderer(canvas) {
 
     const cols = mapData.grid.cols; // 16
     const rows = mapData.grid.rows; // 9
-    const cellSize = canvas.width / cols;
+    const cellSizeX = canvas.width / cols;
+    const cellSizeY = canvas.height / rows;
 
-    const col = Math.floor(canvasX / cellSize);
-    const row = Math.floor(canvasY / cellSize);
+    const col = Math.floor(canvasX / cellSizeX);
+    const row = Math.floor(canvasY / cellSizeY);
 
     if (col >= 0 && col < cols && row >= 0 && row < rows) {
       return { col, row };
@@ -339,8 +343,7 @@ export function createRenderer(canvas) {
     screenToCell,
     setSelectedCell: (cell) => { selectedCell = cell; },
     setSelectedTower: (tower) => { selectedTower = tower; },
-    setPreviewTowerType: (type) => { previewTowerType = type; },
-    effects,
-    getContext: () => ctx
+    setPreviewTowerType: (type) => { previewTowerType = type || 'pulse'; },
+    effects
   };
 }

@@ -30,6 +30,14 @@ export function createUI(container, callbacks = {}) {
   let selectedTower = null;
   let recordedEndGame = false;
 
+  const playArea = document.createElement('div');
+  playArea.className = 'play-area';
+  playArea.id = 'playArea';
+
+  const canvasStage = document.createElement('div');
+  canvasStage.className = 'canvas-stage';
+  canvasStage.id = 'canvasStage';
+
   // Sub-components
   const hud = createHUD({
     onStartWave: () => callbacks.onStartWave && callbacks.onStartWave(),
@@ -41,6 +49,8 @@ export function createUI(container, callbacks = {}) {
   const tipsBanner = createTipsBanner();
 
   const buildBar = createBuildBar({
+    getUpgradesConfig: callbacks.getUpgradesConfig,
+    onPreviewTower: (type) => callbacks.onPreviewTower && callbacks.onPreviewTower(type),
     onBuildTower: (type) => {
       if (selectedCell && callbacks.onBuild) {
         callbacks.onBuild(selectedCell, type);
@@ -50,6 +60,7 @@ export function createUI(container, callbacks = {}) {
   });
 
   const inspectCard = createInspectCard({
+    getUpgradesConfig: callbacks.getUpgradesConfig,
     onUpgradeTower: (towerId) => callbacks.onUpgrade && callbacks.onUpgrade(towerId),
     onSellTower: (towerId) => {
       if (callbacks.onSell) {
@@ -60,12 +71,33 @@ export function createUI(container, callbacks = {}) {
     onClose: () => clearSelection()
   });
 
+  playArea.appendChild(canvasStage);
+  playArea.appendChild(inspectCard.element);
+
+  const backgroundNodes = [hud.element, tipsBanner.element, playArea, buildBar.element];
+
+  function syncBackgroundInert() {
+    const titleVisible = screens.titleScreen.style.display !== 'none';
+    const endVisible = screens.endScreen.style.display !== 'none';
+    const isModalOpen = titleVisible || endVisible || workshop.isOpen();
+    for (const node of backgroundNodes) {
+      node.inert = isModalOpen;
+      if (isModalOpen) {
+        node.setAttribute('aria-hidden', 'true');
+      } else {
+        node.removeAttribute('aria-hidden');
+      }
+    }
+  }
+
   const workshop = createWorkshopModal({
     onBuyUpgrade: (id) => callbacks.onBuyUpgrade && callbacks.onBuyUpgrade(id),
-    onClose: () => workshop.hide()
+    onClose: () => workshop.hide(),
+    onVisibilityChange: () => syncBackgroundInert()
   });
 
   const screens = createScreens({
+    onScreenChange: () => syncBackgroundInert(),
     onStartGame: () => {
       if (callbacks.onStartGame) callbacks.onStartGame();
     },
@@ -81,12 +113,14 @@ export function createUI(container, callbacks = {}) {
     container.innerHTML = '';
     container.appendChild(hud.element);
     container.appendChild(tipsBanner.element);
+    container.appendChild(playArea);
     container.appendChild(buildBar.element);
-    container.appendChild(inspectCard.element);
     container.appendChild(workshop.element);
     container.appendChild(screens.titleScreen);
     container.appendChild(screens.endScreen);
   }
+
+  syncBackgroundInert();
 
   function clearSelection() {
     selectedCell = null;
@@ -127,11 +161,13 @@ export function createUI(container, callbacks = {}) {
       recordedEndGame = true;
       incrementWins();
       updateBestWave(snap.wave);
+      if (workshop.isOpen()) workshop.hide();
       screens.showVictory(snap);
       clearSelection();
     } else if (snap.waveState === 'lost' && !recordedEndGame) {
       recordedEndGame = true;
       updateBestWave(snap.wave);
+      if (workshop.isOpen()) workshop.hide();
       screens.showDefeat(snap);
       clearSelection();
     }
@@ -159,15 +195,9 @@ export function createUI(container, callbacks = {}) {
 
   return {
     renderHUD,
-    getSelectedCell: () => selectedCell,
     selectCell,
-    getSelectedTower: () => selectedTower,
     selectTower,
     clearSelection,
-    openWorkshop: () => workshop.show(),
-    closeWorkshop: () => workshop.hide(),
-    showTitle: () => screens.showTitleScreen(),
-    hideTitle: () => screens.hideTitleScreen(),
     callbacks
   };
 }

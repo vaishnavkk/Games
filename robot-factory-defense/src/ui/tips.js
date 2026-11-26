@@ -28,7 +28,7 @@ export function createTipsBanner(onDismiss) {
   dismissBtn.id = 'btnDismissTip';
   dismissBtn.setAttribute('data-testid', 'btn-dismiss-tip');
   dismissBtn.setAttribute('aria-label', 'Next Tip or Dismiss');
-  dismissBtn.innerHTML = '✕';
+  dismissBtn.textContent = '✕';
 
   dismissBtn.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -46,16 +46,6 @@ export function createTipsBanner(onDismiss) {
   banner.appendChild(dismissBtn);
 
   return {
-    element: banner,
-    nextTip: () => {
-      currentTipIndex = (currentTipIndex + 1) % FIRST_RUN_TIPS.length;
-      text.textContent = FIRST_RUN_TIPS[currentTipIndex];
-    },
-    hide: () => {
-      banner.style.display = 'none';
-    },
-    show: () => {
-      banner.style.display = 'flex';
-    }
+    element: banner
   };
 }

@@ -38,6 +38,10 @@ export function createEffectsManager() {
   const beams = [];
 
   function addBeam(x1, y1, x2, y2, color = '#00d2d3', width = 2, duration = 0.15) {
+    if (isReducedMotion()) {
+      beams.push({ x1, y1, x2, y2, color, width, life: 0.06, maxLife: 0.06 });
+      return;
+    }
     beams.push({ x1, y1, x2, y2, color, width, life: duration, maxLife: duration });
   }
 

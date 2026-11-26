@@ -1,4 +1,12 @@
 import towersData from '../data/towers.json' with { type: 'json' };
+import upgradesData from '../data/upgrades.json' with { type: 'json' };
+import { escapeHtml, getUpgradeEffectValue } from './utils.js';
+
+function formatBonusPercent(upgradesConfig, upgradeId, effectKey, fallbackMult) {
+  const mult = getUpgradeEffectValue(upgradesConfig, upgradeId, effectKey, fallbackMult);
+  const pct = Math.round((mult - 1) * 100);
+  return pct > 0 ? ` (+${pct}%)` : '';
+}
 
 /**
  * Inspect Card for viewing, upgrading, and selling placed towers.
@@ -55,7 +63,6 @@ export function createInspectCard(callbacks = {}) {
   btnClose.setAttribute('data-testid', 'btn-close-inspect');
   btnClose.setAttribute('aria-label', 'Close Inspect Panel');
   btnClose.textContent = 'CLOSE';
-  btnClose.style.marginTop = '4px';
 
   card.appendChild(header);
   card.appendChild(statsBox);
@@ -96,6 +103,8 @@ export function createInspectCard(callbacks = {}) {
     const def = towersData.towers[tower.type];
     if (!def) return;
 
+    const upgradesConfig = snap.upgradesConfig || callbacks.getUpgradesConfig?.() || upgradesData;
+
     title.textContent = def.name;
     lvlBadge.textContent = tower.type === 'fabricator' ? 'LVL 1' : `LVL ${tower.level} / 3`;
 
@@ -109,22 +118,29 @@ export function createInspectCard(callbacks = {}) {
         <div class="inspect-stat-row"><span>Limit:</span><span class="inspect-stat-val">Max 4 Active</span></div>
       `;
     } else {
-      const dmgBonus = snap.purchasedUpgrades.includes('hardened_rounds') ? ' (+15%)' : '';
-      const rngBonus = snap.purchasedUpgrades.includes('long_barrels') ? ' (+10%)' : '';
-      const frBonus = snap.purchasedUpgrades.includes('overclock') ? ' (+15%)' : '';
+      const purchased = snap.purchasedUpgrades || [];
+      const dmgBonus = purchased.includes('hardened_rounds')
+        ? formatBonusPercent(upgradesConfig, 'hardened_rounds', 'damageMultiplier', 1.1)
+        : '';
+      const rngBonus = purchased.includes('long_barrels')
+        ? formatBonusPercent(upgradesConfig, 'long_barrels', 'rangeMultiplier', 1.1)
+        : '';
+      const frBonus = purchased.includes('overclock')
+        ? formatBonusPercent(upgradesConfig, 'overclock', 'fireRateMultiplier', 1.1)
+        : '';
 
       statsHtml = `
-        <div class="inspect-stat-row"><span>Damage:</span><span class="inspect-stat-val">${lvlConfig.damage}${dmgBonus}</span></div>
-        <div class="inspect-stat-row"><span>Range:</span><span class="inspect-stat-val">${lvlConfig.range} cells${rngBonus}</span></div>
-        <div class="inspect-stat-row"><span>Fire Rate:</span><span class="inspect-stat-val">${lvlConfig.fireRate}/s${frBonus}</span></div>
+        <div class="inspect-stat-row"><span>Damage:</span><span class="inspect-stat-val">${escapeHtml(lvlConfig.damage)}${escapeHtml(dmgBonus)}</span></div>
+        <div class="inspect-stat-row"><span>Range:</span><span class="inspect-stat-val">${escapeHtml(lvlConfig.range)} cells${escapeHtml(rngBonus)}</span></div>
+        <div class="inspect-stat-row"><span>Fire Rate:</span><span class="inspect-stat-val">${escapeHtml(lvlConfig.fireRate)}/s${escapeHtml(frBonus)}</span></div>
       `;
 
       if (tower.type === 'coolant') {
-        statsHtml += `<div class="inspect-stat-row"><span>Slow:</span><span class="inspect-stat-val">50% for ${lvlConfig.slowDuration}s</span></div>`;
+        statsHtml += `<div class="inspect-stat-row"><span>Slow:</span><span class="inspect-stat-val">50% for ${escapeHtml(lvlConfig.slowDuration)}s</span></div>`;
       } else if (tower.type === 'arc') {
         statsHtml += `<div class="inspect-stat-row"><span>Chain:</span><span class="inspect-stat-val">3 targets (ignores armor)</span></div>`;
       } else if (tower.type === 'rocket') {
-        statsHtml += `<div class="inspect-stat-row"><span>Splash:</span><span class="inspect-stat-val">${lvlConfig.splashRadius} cells radius</span></div>`;
+        statsHtml += `<div class="inspect-stat-row"><span>Splash:</span><span class="inspect-stat-val">${escapeHtml(lvlConfig.splashRadius)} cells radius</span></div>`;
       }
     }
     statsBox.innerHTML = statsHtml;
@@ -135,8 +151,9 @@ export function createInspectCard(callbacks = {}) {
       btnUpgrade.textContent = 'MAX LEVEL';
     } else {
       let upCost = lvlConfig.upgradeCost;
-      if (snap.purchasedUpgrades.includes('fast_assembly')) {
-        upCost = Math.floor(upCost * 0.90);
+      if ((snap.purchasedUpgrades || []).includes('fast_assembly')) {
+        const discountRatio = getUpgradeEffectValue(upgradesConfig, 'fast_assembly', 'costDiscountRatio', 0.1);
+        upCost = Math.floor(upCost * (1 - discountRatio));
       }
       btnUpgrade.textContent = `UPGRADE (${upCost} Scrap)`;
       btnUpgrade.disabled = snap.scrap < upCost;
@@ -155,8 +172,6 @@ export function createInspectCard(callbacks = {}) {
     hide: () => {
       currentTowerId = null;
       card.style.display = 'none';
-    },
-    show: () => { card.style.display = 'flex'; },
-    getCurrentTowerId: () => currentTowerId
+    }
   };
 }

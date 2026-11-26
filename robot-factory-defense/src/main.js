@@ -23,6 +23,63 @@ let state = createGame();
 let renderer = null;
 let ui = null;
 let gameStarted = false;
+const enemyPosCache = new Map();
+
+function getEnemyCanvasCoords(pos, cellSize) {
+  const ex = pos.x <= mapData.grid.cols ? (pos.x + 0.5) * cellSize : pos.x;
+  const ey = pos.y <= mapData.grid.rows ? (pos.y + 0.5) * cellSize : pos.y;
+  return { ex, ey };
+}
+
+function processEvents(events) {
+  if (!renderer || !canvas || !events || events.length === 0) return;
+  const cellSize = canvas.width / mapData.grid.cols;
+
+  for (const ev of events) {
+    if (ev.type === 'hit') {
+      const tower = state.towers.find(t => t.id === ev.towerId);
+      const pos = enemyPosCache.get(ev.enemyId);
+      if (tower && pos) {
+        const tx = (tower.col + 0.5) * cellSize;
+        const ty = (tower.row + 0.5) * cellSize;
+        const { ex, ey } = getEnemyCanvasCoords(pos, cellSize);
+        if (tower.type === 'arc') {
+          renderer.effects.addBeam(tx, ty, ex, ey, '#a55eea', 2.5, 0.15);
+          renderer.effects.addSparks(ex, ey, '#d6a2e8', 3);
+        } else if (tower.type === 'coolant') {
+          renderer.effects.addBeam(tx, ty, ex, ey, '#48dbfb', 2, 0.12);
+          renderer.effects.addSparks(ex, ey, '#00d2d3', 3);
+        } else if (tower.type === 'rocket') {
+          renderer.effects.addExplosion(ex, ey, cellSize * 0.85, '#ff793f', 0.28);
+        } else {
+          renderer.effects.addBeam(tx, ty, ex, ey, '#00d2d3', 1.8, 0.1);
+          renderer.effects.addSparks(ex, ey, '#feca57', 3);
+        }
+      }
+    } else if (ev.type === 'killed') {
+      const pos = enemyPosCache.get(ev.enemyId);
+      if (pos) {
+        const { ex, ey } = getEnemyCanvasCoords(pos, cellSize);
+        renderer.effects.addExplosion(ex, ey, cellSize * 0.6, '#feca57', 0.25);
+      }
+    } else if (ev.type === 'leaked') {
+      const cx = (mapData.core.position.col + 0.5) * cellSize;
+      const cy = (mapData.core.position.row + 0.5) * cellSize;
+      renderer.effects.addExplosion(cx, cy, cellSize * 0.8, '#ff4757', 0.3);
+    } else if (ev.type === 'built' && ev.cell) {
+      const bx = (ev.cell.col + 0.5) * cellSize;
+      const by = (ev.cell.row + 0.5) * cellSize;
+      renderer.effects.addSparks(bx, by, '#2ed573', 4);
+    } else if (ev.type === 'upgraded') {
+      const tower = state.towers.find(t => t.id === ev.towerId);
+      if (tower) {
+        const ux = (tower.col + 0.5) * cellSize;
+        const uy = (tower.row + 0.5) * cellSize;
+        renderer.effects.addSparks(ux, uy, '#00d2d3', 5);
+      }
+    }
+  }
+}
 
 function onCanvasClick(e) {
   if (!renderer || !ui) return;
@@ -31,6 +88,7 @@ function onCanvasClick(e) {
     ui.clearSelection();
     renderer.setSelectedCell(null);
     renderer.setSelectedTower(null);
+    renderer.setPreviewTowerType('pulse');
     return;
   }
 
@@ -53,6 +111,7 @@ function onCanvasClick(e) {
     ui.clearSelection();
     renderer.setSelectedCell(null);
     renderer.setSelectedTower(null);
+    renderer.setPreviewTowerType('pulse');
   }
 }
 
@@ -64,6 +123,7 @@ function init() {
 
   if (uiRoot) {
     ui = createUI(uiRoot, {
+      getUpgradesConfig: () => state.config.upgrades,
       onStartWave: () => startWave(state),
       onToggleSpeed: () => setSpeed(state, state.speed === 1 ? 2 : 1),
       onTogglePause: () => togglePause(state),
@@ -74,6 +134,7 @@ function init() {
           if (renderer) {
             renderer.setSelectedCell(null);
             renderer.setSelectedTower(null);
+            renderer.setPreviewTowerType('pulse');
           }
         }
       },
@@ -87,23 +148,34 @@ function init() {
         resetGame();
       },
       onSelectCell: (cell) => {
-        if (renderer) renderer.setSelectedCell(cell);
+        if (renderer) {
+          renderer.setSelectedCell(cell);
+          if (!cell) renderer.setPreviewTowerType('pulse');
+        }
       },
       onSelectTower: (tower) => {
         if (renderer) renderer.setSelectedTower(tower);
+      },
+      onPreviewTower: (type) => {
+        if (renderer) renderer.setPreviewTowerType(type);
       }
     });
+
+    const canvasStage = document.getElementById('canvasStage');
+    if (canvasStage && canvas) {
+      canvasStage.appendChild(canvas);
+    }
   }
 
   // Resize handling
   function handleResize() {
     if (!canvas || !renderer) return;
-    const container = document.getElementById('gameContainer');
-    if (!container) return;
+    const stage = document.getElementById('canvasStage') || document.getElementById('gameContainer');
+    if (!stage) return;
 
-    const contW = container.clientWidth || window.innerWidth;
-    const contH = container.clientHeight || window.innerHeight;
-    const targetAspect = 16 / 9;
+    const contW = stage.clientWidth || window.innerWidth;
+    const contH = stage.clientHeight || window.innerHeight;
+    const targetAspect = mapData.grid.cols / mapData.grid.rows;
 
     let w = contW;
     let h = contW / targetAspect;
@@ -113,11 +185,19 @@ function init() {
       w = contH * targetAspect;
     }
 
-    canvas.style.width = `${Math.floor(w)}px`;
-    canvas.style.height = `${Math.floor(h)}px`;
+    const cssW = Math.max(16, Math.floor(w));
+    const cssH = Math.max(9, Math.floor(h));
+    canvas.style.width = `${cssW}px`;
+    canvas.style.height = `${cssH}px`;
+    renderer.resize(cssW, cssH, window.devicePixelRatio || 1);
   }
 
   window.addEventListener('resize', handleResize);
+  const canvasStage = document.getElementById('canvasStage');
+  if (canvasStage && typeof window.ResizeObserver === 'function') {
+    const observer = new window.ResizeObserver(() => handleResize());
+    observer.observe(canvasStage);
+  }
   handleResize();
 
   // Expose debug hook for QA automation
@@ -152,9 +232,13 @@ function init() {
 
 function resetGame() {
   state = createGame();
+  drainEvents(state);
+  enemyPosCache.clear();
   if (renderer) {
     renderer.setSelectedCell(null);
     renderer.setSelectedTower(null);
+    renderer.setPreviewTowerType('pulse');
+    renderer.effects.clear();
   }
   if (ui) {
     ui.clearSelection();
@@ -169,7 +253,20 @@ function gameLoop(time) {
 
   // Advance simulation if game has started
   if (gameStarted) {
+    for (const e of state.enemies) {
+      enemyPosCache.set(e.id, { x: e.x, y: e.y });
+    }
+    processEvents(drainEvents(state));
     step(state, dt);
+    for (const e of state.enemies) {
+      enemyPosCache.set(e.id, { x: e.x, y: e.y });
+    }
+    processEvents(drainEvents(state));
+
+    const aliveIds = new Set(state.enemies.map(e => e.id));
+    for (const id of enemyPosCache.keys()) {
+      if (!aliveIds.has(id)) enemyPosCache.delete(id);
+    }
   }
 
   const snap = snapshot(state);
