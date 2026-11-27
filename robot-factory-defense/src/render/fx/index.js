@@ -94,6 +94,15 @@ export function createFxSystem() {
   let coreFlashTimer = 0;
   let shakeTimer = 0;
   let shakeMagnitude = 0;
+  let rocketSmokeAccum = 0;
+  let cachedFontCs = 0;
+  let cachedFontStr = '';
+
+  function removeAt(arr, i) {
+    const last = arr.length - 1;
+    if (i !== last) arr[i] = arr[last];
+    arr.pop();
+  }
 
   function spawnParticle(x, y, vx, vy, color, life, size, drag = 0.94) {
     if (particles.length >= MAX_PARTICLES) return false;
@@ -197,6 +206,7 @@ export function createFxSystem() {
     coreFlashTimer = 0;
     shakeTimer = 0;
     shakeMagnitude = 0;
+    rocketSmokeAccum = 0;
   }
 
   function handleEvents(events, state, cellSize, enemyPosCache) {
@@ -329,23 +339,29 @@ export function createFxSystem() {
     const cs = Number.isFinite(cellSize) && cellSize > 0 ? cellSize : 60;
     const reduced = isReducedMotion();
 
-    // Emit smoke trail particles for active in-flight rockets
+    // Emit smoke trail particles for active in-flight rockets (throttled for 4x CPU budget)
     if (!reduced && Array.isArray(state?.projectiles) && state.projectiles.length > 0) {
-      for (let i = 0; i < state.projectiles.length; i++) {
-        const proj = state.projectiles[i];
-        if (proj.type === 'rocket' && particles.length < MAX_PARTICLES) {
-          const px = toPixelCoords(proj, cs, state);
-          if (px) {
-            spawnParticle(
-              px.x + (Math.random() - 0.5) * 3,
-              px.y + (Math.random() - 0.5) * 3,
-              (Math.random() - 0.5) * 14,
-              (Math.random() - 0.5) * 14,
-              '#95a5a6',
-              0.24,
-              2.8,
-              0.92
-            );
+      rocketSmokeAccum += dt;
+      if (rocketSmokeAccum >= 0.04) {
+        rocketSmokeAccum = 0;
+        let emitted = 0;
+        for (let i = 0; i < state.projectiles.length && emitted < 8; i++) {
+          const proj = state.projectiles[i];
+          if (proj.type === 'rocket' && particles.length < MAX_PARTICLES) {
+            const px = toPixelCoords(proj, cs, state);
+            if (px) {
+              spawnParticle(
+                px.x + (Math.random() - 0.5) * 3,
+                px.y + (Math.random() - 0.5) * 3,
+                (Math.random() - 0.5) * 14,
+                (Math.random() - 0.5) * 14,
+                '#95a5a6',
+                0.24,
+                2.8,
+                0.92
+              );
+              emitted++;
+            }
           }
         }
       }
@@ -356,7 +372,7 @@ export function createFxSystem() {
       const p = particles[i];
       p.life -= dt;
       if (p.life <= 0) {
-        particles.splice(i, 1);
+        removeAt(particles, i);
         continue;
       }
       p.x += p.vx * dt;
@@ -369,7 +385,7 @@ export function createFxSystem() {
     for (let i = bolts.length - 1; i >= 0; i--) {
       bolts[i].life -= dt;
       if (bolts[i].life <= 0) {
-        bolts.splice(i, 1);
+        removeAt(bolts, i);
       }
     }
 
@@ -377,7 +393,7 @@ export function createFxSystem() {
     for (let i = beams.length - 1; i >= 0; i--) {
       beams[i].life -= dt;
       if (beams[i].life <= 0) {
-        beams.splice(i, 1);
+        removeAt(beams, i);
       }
     }
 
@@ -385,7 +401,7 @@ export function createFxSystem() {
     for (let i = rings.length - 1; i >= 0; i--) {
       rings[i].life -= dt;
       if (rings[i].life <= 0) {
-        rings.splice(i, 1);
+        removeAt(rings, i);
       }
     }
 
@@ -394,7 +410,7 @@ export function createFxSystem() {
       const ft = floatingTexts[i];
       ft.life -= dt;
       if (ft.life <= 0) {
-        floatingTexts.splice(i, 1);
+        removeAt(floatingTexts, i);
         continue;
       }
       ft.y += ft.vy * dt;
@@ -482,19 +498,26 @@ export function createFxSystem() {
       ctx.fill();
     }
 
-    // 4. Particles
+    // 4. Particles (fillRect avoids 300x beginPath+arc overhead per frame)
+    let lastColor = '';
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
+      const s = p.size;
       ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fill();
+      if (p.color !== lastColor) {
+        lastColor = p.color;
+        ctx.fillStyle = lastColor;
+      }
+      ctx.fillRect(p.x - s, p.y - s, s * 2, s * 2);
     }
 
     // 5. Floating "+N" Scrap Texts
     if (floatingTexts.length > 0) {
-      ctx.font = `bold ${Math.max(11, Math.round(cs * 0.22))}px "Space Mono", monospace`;
+      if (cachedFontCs !== cs) {
+        cachedFontCs = cs;
+        cachedFontStr = `bold ${Math.max(11, Math.round(cs * 0.22))}px "Space Mono", monospace`;
+      }
+      ctx.font = cachedFontStr;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       for (let i = 0; i < floatingTexts.length; i++) {

@@ -19,6 +19,7 @@ function createMockCtx() {
     arc(x, y, r) { calls.push(['arc', x, y, r]); },
     stroke() { calls.push('stroke'); },
     fill() { calls.push('fill'); },
+    fillRect(x, y, w, h) { calls.push(['fillRect', x, y, w, h]); },
     fillText(text, x, y) { calls.push(['fillText', text, x, y]); }
   };
 }
