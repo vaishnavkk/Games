@@ -24,24 +24,40 @@ function drawPolygon(ctx, x, y, radius, sides, rotation = 0) {
  */
 const enemyCache = {};
 
-function createFlashVariant(sourceCanvas) {
-  const flash = document.createElement('canvas');
-  flash.width = sourceCanvas.width;
-  flash.height = sourceCanvas.height;
-  const fctx = flash.getContext('2d');
-  fctx.drawImage(sourceCanvas, 0, 0);
-  fctx.globalCompositeOperation = 'source-atop';
-  fctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
-  fctx.fillRect(0, 0, flash.width, flash.height);
-  return flash;
+function createTintVariant(sourceCanvas, fillStyle) {
+  const tinted = document.createElement('canvas');
+  tinted.width = sourceCanvas.width;
+  tinted.height = sourceCanvas.height;
+  const tctx = tinted.getContext('2d');
+  tctx.drawImage(sourceCanvas, 0, 0);
+  tctx.globalCompositeOperation = 'source-atop';
+  tctx.fillStyle = fillStyle;
+  tctx.fillRect(0, 0, tinted.width, tinted.height);
+  return tinted;
 }
 
-function getEnemySprite(type, size) {
+/**
+ * Draw a small 6-spoke procedural snowflake pip centered at (x, y).
+ */
+export function drawSnowflakePip(ctx, x, y, radius = 4.5) {
+  ctx.beginPath();
+  for (let i = 0; i < 3; i++) {
+    const a = (i * Math.PI) / 3;
+    const dx = Math.cos(a) * radius;
+    const dy = Math.sin(a) * radius;
+    ctx.moveTo(x - dx, y - dy);
+    ctx.lineTo(x + dx, y + dy);
+  }
+  ctx.stroke();
+}
+
+export function getEnemySprite(type, size) {
   const key = `${type}_${size}`;
   if (enemyCache[key]) return enemyCache[key];
 
+  const isBoss = type === 'iron_sentry' || type === 'mega_mixer';
   const canvas = document.createElement('canvas');
-  const dim = Math.ceil(size * 1.9);
+  const dim = Math.ceil(size * (isBoss ? 2.4 : 1.9));
   canvas.width = dim;
   canvas.height = dim;
   const ctx = canvas.getContext('2d');
@@ -102,39 +118,47 @@ function getEnemySprite(type, size) {
     }
 
     case 'spark_drone': {
-      // Shape: 4-pointed Cross / Quad-rotor (#f9ca24) facing +X
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = '#f9ca24';
-      ctx.fillStyle = '#332b0e';
+      // Shape: Diagonal X-frame Quad-Rotor Drone (#f9ca24) facing +X
+      const armReach = r * 0.88;
+      const rotorR = r * 0.3;
 
-      const armW = r * 0.34;
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = '#f9ca24';
       ctx.beginPath();
-      ctx.moveTo(cx - armW, cy - r);
-      ctx.lineTo(cx + armW, cy - r);
-      ctx.lineTo(cx + armW, cy - armW);
-      ctx.lineTo(cx + r, cy - armW);
-      ctx.lineTo(cx + r, cy + armW);
-      ctx.lineTo(cx + armW, cy + armW);
-      ctx.lineTo(cx + armW, cy + r);
-      ctx.lineTo(cx - armW, cy + r);
-      ctx.lineTo(cx - armW, cy + armW);
-      ctx.lineTo(cx - r, cy + armW);
-      ctx.lineTo(cx - r, cy - armW);
-      ctx.lineTo(cx - armW, cy - armW);
-      ctx.closePath();
+      ctx.moveTo(cx - armReach, cy - armReach);
+      ctx.lineTo(cx + armReach, cy + armReach);
+      ctx.moveTo(cx - armReach, cy + armReach);
+      ctx.lineTo(cx + armReach, cy - armReach);
+      ctx.stroke();
+
+      // 4 rotor rings at diagonal arm tips
+      const rotors = [
+        [-armReach, -armReach],
+        [armReach, -armReach],
+        [-armReach, armReach],
+        [armReach, armReach]
+      ];
+      ctx.fillStyle = '#332b0e';
+      ctx.lineWidth = 1.75;
+      for (let i = 0; i < rotors.length; i++) {
+        ctx.beginPath();
+        ctx.arc(cx + rotors[i][0], cy + rotors[i][1], rotorR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // Central fuselage pod + forward spark
+      ctx.fillStyle = '#332b0e';
+      ctx.strokeStyle = '#fff200';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 0.42, 0, Math.PI * 2);
       ctx.fill();
       ctx.stroke();
 
-      // Forward nose spark
       ctx.beginPath();
-      ctx.arc(cx + r * 0.45, cy, 2.5, 0, Math.PI * 2);
+      ctx.arc(cx + r * 0.25, cy, 2.5, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
-      ctx.fill();
-
-      // Central core dot
-      ctx.beginPath();
-      ctx.arc(cx, cy, 3, 0, Math.PI * 2);
-      ctx.fillStyle = '#f9ca24';
       ctx.fill();
       break;
     }
@@ -166,34 +190,44 @@ function getEnemySprite(type, size) {
     }
 
     case 'iron_sentry': {
-      // Shape: Large Octagon Mini-Boss (#6ab04c) facing +X
-      const bossR = r * 1.45;
-      ctx.lineWidth = 3;
+      // Shape: Heavy Armored Octagon Siege Mini-Boss (#6ab04c) facing +X
+      const bossR = r * 1.85;
+      ctx.lineWidth = 3.5;
       ctx.strokeStyle = '#6ab04c';
       ctx.fillStyle = '#162913';
       drawPolygon(ctx, cx, cy, bossR, 8);
       ctx.fill();
       ctx.stroke();
 
-      ctx.lineWidth = 1.75;
+      // Angled shoulder armor plates
+      ctx.fillStyle = '#24421f';
       ctx.strokeStyle = '#badc58';
-      drawPolygon(ctx, cx, cy, bossR * 0.65, 8);
+      ctx.lineWidth = 2;
+      drawPolygon(ctx, cx, cy, bossR * 0.68, 8);
+      ctx.fill();
       ctx.stroke();
 
-      // Forward siege visor
+      // Twin forward siege cannons (+X)
       ctx.fillStyle = '#badc58';
-      ctx.fillRect(cx + bossR * 0.35, cy - bossR * 0.28, bossR * 0.45, bossR * 0.56);
+      ctx.fillRect(cx + bossR * 0.45, cy - bossR * 0.34, bossR * 0.52, bossR * 0.18);
+      ctx.fillRect(cx + bossR * 0.45, cy + bossR * 0.16, bossR * 0.52, bossR * 0.18);
+
+      // Central reactor core
+      ctx.beginPath();
+      ctx.arc(cx, cy, bossR * 0.24, 0, Math.PI * 2);
+      ctx.fillStyle = '#badc58';
+      ctx.fill();
       break;
     }
 
     case 'mega_mixer': {
-      // Shape: Colossal Spiked Cog Boss (#c0392b) facing +X
-      const bossR = r * 1.65;
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = '#c0392b';
+      // Shape: Colossal 10-Tooth Spiked Saw-Cog Boss (#c0392b) facing +X
+      const bossR = r * 2.15;
+      ctx.lineWidth = 3.5;
+      ctx.strokeStyle = '#ff4757';
       ctx.fillStyle = '#360909';
 
-      const spikes = 8;
+      const spikes = 10;
       ctx.beginPath();
       for (let i = 0; i < spikes; i++) {
         const a1 = (i * 2 * Math.PI) / spikes;
@@ -205,12 +239,27 @@ function getEnemySprite(type, size) {
       ctx.fill();
       ctx.stroke();
 
+      // Heavy inner armor ring
       ctx.beginPath();
-      ctx.arc(cx, cy, bossR * 0.36, 0, Math.PI * 2);
-      ctx.fillStyle = '#eb4d4b';
+      ctx.arc(cx, cy, bossR * 0.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#521010';
       ctx.fill();
       ctx.strokeStyle = '#ff7979';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Twin forward grinder mandibles (+X)
+      ctx.fillStyle = '#feca57';
+      ctx.fillRect(cx + bossR * 0.48, cy - bossR * 0.28, bossR * 0.48, bossR * 0.16);
+      ctx.fillRect(cx + bossR * 0.48, cy + bossR * 0.12, bossR * 0.48, bossR * 0.16);
+
+      // Glowing molten core
+      ctx.beginPath();
+      ctx.arc(cx, cy, bossR * 0.24, 0, Math.PI * 2);
+      ctx.fillStyle = '#ff6b6b';
+      ctx.fill();
+      ctx.strokeStyle = '#feca57';
+      ctx.lineWidth = 2;
       ctx.stroke();
       break;
     }
@@ -225,8 +274,9 @@ function getEnemySprite(type, size) {
     }
   }
 
-  const flashCanvas = createFlashVariant(canvas);
-  enemyCache[key] = { canvas, flashCanvas, dim, offset: dim / 2 };
+  const flashCanvas = createTintVariant(canvas, 'rgba(255, 255, 255, 0.72)');
+  const slowCanvas = createTintVariant(canvas, 'rgba(72, 219, 251, 0.45)');
+  enemyCache[key] = { canvas, flashCanvas, slowCanvas, dim, offset: dim / 2 };
   return enemyCache[key];
 }
 
@@ -237,7 +287,8 @@ export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio = 1, slowed = fals
   const type = enemy.type || 'glitchbot';
   const sprite = getEnemySprite(type, size);
   const { angle = 0, bobOffset = 0, wobble = 0, hitFlash = false } = options;
-  const img = hitFlash ? sprite.flashCanvas : sprite.canvas;
+  const isSlowed = slowed || Boolean(options.slowed) || (enemy.slowTimer > 0);
+  const img = hitFlash ? sprite.flashCanvas : (isSlowed ? sprite.slowCanvas : sprite.canvas);
 
   if (angle !== 0 || bobOffset !== 0 || wobble !== 0) {
     ctx.save();
@@ -249,14 +300,19 @@ export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio = 1, slowed = fals
     ctx.drawImage(img, x - sprite.offset, y - sprite.offset);
   }
 
-  // Slowed Frost Ring
+  // Standalone Slowed Frost Ring + Snowflake Pip
   if (slowed) {
-    const r = size * 0.38 * (enemy.isBoss ? 1.45 : 1);
+    const r = size * 0.38 * (enemy.isBoss ? 1.85 : 1);
+    const frostRadius = r * 1.3;
     ctx.strokeStyle = '#00d2d3';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(x, y, r * 1.3, 0, Math.PI * 2);
+    ctx.arc(x, y, frostRadius, 0, Math.PI * 2);
     ctx.stroke();
+
+    ctx.strokeStyle = '#dff9fb';
+    ctx.lineWidth = 1.5;
+    drawSnowflakePip(ctx, x + frostRadius * 0.72, y - frostRadius * 0.72, Math.max(4, size * 0.08));
   }
 
   // Health Bar (only when standalone drawing is requested and damaged)

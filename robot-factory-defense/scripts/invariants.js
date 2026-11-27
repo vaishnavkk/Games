@@ -15,6 +15,7 @@ const VIEWPORTS = [
   { name: '390x844 (iPhone 12/13)', width: 390, height: 844 },
   { name: '412x915 (Pixel 7)', width: 412, height: 915 },
   { name: '568x320 (Mobile Landscape)', width: 568, height: 320 },
+  { name: '844x390 (iPhone 12/13 Landscape)', width: 844, height: 390 },
   { name: '768x1024 (iPad Portrait)', width: 768, height: 1024 },
   { name: '1024x768 (iPad Landscape)', width: 1024, height: 768 },
   { name: '1440x900 (Desktop HD)', width: 1440, height: 900 }
@@ -134,6 +135,38 @@ async function auditDomInvariants(page, vp, stateLabel) {
       }
     }
 
+    // Check next-wave preview icon sizes (>= 16px) and count label font sizes (>= 14px)
+    const nextWaveIcons = Array.from(document.querySelectorAll('#hudNextWaveList .hud-next-wave-item svg'));
+    for (const svg of nextWaveIcons) {
+      const style = window.getComputedStyle(svg);
+      if (style.display === 'none' || style.visibility === 'hidden') continue;
+      if (svg.closest('[inert]') || svg.closest('[style*="display: none"]')) continue;
+      const r = svg.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) continue;
+      if (r.width < 15.5 || r.height < 15.5) {
+        issues.push({
+          type: 'next_preview_icon_too_small',
+          state: label,
+          msg: `[${label}] Next-wave icon is ${r.width.toFixed(1)}x${r.height.toFixed(1)}px (need >= 16x16px)`
+        });
+      }
+    }
+
+    const nextWaveCounts = Array.from(document.querySelectorAll('#hudNextWaveList .hud-next-wave-count'));
+    for (const countEl of nextWaveCounts) {
+      const style = window.getComputedStyle(countEl);
+      if (style.display === 'none' || style.visibility === 'hidden') continue;
+      if (countEl.closest('[inert]') || countEl.closest('[style*="display: none"]')) continue;
+      const fs = parseFloat(style.fontSize);
+      if (fs < 13.9) {
+        issues.push({
+          type: 'next_preview_font_too_small',
+          state: label,
+          msg: `[${label}] Next-wave count font-size is ${fs}px (need >= 14px)`
+        });
+      }
+    }
+
     return issues;
   }, vp, stateLabel);
 }
@@ -160,6 +193,38 @@ async function checkNonOverlappingRects(page, vp, label, pairs) {
         });
       }
     }
+    // Check next-wave preview icon sizes (>= 16px) and count label font sizes (>= 14px)
+    const nextWaveIcons = Array.from(document.querySelectorAll('#hudNextWaveList .hud-next-wave-item svg'));
+    for (const svg of nextWaveIcons) {
+      const style = window.getComputedStyle(svg);
+      if (style.display === 'none' || style.visibility === 'hidden') continue;
+      if (svg.closest('[inert]') || svg.closest('[style*="display: none"]')) continue;
+      const r = svg.getBoundingClientRect();
+      if (r.width === 0 && r.height === 0) continue;
+      if (r.width < 15.5 || r.height < 15.5) {
+        issues.push({
+          type: 'next_preview_icon_too_small',
+          state: label,
+          msg: `[${label}] Next-wave icon is ${r.width.toFixed(1)}x${r.height.toFixed(1)}px (need >= 16x16px)`
+        });
+      }
+    }
+
+    const nextWaveCounts = Array.from(document.querySelectorAll('#hudNextWaveList .hud-next-wave-count'));
+    for (const countEl of nextWaveCounts) {
+      const style = window.getComputedStyle(countEl);
+      if (style.display === 'none' || style.visibility === 'hidden') continue;
+      if (countEl.closest('[inert]') || countEl.closest('[style*="display: none"]')) continue;
+      const fs = parseFloat(style.fontSize);
+      if (fs < 13.9) {
+        issues.push({
+          type: 'next_preview_font_too_small',
+          state: label,
+          msg: `[${label}] Next-wave count font-size is ${fs}px (need >= 14px)`
+        });
+      }
+    }
+
     return issues;
   }, vp, label, pairs);
 }
@@ -262,6 +327,64 @@ export async function runInvariantsCheck(options = {}) {
         }
       });
       await new Promise(r => setTimeout(r, 120));
+
+      // Verify & dismiss portrait rotate overlay if visible on narrow portrait
+      const rotateCheck = await page.evaluate(() => {
+        const overlay = document.getElementById('rotateOverlay');
+        if (!overlay) return { present: false, visible: false };
+        return { present: true, visible: window.getComputedStyle(overlay).display !== 'none' };
+      });
+      if (rotateCheck.visible) {
+        violations.push(
+          ...(await auditDomInvariants(page, vp, 'rotateOverlay')).map(iss => ({ viewport: vp.name, ...iss }))
+        );
+        await page.click('#btnContinuePortrait');
+        await new Promise(r => setTimeout(r, 80));
+        const stillVisible = await page.evaluate(() => {
+          const overlay = document.getElementById('rotateOverlay');
+          return overlay && window.getComputedStyle(overlay).display !== 'none';
+        });
+        if (stillVisible) {
+          violations.push({
+            viewport: vp.name,
+            type: 'rotate_overlay_not_dismissed',
+            state: 'gameplay',
+            msg: `[gameplay] Clicking #btnContinuePortrait did not dismiss #rotateOverlay at ${vp.name}`
+          });
+        }
+      }
+
+      // Check grid cell tap area on landscape phone/desktop & log cell size
+      const gridCellMetrics = await page.evaluate((vpInfo) => {
+        const canvas = document.getElementById('gameCanvas');
+        if (!canvas) return null;
+        const r = canvas.getBoundingClientRect();
+        return {
+          cellW: r.width / 16,
+          cellH: r.height / 9,
+          canvasW: r.width,
+          canvasH: r.height,
+          isLandscape: vpInfo.width > vpInfo.height
+        };
+      }, vp);
+
+      if (gridCellMetrics) {
+        if (verbose && (vp.width === 844 && vp.height === 390 || vp.width === 390 && vp.height === 844)) {
+          console.log(`[invariants] Measured cell size at ${vp.width}x${vp.height}: ${gridCellMetrics.cellW.toFixed(2)}x${gridCellMetrics.cellH.toFixed(2)}px`);
+        }
+        if (gridCellMetrics.isLandscape) {
+          const isDesktop = vp.width >= 1024 && vp.height >= 768;
+          const minCellPx = isDesktop ? 48 : 24;
+          if (gridCellMetrics.cellW < minCellPx || gridCellMetrics.cellH < minCellPx) {
+            violations.push({
+              viewport: vp.name,
+              type: 'grid_cell_too_small',
+              state: 'gameplay',
+              msg: `[gameplay] Grid cell ${gridCellMetrics.cellW.toFixed(1)}x${gridCellMetrics.cellH.toFixed(1)}px < ${minCellPx}px at ${vp.name}`
+            });
+          }
+        }
+      }
 
       // 1. Live gameplay HUD + Canvas view
       violations.push(

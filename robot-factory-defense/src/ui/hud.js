@@ -153,7 +153,7 @@ export function createHUD(callbacks = {}) {
     for (const [type, count] of counts.entries()) {
       const name = enemiesConfig?.enemies?.[type]?.name || type;
       items.push(
-        `<span class="hud-next-wave-item" title="${count}x ${name}">${getEnemySvg(type, enemiesConfig)}<span>${count}</span></span>`
+        `<span class="hud-next-wave-item" title="${count}x ${name}">${getEnemySvg(type, enemiesConfig)}<span class="hud-next-wave-count">${count}</span></span>`
       );
     }
     nextWaveListEl.innerHTML = items.join('');

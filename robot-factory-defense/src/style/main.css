@@ -266,7 +266,7 @@ html, body {
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-main);
   white-space: nowrap;
@@ -279,13 +279,22 @@ html, body {
 .hud-next-wave-item {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
   color: var(--text-main);
+}
+
+.hud-next-wave-count {
+  font-size: 14px;
+  line-height: 1;
 }
 
 .hud-next-wave-item svg {
   display: block;
   flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
 }
 
 /* Wave Banner */
@@ -611,9 +620,11 @@ html, body {
   border-radius: 8px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
   width: 100%;
-  max-width: 720px;
+  max-width: min(720px, calc(100vw - 24px));
+  min-width: 0;
   max-height: calc(100vh - 24px);
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   padding: 18px 20px;
@@ -829,6 +840,57 @@ html, body {
   line-height: 1.4;
 }
 
+/* Portrait Rotate Overlay */
+.rotate-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(9, 14, 22, 0.94);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 120;
+  pointer-events: auto;
+}
+
+.rotate-overlay-card {
+  background: var(--bg-panel);
+  border: 2px solid var(--border-steel);
+  border-radius: 8px;
+  padding: 22px 20px;
+  max-width: 340px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8);
+}
+
+.rotate-icon {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--accent-cyan);
+}
+
+.rotate-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.rotate-subtitle {
+  font-size: 13px;
+  color: #c8d6e5;
+  line-height: 1.4;
+}
+
 /* Reduced Motion Mode */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -871,13 +933,13 @@ html, body {
   }
 
   .hud-next-wave-list {
-    font-size: 10px;
-    gap: 3px;
+    font-size: 14px;
+    gap: 4px;
   }
 
   .hud-next-wave-item svg {
-    width: 11px;
-    height: 11px;
+    width: 16px;
+    height: 16px;
   }
 
   .wave-banner {
@@ -985,13 +1047,13 @@ html, body {
   }
 
   .hud-next-wave-list {
-    font-size: 10px;
-    gap: 3px;
+    font-size: 14px;
+    gap: 4px;
   }
 
   .hud-next-wave-item svg {
-    width: 11px;
-    height: 11px;
+    width: 16px;
+    height: 16px;
   }
 
   .btn {
@@ -1063,5 +1125,12 @@ html, body {
 
   .screen-content {
     gap: 8px;
+  }
+}
+
+@media (max-height: 450px) and (max-width: 700px) {
+  .hud-bar {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
