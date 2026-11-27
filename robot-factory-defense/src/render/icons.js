@@ -19,42 +19,56 @@ function drawPolygon(ctx, x, y, radius, sides, rotation = 0) {
 }
 
 /**
- * Procedural Enemy Sprite Caches (Generated purely in code with Canvas primitives)
+ * Procedural Enemy Sprite Caches (Generated purely in code with Canvas primitives).
+ * All sprites face +X (angle = 0) so rotating by travel angle points them forward.
  */
 const enemyCache = {};
+
+function createFlashVariant(sourceCanvas) {
+  const flash = document.createElement('canvas');
+  flash.width = sourceCanvas.width;
+  flash.height = sourceCanvas.height;
+  const fctx = flash.getContext('2d');
+  fctx.drawImage(sourceCanvas, 0, 0);
+  fctx.globalCompositeOperation = 'source-atop';
+  fctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
+  fctx.fillRect(0, 0, flash.width, flash.height);
+  return flash;
+}
 
 function getEnemySprite(type, size) {
   const key = `${type}_${size}`;
   if (enemyCache[key]) return enemyCache[key];
 
   const canvas = document.createElement('canvas');
-  const dim = Math.ceil(size * 1.6);
+  const dim = Math.ceil(size * 1.9);
   canvas.width = dim;
   canvas.height = dim;
   const ctx = canvas.getContext('2d');
   const cx = dim / 2;
   const cy = dim / 2;
-  const r = size * 0.38;
+  const r = size * 0.36;
 
   switch (type) {
     case 'glitchbot': {
-      // Shape: Diamond (#e056fd)
+      // Shape: Sleek Arrowhead / Diamond (#e056fd) facing +X
       ctx.lineWidth = 2;
       ctx.strokeStyle = '#e056fd';
       ctx.fillStyle = '#2e1236';
       ctx.beginPath();
-      ctx.moveTo(cx, cy - r);
-      ctx.lineTo(cx + r, cy);
-      ctx.lineTo(cx, cy + r);
-      ctx.lineTo(cx - r, cy);
+      ctx.moveTo(cx + r * 1.15, cy);
+      ctx.lineTo(cx - r * 0.2, cy - r * 0.85);
+      ctx.lineTo(cx - r * 0.9, cy);
+      ctx.lineTo(cx - r * 0.2, cy + r * 0.85);
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
-      // Slit eye
+      // Forward visor slit
       ctx.beginPath();
-      ctx.moveTo(cx - r * 0.45, cy);
-      ctx.lineTo(cx + r * 0.45, cy);
+      ctx.moveTo(cx + r * 0.15, cy - r * 0.35);
+      ctx.lineTo(cx + r * 0.65, cy);
+      ctx.lineTo(cx + r * 0.15, cy + r * 0.35);
       ctx.strokeStyle = '#ffffff';
       ctx.lineWidth = 2;
       ctx.stroke();
@@ -62,35 +76,38 @@ function getEnemySprite(type, size) {
     }
 
     case 'rust_walker': {
-      // Shape: Square (#f0932b)
+      // Shape: Industrial Square Chassis (#f0932b) facing +X
       ctx.lineWidth = 2;
       ctx.strokeStyle = '#f0932b';
       ctx.fillStyle = '#362110';
-      const half = r * 0.75;
+      const half = r * 0.78;
       ctx.fillRect(cx - half, cy - half, half * 2, half * 2);
       ctx.strokeRect(cx - half, cy - half, half * 2, half * 2);
 
-      // Mechanical grill visor
+      // Forward grill visor on +X face
       ctx.strokeStyle = '#ffa801';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.75;
       ctx.beginPath();
-      ctx.moveTo(cx - 4, cy - half * 0.6);
-      ctx.lineTo(cx - 4, cy + half * 0.6);
-      ctx.moveTo(cx, cy - half * 0.6);
-      ctx.lineTo(cx, cy + half * 0.6);
-      ctx.moveTo(cx + 4, cy - half * 0.6);
-      ctx.lineTo(cx + 4, cy + half * 0.6);
+      ctx.moveTo(cx + half * 0.35, cy - half * 0.55);
+      ctx.lineTo(cx + half * 0.35, cy + half * 0.55);
+      ctx.moveTo(cx + half * 0.65, cy - half * 0.45);
+      ctx.lineTo(cx + half * 0.65, cy + half * 0.45);
       ctx.stroke();
+
+      // Shoulder rivets
+      ctx.fillStyle = '#f0932b';
+      ctx.fillRect(cx - half * 0.7, cy - half * 0.7, 3, 3);
+      ctx.fillRect(cx - half * 0.7, cy + half * 0.7 - 3, 3, 3);
       break;
     }
 
     case 'spark_drone': {
-      // Shape: 4-pointed Cross (#f9ca24)
+      // Shape: 4-pointed Cross / Quad-rotor (#f9ca24) facing +X
       ctx.lineWidth = 2;
       ctx.strokeStyle = '#f9ca24';
       ctx.fillStyle = '#332b0e';
 
-      const armW = r * 0.35;
+      const armW = r * 0.34;
       ctx.beginPath();
       ctx.moveTo(cx - armW, cy - r);
       ctx.lineTo(cx + armW, cy - r);
@@ -108,38 +125,49 @@ function getEnemySprite(type, size) {
       ctx.fill();
       ctx.stroke();
 
+      // Forward nose spark
+      ctx.beginPath();
+      ctx.arc(cx + r * 0.45, cy, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+
       // Central core dot
       ctx.beginPath();
       ctx.arc(cx, cy, 3, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#f9ca24';
       ctx.fill();
       break;
     }
 
     case 'crusher_tank': {
-      // Shape: Wide Rectangle Chassis (#eb4d4b)
-      const w = r * 1.35;
-      const h = r * 0.85;
+      // Shape: Heavy Rectangular Tank (#eb4d4b) with top/bottom treads facing +X
+      const w = r * 1.15;
+      const h = r * 0.78;
+      // Dual horizontal treads (top & bottom)
+      ctx.fillStyle = '#1a0808';
+      ctx.strokeStyle = '#ff7979';
+      ctx.lineWidth = 1.5;
+      ctx.fillRect(cx - w, cy - h - 4, w * 2, 4);
+      ctx.strokeRect(cx - w, cy - h - 4, w * 2, 4);
+      ctx.fillRect(cx - w, cy + h, w * 2, 4);
+      ctx.strokeRect(cx - w, cy + h, w * 2, 4);
+
+      // Armored hull
       ctx.lineWidth = 2;
       ctx.strokeStyle = '#eb4d4b';
       ctx.fillStyle = '#361111';
       ctx.fillRect(cx - w, cy - h, w * 2, h * 2);
       ctx.strokeRect(cx - w, cy - h, w * 2, h * 2);
 
-      // Dual treads
-      ctx.fillStyle = '#1a0808';
-      ctx.strokeStyle = '#ff7979';
-      ctx.lineWidth = 1.5;
-      ctx.fillRect(cx - w - 3, cy - h, 3, h * 2);
-      ctx.strokeRect(cx - w - 3, cy - h, 3, h * 2);
-      ctx.fillRect(cx + w, cy - h, 3, h * 2);
-      ctx.strokeRect(cx + w, cy - h, 3, h * 2);
+      // Forward ram & turret barrel (+X)
+      ctx.fillStyle = '#ff7979';
+      ctx.fillRect(cx + w * 0.2, cy - 2.5, w * 0.95, 5);
       break;
     }
 
     case 'iron_sentry': {
-      // Shape: Octagon (Wave 10 Mini-Boss) (#6ab04c)
-      const bossR = r * 1.35;
+      // Shape: Large Octagon Mini-Boss (#6ab04c) facing +X
+      const bossR = r * 1.45;
       ctx.lineWidth = 3;
       ctx.strokeStyle = '#6ab04c';
       ctx.fillStyle = '#162913';
@@ -147,16 +175,20 @@ function getEnemySprite(type, size) {
       ctx.fill();
       ctx.stroke();
 
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.75;
       ctx.strokeStyle = '#badc58';
       drawPolygon(ctx, cx, cy, bossR * 0.65, 8);
       ctx.stroke();
+
+      // Forward siege visor
+      ctx.fillStyle = '#badc58';
+      ctx.fillRect(cx + bossR * 0.35, cy - bossR * 0.28, bossR * 0.45, bossR * 0.56);
       break;
     }
 
     case 'mega_mixer': {
-      // Shape: Spiked Cog (Wave 15 Boss) (#c0392b)
-      const bossR = r * 1.5;
+      // Shape: Colossal Spiked Cog Boss (#c0392b) facing +X
+      const bossR = r * 1.65;
       ctx.lineWidth = 3;
       ctx.strokeStyle = '#c0392b';
       ctx.fillStyle = '#360909';
@@ -166,7 +198,7 @@ function getEnemySprite(type, size) {
       for (let i = 0; i < spikes; i++) {
         const a1 = (i * 2 * Math.PI) / spikes;
         const a2 = a1 + Math.PI / spikes;
-        ctx.lineTo(cx + Math.cos(a1) * (bossR * 0.7), cy + Math.sin(a1) * (bossR * 0.7));
+        ctx.lineTo(cx + Math.cos(a1) * (bossR * 0.68), cy + Math.sin(a1) * (bossR * 0.68));
         ctx.lineTo(cx + Math.cos(a2) * bossR, cy + Math.sin(a2) * bossR);
       }
       ctx.closePath();
@@ -174,9 +206,12 @@ function getEnemySprite(type, size) {
       ctx.stroke();
 
       ctx.beginPath();
-      ctx.arc(cx, cy, bossR * 0.35, 0, Math.PI * 2);
+      ctx.arc(cx, cy, bossR * 0.36, 0, Math.PI * 2);
       ctx.fillStyle = '#eb4d4b';
       ctx.fill();
+      ctx.strokeStyle = '#ff7979';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
       break;
     }
 
@@ -190,36 +225,46 @@ function getEnemySprite(type, size) {
     }
   }
 
-  enemyCache[key] = { canvas, dim, offset: dim / 2 };
+  const flashCanvas = createFlashVariant(canvas);
+  enemyCache[key] = { canvas, flashCanvas, dim, offset: dim / 2 };
   return enemyCache[key];
 }
 
 /**
  * Draw enemy icon using cached procedural offscreen canvas.
  */
-export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio = 1, slowed = false, drawBars = false) {
+export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio = 1, slowed = false, drawBars = false, options = {}) {
   const type = enemy.type || 'glitchbot';
   const sprite = getEnemySprite(type, size);
+  const { angle = 0, bobOffset = 0, wobble = 0, hitFlash = false } = options;
+  const img = hitFlash ? sprite.flashCanvas : sprite.canvas;
 
-  // Blit procedural icon in 1 hardware-accelerated call
-  ctx.drawImage(sprite.canvas, x - sprite.offset, y - sprite.offset);
+  if (angle !== 0 || bobOffset !== 0 || wobble !== 0) {
+    ctx.save();
+    ctx.translate(x, y + bobOffset);
+    ctx.rotate(angle + wobble);
+    ctx.drawImage(img, -sprite.offset, -sprite.offset);
+    ctx.restore();
+  } else {
+    ctx.drawImage(img, x - sprite.offset, y - sprite.offset);
+  }
 
   // Slowed Frost Ring
   if (slowed) {
-    const r = size * 0.38;
+    const r = size * 0.38 * (enemy.isBoss ? 1.45 : 1);
     ctx.strokeStyle = '#00d2d3';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(x, y, r * 1.35, 0, Math.PI * 2);
+    ctx.arc(x, y, r * 1.3, 0, Math.PI * 2);
     ctx.stroke();
   }
 
-  // Health Bar (only when standalone drawing is requested)
-  if (drawBars) {
+  // Health Bar (only when standalone drawing is requested and damaged)
+  if (drawBars && hpRatio < 1) {
     const r = size * 0.38;
     const barW = Math.max(r * 2.2, 28);
     const barH = enemy.isBoss ? 5 : 3.5;
-    const barY = y - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
+    const barY = y - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
 
     // Background
     ctx.fillStyle = '#000000';
@@ -235,8 +280,9 @@ export function drawEnemyIcon(ctx, enemy, x, y, size, hpRatio = 1, slowed = fals
 /**
  * Procedural Tower Drawing Functions
  */
-function drawPulseTurret(ctx, x, y, size, level = 1, angle = 0) {
-  const r = size * 0.42;
+function drawPulseTurret(ctx, x, y, size, level = 1, angle = 0, recoil = 0) {
+  const scale = 1 + (level - 1) * 0.05;
+  const r = size * 0.4 * scale;
 
   ctx.save();
   ctx.translate(x, y);
@@ -256,6 +302,8 @@ function drawPulseTurret(ctx, x, y, size, level = 1, angle = 0) {
 
   ctx.save();
   ctx.rotate(angle);
+  const kick = -recoil * r * 0.26;
+  ctx.translate(kick, 0);
 
   const bLen = r * 1.1;
   const bW = r * 0.22;
@@ -284,7 +332,7 @@ function drawPulseTurret(ctx, x, y, size, level = 1, angle = 0) {
   ctx.restore();
 
   for (let i = 0; i < level; i++) {
-    const pipAngle = -Math.PI / 2 + (i - (level - 1) / 2) * 0.35;
+    const pipAngle = -Math.PI / 2 + (i - (level - 1) / 2) * 0.38;
     const px = Math.cos(pipAngle) * (r * 0.88);
     const py = Math.sin(pipAngle) * (r * 0.88);
     ctx.beginPath();
@@ -296,8 +344,9 @@ function drawPulseTurret(ctx, x, y, size, level = 1, angle = 0) {
   ctx.restore();
 }
 
-function drawCoolantSprayer(ctx, x, y, size, level = 1, angle = 0) {
-  const r = size * 0.42;
+function drawCoolantSprayer(ctx, x, y, size, level = 1, angle = 0, recoil = 0) {
+  const scale = 1 + (level - 1) * 0.05;
+  const r = size * 0.4 * scale;
 
   ctx.save();
   ctx.translate(x, y);
@@ -322,6 +371,7 @@ function drawCoolantSprayer(ctx, x, y, size, level = 1, angle = 0) {
 
   ctx.save();
   ctx.rotate(angle);
+  ctx.translate(-recoil * r * 0.18, 0);
 
   ctx.beginPath();
   ctx.moveTo(0, -r * 0.2);
@@ -345,7 +395,7 @@ function drawCoolantSprayer(ctx, x, y, size, level = 1, angle = 0) {
 
   for (let i = 0; i < level; i++) {
     const px = (i - (level - 1) / 2) * 7;
-    const py = r * 0.75;
+    const py = r * 0.78;
     ctx.beginPath();
     ctx.arc(px, py, 2.5, 0, Math.PI * 2);
     ctx.fillStyle = '#48dbfb';
@@ -355,8 +405,9 @@ function drawCoolantSprayer(ctx, x, y, size, level = 1, angle = 0) {
   ctx.restore();
 }
 
-function drawArcCoil(ctx, x, y, size, level = 1, _angle = 0) {
-  const r = size * 0.42;
+function drawArcCoil(ctx, x, y, size, level = 1, angle = 0, recoil = 0) {
+  const scale = 1 + (level - 1) * 0.05;
+  const r = size * 0.4 * scale;
 
   ctx.save();
   ctx.translate(x, y);
@@ -379,9 +430,20 @@ function drawArcCoil(ctx, x, y, size, level = 1, _angle = 0) {
   ctx.strokeStyle = '#a55eea';
   ctx.stroke();
 
+  // Directional discharge prong
+  ctx.save();
+  ctx.rotate(angle);
+  ctx.strokeStyle = '#d6a2e8';
+  ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.arc(0, 0, r * 0.25, 0, Math.PI * 2);
-  ctx.fillStyle = '#ffffff';
+  ctx.moveTo(r * 0.25, 0);
+  ctx.lineTo(r * (0.78 - recoil * 0.15), 0);
+  ctx.stroke();
+  ctx.restore();
+
+  ctx.beginPath();
+  ctx.arc(0, 0, r * (0.25 + recoil * 0.08), 0, Math.PI * 2);
+  ctx.fillStyle = recoil > 0.2 ? '#ffffff' : '#e0ccff';
   ctx.fill();
   ctx.strokeStyle = '#d6a2e8';
   ctx.lineWidth = 2;
@@ -389,7 +451,7 @@ function drawArcCoil(ctx, x, y, size, level = 1, _angle = 0) {
 
   for (let i = 0; i < level; i++) {
     const px = (i - (level - 1) / 2) * 7;
-    const py = r * 0.78;
+    const py = r * 0.8;
     ctx.beginPath();
     ctx.arc(px, py, 2.5, 0, Math.PI * 2);
     ctx.fillStyle = '#a55eea';
@@ -399,8 +461,9 @@ function drawArcCoil(ctx, x, y, size, level = 1, _angle = 0) {
   ctx.restore();
 }
 
-function drawRocketRack(ctx, x, y, size, level = 1, angle = 0) {
-  const r = size * 0.42;
+function drawRocketRack(ctx, x, y, size, level = 1, angle = 0, recoil = 0) {
+  const scale = 1 + (level - 1) * 0.05;
+  const r = size * 0.4 * scale;
 
   ctx.save();
   ctx.translate(x, y);
@@ -415,6 +478,7 @@ function drawRocketRack(ctx, x, y, size, level = 1, angle = 0) {
 
   ctx.save();
   ctx.rotate(angle);
+  ctx.translate(-recoil * r * 0.22, 0);
 
   const podW = r * 1.3;
   const podH = r * 1.0;
@@ -454,7 +518,7 @@ function drawRocketRack(ctx, x, y, size, level = 1, angle = 0) {
 
   for (let i = 0; i < level; i++) {
     const px = (i - (level - 1) / 2) * 8;
-    const py = r * 0.8;
+    const py = r * 0.82;
     ctx.beginPath();
     ctx.arc(px, py, 2.5, 0, Math.PI * 2);
     ctx.fillStyle = '#ff9f43';
@@ -512,24 +576,24 @@ function drawFabricator(ctx, x, y, size, rotation = 0) {
   ctx.restore();
 }
 
-export function drawTowerIcon(ctx, type, x, y, size, level = 1, angle = 0, animTime = 0) {
+export function drawTowerIcon(ctx, type, x, y, size, level = 1, angle = 0, animTime = 0, recoil = 0) {
   switch (type) {
     case 'pulse':
-      drawPulseTurret(ctx, x, y, size, level, angle);
+      drawPulseTurret(ctx, x, y, size, level, angle, recoil);
       break;
     case 'coolant':
-      drawCoolantSprayer(ctx, x, y, size, level, angle);
+      drawCoolantSprayer(ctx, x, y, size, level, angle, recoil);
       break;
     case 'arc':
-      drawArcCoil(ctx, x, y, size, level, angle);
+      drawArcCoil(ctx, x, y, size, level, angle, recoil);
       break;
     case 'rocket':
-      drawRocketRack(ctx, x, y, size, level, angle);
+      drawRocketRack(ctx, x, y, size, level, angle, recoil);
       break;
     case 'fabricator':
       drawFabricator(ctx, x, y, size, animTime * 0.8);
       break;
     default:
-      drawPulseTurret(ctx, x, y, size, level, angle);
+      drawPulseTurret(ctx, x, y, size, level, angle, recoil);
   }
 }
