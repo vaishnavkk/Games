@@ -70,8 +70,8 @@ export function createScreens(callbacks = {}) {
 
       <div class="screen-stats-box" id="endStatsBox">
         <div>
-          <div class="screen-stat-label">Wave Reached</div>
-          <div class="screen-stat-val wave" id="endWaveVal" data-testid="end-wave-val">0</div>
+          <div class="screen-stat-label">Waves Cleared</div>
+          <div class="screen-stat-val wave" id="endWaveVal" data-testid="end-wave-val">0 / 15</div>
         </div>
         <div>
           <div class="screen-stat-label">Final Core HP</div>
@@ -140,7 +140,12 @@ export function createScreens(callbacks = {}) {
     const killsEl = endScreen.querySelector('#endKillsVal');
     const scrapEl = endScreen.querySelector('#endScrapVal');
 
-    if (waveEl) waveEl.textContent = `${snap.wave} / ${snap.totalWaves || 15}`;
+    const totalWaves = snap.totalWaves || 15;
+    const wavesCleared = snap.waveState === 'won'
+      ? Math.min(totalWaves, snap.wave || totalWaves)
+      : Math.max(0, (snap.wave || 0) - (snap.wave > 0 ? 1 : 0));
+
+    if (waveEl) waveEl.textContent = `${wavesCleared} / ${totalWaves}`;
     if (coreEl) coreEl.textContent = `${Math.max(0, snap.coreHp)} / ${snap.maxCoreHp}`;
     if (killsEl) killsEl.textContent = `${snap.stats ? snap.stats.enemiesKilled : 0}`;
     if (scrapEl) scrapEl.textContent = `${snap.stats ? snap.stats.scrapEarned : snap.scrap}`;

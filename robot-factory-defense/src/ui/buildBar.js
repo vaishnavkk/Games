@@ -1,6 +1,7 @@
 import towersData from '../data/towers.json' with { type: 'json' };
 import upgradesData from '../data/upgrades.json' with { type: 'json' };
 import { getUpgradeEffectValue } from './utils.js';
+import { getTowerSvg } from './svgIcons.js';
 
 /**
  * Build Bar Component for selecting and deploying towers.
@@ -15,6 +16,18 @@ export function createBuildBar(callbacks = {}) {
   const towerTypes = ['pulse', 'coolant', 'arc', 'rocket', 'fabricator'];
 
   const buttons = {};
+  let selectedType = 'pulse';
+
+  function setSelectedType(type) {
+    selectedType = type || 'pulse';
+    towerTypes.forEach(t => {
+      const entry = buttons[t];
+      if (!entry) return;
+      const isSelected = t === selectedType;
+      entry.btn.classList?.toggle?.('is-selected', isSelected);
+      entry.btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+    });
+  }
 
   towerTypes.forEach(type => {
     const def = towersData.towers[type];
@@ -23,6 +36,11 @@ export function createBuildBar(callbacks = {}) {
     btn.setAttribute('data-tower', type);
     btn.setAttribute('data-testid', `build-${type}`);
     btn.setAttribute('aria-label', `Build ${def.name}`);
+    btn.setAttribute('aria-pressed', type === selectedType ? 'true' : 'false');
+
+    const iconEl = document.createElement('span');
+    iconEl.className = 'build-card-icon';
+    iconEl.innerHTML = getTowerSvg(type);
 
     const nameEl = document.createElement('span');
     nameEl.className = 'build-card-name';
@@ -32,18 +50,22 @@ export function createBuildBar(callbacks = {}) {
     costEl.className = 'build-card-cost';
     costEl.textContent = `${def.levels[0].cost} Scrap`;
 
+    btn.appendChild(iconEl);
     btn.appendChild(nameEl);
     btn.appendChild(costEl);
 
     btn.addEventListener('pointerenter', () => {
+      setSelectedType(type);
       if (callbacks.onPreviewTower) callbacks.onPreviewTower(type);
     });
     btn.addEventListener('focus', () => {
+      setSelectedType(type);
       if (callbacks.onPreviewTower) callbacks.onPreviewTower(type);
     });
 
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
+      setSelectedType(type);
       if (callbacks.onBuildTower) {
         callbacks.onBuildTower(type);
       }
@@ -52,6 +74,7 @@ export function createBuildBar(callbacks = {}) {
     buttons[type] = { btn, costEl, def };
     container.appendChild(btn);
   });
+  setSelectedType(selectedType);
 
   // Cancel / Close selection button
   const cancelBtn = document.createElement('button');
@@ -93,15 +116,21 @@ export function createBuildBar(callbacks = {}) {
 
       if (!isUnlocked) {
         btn.disabled = true;
+        btn.classList?.add?.('is-unaffordable', 'is-locked');
         costEl.textContent = 'LOCKED (Workshop)';
       } else if (isMaxFab) {
         btn.disabled = true;
+        btn.classList?.add?.('is-unaffordable');
+        btn.classList?.remove?.('is-locked');
         costEl.textContent = 'MAX 4 BUILT';
       } else if (!canAfford) {
         btn.disabled = true;
+        btn.classList?.add?.('is-unaffordable');
+        btn.classList?.remove?.('is-locked');
         costEl.textContent = `${baseCost} Scrap (Need +${baseCost - snap.scrap})`;
       } else {
         btn.disabled = false;
+        btn.classList?.remove?.('is-unaffordable', 'is-locked');
       }
     });
   }
@@ -109,6 +138,7 @@ export function createBuildBar(callbacks = {}) {
   return {
     element: container,
     update,
+    setSelectedType,
     hide: () => { container.style.display = 'none'; }
   };
 }

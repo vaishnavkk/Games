@@ -35,6 +35,13 @@ function processEvents(events) {
   if (!renderer || !canvas || !events || events.length === 0) return;
   const cellSize = canvas.width / mapData.grid.cols;
 
+  if (renderer.fx && typeof renderer.fx.handleEvents === 'function') {
+    renderer.fx.handleEvents(events, state, cellSize, enemyPosCache);
+    return;
+  }
+
+  if (!renderer.effects) return;
+
   for (const ev of events) {
     if (ev.type === 'hit') {
       const tower = state.towers.find(t => t.id === ev.towerId);
@@ -124,7 +131,16 @@ function init() {
   if (uiRoot) {
     ui = createUI(uiRoot, {
       getUpgradesConfig: () => state.config.upgrades,
-      onStartWave: () => startWave(state),
+      getWavesConfig: () => state.config.waves,
+      getEnemiesConfig: () => state.config.enemies,
+      onStartWave: () => {
+        const prevWave = state.wave;
+        const started = startWave(state);
+        if (started && state.wave > prevWave && ui) {
+          ui.showWaveBanner(state.wave);
+        }
+        return started;
+      },
       onToggleSpeed: () => setSpeed(state, state.speed === 1 ? 2 : 1),
       onTogglePause: () => togglePause(state),
       onBuild: (cell, type) => {
@@ -238,10 +254,12 @@ function resetGame() {
     renderer.setSelectedCell(null);
     renderer.setSelectedTower(null);
     renderer.setPreviewTowerType('pulse');
-    renderer.effects.clear();
+    renderer.fx?.clear?.();
+    renderer.effects?.clear?.();
   }
   if (ui) {
     ui.clearSelection();
+    ui.hideWaveBanner?.();
   }
 }
 
