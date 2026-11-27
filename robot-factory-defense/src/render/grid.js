@@ -281,35 +281,36 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
   // Blit static background in 1 call
   ctx.drawImage(cachedBgCanvas, 0, 0);
 
-  // Animated conveyor chevrons scrolling in exact waypoint travel direction
-  const halfCell = cellSize * 0.5;
+  // Animated conveyor chevrons scrolling in exact waypoint travel direction (batched, no per-cell clip)
   const step = cellSize * 0.5;
   const scroll = (animTime * cellSize * 0.45) % step;
-  const chevSize = cellSize * 0.18;
+  const chevSize = cellSize * 0.16;
+  const maxOx = cellSize * 0.5 - chevSize * 0.65 - 2;
 
   ctx.strokeStyle = 'rgba(116, 224, 255, 0.35)';
   ctx.lineWidth = Math.max(1.5, cellSize * 0.035);
+  ctx.beginPath();
   for (let i = 0; i < pathCellDirections.length; i++) {
     const cell = pathCellDirections[i];
     const cx = (cell.col + 0.5) * cellSize;
     const cy = (cell.row + 0.5) * cellSize;
+    const ux = cell.dx;
+    const uy = cell.dy;
+    const vx = -uy;
+    const vy = ux;
 
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(cell.angle);
-    ctx.beginPath();
-    ctx.rect(-halfCell + 2, -halfCell + 2, cellSize - 4, cellSize - 4);
-    ctx.clip();
-
-    ctx.beginPath();
-    for (let ox = -step + scroll; ox <= halfCell + chevSize; ox += step) {
-      ctx.moveTo(ox - chevSize * 0.6, -chevSize);
-      ctx.lineTo(ox + chevSize * 0.5, 0);
-      ctx.lineTo(ox - chevSize * 0.6, chevSize);
+    for (let ox = -step + scroll; ox <= maxOx; ox += step) {
+      if (ox < -maxOx) continue;
+      const tipX = cx + ux * (ox + chevSize * 0.5);
+      const tipY = cy + uy * (ox + chevSize * 0.5);
+      const backX = cx + ux * (ox - chevSize * 0.55);
+      const backY = cy + uy * (ox - chevSize * 0.55);
+      ctx.moveTo(backX + vx * chevSize, backY + vy * chevSize);
+      ctx.lineTo(tipX, tipY);
+      ctx.lineTo(backX - vx * chevSize, backY - vy * chevSize);
     }
-    ctx.stroke();
-    ctx.restore();
   }
+  ctx.stroke();
 
   // Animated Spawn Portal at Entrance (waypoints[0])
   const spX = (mapData.waypoints[0].col + 0.5) * cellSize;

@@ -73,8 +73,8 @@ export function createRenderer(canvas) {
     enemyAngle[idx] = getSegmentAngle(dist);
 
     if (typeof enemy.x === 'number' && typeof enemy.y === 'number') {
-      enemyX[idx] = enemy.x <= 16 ? (enemy.x + 0.5) * cellSize : enemy.x;
-      enemyY[idx] = enemy.y <= 9 ? (enemy.y + 0.5) * cellSize : enemy.y;
+      enemyX[idx] = enemy.x <= 16 ? enemy.x * cellSize : enemy.x;
+      enemyY[idx] = enemy.y <= 9 ? enemy.y * cellSize : enemy.y;
       return;
     }
 
@@ -348,8 +348,8 @@ export function createRenderer(canvas) {
       for (let i = 0; i < projs.length; i++) {
         if (projs[i].type === 'rocket') {
           hasRockets = true;
-          const px = projs[i].x <= 16 ? (projs[i].x + 0.5) * cellSize : projs[i].x;
-          const py = projs[i].y <= 9 ? (projs[i].y + 0.5) * cellSize : projs[i].y;
+          const px = projs[i].x <= 16 ? projs[i].x * cellSize : projs[i].x;
+          const py = projs[i].y <= 9 ? projs[i].y * cellSize : projs[i].y;
           ctx.moveTo(px + 4, py);
           ctx.arc(px, py, 4, 0, Math.PI * 2);
         }
@@ -363,8 +363,8 @@ export function createRenderer(canvas) {
       for (let i = 0; i < projs.length; i++) {
         if (projs[i].type !== 'rocket') {
           hasKinetic = true;
-          const px = projs[i].x <= 16 ? (projs[i].x + 0.5) * cellSize : projs[i].x;
-          const py = projs[i].y <= 9 ? (projs[i].y + 0.5) * cellSize : projs[i].y;
+          const px = projs[i].x <= 16 ? projs[i].x * cellSize : projs[i].x;
+          const py = projs[i].y <= 9 ? projs[i].y * cellSize : projs[i].y;
           ctx.moveTo(px + 2.5, py);
           ctx.arc(px, py, 2.5, 0, Math.PI * 2);
         }

@@ -31,7 +31,7 @@ function createFlashVariant(sourceCanvas) {
   const fctx = flash.getContext('2d');
   fctx.drawImage(sourceCanvas, 0, 0);
   fctx.globalCompositeOperation = 'source-atop';
-  fctx.fillStyle = '#ffffff';
+  fctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
   fctx.fillRect(0, 0, flash.width, flash.height);
   return flash;
 }
