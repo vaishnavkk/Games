@@ -1,5 +1,6 @@
 import upgradesData from '../data/upgrades.json' with { type: 'json' };
 import { escapeHtml } from './utils.js';
+import { createThemePicker } from './theme.js';
 
 /**
  * Workshop Modal Component for Research Upgrades & Tower Unlocks.
@@ -42,6 +43,7 @@ export function createWorkshopModal(callbacks = {}) {
     <span class="hud-stat-label">Available Circuits:</span>
     <span class="hud-stat-val circuits" id="workshopCircuitsVal" data-testid="workshop-circuits-val">0</span>
   `;
+  circuitsBar.appendChild(createThemePicker('workshopTheme'));
 
   // Item list container
   const list = document.createElement('div');

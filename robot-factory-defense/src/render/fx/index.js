@@ -84,6 +84,10 @@ function resolveTower(towerId, state) {
  */
 export function createFxSystem() {
   const particles = [];
+  const freeParticles = [];
+  for (let i = 0; i < MAX_PARTICLES; i++) {
+    freeParticles.push({ x: 0, y: 0, prevX: 0, prevY: 0, vx: 0, vy: 0, color: '', life: 0, maxLife: 1, size: 1, drag: 0.94 });
+  }
   const bolts = [];
   const beams = [];
   const sprays = [];
@@ -91,6 +95,9 @@ export function createFxSystem() {
   const floatingTexts = [];
   const hitFlashes = new Map();
   const towerRecoils = new Map();
+  const arcChainOrigins = new Map();
+  const rocketSplashDone = new Set();
+  const shakeOffset = { x: 0, y: 0 };
 
   let coreFlashTimer = 0;
   let shakeTimer = 0;
@@ -106,18 +113,20 @@ export function createFxSystem() {
   }
 
   function spawnParticle(x, y, vx, vy, color, life, size, drag = 0.94) {
-    if (particles.length >= MAX_PARTICLES) return false;
-    particles.push({
-      x,
-      y,
-      vx,
-      vy,
-      color,
-      life,
-      maxLife: life,
-      size,
-      drag
-    });
+    if (particles.length >= MAX_PARTICLES || freeParticles.length === 0) return false;
+    const p = freeParticles.pop();
+    p.x = x;
+    p.y = y;
+    p.prevX = x;
+    p.prevY = y;
+    p.vx = vx;
+    p.vy = vy;
+    p.color = color;
+    p.life = life;
+    p.maxLife = life;
+    p.size = size;
+    p.drag = drag;
+    particles.push(p);
     return true;
   }
 
@@ -215,7 +224,9 @@ export function createFxSystem() {
   }
 
   function clear() {
-    particles.length = 0;
+    while (particles.length > 0) {
+      freeParticles.push(particles.pop());
+    }
     bolts.length = 0;
     beams.length = 0;
     sprays.length = 0;
@@ -235,8 +246,8 @@ export function createFxSystem() {
     const reduced = isReducedMotion();
 
     // Track per-batch state for multi-hit towers (arc chain hops, rocket splash dedupe)
-    const arcChainOrigins = new Map();
-    const rocketSplashDone = new Set();
+    arcChainOrigins.clear();
+    rocketSplashDone.clear();
 
     for (let i = 0; i < events.length; i++) {
       const ev = events[i];
@@ -413,14 +424,19 @@ export function createFxSystem() {
       }
     }
 
-    // Update particles
+    // Update particles (pooled, zero allocation)
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.life -= dt;
       if (p.life <= 0) {
-        removeAt(particles, i);
+        const last = particles.length - 1;
+        if (i !== last) particles[i] = particles[last];
+        particles.pop();
+        freeParticles.push(p);
         continue;
       }
+      p.prevX = p.x;
+      p.prevY = p.y;
       p.x += p.vx * dt;
       p.y += p.vy * dt;
       p.vx *= p.drag;
@@ -471,17 +487,21 @@ export function createFxSystem() {
     }
 
     // Update hit flashes
-    for (const [id, timer] of hitFlashes) {
-      const next = timer - dt;
-      if (next <= 0) hitFlashes.delete(id);
-      else hitFlashes.set(id, next);
+    if (hitFlashes.size > 0) {
+      for (const [id, timer] of hitFlashes) {
+        const next = timer - dt;
+        if (next <= 0) hitFlashes.delete(id);
+        else hitFlashes.set(id, next);
+      }
     }
 
     // Update tower recoils
-    for (const [id, timer] of towerRecoils) {
-      const next = timer - dt;
-      if (next <= 0) towerRecoils.delete(id);
-      else towerRecoils.set(id, next);
+    if (towerRecoils.size > 0) {
+      for (const [id, timer] of towerRecoils) {
+        const next = timer - dt;
+        if (next <= 0) towerRecoils.delete(id);
+        else towerRecoils.set(id, next);
+      }
     }
 
     // Update core flash & shake
@@ -494,10 +514,11 @@ export function createFxSystem() {
     }
   }
 
-  function render(ctx, cellSize, _state) {
+  function render(ctx, cellSize, _state, alpha = 1) {
     if (!ctx) return;
     const cs = Number.isFinite(cellSize) && cellSize > 0 ? cellSize : 60;
     const prevAlpha = ctx.globalAlpha;
+    const interp = Number.isFinite(alpha) ? Math.max(0, Math.min(1, alpha)) : 1;
 
     // 1. Expanding Rings
     for (let i = 0; i < rings.length; i++) {
@@ -608,12 +629,14 @@ export function createFxSystem() {
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       const s = p.size;
+      const px = p.prevX + (p.x - p.prevX) * interp;
+      const py = p.prevY + (p.y - p.prevY) * interp;
       ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
       if (p.color !== lastColor) {
         lastColor = p.color;
         ctx.fillStyle = lastColor;
       }
-      ctx.fillRect(p.x - s, p.y - s, s * 2, s * 2);
+      ctx.fillRect(px - s, py - s, s * 2, s * 2);
     }
 
     // 5. Floating "+N" Scrap Texts
@@ -653,14 +676,15 @@ export function createFxSystem() {
 
   function getShakeOffset() {
     if (shakeTimer <= 0 || isReducedMotion()) {
-      return { x: 0, y: 0 };
+      shakeOffset.x = 0;
+      shakeOffset.y = 0;
+      return shakeOffset;
     }
     const factor = shakeTimer / SHAKE_DURATION;
     const amp = shakeMagnitude * factor;
-    return {
-      x: (Math.random() * 2 - 1) * amp,
-      y: (Math.random() * 2 - 1) * amp
-    };
+    shakeOffset.x = (Math.random() * 2 - 1) * amp;
+    shakeOffset.y = (Math.random() * 2 - 1) * amp;
+    return shakeOffset;
   }
 
   function getParticleCount() {

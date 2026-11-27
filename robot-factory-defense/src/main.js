@@ -10,10 +10,12 @@ import {
   setSpeed,
   buyUpgrade,
   togglePause,
-  drainEvents
+  drainEvents,
+  TICK_MS
 } from './sim/index.js';
 import { createRenderer } from './render/index.js';
 import { createUI } from './ui/index.js';
+import { applyTheme, getSavedTheme, subscribeTheme } from './ui/theme.js';
 import { findNearestBuildablePad } from './ui/utils.js';
 import mapData from './data/map.json' with { type: 'json' };
 
@@ -140,8 +142,12 @@ function onCanvasClick(e) {
 }
 
 function init() {
+  const initialTheme = applyTheme(getSavedTheme());
+
   if (canvas) {
     renderer = createRenderer(canvas);
+    renderer.setTheme?.(initialTheme);
+    subscribeTheme((themeId) => renderer?.setTheme?.(themeId));
     canvas.addEventListener('click', onCanvasClick);
   }
 
@@ -283,31 +289,46 @@ function resetGame() {
 }
 
 let lastTime = performance.now();
+let posCacheFrame = 0;
+
+function updateEnemyPosCache() {
+  posCacheFrame++;
+  const enemies = state.enemies;
+  for (let i = 0; i < enemies.length; i++) {
+    const e = enemies[i];
+    let rec = enemyPosCache.get(e.id);
+    if (!rec) {
+      rec = { x: e.x, y: e.y, frame: posCacheFrame };
+      enemyPosCache.set(e.id, rec);
+    } else {
+      rec.x = e.x;
+      rec.y = e.y;
+      rec.frame = posCacheFrame;
+    }
+  }
+  if (enemyPosCache.size > enemies.length) {
+    for (const [id, rec] of enemyPosCache) {
+      if (rec.frame !== posCacheFrame) enemyPosCache.delete(id);
+    }
+  }
+}
 
 function gameLoop(time) {
-  const dt = time - lastTime;
+  const dt = Math.min(Math.max(0, time - lastTime), 50);
   lastTime = time;
 
   // Advance simulation if game has started
   if (gameStarted) {
-    for (const e of state.enemies) {
-      enemyPosCache.set(e.id, { x: e.x, y: e.y });
-    }
+    updateEnemyPosCache();
     processEvents(drainEvents(state));
     step(state, dt);
-    for (const e of state.enemies) {
-      enemyPosCache.set(e.id, { x: e.x, y: e.y });
-    }
+    updateEnemyPosCache();
     processEvents(drainEvents(state));
-
-    const aliveIds = new Set(state.enemies.map(e => e.id));
-    for (const id of enemyPosCache.keys()) {
-      if (!aliveIds.has(id)) enemyPosCache.delete(id);
-    }
   }
 
+  const alpha = state.paused ? 0 : Math.max(0, Math.min(1, (state.accumulatorMs || 0) / TICK_MS));
   const snap = snapshot(state);
-  if (renderer) renderer.render(snap);
+  if (renderer) renderer.render(snap, alpha);
   if (ui) ui.renderHUD(snap);
 
   requestAnimationFrame(gameLoop);

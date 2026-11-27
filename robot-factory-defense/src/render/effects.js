@@ -1,3 +1,5 @@
+import { getPalette } from './palette.js';
+
 /**
  * Visual Combat Effects and Range Circles for Robot Factory Defense.
  * Respects prefers-reduced-motion: reduces particle density and disables screen shake.
@@ -13,16 +15,17 @@ export function isReducedMotion() {
  */
 export function drawRangeCircle(ctx, x, y, rangeCells, cellSize) {
   const r = rangeCells * cellSize;
+  const pal = getPalette();
 
   ctx.save();
-  // Soft blueprint cyan fill
-  ctx.fillStyle = 'rgba(0, 210, 211, 0.08)';
+  // Soft blueprint fill
+  ctx.fillStyle = pal.rangeFill;
   ctx.beginPath();
   ctx.arc(x, y, r, 0, Math.PI * 2);
   ctx.fill();
 
-  // Dashed cyan boundary
-  ctx.strokeStyle = '#00d2d3';
+  // Dashed boundary
+  ctx.strokeStyle = pal.rangeStroke;
   ctx.lineWidth = 1.5;
   ctx.setLineDash([6, 4]);
   ctx.stroke();

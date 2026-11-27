@@ -1,12 +1,14 @@
 import mapData from '../data/map.json' with { type: 'json' };
+import { getPalette, getActiveTheme } from './palette.js';
 
 /**
- * Grid, Conveyor Path, and Buildable Cell Rendering for Blueprint-on-Steel Theme.
+ * Grid, Conveyor Path, and Buildable Cell Rendering.
  * Uses offscreen canvas caching for extreme 60+ FPS performance under CPU throttling.
  */
 let cachedBgCanvas = null;
 let cachedWidth = 0;
 let cachedHeight = 0;
+let cachedTheme = '';
 
 // Precompute cell lookup sets and exact waypoint travel directions for every path cell.
 const pathCellKeySet = new Set(mapData.pathCells.map(c => `${c.col},${c.row}`));
@@ -48,7 +50,7 @@ function cellHash(col, row) {
   return h ^ (h >>> 16);
 }
 
-function drawDeadCellDecor(ctx, x, y, cellSize, col, row) {
+function drawDeadCellDecor(ctx, x, y, cellSize, col, row, pal) {
   const h = cellHash(col, row);
   const variant = h % 5;
   const pad = cellSize * 0.16;
@@ -59,9 +61,9 @@ function drawDeadCellDecor(ctx, x, y, cellSize, col, row) {
     const vy = y + pad * 1.1;
     const vw = cellSize - pad * 2;
     const vh = cellSize - pad * 2.2;
-    ctx.fillStyle = '#070b11';
+    ctx.fillStyle = pal.deadVentBg;
     ctx.fillRect(vx, vy, vw, vh);
-    ctx.strokeStyle = '#182433';
+    ctx.strokeStyle = pal.deadVentStroke;
     ctx.lineWidth = 1;
     ctx.strokeRect(vx, vy, vw, vh);
     ctx.beginPath();
@@ -70,12 +72,12 @@ function drawDeadCellDecor(ctx, x, y, cellSize, col, row) {
       ctx.moveTo(vx + 3, ly);
       ctx.lineTo(vx + vw - 3, ly);
     }
-    ctx.strokeStyle = '#1a293a';
+    ctx.strokeStyle = pal.deadVentLouver;
     ctx.stroke();
   } else if (variant === 1) {
     // Sub-floor conduit pipe
     const horizontal = (h & 8) === 0;
-    ctx.strokeStyle = '#162231';
+    ctx.strokeStyle = pal.deadPipe;
     ctx.lineWidth = Math.max(3, cellSize * 0.09);
     ctx.beginPath();
     if (horizontal) {
@@ -88,13 +90,13 @@ function drawDeadCellDecor(ctx, x, y, cellSize, col, row) {
       ctx.lineTo(px, y + cellSize - 2);
     }
     ctx.stroke();
-    ctx.strokeStyle = '#1e3044';
+    ctx.strokeStyle = pal.deadPipeHighlight;
     ctx.lineWidth = 1;
     ctx.stroke();
   } else if (variant === 2) {
     // Corner rivets on dark steel plate
     const inset = cellSize * 0.16;
-    ctx.fillStyle = '#1b2b3d';
+    ctx.fillStyle = pal.deadRivet;
     const pts = [
       [x + inset, y + inset],
       [x + cellSize - inset, y + inset],
@@ -110,6 +112,7 @@ function drawDeadCellDecor(ctx, x, y, cellSize, col, row) {
 }
 
 function createStaticBackground(width, height, cellSize) {
+  const pal = getPalette();
   const bg = document.createElement('canvas');
   bg.width = width;
   bg.height = height;
@@ -117,13 +120,13 @@ function createStaticBackground(width, height, cellSize) {
   const cols = mapData.grid.cols; // 16
   const rows = mapData.grid.rows; // 9
 
-  // 1. Dark Factory Dead-Cell Steel Background
-  ctx.fillStyle = '#090e15';
+  // 1. Factory Dead-Cell Background
+  ctx.fillStyle = pal.deadBg;
   ctx.fillRect(0, 0, width, height);
 
   // Subtle steel grid lines (single batched path)
   ctx.lineWidth = 1;
-  ctx.strokeStyle = '#121d2b';
+  ctx.strokeStyle = pal.deadGridLine;
   ctx.beginPath();
   for (let c = 0; c <= cols; c++) {
     const x = c * cellSize;
@@ -142,26 +145,26 @@ function createStaticBackground(width, height, cellSize) {
     for (let c = 0; c < cols; c++) {
       const key = `${c},${r}`;
       if (!pathCellKeySet.has(key) && !buildableKeySet.has(key)) {
-        drawDeadCellDecor(ctx, c * cellSize, r * cellSize, cellSize, c, r);
+        drawDeadCellDecor(ctx, c * cellSize, r * cellSize, cellSize, c, r, pal);
       }
     }
   }
 
-  // 2. Conveyor Belt Track (clearly lighter than dead & buildable cells)
+  // 2. Conveyor Belt Track (clearly distinct from dead & buildable cells)
   const railInset = Math.max(2, cellSize * 0.06);
   mapData.pathCells.forEach(({ col, row }) => {
     const x = col * cellSize;
     const y = row * cellSize;
-    ctx.fillStyle = '#26394f';
+    ctx.fillStyle = pal.pathCenterLine;
     ctx.fillRect(x, y, cellSize, cellSize);
 
     // Inner belt bed
-    ctx.fillStyle = '#2d435c';
+    ctx.fillStyle = pal.pathFill;
     ctx.fillRect(x + railInset, y + railInset, cellSize - railInset * 2, cellSize - railInset * 2);
   });
 
   // Track metal guide rails on exposed edges
-  ctx.strokeStyle = '#53789e';
+  ctx.strokeStyle = pal.pathBorder;
   ctx.lineWidth = 2;
   ctx.beginPath();
   mapData.pathCells.forEach(({ col, row }) => {
@@ -189,14 +192,15 @@ function createStaticBackground(width, height, cellSize) {
   // 3. Entrance Spawn Bay (col: 0, row: 2)
   const entX = mapData.waypoints[0].col * cellSize;
   const entY = mapData.waypoints[0].row * cellSize;
-  ctx.fillStyle = '#241812';
+  ctx.fillStyle = pal.spawnBg;
   ctx.fillRect(entX, entY, cellSize, cellSize);
   // Hazard caution stripes clipped to entrance cell
   ctx.save();
   ctx.beginPath();
   ctx.rect(entX, entY, cellSize, cellSize);
   ctx.clip();
-  ctx.strokeStyle = 'rgba(255, 159, 67, 0.55)';
+  ctx.strokeStyle = pal.spawnGlow;
+  ctx.globalAlpha = 0.55;
   ctx.lineWidth = 3;
   ctx.beginPath();
   for (let i = -cellSize; i < cellSize * 2; i += 10) {
@@ -205,7 +209,7 @@ function createStaticBackground(width, height, cellSize) {
   }
   ctx.stroke();
   ctx.restore();
-  ctx.strokeStyle = '#ff9f43';
+  ctx.strokeStyle = pal.spawnCore;
   ctx.lineWidth = 2.5;
   ctx.strokeRect(entX + 1.5, entY + 1.5, cellSize - 3, cellSize - 3);
 
@@ -216,26 +220,28 @@ function createStaticBackground(width, height, cellSize) {
     const by = row * cellSize;
 
     // Outer pad base
-    ctx.fillStyle = '#132030';
+    ctx.fillStyle = pal.padSocket;
     ctx.fillRect(bx + 1, by + 1, cellSize - 2, cellSize - 2);
 
     // Raised inner steel plate
-    ctx.fillStyle = '#1b2e44';
+    ctx.fillStyle = pal.padFill;
     ctx.fillRect(bx + padInset, by + padInset, cellSize - padInset * 2, cellSize - padInset * 2);
 
-    ctx.strokeStyle = '#2f4f73';
+    ctx.strokeStyle = pal.padBorder;
     ctx.lineWidth = 1;
     ctx.strokeRect(bx + padInset, by + padInset, cellSize - padInset * 2, cellSize - padInset * 2);
 
     // Center mounting socket
     ctx.beginPath();
     ctx.arc(bx + cellSize / 2, by + cellSize / 2, cellSize * 0.1, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(72, 219, 251, 0.25)';
+    ctx.strokeStyle = pal.padCorner;
+    ctx.globalAlpha = 0.35;
     ctx.stroke();
+    ctx.globalAlpha = 1;
   });
 
   // Corner brackets (batched)
-  ctx.strokeStyle = '#48a9c5';
+  ctx.strokeStyle = pal.padCorner;
   ctx.lineWidth = 1.75;
   const bLen = Math.max(5, cellSize * 0.14);
   ctx.beginPath();
@@ -271,11 +277,14 @@ function createStaticBackground(width, height, cellSize) {
 }
 
 export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selectedCell = null, coreFlashAlpha = 0) {
+  const theme = getActiveTheme();
+  const pal = getPalette(theme);
   // Check or build cached static background
-  if (!cachedBgCanvas || cachedWidth !== width || cachedHeight !== height) {
+  if (!cachedBgCanvas || cachedWidth !== width || cachedHeight !== height || cachedTheme !== theme) {
     cachedBgCanvas = createStaticBackground(width, height, cellSize);
     cachedWidth = width;
     cachedHeight = height;
+    cachedTheme = theme;
   }
 
   // Blit static background in 1 call
@@ -287,7 +296,8 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
   const chevSize = cellSize * 0.16;
   const maxOx = cellSize * 0.5 - chevSize * 0.65 - 2;
 
-  ctx.strokeStyle = 'rgba(116, 224, 255, 0.35)';
+  ctx.strokeStyle = pal.pathChevron;
+  ctx.globalAlpha = 0.65;
   ctx.lineWidth = Math.max(1.5, cellSize * 0.035);
   ctx.beginPath();
   for (let i = 0; i < pathCellDirections.length; i++) {
@@ -311,6 +321,7 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
     }
   }
   ctx.stroke();
+  ctx.globalAlpha = 1;
 
   // Animated Spawn Portal at Entrance (waypoints[0])
   const spX = (mapData.waypoints[0].col + 0.5) * cellSize;
@@ -318,20 +329,21 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
   const spPulse = 0.5 + 0.5 * Math.sin(animTime * 4);
   const spR = cellSize * (0.24 + spPulse * 0.06);
 
-  ctx.save();
   ctx.beginPath();
   ctx.arc(spX, spY, spR, 0, Math.PI * 2);
-  ctx.fillStyle = `rgba(255, 159, 67, ${0.2 + spPulse * 0.25})`;
+  ctx.fillStyle = pal.spawnGlow;
+  ctx.globalAlpha = 0.2 + spPulse * 0.25;
   ctx.fill();
-  ctx.strokeStyle = `rgba(255, 121, 63, ${0.7 + spPulse * 0.3})`;
+  ctx.strokeStyle = pal.spawnCore;
+  ctx.globalAlpha = 0.7 + spPulse * 0.3;
   ctx.lineWidth = 2;
   ctx.stroke();
 
   ctx.beginPath();
   ctx.arc(spX, spY, cellSize * 0.12, 0, Math.PI * 2);
-  ctx.fillStyle = '#ff9f43';
+  ctx.fillStyle = pal.spawnCore;
+  ctx.globalAlpha = 1;
   ctx.fill();
-  ctx.restore();
 
   // Core Base at Exit (col: 15, row: 7)
   const coreX = mapData.core.position.col * cellSize;
@@ -340,18 +352,20 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
   const cy = coreY + cellSize / 2;
   const cr = cellSize * 0.42;
 
-  ctx.fillStyle = '#0f241b';
+  ctx.fillStyle = pal.coreFill;
   ctx.fillRect(coreX, coreY, cellSize, cellSize);
 
   const pulse = Math.sin(animTime * 3.5) * 0.2 + 0.8;
-  ctx.strokeStyle = `rgba(46, 213, 115, ${pulse})`;
+  ctx.strokeStyle = pal.coreGlow;
+  ctx.globalAlpha = pulse;
   ctx.lineWidth = 2.5;
   ctx.beginPath();
   ctx.arc(cx, cy, cr * (0.95 + Math.sin(animTime * 3.5) * 0.05), 0, Math.PI * 2);
   ctx.stroke();
+  ctx.globalAlpha = 1;
 
-  ctx.fillStyle = '#1c4d36';
-  ctx.strokeStyle = '#2ed573';
+  ctx.fillStyle = pal.coreFill;
+  ctx.strokeStyle = pal.coreGlow;
   ctx.lineWidth = 2;
   ctx.beginPath();
   for (let i = 0; i < 6; i++) {
@@ -367,18 +381,19 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
 
   ctx.beginPath();
   ctx.arc(cx, cy, cr * 0.3, 0, Math.PI * 2);
-  ctx.fillStyle = '#2ed573';
+  ctx.fillStyle = pal.coreGlow;
   ctx.fill();
 
   // Core Damage Flash
   if (coreFlashAlpha > 0) {
-    ctx.save();
-    ctx.fillStyle = `rgba(255, 71, 87, ${Math.min(0.85, coreFlashAlpha)})`;
+    ctx.fillStyle = pal.coreFlash;
+    ctx.globalAlpha = Math.min(0.85, coreFlashAlpha);
     ctx.fillRect(coreX, coreY, cellSize, cellSize);
-    ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(1, coreFlashAlpha)})`;
+    ctx.strokeStyle = '#ffffff';
+    ctx.globalAlpha = Math.min(1, coreFlashAlpha);
     ctx.lineWidth = 2.5;
     ctx.strokeRect(coreX + 1.5, coreY + 1.5, cellSize - 3, cellSize - 3);
-    ctx.restore();
+    ctx.globalAlpha = 1;
   }
 
   // Selected Cell Highlight
@@ -386,11 +401,11 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
     const sx = selectedCell.col * cellSize;
     const sy = selectedCell.row * cellSize;
 
-    ctx.strokeStyle = '#ff793f';
+    ctx.strokeStyle = pal.selectedCellStroke;
     ctx.lineWidth = 2.5;
     ctx.strokeRect(sx + 1, sy + 1, cellSize - 2, cellSize - 2);
 
-    ctx.fillStyle = 'rgba(255, 121, 63, 0.15)';
+    ctx.fillStyle = pal.selectedCellBg;
     ctx.fillRect(sx, sy, cellSize, cellSize);
   }
 }

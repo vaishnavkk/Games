@@ -1,6 +1,7 @@
 import { getBestWave, getWins } from './storage.js';
 import { FIRST_RUN_TIPS } from './tips.js';
 import { escapeHtml } from './utils.js';
+import { createThemePicker } from './theme.js';
 
 /**
  * Screen Overlays: Title, Victory, Defeat screens.
@@ -40,11 +41,18 @@ export function createScreens(callbacks = {}) {
         </ol>
       </div>
 
+      <div class="screen-theme-row" id="titleThemeSlot"></div>
+
       <button class="interactive btn btn-hazard" id="btnPlay" data-testid="btn-play" aria-label="Deploy into Factory" style="font-size: 16px; padding: 12px 32px;">
         DEPLOY TO FACTORY
       </button>
     </div>
   `;
+
+  const titleThemeSlot = titleScreen.querySelector('#titleThemeSlot');
+  if (titleThemeSlot) {
+    titleThemeSlot.appendChild(createThemePicker('titleTheme'));
+  }
 
   const btnPlay = titleScreen.querySelector('#btnPlay');
   btnPlay.addEventListener('click', () => {

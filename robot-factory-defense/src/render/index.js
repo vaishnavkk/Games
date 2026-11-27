@@ -5,6 +5,7 @@ import { drawGridAndMap } from './grid.js';
 import { drawTowerIcon, drawEnemyIcon, drawSnowflakePip } from './icons.js';
 import { drawRangeCircle, isReducedMotion } from './effects.js';
 import { createFxSystem } from './fx/index.js';
+import { getPalette, setActiveTheme } from './palette.js';
 
 const MAX_HIT_FLASH_SEC = 0.08;
 
@@ -34,6 +35,10 @@ export function createRenderer(canvas) {
   const towerCooldowns = new Map();
   const towerRecoils = new Map();
   const enemyFlashTimers = new Map();
+  const enemyInterp = new Map();
+  const projInterp = new Map();
+  let lastSimTick = -1;
+  let interpFrameSeq = 0;
 
   // Waypoints for distance-to-position projection
   const waypoints = mapData.waypoints;
@@ -71,49 +76,75 @@ export function createRenderer(canvas) {
     return 0;
   }
 
-  function getEnemyCoordsInto(enemy, cellSize, idx) {
+  function getEnemyCoordsInto(enemy, cellSize, idx, simTickChanged, alpha) {
     const dist = typeof enemy.distance === 'number' ? enemy.distance : 0;
     enemyAngle[idx] = getSegmentAngle(dist);
 
+    let rawX = 0;
+    let rawY = 0;
     if (typeof enemy.x === 'number' && typeof enemy.y === 'number') {
-      enemyX[idx] = enemy.x <= 16 ? enemy.x * cellSize : enemy.x;
-      enemyY[idx] = enemy.y <= 9 ? enemy.y * cellSize : enemy.y;
-      return;
-    }
-
-    if (typeof enemy.col === 'number' && typeof enemy.row === 'number') {
-      enemyX[idx] = (enemy.col + 0.5) * cellSize;
-      enemyY[idx] = (enemy.row + 0.5) * cellSize;
-      return;
-    }
-
-    for (let i = 0; i < segments.length; i++) {
-      const seg = segments[i];
-      if (dist >= seg.startDist && dist <= seg.endDist) {
-        const t = seg.len > 0 ? (dist - seg.startDist) / seg.len : 0;
-        const col = seg.x1 + seg.dx * t;
-        const row = seg.y1 + seg.dy * t;
-        enemyX[idx] = (col + 0.5) * cellSize;
-        enemyY[idx] = (row + 0.5) * cellSize;
-        return;
+      rawX = enemy.x <= 16 ? enemy.x * cellSize : enemy.x;
+      rawY = enemy.y <= 9 ? enemy.y * cellSize : enemy.y;
+    } else if (typeof enemy.col === 'number' && typeof enemy.row === 'number') {
+      rawX = (enemy.col + 0.5) * cellSize;
+      rawY = (enemy.row + 0.5) * cellSize;
+    } else {
+      let found = false;
+      for (let i = 0; i < segments.length; i++) {
+        const seg = segments[i];
+        if (dist >= seg.startDist && dist <= seg.endDist) {
+          const t = seg.len > 0 ? (dist - seg.startDist) / seg.len : 0;
+          rawX = (seg.x1 + seg.dx * t + 0.5) * cellSize;
+          rawY = (seg.y1 + seg.dy * t + 0.5) * cellSize;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        rawX = (waypoints[0].col + 0.5) * cellSize;
+        rawY = (waypoints[0].row + 0.5) * cellSize;
       }
     }
 
-    enemyX[idx] = (waypoints[0].col + 0.5) * cellSize;
-    enemyY[idx] = (waypoints[0].row + 0.5) * cellSize;
+    const eid = enemy.id ?? idx;
+    let rec = enemyInterp.get(eid);
+    if (!rec) {
+      rec = { prevX: rawX, prevY: rawY, currX: rawX, currY: rawY, frame: interpFrameSeq };
+      enemyInterp.set(eid, rec);
+    } else {
+      if (simTickChanged) {
+        rec.prevX = rec.currX;
+        rec.prevY = rec.currY;
+        rec.currX = rawX;
+        rec.currY = rawY;
+      } else {
+        rec.currX = rawX;
+        rec.currY = rawY;
+      }
+      rec.frame = interpFrameSeq;
+    }
+
+    enemyX[idx] = rec.prevX + (rec.currX - rec.prevX) * alpha;
+    enemyY[idx] = rec.prevY + (rec.currY - rec.prevY) * alpha;
   }
 
-  function render(snap) {
+  function render(snap, alpha = 1) {
     if (!ctx || !canvas) return;
 
     const now = performance.now();
-    const dt = Math.min((now - lastTime) / 1000, 0.1);
+    const dt = Math.min((now - lastTime) / 1000, 0.05);
     lastTime = now;
     const reducedMotion = isReducedMotion();
     const animate = !snap.paused && !reducedMotion;
     if (animate) {
       totalAnimTime += dt * (snap.speed || 1);
     }
+    const simTick = Number.isFinite(snap.tick) ? snap.tick : -1;
+    const simTickChanged = simTick !== lastSimTick;
+    if (simTickChanged) lastSimTick = simTick;
+    interpFrameSeq++;
+    const interp = snap.paused ? 1 : (Number.isFinite(alpha) ? Math.max(0, Math.min(1, alpha)) : 1);
+    const pal = getPalette();
 
     const width = canvas.width;
     const height = canvas.height;
@@ -181,7 +212,12 @@ export function createRenderer(canvas) {
       enemyAngle = new Float32Array(nextCap);
     }
     for (let i = 0; i < enemyCount; i++) {
-      getEnemyCoordsInto(enemies[i], cellSize, i);
+      getEnemyCoordsInto(enemies[i], cellSize, i, simTickChanged, interp);
+    }
+    if (enemyInterp.size > enemyCount) {
+      for (const [eid, rec] of enemyInterp) {
+        if (rec.frame !== interpFrameSeq) enemyInterp.delete(eid);
+      }
     }
 
     // 4. Draw Placed Towers
@@ -384,19 +420,36 @@ export function createRenderer(canvas) {
       }
     }
 
-    // 6. Draw Projectiles (Batched by munition type)
+    // 6. Draw Projectiles (Batched by munition type with sub-tick interpolation)
     if (snap.projectiles && snap.projectiles.length > 0) {
       const projs = snap.projectiles;
 
       // 6a. Rockets
-      ctx.fillStyle = '#ff793f';
+      ctx.fillStyle = pal.projRocket;
       ctx.beginPath();
       let hasRockets = false;
       for (let i = 0; i < projs.length; i++) {
-        if (projs[i].type === 'rocket') {
+        const pr = projs[i];
+        const rawX = pr.x <= 16 ? pr.x * cellSize : pr.x;
+        const rawY = pr.y <= 9 ? pr.y * cellSize : pr.y;
+        const pid = pr.id ?? i;
+        let rec = projInterp.get(pid);
+        if (!rec) {
+          rec = { prevX: rawX, prevY: rawY, currX: rawX, currY: rawY, frame: interpFrameSeq };
+          projInterp.set(pid, rec);
+        } else {
+          if (simTickChanged) {
+            rec.prevX = rec.currX;
+            rec.prevY = rec.currY;
+          }
+          rec.currX = rawX;
+          rec.currY = rawY;
+          rec.frame = interpFrameSeq;
+        }
+        if (pr.type === 'rocket') {
           hasRockets = true;
-          const px = projs[i].x <= 16 ? projs[i].x * cellSize : projs[i].x;
-          const py = projs[i].y <= 9 ? projs[i].y * cellSize : projs[i].y;
+          const px = rec.prevX + (rec.currX - rec.prevX) * interp;
+          const py = rec.prevY + (rec.currY - rec.prevY) * interp;
           ctx.moveTo(px + 4, py);
           ctx.arc(px, py, 4, 0, Math.PI * 2);
         }
@@ -404,23 +457,32 @@ export function createRenderer(canvas) {
       if (hasRockets) ctx.fill();
 
       // 6b. Pulse / Kinetic
-      ctx.fillStyle = '#00d2d3';
+      ctx.fillStyle = pal.projPulse;
       ctx.beginPath();
       let hasKinetic = false;
       for (let i = 0; i < projs.length; i++) {
         if (projs[i].type !== 'rocket') {
           hasKinetic = true;
-          const px = projs[i].x <= 16 ? projs[i].x * cellSize : projs[i].x;
-          const py = projs[i].y <= 9 ? projs[i].y * cellSize : projs[i].y;
+          const rec = projInterp.get(projs[i].id ?? i);
+          const px = rec ? rec.prevX + (rec.currX - rec.prevX) * interp : (projs[i].x <= 16 ? projs[i].x * cellSize : projs[i].x);
+          const py = rec ? rec.prevY + (rec.currY - rec.prevY) * interp : (projs[i].y <= 9 ? projs[i].y * cellSize : projs[i].y);
           ctx.moveTo(px + 2.5, py);
           ctx.arc(px, py, 2.5, 0, Math.PI * 2);
         }
       }
       if (hasKinetic) ctx.fill();
+
+      if (projInterp.size > projs.length) {
+        for (const [pid, rec] of projInterp) {
+          if (rec.frame !== interpFrameSeq) projInterp.delete(pid);
+        }
+      }
+    } else if (projInterp.size > 0) {
+      projInterp.clear();
     }
 
     // 7. Draw Visual Effects (Beams, Sparks, Explosions)
-    fx.render(ctx, cellSize, snap);
+    fx.render(ctx, cellSize, snap, interp);
     ctx.restore();
   }
 
@@ -463,6 +525,7 @@ export function createRenderer(canvas) {
     setSelectedCell: (cell) => { selectedCell = cell; },
     setSelectedTower: (tower) => { selectedTower = tower; },
     setPreviewTowerType: (type) => { previewTowerType = type || 'pulse'; },
+    setTheme: (id) => setActiveTheme(id),
     fx,
     effects
   };

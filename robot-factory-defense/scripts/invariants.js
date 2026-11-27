@@ -64,13 +64,14 @@ async function auditDomInvariants(page, vp, stateLabel) {
         if (a > 0.3) return [r, g, b, a];
         curr = curr.parentElement;
       }
-      return [17, 20, 24, 1];
+      return parseRgb(window.getComputedStyle(document.body).backgroundColor);
     }
 
     const interactives = Array.from(document.querySelectorAll('button, [role="button"], .interactive, [data-action], [data-tower], input, select'));
     for (const el of interactives) {
       const style = window.getComputedStyle(el);
       if (style.display === 'none' || style.visibility === 'hidden') continue;
+      if (el.offsetParent === null && style.position !== 'fixed') continue;
       if (el.closest('[inert]') || el.inert) continue;
 
       const rect = el.getBoundingClientRect();
@@ -103,6 +104,7 @@ async function auditDomInvariants(page, vp, stateLabel) {
     for (const el of textNodes) {
       const style = window.getComputedStyle(el);
       if (style.display === 'none' || style.visibility === 'hidden') continue;
+      if (el.offsetParent === null && style.position !== 'fixed') continue;
       if (el.closest('[inert]') || el.inert) continue;
       if (!el.textContent.trim()) continue;
 
@@ -522,6 +524,27 @@ export async function runInvariantsCheck(options = {}) {
           msg: `[workshopModal] Pressing Escape did not close #workshopModal at ${vp.name}`
         });
         await page.click('#btnCloseWorkshop');
+      }
+    }
+
+    // 2b. Multi-theme WCAG AA (>= 4.5:1) HUD contrast audit
+    await page.setViewport({ width: 1440, height: 900 });
+    await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+    await page.waitForFunction(() => typeof window.__rfd !== 'undefined', { timeout: 5000 });
+    const playBtn = await page.$('#btnPlay');
+    if (playBtn) await playBtn.click();
+
+    for (const themeId of ['neon', 'daylight', 'terminal']) {
+      if (verbose) console.log(`[invariants] Checking WCAG AA 4.5:1 HUD contrast for theme: ${themeId}...`);
+      await page.evaluate((t) => {
+        document.documentElement.setAttribute('data-theme', t);
+      }, themeId);
+      await new Promise(r => setTimeout(r, 220));
+      const themeIssues = await auditDomInvariants(page, { name: `theme:${themeId}`, width: 1440, height: 900 }, `theme_${themeId}`);
+      for (const issue of themeIssues) {
+        if (issue.type === 'low_contrast') {
+          violations.push({ viewport: `1440x900 (${themeId})`, ...issue });
+        }
       }
     }
 

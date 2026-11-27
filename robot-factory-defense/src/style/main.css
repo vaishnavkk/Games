@@ -8,6 +8,9 @@
   --bg-dark: #0d141e;
   --bg-panel: #14202e;
   --bg-panel-overlay: rgba(14, 23, 34, 0.94);
+  --bg-hud-stat: rgba(13, 20, 30, 0.88);
+  --bg-card: #111a26;
+  --bg-gradient: radial-gradient(circle at 50% 50%, #152233 0%, #0d141e 100%);
   --border-steel: #2e4a6e;
   --border-steel-light: #436792;
   --accent-cyan: #00d2d3;
@@ -19,9 +22,52 @@
   --accent-red: #ff4757;
   --text-main: #f1f2f6;
   --text-muted: #a4b0be;
+  --btn-text-dark: #0b121a;
   --font-main: 'Chakra Petch', system-ui, -apple-system, sans-serif;
   --font-mono: 'Space Mono', monospace;
   --min-tap: 48px;
+}
+
+:root[data-theme="daylight"] {
+  --bg-dark: #e6edf5;
+  --bg-panel: #ffffff;
+  --bg-panel-overlay: rgba(248, 250, 252, 0.96);
+  --bg-hud-stat: #ffffff;
+  --bg-card: #f1f5f9;
+  --bg-gradient: radial-gradient(circle at 50% 50%, #f1f5f9 0%, #dbe4f0 100%);
+  --border-steel: #94a3b8;
+  --border-steel-light: #64748b;
+  --accent-cyan: #0369a1;
+  --accent-cyan-hover: #0284c7;
+  --accent-orange: #c2410c;
+  --accent-orange-hover: #ea580c;
+  --accent-gold: #9a3412;
+  --accent-green: #15803d;
+  --accent-red: #b91c1c;
+  --text-main: #0f172a;
+  --text-muted: #334155;
+  --btn-text-dark: #ffffff;
+}
+
+:root[data-theme="terminal"] {
+  --bg-dark: #030a05;
+  --bg-panel: #07170b;
+  --bg-panel-overlay: rgba(5, 18, 8, 0.95);
+  --bg-hud-stat: rgba(4, 15, 7, 0.92);
+  --bg-card: #081c0d;
+  --bg-gradient: radial-gradient(circle at 50% 50%, #09210f 0%, #030a05 100%);
+  --border-steel: #1f6e36;
+  --border-steel-light: #2ea350;
+  --accent-cyan: #39ff14;
+  --accent-cyan-hover: #6eff52;
+  --accent-orange: #ffb000;
+  --accent-orange-hover: #ffc94d;
+  --accent-gold: #e6ff00;
+  --accent-green: #39ff14;
+  --accent-red: #ff5555;
+  --text-main: #d8ffe0;
+  --text-muted: #7be396;
+  --btn-text-dark: #031206;
 }
 
 * {
@@ -50,7 +96,37 @@ html, body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(circle at 50% 50%, #152233 0%, #0d141e 100%);
+  background-color: var(--bg-dark);
+  background-image: var(--bg-gradient);
+}
+
+.theme-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.theme-select {
+  min-height: var(--min-tap);
+  min-width: 140px;
+  padding: 0 12px;
+  background: var(--bg-panel);
+  color: var(--text-main);
+  border: 1px solid var(--border-steel-light);
+  border-radius: 4px;
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.screen-theme-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 }
 
 #uiRoot {
@@ -138,32 +214,31 @@ html, body {
 
 .btn-hazard {
   background: var(--accent-orange);
-  color: #0b121a;
-  border-color: #ffa502;
+  color: var(--btn-text-dark);
+  border-color: var(--accent-orange-hover);
   font-weight: 800;
 }
 
 .btn-hazard:hover:not(:disabled) {
   background: var(--accent-orange-hover);
-  border-color: #ffd32a;
+  border-color: var(--accent-gold);
 }
 
 .btn-start-wave {
-  background: #2ed573;
-  color: #0b121a;
-  border-color: #20bf6b;
+  background: var(--accent-green);
+  color: var(--btn-text-dark);
+  border-color: var(--accent-green);
   font-weight: 800;
 }
 
 .btn-start-wave:hover:not(:disabled) {
-  background: #45e085;
-  border-color: #7bed9f;
+  filter: brightness(1.1);
 }
 
 .btn-start-wave:disabled {
-  background: #2f3b4c;
-  color: #b8c4d4;
-  border-color: #445368;
+  background: var(--bg-panel);
+  color: var(--text-muted);
+  border-color: var(--border-steel);
   opacity: 1;
   filter: none;
   cursor: not-allowed;
@@ -171,7 +246,7 @@ html, body {
 
 .btn-cyan {
   background: var(--accent-cyan);
-  color: #06121e;
+  color: var(--btn-text-dark);
   border-color: var(--accent-cyan-hover);
   font-weight: 800;
 }
@@ -219,7 +294,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(13, 20, 30, 0.8);
+  background: var(--bg-hud-stat);
   border: 1px solid var(--border-steel);
   padding: 6px 12px;
   border-radius: 4px;
@@ -342,7 +417,7 @@ html, body {
 
 .wave-banner-badge {
   background: var(--accent-cyan);
-  color: #06121e;
+  color: var(--btn-text-dark);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.8px;
@@ -399,7 +474,7 @@ html, body {
 }
 
 .tips-badge {
-  background: var(--border-steel);
+  background: var(--bg-card);
   color: var(--accent-cyan);
   font-size: 10px;
   font-weight: 700;
@@ -449,7 +524,7 @@ html, body {
   align-items: center;
   justify-content: center;
   color: var(--text-main);
-  background: #111a26;
+  background: var(--bg-card);
   border: 1px solid var(--border-steel);
   border-radius: 4px;
   padding: 6px 10px;
@@ -708,7 +783,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #111a26;
+  background: var(--bg-card);
   border: 1px solid var(--border-steel);
   border-radius: 6px;
   padding: 10px;
@@ -887,7 +962,7 @@ html, body {
 
 .rotate-subtitle {
   font-size: 13px;
-  color: #c8d6e5;
+  color: var(--text-muted);
   line-height: 1.4;
 }
 
