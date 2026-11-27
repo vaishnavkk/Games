@@ -615,11 +615,11 @@ describe('Simulation Combat & Mechanic Rules', () => {
 
     const t = place(state, { col: 1, row: 1 }, 'pulse'); // lvl 1: dmg 12, fireRate 1.5, range 2.5
 
-    // Overclock (+10% fire rate from upgrades.json)
+    // Overclock (+15% fire rate from upgrades.json)
     buyUpgrade(state, 'overclock');
     assert.ok(state.purchasedUpgrades.includes('overclock'));
 
-    // Hardened Rounds (+10% damage from upgrades.json)
+    // Hardened Rounds (+15% damage from upgrades.json)
     buyUpgrade(state, 'hardened_rounds');
     assert.ok(state.purchasedUpgrades.includes('hardened_rounds'));
 
@@ -654,8 +654,8 @@ describe('Simulation Combat & Mechanic Rules', () => {
     const scrapBefore = state.scrap;
     step(state, TICK_MS);
     const hit = state.events.find(e => e.type === 'hit');
-    // Hardened Rounds deals Math.round(12 * 1.1) = 13 damage (from upgrades.json)
-    assert.equal(hit.damage, 13);
+    // Hardened Rounds deals Math.round(12 * 1.15) = 14 damage (from upgrades.json)
+    assert.equal(hit.damage, 14);
 
     // Finish kill
     t.cooldown = 0;
