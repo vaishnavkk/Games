@@ -426,25 +426,30 @@ export async function runSelfplay(options = {}) {
   const full = options.full ?? false;
   const humanPace = options.humanPace ?? false;
   const verbose = options.verbose ?? true;
+  const targetUrl = options.url || null;
 
   if (verbose) {
-    console.log(`Starting Robot Factory Defense selfplay (${smoke ? 'SMOKE MODE' : (humanPace ? 'HUMAN PACE (360x800)' : (full ? 'FULL MATRIX MODE' : 'FULL GAME'))})...`);
+    console.log(`Starting Robot Factory Defense selfplay (${smoke ? 'SMOKE MODE' : (humanPace ? 'HUMAN PACE (360x800)' : (full ? 'FULL MATRIX MODE' : 'FULL GAME'))})${targetUrl ? ` against ${targetUrl}` : ''}...`);
   }
 
-  const nmPath = path.join(projectRoot, 'node_modules');
-  const fsAllow = [projectRoot];
-  if (fs.existsSync(nmPath)) {
-    fsAllow.push(fs.realpathSync(nmPath));
-  }
+  let server = null;
+  let baseUrl = targetUrl;
+  if (!baseUrl) {
+    const nmPath = path.join(projectRoot, 'node_modules');
+    const fsAllow = [projectRoot];
+    if (fs.existsSync(nmPath)) {
+      fsAllow.push(fs.realpathSync(nmPath));
+    }
 
-  // Start Vite server
-  const server = await createServer({
-    root: projectRoot,
-    server: { port: 0, fs: { allow: fsAllow } }
-  });
-  await server.listen();
-  const port = server.httpServer.address().port;
-  const baseUrl = `http://localhost:${port}/`;
+    // Start Vite server
+    server = await createServer({
+      root: projectRoot,
+      server: { port: 0, fs: { allow: fsAllow } }
+    });
+    await server.listen();
+    const port = server.httpServer.address().port;
+    baseUrl = `http://localhost:${port}/`;
+  }
 
   const browser = await puppeteer.launch(launchOptions({ headless: true }));
 
@@ -798,7 +803,7 @@ export async function runSelfplay(options = {}) {
 
   } finally {
     await browser.close();
-    await server.close();
+    if (server) await server.close();
   }
 }
 
@@ -809,6 +814,9 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
   const isSelftest = args.includes('--selftest');
   const isFull = args.includes('--full');
   const isHumanPace = args.includes('--human-pace');
+  const urlArg = args.find(a => a.startsWith('--url='));
+  const urlIdx = args.indexOf('--url');
+  const targetUrl = urlArg ? urlArg.slice('--url='.length) : (urlIdx !== -1 ? args[urlIdx + 1] : null);
 
   if (isSelftest) {
     runSelftest()
@@ -820,7 +828,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
         process.exit(1);
       });
   } else {
-    runSelfplay({ smoke: isSmoke, full: isFull, humanPace: isHumanPace })
+    runSelfplay({ smoke: isSmoke, full: isFull, humanPace: isHumanPace, url: targetUrl })
       .then(res => {
         process.exit(res.success ? 0 : 1);
       })
