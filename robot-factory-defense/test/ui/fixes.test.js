@@ -221,7 +221,7 @@ describe('UI Fixes Verification', () => {
       const customUpgrades = {
         workshop: {
           globalUpgrades: [
-            { id: 'overclock', effect: { fireRateMultiplier: 1.25 } },
+            { id: 'overclock', effect: { fireRateMultiplier: 1.22 } },
             { id: 'hardened_rounds', effect: { damageMultiplier: 1.3 } },
             { id: 'long_barrels', effect: { rangeMultiplier: 1.2 } },
             { id: 'fast_assembly', effect: { costDiscountRatio: 0.2 } }
@@ -231,23 +231,24 @@ describe('UI Fixes Verification', () => {
 
       const tower = { id: 't1', type: 'pulse', col: 1, row: 1, level: 1, investedScrap: 60 };
 
-      // Default upgrades.json uses 1.1 (+10%) for overclock/hardened_rounds/long_barrels
+      // Default upgrades.json uses 1.15 (+15%) for overclock/hardened_rounds and 1.1 (+10%) for long_barrels
       card.update({
         scrap: 200,
         purchasedUpgrades: ['overclock', 'hardened_rounds', 'long_barrels']
       }, tower);
       const statsDefault = card.element.querySelector('#inspectStats').innerHTML;
-      assert.ok(statsDefault.includes('(+10%)'), 'Default upgrades config yields +10%');
-      assert.ok(!statsDefault.includes('(+15%)'), 'Must not hardcode +15%');
+      assert.ok(statsDefault.includes('(+15%)'), 'Default upgrades config yields +15% for overclock/hardened_rounds');
+      assert.ok(statsDefault.includes('(+10%)'), 'Default upgrades config yields +10% for long_barrels');
 
-      // Custom state.config.upgrades dynamically updates displayed percentages
+      // Custom state.config.upgrades dynamically updates displayed percentages (not hardcoded to +15%)
       card.update({
         scrap: 200,
         purchasedUpgrades: ['overclock', 'hardened_rounds', 'long_barrels'],
         upgradesConfig: customUpgrades
       }, tower);
       const statsCustom = card.element.querySelector('#inspectStats').innerHTML;
-      assert.ok(statsCustom.includes('(+25%)'), 'Displays dynamic overclock +25%');
+      assert.ok(!statsCustom.includes('(+15%)'), 'Must read dynamic config rather than hardcoding +15%');
+      assert.ok(statsCustom.includes('(+22%)'), 'Displays dynamic overclock +22%');
       assert.ok(statsCustom.includes('(+30%)'), 'Displays dynamic hardened_rounds +30%');
       assert.ok(statsCustom.includes('(+20%)'), 'Displays dynamic long_barrels +20%');
     });
