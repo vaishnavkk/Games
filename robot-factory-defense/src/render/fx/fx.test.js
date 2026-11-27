@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { createFxSystem, MAX_PARTICLES } from './index.js';
+import { createFxSystem, MAX_PARTICLES, HIT_FLASH_DURATION } from './index.js';
 
 function createMockCtx() {
   const calls = [];
@@ -94,19 +94,44 @@ describe('Procedural FX System (src/render/fx)', () => {
     assert.ok(fx.getParticleCount() <= MAX_PARTICLES);
 
     const ctx = createMockCtx();
-    fx.update(0.05, state, cellSize);
+    fx.update(0.04, state, cellSize);
+    assert.equal(fx.hasHitFlash('e1'), true);
     fx.render(ctx, cellSize, state);
 
-    // Rocket L2 splashRadius is 1.25 * 60 = 75px; verify ring arc drawn and fillText not broken
+    // Rocket L2 splashRadius is 1.25 * 60 = 75px; verify ring arc drawn, jagged beams & spray rendered
     const arcs = ctx.calls.filter(c => Array.isArray(c) && c[0] === 'arc');
     assert.ok(arcs.length > 0);
     assert.ok(ctx.calls.includes('stroke'));
+    assert.ok(ctx.calls.includes('fill'));
+    const lineTos = ctx.calls.filter(c => Array.isArray(c) && c[0] === 'lineTo');
+    assert.ok(lineTos.length >= 18, `Expected multi-segment arc chain + spray lines, got ${lineTos.length}`);
 
-    // After enough time, flashes and recoils decay to 0/false
-    fx.update(0.1, state, cellSize);
-    fx.update(0.1, state, cellSize);
+    // Hit flash must clear after > 80ms (HIT_FLASH_DURATION <= 0.08)
+    assert.ok(HIT_FLASH_DURATION <= 0.08);
+    fx.update(0.045, state, cellSize);
     assert.equal(fx.hasHitFlash('e1'), false);
+
+    // After enough time, recoils decay to 0
+    fx.update(0.1, state, cellSize);
     assert.equal(fx.getTowerRecoil('t_pulse'), 0);
+  });
+
+  it('emits rocket smoke trail particles for in-flight rockets and expands splash ring to true splashRadius * cellSize', () => {
+    const fx = createFxSystem();
+    const state = makeState();
+    const cellSize = 60;
+    const before = fx.getParticleCount();
+    fx.update(0.03, state, cellSize);
+    assert.ok(fx.getParticleCount() > before, 'Expected rocket smoke trail particles');
+
+    const cache = new Map([['e3', { x: 5, y: 2 }]]);
+    fx.handleEvents([{ type: 'hit', towerId: 't_rocket', enemyId: 'e3', damage: 44 }], state, cellSize, cache);
+    for (let i = 0; i < 4; i++) fx.update(0.0875, state, cellSize);
+    const ctx = createMockCtx();
+    fx.render(ctx, cellSize, state);
+    const arcs = ctx.calls.filter(c => Array.isArray(c) && c[0] === 'arc');
+    const maxRadius = Math.max(...arcs.map(a => a[3]));
+    assert.ok(maxRadius > 70 && maxRadius <= 75, `Expected splash ring near 75px (1.25 * 60), got ${maxRadius}`);
   });
 
   it('handles killed (+N scrap text), leaked (core flash + shake), built, and upgraded events', () => {

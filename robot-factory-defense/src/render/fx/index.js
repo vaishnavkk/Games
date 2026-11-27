@@ -4,8 +4,8 @@
  */
 
 export const MAX_PARTICLES = 300;
+export const HIT_FLASH_DURATION = 0.08;
 
-const HIT_FLASH_DURATION = 0.1;
 const TOWER_RECOIL_DURATION = 0.12;
 const CORE_FLASH_DURATION = 0.35;
 const SHAKE_DURATION = 0.25;
@@ -86,6 +86,7 @@ export function createFxSystem() {
   const particles = [];
   const bolts = [];
   const beams = [];
+  const sprays = [];
   const rings = [];
   const floatingTexts = [];
   const hitFlashes = new Map();
@@ -139,7 +140,7 @@ export function createFxSystem() {
     }
   }
 
-  function addJaggedBeam(x1, y1, x2, y2, color, width, duration, segments = 5, jitter = 8) {
+  function addJaggedBeam(x1, y1, x2, y2, color, width, duration, segments = 5, jitter = 8, coreColor = null, coreWidth = 0) {
     const reduced = isReducedMotion();
     const pts = [{ x: x1, y: y1 }];
     if (!reduced && segments > 1) {
@@ -158,16 +159,33 @@ export function createFxSystem() {
       }
     }
     pts.push({ x: x2, y: y2 });
+    const dur = reduced ? Math.min(0.08, duration) : duration;
     beams.push({
       points: pts,
       color,
       width,
-      life: reduced ? Math.min(0.08, duration) : duration,
-      maxLife: reduced ? Math.min(0.08, duration) : duration
+      coreColor,
+      coreWidth,
+      life: dur,
+      maxLife: dur
     });
   }
 
-  function addRing(x, y, maxRadius, color, width, duration, startRatio = 0.2) {
+  function addSprayCone(x1, y1, x2, y2, spreadRadius, duration) {
+    const reduced = isReducedMotion();
+    const dur = reduced ? Math.min(0.12, duration) : duration;
+    sprays.push({
+      x1,
+      y1,
+      x2,
+      y2,
+      spreadRadius,
+      life: dur,
+      maxLife: dur
+    });
+  }
+
+  function addRing(x, y, maxRadius, color, width, duration, startRatio = 0.2, fillColor = null) {
     const reduced = isReducedMotion();
     const dur = reduced ? Math.min(0.12, duration) : duration;
     rings.push({
@@ -177,6 +195,7 @@ export function createFxSystem() {
       startRatio: reduced ? 0.85 : startRatio,
       color,
       width,
+      fillColor,
       life: dur,
       maxLife: dur
     });
@@ -199,6 +218,7 @@ export function createFxSystem() {
     particles.length = 0;
     bolts.length = 0;
     beams.length = 0;
+    sprays.length = 0;
     rings.length = 0;
     floatingTexts.length = 0;
     hitFlashes.clear();
@@ -257,41 +277,54 @@ export function createFxSystem() {
             const dist = Math.hypot(dx, dy) || 1;
             const ux = dx / dist;
             const uy = dy / dist;
-            const sprayCount = reduced ? 2 : 7;
+            addSprayCone(tx, ty, ex, ey, cs * 0.28, 0.26);
+            const sprayCount = reduced ? 2 : 8;
             for (let s = 0; s < sprayCount; s++) {
               if (particles.length >= MAX_PARTICLES) break;
-              const spread = (Math.random() - 0.5) * 0.45;
+              const spread = (Math.random() - 0.5) * 0.5;
               const cos = Math.cos(spread);
               const sin = Math.sin(spread);
               const vxDir = ux * cos - uy * sin;
               const vyDir = ux * sin + uy * cos;
-              const speed = (dist / 0.22) * (0.65 + Math.random() * 0.5);
-              const spawnFrac = Math.random() * 0.3;
+              const speed = (dist / 0.26) * (0.6 + Math.random() * 0.5);
+              const spawnFrac = Math.random() * 0.25;
               spawnParticle(
                 tx + dx * spawnFrac,
                 ty + dy * spawnFrac,
                 vxDir * speed,
                 vyDir * speed,
-                s % 2 === 0 ? '#48dbfb' : '#dff9fb',
-                reduced ? 0.1 : 0.22,
-                2.5 + Math.random() * 1.5,
-                0.9
+                s % 3 === 0 ? '#74b9ff' : (s % 2 === 0 ? '#48dbfb' : '#dff9fb'),
+                reduced ? 0.1 : 0.26,
+                3.2 + Math.random() * 1.4,
+                0.92
               );
             }
-            addJaggedBeam(tx, ty, ex, ey, 'rgba(72, 219, 251, 0.45)', 3, 0.1, 2, 2);
+            addRing(ex, ey, cs * 0.36, '#74b9ff', 2, 0.22, 0.25, 'rgba(72, 219, 251, 0.14)');
           } else if (tower.type === 'arc') {
             const origin = arcChainOrigins.get(tower.id) || { x: tx, y: ty };
-            addJaggedBeam(origin.x, origin.y, ex, ey, '#a55eea', 2.6, 0.16, 5, cs * 0.14);
-            addJaggedBeam(origin.x, origin.y, ex, ey, '#f3e5ff', 1.1, 0.12, 5, cs * 0.08);
+            addJaggedBeam(
+              origin.x,
+              origin.y,
+              ex,
+              ey,
+              'rgba(165, 94, 234, 0.78)',
+              4.5,
+              0.24,
+              6,
+              cs * 0.14,
+              '#f3e5ff',
+              1.8
+            );
             arcChainOrigins.set(tower.id, { x: ex, y: ey });
-            spawnBurst(ex, ey, '#d6a2e8', 4, cs * 0.5, cs * 1.3, 0.18, 2);
+            addRing(ex, ey, cs * 0.26, '#d6a2e8', 1.8, 0.18, 0.2);
+            spawnBurst(ex, ey, '#d6a2e8', 4, cs * 0.5, cs * 1.3, 0.18, 2.2);
           } else if (tower.type === 'rocket') {
             if (!rocketSplashDone.has(tower.id)) {
               rocketSplashDone.add(tower.id);
               const splashRadius = getTowerSplashRadius(state, tower);
               const radiusPx = splashRadius * cs;
-              addRing(ex, ey, radiusPx, '#ff793f', 3, 0.32, 0.15);
-              addRing(ex, ey, radiusPx * 0.65, '#feca57', 2, 0.22, 0.2);
+              addRing(ex, ey, radiusPx, '#ff793f', 3.5, 0.36, 0.22, 'rgba(255, 121, 63, 0.14)');
+              addRing(ex, ey, radiusPx * 0.65, '#feca57', 2.4, 0.24, 0.25);
               spawnBurst(ex, ey, '#ff793f', 10, cs * 0.8, cs * 2.2, 0.3, 3.2);
               spawnBurst(ex, ey, '#b2bec3', 6, cs * 0.3, cs * 1.0, 0.38, 4.0);
             }
@@ -342,25 +375,38 @@ export function createFxSystem() {
     // Emit smoke trail particles for active in-flight rockets (throttled for 4x CPU budget)
     if (!reduced && Array.isArray(state?.projectiles) && state.projectiles.length > 0) {
       rocketSmokeAccum += dt;
-      if (rocketSmokeAccum >= 0.04) {
+      if (rocketSmokeAccum >= 0.025) {
         rocketSmokeAccum = 0;
         let emitted = 0;
-        for (let i = 0; i < state.projectiles.length && emitted < 8; i++) {
+        for (let i = 0; i < state.projectiles.length && emitted < 12; i++) {
           const proj = state.projectiles[i];
           if (proj.type === 'rocket' && particles.length < MAX_PARTICLES) {
             const px = toPixelCoords(proj, cs, state);
             if (px) {
               spawnParticle(
-                px.x + (Math.random() - 0.5) * 3,
-                px.y + (Math.random() - 0.5) * 3,
-                (Math.random() - 0.5) * 14,
-                (Math.random() - 0.5) * 14,
-                '#95a5a6',
-                0.24,
-                2.8,
-                0.92
+                px.x + (Math.random() - 0.5) * 4,
+                px.y + (Math.random() - 0.5) * 4,
+                (Math.random() - 0.5) * 16,
+                (Math.random() - 0.5) * 16,
+                '#b2bec3',
+                0.34,
+                4.2,
+                0.94
               );
               emitted++;
+              if (particles.length < MAX_PARTICLES && emitted < 12) {
+                spawnParticle(
+                  px.x,
+                  px.y,
+                  (Math.random() - 0.5) * 10,
+                  (Math.random() - 0.5) * 10,
+                  '#ff9f43',
+                  0.14,
+                  2.8,
+                  0.9
+                );
+                emitted++;
+              }
             }
           }
         }
@@ -394,6 +440,14 @@ export function createFxSystem() {
       beams[i].life -= dt;
       if (beams[i].life <= 0) {
         removeAt(beams, i);
+      }
+    }
+
+    // Update sprays
+    for (let i = sprays.length - 1; i >= 0; i--) {
+      sprays[i].life -= dt;
+      if (sprays[i].life <= 0) {
+        removeAt(sprays, i);
       }
     }
 
@@ -449,21 +503,61 @@ export function createFxSystem() {
     for (let i = 0; i < rings.length; i++) {
       const r = rings[i];
       const progress = 1 - r.life / r.maxLife;
-      const currentR = r.maxRadius * (r.startRatio + progress * (1 - r.startRatio));
-      ctx.globalAlpha = Math.max(0, r.life / r.maxLife);
+      const currentR = Math.max(1, r.maxRadius * (r.startRatio + progress * (1 - r.startRatio)));
+      const alpha = Math.max(0, r.life / r.maxLife);
+      ctx.globalAlpha = alpha;
+      if (r.fillColor) {
+        ctx.fillStyle = r.fillColor;
+        ctx.beginPath();
+        ctx.arc(r.x, r.y, currentR, 0, Math.PI * 2);
+        ctx.fill();
+      }
       ctx.strokeStyle = r.color;
       ctx.lineWidth = r.width;
       ctx.beginPath();
-      ctx.arc(r.x, r.y, Math.max(1, currentR), 0, Math.PI * 2);
+      ctx.arc(r.x, r.y, currentR, 0, Math.PI * 2);
       ctx.stroke();
     }
 
-    // 2. Jagged Beams (Arc lightning / Coolant mist)
+    // 1b. Coolant Spray Cones
+    for (let i = 0; i < sprays.length; i++) {
+      const s = sprays[i];
+      const dx = s.x2 - s.x1;
+      const dy = s.y2 - s.y1;
+      const len = Math.hypot(dx, dy) || 1;
+      const nx = -dy / len;
+      const ny = dx / len;
+      const alpha = Math.max(0, s.life / s.maxLife);
+      const halfSpread = s.spreadRadius;
+
+      ctx.globalAlpha = alpha * 0.35;
+      ctx.fillStyle = '#48dbfb';
+      ctx.beginPath();
+      ctx.moveTo(s.x1, s.y1);
+      ctx.lineTo(s.x2 + nx * halfSpread, s.y2 + ny * halfSpread);
+      ctx.lineTo(s.x2 - nx * halfSpread, s.y2 - ny * halfSpread);
+      ctx.fill();
+
+      ctx.globalAlpha = alpha * 0.85;
+      ctx.strokeStyle = '#dff9fb';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(s.x1, s.y1);
+      ctx.lineTo(s.x2, s.y2);
+      ctx.moveTo(s.x1, s.y1);
+      ctx.lineTo(s.x2 + nx * (halfSpread * 0.55), s.y2 + ny * (halfSpread * 0.55));
+      ctx.moveTo(s.x1, s.y1);
+      ctx.lineTo(s.x2 - nx * (halfSpread * 0.55), s.y2 - ny * (halfSpread * 0.55));
+      ctx.stroke();
+    }
+
+    // 2. Jagged Beams (Arc lightning)
     for (let i = 0; i < beams.length; i++) {
       const b = beams[i];
       const pts = b.points;
       if (pts.length < 2) continue;
-      ctx.globalAlpha = Math.max(0, b.life / b.maxLife);
+      const alpha = Math.max(0, b.life / b.maxLife);
+      ctx.globalAlpha = alpha;
       ctx.strokeStyle = b.color;
       ctx.lineWidth = b.width;
       ctx.beginPath();
@@ -472,6 +566,17 @@ export function createFxSystem() {
         ctx.lineTo(pts[j].x, pts[j].y);
       }
       ctx.stroke();
+
+      if (b.coreColor && b.coreWidth > 0) {
+        ctx.strokeStyle = b.coreColor;
+        ctx.lineWidth = b.coreWidth;
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let j = 1; j < pts.length; j++) {
+          ctx.lineTo(pts[j].x, pts[j].y);
+        }
+        ctx.stroke();
+      }
     }
 
     // 3. Pulse Bolts (Fast glowing bolt + short trail)
