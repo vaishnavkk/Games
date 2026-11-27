@@ -2,9 +2,11 @@ import mapData from '../data/map.json' with { type: 'json' };
 import towersData from '../data/towers.json' with { type: 'json' };
 import enemiesData from '../data/enemies.json' with { type: 'json' };
 import { drawGridAndMap } from './grid.js';
-import { drawTowerIcon, drawEnemyIcon } from './icons.js';
+import { drawTowerIcon, drawEnemyIcon, drawSnowflakePip } from './icons.js';
 import { drawRangeCircle, isReducedMotion } from './effects.js';
 import { createFxSystem } from './fx/index.js';
+
+const MAX_HIT_FLASH_SEC = 0.08;
 
 /**
  * Canvas2D Procedural Renderer for Robot Factory Defense.
@@ -31,6 +33,7 @@ export function createRenderer(canvas) {
   let enemyAngle = new Float32Array(256);
   const towerCooldowns = new Map();
   const towerRecoils = new Map();
+  const enemyFlashTimers = new Map();
 
   // Waypoints for distance-to-position projection
   const waypoints = mapData.waypoints;
@@ -123,6 +126,20 @@ export function createRenderer(canvas) {
       ctx.translate(shake.x, shake.y);
     }
 
+    const towers = snap.towers || [];
+    // Clear stale selection if selectedTower was sold or selectedCell is now occupied
+    if (selectedTower) {
+      const stillExists = towers.some(t =>
+        (selectedTower.id !== undefined && t.id === selectedTower.id) ||
+        (t.col === selectedTower.col && t.row === selectedTower.row)
+      );
+      if (!stillExists) selectedTower = null;
+    }
+    if (selectedCell) {
+      const isOccupied = towers.some(t => t.col === selectedCell.col && t.row === selectedCell.row);
+      if (isOccupied) selectedCell = null;
+    }
+
     // 1. Draw Factory Grid & Conveyor Path
     drawGridAndMap(ctx, width, height, cellSize, totalAnimTime, selectedCell, fx.getCoreFlashAlpha());
 
@@ -168,7 +185,6 @@ export function createRenderer(canvas) {
     }
 
     // 4. Draw Placed Towers
-    const towers = snap.towers || [];
     for (let tIdx = 0; tIdx < towers.length; tIdx++) {
       const tower = towers[tIdx];
       const tx = (tower.col + 0.5) * cellSize;
@@ -221,15 +237,28 @@ export function createRenderer(canvas) {
         const eid = typeof enemy.id === 'number' ? enemy.id : i;
         const bobOffset = animate ? Math.sin(totalAnimTime * 9 + eid * 1.7) * (cellSize * 0.03) : 0;
         const wobble = animate ? Math.sin(totalAnimTime * 7 + eid * 2.3) * 0.06 : 0;
+
+        let hitFlash = false;
+        if (fx.hasHitFlash(enemy.id)) {
+          const prevElapsed = enemyFlashTimers.get(enemy.id);
+          const nextElapsed = prevElapsed === undefined ? 0 : prevElapsed + dt;
+          enemyFlashTimers.set(enemy.id, nextElapsed);
+          hitFlash = nextElapsed <= MAX_HIT_FLASH_SEC;
+        } else {
+          enemyFlashTimers.delete(enemy.id);
+        }
+
+        const isSlowed = enemy.slowTimer > 0 || Boolean(enemy.slowed);
         drawEnemyIcon(ctx, enemy, enemyX[i], enemyY[i], cellSize, 1, false, false, {
           angle: enemyAngle[i],
           bobOffset,
           wobble,
-          hitFlash: fx.hasHitFlash(enemy.id)
+          hitFlash,
+          slowed: isSlowed
         });
       }
 
-      // 5b. Batched Slowed Frost Rings
+      // 5b. Batched Slowed Frost Rings & Snowflake Pips
       ctx.strokeStyle = '#00d2d3';
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -240,12 +269,30 @@ export function createRenderer(canvas) {
           hasSlowed = true;
           const ex = enemyX[i];
           const ey = enemyY[i];
-          const frostRadius = cellSize * 0.38 * (enemy.isBoss ? 1.45 : 1) * 1.3;
+          const bossScale = enemy.type === 'mega_mixer' ? 2.0 : enemy.isBoss ? 1.8 : 1;
+          const frostRadius = cellSize * 0.38 * bossScale * 1.3;
           ctx.moveTo(ex + frostRadius, ey);
           ctx.arc(ex, ey, frostRadius, 0, Math.PI * 2);
         }
       }
-      if (hasSlowed) ctx.stroke();
+      if (hasSlowed) {
+        ctx.stroke();
+
+        // Batched procedural snowflake pips above/beside slowed enemies
+        ctx.strokeStyle = '#dff9fb';
+        ctx.lineWidth = 1.5;
+        const pipR = Math.max(4, cellSize * 0.08);
+        for (let i = 0; i < enemyCount; i++) {
+          const enemy = enemies[i];
+          if (enemy.slowTimer > 0 || enemy.slowed) {
+            const ex = enemyX[i];
+            const ey = enemyY[i];
+            const bossScale = enemy.type === 'mega_mixer' ? 2.0 : enemy.isBoss ? 1.8 : 1;
+            const frostRadius = cellSize * 0.38 * bossScale * 1.3;
+            drawSnowflakePip(ctx, ex + frostRadius * 0.72, ey - frostRadius * 0.72, pipR);
+          }
+        }
+      }
 
       // 5c. Batched Health Bars (ONLY when damaged: e.hp < maxHp)
       const r = cellSize * 0.38;
@@ -262,7 +309,7 @@ export function createRenderer(canvas) {
         const ex = enemyX[i];
         const ey = enemyY[i];
         const barH = enemy.isBoss ? 5 : 3.5;
-        const barY = ey - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
+        const barY = ey - r * (enemy.isBoss ? 2.25 : 1.35) - 6;
         ctx.rect(ex - barW / 2 - 1, barY - 1, barW + 2, barH + 2);
       }
       if (hasDamaged) {
@@ -285,7 +332,7 @@ export function createRenderer(canvas) {
             const ey = enemyY[i];
             const fillW = Math.min(1, hpRatio) * barW;
             const barH = enemy.isBoss ? 5 : 3.5;
-            const barY = ey - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
+            const barY = ey - r * (enemy.isBoss ? 2.25 : 1.35) - 6;
             ctx.rect(ex - barW / 2, barY, fillW, barH);
           }
         }
@@ -307,7 +354,7 @@ export function createRenderer(canvas) {
             const ey = enemyY[i];
             const fillW = hpRatio * barW;
             const barH = enemy.isBoss ? 5 : 3.5;
-            const barY = ey - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
+            const barY = ey - r * (enemy.isBoss ? 2.25 : 1.35) - 6;
             ctx.rect(ex - barW / 2, barY, fillW, barH);
           }
         }
@@ -329,7 +376,7 @@ export function createRenderer(canvas) {
             const ey = enemyY[i];
             const fillW = hpRatio * barW;
             const barH = enemy.isBoss ? 5 : 3.5;
-            const barY = ey - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
+            const barY = ey - r * (enemy.isBoss ? 2.25 : 1.35) - 6;
             ctx.rect(ex - barW / 2, barY, fillW, barH);
           }
         }
