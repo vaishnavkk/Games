@@ -26,8 +26,8 @@ let gameStarted = false;
 const enemyPosCache = new Map();
 
 function getEnemyCanvasCoords(pos, cellSize) {
-  const ex = pos.x <= mapData.grid.cols ? (pos.x + 0.5) * cellSize : pos.x;
-  const ey = pos.y <= mapData.grid.rows ? (pos.y + 0.5) * cellSize : pos.y;
+  const ex = pos.x <= mapData.grid.cols ? pos.x * cellSize : pos.x;
+  const ey = pos.y <= mapData.grid.rows ? pos.y * cellSize : pos.y;
   return { ex, ey };
 }
 
