@@ -36,37 +36,37 @@
     "coolant": {
       "id": "coolant",
       "name": "Coolant Sprayer",
-      "description": "Sprays cryogenic foam, slowing enemy speed by 50% for 2s (non-stacking).",
+      "description": "Sprays cryogenic foam, slowing enemy speed by 50% for 2.4s (non-stacking).",
       "unlockedByDefault": true,
       "levels": [
         {
           "level": 1,
-          "cost": 80,
-          "damage": 4,
-          "fireRate": 1,
-          "range": 2.2,
+          "cost": 75,
+          "damage": 3,
+          "fireRate": 1.5,
+          "range": 2.3,
           "slowRatio": 0.5,
-          "slowDuration": 2,
-          "upgradeCost": 60
+          "slowDuration": 2.4,
+          "upgradeCost": 55
         },
         {
           "level": 2,
-          "cost": 60,
-          "damage": 7,
-          "fireRate": 1.2,
-          "range": 2.4,
+          "cost": 55,
+          "damage": 5,
+          "fireRate": 1.8,
+          "range": 2.5,
           "slowRatio": 0.5,
-          "slowDuration": 2.2,
-          "upgradeCost": 90
+          "slowDuration": 2.7,
+          "upgradeCost": 85
         },
         {
           "level": 3,
-          "cost": 90,
-          "damage": 11,
-          "fireRate": 1.4,
-          "range": 2.6,
+          "cost": 85,
+          "damage": 8,
+          "fireRate": 2.2,
+          "range": 2.7,
           "slowRatio": 0.5,
-          "slowDuration": 2.4,
+          "slowDuration": 3,
           "upgradeCost": 0
         }
       ]
@@ -118,33 +118,33 @@
       "name": "Rocket Rack",
       "description": "Launches heavy cluster rockets with devastating area splash damage and long range.",
       "unlockedByDefault": false,
-      "unlockCircuitCost": 20,
+      "unlockCircuitCost": 40,
       "levels": [
         {
           "level": 1,
-          "cost": 105,
-          "damage": 38,
-          "fireRate": 0.45,
+          "cost": 120,
+          "damage": 35,
+          "fireRate": 0.33,
           "range": 3.2,
-          "splashRadius": 1.5,
-          "upgradeCost": 80
+          "splashRadius": 1.2,
+          "upgradeCost": 85
         },
         {
           "level": 2,
-          "cost": 80,
-          "damage": 48,
-          "fireRate": 0.5,
+          "cost": 85,
+          "damage": 44,
+          "fireRate": 0.35,
           "range": 3.3,
-          "splashRadius": 1.6,
-          "upgradeCost": 110
+          "splashRadius": 1.25,
+          "upgradeCost": 120
         },
         {
           "level": 3,
-          "cost": 110,
-          "damage": 60,
-          "fireRate": 0.55,
+          "cost": 120,
+          "damage": 53,
+          "fireRate": 0.37,
           "range": 3.4,
-          "splashRadius": 1.8,
+          "splashRadius": 1.3,
           "upgradeCost": 0
         }
       ]

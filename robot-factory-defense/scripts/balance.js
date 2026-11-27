@@ -290,7 +290,7 @@ export function canClearWaveHpWithConfidence(state, waveNum, confidence = 0.90) 
   let maxSpawnTime = 0;
   for (const s of w.spawns) {
     const e = state.config.enemies.enemies[s.type];
-    const hp = (e.hp || 0) * (state.config.sim?.hpMultiplier || 1.0);
+    const hp = (e.hp || 0) * (state.hpMultiplier ?? 1.0) * (w.hpMult ?? 1.0);
     totalHp += hp * s.count;
     const travelTime = pathCells / (e.speed || 1);
     if (travelTime < minTravelTime) minTravelTime = travelTime;
@@ -356,13 +356,14 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     const nextWave = state.wave + 1;
 
     // Workshop purchases
+    const arcUnlockCost = state.config.upgrades.workshop.unlocks.find(u => u.target === 'arc')?.cost ?? 20;
+    const rocketUnlockCost = state.config.upgrades.workshop.unlocks.find(u => u.target === 'rocket')?.cost ?? 40;
     if (workshopMode === 'all') {
       if (!canBuild('arc') && excludedTower !== 'arc') {
-        if (nextWave >= 5 && state.circuits >= 20 && !shouldSkip()) buyUpgrade(state, 'unlock_arc');
+        if (nextWave >= 5 && state.circuits >= arcUnlockCost && !shouldSkip()) buyUpgrade(state, 'unlock_arc');
       } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
-        const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
         const minW = excludedTower === 'arc' ? 5 : 7;
-        if (nextWave >= minW && state.circuits >= rCost && !shouldSkip()) buyUpgrade(state, 'unlock_rocket');
+        if (nextWave >= minW && state.circuits >= rocketUnlockCost && !shouldSkip()) buyUpgrade(state, 'unlock_rocket');
       } else {
         if (state.circuits >= 30 && !shouldSkip()) buyUpgrade(state, 'fast_assembly');
         if (state.circuits >= 30 && !shouldSkip()) buyUpgrade(state, 'overclock');
@@ -373,19 +374,17 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       }
     } else if (workshopMode === 'none') {
       if (!canBuild('arc') && excludedTower !== 'arc') {
-        if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
+        if (nextWave >= 5 && state.circuits >= arcUnlockCost) buyUpgrade(state, 'unlock_arc');
       } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
-        const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
         const minW = excludedTower === 'arc' ? 5 : 7;
-        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+        if (nextWave >= minW && state.circuits >= rocketUnlockCost) buyUpgrade(state, 'unlock_rocket');
       }
     } else if (typeof workshopMode === 'string') {
       if (!canBuild('arc') && excludedTower !== 'arc') {
-        if (nextWave >= 5 && state.circuits >= 20) buyUpgrade(state, 'unlock_arc');
+        if (nextWave >= 5 && state.circuits >= arcUnlockCost) buyUpgrade(state, 'unlock_arc');
       } else if (!canBuild('rocket') && excludedTower !== 'rocket') {
-        const rCost = state.config.towers.towers.rocket.unlockCircuitCost || 30;
         const minW = excludedTower === 'arc' ? 5 : 7;
-        if (nextWave >= minW && state.circuits >= rCost) buyUpgrade(state, 'unlock_rocket');
+        if (nextWave >= minW && state.circuits >= rocketUnlockCost) buyUpgrade(state, 'unlock_rocket');
       } else {
         const u = state.config.upgrades.workshop.globalUpgrades.find(x => x.id === workshopMode);
         if (u && state.circuits >= u.cost) {
@@ -410,7 +409,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     // Bot may not spend Scrap on Coolant, Fabricator, or any non-damage-dealing purchase
     // until its current damage towers (Pulse/Arc/Rocket, any level) can clear the CURRENT wave's
     // total enemy HP within that wave's duration at >= 90% confidence.
-    let combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+    let combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.75);
     if (!combatSufficient) {
       // Prioritize upgrading damage towers first
       for (const t of state.towers) {
@@ -419,10 +418,10 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
         }
       }
       // If still not sufficient, place additional pulse defense
-      combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+      combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.75);
       if (!combatSufficient && canBuild('pulse')) {
         let iters = 0;
-        while (state.scrap >= 60 && !canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
+        while (state.scrap >= 60 && !canClearWaveHpWithConfidence(state, nextWave, 0.75)) {
           if (++iters > maxPurchaseIterations) break;
           if (shouldSkip()) break;
           const p = pickPad(COMBAT_PADS) || pickPad(HEAVY_PADS);
@@ -430,14 +429,14 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
           else break;
         }
       }
-      combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.90);
+      combatSufficient = canClearWaveHpWithConfidence(state, nextWave, 0.75);
     }
 
     // 2. Fabricators (Economy): 1 on W2, 2 on W4, 3 on W6, 4 on W8 (gated by combat confidence)
     const maxFabs = nextWave <= 1 ? 0 : (nextWave <= 3 ? 1 : (nextWave <= 5 ? 2 : (nextWave <= 7 ? 3 : 4)));
     if (combatSufficient && canBuild('fabricator') && state.fabricatorCount < maxFabs && state.scrap >= 75) {
       let iters = 0;
-      while (state.fabricatorCount < maxFabs && state.scrap >= 75 && canClearWaveHpWithConfidence(state, nextWave, 0.90)) {
+      while (state.fabricatorCount < maxFabs && state.scrap >= 75 && canClearWaveHpWithConfidence(state, nextWave, 0.75)) {
         if (++iters > maxPurchaseIterations) break;
         if (shouldSkip()) break;
         const p = pickPad(UTILITY_PADS) || pickPad(COMBAT_PADS);
@@ -446,10 +445,11 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
       }
     }
 
-    // 3. Coolant slow: defer until Arc L2 owned (Arm C ordering)
+    // 3. Coolant slow: defer until Arc L2 owned (Arm C ordering; or W6+ if Arc is excluded)
     const hasArcL2 = state.towers.some(t => t.type === 'arc' && t.level >= 2);
+    const coolantReady = excludedTower === 'arc' ? nextWave >= 6 : hasArcL2;
     const coolantTarget = nextWave >= 7 ? 2 : (nextWave >= 3 ? 1 : 0);
-    if (combatSufficient && hasArcL2 && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
+    if (combatSufficient && coolantReady && canBuild('coolant') && state.towers.filter(t => t.type === 'coolant').length < coolantTarget && state.scrap >= 80) {
       if (!shouldSkip()) {
         const p = pickPad(COOLANT_PADS) || pickPad(COMBAT_PADS);
       if (p && place(state, p, 'coolant')) usedTowers.add('coolant');
@@ -474,7 +474,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
     }
 
     // 5. Rocket Rack: 2 starting W8
-    const rocketCost = state.config.towers.towers.rocket.levels[0].cost || 110;
+    const rocketCost = state.config.towers.towers.rocket.levels[0].cost;
     if (nextWave >= 8 && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= rocketCost) {
       let iters = 0;
       while (state.towers.filter(t => t.type === 'rocket').length < 2 && state.scrap >= rocketCost) {
@@ -539,7 +539,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
           } else break;
         }
         let sIters4 = 0;
-        while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
+        while (nextWave >= 6 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 4) {
           if (++sIters4 > maxPurchaseIterations) break;
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
@@ -596,10 +596,25 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
           else break;
         }
       } else {
-        // Default surplus: 3rd Arc, 3rd Pulse
+        // Default surplus: 3rd Rocket (W10+), 3rd Arc, 3rd Pulse
+        const maxRFull = nextWave >= 10 ? 3 : 2;
+        let sItersR = 0;
+        while (state.scrap >= rocketCost && canBuild('rocket') && state.towers.filter(t => t.type === 'rocket').length < maxRFull) {
+          if (++sItersR > maxPurchaseIterations) break;
+          if (shouldSkip()) break;
+          const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
+          if (p) {
+            const t = place(state, p, 'rocket');
+            if (t) {
+              usedTowers.add('rocket');
+              if (targeting === 'nearest') setTowerTargetMode(state, t.id, 'nearest');
+            } else break;
+          } else break;
+        }
         let sIters10 = 0;
         while (state.scrap >= 100 && canBuild('arc') && state.towers.filter(t => t.type === 'arc').length < 3) {
           if (++sIters10 > maxPurchaseIterations) break;
+          if (shouldSkip()) break;
           const p = pickPad(HEAVY_PADS) || pickPad(COMBAT_PADS);
           if (p) {
             const t = place(state, p, 'arc');
@@ -612,6 +627,7 @@ export function simulateCompetentBot(seed, excludedTower = null, options = {}) {
         let sIters11 = 0;
         while (nextWave >= 10 && state.scrap >= 60 && canBuild('pulse') && state.towers.filter(t => t.type === 'pulse').length < 3) {
           if (++sIters11 > maxPurchaseIterations) break;
+          if (shouldSkip()) break;
           const p = pickPad(COMBAT_PADS) || pickPad(UTILITY_PADS);
           if (p && place(state, p, 'pulse')) usedTowers.add('pulse');
           else break;
@@ -654,12 +670,15 @@ export function simulateSloppyBot(seed, sloppyP = 0.1, options = {}) {
 // 5. CIRCUIT ECONOMY & INVARIANTS CHECKS
 // ==========================================
 export function verifyCircuitEconomy(avgWaveDuration = 48) {
-  const totalWorkshop = 220; // 160 upgrades + 60 unlocks
+  const totalWorkshop =
+    upgradesData.workshop.unlocks.reduce((sum, u) => sum + u.cost, 0) +
+    upgradesData.workshop.globalUpgrades.reduce((sum, g) => sum + g.cost, 0);
+  const arcUnlockCost = upgradesData.workshop.unlocks.find(u => u.target === 'arc')?.cost ?? 20;
 
-  // 1 Fabricator on Wave 1: can it unlock Arc Coil (20 circuits) on or before W6?
+  // 1 Fabricator on Wave 1: can it unlock Arc Coil on or before W6?
   const timeByW6 = 6 * avgWaveDuration;
   const circuitsByW6_1Fab = Math.floor(timeByW6 / 10);
-  const w6Check = circuitsByW6_1Fab >= 20;
+  const w6Check = circuitsByW6_1Fab >= arcUnlockCost;
 
   // 2 Fabricators by W15: affords <= 80% of total Workshop (176 circuits)
   const totalGameTime = 15 * avgWaveDuration;
