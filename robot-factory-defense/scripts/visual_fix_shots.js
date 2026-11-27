@@ -93,7 +93,9 @@ async function captureFxShot(page, towerType) {
           { type: 'rust_walker', hp: 5000, distance: 3.3, x: 3.8, y: 2.5, speed: 0.2 },
           { type: 'rust_walker', hp: 5000, distance: 3.9, x: 4.4, y: 2.5, speed: 0.2 }
         ]
-      : [{ type: 'crusher_tank', hp: 5000, distance: 3.0, x: 3.5, y: 2.5, speed: 0.15 }];
+      : towerType === 'pulse'
+        ? [{ type: 'crusher_tank', hp: 5000, distance: 4.5, x: 5.0, y: 2.5, speed: 0.15 }]
+        : [{ type: 'crusher_tank', hp: 5000, distance: 3.0, x: 3.5, y: 2.5, speed: 0.15 }];
 
   await setupScenario(page, {
     scrap: 5000,
@@ -110,12 +112,14 @@ async function captureFxShot(page, towerType) {
     rfd.renderer?.fx?.clear?.();
   });
 
-  // Step simulation via rAF until live combat FX count > 0 (for rocket, prefer explosion burst)
+  // Step simulation via rAF until live combat FX count > 0 (for rocket, prefer explosion burst;
+  // for pulse, wait 2 extra frames so the 0.09s bolt stretches mid-flight between tower and target)
   const fxStats = await page.evaluate(
     (type) =>
       new Promise((resolve) => {
         const rfd = window.__rfd;
         let frames = 0;
+        let pulseSeenFrames = 0;
         const maxFrames = 180;
 
         const check = () => {
@@ -124,8 +128,21 @@ async function captureFxShot(page, towerType) {
           const projectiles = rfd.state?.projectiles?.length ?? 0;
           const fxCount = particles + projectiles;
 
-          const ready = type === 'rocket' ? particles >= 6 : particles > 0;
+          let ready = false;
+          if (type === 'rocket') {
+            ready = particles >= 6;
+          } else if (type === 'pulse') {
+            if (particles > 0) pulseSeenFrames += 1;
+            ready = pulseSeenFrames >= 3;
+          } else {
+            ready = particles > 0;
+          }
+
           if (ready || (frames >= 90 && fxCount > 0) || frames >= maxFrames) {
+            if (rfd.renderer?.fx && !window.__rfdOrigFxUpdate) {
+              window.__rfdOrigFxUpdate = rfd.renderer.fx.update;
+              rfd.renderer.fx.update = () => {};
+            }
             resolve({ particles, projectiles, fxCount, frames });
             return;
           }
@@ -142,6 +159,13 @@ async function captureFxShot(page, towerType) {
 
   const outPath = path.join(outDir, `fx_${towerType}.png`);
   await page.screenshot({ path: outPath });
+  await page.evaluate(() => {
+    const rfd = window.__rfd;
+    if (rfd.renderer?.fx && window.__rfdOrigFxUpdate) {
+      rfd.renderer.fx.update = window.__rfdOrigFxUpdate;
+      delete window.__rfdOrigFxUpdate;
+    }
+  });
   console.log(
     `[visual_fix_shots] Saved fx_${towerType}.png (fxCount=${fxStats.fxCount}, particles=${fxStats.particles}, projectiles=${fxStats.projectiles}, frames=${fxStats.frames})`
   );
