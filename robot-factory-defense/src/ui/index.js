@@ -12,6 +12,7 @@ import { createInspectCard } from './inspectCard.js';
 import { createWorkshopModal } from './workshopModal.js';
 import { createScreens } from './screens.js';
 import { createTipsBanner } from './tips.js';
+import { createWaveBanner } from './waveBanner.js';
 
 export {
   getStoredData,
@@ -40,10 +41,17 @@ export function createUI(container, callbacks = {}) {
 
   // Sub-components
   const hud = createHUD({
+    getWavesConfig: callbacks.getWavesConfig,
+    getEnemiesConfig: callbacks.getEnemiesConfig,
     onStartWave: () => callbacks.onStartWave && callbacks.onStartWave(),
     onToggleSpeed: () => callbacks.onToggleSpeed && callbacks.onToggleSpeed(),
     onTogglePause: () => callbacks.onTogglePause && callbacks.onTogglePause(),
     onOpenWorkshop: () => workshop.show()
+  });
+
+  const waveBanner = createWaveBanner({
+    getWavesConfig: callbacks.getWavesConfig,
+    getEnemiesConfig: callbacks.getEnemiesConfig
   });
 
   const tipsBanner = createTipsBanner();
@@ -72,6 +80,7 @@ export function createUI(container, callbacks = {}) {
   });
 
   playArea.appendChild(canvasStage);
+  playArea.appendChild(waveBanner.element);
   playArea.appendChild(inspectCard.element);
 
   const backgroundNodes = [hud.element, tipsBanner.element, playArea, buildBar.element];
@@ -126,6 +135,7 @@ export function createUI(container, callbacks = {}) {
     selectedCell = null;
     selectedTower = null;
     buildBar.hide();
+    buildBar.setSelectedType('pulse');
     inspectCard.hide();
     if (callbacks.onSelectCell) callbacks.onSelectCell(null);
     if (callbacks.onSelectTower) callbacks.onSelectTower(null);
@@ -198,6 +208,8 @@ export function createUI(container, callbacks = {}) {
     selectCell,
     selectTower,
     clearSelection,
+    showWaveBanner: (waveNum) => waveBanner.show(waveNum),
+    hideWaveBanner: () => waveBanner.hide(),
     callbacks
   };
 }

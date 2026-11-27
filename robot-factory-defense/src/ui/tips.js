@@ -1,3 +1,5 @@
+import { getStoredData, setStoredData } from './storage.js';
+
 /**
  * First-run tips configuration and helper functions.
  */
@@ -7,12 +9,19 @@ export const FIRST_RUN_TIPS = [
   'Armored enemies resist basic turrets; use Arc Coils and Rockets.'
 ];
 
+export const TIPS_DISMISSED_KEY = 'tips_dismissed';
+
 export function createTipsBanner(onDismiss) {
   let currentTipIndex = 0;
+  const isDismissed = Boolean(getStoredData(TIPS_DISMISSED_KEY, false));
+
   const banner = document.createElement('div');
   banner.className = 'tips-banner interactive';
   banner.id = 'tipsBanner';
   banner.setAttribute('data-testid', 'tips-banner');
+  if (isDismissed) {
+    banner.style.display = 'none';
+  }
 
   const badge = document.createElement('span');
   badge.className = 'tips-badge';
@@ -36,6 +45,7 @@ export function createTipsBanner(onDismiss) {
     if (currentTipIndex < FIRST_RUN_TIPS.length) {
       text.textContent = FIRST_RUN_TIPS[currentTipIndex];
     } else {
+      setStoredData(TIPS_DISMISSED_KEY, true);
       banner.style.display = 'none';
       if (onDismiss) onDismiss();
     }

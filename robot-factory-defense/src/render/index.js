@@ -3,7 +3,8 @@ import towersData from '../data/towers.json' with { type: 'json' };
 import enemiesData from '../data/enemies.json' with { type: 'json' };
 import { drawGridAndMap } from './grid.js';
 import { drawTowerIcon, drawEnemyIcon } from './icons.js';
-import { drawRangeCircle, createEffectsManager, isReducedMotion } from './effects.js';
+import { drawRangeCircle, isReducedMotion } from './effects.js';
+import { createFxSystem } from './fx/index.js';
 
 /**
  * Canvas2D Procedural Renderer for Robot Factory Defense.
@@ -12,7 +13,13 @@ import { drawRangeCircle, createEffectsManager, isReducedMotion } from './effect
  */
 export function createRenderer(canvas) {
   const ctx = canvas.getContext('2d');
-  const effects = createEffectsManager();
+  const fx = createFxSystem();
+  const effects = {
+    clear: () => fx.clear(),
+    addBeam: () => {},
+    addExplosion: () => {},
+    addSparks: () => {}
+  };
 
   let selectedCell = null;
   let selectedTower = null;
@@ -21,6 +28,9 @@ export function createRenderer(canvas) {
   let totalAnimTime = 0;
   let enemyX = new Float32Array(256);
   let enemyY = new Float32Array(256);
+  let enemyAngle = new Float32Array(256);
+  const towerCooldowns = new Map();
+  const towerRecoils = new Map();
 
   // Waypoints for distance-to-position projection
   const waypoints = mapData.waypoints;
@@ -41,13 +51,27 @@ export function createRenderer(canvas) {
       dx,
       dy,
       len,
+      angle: Math.atan2(dy, dx),
       startDist: totalPathCells,
       endDist: totalPathCells + len
     });
     totalPathCells += len;
   }
 
+  function getSegmentAngle(dist) {
+    for (let i = 0; i < segments.length; i++) {
+      const seg = segments[i];
+      if (dist >= seg.startDist && dist <= seg.endDist) {
+        return seg.angle;
+      }
+    }
+    return 0;
+  }
+
   function getEnemyCoordsInto(enemy, cellSize, idx) {
+    const dist = typeof enemy.distance === 'number' ? enemy.distance : 0;
+    enemyAngle[idx] = getSegmentAngle(dist);
+
     if (typeof enemy.x === 'number' && typeof enemy.y === 'number') {
       enemyX[idx] = enemy.x <= 16 ? (enemy.x + 0.5) * cellSize : enemy.x;
       enemyY[idx] = enemy.y <= 9 ? (enemy.y + 0.5) * cellSize : enemy.y;
@@ -60,7 +84,6 @@ export function createRenderer(canvas) {
       return;
     }
 
-    const dist = typeof enemy.distance === 'number' ? enemy.distance : 0;
     for (let i = 0; i < segments.length; i++) {
       const seg = segments[i];
       if (dist >= seg.startDist && dist <= seg.endDist) {
@@ -83,7 +106,9 @@ export function createRenderer(canvas) {
     const now = performance.now();
     const dt = Math.min((now - lastTime) / 1000, 0.1);
     lastTime = now;
-    if (!snap.paused && !isReducedMotion()) {
+    const reducedMotion = isReducedMotion();
+    const animate = !snap.paused && !reducedMotion;
+    if (animate) {
       totalAnimTime += dt * (snap.speed || 1);
     }
 
@@ -91,10 +116,17 @@ export function createRenderer(canvas) {
     const height = canvas.height;
     const cellSize = width / mapData.grid.cols; // 60px at 960x540
 
-    // 1. Draw Factory Grid & Conveyor Path
-    drawGridAndMap(ctx, width, height, cellSize, totalAnimTime, selectedCell);
+    fx.update(dt, snap, cellSize);
+    const shake = fx.getShakeOffset();
+    ctx.save();
+    if (shake && (shake.x || shake.y)) {
+      ctx.translate(shake.x, shake.y);
+    }
 
-    // 2. Draw Range Circles for Selected Cell or Tower
+    // 1. Draw Factory Grid & Conveyor Path
+    drawGridAndMap(ctx, width, height, cellSize, totalAnimTime, selectedCell, fx.getCoreFlashAlpha());
+
+    // 2. Draw Range Circles ONLY for selectedTower or placement preview (selectedCell)
     if (selectedTower) {
       const def = towersData.towers[selectedTower.type];
       if (def && def.levels) {
@@ -126,8 +158,10 @@ export function createRenderer(canvas) {
     const enemies = snap.enemies || [];
     const enemyCount = enemies.length;
     if (enemyX.length < enemyCount) {
-      enemyX = new Float32Array(Math.max(enemyCount, 256));
-      enemyY = new Float32Array(Math.max(enemyCount, 256));
+      const nextCap = Math.max(enemyCount, 256);
+      enemyX = new Float32Array(nextCap);
+      enemyY = new Float32Array(nextCap);
+      enemyAngle = new Float32Array(nextCap);
     }
     for (let i = 0; i < enemyCount; i++) {
       getEnemyCoordsInto(enemies[i], cellSize, i);
@@ -158,14 +192,41 @@ export function createRenderer(canvas) {
         angle = Math.atan2(bestY - ty, bestX - tx);
       }
 
-      drawTowerIcon(ctx, tower.type, tx, ty, cellSize, tower.level, angle, totalAnimTime);
+      let recoil = 0;
+      if (tower.type !== 'fabricator') {
+        const prevCd = towerCooldowns.get(tower.id) ?? 0;
+        const currCd = tower.cooldown ?? 0;
+        if (currCd > prevCd + 0.01) {
+          towerRecoils.set(tower.id, 1);
+        }
+        towerCooldowns.set(tower.id, currCd);
+
+        recoil = towerRecoils.get(tower.id) || 0;
+        if (recoil > 0 && !snap.paused) {
+          const nextRecoil = Math.max(0, recoil - dt * 6);
+          towerRecoils.set(tower.id, nextRecoil);
+        }
+        if (reducedMotion) recoil = 0;
+        else recoil = Math.max(recoil, fx.getTowerRecoil ? fx.getTowerRecoil(tower.id) : 0);
+      }
+
+      drawTowerIcon(ctx, tower.type, tx, ty, cellSize, tower.level, angle, totalAnimTime, recoil);
     }
 
     // 5. Draw Enemies along Path (Sprites + Batched Overlays, Zero Garbage Allocation)
     if (enemyCount > 0) {
-      // 5a. Draw procedural sprites
+      // 5a. Draw procedural sprites rotated to face travel direction with subtle walk bob/wobble
       for (let i = 0; i < enemyCount; i++) {
-        drawEnemyIcon(ctx, enemies[i], enemyX[i], enemyY[i], cellSize, 1, false, false);
+        const enemy = enemies[i];
+        const eid = typeof enemy.id === 'number' ? enemy.id : i;
+        const bobOffset = animate ? Math.sin(totalAnimTime * 9 + eid * 1.7) * (cellSize * 0.03) : 0;
+        const wobble = animate ? Math.sin(totalAnimTime * 7 + eid * 2.3) * 0.06 : 0;
+        drawEnemyIcon(ctx, enemy, enemyX[i], enemyY[i], cellSize, 1, false, false, {
+          angle: enemyAngle[i],
+          bobOffset,
+          wobble,
+          hitFlash: fx.hasHitFlash(enemy.id)
+        });
       }
 
       // 5b. Batched Slowed Frost Rings
@@ -173,97 +234,107 @@ export function createRenderer(canvas) {
       ctx.lineWidth = 2;
       ctx.beginPath();
       let hasSlowed = false;
-      const frostRadius = cellSize * 0.38 * 1.35;
       for (let i = 0; i < enemyCount; i++) {
         const enemy = enemies[i];
         if (enemy.slowTimer > 0 || enemy.slowed) {
           hasSlowed = true;
           const ex = enemyX[i];
           const ey = enemyY[i];
+          const frostRadius = cellSize * 0.38 * (enemy.isBoss ? 1.45 : 1) * 1.3;
           ctx.moveTo(ex + frostRadius, ey);
           ctx.arc(ex, ey, frostRadius, 0, Math.PI * 2);
         }
       }
       if (hasSlowed) ctx.stroke();
 
-      // 5c. Batched Health Bars (Backgrounds)
+      // 5c. Batched Health Bars (ONLY when damaged: e.hp < maxHp)
       const r = cellSize * 0.38;
       const barW = Math.max(r * 2.2, 28);
       ctx.fillStyle = '#000000';
       ctx.beginPath();
+      let hasDamaged = false;
       for (let i = 0; i < enemyCount; i++) {
         const enemy = enemies[i];
+        const enemyDef = enemiesData.enemies[enemy.type] || {};
+        const maxHp = enemy.maxHp || enemyDef.hp || 30;
+        if (enemy.hp >= maxHp) continue;
+        hasDamaged = true;
         const ex = enemyX[i];
         const ey = enemyY[i];
         const barH = enemy.isBoss ? 5 : 3.5;
-        const barY = ey - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
+        const barY = ey - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
         ctx.rect(ex - barW / 2 - 1, barY - 1, barW + 2, barH + 2);
       }
-      ctx.fill();
+      if (hasDamaged) {
+        ctx.fill();
 
-      // 5d. Health Bar Fills (Batched in-place by threshold without object allocations)
-      // Green (> 50%)
-      ctx.fillStyle = '#2ed573';
-      ctx.beginPath();
-      let hasGreen = false;
-      for (let i = 0; i < enemyCount; i++) {
-        const enemy = enemies[i];
-        const enemyDef = enemiesData.enemies[enemy.type] || {};
-        const maxHp = enemy.maxHp || enemyDef.hp || 30;
-        const hpRatio = Math.max(0, enemy.hp / maxHp);
-        if (hpRatio > 0.5) {
-          hasGreen = true;
-          const ex = enemyX[i];
-          const ey = enemyY[i];
-          const fillW = Math.min(1, hpRatio) * barW;
-          const barH = enemy.isBoss ? 5 : 3.5;
-          const barY = ey - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
-          ctx.rect(ex - barW / 2, barY, fillW, barH);
+        // 5d. Health Bar Fills (Batched in-place by threshold without object allocations)
+        // Green (> 50%)
+        ctx.fillStyle = '#2ed573';
+        ctx.beginPath();
+        let hasGreen = false;
+        for (let i = 0; i < enemyCount; i++) {
+          const enemy = enemies[i];
+          const enemyDef = enemiesData.enemies[enemy.type] || {};
+          const maxHp = enemy.maxHp || enemyDef.hp || 30;
+          if (enemy.hp >= maxHp) continue;
+          const hpRatio = Math.max(0, enemy.hp / maxHp);
+          if (hpRatio > 0.5) {
+            hasGreen = true;
+            const ex = enemyX[i];
+            const ey = enemyY[i];
+            const fillW = Math.min(1, hpRatio) * barW;
+            const barH = enemy.isBoss ? 5 : 3.5;
+            const barY = ey - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
+            ctx.rect(ex - barW / 2, barY, fillW, barH);
+          }
         }
-      }
-      if (hasGreen) ctx.fill();
+        if (hasGreen) ctx.fill();
 
-      // Yellow (25% - 50%)
-      ctx.fillStyle = '#feca57';
-      ctx.beginPath();
-      let hasYellow = false;
-      for (let i = 0; i < enemyCount; i++) {
-        const enemy = enemies[i];
-        const enemyDef = enemiesData.enemies[enemy.type] || {};
-        const maxHp = enemy.maxHp || enemyDef.hp || 30;
-        const hpRatio = Math.max(0, enemy.hp / maxHp);
-        if (hpRatio <= 0.5 && hpRatio > 0.25) {
-          hasYellow = true;
-          const ex = enemyX[i];
-          const ey = enemyY[i];
-          const fillW = hpRatio * barW;
-          const barH = enemy.isBoss ? 5 : 3.5;
-          const barY = ey - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
-          ctx.rect(ex - barW / 2, barY, fillW, barH);
+        // Yellow (25% - 50%)
+        ctx.fillStyle = '#feca57';
+        ctx.beginPath();
+        let hasYellow = false;
+        for (let i = 0; i < enemyCount; i++) {
+          const enemy = enemies[i];
+          const enemyDef = enemiesData.enemies[enemy.type] || {};
+          const maxHp = enemy.maxHp || enemyDef.hp || 30;
+          if (enemy.hp >= maxHp) continue;
+          const hpRatio = Math.max(0, enemy.hp / maxHp);
+          if (hpRatio <= 0.5 && hpRatio > 0.25) {
+            hasYellow = true;
+            const ex = enemyX[i];
+            const ey = enemyY[i];
+            const fillW = hpRatio * barW;
+            const barH = enemy.isBoss ? 5 : 3.5;
+            const barY = ey - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
+            ctx.rect(ex - barW / 2, barY, fillW, barH);
+          }
         }
-      }
-      if (hasYellow) ctx.fill();
+        if (hasYellow) ctx.fill();
 
-      // Red (<= 25%)
-      ctx.fillStyle = '#ff4757';
-      ctx.beginPath();
-      let hasRed = false;
-      for (let i = 0; i < enemyCount; i++) {
-        const enemy = enemies[i];
-        const enemyDef = enemiesData.enemies[enemy.type] || {};
-        const maxHp = enemy.maxHp || enemyDef.hp || 30;
-        const hpRatio = Math.max(0, enemy.hp / maxHp);
-        if (hpRatio <= 0.25) {
-          hasRed = true;
-          const ex = enemyX[i];
-          const ey = enemyY[i];
-          const fillW = hpRatio * barW;
-          const barH = enemy.isBoss ? 5 : 3.5;
-          const barY = ey - r * (enemy.isBoss ? 1.6 : 1.35) - 6;
-          ctx.rect(ex - barW / 2, barY, fillW, barH);
+        // Red (<= 25%)
+        ctx.fillStyle = '#ff4757';
+        ctx.beginPath();
+        let hasRed = false;
+        for (let i = 0; i < enemyCount; i++) {
+          const enemy = enemies[i];
+          const enemyDef = enemiesData.enemies[enemy.type] || {};
+          const maxHp = enemy.maxHp || enemyDef.hp || 30;
+          if (enemy.hp >= maxHp) continue;
+          const hpRatio = Math.max(0, enemy.hp / maxHp);
+          if (hpRatio <= 0.25) {
+            hasRed = true;
+            const ex = enemyX[i];
+            const ey = enemyY[i];
+            const fillW = hpRatio * barW;
+            const barH = enemy.isBoss ? 5 : 3.5;
+            const barY = ey - r * (enemy.isBoss ? 1.65 : 1.35) - 6;
+            ctx.rect(ex - barW / 2, barY, fillW, barH);
+          }
         }
+        if (hasRed) ctx.fill();
       }
-      if (hasRed) ctx.fill();
     }
 
     // 6. Draw Projectiles (Batched by munition type)
@@ -302,7 +373,8 @@ export function createRenderer(canvas) {
     }
 
     // 7. Draw Visual Effects (Beams, Sparks, Explosions)
-    effects.updateAndDraw(ctx, dt);
+    fx.render(ctx, cellSize, snap);
+    ctx.restore();
   }
 
   function resize(cssWidth, cssHeight, dpr = (typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1)) {
@@ -344,6 +416,7 @@ export function createRenderer(canvas) {
     setSelectedCell: (cell) => { selectedCell = cell; },
     setSelectedTower: (tower) => { selectedTower = tower; },
     setPreviewTowerType: (type) => { previewTowerType = type || 'pulse'; },
+    fx,
     effects
   };
 }
