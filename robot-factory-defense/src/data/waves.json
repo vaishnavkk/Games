@@ -43,105 +43,116 @@
     },
     {
       "wave": 5,
+      "hpMult": 0.85,
       "rewardScrap": 20,
       "spawns": [
         { "type": "spark_drone", "count": 10, "interval": 0.9, "delay": 0 },
-        { "type": "rust_walker", "count": 8, "interval": 1.2, "delay": 14.0 },
-        { "type": "spark_drone", "count": 8, "interval": 0.8, "delay": 28.0 }
+        { "type": "rust_walker", "count": 8, "interval": 1.2, "delay": 17.0 },
+        { "type": "spark_drone", "count": 8, "interval": 0.8, "delay": 31.0 }
       ]
     },
     {
       "wave": 6,
+      "hpMult": 0.66,
       "rewardScrap": 20,
       "spawns": [
         { "type": "crusher_tank", "count": 4, "interval": 1.6, "delay": 0 },
-        { "type": "rust_walker", "count": 8, "interval": 1.1, "delay": 12.0 },
-        { "type": "crusher_tank", "count": 4, "interval": 1.6, "delay": 26.0 }
+        { "type": "rust_walker", "count": 8, "interval": 1.1, "delay": 16.0 },
+        { "type": "crusher_tank", "count": 4, "interval": 1.6, "delay": 30.0 }
       ]
     },
     {
       "wave": 7,
+      "hpMult": 1.28,
       "rewardScrap": 20,
       "spawns": [
         { "type": "spark_drone", "count": 12, "interval": 0.8, "delay": 0 },
-        { "type": "crusher_tank", "count": 5, "interval": 1.4, "delay": 14.0 },
-        { "type": "spark_drone", "count": 10, "interval": 0.8, "delay": 28.0 }
+        { "type": "crusher_tank", "count": 5, "interval": 1.4, "delay": 18.0 },
+        { "type": "spark_drone", "count": 10, "interval": 0.8, "delay": 32.0 }
       ]
     },
     {
       "wave": 8,
+      "hpMult": 1.20,
       "rewardScrap": 25,
       "spawns": [
         { "type": "glitchbot", "count": 14, "interval": 0.7, "delay": 0 },
-        { "type": "crusher_tank", "count": 6, "interval": 1.3, "delay": 14.0 },
-        { "type": "spark_drone", "count": 12, "interval": 0.7, "delay": 28.0 }
+        { "type": "crusher_tank", "count": 6, "interval": 1.3, "delay": 18.0 },
+        { "type": "spark_drone", "count": 12, "interval": 0.7, "delay": 32.0 }
       ]
     },
     {
       "wave": 9,
+      "hpMult": 1.30,
       "rewardScrap": 25,
       "spawns": [
         { "type": "crusher_tank", "count": 6, "interval": 1.3, "delay": 0 },
-        { "type": "spark_drone", "count": 14, "interval": 0.6, "delay": 12.0 },
-        { "type": "crusher_tank", "count": 6, "interval": 1.3, "delay": 26.0 }
+        { "type": "spark_drone", "count": 14, "interval": 0.6, "delay": 16.0 },
+        { "type": "crusher_tank", "count": 6, "interval": 1.3, "delay": 30.0 }
       ]
     },
     {
       "wave": 10,
+      "hpMult": 1.10,
       "rewardScrap": 30,
       "spawns": [
         { "type": "crusher_tank", "count": 6, "interval": 1.2, "delay": 0 },
-        { "type": "iron_sentry", "count": 1, "interval": 1.0, "delay": 8.0 },
-        { "type": "spark_drone", "count": 14, "interval": 0.6, "delay": 16.0 },
-        { "type": "crusher_tank", "count": 6, "interval": 1.2, "delay": 28.0 }
+        { "type": "iron_sentry", "count": 1, "interval": 1.0, "delay": 12.0 },
+        { "type": "spark_drone", "count": 22, "interval": 0.6, "delay": 20.0 },
+        { "type": "crusher_tank", "count": 6, "interval": 1.2, "delay": 32.0 }
       ]
     },
     {
       "wave": 11,
+      "hpMult": 1.38,
       "rewardScrap": 25,
       "spawns": [
-        { "type": "spark_drone", "count": 22, "interval": 0.45, "delay": 0 },
-        { "type": "crusher_tank", "count": 10, "interval": 0.9, "delay": 12.0 },
-        { "type": "spark_drone", "count": 20, "interval": 0.45, "delay": 26.0 }
+        { "type": "spark_drone", "count": 30, "interval": 0.45, "delay": 0 },
+        { "type": "crusher_tank", "count": 10, "interval": 0.9, "delay": 16.0 },
+        { "type": "spark_drone", "count": 28, "interval": 0.45, "delay": 30.0 }
       ]
     },
     {
       "wave": 12,
+      "hpMult": 1.40,
       "rewardScrap": 25,
       "spawns": [
         { "type": "glitchbot", "count": 22, "interval": 0.5, "delay": 0 },
-        { "type": "crusher_tank", "count": 14, "interval": 0.8, "delay": 12.0 },
-        { "type": "spark_drone", "count": 22, "interval": 0.45, "delay": 26.0 }
+        { "type": "crusher_tank", "count": 14, "interval": 0.8, "delay": 16.0 },
+        { "type": "spark_drone", "count": 30, "interval": 0.45, "delay": 30.0 }
       ]
     },
     {
       "wave": 13,
+      "hpMult": 1.40,
       "rewardScrap": 30,
       "spawns": [
         { "type": "crusher_tank", "count": 18, "interval": 0.55, "delay": 0 },
-        { "type": "spark_drone", "count": 30, "interval": 0.35, "delay": 12.0 },
-        { "type": "crusher_tank", "count": 18, "interval": 0.55, "delay": 26.0 }
+        { "type": "spark_drone", "count": 40, "interval": 0.35, "delay": 16.0 },
+        { "type": "crusher_tank", "count": 18, "interval": 0.55, "delay": 30.0 }
       ]
     },
     {
       "wave": 14,
+      "hpMult": 1.44,
       "rewardScrap": 30,
       "spawns": [
         { "type": "crusher_tank", "count": 32, "interval": 0.35, "delay": 0 },
-        { "type": "iron_sentry", "count": 1, "interval": 1.0, "delay": 6.0 },
-        { "type": "spark_drone", "count": 41, "interval": 0.22, "delay": 10.0 },
-        { "type": "crusher_tank", "count": 32, "interval": 0.35, "delay": 20.0 }
+        { "type": "iron_sentry", "count": 1, "interval": 1.0, "delay": 10.0 },
+        { "type": "spark_drone", "count": 53, "interval": 0.22, "delay": 14.0 },
+        { "type": "crusher_tank", "count": 32, "interval": 0.35, "delay": 24.0 }
       ]
     },
     {
       "wave": 15,
+      "hpMult": 1.27,
       "rewardScrap": 40,
       "spawns": [
         { "type": "crusher_tank", "count": 38, "interval": 0.35, "delay": 0 },
-        { "type": "iron_sentry", "count": 1, "interval": 1.0, "delay": 5.0 },
-        { "type": "mega_mixer", "count": 1, "interval": 1.0, "delay": 8.0 },
-        { "type": "spark_drone", "count": 41, "interval": 0.22, "delay": 10.0 },
-        { "type": "crusher_tank", "count": 38, "interval": 0.35, "delay": 20.0 }
+        { "type": "iron_sentry", "count": 1, "interval": 1.0, "delay": 9.0 },
+        { "type": "mega_mixer", "count": 1, "interval": 1.0, "delay": 12.0 },
+        { "type": "spark_drone", "count": 55, "interval": 0.22, "delay": 14.0 },
+        { "type": "crusher_tank", "count": 38, "interval": 0.35, "delay": 24.0 }
       ]
     }
   ]
