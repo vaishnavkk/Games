@@ -44,8 +44,8 @@ function toPixelCoords(pos, cellSize, state) {
   if (!pos) return null;
   const cols = state?.config?.map?.grid?.cols || 16;
   const rows = state?.config?.map?.grid?.rows || 9;
-  const x = pos.x <= cols ? (pos.x + 0.5) * cellSize : pos.x;
-  const y = pos.y <= rows ? (pos.y + 0.5) * cellSize : pos.y;
+  const x = pos.x <= cols ? pos.x * cellSize : pos.x;
+  const y = pos.y <= rows ? pos.y * cellSize : pos.y;
   if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
   return { x, y };
 }
