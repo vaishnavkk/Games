@@ -85,10 +85,17 @@ export function createUI(container, callbacks = {}) {
 
   const backgroundNodes = [hud.element, tipsBanner.element, playArea, buildBar.element];
 
+  function isNarrowPortrait() {
+    if (typeof window === 'undefined') return false;
+    return window.innerHeight > window.innerWidth && window.innerWidth <= 600;
+  }
+
   function syncBackgroundInert() {
     const titleVisible = screens.titleScreen.style.display !== 'none';
     const endVisible = screens.endScreen.style.display !== 'none';
-    const isModalOpen = titleVisible || endVisible || workshop.isOpen();
+    screens.syncRotateOverlay(isNarrowPortrait());
+    const rotateVisible = screens.rotateOverlay.style.display !== 'none';
+    const isModalOpen = titleVisible || endVisible || workshop.isOpen() || rotateVisible;
     for (const node of backgroundNodes) {
       node.inert = isModalOpen;
       if (isModalOpen) {
@@ -125,6 +132,7 @@ export function createUI(container, callbacks = {}) {
     container.appendChild(playArea);
     container.appendChild(buildBar.element);
     container.appendChild(workshop.element);
+    container.appendChild(screens.rotateOverlay);
     container.appendChild(screens.titleScreen);
     container.appendChild(screens.endScreen);
   }
@@ -197,6 +205,11 @@ export function createUI(container, callbacks = {}) {
       }
     }
 
+    // Auto-dismiss tips banner after first tower is built
+    if (Array.isArray(snap.towers) && snap.towers.length > 0) {
+      tipsBanner.dismiss();
+    }
+
     // Update workshop modal if open
     if (workshop.isOpen()) {
       workshop.update(snap);
@@ -208,6 +221,8 @@ export function createUI(container, callbacks = {}) {
     selectCell,
     selectTower,
     clearSelection,
+    dismissTips: () => tipsBanner.dismiss(),
+    syncViewport: () => syncBackgroundInert(),
     showWaveBanner: (waveNum) => waveBanner.show(waveNum),
     hideWaveBanner: () => waveBanner.hide(),
     callbacks

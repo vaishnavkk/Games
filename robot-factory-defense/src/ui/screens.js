@@ -100,6 +100,41 @@ export function createScreens(callbacks = {}) {
     if (callbacks.onRetry) callbacks.onRetry();
   });
 
+  // Portrait Rotate Overlay (shown on narrow portrait viewports during gameplay)
+  let portraitDismissed = false;
+  const rotateOverlay = document.createElement('div');
+  rotateOverlay.className = 'rotate-overlay';
+  rotateOverlay.id = 'rotateOverlay';
+  rotateOverlay.setAttribute('data-testid', 'rotate-overlay');
+  rotateOverlay.setAttribute('role', 'dialog');
+  rotateOverlay.setAttribute('aria-modal', 'true');
+  rotateOverlay.setAttribute('aria-labelledby', 'rotateOverlayHeading');
+  rotateOverlay.style.display = 'none';
+
+  rotateOverlay.innerHTML = `
+    <div class="rotate-overlay-card">
+      <div class="rotate-icon" aria-hidden="true">📱↻</div>
+      <h2 class="rotate-title" id="rotateOverlayHeading">Rotate your phone</h2>
+      <p class="rotate-subtitle">Landscape mode gives you a larger 16×9 factory grid and easier turret placement.</p>
+      <button class="interactive btn btn-cyan" id="btnContinuePortrait" data-testid="btn-continue-portrait" type="button">
+        Continue anyway
+      </button>
+    </div>
+  `;
+
+  const btnContinuePortrait = rotateOverlay.querySelector('#btnContinuePortrait');
+  btnContinuePortrait.addEventListener('click', () => {
+    portraitDismissed = true;
+    rotateOverlay.style.display = 'none';
+    if (callbacks.onScreenChange) callbacks.onScreenChange();
+  });
+
+  function syncRotateOverlay(isNarrowPortrait) {
+    const screenOpen = titleScreen.style.display !== 'none' || endScreen.style.display !== 'none';
+    const shouldShow = Boolean(isNarrowPortrait) && !portraitDismissed && !screenOpen;
+    rotateOverlay.style.display = shouldShow ? 'flex' : 'none';
+  }
+
   function refreshTitleStats() {
     const bestWaveEl = titleScreen.querySelector('#titleBestWave');
     const winsEl = titleScreen.querySelector('#titleWins');
@@ -154,6 +189,8 @@ export function createScreens(callbacks = {}) {
   return {
     titleScreen,
     endScreen,
+    rotateOverlay,
+    syncRotateOverlay,
     refreshTitleStats,
     showVictory,
     showDefeat

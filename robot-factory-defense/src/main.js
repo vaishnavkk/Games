@@ -14,6 +14,7 @@ import {
 } from './sim/index.js';
 import { createRenderer } from './render/index.js';
 import { createUI } from './ui/index.js';
+import { findNearestBuildablePad } from './ui/utils.js';
 import mapData from './data/map.json' with { type: 'json' };
 
 const canvas = document.getElementById('gameCanvas');
@@ -114,6 +115,22 @@ function onCanvasClick(e) {
     ui.selectCell(cell);
     renderer.setSelectedCell(cell);
     renderer.setSelectedTower(null);
+    return;
+  }
+
+  // Pad snapping: snap within 0.5 * cellSize of an unoccupied buildable pad
+  const rect = canvas.getBoundingClientRect();
+  let snappedPad = null;
+  if (rect.width > 0 && rect.height > 0) {
+    const gx = ((e.clientX - rect.left) / rect.width) * mapData.grid.cols;
+    const gy = ((e.clientY - rect.top) / rect.height) * mapData.grid.rows;
+    snappedPad = findNearestBuildablePad(gx, gy, mapData.buildableCells, state.towers, 0.5);
+  }
+
+  if (snappedPad) {
+    ui.selectCell(snappedPad);
+    renderer.setSelectedCell(snappedPad);
+    renderer.setSelectedTower(null);
   } else {
     ui.clearSelection();
     renderer.setSelectedCell(null);
@@ -146,6 +163,7 @@ function init() {
       onBuild: (cell, type) => {
         const t = place(state, cell, type);
         if (t) {
+          ui.dismissTips?.();
           ui.clearSelection();
           if (renderer) {
             renderer.setSelectedCell(null);
@@ -206,6 +224,7 @@ function init() {
     canvas.style.width = `${cssW}px`;
     canvas.style.height = `${cssH}px`;
     renderer.resize(cssW, cssH, window.devicePixelRatio || 1);
+    ui?.syncViewport?.();
   }
 
   window.addEventListener('resize', handleResize);

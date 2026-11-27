@@ -40,35 +40,35 @@ export function getEnemySvg(type, enemiesConfig = enemiesData) {
   const shape = def.shape || 'square';
 
   if (shape === 'diamond') {
-    return `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+    return `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
       <polygon points="12,2 22,12 12,22 2,12" fill="${color}" stroke="#0d141e" stroke-width="1.5"/>
     </svg>`;
   }
   if (shape === 'cross') {
-    return `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+    return `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
       <polygon points="9,2 15,2 15,9 22,9 22,15 15,15 15,22 9,22 9,15 2,15 2,9 9,9" fill="${color}" stroke="#0d141e" stroke-width="1.4"/>
     </svg>`;
   }
   if (shape === 'rectangle') {
-    return `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+    return `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
       <rect x="2" y="5" width="20" height="14" rx="2" fill="${color}" stroke="#0d141e" stroke-width="1.5"/>
       <rect x="6" y="9" width="12" height="6" rx="1" fill="#0d141e" opacity="0.45"/>
     </svg>`;
   }
   if (shape === 'octagon') {
-    return `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+    return `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
       <polygon points="8,2 16,2 22,8 22,16 16,22 8,22 2,16 2,8" fill="${color}" stroke="#feca57" stroke-width="1.6"/>
     </svg>`;
   }
   if (shape === 'skull_cog') {
-    return `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+    return `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
       <circle cx="12" cy="12" r="9" fill="${color}" stroke="#feca57" stroke-width="2"/>
       <circle cx="9" cy="10" r="1.8" fill="#0d141e"/>
       <circle cx="15" cy="10" r="1.8" fill="#0d141e"/>
       <rect x="8" y="14" width="8" height="3" rx="1" fill="#0d141e"/>
     </svg>`;
   }
-  return `<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+  return `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
     <rect x="4" y="4" width="16" height="16" rx="2" fill="${color}" stroke="#0d141e" stroke-width="1.5"/>
   </svg>`;
 }

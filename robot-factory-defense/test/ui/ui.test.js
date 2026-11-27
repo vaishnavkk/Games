@@ -1,6 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { getStoredData, setStoredData } from '../../src/ui/index.js';
+import { FIRST_RUN_TIPS } from '../../src/ui/tips.js';
 
 describe('UI & Storage Contract', () => {
   it('localStorage keys strictly use rfd: prefix and handle errors gracefully', () => {
@@ -14,13 +15,7 @@ describe('UI & Storage Contract', () => {
   });
 
   it('three first-run tips are all <= 12 words each', () => {
-    const tips = [
-      'Tap a green cell, then select a turret to build defense.',
-      'Build Fabricators early to generate Circuits for powerful Workshop upgrades.',
-      'Armored enemies resist basic turrets; use Arc Coils and Rockets.'
-    ];
-
-    tips.forEach((tip, idx) => {
+    FIRST_RUN_TIPS.forEach((tip, idx) => {
       const words = tip.trim().split(/\s+/).length;
       assert.ok(
         words <= 12,
