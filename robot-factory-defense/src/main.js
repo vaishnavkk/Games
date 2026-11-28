@@ -331,7 +331,8 @@ function updateEnemyPosCache() {
 
 function gameLoop(time) {
   const workStart = performance.now();
-  const dt = Math.min(Math.max(0, time - lastTime), 50);
+  const rawIntervalMs = Math.max(0, time - lastTime);
+  const dt = Math.min(rawIntervalMs, 50);
   lastTime = time;
 
   // Advance simulation if game has started
@@ -366,7 +367,7 @@ function gameLoop(time) {
 
   if (debugEl) {
     debugFrameCount++;
-    debugWorstSamples.push({ t: time, ms: workMs });
+    debugWorstSamples.push({ t: time, ms: workMs, interval: rawIntervalMs });
     while (debugWorstSamples.length > 0 && time - debugWorstSamples[0].t > 5000) {
       debugWorstSamples.shift();
     }
@@ -376,11 +377,13 @@ function gameLoop(time) {
       debugLastSecTime = time;
     }
     let worst5s = 0;
+    let over20Count = 0;
     for (let i = 0; i < debugWorstSamples.length; i++) {
       if (debugWorstSamples[i].ms > worst5s) worst5s = debugWorstSamples[i].ms;
+      if (debugWorstSamples[i].interval > 20) over20Count++;
     }
     const pCount = renderer?.fx?.getParticleCount ? renderer.fx.getParticleCount() : 0;
-    debugEl.textContent = `FPS:${debugFps} | worst5s:${worst5s.toFixed(1)}ms | particles:${pCount} | theme:${getActiveTheme()}`;
+    debugEl.textContent = `FPS:${debugFps} | worst5s:${worst5s.toFixed(1)}ms | frame INTERVAL:${rawIntervalMs.toFixed(1)}ms | intervals>20ms(5s):${over20Count} | particles:${pCount} | theme:${getActiveTheme()}`;
   }
 
   requestAnimationFrame(gameLoop);
