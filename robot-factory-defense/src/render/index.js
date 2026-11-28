@@ -5,7 +5,7 @@ import { drawGridAndMap } from './grid.js';
 import { drawTowerIcon, drawEnemyIcon, drawSnowflakePip } from './icons.js';
 import { drawRangeCircle, isReducedMotion } from './effects.js';
 import { createFxSystem } from './fx/index.js';
-import { getPalette, setActiveTheme } from './palette.js';
+import { getPalette, getActiveTheme, setActiveTheme } from './palette.js';
 
 const MAX_HIT_FLASH_SEC = 0.08;
 
@@ -39,6 +39,8 @@ export function createRenderer(canvas) {
   const projInterp = new Map();
   let lastSimTick = -1;
   let interpFrameSeq = 0;
+  let lastPausedSig = '';
+  let dirty = true;
 
   // Waypoints for distance-to-position projection
   const waypoints = mapData.waypoints;
@@ -140,11 +142,27 @@ export function createRenderer(canvas) {
       totalAnimTime += dt * (snap.speed || 1);
     }
     const simTick = Number.isFinite(snap.tick) ? snap.tick : -1;
+    const activeTheme = getActiveTheme();
+
+    // (c) Skip drawing when nothing changed on a paused game
+    if (snap.paused && !dirty && !fx.hasActiveFx()) {
+      const selCellKey = selectedCell ? `${selectedCell.col},${selectedCell.row}` : '';
+      const selTwKey = selectedTower ? `${selectedTower.id || ''}:${selectedTower.level || 1}` : '';
+      const sig = `${simTick}|${snap.towers?.length || 0}|${snap.enemies?.length || 0}|${snap.projectiles?.length || 0}|${selCellKey}|${selTwKey}|${previewTowerType}|${activeTheme}|${canvas.width}x${canvas.height}`;
+      if (sig === lastPausedSig) {
+        return;
+      }
+      lastPausedSig = sig;
+    } else {
+      dirty = false;
+      lastPausedSig = '';
+    }
+
     const simTickChanged = simTick !== lastSimTick;
     if (simTickChanged) lastSimTick = simTick;
     interpFrameSeq++;
     const interp = snap.paused ? 1 : (Number.isFinite(alpha) ? Math.max(0, Math.min(1, alpha)) : 1);
-    const pal = getPalette();
+    const pal = getPalette(activeTheme);
 
     const width = canvas.width;
     const height = canvas.height;
@@ -267,12 +285,13 @@ export function createRenderer(canvas) {
 
     // 5. Draw Enemies along Path (Sprites + Batched Overlays, Zero Garbage Allocation)
     if (enemyCount > 0) {
+      const microAnim = animate && enemyCount <= 80;
       // 5a. Draw procedural sprites rotated to face travel direction with subtle walk bob/wobble
       for (let i = 0; i < enemyCount; i++) {
         const enemy = enemies[i];
         const eid = typeof enemy.id === 'number' ? enemy.id : i;
-        const bobOffset = animate ? Math.sin(totalAnimTime * 9 + eid * 1.7) * (cellSize * 0.03) : 0;
-        const wobble = animate ? Math.sin(totalAnimTime * 7 + eid * 2.3) * 0.06 : 0;
+        const bobOffset = microAnim ? Math.sin(totalAnimTime * 9 + eid * 1.7) * (cellSize * 0.03) : 0;
+        const wobble = microAnim ? Math.sin(totalAnimTime * 7 + eid * 2.3) * 0.06 : 0;
 
         let hitFlash = false;
         if (fx.hasHitFlash(enemy.id)) {
@@ -450,8 +469,7 @@ export function createRenderer(canvas) {
           hasRockets = true;
           const px = rec.prevX + (rec.currX - rec.prevX) * interp;
           const py = rec.prevY + (rec.currY - rec.prevY) * interp;
-          ctx.moveTo(px + 4, py);
-          ctx.arc(px, py, 4, 0, Math.PI * 2);
+          ctx.rect(px - 3.5, py - 3.5, 7, 7);
         }
       }
       if (hasRockets) ctx.fill();
@@ -466,8 +484,7 @@ export function createRenderer(canvas) {
           const rec = projInterp.get(projs[i].id ?? i);
           const px = rec ? rec.prevX + (rec.currX - rec.prevX) * interp : (projs[i].x <= 16 ? projs[i].x * cellSize : projs[i].x);
           const py = rec ? rec.prevY + (rec.currY - rec.prevY) * interp : (projs[i].y <= 9 ? projs[i].y * cellSize : projs[i].y);
-          ctx.moveTo(px + 2.5, py);
-          ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+          ctx.rect(px - 2.5, py - 2.5, 5, 5);
         }
       }
       if (hasKinetic) ctx.fill();
@@ -490,8 +507,8 @@ export function createRenderer(canvas) {
     const ratio = Math.max(1, Number.isFinite(dpr) ? dpr : 1);
     const targetW = Math.max(16, Math.round(cssWidth * ratio));
     const targetH = Math.max(9, Math.round(cssHeight * ratio));
-    if (canvas.width !== targetW) canvas.width = targetW;
-    if (canvas.height !== targetH) canvas.height = targetH;
+    if (canvas.width !== targetW) { canvas.width = targetW; dirty = true; }
+    if (canvas.height !== targetH) { canvas.height = targetH; dirty = true; }
   }
 
   function screenToCell(clientX, clientY) {
@@ -522,10 +539,11 @@ export function createRenderer(canvas) {
     render,
     resize,
     screenToCell,
-    setSelectedCell: (cell) => { selectedCell = cell; },
-    setSelectedTower: (tower) => { selectedTower = tower; },
-    setPreviewTowerType: (type) => { previewTowerType = type || 'pulse'; },
-    setTheme: (id) => setActiveTheme(id),
+    setSelectedCell: (cell) => { selectedCell = cell; dirty = true; },
+    setSelectedTower: (tower) => { selectedTower = tower; dirty = true; },
+    setPreviewTowerType: (type) => { previewTowerType = type || 'pulse'; dirty = true; },
+    setTheme: (id) => { setActiveTheme(id); dirty = true; },
+    forceDirty: () => { dirty = true; },
     fx,
     effects
   };

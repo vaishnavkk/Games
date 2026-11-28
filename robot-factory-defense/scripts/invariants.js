@@ -4,6 +4,27 @@ import { fileURLToPath } from 'url';
 import { createServer } from 'vite';
 import puppeteer from 'puppeteer-core';
 import { launchOptions } from './chrome.js';
+import { PALETTES, THEME_IDS } from '../src/render/palette.js';
+
+function hexToRgb(hex) {
+  const h = hex.replace('#', '');
+  const n = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function paletteRelLum([r, g, b]) {
+  const [rs, gs, bs] = [r, g, b].map(c => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+
+function paletteContrast(hex1, hex2) {
+  const l1 = paletteRelLum(hexToRgb(hex1));
+  const l2 = paletteRelLum(hexToRgb(hex2));
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -534,7 +555,7 @@ export async function runInvariantsCheck(options = {}) {
     const playBtn = await page.$('#btnPlay');
     if (playBtn) await playBtn.click();
 
-    for (const themeId of ['neon', 'daylight', 'terminal']) {
+    for (const themeId of THEME_IDS) {
       if (verbose) console.log(`[invariants] Checking WCAG AA 4.5:1 HUD contrast for theme: ${themeId}...`);
       await page.evaluate((t) => {
         document.documentElement.setAttribute('data-theme', t);
@@ -546,6 +567,28 @@ export async function runInvariantsCheck(options = {}) {
           violations.push({ viewport: `1440x900 (${themeId})`, ...issue });
         }
       }
+
+      // 2c. Canvas shape contrast >= 3.0:1 (pad vs dead, path vs dead, towers vs pad, enemies vs path)
+      const pal = PALETTES[themeId];
+      const checks = [
+        ['padCorner_vs_pad', pal.padCorner, pal.padFill],
+        ['pathChevron_vs_path', pal.pathChevron, pal.pathFill],
+        ['pathBorder_vs_dead', pal.pathBorder, pal.deadBg],
+        ...Object.entries(pal.towers).filter(([k]) => !k.startsWith('base')).map(([k, c]) => [`tower_${k}_vs_pad`, c, pal.padFill]),
+        ...Object.entries(pal.enemies).map(([k, v]) => [`enemy_${k}_vs_path`, v.stroke, pal.pathFill])
+      ];
+      const summary = checks.map(([lbl, fg, bg]) => {
+        const cr = paletteContrast(fg, bg);
+        if (cr < 3.0) {
+          violations.push({
+            viewport: `palette:${themeId}`,
+            type: 'palette_shape_contrast',
+            msg: `[${themeId}] ${lbl} contrast ${cr.toFixed(2)}:1 < 3.0:1 (${fg} vs ${bg})`
+          });
+        }
+        return `${lbl}=${cr.toFixed(1)}`;
+      });
+      if (verbose) console.log(`[invariants] Palette(${themeId}): ${summary.join(' ')}`);
     }
 
     // 3. Storage Failure Resilience Test

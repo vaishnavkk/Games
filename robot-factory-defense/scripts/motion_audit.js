@@ -53,21 +53,24 @@ async function setupW6Fight(page, speed = 1) {
   }, speed);
 }
 
-async function measureFrames(page, count = 180) {
-  return page.evaluate((n) => new Promise((resolve) => {
+async function measureFrames(page, count = 180, warmup = 10) {
+  return page.evaluate((n, w) => new Promise((resolve) => {
     const times = [];
-    let last = performance.now();
-    function tick(now) {
-      times.push(now - last);
-      last = now;
+    let frame = 0;
+    function tick() {
+      frame++;
+      if (frame > w) {
+        const ms = window.__rfd?.lastWorkMs ?? 0;
+        times.push(ms);
+      }
       if (times.length >= n) {
-        resolve(times.slice(1)); // drop initial transition frame
+        resolve(times);
       } else {
         requestAnimationFrame(tick);
       }
     }
     requestAnimationFrame(tick);
-  }), count + 1);
+  }), count, warmup);
 }
 
 async function main() {

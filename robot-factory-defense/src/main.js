@@ -16,6 +16,7 @@ import {
 import { createRenderer } from './render/index.js';
 import { createUI } from './ui/index.js';
 import { applyTheme, getSavedTheme, subscribeTheme } from './ui/theme.js';
+import { getActiveTheme } from './render/palette.js';
 import { findNearestBuildablePad } from './ui/utils.js';
 import mapData from './data/map.json' with { type: 'json' };
 
@@ -290,6 +291,21 @@ function resetGame() {
 
 let lastTime = performance.now();
 let posCacheFrame = 0;
+let lastHudKey = '';
+let cachedHudSnap = null;
+const debugMode = typeof window !== 'undefined' && window.location && window.location.search.includes('debug=1');
+let debugEl = null;
+const debugWorstSamples = [];
+let debugLastSecTime = performance.now();
+let debugFrameCount = 0;
+let debugFps = 0;
+
+if (debugMode && typeof document !== 'undefined') {
+  debugEl = document.createElement('div');
+  debugEl.id = 'debugOverlay';
+  debugEl.style.cssText = 'position:fixed;bottom:8px;left:8px;z-index:9999;pointer-events:none;background:rgba(0,0,0,0.78);color:#00ff88;font:12px/1.4 monospace;padding:6px 10px;border:1px solid #00ff88;border-radius:4px;';
+  document.body.appendChild(debugEl);
+}
 
 function updateEnemyPosCache() {
   posCacheFrame++;
@@ -314,6 +330,7 @@ function updateEnemyPosCache() {
 }
 
 function gameLoop(time) {
+  const workStart = performance.now();
   const dt = Math.min(Math.max(0, time - lastTime), 50);
   lastTime = time;
 
@@ -327,9 +344,44 @@ function gameLoop(time) {
   }
 
   const alpha = state.paused ? 0 : Math.max(0, Math.min(1, (state.accumulatorMs || 0) / TICK_MS));
-  const snap = snapshot(state);
-  if (renderer) renderer.render(snap, alpha);
-  if (ui) ui.renderHUD(snap);
+  // Pass read-only state directly to renderer to avoid cloning 250+ enemy/proj objects per frame
+  if (renderer) renderer.render(state, alpha);
+
+  if (ui) {
+    const hudKey = `${state.tick}|${state.scrap}|${state.circuits}|${state.coreHp}|${state.wave}|${state.waveState}|${state.paused}|${state.speed}|${state.towers.length}|${state.purchasedUpgrades.length}|${state.unlockedTowers.length}`;
+    if (hudKey !== lastHudKey || !cachedHudSnap) {
+      lastHudKey = hudKey;
+      cachedHudSnap = snapshot(state);
+    }
+    ui.renderHUD(cachedHudSnap);
+  }
+
+  const workMs = performance.now() - workStart;
+  if (renderer?.fx?.recordFrameTime) {
+    renderer.fx.recordFrameTime(workMs);
+  }
+  if (typeof window !== 'undefined' && window.__rfd) {
+    window.__rfd.lastWorkMs = workMs;
+  }
+
+  if (debugEl) {
+    debugFrameCount++;
+    debugWorstSamples.push({ t: time, ms: workMs });
+    while (debugWorstSamples.length > 0 && time - debugWorstSamples[0].t > 5000) {
+      debugWorstSamples.shift();
+    }
+    if (time - debugLastSecTime >= 250) {
+      debugFps = Math.round((debugFrameCount * 1000) / Math.max(1, time - debugLastSecTime));
+      debugFrameCount = 0;
+      debugLastSecTime = time;
+    }
+    let worst5s = 0;
+    for (let i = 0; i < debugWorstSamples.length; i++) {
+      if (debugWorstSamples[i].ms > worst5s) worst5s = debugWorstSamples[i].ms;
+    }
+    const pCount = renderer?.fx?.getParticleCount ? renderer.fx.getParticleCount() : 0;
+    debugEl.textContent = `FPS:${debugFps} | worst5s:${worst5s.toFixed(1)}ms | particles:${pCount} | theme:${getActiveTheme()}`;
+  }
 
   requestAnimationFrame(gameLoop);
 }

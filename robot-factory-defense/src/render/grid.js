@@ -9,6 +9,10 @@ let cachedBgCanvas = null;
 let cachedWidth = 0;
 let cachedHeight = 0;
 let cachedTheme = '';
+let cachedGlowTheme = '';
+let cachedGlowCellSize = 0;
+let cachedSpawnGlow = null;
+let cachedCoreGlow = null;
 
 // Precompute cell lookup sets and exact waypoint travel directions for every path cell.
 const pathCellKeySet = new Set(mapData.pathCells.map(c => `${c.col},${c.row}`));
@@ -276,10 +280,60 @@ function createStaticBackground(width, height, cellSize) {
   return bg;
 }
 
+function getGlowSprites(cellSize, theme, pal) {
+  if (cachedSpawnGlow && cachedCoreGlow && cachedGlowTheme === theme && cachedGlowCellSize === cellSize) {
+    return { spawn: cachedSpawnGlow, core: cachedCoreGlow };
+  }
+  const sSize = Math.ceil(cellSize * 0.9);
+  const sc = document.createElement('canvas');
+  sc.width = sSize;
+  sc.height = sSize;
+  const sctx = sc.getContext('2d');
+  const sr = cellSize * 0.3;
+  sctx.fillStyle = pal.spawnGlow;
+  sctx.globalAlpha = 0.28;
+  sctx.beginPath();
+  sctx.arc(sSize / 2, sSize / 2, sr, 0, Math.PI * 2);
+  sctx.fill();
+  sctx.strokeStyle = pal.spawnCore;
+  sctx.globalAlpha = 0.85;
+  sctx.lineWidth = 2;
+  sctx.stroke();
+  sctx.fillStyle = pal.spawnCore;
+  sctx.globalAlpha = 1;
+  sctx.beginPath();
+  sctx.arc(sSize / 2, sSize / 2, cellSize * 0.12, 0, Math.PI * 2);
+  sctx.fill();
+
+  const cSize = Math.ceil(cellSize);
+  const cc = document.createElement('canvas');
+  cc.width = cSize;
+  cc.height = cSize;
+  const cctx = cc.getContext('2d');
+  const cr = cellSize * 0.42;
+  cctx.fillStyle = pal.coreFill;
+  cctx.fillRect(0, 0, cSize, cSize);
+  cctx.strokeStyle = pal.coreGlow;
+  cctx.lineWidth = 2.5;
+  cctx.beginPath();
+  cctx.arc(cSize / 2, cSize / 2, cr, 0, Math.PI * 2);
+  cctx.stroke();
+  cctx.fillStyle = pal.coreGlow;
+  cctx.beginPath();
+  cctx.arc(cSize / 2, cSize / 2, cr * 0.3, 0, Math.PI * 2);
+  cctx.fill();
+
+  cachedSpawnGlow = sc;
+  cachedCoreGlow = cc;
+  cachedGlowTheme = theme;
+  cachedGlowCellSize = cellSize;
+  return { spawn: sc, core: cc };
+}
+
 export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selectedCell = null, coreFlashAlpha = 0) {
   const theme = getActiveTheme();
   const pal = getPalette(theme);
-  // Check or build cached static background
+  // Check or build cached static background (redraws only on resize or theme change)
   if (!cachedBgCanvas || cachedWidth !== width || cachedHeight !== height || cachedTheme !== theme) {
     cachedBgCanvas = createStaticBackground(width, height, cellSize);
     cachedWidth = width;
@@ -289,6 +343,7 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
 
   // Blit static background in 1 call
   ctx.drawImage(cachedBgCanvas, 0, 0);
+  const glows = getGlowSprites(cellSize, theme, pal);
 
   // Animated conveyor chevrons scrolling in exact waypoint travel direction (batched, no per-cell clip)
   const step = cellSize * 0.5;
@@ -323,46 +378,21 @@ export function drawGridAndMap(ctx, width, height, cellSize, animTime = 0, selec
   ctx.stroke();
   ctx.globalAlpha = 1;
 
-  // Animated Spawn Portal at Entrance (waypoints[0])
+  // Animated Spawn Portal at Entrance (waypoints[0]) using pre-rendered glow sprite
   const spX = (mapData.waypoints[0].col + 0.5) * cellSize;
   const spY = (mapData.waypoints[0].row + 0.5) * cellSize;
-  const spPulse = 0.5 + 0.5 * Math.sin(animTime * 4);
-  const spR = cellSize * (0.24 + spPulse * 0.06);
+  const spScale = 0.92 + 0.14 * (0.5 + 0.5 * Math.sin(animTime * 4));
+  const sw = glows.spawn.width * spScale;
+  ctx.drawImage(glows.spawn, spX - sw / 2, spY - sw / 2, sw, sw);
 
-  ctx.beginPath();
-  ctx.arc(spX, spY, spR, 0, Math.PI * 2);
-  ctx.fillStyle = pal.spawnGlow;
-  ctx.globalAlpha = 0.2 + spPulse * 0.25;
-  ctx.fill();
-  ctx.strokeStyle = pal.spawnCore;
-  ctx.globalAlpha = 0.7 + spPulse * 0.3;
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(spX, spY, cellSize * 0.12, 0, Math.PI * 2);
-  ctx.fillStyle = pal.spawnCore;
-  ctx.globalAlpha = 1;
-  ctx.fill();
-
-  // Core Base at Exit (col: 15, row: 7)
+  // Core Base at Exit (col: 15, row: 7) using pre-rendered glow sprite + rotating hex
   const coreX = mapData.core.position.col * cellSize;
   const coreY = mapData.core.position.row * cellSize;
   const cx = coreX + cellSize / 2;
   const cy = coreY + cellSize / 2;
   const cr = cellSize * 0.42;
 
-  ctx.fillStyle = pal.coreFill;
-  ctx.fillRect(coreX, coreY, cellSize, cellSize);
-
-  const pulse = Math.sin(animTime * 3.5) * 0.2 + 0.8;
-  ctx.strokeStyle = pal.coreGlow;
-  ctx.globalAlpha = pulse;
-  ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  ctx.arc(cx, cy, cr * (0.95 + Math.sin(animTime * 3.5) * 0.05), 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.globalAlpha = 1;
+  ctx.drawImage(glows.core, coreX, coreY);
 
   ctx.fillStyle = pal.coreFill;
   ctx.strokeStyle = pal.coreGlow;

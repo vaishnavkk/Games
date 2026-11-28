@@ -105,6 +105,11 @@ export function createFxSystem() {
   let rocketSmokeAccum = 0;
   let cachedFontCs = 0;
   let cachedFontStr = '';
+  const frameWindow = new Float32Array(30);
+  let frameWinIdx = 0;
+  let frameWinCount = 0;
+  let frameWinSum = 0;
+  let adaptiveHalf = false;
 
   function removeAt(arr, i) {
     const last = arr.length - 1;
@@ -132,7 +137,10 @@ export function createFxSystem() {
 
   function spawnBurst(x, y, color, count, speedMin, speedMax, life, size) {
     const reduced = isReducedMotion();
-    const actualCount = reduced ? Math.min(2, count) : count;
+    let actualCount = reduced ? Math.min(2, count) : count;
+    if (adaptiveHalf && actualCount > 1) {
+      actualCount = Math.max(1, Math.floor(actualCount * 0.5));
+    }
     for (let i = 0; i < actualCount; i++) {
       if (particles.length >= MAX_PARTICLES) break;
       const angle = (Math.PI * 2 * i) / actualCount + (Math.random() - 0.5) * 0.5;
@@ -289,7 +297,8 @@ export function createFxSystem() {
             const ux = dx / dist;
             const uy = dy / dist;
             addSprayCone(tx, ty, ex, ey, cs * 0.28, 0.26);
-            const sprayCount = reduced ? 2 : 8;
+            let sprayCount = reduced ? 2 : 8;
+            if (adaptiveHalf && sprayCount > 1) sprayCount = Math.max(1, Math.floor(sprayCount * 0.5));
             for (let s = 0; s < sprayCount; s++) {
               if (particles.length >= MAX_PARTICLES) break;
               const spread = (Math.random() - 0.5) * 0.5;
@@ -687,6 +696,36 @@ export function createFxSystem() {
     return shakeOffset;
   }
 
+  function recordFrameTime(ms) {
+    if (!Number.isFinite(ms) || ms < 0) return;
+    if (frameWinCount === 30) {
+      frameWinSum -= frameWindow[frameWinIdx];
+    } else {
+      frameWinCount++;
+    }
+    frameWindow[frameWinIdx] = ms;
+    frameWinSum += ms;
+    frameWinIdx = (frameWinIdx + 1) % 30;
+    adaptiveHalf = frameWinCount >= 30 && (frameWinSum / 30) > 20;
+  }
+
+  function isAdaptiveHalf() {
+    return adaptiveHalf;
+  }
+
+  function hasActiveFx() {
+    return (
+      particles.length > 0 ||
+      bolts.length > 0 ||
+      beams.length > 0 ||
+      sprays.length > 0 ||
+      rings.length > 0 ||
+      floatingTexts.length > 0 ||
+      coreFlashTimer > 0 ||
+      shakeTimer > 0
+    );
+  }
+
   function getParticleCount() {
     return particles.length;
   }
@@ -700,6 +739,9 @@ export function createFxSystem() {
     getTowerRecoil,
     getCoreFlashAlpha,
     getShakeOffset,
-    getParticleCount
+    getParticleCount,
+    recordFrameTime,
+    isAdaptiveHalf,
+    hasActiveFx
   };
 }
