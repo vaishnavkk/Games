@@ -12,6 +12,7 @@ Hub: https://vaishnavkk.github.io/Games/
 | Matrixfall | Falling-Blocks Arcade | Canvas2D | v0.1 | [Play](https://vaishnavkk.github.io/Games/matrix-fall/) | [matrix-fall/](matrix-fall/) |
 | Tricky Meadow | Science Puzzle | Vite / Canvas2D | v0.1 | [Play](https://vaishnavkk.github.io/Games/tricky-meadow/dist/) | [tricky-meadow/](tricky-meadow/) |
 | Robot Factory Defense | Tactical Tower Defense | Vite / Canvas2D | v0.1 | [Play](https://vaishnavkk.github.io/Games/robot-factory-defense/) | [robot-factory-defense/](robot-factory-defense/) |
+| Pulse Dodge | Arcade Arena Dodge | ES Modules / Canvas2D | v0.1 | [Play](https://vaishnavkk.github.io/Games/pulse-dodge/) | [pulse-dodge/](pulse-dodge/) |
 
 ## Run Locally
 
@@ -31,6 +32,7 @@ Games/
 ├── matrix-fall/
 ├── tricky-meadow/
 ├── robot-factory-defense/
+├── pulse-dodge/
 ├── docs/
 ├── index.html
 └── README.md

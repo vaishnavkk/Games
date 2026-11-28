@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Pulse Dodge — Neon Arena</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23070b12'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%2300dcff' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='%2300dcff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="hud" id="hud">
+      <div class="hud-group">
+        <div class="stat"><span class="stat-label">SCORE</span><span class="stat-val cyan" id="hudScore">0</span></div>
+        <div class="stat"><span class="stat-label">COMBO</span><span class="stat-val gold" id="hudCombo">x1</span></div>
+        <div class="stat"><span class="stat-label">BEST</span><span class="stat-val" id="hudBest">0</span></div>
+      </div>
+      <div class="hud-group">
+        <div class="charge-wrap" title="Pulse Blast Charge (Space / Tap)">
+          <span class="stat-label">BLAST</span>
+          <div class="charge-bar"><div class="charge-fill" id="hudCharge"></div></div>
+        </div>
+        <button class="btn-icon" id="btnMute" type="button" aria-label="Toggle Sound">🔊</button>
+        <button class="btn-icon" id="btnPause" type="button" aria-label="Pause Game">⏸</button>
+      </div>
+    </header>
+
+    <main class="stage" id="stage">
+      <canvas id="gameCanvas"></canvas>
+
+      <section class="overlay" id="titleOverlay">
+        <div class="card">
+          <div class="pill">NEON ARENA</div>
+          <h1>PULSE DODGE</h1>
+          <p class="subtitle">Move with <strong>Mouse / Touch</strong> or <strong>WASD / Arrows</strong>. Collect cyan cores, graze drones for bonus points, and unleash <strong>Space / Double-Tap</strong> when Blast is charged.</p>
+          <div class="best-row">
+            <div><span class="stat-label">HIGH SCORE</span><div class="stat-val cyan" id="titleBest">0</div></div>
+            <div><span class="stat-label">BEST COMBO</span><div class="stat-val gold" id="titleBestCombo">x1</div></div>
+          </div>
+          <button class="btn-primary" id="btnStart" type="button">PLAY NOW</button>
+        </div>
+      </section>
+
+      <section class="overlay hidden" id="pauseOverlay">
+        <div class="card compact">
+          <h2>PAUSED</h2>
+          <button class="btn-primary" id="btnResume" type="button">RESUME</button>
+        </div>
+      </section>
+
+      <section class="overlay hidden" id="gameOverOverlay">
+        <div class="card">
+          <div class="pill danger">CORE SHATTERED</div>
+          <h2>GAME OVER</h2>
+          <div class="best-row">
+            <div><span class="stat-label">SCORE</span><div class="stat-val cyan" id="overScore">0</div></div>
+            <div><span class="stat-label">BEST</span><div class="stat-val gold" id="overBest">0</div></div>
+            <div><span class="stat-label">MAX COMBO</span><div class="stat-val" id="overCombo">x1</div></div>
+          </div>
+          <button class="btn-primary" id="btnRetry" type="button">PLAY AGAIN</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="./game.js"></script>
+</body>
+</html>
